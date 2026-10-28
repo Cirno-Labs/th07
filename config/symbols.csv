@@ -629,10 +629,10 @@ address,size,name,symbol
 0x0045c7d0,265,CSoundManager::SetPrimaryBufferFormat,?SetPrimaryBufferFormat@CSoundManager@@QAEJKKK@Z
 0x0045c8e0,844,CSoundManager::CreateStreaming,?CreateStreaming@CSoundManager@@QAEJPAPAVCStreamingSound@@PADKU_GUID@@KKPAXPAUBgmFormat@@@Z
 0x0045cc30,795,CSoundManager::CreateStreamingFromMemory,?CreateStreamingFromMemory@CSoundManager@@QAEJPAPAVCStreamingSound@@PAXKPAUBgmFormat@@KU_GUID@@KK1@Z
-0x0045cf50,221,Func45cf50,
-0x0045d030,46,Func45d030,
+0x0045cf50,221,CSound::CSound,??0CSound@@QAE@PAPAUIDirectSoundBuffer@@KKPAVCWaveFile@@@Z
+0x0045d030,46,CSound::`scalar deleting destructor',??_GCSound@@UAEPAXI@Z
 0x0045d060,599,CSound::Func45d060,?Func45d060@CSound@@QAEJXZ
-0x0045d2c0,241,Func45d2c0,
+0x0045d2c0,241,CSound::~CSound,??1CSound@@UAE@XZ
 0x0045d3c0,484,CSound::FillBufferWithSound,?FillBufferWithSound@CSound@@QAEJPAUIDirectSoundBuffer@@H@Z
 0x0045d5b0,163,Func45d5b0,
 0x0045d660,182,Func45d660,
@@ -1716,6 +1716,7 @@ address,size,name,symbol
 0x0048d26c,4,CoInitialize,__imp__CoInitialize@4
 0x004903f8,,IID_IDirectSoundNotify,_IID_IDirectSoundNotify
 0x004904e8,,GUID_NULL,_GUID_NULL
+0x00495290,4,CSound::`vftable',??_7CSound@@6B@
 0x004964f4,,g_DifficultyRatings,?g_DifficultyRatings@@3PAMA
 0x0049ea88,,g_SoundInfos,?g_SoundInfos@@3PAUSoundInfo@@A
 0x0049ebb8,,g_SoundPaths,?g_SoundPaths@@3PAPADA
