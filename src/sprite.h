@@ -30,6 +30,9 @@ ASSERT_SIZE(Sprite, 0x24c);
 class SpriteEngine
 {
 public:
+    SpriteEngine();
+    ~SpriteEngine();
+
     // Runs `script` on `vm` from its start.
     void SetScript(Sprite *vm, void *script);
     // Shows sprite `sprite` of the loaded ANM files on `vm`.
@@ -73,4 +76,5 @@ public:
     int pendingCopyDstWidth;
     int pendingCopyDstHeight;
 };
+ASSERT_SIZE(SpriteEngine, 0x17e560);
 extern SpriteEngine *g_SpriteEngine;

@@ -33,7 +33,15 @@ ASSERT_SIZE(ControllerMapping, 0x12);
 class App
 {
 public:
-    unsigned char unk_0[0x8];
+    // Reads the config file at `path` into the config. Returns 0, or
+    // nonzero to quit.
+    int LoadConfig(char *path);
+    // Adds the application's chain elements. Returns 0, -1 to quit, or
+    // anything else to restart.
+    static int RegisterChain();
+
+    HINSTANCE hInstance;
+    IDirect3D8 *d3d;
     IDirect3DDevice8 *d3dDevice;
     unsigned char unk_c[0x4];
     // The keyboard's DirectInput device; NULL without one.
@@ -42,21 +50,86 @@ public:
     IDirectInputDevice8 *joystick;
     unsigned char unk_18[0x2c];
     HWND hwnd;
-    unsigned char unk_48[0xd0];
+    unsigned char unk_48[0x98];
+    D3DPRESENT_PARAMETERS presentParams;
+    unsigned char unk_114[0x4];
+    // The start of the config, which is 0x38 bytes long, as in th06.
     ControllerMapping controllerMapping;
     unsigned char unk_12a[0x6];
     // How far a DirectInput pad axis goes before it counts as a
     // direction.
     short padThresholdX;
     short padThresholdY;
-    unsigned char unk_134[0xa];
+    unsigned char unk_134[0x6];
+    // Played in a window rather than full screen.
+    BYTE windowed;
+    unsigned char unk_13b[0x3];
     // Whether holding shoot also focuses: ReadJoystick reports focus
     // once shoot has been held for 10 frames, and for a few frames after
     // it is let go.
     BYTE shootFocuses;
+    unsigned char unk_13f[0x25];
+    // How many more frames to draw in full, after the device was reset.
+    int redrawFrames;
+    unsigned char unk_168[0x24];
+    // Bit 0x10 is set after the device is reset, until the next frame
+    // is drawn.
+    DWORD unk_18c;
 };
 
 extern App g_App;
+
+// The game window (at 0x575c20), as in th06 with more fields.
+struct GameWindow
+{
+    // Runs one frame of the main loop. Returns 0 to go on, else what
+    // App::RegisterChain's result means.
+    int RunFrame();
+
+    HWND hwnd;
+    // Set when the window is being closed: the main loop ends.
+    int isClosing;
+    WPARAM isAppActive;
+    int isAppInactive;
+    char curFrame;
+    unsigned char unk_11[0x3];
+    // QueryPerformanceFrequency's result.
+    DWORD perfFrequency[2];
+    unsigned char unk_1c[0x4];
+    // The screen saver and power settings, put back on exit.
+    int screenSaveActive;
+    int lowPowerActive;
+    int powerOffActive;
+};
+extern GameWindow g_GameWindow;
+
+// Creates g_App.d3d. Returns 0, or 1 on failure.
+int CreateD3d();
+// Creates the game window. Returns 0, or nonzero on failure.
+int CreateGameWindow(HINSTANCE instance);
+// Creates the Direct3D device. Returns 0, or nonzero on failure.
+int InitD3dDevice();
+// Sets the device's render and texture stage states.
+void SetDefaultRenderStates();
+// Returns -1 if the game must not start. Not in th06.
+int Func435bd0(HINSTANCE instance);
+// Sums the executable's dwords. Not in th06.
+int Func435ec0();
+
+// Plays the sound effects and music (at 0x4ba0d8). Only what is known
+// so far.
+class SoundPlayer
+{
+public:
+    // Creates the DirectSound objects for `hwnd`. Returns 0, or -1 on
+    // failure.
+    int Initialize(HWND hwnd);
+    // Releases the sounds and DirectSound.
+    int Release();
+    // Not in th06. WinMain calls it until it returns 0.
+    int Func44c9c0();
+};
+extern SoundPlayer g_SoundPlayer;
 
 // Its only known caller is Func45db60.
 class Unknown45e1f0
@@ -321,10 +394,17 @@ public:
 
     unsigned char unk_0[0x8];
     Unknown626270Stats *stats;
-    unsigned char unk_c[0x95e8];
+    unsigned char unk_c[0x9264];
+    // When set on exit, WinMain calls Func44a302(2).
+    int unk_9270;
+    unsigned char unk_9274[0x380];
     // The play area: x, y, width and height. Its neighbours (a 0x200
     // byte replay file name, the stage) are th06's GameManager's, so
     // this is probably th07's GameManager.
     float arena[4];
 };
 extern Unknown626270 g_Unknown626270;
+
+// Not identified yet; WinMain calls it with 2 on exit when
+// g_Unknown626270.unk_9270 is set.
+int Func44a302(int arg);
