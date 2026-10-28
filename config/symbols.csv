@@ -683,9 +683,9 @@ address,size,name,symbol
 0x0045f640,63,LzssPredecessor,?LzssPredecessor@@YIHH@Z
 0x0045f680,40,Func45f680,
 0x0045f6b0,53,DatArchive::DatArchive,??0DatArchive@@QAE@XZ
-0x0045f6f0,19,Func45f6f0,
+0x0045f6f0,19,DatArchive::~DatArchive,??1DatArchive@@QAE@XZ
 0x0045f710,229,Func45f710,
-0x0045f800,199,Func45f800,
+0x0045f800,199,DatArchive::Release,?Release@DatArchive@@QAEXXZ
 0x0045f8d0,133,Func45f8d0,
 0x0045f960,321,DatArchive::Decode,?Decode@DatArchive@@QAEPAXPADPAX@Z
 0x0045fab0,46,DatArchive::GetEntrySize,?GetEntrySize@DatArchive@@QAEKPAD@Z

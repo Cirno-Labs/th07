@@ -68,7 +68,11 @@ class DatArchive
 {
 public:
     DatArchive();
+    // Calls Release.
+    ~DatArchive();
 
+    // Closes the archive and frees its table.
+    void Release();
     // The decoded size of entry `name`; 0 if there is none.
     DWORD GetEntrySize(char *name);
     // Decodes entry `name` into `buffer`, which must hold GetEntrySize
