@@ -355,7 +355,7 @@ address,size,name,symbol
 0x00436110,33,MidiDevice::MidiDevice,??0MidiDevice@@QAE@XZ
 0x00436140,19,Func436140,
 0x00436160,89,Func436160,
-0x004361c0,59,Func4361c0,
+0x004361c0,59,MidiDevice::Close,?Close@MidiDevice@@QAEHXZ
 0x00436200,78,Func436200,
 0x00436250,67,Func436250,
 0x004362a0,48,Func4362a0,
