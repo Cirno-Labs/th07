@@ -11,6 +11,7 @@
 
 #include "common.h"
 #include "resultscreen.h"
+#include "timer.h"
 
 // The application: window, Direct3D, configuration and the main loop.
 // Only the fields known so far. Its start matches th06's App: the same
@@ -72,6 +73,9 @@ public:
     // Flushes the sprites and turns fog off if unk_2bc is set; returns
     // 0 when it was not. Not in th06.
     int Func43a207();
+    // Advances `frames` by one frame, or by a fraction of one into
+    // `subFrame` while the game runs slow.
+    void TickTimer(int *frames, float *subFrame);
 
     BOOL UsesPresentImmediate()
     {
@@ -154,6 +158,12 @@ public:
 };
 
 extern App g_App;
+
+inline void Timer::Tick()
+{
+    this->previous = this->current;
+    g_App.TickTimer(&this->current, &this->subFrame);
+}
 
 // The game window (at 0x575c20), as in th06 with more fields.
 struct GameWindow

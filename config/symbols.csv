@@ -400,7 +400,7 @@ address,size,name,symbol
 0x004390a5,860,Func4390a5,
 0x00439401,198,Func439401,
 0x004394c7,198,Func4394c7,
-0x0043958d,110,Func43958d,
+0x0043958d,110,App::TickTimer,?TickTimer@App@@QAEXPAHPAM@Z
 0x004395fb,699,App::Func4395fb,?Func4395fb@App@@QAEHPAD@Z
 0x004398b6,1306,App::LoadConfig,?LoadConfig@App@@QAEHPAD@Z
 0x00439dd0,241,Func439dd0,
@@ -521,7 +521,7 @@ address,size,name,symbol
 0x0044a302,339,ResultScreen::RegisterChain,?RegisterChain@ResultScreen@@SIHH@Z
 0x0044a460,190,ClearScreen,?ClearScreen@@YIXK@Z
 0x0044a520,124,ClearViewport,?ClearViewport@@YIXK@Z
-0x0044a5a0,165,Func44a5a0,
+0x0044a5a0,165,ScreenEffect::OnUpdateFadeIn,?OnUpdateFadeIn@ScreenEffect@@SIHPAV1@@Z
 0x0044a650,969,Func44a650,
 0x0044aa20,971,Func44aa20,
 0x0044adf0,145,Func44adf0,
