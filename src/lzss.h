@@ -40,6 +40,11 @@ void LzssTreeInitNode(int pos);
 // `matchPosition`.
 int LzssInsertNode(int pos, int *matchPosition);
 // Removes the string at window position `pos` from the tree.
-void Func45f460(int pos);
+void LzssDeleteNode(int pos);
+// Removes node `oldNode`, which has at most one child, `newNode`, from
+// the tree, linking the child to its parent.
+void Func45f4f0(int oldNode, int newNode);
 // Puts node `newNode` in the place of `oldNode` in the tree.
 void Func45f580(int oldNode, int newNode);
+// The node that comes before `node`: the largest in its smaller subtree.
+int Func45f640(int node);

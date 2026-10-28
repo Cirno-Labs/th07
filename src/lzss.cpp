@@ -114,7 +114,7 @@ void *LzssCompress(BYTE *data, int size, int *outSize)
         }
         for (i = 0; i < replaceLen; i++)
         {
-            Func45f460((wndPos + 0x12) & 0x1fff);
+            LzssDeleteNode((wndPos + 0x12) & 0x1fff);
             GET_BYTE(ch);
             if (ch == -1)
             {
@@ -339,5 +339,29 @@ int LzssInsertNode(int pos, int *matchPosition)
             return bestLen;
         }
         test = *child;
+    }
+}
+
+void LzssDeleteNode(int pos)
+{
+    int replacement;
+
+    if (g_LzssTree[pos].parent == 0)
+    {
+        return;
+    }
+    if (g_LzssTree[pos].largerChild == 0)
+    {
+        Func45f4f0(pos, g_LzssTree[pos].smallerChild);
+    }
+    else if (g_LzssTree[pos].smallerChild == 0)
+    {
+        Func45f4f0(pos, g_LzssTree[pos].largerChild);
+    }
+    else
+    {
+        replacement = Func45f640(pos);
+        LzssDeleteNode(replacement);
+        Func45f580(pos, replacement);
     }
 }
