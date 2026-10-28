@@ -71,6 +71,9 @@ public:
     // Calls Release.
     ~DatArchive();
 
+    // Opens the archive at `path` and reads its table. Returns true on
+    // success.
+    bool Open(char *path);
     // Closes the archive and frees its table.
     void Release();
     // The decoded size of entry `name`; 0 if there is none.
@@ -78,6 +81,11 @@ public:
     // Decodes entry `name` into `buffer`, which must hold GetEntrySize
     // bytes.
     void *Decode(char *name, void *buffer);
+    // Opens the file at `path` and reads the table. Returns true on
+    // success; on failure deletes the file.
+    bool ReadTable(char *path);
+    // A GlobalAlloc'd copy of `str`, or NULL.
+    char *Func45ffc0(char *str);
 
     DatArchiveEntry *entries;
     int numEntries;

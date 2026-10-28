@@ -1,6 +1,7 @@
 // The data archive, from 0x45f680.
 
 #include "archive.h"
+#include "unsorted.h"
 
 DatArchive::DatArchive()
 {
@@ -13,4 +14,26 @@ DatArchive::DatArchive()
 DatArchive::~DatArchive()
 {
     this->Release();
+}
+
+bool DatArchive::Open(char *path)
+{
+    this->Release();
+    DebugPrint("info : %s open arcfile\r\n", path);
+    this->file = new File();
+    if (this->file == NULL)
+    {
+        return false;
+    }
+    if (this->ReadTable(path))
+    {
+        this->path = this->Func45ffc0(path);
+        if (this->path != NULL)
+        {
+            return true;
+        }
+    }
+    DebugPrint("info : %s not found\r\n", path);
+    this->Release();
+    return false;
 }
