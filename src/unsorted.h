@@ -96,6 +96,10 @@ public:
     // unk_18c (no score is recorded) once unk_2ac reaches 40 or unk_2b4
     // 16, and clears it otherwise. Called by DrawFps. Not in th06.
     void CheckClockDrift();
+    // Checks the version file against `version` ("0100b") and the
+    // executable's size and checksum. Nonzero makes OnUpdate quit. Not
+    // named yet.
+    int Func43a569(char *version, DWORD size, DWORD checksum);
     // Adds the time since the last call to the time played in
     // g_Unknown626270.plst. Not in th06.
     void AddTotalPlayTime();
@@ -287,6 +291,16 @@ public:
 };
 
 extern App g_App;
+
+// Scene set-up and tear-down functions App::OnUpdate calls, not named
+// yet. The set-up ones return nonzero on failure.
+// th06's GameManager::RegisterChain and RemoveChain.
+int Func42f3c5();
+void Func42f45d();
+// th06's Ending::RegisterChain.
+int Func41e820();
+// th06's MusicScreen::RegisterChain.
+int Func43b4db();
 
 // Measures the frame rate every half second, with the performance
 // counter when there is one (calling g_App.CheckClockDrift every eighth
@@ -657,6 +671,9 @@ extern WORD g_PrevButtons;
 // 1 on every 8th frame once the buttons have been held unchanged for 30
 // frames, for key repeat.
 extern WORD g_ButtonRepeat;
+// How many frames the buttons have been held unchanged, cycling from 38
+// back to 30.
+extern WORD g_ButtonFrames;
 
 // Whether a button in `mask` went down this frame.
 #define WAS_PRESSED(mask) ((g_Buttons & (mask)) && (g_Buttons & (mask)) != (g_PrevButtons & (mask)))

@@ -162,7 +162,7 @@ address,size,name,symbol
 0x0041e4b0,216,Func41e4b0,
 0x0041e590,508,Func41e590,
 0x0041e790,137,Func41e790,
-0x0041e820,245,Func41e820,
+0x0041e820,245,Func41e820,?Func41e820@@YIHXZ
 0x0041e920,312,Func41e920,
 0x0041ea60,1037,Func41ea60,
 0x0041ee70,256,Func41ee70,
@@ -273,8 +273,8 @@ address,size,name,symbol
 0x0042e81b,35,Func42e81b,
 0x0042e83e,2726,Func42e83e,
 0x0042f2e4,225,Func42f2e4,
-0x0042f3c5,152,Func42f3c5,
-0x0042f45d,77,Func42f45d,
+0x0042f3c5,152,Func42f3c5,?Func42f3c5@@YIHXZ
+0x0042f45d,77,Func42f45d,?Func42f45d@@YIXXZ
 0x0042f4aa,124,Func42f4aa,
 0x0042f526,124,Func42f526,
 0x0042f5a2,253,Func42f5a2,
@@ -414,7 +414,7 @@ address,size,name,symbol
 0x0043a24e,49,App::SetRenderState,?SetRenderState@App@@QAEHW4_D3DRENDERSTATETYPE@@K@Z
 0x0043a27f,373,App::AddPlayTime,?AddPlayTime@App@@QAEXXZ
 0x0043a3f4,373,App::AddTotalPlayTime,?AddTotalPlayTime@App@@QAEXXZ
-0x0043a569,306,Func43a569,
+0x0043a569,306,App::Func43a569,?Func43a569@App@@QAEHPADKK@Z
 0x0043a69b,197,Func43a69b,
 0x0043a760,161,Func43a760,
 0x0043a801,863,Func43a801,
@@ -422,7 +422,7 @@ address,size,name,symbol
 0x0043ac4c,468,Func43ac4c,
 0x0043ae20,1624,Func43ae20,
 0x0043b478,99,Func43b478,
-0x0043b4db,223,Func43b4db,
+0x0043b4db,223,Func43b4db,?Func43b4db@@YIHXZ
 0x0043b5c0,396,Func43b5c0,
 0x0043b750,71,Func43b750,
 0x0043b7a0,71,Func43b7a0,
@@ -1761,6 +1761,7 @@ address,size,name,symbol
 0x004b9e4c,,g_Buttons,?g_Buttons@@3GA
 0x004b9e54,,g_PrevButtons,?g_PrevButtons@@3GA
 0x004b9e5c,,g_ButtonRepeat,?g_ButtonRepeat@@3GA
+0x004b9e60,,g_ButtonFrames,?g_ButtonFrames@@3GA
 0x004b9e64,,g_FileSize,?g_FileSize@@3HA
 0x004ba0d8,,g_SoundPlayer,?g_SoundPlayer@@3VSoundPlayer@@A
 0x00575950,,g_App,?g_App@@3VApp@@A

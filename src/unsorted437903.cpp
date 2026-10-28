@@ -10,6 +10,7 @@
 
 #include "ascii.h"
 #include "chain.h"
+#include "dsutil.h"
 #include "mainmenu.h"
 #include "midi.h"
 #include "sprite.h"
@@ -87,6 +88,245 @@ void SpriteEngine::ReleaseVertexBuffer()
         this->vertexBuffer->Release();
         this->vertexBuffer = NULL;
     }
+}
+
+int App::OnUpdate(App *arg)
+{
+    g_SpriteEngine->ClearVertexFormat();
+    g_SpriteEngine->ClearSpriteData();
+    g_SpriteEngine->ClearTexture();
+    g_SpriteEngine->ClearColorOp();
+    g_SpriteEngine->ClearBlendMode();
+    g_SpriteEngine->ClearZWrite();
+    g_SpriteEngine->ClearUnk8();
+    g_SpriteEngine->ClearUnk2e4d4();
+    g_SpriteEngine->ResetUnk0();
+    g_SpriteEngine->shakeY = 0.0f;
+    g_SpriteEngine->shakeX = 0.0f;
+    g_App.unk_2bc = 0xff;
+    if (g_SoundPlayer.bgm != NULL)
+    {
+        g_SoundPlayer.bgm->UpdateFade();
+    }
+    if (g_Unknown626270.unk_d == 0)
+    {
+        g_PrevButtons = g_Buttons;
+        g_Buttons = ReadButtons();
+        g_ButtonRepeat = 0;
+        if (g_PrevButtons == g_Buttons)
+        {
+            if (g_ButtonFrames >= 30)
+            {
+                if (g_ButtonFrames % 8 == 0)
+                {
+                    g_ButtonRepeat = 1;
+                }
+                if (g_ButtonFrames >= 38)
+                {
+                    g_ButtonFrames = 30;
+                }
+            }
+            g_ButtonFrames++;
+        }
+        else
+        {
+            g_ButtonFrames = 0;
+        }
+    }
+    else
+    {
+        g_Buttons |= ReadButtons();
+    }
+    if (arg->curScene != arg->scene)
+    {
+        arg->prevScene = arg->curScene;
+        DebugPrint2("scene %d -> %d\r\n", arg->curScene, arg->scene);
+        switch (arg->curScene)
+        {
+        case 0:
+        title:
+            arg->scene = 1;
+            g_App.d3dDevice->ResourceManagerDiscardBytes(0);
+            if (SetUpTitleScene(0) != 0)
+            {
+                return 4;
+            }
+            break;
+        case 1:
+            switch (arg->scene)
+            {
+            case -1:
+                return 4;
+            case 2:
+                if (Func42f3c5() != 0)
+                {
+                    return 4;
+                }
+                break;
+            case 4:
+                return 5;
+            case 5:
+                if (ResultScreen::RegisterChain(0) != 0)
+                {
+                    return 4;
+                }
+                break;
+            case 8:
+                if (Func43b4db() != 0)
+                {
+                    return 4;
+                }
+                break;
+            case 9:
+                Func42f45d();
+                if (Func41e820() != 0)
+                {
+                    return 4;
+                }
+                break;
+            }
+            break;
+        case 5:
+            switch (arg->scene)
+            {
+            case -1:
+                return 4;
+            case 1:
+                arg->scene = 0;
+                goto title;
+            }
+            break;
+        case 2:
+            switch (arg->scene)
+            {
+            case -1:
+                return 4;
+            case 1:
+                Func42f45d();
+                arg->scene = 0;
+                SaveReplay(NULL, NULL);
+                goto title;
+            case 6:
+                Func42f45d();
+                if (ResultScreen::RegisterChain(1) != 0)
+                {
+                    return 4;
+                }
+                break;
+            case 10:
+                Func42f45d();
+                if (!(g_Unknown626270.unk_93d8 & 1) && g_Unknown626270.difficulty < 4)
+                {
+                    g_Unknown626270.stage = 0;
+                }
+                else
+                {
+                    g_Unknown626270.stage--;
+                }
+                SaveReplay(NULL, NULL);
+                if (Func42f3c5() != 0)
+                {
+                    return 4;
+                }
+                arg->scene = 2;
+                break;
+            case 11:
+                g_App.scene = 3;
+                Func42f45d();
+                g_Unknown626270.stage--;
+                if (Func42f3c5() != 0)
+                {
+                    return 4;
+                }
+                arg->scene = 2;
+                break;
+            case 12:
+                g_App.scene = 3;
+                Func42f45d();
+                if (Func42f3c5() != 0)
+                {
+                    return 4;
+                }
+                arg->scene = 2;
+                break;
+            case 3:
+                Func42f45d();
+                if (Func42f3c5() != 0)
+                {
+                    return 4;
+                }
+                arg->scene = 2;
+                break;
+            case 7:
+                Func42f45d();
+                arg->scene = 0;
+                SaveReplay(NULL, NULL);
+                arg->scene = 1;
+                g_App.d3dDevice->ResourceManagerDiscardBytes(0);
+                if (SetUpTitleScene(1) != 0)
+                {
+                    return 4;
+                }
+                break;
+            case 9:
+                g_Unknown626270.plst.counts[g_Unknown626270.difficulty].clears++;
+                Func42f45d();
+                if (Func41e820() != 0)
+                {
+                    return 4;
+                }
+                break;
+            }
+            break;
+        case 6:
+            switch (arg->scene)
+            {
+            case -1:
+                SaveReplay(NULL, NULL);
+                return 4;
+            case 1:
+                arg->scene = 0;
+                SaveReplay(NULL, NULL);
+                goto title;
+            }
+            break;
+        case 8:
+            switch (arg->scene)
+            {
+            case -1:
+                return 4;
+            case 1:
+                arg->scene = 0;
+                goto title;
+            }
+            break;
+        case 9:
+            switch (arg->scene)
+            {
+            case -1:
+                return 4;
+            case 1:
+                arg->scene = 0;
+                goto title;
+            case 6:
+                if (ResultScreen::RegisterChain(1) != 0)
+                {
+                    return 4;
+                }
+            }
+        }
+        g_Buttons = g_PrevButtons = g_ButtonRepeat = 0;
+    }
+    arg->curScene = arg->scene;
+    arg->frames++;
+    if (arg->frames % 4000 == 3999)
+    {
+        if (g_App.Func43a569("0100b", g_App.exeSize, g_App.exeChecksum) != 0)
+        {
+            return 4;
+        }
+    }
+    return 1;
 }
 
 int App::OnDraw(App *arg)
