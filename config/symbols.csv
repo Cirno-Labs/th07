@@ -673,7 +673,7 @@ address,size,name,symbol
 0x0045e8f0,210,File::ReadAll,?ReadAll@File@@UAEPAXK@Z
 0x0045e9d0,253,MakeFullPath,?MakeFullPath@@YIXPAD0@Z
 0x0045ead0,1065,LzssCompress,?LzssCompress@@YIPAXPAEHPAH@Z
-0x0045ef00,868,Func45ef00,
+0x0045ef00,868,LzssDecompress,?LzssDecompress@@YIPAXPAEH0H@Z
 0x0045f270,67,Func45f270,?Func45f270@@YIXH@Z
 0x0045f2c0,124,Func45f2c0,?Func45f2c0@@YIXXZ
 0x0045f340,284,Func45f340,?Func45f340@@YIHHPAH@Z

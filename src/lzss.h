@@ -15,6 +15,10 @@ extern BYTE g_LzssWindow[0x2000];
 // Compresses `size` bytes at `data` into a new GlobalAlloc block, which
 // it returns, and stores the compressed size in `outSize`.
 void *LzssCompress(BYTE *data, int size, int *outSize);
+// Decompresses `dataSize` bytes at `data` into `out`, which holds
+// `outSize` bytes, or into a new GlobalAlloc block of that size if `out`
+// is NULL. Returns the output, or NULL if it cannot be allocated.
+void *LzssDecompress(BYTE *data, int dataSize, BYTE *out, int outSize);
 // Clears the window and the tree.
 void Func45f2c0();
 // Makes window position `pos` the tree's only node.
