@@ -653,7 +653,7 @@ address,size,name,symbol
 0x0045e080,163,Func45e080,
 0x0045e130,84,Func45e130,
 0x0045e190,92,Func45e190,
-0x0045e1f0,17,Func45e1f0,
+0x0045e1f0,17,Unknown45e1f0::GetField2c,?GetField2c@Unknown45e1f0@@QAEHXZ
 0x0045e210,328,Func45e210,
 0x0045e360,328,Func45e360,
 0x0045e4b0,51,Func45e4b0,
