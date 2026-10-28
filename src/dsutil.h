@@ -26,6 +26,9 @@ public:
     // As the SDK's, with a BgmFormat for the wave format. th06 dropped
     // it.
     HRESULT OpenFromMemory(BYTE *pbData, ULONG ulDataSize, BgmFormat *format, DWORD dwFlags);
+    // The game's reset limits the data to the track's loopEnd bytes
+    // and, when `bLoop` is set, skips its first loopStart bytes, as
+    // th06's.
     // Switches the stream to the track `format` describes. Returns
     // E_FAIL while (+0x7c) is set or without a file. Not in th06.
     HRESULT Func45e130(BgmFormat *format);
