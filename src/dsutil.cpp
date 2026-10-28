@@ -15,3 +15,8 @@ CSoundManager::CSoundManager()
 {
     m_pDS = NULL;
 }
+
+CSoundManager::~CSoundManager()
+{
+    SAFE_RELEASE(m_pDS);
+}
