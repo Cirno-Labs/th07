@@ -1570,3 +1570,19 @@ int MainMenu::AddedCallback(MainMenu *menu)
 {
     return menu->InitTitleScene();
 }
+
+int MainMenu::ReleaseTitleScene()
+{
+    if (this->loadedReplay != NULL)
+    {
+        MemFree(this->loadedReplay);
+        this->loadedReplay = NULL;
+    }
+    if (this->sprites != NULL)
+    {
+        delete[] this->sprites;
+        this->sprites = NULL;
+        this->sprites = NULL;
+    }
+    return 0;
+}

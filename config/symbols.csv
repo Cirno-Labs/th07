@@ -620,7 +620,7 @@ address,size,name,symbol
 0x0045bd6c,425,MainMenu::OnDraw,?OnDraw@MainMenu@@SIHPAV1@@Z
 0x0045bf15,1459,MainMenu::InitTitleScene,?InitTitleScene@MainMenu@@QAEHXZ
 0x0045c4c8,17,MainMenu::AddedCallback,?AddedCallback@MainMenu@@SIHPAV1@@Z
-0x0045c4d9,109,Func45c4d9,
+0x0045c4d9,109,MainMenu::ReleaseTitleScene,?ReleaseTitleScene@MainMenu@@QAEHXZ
 0x0045c546,138,Func45c546,
 0x0045c5d0,273,Func45c5d0,
 0x0045c6f0,23,CSoundManager::CSoundManager,??0CSoundManager@@QAE@XZ ??0DatArchiveEntry@@QAE@XZ

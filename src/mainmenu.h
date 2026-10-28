@@ -52,6 +52,8 @@ public:
     // stages for the shot type and difficulty, the one at the cursor
     // highlighted and those not reached yet dark. Returns 1.
     int DrawPracticeScores();
+    // Frees loadedReplay and the sprites. Returns 0. Not in th06.
+    int ReleaseTitleScene();
     // Gives every button of controllerMapping assigned `button` the
     // value `replacement`. Unlike th06's, `unk` is unused.
     void ReassignButton(short button, short replacement, int unk);
