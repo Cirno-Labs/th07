@@ -29,6 +29,8 @@ ASSERT_SIZE(Item, 0x288);
 class ItemManager
 {
 public:
+    // Constructs the items.
+    ItemManager();
     // Drops item `type` at `pos` in `state` into the next free slot and
     // returns it, or the spare last item when all are taken. At full
     // power (128), power items (0 and 2) turn into type 7. States 3 and 4

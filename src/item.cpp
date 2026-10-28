@@ -28,6 +28,10 @@ void Unknown626270::AddPower(int power)
     this->Func4012b0();
 }
 
+ItemManager::ItemManager()
+{
+}
+
 Item *ItemManager::SpawnItem(D3DXVECTOR3 *pos, int type, int state)
 {
     int i;
