@@ -589,6 +589,11 @@ HRESULT CWaveFile::Close()
     return S_OK;
 }
 
+CWaveFile::~CWaveFile()
+{
+    Close();
+}
+
 // As th06's, the locked buffer's variables are renamed and declared after
 // the restore; the cursors' names are picked for their stack slots too.
 HRESULT CStreamingSound::HandleWaveStreamNotification(BOOL bLoopedPlay)
