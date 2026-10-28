@@ -268,3 +268,9 @@ int ScreenEffect::OnUpdateShake(ScreenEffect *effect)
     }
     return 1;
 }
+
+int ScreenEffect::AddedCallback(ScreenEffect *effect)
+{
+    effect->timer.Set(0);
+    return 0;
+}

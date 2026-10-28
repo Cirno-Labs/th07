@@ -14,6 +14,8 @@
 class ScreenEffect
 {
 public:
+    // The update element's added callback: restarts `timer`. Returns 0.
+    static int AddedCallback(ScreenEffect *effect);
     // Type 0's update callback: fades `alpha` from 255 to 0 over
     // `duration` frames. Returns 0 when done, else 1.
     static int OnUpdateFadeIn(ScreenEffect *effect);
