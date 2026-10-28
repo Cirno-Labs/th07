@@ -134,7 +134,7 @@ release:
         ResultScreen::RegisterChain(2);
     }
     g_Chain.Release();
-    while (g_SoundPlayer.Func44c9c0())
+    while (g_SoundPlayer.PlayQueuedSounds())
     {
     }
 stop:
@@ -265,7 +265,7 @@ int GameWindow::RunFrame()
         g_App.viewport.Height = 480;
         g_App.d3dDevice->SetViewport(&g_App.viewport);
         res = g_Chain.RunCalcChain();
-        g_SoundPlayer.Func44c9c0();
+        g_SoundPlayer.PlayQueuedSounds();
         if (res == 0)
         {
             return 1;

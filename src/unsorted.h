@@ -115,7 +115,9 @@ public:
     BYTE colorMode16Bits;
     // 0 for no music, 1 for wave music, as th06's musicMode.
     BYTE musicMode;
-    unsigned char unk_138[0x2];
+    // Whether sound effects are played.
+    BYTE playSounds;
+    unsigned char unk_139;
     // Played in a window rather than full screen.
     BYTE windowed;
     // How many frames to skip drawing between drawn ones.
@@ -256,7 +258,7 @@ int Func435ec0();
 class CSoundManager;
 class CStreamingSound;
 
-// A command Func44c9c0 carries out over several frames, for the
+// A command PlayQueuedSounds carries out over several frames, for the
 // streaming wave music. Not in th06.
 struct SoundCommand
 {
@@ -281,8 +283,15 @@ struct BgmFormat
     DWORD offset;
     DWORD size;
     DWORD unk_18;
+    // Nonzero for a track that loops, probably: SoundPlayer::PlayQueuedSounds
+    // fills the buffer with Loops() as the repeat flag.
     DWORD unk_1c;
     WAVEFORMATEX format;
+
+    BOOL Loops()
+    {
+        return this->unk_1c != 0;
+    }
 };
 ASSERT_SIZE(BgmFormat, 0x34);
 
@@ -325,8 +334,13 @@ public:
     int PlayPreloadedBgm(int slot);
     // Loads the sound effects ("data/wav/se_plst00.wav", ...).
     int LoadSounds();
-    // Not in th06. WinMain calls it until it returns 0.
-    int Func44c9c0();
+    // Carries out the commands' next stages and plays the queued sound
+    // effects. Returns the first command's type: WinMain calls it until
+    // it returns 0. Not in th06.
+    int PlayQueuedSounds();
+    // Fades the wave music out over `seconds`, counted in frames at 60
+    // per second. Inline in the sound file, unlike th06's.
+    void FadeOutBgm(float seconds);
     // Queues sound effect `idx` to start on the next update, unless
     // it is already queued or five are.
     void QueueSound(int idx, int unk);

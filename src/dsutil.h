@@ -18,6 +18,15 @@ public:
     // Switches the stream to the track `format` describes. Returns
     // E_FAIL while (+0x7c) is set or without a file. Not in th06.
     HRESULT Func45e130(BgmFormat *format);
+
+    BgmFormat *GetFormat()
+    {
+        return this->format;
+    }
+
+    unsigned char unk_0[0x90];
+    // The track streamed.
+    BgmFormat *format;
 };
 
 class CSoundManager
@@ -52,15 +61,41 @@ class CSound
 public:
     virtual ~CSound();
 
+    HRESULT FillBufferWithSound(LPDIRECTSOUNDBUFFER pDSB, BOOL bRepeatWavIfBufferLarger);
+    LPDIRECTSOUNDBUFFER GetBuffer(DWORD dwIndex);
+    // Recreates the buffers. Not in th06.
+    HRESULT Func45d060();
+    HRESULT Play(DWORD dwPriority, DWORD dwFlags);
     HRESULT Stop();
+    // Stops the first buffer, keeping its position. Not in th06.
+    HRESULT Func45d910();
+    // Plays the first buffer again. Not in th06.
+    HRESULT Func45d960();
+
+    CWaveFile *GetWaveFile()
+    {
+        return this->m_pWaveFile;
+    }
 
     LPDIRECTSOUNDBUFFER *m_apDSBuffer;
     DWORD m_dwDSBufferSize;
     CWaveFile *m_pWaveFile;
+    DWORD m_dwNumBuffers;
+    // As in th06: while `fading`, each frame counts `fadeFrames` down
+    // and lowers the volume.
+    int fadeFrames;
+    int fadeTotal;
+    int fading;
 };
 
 class CStreamingSound : public CSound
 {
 public:
     ~CStreamingSound();
+
+    HRESULT Reset();
+
+    unsigned char unk_20[0x54];
+    // Set by BgmNotificationProc while it fills the buffer.
+    int unk_74;
 };
