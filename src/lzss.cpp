@@ -90,7 +90,7 @@ void *LzssCompress(BYTE *data, int size, int *outSize)
         g_LzssWindow[wndPos + i] = ch;
     }
     lookAheadBytes = i;
-    Func45f270(wndPos);
+    LzssTreeInitNode(wndPos);
     len = 0;
     position = 0;
     while (lookAheadBytes > 0)
@@ -262,4 +262,12 @@ void *LzssDecompress(BYTE *data, int dataSize, BYTE *out, int outSize)
         READ_BIT(bits);
     }
     return out;
+}
+
+void LzssTreeInitNode(int pos)
+{
+    g_LzssTree[0x2000].largerChild = pos;
+    g_LzssTree[pos].parent = 0x2000;
+    g_LzssTree[pos].largerChild = 0;
+    g_LzssTree[pos].smallerChild = 0;
 }

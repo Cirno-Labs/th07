@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">26.66% (185)</tspan> · <tspan class="decompiled">0.58% (4)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">72.77% (505)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">26.80% (186)</tspan> · <tspan class="decompiled">0.58% (4)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">72.62% (504)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="199.13" height="6" x="0" y="0" class="named"/>
-<rect width="4.31" height="6" x="199.13" y="0" class="decompiled"/>
-<rect width="543.57" height="6" x="203.43" y="0" class="todo"/>
+<rect width="200.20" height="6" x="0" y="0" class="named"/>
+<rect width="4.31" height="6" x="200.20" y="0" class="decompiled"/>
+<rect width="542.49" height="6" x="204.51" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (173 bytes)</title></rect>
@@ -743,7 +743,7 @@
 <rect width="12" height="12" x="330" y="195" class="named"><title>0x0045e9d0 MakeFullPath (253 bytes)</title></rect>
 <rect width="12" height="12" x="345" y="195" class="named"><title>0x0045ead0 LzssCompress (1065 bytes)</title></rect>
 <rect width="12" height="12" x="360" y="195" class="named"><title>0x0045ef00 LzssDecompress (868 bytes)</title></rect>
-<rect width="12" height="12" x="375" y="195" class="todo"><title>0x0045f270 Func45f270 (67 bytes)</title></rect>
+<rect width="12" height="12" x="375" y="195" class="named"><title>0x0045f270 LzssTreeInitNode (67 bytes)</title></rect>
 <rect width="12" height="12" x="390" y="195" class="todo"><title>0x0045f2c0 Func45f2c0 (124 bytes)</title></rect>
 <rect width="12" height="12" x="405" y="195" class="todo"><title>0x0045f340 Func45f340 (284 bytes)</title></rect>
 <rect width="12" height="12" x="420" y="195" class="todo"><title>0x0045f460 Func45f460 (134 bytes)</title></rect>
@@ -766,11 +766,11 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">16.73%</tspan> · <tspan class="decompiled">0.04%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">83.23%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">16.74%</tspan> · <tspan class="decompiled">0.04%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">83.21%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="124.95" height="6" x="0" y="0" class="named"/>
-<rect width="0.33" height="6" x="124.95" y="0" class="decompiled"/>
-<rect width="621.72" height="6" x="125.28" y="0" class="todo"/>
+<rect width="125.08" height="6" x="0" y="0" class="named"/>
+<rect width="0.33" height="6" x="125.08" y="0" class="decompiled"/>
+<rect width="621.59" height="6" x="125.41" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1357,7 +1357,7 @@
 <rect width="2.56" height="2.13" x="704.96" y="168.13" class="named"><title>0x0045e7b0 File::Read (68 bytes)</title></rect>
 <rect width="2.56" height="2.05" x="704.96" y="173.26" class="todo"><title>0x004232e0 Func4232e0 (67 bytes)</title></rect>
 <rect width="2.56" height="2.05" x="704.96" y="178.31" class="named"><title>0x00436250 MidiDevice::SendShortMsg (67 bytes)</title></rect>
-<rect width="2.56" height="2.05" x="704.96" y="183.36" class="todo"><title>0x0045f270 Func45f270 (67 bytes)</title></rect>
+<rect width="2.56" height="2.05" x="704.96" y="183.36" class="named"><title>0x0045f270 LzssTreeInitNode (67 bytes)</title></rect>
 <rect width="2.56" height="1.98" x="704.96" y="188.41" class="todo"><title>0x0044df40 Func44df40 (66 bytes)</title></rect>
 <rect width="2.56" height="1.90" x="704.96" y="193.39" class="todo"><title>0x00401de0 Func401de0 (65 bytes)</title></rect>
 <rect width="2.56" height="1.90" x="704.96" y="198.29" class="todo"><title>0x0041d050 Func41d050 (65 bytes)</title></rect>

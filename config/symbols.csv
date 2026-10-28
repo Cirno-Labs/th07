@@ -674,7 +674,7 @@ address,size,name,symbol
 0x0045e9d0,253,MakeFullPath,?MakeFullPath@@YIXPAD0@Z
 0x0045ead0,1065,LzssCompress,?LzssCompress@@YIPAXPAEHPAH@Z
 0x0045ef00,868,LzssDecompress,?LzssDecompress@@YIPAXPAEH0H@Z
-0x0045f270,67,Func45f270,?Func45f270@@YIXH@Z
+0x0045f270,67,LzssTreeInitNode,?LzssTreeInitNode@@YIXH@Z
 0x0045f2c0,124,Func45f2c0,?Func45f2c0@@YIXXZ
 0x0045f340,284,Func45f340,?Func45f340@@YIHHPAH@Z
 0x0045f460,134,Func45f460,?Func45f460@@YIXH@Z
@@ -1734,6 +1734,7 @@ address,size,name,symbol
 0x0049fe1c,,g_ShotHeldFrames,?g_ShotHeldFrames@@3GA
 0x0049fe20,,g_Rng,?g_Rng@@3VRng@@A
 0x0049fe28,,g_TextSurface,?g_TextSurface@@3PAUIDirect3DSurface8@@A
+0x0049fe30,,g_LzssTree,?g_LzssTree@@3PAULzssNode@@A
 0x004b7e40,,g_LzssWindow,?g_LzssWindow@@3PAEA
 0x004b9e44,,g_SpriteEngine,?g_SpriteEngine@@3PAVSpriteEngine@@A
 0x004b9e4c,,g_Buttons,?g_Buttons@@3GA

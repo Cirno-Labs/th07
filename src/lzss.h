@@ -9,6 +9,18 @@
 
 #include "common.h"
 
+// A node of the search tree: one per window position, and a root at
+// 0x2000. Links are window positions, 0 for none.
+struct LzssNode
+{
+    int parent;
+    int smallerChild;
+    int largerChild;
+};
+ASSERT_SIZE(LzssNode, 0xc);
+
+// The tree; its root is g_LzssTree[0x2000].
+extern LzssNode g_LzssTree[0x2001];
 // The last 0x2000 bytes coded.
 extern BYTE g_LzssWindow[0x2000];
 
@@ -22,7 +34,7 @@ void *LzssDecompress(BYTE *data, int dataSize, BYTE *out, int outSize);
 // Clears the window and the tree.
 void Func45f2c0();
 // Makes window position `pos` the tree's only node.
-void Func45f270(int pos);
+void LzssTreeInitNode(int pos);
 // Adds the string at window position `pos` to the tree. Returns the
 // length of the longest match found and stores its position in
 // `matchPosition`.
