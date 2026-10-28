@@ -113,7 +113,11 @@ public:
     BYTE shootFocuses;
     unsigned char unk_13f[0xd];
     GameConfigFlags flags;
-    unsigned char unk_150[0x14];
+    unsigned char unk_150[0x8];
+    // The scene the game is in or switches to; the result screen sets it
+    // to 1 to leave.
+    int scene;
+    unsigned char unk_15c[0x8];
     // How many more frames to draw in full, after the device was reset.
     int redrawFrames;
     unsigned char unk_168[0x4];
@@ -509,6 +513,9 @@ class Unknown626270
 public:
     // Whether the checksummed fields of `stats` no longer agree.
     int Func404fe0();
+    // Whether Phantasm is open: a shot type cleared Extra (or captured
+    // 60 spell cards, which marks those that cleared Extra as such).
+    int Func42f94c();
     // Rerolls the checksum keys and recomputes the checksums.
     void Func4012b0();
     // Adds `power` to stats->power and recomputes the checksums; wipes

@@ -7,6 +7,7 @@
 #include <windows.h>
 
 #include "common.h"
+#include "sprite.h"
 
 // A high score chunk of the score file ("HSCR"). Only the fields known
 // so far.
@@ -48,7 +49,11 @@ struct Catk
     BYTE unk_09[0x1f];
     // The card's number.
     WORD index;
-    BYTE unk_2a[0x4e];
+    BYTE unk_2a;
+    char name[0x3d];
+    // The result screen shows "？？？？？" for the name while it is 0.
+    WORD unk_68;
+    BYTE unk_6a[0xe];
 };
 ASSERT_SIZE(Catk, 0x78);
 
@@ -59,7 +64,12 @@ struct Clrd
     WORD size;
     WORD size2;
     BYTE version;
-    BYTE unk_09[0x13];
+    BYTE unk_09[0x3];
+    // By difficulty: the number of stages cleared, 99 ('c') for the
+    // whole game, without continues and with.
+    BYTE stagesClearedNoContinue[6];
+    BYTE stagesCleared[6];
+    BYTE unk_18[0x4];
 };
 ASSERT_SIZE(Clrd, 0x1c);
 
@@ -185,6 +195,10 @@ int LoadScreenPlstChunk(ResultScreen *screen, int count);
 // The same with left and right.
 int MoveCursorHorizontal(ResultScreen *screen, int count);
 
+// The shot types' names ("博麗 霊夢 (霊)", ...), by character * 2 +
+// shotType, then "全主人公合計".
+extern char *g_ShotNames[7];
+
 // The result screen's scene object (0xce6c bytes). Only the fields
 // known so far.
 class ResultScreen
@@ -193,18 +207,62 @@ public:
     // Inserts `entry` into the high score list for `difficulty` and
     // `shot`.
     int AddScore(Hscr *entry, int difficulty, int shot);
+    // The menu (states 0 and 1), the score lists (3 to 8, by
+    // difficulty), the spell cards (9), after a game the name entry
+    // (10), replay saving (11 to 15) and statistics (16, 17), and states
+    // 0x14 to 0x16 (Func448098). Steps the sprites. Returns 1, or 0 once
+    // it sets the scene back to the title.
+    static int OnUpdate(ResultScreen *screen);
+
+    // Lets the player enter a name for the score just made. Returns 0.
+    int HandleNameEntry();
+    // Offers to save the replay and lists the slots. Returns 0.
+    int HandleReplaySaving();
+    // After a name is entered, waits for the shot button. Returns 0.
+    int WaitAfterNameEntry();
+    // Runs states 0x14 to 0x16, entered from menu item 7. Returns
+    // nonzero to go back to the menu.
+    int Func448098();
     // Frees the entries of the high score list for `difficulty` and
     // `shot`.
     void ReleaseScores(int difficulty, int shot);
     // The score file, as loaded.
     ScoreDat *scoreDat;
-    BYTE unk_4[0xc];
+    // Counts the frames in the current state.
+    int frame;
+    int state;
+    // The list state (3 to 9, 0x14) last entered from the menu.
+    int listState;
     // The menu item selected.
     int cursor;
-    BYTE unk_14[0x10];
-    // A second cursor, moved by LoadScreenPlstChunk.
+    // The cursors of the score lists and of the spell card pages, kept
+    // while back in the menu.
+    int savedCursor;
+    int savedSpellPage;
+    BYTE unk_1c[0x8];
+    // A second cursor, moved by LoadScreenPlstChunk: the spell cards' shot type.
     int unk_24;
-    BYTE unk_28[0x8580];
+    // The unk_24 that textSprites show; with spellPage.
+    int unk_28;
+    int unk_2c;
+    // The shot type whose name textSprites show; -1 to redraw.
+    int character;
+    // The spell card page (ten cards each) textSprites show; -1 to
+    // redraw.
+    int spellPage;
+    // The menu item whose list is shown.
+    int difficulty;
+    // How far the button sequence that marks every stage cleared has
+    // got: three of 0x10, two of 0x2000, two of 0x20, three of 0x200
+    // while 4 or 0x100 is held.
+    int cheatProgress;
+    BYTE unk_40[0x10];
+    // By shot type (and all of them): the spell cards captured.
+    int unk_50[7];
+    BYTE unk_6c[0x4];
+    Sprite sprites[0x29];
+    // Text drawn with RenderText; the first holds the shot's name.
+    Sprite textSprites[0x11];
     // The high score lists, by difficulty and shot.
     ListNode scores[6][6];
     BYTE unk_8758[0x3868];

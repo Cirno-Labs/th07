@@ -11,18 +11,32 @@ class Sprite
 {
 public:
     unsigned char unk_0[0x1b8];
-    D3DCOLOR color;
+    union
+    {
+        D3DCOLOR color;
+        struct
+        {
+            BYTE unk_rgb[3];
+            // The alpha byte of color.
+            BYTE alpha;
+        };
+    };
     unsigned char unk_1bc[0x4];
     // Bit 0x1000 is set on items as they spawn.
     DWORD flags;
-    unsigned char unk_1c4[0x4];
+    unsigned char unk_1c4[0x2];
+    // The interrupt label to jump to on the next Step; 0 for none.
+    short pendingInterrupt;
     // Where it is drawn.
     D3DXVECTOR3 pos;
     short spriteIndex;
     unsigned char unk_1d6[0x2];
     // The script SpriteEngine::StartScript started.
     short scriptIndex;
-    unsigned char unk_1da[0x72];
+    unsigned char unk_1da[0x56];
+    // Added to pos when it is drawn.
+    D3DXVECTOR3 posOffset;
+    unsigned char unk_23c[0x10];
 };
 ASSERT_SIZE(Sprite, 0x24c);
 
@@ -39,6 +53,12 @@ public:
     int SetSprite(Sprite *vm, int sprite);
     // Draws `vm` at its position.
     int Draw(Sprite *vm);
+    // Runs `vm`'s script for one frame.
+    int Step(Sprite *vm);
+    // Renders text from `fmt` into `sprite`'s texture.
+    void RenderText(Sprite *sprite, D3DCOLOR textColor, D3DCOLOR shadowColor, char *fmt, ...);
+    // RenderText, centered on the sprite.
+    void RenderTextCentered(Sprite *vm, D3DCOLOR color, D3DCOLOR shadowColor, char *fmt, ...);
     // Releases the loaded surfaces, before the device is reset.
     void ReleaseSurfaces();
     // Starts a new batch of quads. Not in th06.
