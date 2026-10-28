@@ -23,6 +23,10 @@ ASSERT_SIZE(MusicTune, 0x292);
 class MusicScreen
 {
 public:
+    // The update chain element's callback: runs the current state's
+    // handler and counts its frames, then steps the sprites. Returns 0
+    // while a handler asks to stop, otherwise 1.
+    static int OnUpdate(MusicScreen *screen);
     // State 0: on its first frame, sends interrupt 1 to the title under
     // the cursor and the comment lines and 2 to the other titles; after
     // 8 frames moves to state 1. Returns 0.

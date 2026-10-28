@@ -124,3 +124,45 @@ int MusicScreen::UpdateList()
     }
     return 0;
 }
+
+int MusicScreen::OnUpdate(MusicScreen *screen)
+{
+    int oldState = screen->state;
+    int i;
+
+again:
+    switch (screen->state)
+    {
+    case 0:
+        if (screen->UpdateIntro() == 0)
+        {
+            break;
+        }
+        // The state changed: run the new one this frame.
+        goto again;
+    case 1:
+        if (screen->UpdateList() != 0)
+        {
+            return 0;
+        }
+        break;
+    }
+    if (oldState != screen->state)
+    {
+        screen->stateFrames = 0;
+    }
+    else
+    {
+        screen->stateFrames++;
+    }
+    g_SpriteEngine->Step(&screen->unk_0024[0]);
+    for (i = 0; i < 0x1f; i++)
+    {
+        g_SpriteEngine->Step(&screen->titles[i]);
+    }
+    for (i = 0; i < 8; i++)
+    {
+        g_SpriteEngine->Step(&screen->comment[i]);
+    }
+    return 1;
+}
