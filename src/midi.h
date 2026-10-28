@@ -131,6 +131,8 @@ public:
 
     // Frees the MIDI file loaded into a slot.
     void UnloadFile(int slot);
+    // Frees the parsed tracks.
+    void FreeTracks();
 
     // The slot of the file being played, -1 for none. LoadFile stops
     // playback before it replaces that file.

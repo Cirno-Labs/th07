@@ -369,7 +369,7 @@ address,size,name,symbol
 0x004365b0,147,Func4365b0,
 0x00436650,112,Func436650,
 0x004366c0,60,MidiPlayer::UnloadFile,?UnloadFile@MidiPlayer@@QAEXH@Z
-0x00436700,131,Func436700,
+0x00436700,131,MidiPlayer::FreeTracks,?FreeTracks@MidiPlayer@@QAEXXZ
 0x00436790,547,Func436790,
 0x004369c0,58,Func4369c0,
 0x00436a00,203,Func436a00,

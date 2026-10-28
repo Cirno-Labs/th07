@@ -177,3 +177,16 @@ void MidiPlayer::UnloadFile(int slot)
     MemFree(this->fileData[slot]);
     this->fileData[slot] = NULL;
 }
+
+void MidiPlayer::FreeTracks()
+{
+    int i;
+
+    for (i = 0; i < this->trackCount; i++)
+    {
+        MemFree(this->tracks[i].data);
+    }
+    MemFree(this->tracks);
+    this->tracks = NULL;
+    this->trackCount = 0;
+}
