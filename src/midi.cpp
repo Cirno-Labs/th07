@@ -40,3 +40,16 @@ int MidiDevice::Open(UINT deviceId)
     this->deviceId = deviceId;
     return midiOutOpen(&this->handle, deviceId, (DWORD_PTR)g_App.hwnd, 0, CALLBACK_WINDOW) != MMSYSERR_NOERROR;
 }
+
+int MidiDevice::SendLongMsg(LPMIDIHDR header)
+{
+    if (this->handle == 0)
+    {
+        return 0;
+    }
+    if (midiOutPrepareHeader(this->handle, header, sizeof(MIDIHDR)) != MMSYSERR_NOERROR)
+    {
+        return 1;
+    }
+    return midiOutLongMsg(this->handle, header, sizeof(MIDIHDR)) != MMSYSERR_NOERROR;
+}

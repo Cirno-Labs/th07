@@ -21,6 +21,10 @@ public:
     // nonzero on failure, 0 on success or if the device is already open.
     int Open(UINT deviceId);
 
+    // Prepares and sends a system-exclusive message. Returns 0 if no
+    // device is open, nonzero if either step fails.
+    int SendLongMsg(LPMIDIHDR header);
+
     HMIDIOUT handle;
     UINT deviceId;
 };
