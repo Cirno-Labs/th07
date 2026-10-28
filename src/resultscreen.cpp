@@ -313,3 +313,8 @@ int ResultScreen::AddScore(Hscr *entry, int difficulty, int shot)
 {
     return InsertScore(&this->scores[difficulty][shot], entry);
 }
+
+void ResultScreen::ReleaseScores(int difficulty, int shot)
+{
+    FreeListNodes(&this->scores[difficulty][shot]);
+}

@@ -193,6 +193,9 @@ public:
     // Inserts `entry` into the high score list for `difficulty` and
     // `shot`.
     int AddScore(Hscr *entry, int difficulty, int shot);
+    // Frees the entries of the high score list for `difficulty` and
+    // `shot`.
+    void ReleaseScores(int difficulty, int shot);
     // The score file, as loaded.
     ScoreDat *scoreDat;
     BYTE unk_4[0xc];

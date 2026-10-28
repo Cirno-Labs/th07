@@ -507,7 +507,7 @@ address,size,name,symbol
 0x00445b56,255,LoadScreenPlstChunk,?LoadScreenPlstChunk@@YIHPAVResultScreen@@H@Z
 0x00445c55,267,MoveCursorHorizontal,?MoveCursorHorizontal@@YIHPAVResultScreen@@H@Z
 0x00445d60,43,ResultScreen::AddScore,?AddScore@ResultScreen@@QAEHPAUHscr@@HH@Z
-0x00445d8b,40,Func445d8b,
+0x00445d8b,40,ResultScreen::ReleaseScores,?ReleaseScores@ResultScreen@@QAEXHH@Z
 0x00445db3,3180,Func445db3,
 0x00446a66,1787,Func446a66,
 0x00447161,55,Func447161,
