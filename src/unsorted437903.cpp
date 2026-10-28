@@ -5,6 +5,7 @@
 // alignment.
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "ascii.h"
@@ -391,6 +392,70 @@ int App::AddedCallback(App *arg)
     return 0;
 }
 
+inline void FreeData(void *data);
+
+int App::DeletedCallback(App *arg)
+{
+    if (g_App.verFile != NULL)
+    {
+        FreeData(g_App.verFile);
+        g_App.verFile = NULL;
+    }
+    g_SpriteEngine->ReleaseVertexBuffer();
+    g_SpriteEngine->ReleaseAnm(0);
+    AsciiText::RemoveChain();
+    g_SoundPlayer.Func44d2f0(4, 0, "dummy");
+    if (arg->midi != NULL)
+    {
+        arg->midi->Stop();
+        delete arg->midi;
+        arg->midi = NULL;
+    }
+    SaveReplay(NULL, NULL);
+    ReleaseTextSurface();
+    if (arg->keyboard)
+    {
+        arg->keyboard->Unacquire();
+    }
+    if (arg->keyboard)
+    {
+        arg->keyboard->Release();
+        arg->keyboard = NULL;
+    }
+    if (arg->joystick)
+    {
+        arg->joystick->Unacquire();
+    }
+    if (arg->joystick)
+    {
+        arg->joystick->Release();
+        arg->joystick = NULL;
+    }
+    if (arg->dinput)
+    {
+        arg->dinput->Release();
+        arg->dinput = NULL;
+    }
+    if (g_Unknown626270.stats != NULL)
+    {
+        delete g_Unknown626270.stats;
+        g_Unknown626270.stats = NULL;
+    }
+    if (g_Unknown626270.unk_4 != NULL)
+    {
+        delete g_Unknown626270.unk_4;
+        g_Unknown626270.unk_4 = NULL;
+    }
+    g_Archive.Release();
+    if (g_App.timer != NULL)
+    {
+        g_App.timer->StopTimer();
+        delete g_App.timer;
+        g_App.timer = NULL;
+    }
+    return 0;
+}
+
 void Timer::Add(int frames)
 {
     if (g_App.unk_18c >> 5 & 1)
@@ -708,4 +773,9 @@ void App::AddTotalPlayTime()
         g_Unknown626270.plst.playMinutes %= 60;
     }
     this->unk_194 = now;
+}
+
+inline void FreeData(void *data)
+{
+    free(data);
 }

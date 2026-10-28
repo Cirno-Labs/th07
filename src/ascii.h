@@ -10,6 +10,8 @@ class AsciiText
 public:
     // Adds the text's chain elements. Returns 0, or nonzero on failure.
     static int RegisterChain();
+    // Removes them.
+    static void RemoveChain();
 
     // Queues `text` to be drawn at `pos`.
     void AddString(D3DXVECTOR3 *pos, char *text);

@@ -19,7 +19,7 @@ address,size,name,symbol
 0x00401d70,104,Func401d70,
 0x00401de0,65,Func401de0,
 0x00401e30,213,AsciiText::RegisterChain,?RegisterChain@AsciiText@@SIHXZ
-0x00401f10,35,Func401f10,
+0x00401f10,35,AsciiText::RemoveChain,?RemoveChain@AsciiText@@SIXXZ
 0x00401f40,277,AsciiText::AddString,?AddString@AsciiText@@QAEXPAUD3DXVECTOR3@@PAD@Z
 0x00402060,68,AsciiText::AddFormat,?AddFormat@AsciiText@@QAAXPAUD3DXVECTOR3@@PADZZ
 0x004020b0,1082,Func4020b0,
@@ -395,7 +395,7 @@ address,size,name,symbol
 0x004386f3,659,MeasureRefreshRate,?MeasureRefreshRate@@YIHXZ
 0x00438986,1116,App::AddedCallback,?AddedCallback@App@@SIHPAV1@@Z
 0x00438de2,525,App::DeletedCallback,?DeletedCallback@App@@SIHPAV1@@Z
-0x00438fef,17,Func438fef,
+0x00438fef,17,Unknown4378b0::~Unknown4378b0,??1Unknown4378b0@@QAE@XZ
 0x00439000,165,App::RegisterChain,?RegisterChain@App@@SIHXZ
 0x004390a5,860,DrawFps,?DrawFps@@YIXH@Z
 0x00439401,198,Timer::Add,?Add@Timer@@QAEXH@Z
