@@ -283,7 +283,7 @@ address,size,name,symbol
 0x0042f789,86,Func42f789,
 0x0042f7df,116,Unknown626270::Func42f7df,?Func42f7df@Unknown626270@@QAEHH@Z
 0x0042f853,139,Unknown626270::Func42f853,?Func42f853@Unknown626270@@QAEHH@Z
-0x0042f8de,110,Func42f8de,
+0x0042f8de,110,Unknown626270::Func42f8de,?Func42f8de@Unknown626270@@QAEHXZ
 0x0042f94c,261,Unknown626270::Func42f94c,?Func42f94c@Unknown626270@@QAEHXZ
 0x0042fa60,75,Chain::~Chain,??1Chain@@QAE@XZ
 0x0042fab0,99,ChainElem::ChainElem,??0ChainElem@@QAE@XZ
@@ -404,7 +404,7 @@ address,size,name,symbol
 0x004395fb,699,App::Func4395fb,?Func4395fb@App@@QAEHPAD@Z
 0x004398b6,1306,App::LoadConfig,?LoadConfig@App@@QAEHPAD@Z
 0x00439dd0,241,App::Func439dd0,?Func439dd0@App@@QAEHHPAD@Z
-0x00439ec1,140,Func439ec1,
+0x00439ec1,140,App::Func439ec1,?Func439ec1@App@@QAEHH@Z
 0x00439f4d,274,Func439f4d,
 0x0043a05f,119,App::Func43a05f,?Func43a05f@App@@QAEHXZ
 0x0043a0d6,183,Func43a0d6,
@@ -596,14 +596,14 @@ address,size,name,symbol
 0x00454f30,251,Func454f30,
 0x00455030,140,SpriteEngine::Func455030,?Func455030@SpriteEngine@@QAEXPAVSprite@@HF@Z
 0x004550c0,70,SpriteEngine::Func4550c0,?Func4550c0@SpriteEngine@@QAEXPAVSprite@@H@Z
-0x00455110,91,Func455110,
+0x00455110,91,SpriteEngine::Func455110,?Func455110@SpriteEngine@@QAEXPAVSprite@@HH@Z
 0x00455170,352,Func455170,
 0x004552d0,298,Func4552d0,
 0x004553fa,59,App::ResetClockDriftCounters,?ResetClockDriftCounters@App@@QAEXXZ
 0x00455435,72,MainMenu::SetState,?SetState@MainMenu@@QAEXH@Z
 0x0045547d,89,MainMenu::MainMenu,??0MainMenu@@QAE@XZ
 0x004554d6,212,MainMenu::OnUpdate,?OnUpdate@MainMenu@@SIHPAV1@@Z
-0x004555dd,3152,MainMenu::Func4555dd,?Func4555dd@MainMenu@@QAEHXZ
+0x004555dd,3152,MainMenu::StartTitle,?StartTitle@MainMenu@@QAEHXZ
 0x0045624d,3059,MainMenu::Func45624d,?Func45624d@MainMenu@@QAEHXZ
 0x00456e40,299,MainMenu::ReassignButton,?ReassignButton@MainMenu@@QAEXFFH@Z
 0x00456f6b,2365,MainMenu::Func456f6b,?Func456f6b@MainMenu@@QAEHXZ
@@ -1724,6 +1724,7 @@ address,size,name,symbol
 0x00495290,4,CSound::`vftable',??_7CSound@@6B@
 0x004964f4,,g_DifficultyRatings,?g_DifficultyRatings@@3PAMA
 0x0049ea70,,g_FileModes,?g_FileModes@@3PAPADA
+0x0049ea7c,,g_DemoReplayPaths,?g_DemoReplayPaths@@3PAPADA
 0x0049ea88,,g_SoundInfos,?g_SoundInfos@@3PAUSoundInfo@@A
 0x0049ebb8,,g_SoundPaths,?g_SoundPaths@@3PAPADA
 0x0049ec30,,g_NameAlphabet,?g_NameAlphabet@@3PADA
@@ -1733,6 +1734,7 @@ address,size,name,symbol
 0x0049f424,,g_MenuStageNames,?g_MenuStageNames@@3PAPADA
 0x0049f444,,g_MenuDifficultyNames,?g_MenuDifficultyNames@@3PAPADA
 0x0049f45c,,g_MenuShotTypeNames,?g_MenuShotTypeNames@@3PAPADA
+0x0049f4cc,,g_TitleHelpTexts,?g_TitleHelpTexts@@3PAPADA
 0x0049f504,,g_SpellCardRatings,?g_SpellCardRatings@@3PAMA
 0x0049f518,,g_DifficultyNames,?g_DifficultyNames@@3PAPADA
 0x0049fc88,,g_JoyCaps,?g_JoyCaps@@3UtagJOYCAPSA@@A

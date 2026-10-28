@@ -137,6 +137,9 @@ public:
     // Steps the `count` sprites from `vms` that run a script. Not in
     // th06.
     void Func4550c0(Sprite *vms, int count);
+    // Starts script `script` + n on sprite n of the `count` sprites from
+    // `vms`, and makes their sprites their base sprites. Not in th06.
+    void Func455110(Sprite *vms, int script, int count);
     // Sends interrupt `interrupt` to the `count` sprites from `vms` that
     // show a loaded sprite. Not in th06.
     void Func455030(Sprite *vms, int count, short interrupt);

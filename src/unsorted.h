@@ -90,6 +90,9 @@ public:
     int Func43a05f();
     // Loads music `path` in slot `slot`. Not named yet.
     int Func439dd0(int slot, char *path);
+    // Plays MIDI slot `slot`, or the BGM track, as musicMode says.
+    // Returns 0.
+    int Func439ec1(int slot);
 
     BOOL UsesPresentImmediate()
     {
@@ -723,6 +726,8 @@ public:
     // Whether Phantasm is open: a shot type cleared Extra (or captured
     // 60 spell cards, which marks those that cleared Extra as such).
     int Func42f94c();
+    // Whether a shot type has Extra open (Func42f7df for any of them).
+    int Func42f8de();
     // Whether shot type `shot` (character * 2 + shot) cleared one of
     // the four main difficulties, which opens Extra for it.
     int Func42f7df(int shot);
@@ -777,7 +782,9 @@ public:
     };
     // Cleared by SetUpTitleScene.
     BYTE unk_93dc;
-    unsigned char unk_93dd[0x2];
+    unsigned char unk_93dd[0x1];
+    // The demo replay played last, 0 to 2.
+    BYTE demoIndex;
     // Set from the replay menu's last choice when a replay starts.
     BYTE unk_93df;
     DWORD unk_93e0;

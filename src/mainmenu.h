@@ -10,6 +10,13 @@
 #include "sprite.h"
 #include "unsorted.h"
 
+// The 0x38 bytes of App's config, from controllerMapping, as one block
+// to copy.
+struct ConfigCopy
+{
+    unsigned char bytes[0x38];
+};
+
 class MainMenu
 {
 public:
@@ -40,10 +47,12 @@ public:
 
     // Moves to state `state`, remembering the one it leaves in
     // prevState, and resets the frame counters. Not in th06 as a
-    // function.
+    // function. Inline (defined in mainmenu.cpp): StartTitle expands it,
+    // the larger state functions have spent their inline budget and call
+    // the copy at 0x455435.
     void SetState(int state);
     // The state functions OnUpdate runs. Not in th06.
-    int Func4555dd();
+    int StartTitle();
     int Func45624d();
     int Func456f6b();
     int UpdateDifficultyMenu();
@@ -82,7 +91,8 @@ public:
 
     // The selected entry.
     int cursor;
-    unsigned char unk_4[0x4];
+    // The cursor the title menu last highlighted.
+    int prevCursor;
     int unk_8;
     // Counts the frames in the current state.
     int stateFrames;
@@ -112,7 +122,9 @@ public:
     // The menu's state.
     int state;
     int unk_d0fc;
-    unsigned char unk_d100[0x4];
+    // The frames the title menu has waited without input; the demo
+    // starts after 900.
+    int idleFrames;
     // The update element (priority 3, with the added and deleted
     // callbacks) and the draw element (priority 0), created by
     // SetUpTitleScene.
@@ -120,7 +132,9 @@ public:
     ChainElem *drawChain;
     // The button mapping the options screen edits.
     ControllerMapping controllerMapping;
-    unsigned char unk_d11e[0x3a];
+    unsigned char unk_d11e[0x2];
+    // A copy of g_App's config, taken as StartTitle enters state 2.
+    ConfigCopy savedConfig;
 };
 ASSERT_SIZE(MainMenu, 0xd158);
 
@@ -128,6 +142,10 @@ ASSERT_SIZE(MainMenu, 0xd158);
 // if the update element cannot be added. `unk` is unused.
 int SetUpTitleScene(int unk);
 
+// The help line the title menu shows for each entry.
+extern char *g_TitleHelpTexts[8];
+// The demo replays the title menu plays in turn.
+extern char *g_DemoReplayPaths[3];
 // The names the replay menu shows for stages (then Extra and Phantasm),
 // difficulties and shot types.
 extern char *g_MenuStageNames[8];
