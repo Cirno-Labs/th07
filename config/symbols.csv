@@ -540,7 +540,7 @@ address,size,name,symbol
 0x0044baf0,523,SoundPlayer::FindTrackIndex,?FindTrackIndex@SoundPlayer@@QAEHPAD@Z
 0x0044bd00,750,SoundPlayer::LoadSound,?LoadSound@SoundPlayer@@QAEHHPAD@Z
 0x0044bff0,48,SoundPlayer::LoadBgmFormat,?LoadBgmFormat@SoundPlayer@@QAEHPAD@Z
-0x0044c020,386,Func44c020,
+0x0044c020,386,SoundPlayer::LoadBgm,?LoadBgm@SoundPlayer@@QAEHPAD@Z
 0x0044c1b0,105,Func44c1b0,
 0x0044c220,677,Func44c220,
 0x0044c4d0,472,Func44c4d0,
@@ -548,7 +548,7 @@ address,size,name,symbol
 0x0044c7d0,342,Func44c7d0,
 0x0044c930,133,SoundPlayer::QueueSound,?QueueSound@SoundPlayer@@QAEXHH@Z
 0x0044c9c0,2073,SoundPlayer::Func44c9c0,?Func44c9c0@SoundPlayer@@QAEHXZ
-0x0044d200,226,Func44d200,
+0x0044d200,226,BgmNotificationProc,?BgmNotificationProc@@YGKPAX@Z
 0x0044d2f0,225,Func44d2f0,
 0x0044d3e0,573,SpriteEngine::SpriteEngine,??0SpriteEngine@@QAE@XZ
 0x0044d620,11,MmTimer::OnTimer,?OnTimer@MmTimer@@UAEXXZ ??1SpriteEngine@@QAE@XZ
@@ -627,7 +627,7 @@ address,size,name,symbol
 0x0045c710,44,CSoundManager::~CSoundManager,??1CSoundManager@@QAE@XZ
 0x0045c740,142,CSoundManager::Initialize,?Initialize@CSoundManager@@QAEJPAUHWND__@@KKKK@Z
 0x0045c7d0,265,Func45c7d0,
-0x0045c8e0,844,Func45c8e0,
+0x0045c8e0,844,CSoundManager::CreateStreaming,?CreateStreaming@CSoundManager@@QAEJPAPAVCStreamingSound@@PADKU_GUID@@KKPAXPAUBgmFormat@@@Z
 0x0045cc30,795,Func45cc30,
 0x0045cf50,221,Func45cf50,
 0x0045d030,46,Func45d030,
@@ -918,6 +918,7 @@ address,size,name,symbol
 0x0046fc62,306,Func46fc62,
 0x0046fd94,97,Func46fd94,
 0x0046fdf5,1175,Func46fdf5,
+0x0046fed0,,Unknown46fed0,
 0x0047028c,233,Func47028c,
 0x00470375,78,Func470375,
 0x004703c3,256,Func4703c3,
@@ -1711,6 +1712,7 @@ address,size,name,symbol
 0x0048d264,4,CoUninitialize,__imp__CoUninitialize@0
 0x0048d268,4,CoCreateInstance,__imp__CoCreateInstance@20
 0x0048d26c,4,CoInitialize,__imp__CoInitialize@4
+0x004904e8,,GUID_NULL,_GUID_NULL
 0x004964f4,,g_DifficultyRatings,?g_DifficultyRatings@@3PAMA
 0x0049ec30,,g_NameAlphabet,?g_NameAlphabet@@3PADA
 0x0049ec34,,g_ShotNames,?g_ShotNames@@3PAPADA

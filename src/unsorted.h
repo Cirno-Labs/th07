@@ -302,6 +302,10 @@ public:
     // Loads the track list at `path` (thbgm.fmt) into bgmFormat. Returns
     // 0 or -1. Not in th06.
     int LoadBgmFormat(char *path);
+    // Starts streaming the wave music from the file at `path`
+    // (thbgm.dat), as bgmFormat's first track, after stopping what
+    // plays, and starts the thread that streams it. Returns 0 or -1.
+    int LoadBgm(char *path);
     // Not in th06. WinMain calls it until it returns 0.
     int Func44c9c0();
     // Queues sound effect `idx` to start on the next update, unless
@@ -353,6 +357,10 @@ public:
 };
 ASSERT_SIZE(SoundPlayer, 0x39cc);
 extern SoundPlayer g_SoundPlayer;
+
+// The thread LoadBgm starts, with the main window: streams the wave music
+// each time notifyEvent is signalled, until WM_QUIT or the music is gone.
+DWORD WINAPI BgmNotificationProc(LPVOID lpParameter);
 
 // Its only known caller is Func45db60.
 class Unknown45e1f0
