@@ -9,6 +9,15 @@
 #include "sprite.h"
 #include "timer.h"
 
+class Player;
+struct PlayerBullet;
+struct ShotData;
+
+// A shot's callbacks. Under /Gr these are __fastcall.
+typedef int (*ShotFireFunc)(Player *player, PlayerBullet *bullet, int frame, ShotData *sd);
+typedef int (*ShotUpdateFunc)(Player *player, PlayerBullet *bullet);
+typedef int (*ShotHitFunc)(Player *player, PlayerBullet *bullet, D3DXVECTOR3 *pos);
+
 // One of the player's bullets. Its implicit constructor is 0x43ba10.
 struct PlayerBullet
 {
@@ -25,7 +34,7 @@ struct PlayerBullet
     float angle;
     Timer timer;
     short damage;
-    // 1 while it flies.
+    // 0 unused, 1 flying, 2 hit, as in th06.
     short state;
     // ShotData::type.
     short type;
@@ -34,11 +43,16 @@ struct PlayerBullet
     short option;
     // FireTrailLaser sets it to ShotData::interval.
     short unk_352;
-    unsigned char unk_354[0x10];
+    // The shot's callbacks, and the shot.
+    ShotUpdateFunc update;
+    ShotUpdateFunc draw;
+    ShotHitFunc hit;
+    ShotData *shot;
 };
 ASSERT_SIZE(PlayerBullet, 0x364);
 
-// One shot of a shot type, as th06's ShotData.
+// One shot of a shot type: th06's ShotData, with callbacks. A table of
+// them ends with an interval below 0.
 struct ShotData
 {
     // Fired on frames where frame % interval is phase.
@@ -59,10 +73,31 @@ struct ShotData
     // Its script, and its sound or -1.
     short script;
     short sound;
+    // Fires it; TryFireShot when NULL.
+    ShotFireFunc fire;
+    // Copied into the bullet it fires.
+    ShotUpdateFunc update;
+    ShotUpdateFunc draw;
+    ShotHitFunc hit;
 };
-ASSERT_SIZE(ShotData, 0x24);
+ASSERT_SIZE(ShotData, 0x34);
 
-class Player;
+// The shots of a shot type up to a power level.
+struct ShotTable
+{
+    ShotData *shots;
+    // The power it lasts below; FireShots takes the first above the
+    // player's.
+    int maxPower;
+};
+
+// A shot type's data, behind Player::shotType and shotTypeFocused. Only
+// the fields known so far.
+struct ShotTypeData
+{
+    unsigned char unk_0[0x34];
+    ShotTable tables[1];
+};
 
 // Fills `bullet` with shot `sd` and starts it: from the player or its
 // option, its script and its sound. th06's FireShot did this inline.
@@ -120,6 +155,10 @@ int UpdateBombShot(Player *player, PlayerBullet *bullet, D3DXVECTOR3 *pos);
 // A hit at `pos`: on every eighth (Player::hitCounter) bursts effect 5
 // at the bullet's x and pos's y. Returns 0.
 int BurstHitEffect(Player *player, PlayerBullet *bullet, D3DXVECTOR3 *pos);
+// th06's FireShots: fires the shots of the shot type's table for the
+// player's power, unfocused or focused, for `frame` into free bullets,
+// through each shot's fire function, giving the bullets its callbacks.
+void FireShots(Player *player, int frame);
 
 // One of the 0x70 entries at Player+0x9dc, probably th06's bomb
 // hitboxes (bombHitPos, bombHitSize, ...) as one struct.
@@ -190,7 +229,8 @@ public:
     // FireLaser fires its lasers while it is 1, FireTrailLaser while it
     // is 3.
     char unk_240a;
-    unsigned char unk_240b[0x1];
+    // Picks shotTypeFocused over shotType, as th06's focused.
+    char focused;
     // Counts hits on enemies, to burst an effect every few, as in th06.
     BYTE hitCounter;
     unsigned char unk_240d[0x3];
@@ -218,6 +258,10 @@ public:
     ChainElem *calcChain;
     ChainElem *drawChain;
     ChainElem *drawChain2;
+    unsigned char unk_b7e68[0x8];
+    // The shot type's data, unfocused and focused.
+    ShotTypeData *shotType;
+    ShotTypeData *shotTypeFocused;
 };
-ASSERT_SIZE(Player, 0xb7e68);
+ASSERT_SIZE(Player, 0xb7e78);
 extern Player g_Player;

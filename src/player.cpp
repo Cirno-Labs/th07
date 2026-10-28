@@ -472,3 +472,54 @@ int BurstHitEffect(Player *player, PlayerBullet *bullet, D3DXVECTOR3 *pos)
     }
     return 0;
 }
+
+void FireShots(Player *player, int frame)
+{
+    ShotData *shot;
+    int ret;
+    PlayerBullet *curBullet;
+    ShotTable *shotTable;
+    int i;
+
+    shotTable = player->focused == 0 ? player->shotType->tables : player->shotTypeFocused->tables;
+    while ((int)g_Unknown626270.stats->power >= shotTable->maxPower)
+    {
+        shotTable++;
+    }
+    shot = shotTable->shots;
+    curBullet = player->bullets;
+    for (i = 0; i < 0x60; i++, curBullet++)
+    {
+        if (curBullet->state != 0)
+        {
+            continue;
+        }
+    again:
+        if (shot->fire != NULL)
+        {
+            ret = shot->fire(player, curBullet, frame, shot);
+        }
+        else
+        {
+            ret = TryFireShot(player, curBullet, frame, shot);
+        }
+        if (ret == 1)
+        {
+            curBullet->sprite.flags |= 0x1000;
+            curBullet->state = 1;
+            curBullet->shot = shot;
+            curBullet->update = curBullet->shot->update;
+            curBullet->draw = curBullet->shot->draw;
+            curBullet->hit = curBullet->shot->hit;
+        }
+        shot++;
+        if (shot->interval < 0)
+        {
+            return;
+        }
+        if (ret == 0)
+        {
+            goto again;
+        }
+    }
+}
