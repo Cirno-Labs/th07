@@ -531,7 +531,7 @@ address,size,name,symbol
 0x0044b090,76,ScreenEffect::OnDrawFlash,?OnDrawFlash@ScreenEffect@@SIHPAV1@@Z
 0x0044b0e0,409,ScreenEffect::OnUpdateShake,?OnUpdateShake@ScreenEffect@@SIHPAV1@@Z
 0x0044b280,53,ScreenEffect::AddedCallback,?AddedCallback@ScreenEffect@@SIHPAV1@@Z
-0x0044b2c0,80,Func44b2c0,
+0x0044b2c0,80,ScreenEffect::DeletedCallback,?DeletedCallback@ScreenEffect@@SIHPAV1@@Z
 0x0044b310,491,Func44b310,
 0x0044b510,76,Func44b510,
 0x0044b560,705,SoundPlayer::Initialize,?Initialize@SoundPlayer@@QAEHPAUHWND__@@@Z
