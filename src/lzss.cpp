@@ -360,7 +360,7 @@ void LzssDeleteNode(int pos)
     }
     else
     {
-        replacement = Func45f640(pos);
+        replacement = LzssPredecessor(pos);
         LzssDeleteNode(replacement);
         LzssReplaceChild(pos, replacement);
     }
@@ -397,4 +397,16 @@ void LzssReplaceChild(int oldNode, int newNode)
     g_LzssTree[g_LzssTree[newNode].smallerChild].parent = newNode;
     g_LzssTree[g_LzssTree[newNode].largerChild].parent = newNode;
     g_LzssTree[oldNode].parent = 0;
+}
+
+int LzssPredecessor(int node)
+{
+    int next;
+
+    next = g_LzssTree[node].smallerChild;
+    while (g_LzssTree[next].largerChild != 0)
+    {
+        next = g_LzssTree[next].largerChild;
+    }
+    return next;
 }

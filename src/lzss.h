@@ -47,4 +47,4 @@ void LzssReplaceNode(int oldNode, int newNode);
 // Puts node `newNode` in the place of `oldNode` in the tree.
 void LzssReplaceChild(int oldNode, int newNode);
 // The node that comes before `node`: the largest in its smaller subtree.
-int Func45f640(int node);
+int LzssPredecessor(int node);
