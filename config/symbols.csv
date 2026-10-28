@@ -545,7 +545,7 @@ address,size,name,symbol
 0x0044c220,677,SoundPlayer::PreloadBgm,?PreloadBgm@SoundPlayer@@QAEHHPAD@Z
 0x0044c4d0,472,SoundPlayer::PlayPreloadedBgm,?PlayPreloadedBgm@SoundPlayer@@QAEHH@Z
 0x0044c6b0,287,SoundPlayer::StopBgm,?StopBgm@SoundPlayer@@QAEXXZ
-0x0044c7d0,342,Func44c7d0,
+0x0044c7d0,342,SoundPlayer::LoadSounds,?LoadSounds@SoundPlayer@@QAEHXZ
 0x0044c930,133,SoundPlayer::QueueSound,?QueueSound@SoundPlayer@@QAEXHH@Z
 0x0044c9c0,2073,SoundPlayer::Func44c9c0,?Func44c9c0@SoundPlayer@@QAEHXZ
 0x0044d200,226,BgmNotificationProc,?BgmNotificationProc@@YGKPAX@Z
@@ -1714,6 +1714,8 @@ address,size,name,symbol
 0x0048d26c,4,CoInitialize,__imp__CoInitialize@4
 0x004904e8,,GUID_NULL,_GUID_NULL
 0x004964f4,,g_DifficultyRatings,?g_DifficultyRatings@@3PAMA
+0x0049ea88,,g_SoundInfos,?g_SoundInfos@@3PAUSoundInfo@@A
+0x0049ebb8,,g_SoundPaths,?g_SoundPaths@@3PAPADA
 0x0049ec30,,g_NameAlphabet,?g_NameAlphabet@@3PADA
 0x0049ec34,,g_ShotNames,?g_ShotNames@@3PAPADA
 0x0049ed98,,g_FormatInfos,?g_FormatInfos@@3PAUFormatInfo@@A

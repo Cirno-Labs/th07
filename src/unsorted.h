@@ -323,6 +323,8 @@ public:
     // or switches the stream to its track without g_App.flags.preloadBgm.
     // Returns 0 or -1. Not in th06.
     int PlayPreloadedBgm(int slot);
+    // Loads the sound effects ("data/wav/se_plst00.wav", ...).
+    int LoadSounds();
     // Not in th06. WinMain calls it until it returns 0.
     int Func44c9c0();
     // Queues sound effect `idx` to start on the next update, unless
@@ -378,6 +380,17 @@ extern SoundPlayer g_SoundPlayer;
 // The thread LoadBgm starts, with the main window: streams the wave music
 // each time notifyEvent is signalled, until WM_QUIT or the music is gone.
 DWORD WINAPI BgmNotificationProc(LPVOID lpParameter);
+
+// Each sound effect's sound buffer and volume, as in th06.
+struct SoundInfo
+{
+    int buffer;
+    short volume;
+    short unk_6;
+};
+extern SoundInfo g_SoundInfos[0x26];
+// The sound files LoadSounds loads, by index.
+extern char *g_SoundPaths[];
 
 // Its only known caller is Func45db60.
 class Unknown45e1f0
