@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">25.36% (176)</tspan> · <tspan class="decompiled">0.58% (4)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">74.06% (514)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">25.50% (177)</tspan> · <tspan class="decompiled">0.58% (4)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">73.92% (513)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="189.44" height="6" x="0" y="0" class="named"/>
-<rect width="4.31" height="6" x="189.44" y="0" class="decompiled"/>
-<rect width="553.25" height="6" x="193.75" y="0" class="todo"/>
+<rect width="190.52" height="6" x="0" y="0" class="named"/>
+<rect width="4.31" height="6" x="190.52" y="0" class="decompiled"/>
+<rect width="552.18" height="6" x="194.82" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (173 bytes)</title></rect>
@@ -734,7 +734,7 @@
 <rect width="12" height="12" x="195" y="195" class="named"><title>0x0045e5c0 File::~File (82 bytes)</title></rect>
 <rect width="12" height="12" x="210" y="195" class="named"><title>0x0045e620 File::Open (330 bytes)</title></rect>
 <rect width="12" height="12" x="225" y="195" class="named"><title>0x0045e770 File::Close (53 bytes)</title></rect>
-<rect width="12" height="12" x="240" y="195" class="todo"><title>0x0045e7b0 File::Read (68 bytes)</title></rect>
+<rect width="12" height="12" x="240" y="195" class="named"><title>0x0045e7b0 File::Read (68 bytes)</title></rect>
 <rect width="12" height="12" x="255" y="195" class="todo"><title>0x0045e800 File::Write (74 bytes)</title></rect>
 <rect width="12" height="12" x="270" y="195" class="todo"><title>0x0045e850 File::Tell (43 bytes)</title></rect>
 <rect width="12" height="12" x="285" y="195" class="todo"><title>0x0045e880 File::GetSize (39 bytes)</title></rect>
@@ -766,11 +766,11 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">16.03%</tspan> · <tspan class="decompiled">0.04%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">83.93%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">16.04%</tspan> · <tspan class="decompiled">0.04%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">83.91%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="119.71" height="6" x="0" y="0" class="named"/>
-<rect width="0.33" height="6" x="119.71" y="0" class="decompiled"/>
-<rect width="626.96" height="6" x="120.04" y="0" class="todo"/>
+<rect width="119.84" height="6" x="0" y="0" class="named"/>
+<rect width="0.33" height="6" x="119.84" y="0" class="decompiled"/>
+<rect width="626.82" height="6" x="120.18" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1354,7 +1354,7 @@
 <rect width="2.17" height="2.59" x="699.79" y="196.31" class="named"><title>0x004314f0 FileExists (69 bytes)</title></rect>
 <rect width="2.17" height="2.59" x="699.79" y="201.90" class="named"><title>0x0044af30 ScreenEffect::OnDrawPlayArea (69 bytes)</title></rect>
 <rect width="2.17" height="2.51" x="699.79" y="207.49" class="todo"><title>0x00402060 AsciiText::AddFormat (68 bytes)</title></rect>
-<rect width="2.56" height="2.13" x="704.96" y="168.13" class="todo"><title>0x0045e7b0 File::Read (68 bytes)</title></rect>
+<rect width="2.56" height="2.13" x="704.96" y="168.13" class="named"><title>0x0045e7b0 File::Read (68 bytes)</title></rect>
 <rect width="2.56" height="2.05" x="704.96" y="173.26" class="todo"><title>0x004232e0 Func4232e0 (67 bytes)</title></rect>
 <rect width="2.56" height="2.05" x="704.96" y="178.31" class="named"><title>0x00436250 MidiDevice::SendShortMsg (67 bytes)</title></rect>
 <rect width="2.56" height="2.05" x="704.96" y="183.36" class="todo"><title>0x0045f270 Func45f270 (67 bytes)</title></rect>
