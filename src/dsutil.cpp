@@ -831,3 +831,41 @@ HRESULT CWaveFile::OpenFromMemory(BYTE *pbData, ULONG ulDataSize, BgmFormat *for
 
     return S_OK;
 }
+
+HRESULT CWaveFile::ResetFile(bool bLoop)
+{
+    DWORD dwPos;
+
+    if (m_bIsReadingFromMemory)
+    {
+        m_pbDataCur = m_pbData;
+        if (this->format->loopEnd > 0)
+        {
+            m_ulDataSize = this->format->loopEnd;
+        }
+        if (bLoop && this->format->loopStart > 0)
+        {
+            m_pbDataCur += this->format->loopStart;
+        }
+    }
+    else
+    {
+        if (this->hFile == NULL)
+            return CO_E_NOTINITIALIZED;
+
+        // Seek to the track's data, or past its intro when looping
+        if (bLoop && this->format->loopStart > 0)
+        {
+            dwPos = SetFilePointer(this->hFile, g_SoundPlayer.unk_39c8 + this->format->loopStart + this->format->offset,
+                                   NULL, FILE_BEGIN);
+            m_ck.cksize = this->format->loopEnd - this->format->loopStart;
+        }
+        else
+        {
+            dwPos = SetFilePointer(this->hFile, g_SoundPlayer.unk_39c8 + this->format->offset, NULL, FILE_BEGIN);
+            m_ck.cksize = this->format->loopEnd;
+        }
+    }
+
+    return S_OK;
+}

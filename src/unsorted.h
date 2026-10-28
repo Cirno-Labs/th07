@@ -282,15 +282,17 @@ struct BgmFormat
     char name[0x10];
     DWORD offset;
     DWORD size;
-    DWORD unk_18;
-    // Nonzero for a track that loops, probably: SoundPlayer::PlayQueuedSounds
-    // fills the buffer with Loops() as the repeat flag.
-    DWORD unk_1c;
+    // As th06's CWaveFile fields: CWaveFile::ResetFile limits the track
+    // to `loopEnd` bytes and, when looping, skips its first `loopStart`.
+    // SoundPlayer::PlayQueuedSounds fills the buffer with Loops() as the repeat
+    // flag.
+    int loopStart;
+    int loopEnd;
     WAVEFORMATEX format;
 
     BOOL Loops()
     {
-        return this->unk_1c != 0;
+        return this->loopEnd != 0;
     }
 };
 ASSERT_SIZE(BgmFormat, 0x34);
@@ -386,6 +388,7 @@ public:
     // Signalled as the wave music plays.
     HANDLE notifyEvent;
     DWORD unk_39c4;
+    // Added to every BgmFormat offset by CWaveFile::ResetFile.
     DWORD unk_39c8;
 };
 ASSERT_SIZE(SoundPlayer, 0x39cc);
