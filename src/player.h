@@ -93,6 +93,9 @@ int FireAimedShot(Player *player, PlayerBullet *bullet, int frame, ShotData *sd)
 int UpdateHomingOrb(Player *player, PlayerBullet *bullet);
 // The same at up to 18, speeding up by 0.6.
 int UpdateHomingOrbFast(Player *player, PlayerBullet *bullet);
+// A flying bullet accelerating up, as th06's UpdateBullets case 2, by
+// a random 0.27 to 0.37 a frame. Returns 0.
+int UpdateAcceleratingBullet(Player *player, PlayerBullet *bullet);
 
 // One of the 0x70 entries at Player+0x9dc, probably th06's bomb
 // hitboxes (bombHitPos, bombHitSize, ...) as one struct.

@@ -438,7 +438,7 @@ address,size,name,symbol
 0x0043c1c0,142,FireAimedShot,?FireAimedShot@@YIHPAVPlayer@@PAUPlayerBullet@@HPAUShotData@@@Z
 0x0043c250,554,UpdateHomingOrb,?UpdateHomingOrb@@YIHPAVPlayer@@PAUPlayerBullet@@@Z
 0x0043c480,554,UpdateHomingOrbFast,?UpdateHomingOrbFast@@YIHPAVPlayer@@PAUPlayerBullet@@@Z
-0x0043c6b0,73,Func43c6b0,
+0x0043c6b0,73,UpdateAcceleratingBullet,?UpdateAcceleratingBullet@@YIHPAVPlayer@@PAUPlayerBullet@@@Z
 0x0043c700,566,Func43c700,
 0x0043c940,868,Func43c940,
 0x0043ccb0,299,Func43ccb0,

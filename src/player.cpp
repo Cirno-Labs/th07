@@ -267,3 +267,12 @@ int UpdateHomingOrbFast(Player *player, PlayerBullet *bullet)
     }
     return 0;
 }
+
+int UpdateAcceleratingBullet(Player *player, PlayerBullet *bullet)
+{
+    if (bullet->state == 1)
+    {
+        bullet->velocity.y -= g_Rng.GetRandomF32ZeroToOne() * 0.1f + 0.27f;
+    }
+    return 0;
+}
