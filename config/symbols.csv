@@ -551,7 +551,7 @@ address,size,name,symbol
 0x0044d200,226,Func44d200,
 0x0044d2f0,225,Func44d2f0,
 0x0044d3e0,573,Func44d3e0,
-0x0044d620,11,Func44d620,
+0x0044d620,11,MmTimer::OnTimer,?OnTimer@MmTimer@@UAEXXZ
 0x0044d630,700,Func44d630,
 0x0044d8f0,234,Func44d8f0,
 0x0044d9e0,511,Func44d9e0,
