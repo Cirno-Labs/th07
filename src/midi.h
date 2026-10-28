@@ -46,6 +46,7 @@ class MmTimer
 {
 public:
     MmTimer();
+    ~MmTimer();
 
     // Kills the timer event, if any, and ends the timer period. Returns 1.
     int Stop();

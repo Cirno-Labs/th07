@@ -359,7 +359,7 @@ address,size,name,symbol
 0x00436200,78,MidiDevice::SendLongMsg,?SendLongMsg@MidiDevice@@QAEHPAUmidihdr_tag@@@Z
 0x00436250,67,MidiDevice::SendShortMsg,?SendShortMsg@MidiDevice@@QAEHEEE@Z
 0x004362a0,48,MmTimer::MmTimer,??0MmTimer@@QAE@XZ
-0x004362d0,41,Func4362d0,
+0x004362d0,41,MmTimer::~MmTimer,??1MmTimer@@QAE@XZ
 0x00436300,115,Func436300,
 0x00436380,61,MmTimer::Stop,?Stop@MmTimer@@QAEHXZ
 0x004363c0,26,Func4363c0,
