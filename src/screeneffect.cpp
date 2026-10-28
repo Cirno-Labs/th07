@@ -154,3 +154,21 @@ int ScreenEffect::OnDrawScreen(ScreenEffect *effect)
     DrawColorRect(area, effect->alpha << 24 | effect->color);
     return 1;
 }
+
+int ScreenEffect::OnUpdateFadeOut(ScreenEffect *effect)
+{
+    if (effect->duration != 0)
+    {
+        effect->alpha = effect->timer.AsFloat() * 255.0f / effect->duration;
+        if (effect->alpha < 0)
+        {
+            effect->alpha = 0;
+        }
+    }
+    if (effect->timer >= effect->duration)
+    {
+        return 0;
+    }
+    effect->timer.Tick();
+    return 1;
+}
