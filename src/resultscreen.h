@@ -85,7 +85,9 @@ struct Clrd
     // whole game, without continues and with.
     BYTE stagesClearedNoContinue[6];
     BYTE stagesCleared[6];
-    BYTE unk_18[0x4];
+    // The shot type.
+    BYTE shot;
+    BYTE unk_19[0x3];
 };
 ASSERT_SIZE(Clrd, 0x1c);
 
@@ -238,8 +240,9 @@ int LoadLsnmChunk(void *scoreDat, Lsnm *lsnm);
 // chunk is there. On any failure it makes a new, empty one. Either way
 // it gives it an empty list.
 ScoreDat *LoadScoreDat(char *path);
-// Fills `clrds` with fresh chunks, then copies the score file's "CLRD"
-// chunks over them.
+// Fills `clrds` (by shot type, 6) with fresh chunks, then copies the
+// score file's version 1 "CLRD" chunks over them, stopping at one out of
+// range. Returns 0, or -1 if `clrds` is NULL.
 int LoadClears(void *scoreDat, Clrd *clrds);
 // Copies the score file's version 1 "CATK" chunks to `catks`, by card
 // number, stopping at one numbered 0x8d or more. Returns 0, or -1 if
