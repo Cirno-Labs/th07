@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">9.22% (64)</tspan> · <tspan class="decompiled">0.14% (1)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">90.63% (629)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">9.37% (65)</tspan> · <tspan class="decompiled">0.14% (1)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">90.49% (628)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="68.89" height="6" x="0" y="0" class="named"/>
-<rect width="1.08" height="6" x="68.89" y="0" class="decompiled"/>
-<rect width="677.04" height="6" x="69.96" y="0" class="todo"/>
+<rect width="69.96" height="6" x="0" y="0" class="named"/>
+<rect width="1.08" height="6" x="69.96" y="0" class="decompiled"/>
+<rect width="675.96" height="6" x="71.04" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (173 bytes)</title></rect>
@@ -389,7 +389,7 @@
 <rect width="12" height="12" x="270" y="90" class="named"><title>0x00431ace GdiSurface::Create (95 bytes)</title></rect>
 <rect width="12" height="12" x="285" y="90" class="named"><title>0x00431b2d GdiSurface::CreateInFormat (447 bytes)</title></rect>
 <rect width="12" height="12" x="300" y="90" class="named"><title>0x00431cec GdiSurface::FindFormat (80 bytes)</title></rect>
-<rect width="12" height="12" x="315" y="90" class="todo"><title>0x00431d3c Func431d3c (1064 bytes)</title></rect>
+<rect width="12" height="12" x="315" y="90" class="named"><title>0x00431d3c GdiSurface::InvertAlpha (1064 bytes)</title></rect>
 <rect width="12" height="12" x="330" y="90" class="todo"><title>0x00432164 Func432164 (247 bytes)</title></rect>
 <rect width="12" height="12" x="345" y="90" class="todo"><title>0x0043225b Func43225b (35 bytes)</title></rect>
 <rect width="12" height="12" x="360" y="90" class="todo"><title>0x0043227e Func43227e (37 bytes)</title></rect>
@@ -766,11 +766,11 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">3.61%</tspan> · <tspan class="decompiled">0%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">96.39%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">3.89%</tspan> · <tspan class="decompiled">0%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">96.11%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="26.96" height="6" x="0" y="0" class="named"/>
-<rect width="0.10" height="6" x="26.96" y="0" class="decompiled"/>
-<rect width="720.01" height="6" x="26.99" y="0" class="todo"/>
+<rect width="29.05" height="6" x="0" y="0" class="named"/>
+<rect width="0.10" height="6" x="29.05" y="0" class="decompiled"/>
+<rect width="717.92" height="6" x="29.08" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -853,7 +853,7 @@
 <rect width="18.67" height="17.93" x="405.51" y="130.03" class="todo"><title>0x004020b0 Func4020b0 (1082 bytes)</title></rect>
 <rect width="18.67" height="17.87" x="405.51" y="150.95" class="todo"><title>0x00409990 Func409990 (1079 bytes)</title></rect>
 <rect width="18.67" height="17.60" x="405.51" y="171.82" class="todo"><title>0x0045ead0 Func45ead0 (1065 bytes)</title></rect>
-<rect width="18.67" height="17.58" x="405.51" y="192.42" class="todo"><title>0x00431d3c Func431d3c (1064 bytes)</title></rect>
+<rect width="18.67" height="17.58" x="405.51" y="192.42" class="named"><title>0x00431d3c GdiSurface::InvertAlpha (1064 bytes)</title></rect>
 <rect width="16.63" height="19.13" x="427.18" y="0" class="todo"><title>0x0041ea60 Func41ea60 (1037 bytes)</title></rect>
 <rect width="16.63" height="19.09" x="427.18" y="22.13" class="todo"><title>0x004069d0 Func4069d0 (1035 bytes)</title></rect>
 <rect width="16.63" height="18.37" x="427.18" y="44.23" class="todo"><title>0x00407000 Func407000 (1001 bytes)</title></rect>

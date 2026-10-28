@@ -188,6 +188,15 @@ struct FormatInfo
     DWORD blueMask;
 };
 
+// A pixel in D3DFMT_A1R5G5B5.
+struct A1R5G5B5
+{
+    WORD b : 5;
+    WORD g : 5;
+    WORD r : 5;
+    WORD a : 1;
+};
+
 // A GDI DIB section text is drawn into before it is copied to a Direct3D
 // surface; `format` is the D3DFORMAT its pixels follow. As in th06.
 class GdiSurface
@@ -210,7 +219,12 @@ public:
     // Returns false when there is no bitmap or the surface can't be
     // locked.
     bool CopyToSurface(IDirect3DSurface8 *surface);
-    bool InvertAlpha(int x, int y, int width, int height);
+    // Flips the alpha of the pixels in rows `y` on (GDI leaves alpha at
+    // 0), taking `width` and `height` in 16-bit pixels. In A1R5G5B5 it
+    // also shades the colors darker towards the bottom, a quarter as
+    // much when `lightShading` is set, and makes the uncovered pixels
+    // black. Returns false for other formats.
+    bool InvertAlpha(int x, int y, int width, int height, int lightShading);
 
     void *GetBits()
     {
