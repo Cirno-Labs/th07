@@ -616,7 +616,7 @@ again:
                     goto done;
                 }
                 DebugPrint("Sound : Recreate Stage\r\n");
-                this->bgm->Func45d060();
+                this->bgm->RecreateBuffers();
             }
             else if (command->stage == 2)
             {

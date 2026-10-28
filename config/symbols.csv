@@ -631,7 +631,7 @@ address,size,name,symbol
 0x0045cc30,795,CSoundManager::CreateStreamingFromMemory,?CreateStreamingFromMemory@CSoundManager@@QAEJPAPAVCStreamingSound@@PAXKPAUBgmFormat@@KU_GUID@@KK1@Z
 0x0045cf50,221,CSound::CSound,??0CSound@@QAE@PAPAUIDirectSoundBuffer@@KKPAVCWaveFile@@@Z
 0x0045d030,46,CSound::`scalar deleting destructor',??_GCSound@@UAEPAXI@Z
-0x0045d060,599,CSound::Func45d060,?Func45d060@CSound@@QAEJXZ
+0x0045d060,599,CStreamingSound::RecreateBuffers,?RecreateBuffers@CStreamingSound@@QAEJXZ
 0x0045d2c0,241,CSound::~CSound,??1CSound@@UAE@XZ
 0x0045d3c0,484,CSound::FillBufferWithSound,?FillBufferWithSound@CSound@@QAEJPAUIDirectSoundBuffer@@H@Z
 0x0045d5b0,163,Func45d5b0,

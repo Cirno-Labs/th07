@@ -76,8 +76,6 @@ public:
 
     HRESULT FillBufferWithSound(LPDIRECTSOUNDBUFFER pDSB, BOOL bRepeatWavIfBufferLarger);
     LPDIRECTSOUNDBUFFER GetBuffer(DWORD dwIndex);
-    // Recreates the buffers. Not in th06.
-    HRESULT Func45d060();
     HRESULT Play(DWORD dwPriority, DWORD dwFlags);
     HRESULT Stop();
     // Stops the first buffer, keeping its position. Not in th06.
@@ -110,6 +108,10 @@ class CStreamingSound : public CSound
 public:
     CStreamingSound(LPDIRECTSOUNDBUFFER pDSBuffer, DWORD dwDSBufferSize, CWaveFile *pWaveFile, DWORD dwNotifySize);
     ~CStreamingSound();
+
+    // Not in th06: releases the buffers and creates them again from
+    // dsbd, with 16 notifications every m_dwNotifySize bytes.
+    HRESULT RecreateBuffers();
 
     HRESULT HandleWaveStreamNotification(BOOL bLoopedPlay);
     HRESULT Reset();
