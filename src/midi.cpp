@@ -77,3 +77,14 @@ MmTimer::MmTimer()
 void MmTimer::OnTimer()
 {
 }
+
+int MmTimer::Stop()
+{
+    if (this->timerId != 0)
+    {
+        timeKillEvent(this->timerId);
+    }
+    timeEndPeriod(this->caps.wPeriodMin);
+    this->timerId = 0;
+    return 1;
+}

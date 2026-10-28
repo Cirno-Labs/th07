@@ -47,6 +47,9 @@ class MmTimer
 public:
     MmTimer();
 
+    // Kills the timer event, if any, and ends the timer period. Returns 1.
+    int Stop();
+
     // Called on every tick when the timer was started without a callback
     // of its own. Empty here; the linker folded it with another empty
     // function, which Func434020 calls directly.
