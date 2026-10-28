@@ -564,3 +564,8 @@ int CStreamingSound::UpdateFade()
     }
     return 0;
 }
+
+DWORD CWaveFile::GetSize()
+{
+    return m_dwSize;
+}

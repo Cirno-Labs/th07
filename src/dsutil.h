@@ -30,6 +30,7 @@ public:
     // and, when `bLoop` is set, skips its first loopStart bytes, as
     // th06's.
     HRESULT ResetFile(bool bLoop);
+    DWORD GetSize();
     HRESULT Read(BYTE *pBuffer, DWORD dwSizeToRead, DWORD *pdwSizeRead);
     // Switches the stream to the track `format` describes. Returns
     // E_FAIL while (+0x7c) is set or without a file. Not in th06.
@@ -40,7 +41,9 @@ public:
         return this->format;
     }
 
-    unsigned char unk_0[0x90];
+    unsigned char unk_0[0x2c];
+    DWORD m_dwSize;
+    unsigned char unk_30[0x60];
     // The track streamed.
     BgmFormat *format;
 };
