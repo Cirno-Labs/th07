@@ -93,9 +93,10 @@ public:
     // Clears unk_2a4 and unk_2ac to unk_2b8. Called by the title menu's
     // added callback. Not in th06.
     void ResetClockDriftCounters();
-    // Stops the music. Returns 0, or -1 with no music mode. Not in
-    // th06 as a function.
-    int Func43a05f();
+    // th06's StopMusic: stops the MIDI player in MIDI mode; in wave mode
+    // it queues sound command 3, or 4 with g_App.flags.preloadBgm.
+    // Returns -1 if the music mode is neither, otherwise 0.
+    int StopMusic();
     // th06's LoadMidi: loads the MIDI file `path` into slot `slot` of
     // `midi` in MIDI mode, and returns 0. In wave mode it queues sound
     // command 1 for the .wav of the same name instead. Returns 1 outside

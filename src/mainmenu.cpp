@@ -409,7 +409,7 @@ int MainMenu::UpdateOptions()
                 }
                 break;
             case 2:
-                g_App.Func43a05f();
+                g_App.StopMusic();
                 if (g_App.musicMode == 2)
                 {
                     g_App.midi->Restart(30);
@@ -491,7 +491,7 @@ int MainMenu::UpdateOptions()
                 }
                 break;
             case 2:
-                g_App.Func43a05f();
+                g_App.StopMusic();
                 if (g_App.musicMode >= 2)
                 {
                     g_App.musicMode = 0;
@@ -1465,7 +1465,7 @@ int MainMenu::UpdateShotTypeMenu()
                 }
                 g_App.scene = 2;
                 g_Unknown626270.SetUnk93d8Bit3(0);
-                g_App.Func43a05f();
+                g_App.StopMusic();
                 while (g_SoundPlayer.PlayQueuedSounds())
                 {
                 }
@@ -1594,7 +1594,7 @@ int MainMenu::UpdateGameStartMenu()
             g_Unknown626270.stage = this->cursor;
             g_App.scene = 2;
             g_Unknown626270.SetUnk93d8Bit3(0);
-            g_App.Func43a05f();
+            g_App.StopMusic();
             while (g_SoundPlayer.PlayQueuedSounds())
             {
             }
@@ -1848,7 +1848,7 @@ int MainMenu::UpdateReplayMenu()
             g_Unknown626270.stage = g_Unknown626270.difficulty >= 5 ? 7 : this->replayStage;
             g_App.scene = 2;
             g_Unknown626270.unk_93df = this->cursor;
-            g_App.Func43a05f();
+            g_App.StopMusic();
             while (g_SoundPlayer.PlayQueuedSounds())
             {
             }

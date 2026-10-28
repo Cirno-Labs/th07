@@ -302,3 +302,30 @@ int App::PlayMusic(char *path)
     }
     return 0;
 }
+
+int App::StopMusic()
+{
+    if (g_App.musicMode == 2)
+    {
+        if (g_App.midi != NULL)
+        {
+            g_App.midi->Stop();
+        }
+    }
+    else if (g_App.musicMode == 1)
+    {
+        if (g_App.flags.preloadBgm)
+        {
+            g_SoundPlayer.Func44d2f0(4, 0, "dummy");
+        }
+        else
+        {
+            g_SoundPlayer.Func44d2f0(3, 0, "dummy");
+        }
+    }
+    else
+    {
+        return -1;
+    }
+    return 0;
+}

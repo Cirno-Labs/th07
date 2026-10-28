@@ -406,7 +406,7 @@ address,size,name,symbol
 0x00439dd0,241,App::LoadMidi,?LoadMidi@App@@QAEHHPAD@Z
 0x00439ec1,140,App::PlayMidi,?PlayMidi@App@@QAEHH@Z
 0x00439f4d,274,App::PlayMusic,?PlayMusic@App@@QAEHPAD@Z
-0x0043a05f,119,App::Func43a05f,?Func43a05f@App@@QAEHXZ
+0x0043a05f,119,App::StopMusic,?StopMusic@App@@QAEHXZ
 0x0043a0d6,183,Func43a0d6,
 0x0043a18d,48,App::Func43a18d,?Func43a18d@App@@QAEHXZ
 0x0043a1bd,74,Func43a1bd,
