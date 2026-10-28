@@ -329,7 +329,7 @@ address,size,name,symbol
 0x004325e0,71,Unknown626270::AddPower,?AddPower@Unknown626270@@QAEXH@Z
 0x00432630,84,Func432630,
 0x00432690,91,Func432690,
-0x004326f0,660,Func4326f0,
+0x004326f0,660,ItemManager::SpawnItem,?SpawnItem@ItemManager@@QAEPAUItem@@PAUD3DXVECTOR3@@HH@Z
 0x00432990,4298,Func432990,
 0x00433a90,132,Func433a90,
 0x00433b20,275,Func433b20,
@@ -563,7 +563,7 @@ address,size,name,symbol
 0x0044e6f0,142,Func44e6f0,
 0x0044e780,347,Func44e780,
 0x0044e8e0,308,Func44e8e0,
-0x0044ea20,188,Func44ea20,
+0x0044ea20,188,SpriteEngine::SetScript,?SetScript@SpriteEngine@@QAEXPAVSprite@@PAX@Z
 0x0044eae0,992,Func44eae0,
 0x0044eec0,237,Func44eec0,
 0x0044efb0,1481,Func44efb0,
@@ -1712,10 +1712,13 @@ address,size,name,symbol
 0x0049ed98,,g_FormatInfos,?g_FormatInfos@@3PAUFormatInfo@@A
 0x0049fc88,,g_JoyCaps,?g_JoyCaps@@3UtagJOYCAPSA@@A
 0x0049fe1c,,g_ShotHeldFrames,?g_ShotHeldFrames@@3GA
+0x0049fe20,,g_Rng,?g_Rng@@3VRng@@A
 0x0049fe28,,g_TextSurface,?g_TextSurface@@3PAUIDirect3DSurface8@@A
+0x004b9e44,,g_SpriteEngine,?g_SpriteEngine@@3PAVSpriteEngine@@A
 0x004b9e64,,g_FileSize,?g_FileSize@@3HA
 0x00575950,,g_App,?g_App@@3VApp@@A
 0x00624210,,g_Log,?g_Log@@3VLog@@A
 0x00626218,,g_Chain,?g_Chain@@3VChain@@A
 0x00626258,,g_Archive,?g_Archive@@3VArchive@@A
+0x00626270,,g_Unknown626270,?g_Unknown626270@@3VUnknown626270@@A
 0x0135e218,,g_PadButtons,?g_PadButtons@@3PAEA

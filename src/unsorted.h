@@ -170,6 +170,7 @@ public:
     // How many times the generator was advanced.
     DWORD generated;
 };
+extern Rng g_Rng;
 
 // a + b, brought back into [-pi, pi] (giving up after 17 turns).
 float AddNormalizeAngle(float a, float b);
