@@ -285,9 +285,9 @@ address,size,name,symbol
 0x0042f853,139,Func42f853,
 0x0042f8de,110,Func42f8de,
 0x0042f94c,261,Func42f94c,
-0x0042fa60,75,Func42fa60,
+0x0042fa60,75,Chain::~Chain,??1Chain@@QAE@XZ
 0x0042fab0,99,Func42fab0,
-0x0042fb20,82,Func42fb20,
+0x0042fb20,82,ChainElem::~ChainElem,??1ChainElem@@QAE@XZ
 0x0042fb80,78,Func42fb80,
 0x0042fbd0,197,Func42fbd0,
 0x0042fca0,184,Func42fca0,
@@ -1710,3 +1710,4 @@ address,size,name,symbol
 0x0048d26c,4,CoInitialize,__imp__CoInitialize@4
 0x00575950,,g_App,?g_App@@3VApp@@A
 0x00624210,,g_Log,?g_Log@@3VLog@@A
+0x00626218,,g_Chain,?g_Chain@@3VChain@@A
