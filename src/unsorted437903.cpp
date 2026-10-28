@@ -15,6 +15,15 @@ void DebugPrint2(const char *fmt, ...)
 {
 }
 
+void SpriteEngine::ReleaseVertexBuffer()
+{
+    if (this->vertexBuffer != NULL)
+    {
+        this->vertexBuffer->Release();
+        this->vertexBuffer = NULL;
+    }
+}
+
 int App::OnDraw(App *arg)
 {
     DrawFps(1);

@@ -159,6 +159,8 @@ public:
     void ReleaseSurface(int surface);
     // Releases the loaded surfaces, before the device is reset.
     void ReleaseSurfaces();
+    // Releases the vertex buffer, if there is one.
+    void ReleaseVertexBuffer();
     // Starts a new batch of quads. Not in th06.
     void Func44f580();
     // Draws the batched quads, if any. Not in th06.
@@ -256,7 +258,8 @@ public:
     unsigned char unk_2e4d5[0x3];
     // The sprite data Draw last used, NULL when unknown.
     void *currentSpriteData;
-    unsigned char unk_2e4dc[0x150060];
+    IDirect3DVertexBuffer8 *vertexBuffer;
+    unsigned char unk_2e4e0[0x15005c];
     // A copy of the back buffer into a texture to do after the frame is
     // drawn: CopyBackBufferToTexture's arguments, the texture -1 when
     // there is none.
