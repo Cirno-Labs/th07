@@ -536,7 +536,7 @@ address,size,name,symbol
 0x0044b510,76,SoundPlayer::SoundPlayer,??0SoundPlayer@@QAE@XZ
 0x0044b560,705,SoundPlayer::Initialize,?Initialize@SoundPlayer@@QAEHPAUHWND__@@@Z
 0x0044b830,584,SoundPlayer::Release,?Release@SoundPlayer@@QAEHXZ
-0x0044ba80,100,Func44ba80,
+0x0044ba80,100,FindRiffChunk,?FindRiffChunk@@YIPADPAD0PAHI@Z
 0x0044baf0,523,Func44baf0,
 0x0044bd00,750,Func44bd00,
 0x0044bff0,48,Func44bff0,
@@ -1126,7 +1126,7 @@ address,size,name,symbol
 0x0047dbf0,96,_memset,_memset
 0x0047dc50,44,_mkdir,__mkdir
 0x0047dc7c,52,_sscanf,
-0x0047dcb0,57,_strncmp,
+0x0047dcb0,57,_strncmp,_strncmp
 0x0047dd00,195,_strchr,
 0x0047ddc0,7,_strcpy,_strcpy
 0x0047ddd0,232,Func47ddd0,

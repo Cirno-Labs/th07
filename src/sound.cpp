@@ -4,6 +4,8 @@
 #include "dsutil.h"
 #include "unsorted.h"
 
+char *FindRiffChunk(char *data, char *name, int *chunkSize, unsigned int size);
+
 SoundPlayer::SoundPlayer()
 {
     int i;
@@ -126,4 +128,21 @@ int SoundPlayer::Release()
         MemFree(this->bgmFormat);
     }
     return 0;
+}
+
+// Finds chunk `name` among the RIFF chunks at `data`, `size` bytes of
+// them. Returns its contents and sets *chunkSize, or returns NULL.
+char *FindRiffChunk(char *data, char *name, int *chunkSize, unsigned int size)
+{
+    while (size > 0)
+    {
+        *chunkSize = *(int *)(data + 4);
+        if (strncmp(data, name, 4) == 0)
+        {
+            return data + 8;
+        }
+        size -= *chunkSize + 8;
+        data += *chunkSize + 8;
+    }
+    return NULL;
 }
