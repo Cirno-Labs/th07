@@ -35,8 +35,8 @@ public:
     // Closes a file opened for reading.
     HRESULT Close();
     // Switches the stream to the track `format` describes. Returns
-    // E_FAIL while (+0x7c) is set or without a file. Not in th06.
-    HRESULT Func45e130(BgmFormat *format);
+    // E_FAIL when reading from memory or without a file. Not in th06.
+    HRESULT SwitchTrack(BgmFormat *format);
 
     BgmFormat *GetFormat()
     {

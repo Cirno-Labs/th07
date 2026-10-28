@@ -651,7 +651,7 @@ address,size,name,symbol
 0x0045e020,56,CWaveFile::CWaveFile,??0CWaveFile@@QAE@XZ
 0x0045e060,19,CWaveFile::~CWaveFile,??1CWaveFile@@QAE@XZ
 0x0045e080,163,CWaveFile::Open,?Open@CWaveFile@@QAEJPADPAUBgmFormat@@K@Z
-0x0045e130,84,CWaveFile::Func45e130,?Func45e130@CWaveFile@@QAEJPAUBgmFormat@@@Z
+0x0045e130,84,CWaveFile::SwitchTrack,?SwitchTrack@CWaveFile@@QAEJPAUBgmFormat@@@Z
 0x0045e190,92,CWaveFile::OpenFromMemory,?OpenFromMemory@CWaveFile@@QAEJPAEKPAUBgmFormat@@K@Z
 0x0045e1f0,17,CWaveFile::GetSize,?GetSize@CWaveFile@@QAEKXZ
 0x0045e210,328,CWaveFile::ResetFile,?ResetFile@CWaveFile@@QAEJ_N@Z

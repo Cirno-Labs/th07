@@ -320,7 +320,7 @@ int SoundPlayer::SwitchBgmTrack(char *path)
     }
     i = this->FindTrackIndex(path);
     waveFile = this->bgm->m_pWaveFile;
-    waveFile->Func45e130(&this->bgmFormat[i]);
+    waveFile->SwitchTrack(&this->bgmFormat[i]);
     DebugPrint("Streming BGM Reopen %d\r\n", i);
     return 0;
 }
@@ -623,7 +623,7 @@ again:
                 DebugPrint("Sound : ReOpen Stage\r\n");
                 char *name = command->arg >= 0 ? this->bgmNames[command->arg] : command->path;
                 int entry = this->FindTrackIndex(name);
-                this->bgm->GetWaveFile()->Func45e130(&this->bgmFormat[entry]);
+                this->bgm->GetWaveFile()->SwitchTrack(&this->bgmFormat[entry]);
             }
             else if (command->stage == 3)
             {
