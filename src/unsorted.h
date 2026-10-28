@@ -151,6 +151,9 @@ int InitD3dDevice();
 // Prints `name` and then 可 or 不可 (yes or no), by whether `caps` has
 // any of `flag`, at `out`; returns the end of the text. Not in th06.
 char *AppendCapsFlagText(char *name, DWORD caps, DWORD flag, char *out);
+// Writes a report of the device capabilities `caps` that matter to the
+// game into `buffer`, in Japanese. Not in th06.
+void FormatCapsReport(D3DCAPS8 *caps, char *buffer);
 // Sets the device's render and texture stage states.
 void SetDefaultRenderStates();
 // Returns -1 if the game must not start. Not in th06.
