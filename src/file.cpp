@@ -48,7 +48,7 @@ bool File::Open(char *path, char *mode)
     {
         return false;
     }
-    Func45e9d0(absPath, path);
+    MakeFullPath(absPath, path);
     this->handle = CreateFileA(absPath, this->access, FILE_SHARE_READ, NULL, dwCreation,
                                FILE_ATTRIBUTE_NORMAL | FILE_FLAG_SEQUENTIAL_SCAN, NULL);
     if (this->handle == INVALID_HANDLE_VALUE)
@@ -160,4 +160,25 @@ void *File::ReadAll(DWORD maxSize)
     }
     this->Seek(pos, g_SeekOrigins[0]);
     return hMem;
+}
+
+void MakeFullPath(char *dst, char *path)
+{
+    char *slash;
+
+    if (strchr(path, ':') != NULL)
+    {
+        strcpy(dst, path);
+    }
+    else
+    {
+        GetModuleFileNameA(NULL, dst, MAX_PATH);
+        slash = strrchr(dst, '\\');
+        if (slash == NULL)
+        {
+            strcpy(dst, "");
+        }
+        slash[1] = '\0';
+        strcat(dst, path);
+    }
 }

@@ -671,7 +671,7 @@ address,size,name,symbol
 0x0045e880,39,File::GetSize,?GetSize@File@@UAEKXZ
 0x0045e8b0,51,File::Seek,?Seek@File@@UAE_NJK@Z
 0x0045e8f0,210,File::ReadAll,?ReadAll@File@@UAEPAXK@Z
-0x0045e9d0,253,Func45e9d0,?Func45e9d0@@YIXPAD0@Z
+0x0045e9d0,253,MakeFullPath,?MakeFullPath@@YIXPAD0@Z
 0x0045ead0,1065,Func45ead0,?Func45ead0@@YIPAXPAEHPAH@Z
 0x0045ef00,868,Func45ef00,
 0x0045f270,67,Func45f270,
@@ -1129,7 +1129,7 @@ address,size,name,symbol
 0x0047dc50,44,_mkdir,__mkdir
 0x0047dc7c,52,_sscanf,
 0x0047dcb0,57,_strncmp,_strncmp
-0x0047dd00,195,_strchr,
+0x0047dd00,195,_strchr,_strchr
 0x0047ddc0,7,_strcpy,_strcpy
 0x0047ddd0,232,Func47ddd0,
 0x0047deb8,384,_localtime,_localtime

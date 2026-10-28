@@ -56,4 +56,4 @@ extern const DWORD g_SeekOrigins[3];
 
 // Writes `path` to `dst` (MAX_PATH bytes) as a full path: in the game's
 // directory unless it has a drive. Not in th06.
-void Func45e9d0(char *dst, char *path);
+void MakeFullPath(char *dst, char *path);
