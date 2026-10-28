@@ -7,6 +7,7 @@
 #include <mmsystem.h>
 #define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
+#include <dsound.h>
 #include <d3dx8math.h>
 
 #include "common.h"
@@ -246,11 +247,30 @@ int Func435fc0(char *path, char *out, int size);
 // Sums the executable's dwords. Not in th06.
 int Func435ec0();
 
-// Plays the sound effects and music (at 0x4ba0d8). Only what is known
-// so far.
+class CSoundManager;
+class CStreamingSound;
+
+// A command Func44c9c0 carries out over several frames, for the
+// streaming wave music. Not in th06.
+struct SoundCommand
+{
+    // 0 ends the queue.
+    int type;
+    int arg;
+    // How far the command has got.
+    int stage;
+    char path[0x100];
+};
+ASSERT_SIZE(SoundCommand, 0x10c);
+
+// Plays the sound effects and music (at 0x4ba0d8). It starts as th06's;
+// the wave music now streams from one file of tracks (thbgm.dat), with
+// a queue of commands.
 class SoundPlayer
 {
 public:
+    // Zeroes everything; no sound is loaded.
+    SoundPlayer();
     // Creates the DirectSound objects for `hwnd`. Returns 0, or -1 on
     // failure.
     int Initialize(HWND hwnd);
@@ -261,7 +281,51 @@ public:
     // Queues sound effect `idx` to start on the next update, unless
     // it is already queued or five are.
     void QueueSound(int idx, int unk);
+
+    IDirectSound8 *dsound;
+    DWORD unk_004;
+    // The loaded sound files' buffers.
+    IDirectSoundBuffer *soundBuffers[0x80];
+    // Each sound effect's own buffer.
+    IDirectSoundBuffer *sounds[0x80];
+    // Set when a sound is queued; -1 at first.
+    int unk_408[0x80];
+    // A silent buffer, looping from start-up.
+    IDirectSoundBuffer *silence;
+    // The window the sound timer posts to.
+    HWND hwnd;
+    // NULL until Initialize succeeds.
+    CSoundManager *manager;
+    // The thread streaming the wave music and its ID.
+    DWORD notifyThreadId;
+    HANDLE notifyThread;
+    DWORD unk_61c;
+    // The sound effects to play, or -1.
+    int queue[5];
+    // The thbgm.fmt entries of the preloaded tracks, their data, and
+    // its size.
+    void *bgmEntries[0x10];
+    void *bgmPreloadData[0x10];
+    void *bgmPreloadCursor[0x10];
+    DWORD bgmPreloadSize[0x10];
+    // The preloaded track playing.
+    int bgmPlaying;
+    // The contents of thbgm.fmt.
+    void *bgmFormat;
+    // The commands for the wave music, in order.
+    SoundCommand commands[0x20];
+    // The file names of the preloaded tracks.
+    char bgmNames[0x10][0x100];
+    // The file the wave music streams from.
+    char bgmPath[0x100];
+    // The wave music playing; NULL when stopped.
+    CStreamingSound *bgm;
+    // Signalled as the wave music plays.
+    HANDLE notifyEvent;
+    DWORD unk_39c4;
+    DWORD unk_39c8;
 };
+ASSERT_SIZE(SoundPlayer, 0x39cc);
 extern SoundPlayer g_SoundPlayer;
 
 // Its only known caller is Func45db60.
