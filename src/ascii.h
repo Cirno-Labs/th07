@@ -13,8 +13,20 @@ public:
     // AddString with printf-style formatting.
     void AddFormat(D3DXVECTOR3 *pos, char *fmt, ...);
 
+    void SetColor(D3DCOLOR color)
+    {
+        this->color = color;
+    }
+    void SetHighlight(int highlight)
+    {
+        this->highlight = highlight;
+    }
+
     unsigned char unk_0[0x74c0];
     // The color text is queued with.
     D3DCOLOR color;
+    unsigned char unk_74c4[0xc];
+    // Drawn with the second glyph set, as in th06.
+    int highlight;
 };
 extern AsciiText g_AsciiText;

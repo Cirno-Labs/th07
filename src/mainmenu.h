@@ -33,6 +33,11 @@ public:
     // the player pick one, one of its stages and an option, and starts
     // it (scene 2, returns 0). Returns 1 otherwise.
     int UpdateReplayMenu();
+    // In the replay menu, lists the page of 15 replays around
+    // replayCursor, the one at the cursor highlighted, and in sub-states
+    // 2 and 3 the picked replay's slowdown and the score each stage
+    // started with. Returns 1.
+    int DrawReplayMenu();
     // Gives every button of controllerMapping assigned `button` the
     // value `replacement`. Unlike th06's, `unk` is unused.
     void ReassignButton(short button, short replacement, int unk);
@@ -84,3 +89,9 @@ public:
     unsigned char unk_d11e[0x3a];
 };
 ASSERT_SIZE(MainMenu, 0xd158);
+
+// The names the replay menu shows for stages (then Extra and Phantasm),
+// difficulties and shot types.
+extern char *g_MenuStageNames[8];
+extern char *g_MenuDifficultyNames[6];
+extern char *g_MenuShotTypeNames[6];

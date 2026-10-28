@@ -5,6 +5,7 @@
 #include <direct.h>
 #include <stdio.h>
 
+#include "ascii.h"
 #include "mainmenu.h"
 #include "unsorted.h"
 
@@ -1150,5 +1151,100 @@ int MainMenu::UpdateReplayMenu()
     this->unk_b0c0++;
     this->stateFrames++;
     this->unk_d0fc++;
+    return 1;
+}
+
+int MainMenu::DrawReplayMenu()
+{
+    Sprite *text;
+    int top;
+    int j;
+
+    text = &this->sprites[0x86];
+    g_AsciiText.AddFormat(&text->pos, "No.   Name       Date  Player   Rank");
+    j = this->replayCursor - this->replayCursor % 15;
+    for (top = j + 15; j < top; j++)
+    {
+        if (j >= this->replayCount)
+        {
+            break;
+        }
+        text++;
+        g_AsciiText.SetHighlight(j == this->replayCursor);
+        if (j == this->replayCursor)
+        {
+            g_AsciiText.SetColor(0xffffffff);
+        }
+        else
+        {
+            g_AsciiText.SetColor(0xff808080);
+        }
+        g_AsciiText.AddFormat(&text->pos, "%s %8s  %6s %7s  %8s", this->replayLabels[j], this->replays[j].name,
+                              this->replays[j].date, g_MenuShotTypeNames[this->replays[j].shotType],
+                              g_MenuDifficultyNames[this->replays[j].difficulty]);
+    }
+    if ((this->unk_8 == 2 || this->unk_8 == 3) && this->loadedReplay != NULL)
+    {
+        g_AsciiText.SetColor(0xffffffff);
+        g_AsciiText.SetHighlight(0);
+        text = &this->sprites[0x85];
+        g_AsciiText.AddFormat(&text->pos, "       %2.3f%%", this->loadedReplay->slowdown);
+        text = &this->sprites[0x96];
+        g_AsciiText.AddFormat(&text->pos, "Stage    LastScore");
+        j = this->replayCursor - this->replayCursor % 15;
+        for (top = 0; top < 7; top++, j++)
+        {
+            text++;
+            if (this->unk_8 != 3)
+            {
+                g_AsciiText.SetHighlight(top == this->replayStage);
+                if (top == this->replayStage)
+                {
+                    g_AsciiText.SetColor(0xffffffff);
+                }
+                else
+                {
+                    g_AsciiText.SetColor(0xff808080);
+                }
+            }
+            else
+            {
+                if (top == this->replayStage)
+                {
+                    g_AsciiText.SetColor(0x60ffffff);
+                }
+                else
+                {
+                    g_AsciiText.SetColor(0x60808080);
+                }
+            }
+            if (this->loadedReplay->stages[top] != NULL)
+            {
+                if (top < 6 || this->loadedReplay->difficulty <= 4)
+                {
+                    g_AsciiText.AddFormat(&text->pos, "%s %9d0", g_MenuStageNames[top],
+                                          this->loadedReplay->stages[top]->score);
+                }
+                else
+                {
+                    g_AsciiText.AddFormat(&text->pos, "%s %9d0", g_MenuStageNames[7],
+                                          this->loadedReplay->stages[top]->score);
+                }
+            }
+            else
+            {
+                if (top < 6 || this->loadedReplay->difficulty <= 4)
+                {
+                    g_AsciiText.AddFormat(&text->pos, "%s ----------", g_MenuStageNames[top]);
+                }
+                else
+                {
+                    g_AsciiText.AddFormat(&text->pos, "%s ----------", g_MenuStageNames[7]);
+                }
+            }
+        }
+    }
+    g_AsciiText.SetColor(0xffffffff);
+    g_AsciiText.SetHighlight(0);
     return 1;
 }
