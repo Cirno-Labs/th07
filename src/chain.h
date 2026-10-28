@@ -50,6 +50,8 @@ public:
     // Inserts `elem` into the update chain by priority and calls its
     // added callback. Returns that callback's result, or 0 without one.
     int AddToCalcChain(ChainElem *elem, int priority);
+    // Like AddToCalcChain, for the draw chain.
+    int AddToDrawChain(ChainElem *elem, int priority);
 
     ChainElem calcChain;
     ChainElem drawChain;
