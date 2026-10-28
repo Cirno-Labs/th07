@@ -299,7 +299,7 @@ address,size,name,symbol
 0x00430140,325,Chain::Remove,?Remove@Chain@@QAEXPAUChainElem@@@Z
 0x00430290,85,Func430290,
 0x004302f0,122,Func4302f0,
-0x00430370,115,Func430370,
+0x00430370,115,SetButtonFromJoystick,?SetButtonFromJoystick@@YIHPAGFGK@Z
 0x004303f0,1488,Func4303f0,
 0x004309c0,392,Func4309c0,
 0x00430b50,1904,Func430b50,

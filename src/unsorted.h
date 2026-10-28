@@ -43,3 +43,8 @@ extern Log g_Log;
 
 // Logs a printf-style message to a log object.
 int LogPrintf(Log *log, const char *fmt, ...);
+
+// Ors `bit` into `buttons` while button `button` (a bit index into
+// joyGetPosEx's dwButtons) is down, and returns what it ored in. A
+// negative button is unmapped.
+int SetButtonFromJoystick(WORD *buttons, short button, WORD bit, DWORD joyButtons);
