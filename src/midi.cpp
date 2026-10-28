@@ -266,3 +266,25 @@ found:
     MemFree(header);
     return 0;
 }
+
+int MidiPlayer::Stop()
+{
+    int i;
+
+    if (this->tracks == NULL)
+    {
+        return -1;
+    }
+    for (i = 0; i < 0x20; i++)
+    {
+        // Indexes with nextHeader, not i, in the original.
+        if (this->headers[this->nextHeader] != NULL)
+        {
+            this->ReleaseHeader(this->headers[this->nextHeader]);
+        }
+    }
+    MmTimer::Stop();
+    this->device.Close();
+    this->playingSlot = -1;
+    return 0;
+}
