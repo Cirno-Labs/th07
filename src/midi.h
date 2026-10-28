@@ -183,6 +183,9 @@ public:
     // Loads and parses a MIDI file through the scratch slot 31. Returns -1
     // if it cannot be loaded, otherwise 0.
     int Load(char *path);
+    // Handles the next event of a track and reads the time of the one
+    // after.
+    void ProcessEvent(MidiTrack *track);
 
     // The slot of the file being played, -1 for none. LoadFile stops
     // playback before it replaces that file.

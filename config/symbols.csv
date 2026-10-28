@@ -378,7 +378,7 @@ address,size,name,symbol
 0x00436bc0,199,MidiPlayer::ReleaseHeader,?ReleaseHeader@MidiPlayer@@QAEHPAUmidihdr_tag@@@Z
 0x00436c90,79,MidiPlayer::FadeOut,?FadeOut@MidiPlayer@@QAEHH@Z
 0x00436ce0,619,MidiPlayer::OnTimer,?OnTimer@MidiPlayer@@UAEXXZ
-0x00436f50,1868,Func436f50,
+0x00436f50,1868,MidiPlayer::ProcessEvent,?ProcessEvent@MidiPlayer@@QAEXPAUMidiTrack@@@Z
 0x004377f0,187,MidiPlayer::SendVolume,?SendVolume@MidiPlayer@@QAEXH@Z
 0x004378b0,22,Func4378b0,
 0x004378d0,25,Func4378d0,
@@ -1222,7 +1222,7 @@ address,size,name,symbol
 0x004815ba,30,Func4815ba,
 0x004815d8,113,__getptd,
 0x00481649,111,Func481649,
-0x004816c0,52,__allmul,
+0x004816c0,52,__allmul,__allmul
 0x004816f4,9,Func4816f4,
 0x004816fd,9,Func4816fd,
 0x00481706,115,__dosmaperr,
@@ -1236,7 +1236,7 @@ address,size,name,symbol
 0x00482839,263,_gmtime,
 0x00482940,78,___ascii_stricmp,
 0x0048298e,209,Func48298e,
-0x00482a60,104,__aulldiv,
+0x00482a60,104,__aulldiv,__aulldiv
 0x00482ac8,133,__mbctoupper,
 0x00482b4d,41,report_failure,
 0x00482b7e,14,__security_check_cookie,
