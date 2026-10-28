@@ -436,7 +436,7 @@ address,size,name,symbol
 0x0043bf50,379,FireTrailLaser,?FireTrailLaser@@YIHPAVPlayer@@PAUPlayerBullet@@HPAUShotData@@@Z
 0x0043c0d0,228,FireHomingShot,?FireHomingShot@@YIHPAVPlayer@@PAUPlayerBullet@@HPAUShotData@@@Z
 0x0043c1c0,142,FireAimedShot,?FireAimedShot@@YIHPAVPlayer@@PAUPlayerBullet@@HPAUShotData@@@Z
-0x0043c250,554,Func43c250,
+0x0043c250,554,UpdateHomingOrb,?UpdateHomingOrb@@YIHPAVPlayer@@PAUPlayerBullet@@@Z
 0x0043c480,554,Func43c480,
 0x0043c6b0,73,Func43c6b0,
 0x0043c700,566,Func43c700,
@@ -1459,7 +1459,7 @@ address,size,name,symbol
 0x0048bbf0,20,__CIcos,__CIcos
 0x0048bc0d,145,Func48bc0d,
 0x0048bcaa,10,__CIatan2,__CIatan2
-0x0048bcc0,20,Func48bcc0,
+0x0048bcc0,20,__CIsqrt,__CIsqrt
 0x0048bcdd,157,Func48bcdd,
 0x0048bd80,24,Func48bd80,
 0x0048bd9e,717,Func48bd9e,

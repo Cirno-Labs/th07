@@ -25,7 +25,8 @@ struct PlayerBullet
     float angle;
     Timer timer;
     short damage;
-    unsigned char unk_34a[0x2];
+    // 1 while it flies.
+    short state;
     // ShotData::type.
     short type;
     // A laser's: its entry in Player::lasers, and its option, from 1.
@@ -85,6 +86,11 @@ int FireHomingShot(Player *player, PlayerBullet *bullet, int frame, ShotData *sd
 // A plain shot that flies at Player::unk_b7e58, turned by sd->angle +
 // pi / 2.
 int FireAimedShot(Player *player, PlayerBullet *bullet, int frame, ShotData *sd);
+
+// Steers a flying homing bullet, as th06's UpdateBullets did Reimu A's
+// orbs: for its first 40 frames towards Player::unk_2428, if any, at up
+// to 10; otherwise speeds it up by a third up to 10. Returns 0.
+int UpdateHomingOrb(Player *player, PlayerBullet *bullet);
 
 // One of the 0x70 entries at Player+0x9dc, probably th06's bomb
 // hitboxes (bombHitPos, bombHitSize, ...) as one struct.
@@ -152,7 +158,10 @@ public:
     char unk_240a;
     unsigned char unk_240b[0x5];
     Timer unk_2410;
-    unsigned char unk_241c[0x18];
+    unsigned char unk_241c[0xc];
+    // What UpdateHomingOrb's and Func43c480's shots home in on; x is -100 or
+    // less when there is nothing.
+    D3DXVECTOR3 unk_2428;
     // What the homing shots aim at; x is -100 or less when there is
     // nothing.
     D3DXVECTOR3 homingTarget;
