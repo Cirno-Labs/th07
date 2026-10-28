@@ -79,6 +79,9 @@ int FireLaser(Player *player, PlayerBullet *bullet, int frame, ShotData *sd);
 // keeps sd->interval in bullet->unk_352 and moves its pos and the 16
 // unk_258 to x = -999.
 int FireTrailLaser(Player *player, PlayerBullet *bullet, int frame, ShotData *sd);
+// A plain shot that, when there is a homingTarget, flies at it, turned
+// by sd->angle + pi / 2, at 1.5 times its speed.
+int FireHomingShot(Player *player, PlayerBullet *bullet, int frame, ShotData *sd);
 
 // One of the 0x70 entries at Player+0x9dc, probably th06's bomb
 // hitboxes (bombHitPos, bombHitSize, ...) as one struct.
@@ -146,7 +149,11 @@ public:
     char unk_240a;
     unsigned char unk_240b[0x5];
     Timer unk_2410;
-    unsigned char unk_241c[0x28];
+    unsigned char unk_241c[0x18];
+    // What the homing shots aim at; x is -100 or less when there is
+    // nothing.
+    D3DXVECTOR3 homingTarget;
+    unsigned char unk_2440[0x4];
     PlayerBullet bullets[0x60];
     PlayerLaser lasers[3];
     Timer unk_169f4;
