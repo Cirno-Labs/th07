@@ -578,6 +578,17 @@ DWORD CWaveFile::GetSize()
     return m_dwSize;
 }
 
+HRESULT CWaveFile::Close()
+{
+    if (m_dwFlags == WAVEFILE_READ)
+    {
+        CloseHandle(this->hFile);
+        this->hFile = INVALID_HANDLE_VALUE;
+    }
+
+    return S_OK;
+}
+
 // As th06's, the locked buffer's variables are renamed and declared after
 // the restore; the cursors' names are picked for their stack slots too.
 HRESULT CStreamingSound::HandleWaveStreamNotification(BOOL bLoopedPlay)
