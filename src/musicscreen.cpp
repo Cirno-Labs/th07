@@ -1,6 +1,7 @@
 // cflags: /Os
 // Part of the /Os file starting at 0x437903, as in th06.
 
+#include <stdlib.h>
 #include <string.h>
 
 #include "ascii.h"
@@ -206,4 +207,143 @@ int MusicScreen::OnDraw(MusicScreen *screen)
     }
     g_AsciiText.color = 0xffffffff;
     return 1;
+}
+
+// musiccmt.txt lists the tunes. Each starts with a line "@path", then
+// its title on the next line and up to 8 lines of comment.
+int MusicScreen::AddedCallback(MusicScreen *screen)
+{
+    int i;
+    int row;
+    char *rp;
+    int k;
+    char *data;
+    char str[0x42];
+
+    if (g_SpriteEngine->LoadSurface(0, "data/result/music.jpg") != 0)
+    {
+        return -1;
+    }
+    if (g_SpriteEngine->LoadAnm(0x2e, "data/music00.anm", 0x900) != 0)
+    {
+        return -1;
+    }
+    g_SpriteEngine->StartScript(&screen->unk_0024[0], 0x900);
+    screen->stateFrames = 0;
+    data = rp = (char *)LoadFileData("data/musiccmt.txt", 0);
+    if (rp == NULL)
+    {
+        return -1;
+    }
+    screen->tunes = new MusicTune[0x20];
+    i = -1;
+    while ((DWORD)(rp - data) < (DWORD)g_FileSize)
+    {
+        if (*rp == '@')
+        {
+            rp++;
+            i++;
+            k = 0;
+            while (*rp != '\n' && *rp != '\r')
+            {
+                screen->tunes[i].path[k] = *rp;
+                rp++;
+                k++;
+                if ((DWORD)(rp - data) >= (DWORD)g_FileSize)
+                {
+                    goto done;
+                }
+            }
+            while (*rp == '\n' || *rp == '\r')
+            {
+                rp++;
+                if ((DWORD)(rp - data) >= (DWORD)g_FileSize)
+                {
+                    goto done;
+                }
+            }
+            k = 0;
+            while (*rp != '\n' && *rp != '\r')
+            {
+                screen->tunes[i].title[k] = *rp;
+                rp++;
+                k++;
+                if ((DWORD)(rp - data) >= (DWORD)g_FileSize)
+                {
+                    goto done;
+                }
+            }
+            // Never true, so the row break after the title is skipped
+            // as an empty comment row.
+            while (*rp == '\n' && *rp == '\r')
+            {
+                rp++;
+                if ((DWORD)(rp - data) >= (DWORD)g_FileSize)
+                {
+                    goto done;
+                }
+            }
+            for (row = 0; row < 8; row++)
+            {
+                if (*rp == '@')
+                {
+                    break;
+                }
+                memset(screen->tunes[i].comment[row], 0, sizeof(screen->tunes[i].comment[row]));
+                k = 0;
+                while (*rp != '\n' && *rp != '\r')
+                {
+                    screen->tunes[i].comment[row][k] = *rp;
+                    rp++;
+                    k++;
+                    if ((DWORD)(rp - data) >= (DWORD)g_FileSize)
+                    {
+                        goto done;
+                    }
+                }
+                while (*rp == '\n' || *rp == '\r')
+                {
+                    rp++;
+                    if ((DWORD)(rp - data) >= (DWORD)g_FileSize)
+                    {
+                        goto done;
+                    }
+                }
+            }
+        }
+        else
+        {
+            rp++;
+        }
+    }
+
+done:
+    screen->tuneCount = i + 1;
+    for (i = 0; i < screen->tuneCount; i++)
+    {
+        g_SpriteEngine->StartScript(&screen->titles[i], i + 0x901);
+        g_SpriteEngine->RenderText(&screen->titles[i], 0xc0e0ff, 0x302080, screen->tunes[i].title);
+        screen->titles[i].pos.x = 93.0f;
+        screen->titles[i].pos.y = 104.0f + (i + 1) * 18 - 20.0f;
+        screen->titles[i].pos.z = 0.0f;
+        screen->titles[i].flags |= 0xc00;
+    }
+    // The comment of the tune playing, as UpdateList shows it.
+    for (i = 0; i < 8; i++)
+    {
+        g_SpriteEngine->StartScript(&screen->comment[i], i + 0x707);
+        memset(str, 0, sizeof(str));
+        memcpy(str, screen->tunes[screen->playing].comment[i], 0x40);
+        if (str[0] != '\0')
+        {
+            screen->comment[i].flags |= 2;
+            g_SpriteEngine->RenderText(&screen->comment[i], 0xffe0c0, 0x300000, str);
+        }
+        else
+        {
+            screen->comment[i].flags &= ~2;
+        }
+    }
+    free(data);
+    return 0;
 }

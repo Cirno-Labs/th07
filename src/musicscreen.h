@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include <string.h>
+
 #include "chain.h"
 #include "common.h"
 #include "sprite.h"
@@ -10,6 +12,11 @@
 // A tune in the music screen's list.
 struct MusicTune
 {
+    MusicTune()
+    {
+        memset(this, 0, sizeof(MusicTune));
+    }
+
     // The MIDI file; App::PlayMusic finds the wave files from it.
     char path[0x40];
     char title[0x42];
@@ -23,6 +30,11 @@ ASSERT_SIZE(MusicTune, 0x292);
 class MusicScreen
 {
 public:
+    // The update chain element's added callback: loads the screen's
+    // image, data/music00.anm and data/musiccmt.txt, the list of tunes,
+    // and sets up the title and comment sprites. Returns 0, or -1 on
+    // failure.
+    static int AddedCallback(MusicScreen *screen);
     // The update chain element's callback: runs the current state's
     // handler and counts its frames, then steps the sprites. Returns 0
     // while a handler asks to stop, otherwise 1.
