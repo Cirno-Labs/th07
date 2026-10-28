@@ -52,6 +52,8 @@ class CSound
 public:
     virtual ~CSound();
 
+    HRESULT Stop();
+
     LPDIRECTSOUNDBUFFER *m_apDSBuffer;
     DWORD m_dwDSBufferSize;
     CWaveFile *m_pWaveFile;
