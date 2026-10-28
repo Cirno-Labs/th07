@@ -76,3 +76,104 @@ public:
     TIMECAPS caps;
 };
 ASSERT_SIZE(MmTimer, 0x10);
+
+// One track of a parsed MIDI file. Size from the stride of
+// MidiPlayer::tracks.
+struct MidiTrack
+{
+    // Set when the track is rewound.
+    int active;
+    // Time of the next event, from the delta times read by ReadVarLen.
+    int delta;
+    // The length of `data`.
+    DWORD length;
+    // The last status byte, for running status.
+    BYTE runningStatus;
+    // The track's event data.
+    BYTE *data;
+    // Read position in `data`.
+    BYTE *cursor;
+    // `cursor` and `delta` at the loop start, saved by controller 2 and
+    // restored by controller 4. The start of the data after a rewind.
+    BYTE *loopCursor;
+    int loopDelta;
+};
+ASSERT_SIZE(MidiTrack, 0x20);
+
+// The state of one of the 16 MIDI channels. Size from the stride of
+// MidiPlayer::channels.
+struct MidiChannel
+{
+    // One bit per note that is on, note n at bit n % 8 of byte n / 8.
+    BYTE notes[0x10];
+    BYTE program;
+    // Controllers 0, 10, 91 and 93.
+    BYTE bank;
+    BYTE pan;
+    BYTE reverb;
+    BYTE chorus;
+    // Channel volume (controller 7) before scaling.
+    BYTE volume;
+    // `volume` scaled by volumeScale, as last sent.
+    BYTE scaledVolume;
+};
+ASSERT_SIZE(MidiChannel, 0x17);
+
+// Plays MIDI files on a MidiDevice, driven by its own timer. th06's
+// player with one more field, `playingSlot`; from `tracks` on the layout
+// is the same.
+class MidiPlayer : public MmTimer
+{
+public:
+    MidiPlayer();
+
+    virtual void OnTimer();
+
+    // The slot of the file being played, -1 for none. LoadFile stops
+    // playback before it replaces that file.
+    int playingSlot;
+    // Long messages being sent; released by ReleaseHeader.
+    LPMIDIHDR headers[0x20];
+    // The entry of `headers` the next long message goes in.
+    int nextHeader;
+    // MIDI files loaded by LoadFile, freed by UnloadFile.
+    void *fileData[0x20];
+    // The number of entries in `tracks`.
+    int trackCount;
+    // From the file header: the format and the time division.
+    int format;
+    int division;
+    // Microseconds per quarter note, from the tempo meta event.
+    int tempo;
+    // Timer ticks since the start.
+    unsigned __int64 ticks;
+    // The time, in ms, played at earlier tempos; added to the time computed
+    // from `ticks`, which restart at each tempo change.
+    unsigned __int64 baseTime;
+    // Parsed tracks, `trackCount` of them.
+    MidiTrack *tracks;
+    MidiDevice device;
+    unsigned char unk_144[0x10];
+    MidiChannel channels[0x10];
+    // Added to every note number.
+    char transpose;
+    // Scales every channel's volume.
+    float volumeScale;
+    // The volume last sent while fading, volumeScale * 128.
+    int lastVolume;
+    int unk_2d0;
+    int unk_2d4;
+    int unk_2d8;
+    int unk_2dc;
+    // Set while fading out.
+    int fading;
+    // In ms, set by FadeOut.
+    int fadeDuration;
+    // Ticks of the fade so far.
+    int fadeElapsed;
+    // tempo, ticks and baseTime at the loop start (controller 2).
+    int loopTempo;
+    unsigned __int64 loopTicks;
+    unsigned __int64 loopBaseTime;
+};
+ASSERT_SIZE(MidiPlayer, 0x300);
