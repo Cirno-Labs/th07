@@ -681,12 +681,12 @@ address,size,name,symbol
 0x0045f4f0,132,LzssReplaceNode,?LzssReplaceNode@@YIXHH@Z
 0x0045f580,183,LzssReplaceChild,?LzssReplaceChild@@YIXHH@Z
 0x0045f640,63,LzssPredecessor,?LzssPredecessor@@YIHH@Z
-0x0045f680,40,Func45f680,
+0x0045f680,40,DatArchiveEntry::~DatArchiveEntry,??1DatArchiveEntry@@QAE@XZ
 0x0045f6b0,53,DatArchive::DatArchive,??0DatArchive@@QAE@XZ
 0x0045f6f0,19,DatArchive::~DatArchive,??1DatArchive@@QAE@XZ
 0x0045f710,229,DatArchive::Open,?Open@DatArchive@@QAE_NPAD@Z
 0x0045f800,199,DatArchive::Release,?Release@DatArchive@@QAEXXZ
-0x0045f8d0,133,Func45f8d0,
+0x0045f8d0,133,DatArchiveEntry::`vector deleting destructor',??_EDatArchiveEntry@@QAEPAXI@Z
 0x0045f960,321,DatArchive::Decode,?Decode@DatArchive@@QAEPAXPADPAX@Z
 0x0045fab0,46,DatArchive::GetEntrySize,?GetEntrySize@DatArchive@@QAEKPAD@Z
 0x0045fae0,101,Func45fae0,
@@ -1144,7 +1144,7 @@ address,size,name,symbol
 0x0047e8e9,34,_rand,_rand
 0x0047e90b,,_purecall,__purecall
 0x0047e914,47,__ArrayUnwind,
-0x0047e972,72,`eh_vector_destructor_iterator',
+0x0047e972,72,`eh_vector_destructor_iterator',??_M@YGXPAXIHP6EX0@Z@Z
 0x0047e9ba,24,Func47e9ba,
 0x0047e9d2,74,`eh_vector_constructor_iterator',
 0x0047ea1c,24,Func47ea1c,

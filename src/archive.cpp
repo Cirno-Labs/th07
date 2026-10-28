@@ -37,3 +37,24 @@ bool DatArchive::Open(char *path)
     this->Release();
     return false;
 }
+
+void DatArchive::Release()
+{
+    DebugPrint("info : %s close arcfile\r\n", this->path);
+    if (this->path != NULL)
+    {
+        GlobalFree(this->path);
+        this->path = NULL;
+    }
+    if (this->entries != NULL)
+    {
+        delete[] this->entries;
+        this->entries = NULL;
+    }
+    if (this->file != NULL)
+    {
+        delete this->file;
+        this->file = NULL;
+    }
+    this->numEntries = 0;
+}

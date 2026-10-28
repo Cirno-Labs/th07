@@ -59,7 +59,29 @@ extern const DWORD g_SeekOrigins[3];
 // directory unless it has a drive. Not in th06.
 void MakeFullPath(char *dst, char *path);
 
-struct DatArchiveEntry;
+// An entry of an archive's table.
+struct DatArchiveEntry
+{
+    ~DatArchiveEntry()
+    {
+        if (this->name != NULL)
+        {
+            GlobalFree(this->name);
+            this->name = NULL;
+        }
+    }
+
+    // GlobalAlloc'd.
+    char *name;
+    // Where the compressed data starts in the archive; it ends where the
+    // next entry's starts. The table has one more entry, without a name,
+    // whose offset is the table's.
+    DWORD offset;
+    // The decoded size.
+    DWORD size;
+    DWORD unk_0c;
+};
+ASSERT_SIZE(DatArchiveEntry, 0x10);
 
 // The game's data archive (th07.dat, magic "PBG4"), at 0x626258: files
 // are looked up by name (without the directory). Rewritten since th06:
