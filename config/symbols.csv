@@ -351,7 +351,7 @@ address,size,name,symbol
 0x00435bd0,595,CheckSingleInstance,?CheckSingleInstance@@YIHPAUHINSTANCE__@@@Z
 0x00435e30,143,ForceForegroundWindow,?ForceForegroundWindow@@YIXPAUHWND__@@@Z
 0x00435ec0,255,ChecksumExecutable,?ChecksumExecutable@@YIHXZ
-0x00435fc0,322,Func435fc0,?Func435fc0@@YIHPAD0H@Z
+0x00435fc0,322,ResolveShortcut,?ResolveShortcut@@YIHPAD0H@Z
 0x00436110,33,MidiDevice::MidiDevice,??0MidiDevice@@QAE@XZ
 0x00436140,19,MidiDevice::~MidiDevice,??1MidiDevice@@QAE@XZ
 0x00436160,89,MidiDevice::Open,?Open@MidiDevice@@QAEHI@Z
@@ -1716,6 +1716,9 @@ address,size,name,symbol
 0x0048d268,4,CoCreateInstance,__imp__CoCreateInstance@20
 0x0048d26c,4,CoInitialize,__imp__CoInitialize@4
 0x004903f8,,IID_IDirectSoundNotify,_IID_IDirectSoundNotify
+0x004904b8,,IID_IShellLinkA,_IID_IShellLinkA
+0x004904c8,,CLSID_ShellLink,_CLSID_ShellLink
+0x004904d8,,IID_IPersistFile,_IID_IPersistFile
 0x004904e8,,GUID_NULL,_GUID_NULL
 0x00495120,,g_SeekOrigins,?g_SeekOrigins@@3QBKB
 0x00495248,36,File::`vftable',??_7File@@6B@

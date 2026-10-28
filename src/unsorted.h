@@ -291,7 +291,7 @@ int CheckSingleInstance(HINSTANCE instance);
 extern HANDLE g_AppMutex;
 // Resolves the shortcut at `path` into `out`, `size` bytes long. Not in
 // th06.
-int Func435fc0(char *path, char *out, int size);
+int ResolveShortcut(char *path, char *out, int size);
 // Sums the executable's dwords. Not in th06.
 int ChecksumExecutable();
 
