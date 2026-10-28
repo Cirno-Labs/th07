@@ -604,7 +604,7 @@ address,size,name,symbol
 0x0045547d,89,MainMenu::MainMenu,??0MainMenu@@QAE@XZ
 0x004554d6,212,MainMenu::OnUpdate,?OnUpdate@MainMenu@@SIHPAV1@@Z
 0x004555dd,3152,MainMenu::StartTitle,?StartTitle@MainMenu@@QAEHXZ
-0x0045624d,3059,MainMenu::Func45624d,?Func45624d@MainMenu@@QAEHXZ
+0x0045624d,3059,MainMenu::UpdateOptions,?UpdateOptions@MainMenu@@QAEHXZ
 0x00456e40,299,MainMenu::ReassignButton,?ReassignButton@MainMenu@@QAEXFFH@Z
 0x00456f6b,2365,MainMenu::Func456f6b,?Func456f6b@MainMenu@@QAEHXZ
 0x004578cc,191,MainMenu::ShowButtonDigits,?ShowButtonDigits@MainMenu@@QAEHPAVSprite@@F@Z
@@ -1734,6 +1734,7 @@ address,size,name,symbol
 0x0049f424,,g_MenuStageNames,?g_MenuStageNames@@3PAPADA
 0x0049f444,,g_MenuDifficultyNames,?g_MenuDifficultyNames@@3PAPADA
 0x0049f45c,,g_MenuShotTypeNames,?g_MenuShotTypeNames@@3PAPADA
+0x0049f4a8,,g_OptionsHelpTexts,?g_OptionsHelpTexts@@3PAPADA
 0x0049f4cc,,g_TitleHelpTexts,?g_TitleHelpTexts@@3PAPADA
 0x0049f504,,g_SpellCardRatings,?g_SpellCardRatings@@3PAMA
 0x0049f518,,g_DifficultyNames,?g_DifficultyNames@@3PAPADA

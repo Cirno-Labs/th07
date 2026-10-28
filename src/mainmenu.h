@@ -14,8 +14,13 @@
 // to copy.
 struct ConfigCopy
 {
-    unsigned char bytes[0x38];
+    unsigned char unk_0[0x1e];
+    BYTE colorMode16Bits;
+    unsigned char unk_1f[0x3];
+    BYTE windowed;
+    unsigned char unk_23[0x15];
 };
+ASSERT_SIZE(ConfigCopy, 0x38);
 
 class MainMenu
 {
@@ -53,7 +58,7 @@ public:
     void SetState(int state);
     // The state functions OnUpdate runs. Not in th06.
     int StartTitle();
-    int Func45624d();
+    int UpdateOptions();
     int Func456f6b();
     int UpdateDifficultyMenu();
     int UpdateCharacterMenu();
@@ -144,6 +149,8 @@ int SetUpTitleScene(int unk);
 
 // The help line the title menu shows for each entry.
 extern char *g_TitleHelpTexts[8];
+// The help line the options screen shows for each entry.
+extern char *g_OptionsHelpTexts[9];
 // The demo replays the title menu plays in turn.
 extern char *g_DemoReplayPaths[3];
 // The names the replay menu shows for stages (then Extra and Phantasm),

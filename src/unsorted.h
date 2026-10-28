@@ -121,7 +121,9 @@ public:
     // direction.
     short padThresholdX;
     short padThresholdY;
-    unsigned char unk_134[0x2];
+    // The lives and bombs a game starts with.
+    BYTE lifeCount;
+    BYTE bombCount;
     // 0 for a 32-bit display, 1 for 16 bits, 0xff before the first run
     // picks one.
     BYTE colorMode16Bits;
@@ -136,7 +138,9 @@ public:
     BYTE windowed;
     // How many frames to skip drawing between drawn ones.
     BYTE frameSkip;
-    unsigned char unk_13c[0x2];
+    unsigned char unk_13c[0x1];
+    // The options screen's last entry: 0 or 1.
+    BYTE unk_13d;
     // Whether holding shoot also focuses: ReadJoystick reports focus
     // once shoot has been held for 10 frames, and for a few frames after
     // it is let go.

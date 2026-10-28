@@ -44,7 +44,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
         status = menu->UpdateReplayMenu();
         break;
     case 2:
-        status = menu->Func45624d();
+        status = menu->UpdateOptions();
         break;
     case 3:
         status = menu->Func456f6b();
@@ -252,7 +252,7 @@ int MainMenu::StartTitle()
                 this->stateFrames = 0;
                 this->unk_8 = 3;
                 this->stateFrames = 0;
-                this->Func45624d();
+                this->UpdateOptions();
                 this->cursor = 0;
                 break;
             case 7:
@@ -295,6 +295,305 @@ int MainMenu::StartTitle()
             this->cursor = 0;
             this->savedConfig = *(ConfigCopy *)&g_App.controllerMapping;
             return 1;
+        }
+    }
+    this->unk_b0c0++;
+    this->stateFrames++;
+    this->unk_d0fc++;
+    return 1;
+}
+
+int MainMenu::UpdateOptions()
+{
+    int i;
+
+    switch (this->unk_8)
+    {
+    case 0:
+        if (this->unk_d0fc == 0)
+        {
+            g_SpriteEngine->Func455030(this->sprites, this->spriteCount, 3);
+            for (i = 0; i < 9; i++)
+            {
+                g_SpriteEngine->SetSprite(&this->sprites[i + 9], this->sprites[i + 9].baseSpriteIndex + 1);
+            }
+            g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 9],
+                                      this->sprites[this->cursor + 9].baseSpriteIndex);
+            this->unk_8 = 0;
+            this->stateFrames = 0;
+            this->prevCursor = -1;
+        }
+        this->unk_8 = 1;
+        for (i = 0; i < ARRAY_SIZE(g_OptionsHelpTexts); i++)
+        {
+            g_SpriteEngine->RenderTextCentered(&this->unk_b0cc[i], 0xfff0e0, 0x300000, g_OptionsHelpTexts[i]);
+        }
+    case 1:
+        if (this->MoveMenuCursor(9))
+        {
+            for (i = 0; i < 9; i++)
+            {
+                g_SpriteEngine->SetSprite(&this->sprites[i + 9], this->sprites[i + 9].baseSpriteIndex + 1);
+            }
+            g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 9],
+                                      this->sprites[this->cursor + 9].baseSpriteIndex);
+        }
+        if (this->prevCursor != this->cursor)
+        {
+            this->unk_b0c8 = &this->unk_b0cc[this->cursor];
+            this->unk_b0c8->SetPendingInterrupt(1);
+        }
+        this->prevCursor = this->cursor;
+        for (i = 0x12; i <= 0x16; i++)
+        {
+            g_SpriteEngine->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex + 1);
+        }
+        i = g_App.lifeCount + 0x12;
+        g_SpriteEngine->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex);
+        for (i = 0x17; i <= 0x18; i++)
+        {
+            g_SpriteEngine->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex + 1);
+        }
+        i = g_App.colorMode16Bits + 0x17;
+        g_SpriteEngine->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex);
+        for (i = 0x19; i <= 0x1b; i++)
+        {
+            g_SpriteEngine->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex + 1);
+        }
+        i = g_App.musicMode + 0x19;
+        g_SpriteEngine->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex);
+        for (i = 0x1c; i <= 0x1d; i++)
+        {
+            g_SpriteEngine->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex + 1);
+        }
+        i = g_App.playSounds + 0x1c;
+        g_SpriteEngine->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex);
+        for (i = 0x1e; i <= 0x1f; i++)
+        {
+            g_SpriteEngine->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex + 1);
+        }
+        i = g_App.windowed + 0x1e;
+        g_SpriteEngine->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex);
+        for (i = 0x20; i <= 0x21; i++)
+        {
+            g_SpriteEngine->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex + 1);
+        }
+        i = g_App.unk_13d + 0x20;
+        g_SpriteEngine->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex);
+        if (this->unk_d0fc < 4)
+        {
+            break;
+        }
+        if (WAS_PRESSED_OR_HELD(0x40))
+        {
+            switch (this->cursor)
+            {
+            case 0:
+                if (g_App.lifeCount == 0)
+                {
+                    g_App.lifeCount = 4;
+                }
+                else
+                {
+                    g_App.lifeCount--;
+                }
+                break;
+            case 1:
+                if (g_App.colorMode16Bits == 0)
+                {
+                    g_App.colorMode16Bits = 1;
+                }
+                else
+                {
+                    g_App.colorMode16Bits--;
+                }
+                break;
+            case 2:
+                g_App.Func43a05f();
+                if (g_App.musicMode == 2)
+                {
+                    g_App.midi->Restart(30);
+                }
+                if (g_App.musicMode == 0)
+                {
+                    g_App.musicMode = 2;
+                }
+                else
+                {
+                    g_App.musicMode--;
+                }
+                if (!g_App.flags.preloadBgm && g_App.musicMode == 2)
+                {
+                    g_SoundPlayer.LoadBgm("thbgm.dat");
+                }
+                g_App.Func439dd0(8, "bgm/th07_01.mid");
+                g_App.Func439ec1(8);
+                break;
+            case 3:
+                if (g_App.playSounds == 0)
+                {
+                    g_App.playSounds = 1;
+                }
+                else
+                {
+                    g_App.playSounds--;
+                }
+                break;
+            case 4:
+                if (g_App.windowed == 0)
+                {
+                    g_App.windowed = 1;
+                }
+                else
+                {
+                    g_App.windowed--;
+                }
+                break;
+            case 5:
+                if (g_App.unk_13d == 0)
+                {
+                    g_App.unk_13d = 1;
+                }
+                else
+                {
+                    g_App.unk_13d--;
+                }
+                break;
+            default:
+                goto right;
+            }
+            g_SoundPlayer.QueueSound(12, 0);
+            g_SoundPlayer.PlayQueuedSounds();
+        }
+    right:
+        if (WAS_PRESSED_OR_HELD(0x80))
+        {
+            switch (this->cursor)
+            {
+            case 0:
+                if (g_App.lifeCount >= 4)
+                {
+                    g_App.lifeCount = 0;
+                }
+                else
+                {
+                    g_App.lifeCount++;
+                }
+                break;
+            case 1:
+                if (g_App.colorMode16Bits >= 1)
+                {
+                    g_App.colorMode16Bits = 0;
+                }
+                else
+                {
+                    g_App.colorMode16Bits++;
+                }
+                break;
+            case 2:
+                g_App.Func43a05f();
+                if (g_App.musicMode >= 2)
+                {
+                    g_App.musicMode = 0;
+                }
+                else
+                {
+                    g_App.musicMode++;
+                }
+                g_App.Func439dd0(8, "bgm/th07_01.mid");
+                g_App.Func439ec1(8);
+                break;
+            case 3:
+                if (g_App.playSounds >= 1)
+                {
+                    g_App.playSounds = 0;
+                }
+                else
+                {
+                    g_App.playSounds++;
+                }
+                break;
+            case 4:
+                if (g_App.windowed >= 1)
+                {
+                    g_App.windowed = 0;
+                }
+                else
+                {
+                    g_App.windowed++;
+                }
+                break;
+            case 5:
+                if (g_App.unk_13d >= 1)
+                {
+                    g_App.unk_13d = 0;
+                }
+                else
+                {
+                    g_App.unk_13d++;
+                }
+                break;
+            default:
+                goto idle;
+            }
+            g_SoundPlayer.QueueSound(12, 0);
+            g_SoundPlayer.PlayQueuedSounds();
+        }
+    idle:
+        if (g_Buttons != 0)
+        {
+            this->unk_b0c0 = 0;
+        }
+        if (this->unk_b0c0 >= 3600)
+        {
+            goto leave;
+        }
+        if (WAS_PRESSED(0x1001))
+        {
+            switch (this->cursor)
+            {
+            case 6:
+                g_App.lifeCount = 2;
+                g_App.bombCount = 3;
+                g_App.musicMode = 1;
+                g_App.playSounds = 1;
+                g_App.unk_13d = 0;
+                g_SoundPlayer.QueueSound(10, 0);
+                g_SoundPlayer.PlayQueuedSounds();
+                break;
+            case 7:
+                this->cursor = 0;
+                this->SetState(3);
+                g_SoundPlayer.QueueSound(10, 0);
+                g_SoundPlayer.PlayQueuedSounds();
+                return 1;
+            case 8:
+            leave:
+                this->cursor = 6;
+                this->SetState(0);
+                g_SoundPlayer.QueueSound(11, 0);
+                g_SoundPlayer.PlayQueuedSounds();
+                if (this->savedConfig.colorMode16Bits != g_App.colorMode16Bits ||
+                    this->savedConfig.windowed != g_App.windowed)
+                {
+                    return 5;
+                }
+                return 1;
+            }
+        }
+        if (WAS_PRESSED(10))
+        {
+            if (this->cursor == 8)
+            {
+                goto leave;
+            }
+            g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 9],
+                                      this->sprites[this->cursor + 9].baseSpriteIndex + 1);
+            this->cursor = 8;
+            g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 9],
+                                      this->sprites[this->cursor + 9].baseSpriteIndex);
+            g_SoundPlayer.QueueSound(11, 0);
+            g_SoundPlayer.PlayQueuedSounds();
         }
     }
     this->unk_b0c0++;

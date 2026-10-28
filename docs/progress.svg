@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">33% (229)</tspan> · <tspan class="decompiled">0.58% (4)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">66.28% (460)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">33.14% (230)</tspan> · <tspan class="decompiled">0.58% (4)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">66.14% (459)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="246.49" height="6" x="0" y="0" class="named"/>
-<rect width="4.31" height="6" x="246.49" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="250.79" y="0" class="nonmatching"/>
-<rect width="495.13" height="6" x="251.87" y="0" class="todo"/>
+<rect width="247.56" height="6" x="0" y="0" class="named"/>
+<rect width="4.31" height="6" x="247.56" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="251.87" y="0" class="nonmatching"/>
+<rect width="494.05" height="6" x="252.95" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (173 bytes)</title></rect>
@@ -674,7 +674,7 @@
 <rect width="12" height="12" x="30" y="180" class="named"><title>0x0045547d MainMenu::MainMenu (89 bytes)</title></rect>
 <rect width="12" height="12" x="45" y="180" class="named"><title>0x004554d6 MainMenu::OnUpdate (212 bytes)</title></rect>
 <rect width="12" height="12" x="60" y="180" class="named"><title>0x004555dd MainMenu::StartTitle (3152 bytes)</title></rect>
-<rect width="12" height="12" x="75" y="180" class="todo"><title>0x0045624d MainMenu::Func45624d (3059 bytes)</title></rect>
+<rect width="12" height="12" x="75" y="180" class="named"><title>0x0045624d MainMenu::UpdateOptions (3059 bytes)</title></rect>
 <rect width="12" height="12" x="90" y="180" class="named"><title>0x00456e40 MainMenu::ReassignButton (299 bytes)</title></rect>
 <rect width="12" height="12" x="105" y="180" class="todo"><title>0x00456f6b MainMenu::Func456f6b (2365 bytes)</title></rect>
 <rect width="12" height="12" x="120" y="180" class="named"><title>0x004578cc MainMenu::ShowButtonDigits (191 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">24.37%</tspan> · <tspan class="decompiled">0.04%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">75.50%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">25.17%</tspan> · <tspan class="decompiled">0.04%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">74.70%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="182.02" height="6" x="0" y="0" class="named"/>
-<rect width="0.33" height="6" x="182.02" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="182.35" y="0" class="nonmatching"/>
-<rect width="563.98" height="6" x="183.02" y="0" class="todo"/>
+<rect width="188.01" height="6" x="0" y="0" class="named"/>
+<rect width="0.33" height="6" x="188.01" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="188.35" y="0" class="nonmatching"/>
+<rect width="557.99" height="6" x="189.01" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -794,7 +794,7 @@
 <rect width="36.54" height="30.70" x="171.48" y="179.30" class="named"><title>0x00445db3 ResultScreen::OnUpdate (3180 bytes)</title></rect>
 <rect width="31.96" height="34.79" x="211.02" y="0" class="named"><title>0x004555dd MainMenu::StartTitle (3152 bytes)</title></rect>
 <rect width="31.96" height="33.73" x="211.02" y="37.79" class="todo"><title>0x00429c42 Func429c42 (3064 bytes)</title></rect>
-<rect width="31.96" height="33.67" x="211.02" y="74.52" class="todo"><title>0x0045624d MainMenu::Func45624d (3059 bytes)</title></rect>
+<rect width="31.96" height="33.67" x="211.02" y="74.52" class="named"><title>0x0045624d MainMenu::UpdateOptions (3059 bytes)</title></rect>
 <rect width="31.96" height="31.47" x="211.02" y="111.19" class="todo"><title>0x00423730 Func423730 (2875 bytes)</title></rect>
 <rect width="31.96" height="31.32" x="211.02" y="145.65" class="todo"><title>0x00422170 Func422170 (2863 bytes)</title></rect>
 <rect width="31.96" height="30.03" x="211.02" y="179.97" class="todo"><title>0x0042c577 Func42c577 (2755 bytes)</title></rect>
