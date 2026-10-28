@@ -741,7 +741,7 @@ again:
             }
             if (this->bgm != NULL)
             {
-                this->bgm->Func45d960();
+                this->bgm->ResumeBuffer();
             }
         }
         break;

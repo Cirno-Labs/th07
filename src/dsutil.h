@@ -88,7 +88,7 @@ public:
     // Stops the first buffer, keeping its position. Not in th06.
     HRESULT PauseBuffer();
     // Plays the first buffer again. Not in th06.
-    HRESULT Func45d960();
+    HRESULT ResumeBuffer();
     HRESULT Reset();
 
     CWaveFile *GetWaveFile()
@@ -105,13 +105,13 @@ public:
     int fadeFrames;
     int fadeTotal;
     int fading;
-    // Not in th06: Play's priority and flags, for Func45d960.
+    // Not in th06: Play's priority and flags, for ResumeBuffer.
     DWORD dwPlayPriority;
     DWORD dwPlayFlags;
     DWORD unk_28;
     // Cleared by Play.
     DWORD unk_2c;
-    // Set while the first buffer plays: Func45d960 sets it, PauseBuffer
+    // Set while the first buffer plays: ResumeBuffer sets it, PauseBuffer
     // clears it. Not in th06.
     BOOL unk_30;
 };
