@@ -18,6 +18,31 @@ union MidiShortMsg
 // Swaps the bytes of a big-endian 16-bit value from a MIDI file.
 WORD SwapBytes16(WORD value);
 
+// Swaps the bytes of a big-endian 32-bit value from a MIDI file. Inline:
+// ParseFile has its body, not a call.
+inline DWORD SwapBytes32(DWORD value)
+{
+    union
+    {
+        DWORD dword;
+        BYTE bytes[4];
+    } swapped;
+
+    swapped.bytes[0] = ((BYTE *)&value)[3];
+    swapped.bytes[1] = ((BYTE *)&value)[2];
+    swapped.bytes[2] = ((BYTE *)&value)[1];
+    swapped.bytes[3] = ((BYTE *)&value)[0];
+    return swapped.dword;
+}
+
+// The header of a chunk in a MIDI file ("MThd", "MTrk").
+struct MidiChunk
+{
+    char id[4];
+    // Big-endian.
+    DWORD length;
+};
+
 // Reads a MIDI variable-length quantity (7 bits per byte, high bit set on
 // all but the last) and advances the cursor past it.
 DWORD ReadVarLen(BYTE **cursor);
@@ -152,6 +177,9 @@ public:
     int FadeOut(int duration);
     // Frees the parsed tracks.
     void FreeTracks();
+    // Parses the file in a slot into tracks. Returns -1 if the slot is
+    // empty, otherwise 0.
+    int ParseFile(int slot);
 
     // The slot of the file being played, -1 for none. LoadFile stops
     // playback before it replaces that file.
