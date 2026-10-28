@@ -30,3 +30,16 @@ public:
 // Debug output, compiled out of the release build: an empty function
 // that the game still calls with messages.
 void DebugPrint(const char *fmt, ...);
+
+// Loads a whole file into a malloc'd buffer; NULL on failure. As in
+// th06, where the second argument says whether the file is read from
+// disk rather than from the archives.
+void *LoadFileData(char *path, int isExternal);
+
+// The object error messages go to, e.g. "error : MIDI File が読み込めない".
+// Its layout is not known yet.
+class Log;
+extern Log g_Log;
+
+// Logs a printf-style message to a log object.
+int LogPrintf(Log *log, const char *fmt, ...);

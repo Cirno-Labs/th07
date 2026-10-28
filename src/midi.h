@@ -132,6 +132,9 @@ public:
 
     // Frees the MIDI file loaded into a slot.
     void UnloadFile(int slot);
+    // Loads a MIDI file into a slot, stopping playback first if that slot
+    // is playing. Returns -1 on failure, otherwise 0.
+    int LoadFile(int slot, char *path);
     // Sends every channel's volume, scaled and offset by `offset`, unless
     // unk_2d4 is set.
     void SendVolume(int offset);
