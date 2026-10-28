@@ -386,7 +386,7 @@ int CreateGameWindow(HINSTANCE instance)
     {
         return 1;
     }
-    Func435e30(g_GameWindow.hwnd);
+    ForceForegroundWindow(g_GameWindow.hwnd);
     return 0;
 }
 
@@ -854,4 +854,20 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         return 1;
     }
     return DefWindowProcA(hwnd, msg, wParam, lParam);
+}
+
+void ForceForegroundWindow(HWND hwnd)
+{
+    DWORD activeThread;
+    DWORD thread;
+    DWORD lockTime;
+
+    activeThread = GetWindowThreadProcessId(GetForegroundWindow(), NULL);
+    thread = GetWindowThreadProcessId(hwnd, NULL);
+    AttachThreadInput(thread, activeThread, TRUE);
+    SystemParametersInfoA(SPI_GETFOREGROUNDLOCKTIMEOUT, 0, &lockTime, 0);
+    SystemParametersInfoA(SPI_SETFOREGROUNDLOCKTIMEOUT, 0, NULL, 0);
+    SetActiveWindow(hwnd);
+    SystemParametersInfoA(SPI_SETFOREGROUNDLOCKTIMEOUT, 0, &lockTime, 0);
+    AttachThreadInput(thread, activeThread, FALSE);
 }
