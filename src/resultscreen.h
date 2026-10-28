@@ -213,7 +213,7 @@ extern char *g_ShotNames[7];
 extern char *g_NameAlphabet;
 
 // Writes today's date as "%m/%d" to `date`. Not in th06.
-void Func447161(char *date);
+void FormatTodayDate(char *date);
 
 // The result screen's scene object (0xce6c bytes). Only the fields
 // known so far.

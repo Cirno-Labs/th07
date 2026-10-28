@@ -510,7 +510,7 @@ address,size,name,symbol
 0x00445d8b,40,ResultScreen::ReleaseScores,?ReleaseScores@ResultScreen@@QAEXHH@Z
 0x00445db3,3180,ResultScreen::OnUpdate,?OnUpdate@ResultScreen@@SIHPAV1@@Z
 0x00446a66,1787,ResultScreen::HandleNameEntry,?HandleNameEntry@ResultScreen@@QAEHXZ
-0x00447161,55,Func447161,?Func447161@@YIXPAD@Z
+0x00447161,55,FormatTodayDate,?FormatTodayDate@@YIXPAD@Z
 0x00447198,3640,ResultScreen::HandleReplaySaving,?HandleReplaySaving@ResultScreen@@QAEHXZ
 0x00447fd0,200,ResultScreen::WaitAfterNameEntry,?WaitAfterNameEntry@ResultScreen@@QAEHXZ
 0x00448098,2065,ResultScreen::Func448098,?Func448098@ResultScreen@@QAEHXZ
@@ -1130,14 +1130,14 @@ address,size,name,symbol
 0x0047dd00,195,_strchr,
 0x0047ddc0,7,_strcpy,_strcpy
 0x0047ddd0,232,Func47ddd0,
-0x0047deb8,384,_localtime,
+0x0047deb8,384,_localtime,_localtime
 0x0047e058,121,FID_conflict:__store_num,
 0x0047e0d1,608,Func47e0d1,
 0x0047e311,1019,Func47e311,
 0x0047e723,164,Func47e723,
 0x0047e7c7,50,__Strftime,
-0x0047e7f9,27,_strftime,
-0x0047e814,57,FID_conflict:__time32,
+0x0047e7f9,27,_strftime,_strftime
+0x0047e814,57,_time,_time
 0x0047e84d,156,Func47e84d,
 0x0047e8e9,34,_rand,
 0x0047e914,47,__ArrayUnwind,

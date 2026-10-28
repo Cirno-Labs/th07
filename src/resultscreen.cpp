@@ -3,6 +3,7 @@
 // lists, th06's resultscreen.cpp.
 
 #include <string.h>
+#include <time.h>
 
 #include "resultscreen.h"
 #include "unsorted.h"
@@ -716,7 +717,7 @@ int ResultScreen::HandleNameEntry()
         }
         this->entry.isNew = 1;
         strcpy(this->entry.name, this->lsnm.name);
-        Func447161(this->entry.date);
+        FormatTodayDate(this->entry.date);
         rate = (g_App.unk_180 / g_App.unk_184 - 0.5f) * 2.0f;
         if (rate < 0.0f)
         {
@@ -868,4 +869,14 @@ int ResultScreen::HandleNameEntry()
         strcpy(this->lsnm.name, this->name);
     }
     return 0;
+}
+
+void FormatTodayDate(char *date)
+{
+    time_t t;
+    struct tm *tm;
+
+    time(&t);
+    tm = localtime(&t);
+    strftime(date, 6, "%m/%d", tm);
 }
