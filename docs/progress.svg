@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">25.79% (179)</tspan> · <tspan class="decompiled">0.58% (4)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">73.63% (511)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">25.94% (180)</tspan> · <tspan class="decompiled">0.58% (4)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">73.49% (510)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="192.67" height="6" x="0" y="0" class="named"/>
-<rect width="4.31" height="6" x="192.67" y="0" class="decompiled"/>
-<rect width="550.02" height="6" x="196.98" y="0" class="todo"/>
+<rect width="193.75" height="6" x="0" y="0" class="named"/>
+<rect width="4.31" height="6" x="193.75" y="0" class="decompiled"/>
+<rect width="548.95" height="6" x="198.05" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (173 bytes)</title></rect>
@@ -737,7 +737,7 @@
 <rect width="12" height="12" x="240" y="195" class="named"><title>0x0045e7b0 File::Read (68 bytes)</title></rect>
 <rect width="12" height="12" x="255" y="195" class="named"><title>0x0045e800 File::Write (74 bytes)</title></rect>
 <rect width="12" height="12" x="270" y="195" class="named"><title>0x0045e850 File::Tell (43 bytes)</title></rect>
-<rect width="12" height="12" x="285" y="195" class="todo"><title>0x0045e880 File::GetSize (39 bytes)</title></rect>
+<rect width="12" height="12" x="285" y="195" class="named"><title>0x0045e880 File::GetSize (39 bytes)</title></rect>
 <rect width="12" height="12" x="300" y="195" class="todo"><title>0x0045e8b0 File::Seek (51 bytes)</title></rect>
 <rect width="12" height="12" x="315" y="195" class="todo"><title>0x0045e8f0 Func45e8f0 (210 bytes)</title></rect>
 <rect width="12" height="12" x="330" y="195" class="todo"><title>0x0045e9d0 Func45e9d0 (253 bytes)</title></rect>
@@ -766,11 +766,11 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">16.07%</tspan> · <tspan class="decompiled">0.04%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">83.88%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">16.08%</tspan> · <tspan class="decompiled">0.04%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">83.87%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="120.07" height="6" x="0" y="0" class="named"/>
-<rect width="0.33" height="6" x="120.07" y="0" class="decompiled"/>
-<rect width="626.59" height="6" x="120.41" y="0" class="todo"/>
+<rect width="120.15" height="6" x="0" y="0" class="named"/>
+<rect width="0.33" height="6" x="120.15" y="0" class="decompiled"/>
+<rect width="626.52" height="6" x="120.48" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1424,7 +1424,7 @@
 <rect width="1.22" height="0.97" x="737.33" y="188.11" class="named"><title>0x00431900 Rng::GetRandomF32ZeroToOne (40 bytes)</title></rect>
 <rect width="1.22" height="0.97" x="741.56" y="188.11" class="named"><title>0x00445d8b ResultScreen::ReleaseScores (40 bytes)</title></rect>
 <rect width="1.22" height="0.97" x="745.78" y="188.11" class="todo"><title>0x0045f680 Func45f680 (40 bytes)</title></rect>
-<rect width="0.71" height="1.41" x="728.89" y="192.08" class="todo"><title>0x0045e880 File::GetSize (39 bytes)</title></rect>
+<rect width="0.71" height="1.41" x="728.89" y="192.08" class="named"><title>0x0045e880 File::GetSize (39 bytes)</title></rect>
 <rect width="0.71" height="1.30" x="728.89" y="196.49" class="named"><title>0x00430060 Chain::Release (38 bytes)</title></rect>
 <rect width="0.71" height="1.18" x="728.89" y="200.79" class="named"><title>0x0043227e ReleaseTextSurface (37 bytes)</title></rect>
 <rect width="0.71" height="1.07" x="728.89" y="204.97" class="todo"><title>0x0042e1d4 Func42e1d4 (36 bytes)</title></rect>
