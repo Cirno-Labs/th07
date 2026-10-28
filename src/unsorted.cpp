@@ -320,6 +320,75 @@ void ResetKeyboard()
     SetKeyboardState(keyState);
 }
 
+
+void *LoadFileData(char *path, int isExternal)
+{
+    int idx = -1;
+    char *name;
+    DWORD dataSize;
+    void *buffer;
+    HANDLE handle;
+
+    if (isExternal == 0)
+    {
+        name = strrchr(path, '\\');
+        if (name == NULL)
+        {
+            name = path;
+        }
+        else
+        {
+            name++;
+        }
+        name = strrchr(name, '/');
+        if (name == NULL)
+        {
+            name = path;
+        }
+        else
+        {
+            name++;
+        }
+        dataSize = g_Archive.GetEntrySize(name);
+        g_FileSize = dataSize;
+        if (dataSize == 0)
+        {
+            LogError(&g_Log, "error : %s is not found in arcfile.\r\n", name);
+            return NULL;
+        }
+        if (dataSize != 0)
+        {
+            DebugPrint("%s Decode ... \r\n", name);
+            buffer = MemAlloc(dataSize);
+            if (buffer == NULL)
+            {
+                return NULL;
+            }
+            g_Archive.Decode(name, buffer);
+            return buffer;
+        }
+    }
+    DebugPrint("%s Load ... \r\n", path);
+    handle = CreateFileA(path, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING,
+                       FILE_ATTRIBUTE_NORMAL | FILE_FLAG_SEQUENTIAL_SCAN, NULL);
+    if (handle == INVALID_HANDLE_VALUE)
+    {
+        DebugPrint("error : %s is not found.\r\n", path);
+        return NULL;
+    }
+    dataSize = GetFileSize(handle, NULL);
+    buffer = MemAlloc(dataSize);
+    if (buffer == NULL)
+    {
+        CloseHandle(handle);
+        return NULL;
+    }
+    ReadFile(handle, buffer, dataSize, &dataSize, NULL);
+    g_FileSize = dataSize;
+    CloseHandle(handle);
+    return buffer;
+}
+
 int FileExists(char *path)
 {
     HANDLE file;
