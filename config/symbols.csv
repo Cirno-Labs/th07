@@ -543,7 +543,7 @@ address,size,name,symbol
 0x0044c020,386,SoundPlayer::LoadBgm,?LoadBgm@SoundPlayer@@QAEHPAD@Z
 0x0044c1b0,105,SoundPlayer::SwitchBgmTrack,?SwitchBgmTrack@SoundPlayer@@QAEHPAD@Z
 0x0044c220,677,SoundPlayer::PreloadBgm,?PreloadBgm@SoundPlayer@@QAEHHPAD@Z
-0x0044c4d0,472,Func44c4d0,
+0x0044c4d0,472,SoundPlayer::PlayPreloadedBgm,?PlayPreloadedBgm@SoundPlayer@@QAEHH@Z
 0x0044c6b0,287,SoundPlayer::StopBgm,?StopBgm@SoundPlayer@@QAEXXZ
 0x0044c7d0,342,Func44c7d0,
 0x0044c930,133,SoundPlayer::QueueSound,?QueueSound@SoundPlayer@@QAEXHH@Z
@@ -628,7 +628,7 @@ address,size,name,symbol
 0x0045c740,142,CSoundManager::Initialize,?Initialize@CSoundManager@@QAEJPAUHWND__@@KKKK@Z
 0x0045c7d0,265,Func45c7d0,
 0x0045c8e0,844,CSoundManager::CreateStreaming,?CreateStreaming@CSoundManager@@QAEJPAPAVCStreamingSound@@PADKU_GUID@@KKPAXPAUBgmFormat@@@Z
-0x0045cc30,795,Func45cc30,
+0x0045cc30,795,CSoundManager::Func45cc30,?Func45cc30@CSoundManager@@QAEJPAPAVCStreamingSound@@PAXKPAUBgmFormat@@KU_GUID@@KK1@Z
 0x0045cf50,221,Func45cf50,
 0x0045d030,46,Func45d030,
 0x0045d060,599,Func45d060,

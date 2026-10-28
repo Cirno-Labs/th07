@@ -33,6 +33,11 @@ public:
     HRESULT CreateStreaming(CStreamingSound **ppStreamingSound, LPTSTR strWaveFileName, DWORD dwCreationFlags,
                             GUID guid3DAlgorithm, DWORD dwNotifyCount, DWORD dwNotifySize, HANDLE hNotifyEvent,
                             BgmFormat *format);
+    // CreateStreaming for a track read into memory: `size` bytes at
+    // `data`, in the format `format` describes. Not in th06.
+    HRESULT Func45cc30(CStreamingSound **ppStreamingSound, void *data, DWORD size, BgmFormat *format,
+                       DWORD dwCreationFlags, GUID guid3DAlgorithm, DWORD dwNotifyCount, DWORD dwNotifySize,
+                       HANDLE hNotifyEvent);
 
     inline LPDIRECTSOUND8 GetDirectSound()
     {

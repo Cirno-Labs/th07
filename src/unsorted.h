@@ -113,7 +113,9 @@ public:
     // 0 for a 32-bit display, 1 for 16 bits, 0xff before the first run
     // picks one.
     BYTE colorMode16Bits;
-    unsigned char unk_137[0x3];
+    // 0 for no music, 1 for wave music, as th06's musicMode.
+    BYTE musicMode;
+    unsigned char unk_138[0x2];
     // Played in a window rather than full screen.
     BYTE windowed;
     // How many frames to skip drawing between drawn ones.
@@ -317,6 +319,10 @@ public:
     // into preload slot `slot`, unless it is there already. Does nothing
     // unless g_App.flags.preloadBgm is set. Returns 0 or -1. Not in th06.
     int PreloadBgm(int slot, char *path);
+    // Starts the wave music from preload slot `slot`, as LoadBgm does,
+    // or switches the stream to its track without g_App.flags.preloadBgm.
+    // Returns 0 or -1. Not in th06.
+    int PlayPreloadedBgm(int slot);
     // Not in th06. WinMain calls it until it returns 0.
     int Func44c9c0();
     // Queues sound effect `idx` to start on the next update, unless
