@@ -257,4 +257,7 @@ public:
     void StartTimer();
     // Stops the timer.
     void StopTimer();
+
+    int unk_10;
 };
+ASSERT_SIZE(Unknown4378b0, 0x14);

@@ -35,6 +35,7 @@ struct ControllerMapping
 ASSERT_SIZE(ControllerMapping, 0x12);
 
 class MidiPlayer;
+class Unknown4378b0;
 
 // The config's option bits, in th06's order; the ones used so far test
 // the same bits as th06's.
@@ -148,7 +149,8 @@ public:
     D3DXMATRIX projectionMatrix;
     D3DVIEWPORT8 viewport;
     D3DPRESENT_PARAMETERS presentParams;
-    unsigned char unk_114[0x4];
+    // Started by AddedCallback, stopped by DeletedCallback.
+    Unknown4378b0 *timer;
     // The start of the config, which is 0x38 bytes long, as in th06.
     ControllerMapping controllerMapping;
     unsigned char unk_12a[0x6];
@@ -195,7 +197,9 @@ public:
     unsigned char unk_160[0x4];
     // How many more frames to draw in full, after the device was reset.
     int redrawFrames;
-    unsigned char unk_168[0x4];
+    // DrawFps shows the frame rate while it is 0; AddedCallback sets it
+    // while the refresh rate is measured.
+    int hideFps;
     // Frames are paced by the clock rather than by the presents.
     int presentImmediate;
     // Set while the device is created asking for 60 Hz.
@@ -220,7 +224,10 @@ public:
     // timeGetTime() when AddTotalPlayTime last added to the play time.
     DWORD unk_194;
     D3DCAPS8 caps;
-    unsigned char unk_26c[0x38];
+    // QueryPerformanceFrequency's result, as AddedCallback read it. Only
+    // 4-aligned, so not a LARGE_INTEGER.
+    DWORD perfFrequency[2];
+    unsigned char unk_274[0x30];
     DWORD unk_2a4;
     unsigned char unk_2a8[0x4];
     DWORD unk_2ac;
@@ -630,6 +637,11 @@ class Rng
 public:
     // Advances the generator and returns 16 random bits.
     WORD GetRandomU16();
+    // Unlike th06's, leaves `generated` alone.
+    void SetSeed(WORD seed)
+    {
+        this->seed = seed;
+    }
     // 32 random bits, from two GetRandomU16 calls.
     DWORD GetRandomU32();
     WORD GetRandomU16InRange(WORD range)

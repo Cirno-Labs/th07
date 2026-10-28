@@ -159,6 +159,8 @@ public:
     void ReleaseSurface(int surface);
     // Releases the loaded surfaces, before the device is reset.
     void ReleaseSurfaces();
+    // Creates the vertex buffer and the quads sprites are drawn with.
+    void CreateQuad();
     // Releases the vertex buffer, if there is one.
     void ReleaseVertexBuffer();
     // Starts a new batch of quads. Not in th06.

@@ -18,7 +18,7 @@ address,size,name,symbol
 0x00401ba0,456,Func401ba0,
 0x00401d70,104,Func401d70,
 0x00401de0,65,Func401de0,
-0x00401e30,213,Func401e30,
+0x00401e30,213,AsciiText::RegisterChain,?RegisterChain@AsciiText@@SIHXZ
 0x00401f10,35,Func401f10,
 0x00401f40,277,AsciiText::AddString,?AddString@AsciiText@@QAEXPAUD3DXVECTOR3@@PAD@Z
 0x00402060,68,AsciiText::AddFormat,?AddFormat@AsciiText@@QAAXPAUD3DXVECTOR3@@PADZZ
@@ -552,7 +552,7 @@ address,size,name,symbol
 0x0044d2f0,225,SoundPlayer::Func44d2f0,?Func44d2f0@SoundPlayer@@QAEXHHPAD@Z
 0x0044d3e0,573,SpriteEngine::SpriteEngine,??0SpriteEngine@@QAE@XZ
 0x0044d620,11,MmTimer::OnTimer,?OnTimer@MmTimer@@UAEXXZ ??1SpriteEngine@@QAE@XZ
-0x0044d630,700,Func44d630,
+0x0044d630,700,SpriteEngine::CreateQuad,?CreateQuad@SpriteEngine@@QAEXXZ
 0x0044d8f0,234,Func44d8f0,
 0x0044d9e0,511,Func44d9e0,
 0x0044dbe0,861,Func44dbe0,
@@ -1731,6 +1731,7 @@ address,size,name,symbol
 0x0049528c,4,CStreamingSound::`vftable',??_7CStreamingSound@@6B@
 0x00495290,4,CSound::`vftable',??_7CSound@@6B@
 0x004964f4,,g_DifficultyRatings,?g_DifficultyRatings@@3PAMA
+0x00496c0c,4,Unknown4378b0::`vftable',??_7Unknown4378b0@@6B@
 0x0049ea70,,g_FileModes,?g_FileModes@@3PAPADA
 0x0049ea7c,,g_DemoReplayPaths,?g_DemoReplayPaths@@3PAPADA
 0x0049ea88,,g_SoundInfos,?g_SoundInfos@@3PAUSoundInfo@@A

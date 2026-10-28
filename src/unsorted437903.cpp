@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "ascii.h"
 #include "chain.h"
 #include "midi.h"
 #include "sprite.h"
@@ -266,6 +267,126 @@ int MeasureRefreshRate()
             g_App.presentImmediate = 1;
             return -2;
         }
+    }
+    return 0;
+}
+
+int App::AddedCallback(App *arg)
+{
+    int i;
+    ScoreDat *scoreDat;
+
+    QueryPerformanceFrequency((LARGE_INTEGER *)arg->perfFrequency);
+    g_App.d3dDevice->BeginScene();
+    g_App.d3dDevice->Clear(0, NULL, D3DCLEAR_TARGET, 0xff000000, 1.0f, 0);
+    g_App.d3dDevice->EndScene();
+    if (FAILED(g_App.d3dDevice->Present(NULL, NULL, NULL, NULL)))
+    {
+        g_App.d3dDevice->Reset(&g_App.presentParams);
+    }
+    g_App.d3dDevice->BeginScene();
+    g_App.d3dDevice->Clear(0, NULL, D3DCLEAR_TARGET, 0xff000000, 1.0f, 0);
+    g_App.d3dDevice->EndScene();
+    if (FAILED(g_App.d3dDevice->Present(NULL, NULL, NULL, NULL)))
+    {
+        g_App.d3dDevice->Reset(&g_App.presentParams);
+    }
+    if (OpenGameArchive() != 0)
+    {
+        return -1;
+    }
+    // Shows the logo while the refresh rate is measured, or for four
+    // frames.
+    g_SpriteEngine->LoadSurface(0, "data/title/th07logo.jpg");
+    g_App.hideFps = 1;
+    if (g_App.presentImmediate == 0)
+    {
+        if (MeasureRefreshRate() != 0)
+        {
+            g_SpriteEngine->ReleaseSurface(0);
+            return -2;
+        }
+    }
+    else
+    {
+        i = 0;
+        while (i < 4)
+        {
+            g_App.d3dDevice->BeginScene();
+            g_SpriteEngine->CopySurfaceToBackBuffer(0, 0, 0, 0, 0);
+            g_App.d3dDevice->EndScene();
+            if (FAILED(g_App.d3dDevice->Present(NULL, NULL, NULL, NULL)))
+            {
+                g_App.d3dDevice->Reset(&g_App.presentParams);
+            }
+            i++;
+        }
+    }
+    g_SpriteEngine->ReleaseSurface(0);
+    arg->hideFps = 0;
+    arg->redrawFrames = 0;
+    arg->unk_190 = timeGetTime();
+    g_Rng.SetSeed(arg->unk_190);
+    InitDirectInput(arg);
+    if (arg->midi == NULL)
+    {
+        arg->midi = new MidiPlayer();
+    }
+    if (arg->midi != NULL)
+    {
+        arg->midi->LoadFile(0x1e, "bgm/init.mid");
+    }
+    g_SoundPlayer.LoadSounds();
+    if (g_SpriteEngine->LoadAnm(0, "data/text.anm", 0x700) != 0)
+    {
+        return -1;
+    }
+    if (AsciiText::RegisterChain() != 0)
+    {
+        LogPrintf(&g_Log, "error : 文字の初期化に失敗しました\r\n");
+        return -1;
+    }
+    g_SpriteEngine->CreateQuad();
+    CreateTextSurface();
+    if (g_SoundPlayer.LoadBgmFormat("bgm/thbgm.fmt") != 0)
+    {
+        LogPrintf(&g_Log, "error : BGM の初期化に失敗しました\r\n");
+        return -1;
+    }
+    if (g_SoundPlayer.unk_39c8 == 0)
+    {
+        if (!g_App.flags.preloadBgm)
+        {
+            g_SoundPlayer.LoadBgm("thbgm.dat");
+        }
+        else
+        {
+            strcpy(g_SoundPlayer.bgmPath, "thbgm.dat");
+        }
+    }
+    else
+    {
+        if (!g_App.flags.preloadBgm)
+        {
+            g_SoundPlayer.LoadBgm("th07.dat");
+        }
+        else
+        {
+            strcpy(g_SoundPlayer.bgmPath, "th07.dat");
+        }
+    }
+    scoreDat = LoadScoreDat("score.dat");
+    memset(&g_Unknown626270.plst, 0, sizeof(Plst));
+    g_Unknown626270.plst.size = sizeof(Plst);
+    g_Unknown626270.plst.size2 = g_Unknown626270.plst.size;
+    g_Unknown626270.plst.magic = 'TSLP';
+    g_Unknown626270.plst.version = 1;
+    LoadPlstChunk(scoreDat, &g_Unknown626270.plst);
+    ReleaseScoreDat(scoreDat);
+    g_App.timer = new Unknown4378b0();
+    if (g_App.timer != NULL)
+    {
+        g_App.timer->StartTimer();
     }
     return 0;
 }
