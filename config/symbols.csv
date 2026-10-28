@@ -537,7 +537,7 @@ address,size,name,symbol
 0x0044b560,705,SoundPlayer::Initialize,?Initialize@SoundPlayer@@QAEHPAUHWND__@@@Z
 0x0044b830,584,SoundPlayer::Release,?Release@SoundPlayer@@QAEHXZ
 0x0044ba80,100,FindRiffChunk,?FindRiffChunk@@YIPADPAD0PAHI@Z
-0x0044baf0,523,Func44baf0,
+0x0044baf0,523,SoundPlayer::FindTrackIndex,?FindTrackIndex@SoundPlayer@@QAEHPAD@Z
 0x0044bd00,750,Func44bd00,
 0x0044bff0,48,Func44bff0,
 0x0044c020,386,Func44c020,

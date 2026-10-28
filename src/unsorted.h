@@ -266,6 +266,20 @@ ASSERT_SIZE(SoundCommand, 0x10c);
 // Plays the sound effects and music (at 0x4ba0d8). It starts as th06's;
 // the wave music now streams from one file of tracks (thbgm.dat), with
 // a queue of commands.
+// An entry of thbgm.fmt: where a track is in thbgm.dat and its format.
+// Not in th06.
+struct BgmFormat
+{
+    // The track's file name; an empty one ends the list.
+    char name[0x10];
+    DWORD offset;
+    DWORD size;
+    DWORD unk_18;
+    DWORD unk_1c;
+    WAVEFORMATEX format;
+};
+ASSERT_SIZE(BgmFormat, 0x34);
+
 class SoundPlayer
 {
 public:
@@ -279,6 +293,9 @@ public:
     // Stops the wave music: ends the notification thread and releases
     // the stream.
     void StopBgm();
+    // The index in bgmFormat of the track named as the file name of
+    // `path`, or 0 if there is none. Not in th06.
+    int FindTrackIndex(char *path);
     // Not in th06. WinMain calls it until it returns 0.
     int Func44c9c0();
     // Queues sound effect `idx` to start on the next update, unless
@@ -314,7 +331,7 @@ public:
     // The preloaded track playing.
     int bgmPlaying;
     // The contents of thbgm.fmt.
-    void *bgmFormat;
+    BgmFormat *bgmFormat;
     // The commands for the wave music, in order.
     SoundCommand commands[0x20];
     // The file names of the preloaded tracks.

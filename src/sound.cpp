@@ -146,3 +146,38 @@ char *FindRiffChunk(char *data, char *name, int *chunkSize, unsigned int size)
     }
     return NULL;
 }
+
+int SoundPlayer::FindTrackIndex(char *path)
+{
+    char name[0x80];
+    int i;
+    char *p;
+
+    i = 0;
+    p = strrchr(path, '/');
+    if (p == NULL)
+    {
+        p = strrchr(path, '\\');
+    }
+    if (p == NULL)
+    {
+        strcpy(name, path);
+    }
+    else
+    {
+        strcpy(name, p + 1);
+    }
+    while (this->bgmFormat[i].name[0] != '\0')
+    {
+        if (strcmp(this->bgmFormat[i].name, name) == 0)
+        {
+            break;
+        }
+        i++;
+    }
+    if (this->bgmFormat[i].name[0] == '\0')
+    {
+        i = 0;
+    }
+    return i;
+}
