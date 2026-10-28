@@ -15,6 +15,9 @@ public:
     // The update element's callback: runs the state's function, then
     // steps the sprites.
     static int OnUpdate(MainMenu *menu);
+    // The draw element's callback: draws the background, the replay
+    // menu's or the practice scores' text, then the sprites. Returns 1.
+    static int OnDraw(MainMenu *menu);
 
     // Moves to state `state`, remembering the one it leaves in
     // prevState, and resets the frame counters. Not in th06 as a

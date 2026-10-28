@@ -7,15 +7,29 @@
 
 #include "common.h"
 
+// An entry of a loaded ANM file's sprite list. Only the fields known so
+// far.
+struct SpriteData
+{
+    // The ANM slot the sprite comes from; negative when unused.
+    int sourceFileIndex;
+};
+
 class Sprite
 {
 public:
+    // Whether the sprite shows a sprite whose texture is loaded. Defined
+    // after SpriteEngine.
+    __forceinline BOOL HasTexture();
     void SetPendingInterrupt(short interrupt)
     {
         this->pendingInterrupt = interrupt;
     }
 
-    unsigned char unk_0[0x1b8];
+    unsigned char unk_0[0x8];
+    // The sprite's rotation about z.
+    float rotationZ;
+    unsigned char unk_c[0x1ac];
     union
     {
         D3DCOLOR color;
@@ -40,7 +54,10 @@ public:
     short baseSpriteIndex;
     // The script SpriteEngine::StartScript started.
     short scriptIndex;
-    unsigned char unk_1da[0x56];
+    unsigned char unk_1da[0xa];
+    // The entry SetSprite chose.
+    SpriteData *spriteData;
+    unsigned char unk_1e8[0x48];
     // Added to pos when it is drawn.
     D3DXVECTOR3 posOffset;
     unsigned char unk_23c[0x10];
@@ -60,6 +77,11 @@ public:
     int SetSprite(Sprite *vm, int sprite);
     // Draws `vm` at its position.
     int Draw(Sprite *vm);
+    // Draws `vm` when it is not rotated. Not in th06 as such.
+    int Func44f770(Sprite *vm);
+    // Copies surface `surface` to the back buffer at (`left`, `top`),
+    // as in th06.
+    void CopySurfaceToBackBuffer(int surface, int left, int top, int x, int y);
     // Runs `vm`'s script for one frame.
     int Step(Sprite *vm);
     // Steps the `count` sprites from `vms` that run a script. Not in
@@ -134,7 +156,10 @@ public:
     // How far the screen is shaken, set by ScreenEffect's shake.
     float shakeX;
     float shakeY;
-    unsigned char unk_20[0x28ed0];
+    unsigned char unk_20[0x2828c];
+    // The textures of the loaded ANM files, by slot.
+    IDirect3DTexture8 *textures[1];
+    unsigned char unk_282b0[0xc40];
     void *scripts[1];
     unsigned char unk_28ef4[0x5254];
     // Images loaded as surfaces to copy to the back buffer from.
@@ -167,6 +192,19 @@ public:
 };
 ASSERT_SIZE(SpriteEngine, 0x17e560);
 extern SpriteEngine *g_SpriteEngine;
+
+inline BOOL Sprite::HasTexture()
+{
+    if (this->spriteData == NULL)
+    {
+        return FALSE;
+    }
+    if (this->spriteData->sourceFileIndex < 0)
+    {
+        return FALSE;
+    }
+    return g_SpriteEngine->textures[this->spriteData->sourceFileIndex] != NULL;
+}
 
 // A vertex with a transformed position and a color, as
 // D3DFVF_XYZRHW | D3DFVF_DIFFUSE.

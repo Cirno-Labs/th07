@@ -570,7 +570,7 @@ address,size,name,symbol
 0x0044f580,60,SpriteEngine::Func44f580,?Func44f580@SpriteEngine@@QAEXXZ
 0x0044f5c0,198,SpriteEngine::Func44f5c0,?Func44f5c0@SpriteEngine@@QAEXXZ
 0x0044f690,211,Func44f690,
-0x0044f770,487,Func44f770,
+0x0044f770,487,SpriteEngine::Func44f770,?Func44f770@SpriteEngine@@QAEHPAVSprite@@@Z
 0x0044f960,58,Func44f960,
 0x0044f9a0,616,SpriteEngine::Draw,?Draw@SpriteEngine@@QAEHPAVSprite@@@Z
 0x0044fc10,487,Func44fc10,
@@ -590,7 +590,7 @@ address,size,name,symbol
 0x004545b0,511,SpriteEngine::RenderTextCentered,?RenderTextCentered@SpriteEngine@@QAAXPAVSprite@@KKPADZZ
 0x004547b0,599,SpriteEngine::LoadSurface,?LoadSurface@SpriteEngine@@QAEHHPAD@Z
 0x00454a10,143,SpriteEngine::ReleaseSurface,?ReleaseSurface@SpriteEngine@@QAEXH@Z
-0x00454aa0,445,Func454aa0,
+0x00454aa0,445,SpriteEngine::CopySurfaceToBackBuffer,?CopySurfaceToBackBuffer@SpriteEngine@@QAEXHHHHH@Z
 0x00454c60,424,Func454c60,
 0x00454e10,280,SpriteEngine::CopyBackBufferToTexture,?CopyBackBufferToTexture@SpriteEngine@@QAEXHHHHHHHHH@Z
 0x00454f30,251,Func454f30,
@@ -617,7 +617,7 @@ address,size,name,symbol
 0x0045b9ad,413,MainMenu::DrawPracticeScores,?DrawPracticeScores@MainMenu@@QAEHXZ
 0x0045bb4a,281,MainMenu::MoveMenuCursor,?MoveMenuCursor@MainMenu@@QAEHH@Z
 0x0045bc63,265,MainMenu::MoveMenuCursorLR,?MoveMenuCursorLR@MainMenu@@QAEHH@Z
-0x0045bd6c,425,Func45bd6c,
+0x0045bd6c,425,MainMenu::OnDraw,?OnDraw@MainMenu@@SIHPAV1@@Z
 0x0045bf15,1459,Func45bf15,
 0x0045c4c8,17,Func45c4c8,
 0x0045c4d9,109,Func45c4d9,

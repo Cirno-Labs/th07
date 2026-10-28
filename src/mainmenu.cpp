@@ -1359,3 +1359,44 @@ int MainMenu::MoveMenuCursorLR(int count)
     }
     return 0;
 }
+
+int MainMenu::OnDraw(MainMenu *menu)
+{
+    int i;
+    Sprite *vm;
+
+    g_SpriteEngine->ClearTexture();
+    g_SpriteEngine->CopySurfaceToBackBuffer(0, 0, 0, 0, 0);
+    switch (menu->state)
+    {
+    case 7:
+        menu->DrawReplayMenu();
+        break;
+    case 11:
+        menu->DrawPracticeScores();
+        break;
+    }
+    vm = menu->sprites;
+    for (i = 0; i < menu->spriteCount; i++, vm++)
+    {
+        if (vm->HasTexture())
+        {
+            D3DXVECTOR3 savedPos = vm->pos;
+            vm->pos += vm->posOffset;
+            if (vm->rotationZ != 0.0f)
+            {
+                g_SpriteEngine->Draw(vm);
+            }
+            else
+            {
+                g_SpriteEngine->Func44f770(vm);
+            }
+            vm->pos = savedPos;
+        }
+    }
+    if (menu->unk_b0c8 != NULL)
+    {
+        g_SpriteEngine->Func44f770(menu->unk_b0c8);
+    }
+    return 1;
+}
