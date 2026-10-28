@@ -4,6 +4,7 @@
 
 #include <windows.h>
 
+#include "chain.h"
 #include "common.h"
 #include "replay.h"
 #include "sprite.h"
@@ -20,6 +21,10 @@ public:
     static int OnDraw(MainMenu *menu);
     // The update element's added callback: runs InitTitleScene.
     static int AddedCallback(MainMenu *menu);
+    // The update element's deleted callback: releases the title's ANM
+    // slots (0x20 to 0x29) and surface 0, removes the draw element,
+    // frees the menu's buffers and the menu. Returns 0.
+    static int DeletedCallback(MainMenu *menu);
     // The body of the added callback: resets the game's numbers, reloads the score file, shows the
     // Phantasm splash once it opens, puts the cursor on the entry the
     // previous scene came from, loads "data/title01.anm" and the title
@@ -100,7 +105,9 @@ public:
     // The menu's state.
     int state;
     int unk_d0fc;
-    unsigned char unk_d100[0xc];
+    unsigned char unk_d100[0x8];
+    // The draw element (priority 0), created by SetUpTitleScene.
+    ChainElem *drawChain;
     // The button mapping the options screen edits.
     ControllerMapping controllerMapping;
     unsigned char unk_d11e[0x3a];
