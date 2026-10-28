@@ -41,6 +41,10 @@ public:
     int Draw(Sprite *vm);
     // Releases the loaded surfaces, before the device is reset.
     void ReleaseSurfaces();
+    // Starts a new batch of quads. Not in th06.
+    void Func44f580();
+    // Draws the batched quads, if any. Not in th06.
+    void Func44f5c0();
     // Copies the `srcWidth` by `srcHeight` rectangle at (`srcLeft`,
     // `srcTop`) of the back buffer into the `dstWidth` by `dstHeight`
     // rectangle at (`dstLeft`, `dstTop`) of texture `texture`.

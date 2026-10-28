@@ -410,7 +410,7 @@ address,size,name,symbol
 0x0043a0d6,183,Func43a0d6,
 0x0043a18d,48,Func43a18d,
 0x0043a1bd,74,Func43a1bd,
-0x0043a207,71,Func43a207,
+0x0043a207,71,App::Func43a207,?Func43a207@App@@QAEHXZ
 0x0043a24e,49,Func43a24e,
 0x0043a27f,373,Func43a27f,
 0x0043a3f4,373,Func43a3f4,
@@ -567,8 +567,8 @@ address,size,name,symbol
 0x0044eae0,992,Func44eae0,
 0x0044eec0,237,Func44eec0,
 0x0044efb0,1481,Func44efb0,
-0x0044f580,60,Func44f580,
-0x0044f5c0,198,Func44f5c0,
+0x0044f580,60,SpriteEngine::Func44f580,?Func44f580@SpriteEngine@@QAEXXZ
+0x0044f5c0,198,SpriteEngine::Func44f5c0,?Func44f5c0@SpriteEngine@@QAEXXZ
 0x0044f690,211,Func44f690,
 0x0044f770,487,Func44f770,
 0x0044f960,58,Func44f960,

@@ -43,6 +43,14 @@ public:
     static int RegisterChain();
     // Saves the back buffer as a bitmap at `path`. Not in th06.
     int Func4395fb(char *path);
+    // Flushes the sprites and turns fog off if unk_2bc is set; returns
+    // 0 when it was not. Not in th06.
+    int Func43a207();
+
+    BOOL UsesPresentImmediate()
+    {
+        return this->presentImmediate;
+    }
 
     HINSTANCE hInstance;
     IDirect3D8 *d3d;
@@ -54,7 +62,8 @@ public:
     IDirectInputDevice8 *joystick;
     unsigned char unk_18[0x2c];
     HWND hwnd;
-    unsigned char unk_48[0x98];
+    unsigned char unk_48[0x80];
+    D3DVIEWPORT8 viewport;
     D3DPRESENT_PARAMETERS presentParams;
     unsigned char unk_114[0x4];
     // The start of the config, which is 0x38 bytes long, as in th06.
@@ -67,7 +76,9 @@ public:
     unsigned char unk_134[0x6];
     // Played in a window rather than full screen.
     BYTE windowed;
-    unsigned char unk_13b[0x3];
+    // How many frames to skip drawing between drawn ones.
+    BYTE frameSkip;
+    unsigned char unk_13c[0x2];
     // Whether holding shoot also focuses: ReadJoystick reports focus
     // once shoot has been held for 10 frames, and for a few frames after
     // it is let go.
@@ -75,13 +86,19 @@ public:
     unsigned char unk_13f[0x25];
     // How many more frames to draw in full, after the device was reset.
     int redrawFrames;
-    unsigned char unk_168[0x14];
+    unsigned char unk_168[0x4];
+    // Frames are paced by the clock rather than by the presents.
+    int presentImmediate;
+    unsigned char unk_170[0xc];
     // The MIDI player; its long messages come back to WindowProc.
     MidiPlayer *midi;
     unsigned char unk_180[0xc];
     // Bit 0x10 is set after the device is reset, until the next frame
     // is drawn.
     DWORD unk_18c;
+    unsigned char unk_190[0x12c];
+    // Set to 0xff before each frame is drawn; Func43a207 clears it.
+    DWORD unk_2bc;
 };
 
 extern App g_App;
@@ -102,7 +119,9 @@ struct GameWindow
     unsigned char unk_11[0x3];
     // QueryPerformanceFrequency's result.
     DWORD perfFrequency[2];
-    unsigned char unk_1c[0x4];
+    // Paces every frame by the clock, even ones that are early.
+    BYTE unk_1c;
+    unsigned char unk_1d[0x3];
     // The screen saver and power settings, put back on exit.
     int screenSaveActive;
     int lowPowerActive;

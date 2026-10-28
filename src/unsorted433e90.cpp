@@ -2,6 +2,7 @@
 // th06's unsorted41f230.cpp.
 
 #include <direct.h>
+#include <math.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -225,6 +226,118 @@ void PresentFrame()
     {
         g_App.redrawFrames--;
     }
+}
+
+int GameWindow::RunFrame()
+{
+    double delta2;
+    double now;
+    double elapsed;
+    // A LARGE_INTEGER, but only 4-aligned, like GameWindow's.
+    DWORD count[2];
+    int res;
+    static int s_frames;
+    static double s_lastFrameTime;
+    static LARGE_INTEGER s_lastCount;
+
+    if (this->isAppActive == 0)
+    {
+        return 0;
+    }
+    if (this->curFrame == 0)
+    {
+    loop:
+        if (g_App.frameSkip <= this->curFrame)
+        {
+            g_App.d3dDevice->BeginScene();
+            g_SpriteEngine->Func44f580();
+            g_App.unk_2bc = 0xff;
+            g_App.Func43a207();
+            g_Chain.RunDrawChain();
+            g_SpriteEngine->Func44f5c0();
+            g_App.d3dDevice->SetTexture(0, NULL);
+            g_App.d3dDevice->EndScene();
+        }
+        g_SpriteEngine->Func44f5c0();
+        g_App.viewport.X = 0;
+        g_App.viewport.Y = 0;
+        g_App.viewport.Width = 640;
+        g_App.viewport.Height = 480;
+        g_App.d3dDevice->SetViewport(&g_App.viewport);
+        res = g_Chain.RunCalcChain();
+        g_SoundPlayer.Func44c9c0();
+        if (res == 0)
+        {
+            return 1;
+        }
+        if (res == -1)
+        {
+            return 2;
+        }
+        this->curFrame++;
+    }
+    if ((g_App.windowed || g_App.UsesPresentImmediate()) && this->curFrame != 0)
+    {
+        if (g_GameWindow.perfFrequency[0] != 0)
+        {
+            QueryPerformanceCounter((LARGE_INTEGER *)count);
+            elapsed = (double)(count[0] - s_lastCount.LowPart) / (double)g_GameWindow.perfFrequency[0];
+            if (elapsed < 0.0)
+            {
+                s_lastCount = *(LARGE_INTEGER *)count;
+            }
+            if (elapsed >= 1.0 / 60.0 || g_GameWindow.unk_1c)
+            {
+                while (elapsed >= 1.0 / 60.0)
+                {
+                    s_lastCount.LowPart += g_GameWindow.perfFrequency[0] / 60;
+                    elapsed -= 1.0 / 60.0;
+                }
+                if (g_App.frameSkip < this->curFrame)
+                {
+                    goto present;
+                }
+                goto loop;
+            }
+        }
+        else
+        {
+            timeBeginPeriod(1);
+            now = timeGetTime();
+            if (now < s_lastFrameTime)
+            {
+                s_lastFrameTime = now;
+            }
+            delta2 = fabs(now - s_lastFrameTime);
+            timeEndPeriod(1);
+            if (delta2 >= 1000.0 / 60.0 || g_GameWindow.unk_1c)
+            {
+                while (delta2 >= 1000.0 / 60.0)
+                {
+                    s_lastFrameTime += 1000.0 / 60.0;
+                    delta2 -= 1000.0 / 60.0;
+                }
+                if (g_App.frameSkip < this->curFrame)
+                {
+                    goto present;
+                }
+                goto loop;
+            }
+        }
+    }
+    if (!g_App.windowed && !g_App.UsesPresentImmediate())
+    {
+        if (g_App.frameSkip >= this->curFrame)
+        {
+            PresentFrame();
+            goto loop;
+        }
+    present:
+        PresentFrame();
+        this->curFrame = 0;
+        s_frames++;
+    }
+    return 0;
 }
 
 inline void SpriteEngine::ReleaseSurfaces()
