@@ -288,7 +288,7 @@ address,size,name,symbol
 0x0042fa60,75,Chain::~Chain,??1Chain@@QAE@XZ
 0x0042fab0,99,ChainElem::ChainElem,??0ChainElem@@QAE@XZ
 0x0042fb20,82,ChainElem::~ChainElem,??1ChainElem@@QAE@XZ
-0x0042fb80,78,Func42fb80,
+0x0042fb80,78,Chain::Chain,??0Chain@@QAE@XZ
 0x0042fbd0,197,Func42fbd0,
 0x0042fca0,184,Func42fca0,
 0x0042fd60,153,Func42fd60,
