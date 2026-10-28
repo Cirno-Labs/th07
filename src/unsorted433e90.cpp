@@ -1,6 +1,8 @@
 // The file from 0x433e90: start-up, the window and the display, as in
 // th06's unsorted41f230.cpp.
 
+#include <direct.h>
+#include <stdio.h>
 #include <string.h>
 
 #include <windows.h>
@@ -188,6 +190,41 @@ stop:
     WINNLSEnableIME(NULL, TRUE);
     g_Log.Flush();
     return 0;
+}
+
+void PresentFrame()
+{
+    int i;
+    char path[0x100];
+
+    if (g_App.d3dDevice->Present(NULL, NULL, NULL, NULL) < 0)
+    {
+        g_SpriteEngine->ReleaseSurfaces();
+        g_App.d3dDevice->Reset(&g_App.presentParams);
+        SetDefaultRenderStates();
+        g_App.redrawFrames = 2;
+    }
+    g_SpriteEngine->DoPendingCopy();
+    if ((g_Buttons & 0x800) && (g_Buttons & 0x800) != (g_PrevButtons & 0x800))
+    {
+        _mkdir("snapshot");
+        for (i = 0; i < 1000; i++)
+        {
+            sprintf(path, "snapshot/th%.3d.bmp", i);
+            if (!FileExists(path))
+            {
+                break;
+            }
+        }
+        if (i < 1000)
+        {
+            g_App.Func4395fb(path);
+        }
+    }
+    if (g_App.redrawFrames != 0)
+    {
+        g_App.redrawFrames--;
+    }
 }
 
 inline void SpriteEngine::ReleaseSurfaces()

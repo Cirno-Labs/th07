@@ -340,7 +340,7 @@ address,size,name,symbol
 0x00433f90,134,SpriteEngine::DoPendingCopy,?DoPendingCopy@SpriteEngine@@QAEXXZ
 0x00434020,1131,WinMain,_WinMain@16
 0x00434490,292,WindowProc,?WindowProc@@YGJPAUHWND__@@IIJ@Z
-0x004345c0,284,Func4345c0,
+0x004345c0,284,PresentFrame,?PresentFrame@@YIXXZ
 0x004346e0,855,GameWindow::RunFrame,?RunFrame@GameWindow@@QAEHXZ
 0x00434a40,53,CreateD3d,?CreateD3d@@YIHXZ
 0x00434a80,326,CreateGameWindow,?CreateGameWindow@@YIHPAUHINSTANCE__@@@Z
@@ -401,7 +401,7 @@ address,size,name,symbol
 0x00439401,198,Func439401,
 0x004394c7,198,Func4394c7,
 0x0043958d,110,Func43958d,
-0x004395fb,699,Func4395fb,
+0x004395fb,699,App::Func4395fb,?Func4395fb@App@@QAEHPAD@Z
 0x004398b6,1306,App::LoadConfig,?LoadConfig@App@@QAEHPAD@Z
 0x00439dd0,241,Func439dd0,
 0x00439ec1,140,Func439ec1,
@@ -1117,13 +1117,13 @@ address,size,name,symbol
 0x0047d3af,136,_atol,
 0x0047d43c,,operator delete,??3@YAXPAX@Z
 0x0047d441,14,operator new,??2@YAPAXI@Z
-0x0047d44f,88,Func47d44f,
+0x0047d44f,88,_sprintf,_sprintf
 0x0047d4b0,45,_strrchr,_strrchr
 0x0047d4e0,672,_memcpy,_memcpy
 0x0047d820,672,_memmove,
 0x0047db60,139,_strlen,_strlen
 0x0047dbf0,96,_memset,_memset
-0x0047dc50,44,Func47dc50,
+0x0047dc50,44,_mkdir,__mkdir
 0x0047dc7c,52,_sscanf,
 0x0047dcb0,57,_strncmp,
 0x0047dd00,195,_strchr,
@@ -1716,6 +1716,8 @@ address,size,name,symbol
 0x0049fe20,,g_Rng,?g_Rng@@3VRng@@A
 0x0049fe28,,g_TextSurface,?g_TextSurface@@3PAUIDirect3DSurface8@@A
 0x004b9e44,,g_SpriteEngine,?g_SpriteEngine@@3PAVSpriteEngine@@A
+0x004b9e4c,,g_Buttons,?g_Buttons@@3GA
+0x004b9e54,,g_PrevButtons,?g_PrevButtons@@3GA
 0x004b9e64,,g_FileSize,?g_FileSize@@3HA
 0x004ba0d8,,g_SoundPlayer,?g_SoundPlayer@@3VSoundPlayer@@A
 0x00575950,,g_App,?g_App@@3VApp@@A

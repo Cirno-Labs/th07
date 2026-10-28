@@ -41,6 +41,8 @@ public:
     // Adds the application's chain elements. Returns 0, -1 to quit, or
     // anything else to restart.
     static int RegisterChain();
+    // Saves the back buffer as a bitmap at `path`. Not in th06.
+    int Func4395fb(char *path);
 
     HINSTANCE hInstance;
     IDirect3D8 *d3d;
@@ -112,6 +114,11 @@ extern GameWindow g_GameWindow;
 // cursor shown only in a window or while inactive, swallows
 // WM_ERASEBKGND, and has WM_CLOSE end the main loop.
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
+// Presents the frame, resetting the device if that fails; does the
+// pending texture copy; saves a screenshot to snapshot/thNNN.bmp when
+// button 0x800 is pressed.
+void PresentFrame();
 
 // Creates g_App.d3d. Returns 0, or 1 on failure.
 int CreateD3d();
@@ -229,6 +236,10 @@ BYTE *GetPadButtons();
 // Reads the keyboard and the joystick into button bits: through
 // DirectInput if there is a keyboard device, else GetKeyboardState.
 WORD ReadButtons();
+
+// The buttons held this frame and the frame before, as bits.
+extern WORD g_Buttons;
+extern WORD g_PrevButtons;
 
 // Clears the down bit (0x80) of every key in the thread's keyboard
 // state.
