@@ -81,7 +81,8 @@ public:
     IDirectInputDevice8 *joystick;
     unsigned char unk_18[0x2c];
     HWND hwnd;
-    unsigned char unk_48[0x80];
+    D3DXMATRIX viewMatrix;
+    D3DXMATRIX projectionMatrix;
     D3DVIEWPORT8 viewport;
     D3DPRESENT_PARAMETERS presentParams;
     unsigned char unk_114[0x4];
@@ -92,7 +93,11 @@ public:
     // direction.
     short padThresholdX;
     short padThresholdY;
-    unsigned char unk_134[0x6];
+    unsigned char unk_134[0x2];
+    // 0 for a 32-bit display, 1 for 16 bits, 0xff before the first run
+    // picks one.
+    BYTE colorMode16Bits;
+    unsigned char unk_137[0x3];
     // Played in a window rather than full screen.
     BYTE windowed;
     // How many frames to skip drawing between drawn ones.
@@ -110,12 +115,17 @@ public:
     unsigned char unk_168[0x4];
     // Frames are paced by the clock rather than by the presents.
     int presentImmediate;
-    unsigned char unk_170[0xc];
+    // Set while the device is created asking for 60 Hz.
+    int unk_170;
+    // Cleared by InitD3dDevice.
+    int unk_174;
+    unsigned char unk_178[0x4];
     // The MIDI player; its long messages come back to WindowProc.
     MidiPlayer *midi;
     unsigned char unk_180[0xc];
-    // Bit 0x10 is set after the device is reset, until the next frame
-    // is drawn.
+    // Bit 1: the device does T&L in hardware; 2: the back buffer is
+    // lockable; 4: A8R8G8B8 textures work; 0x10: the device was reset and
+    // no frame has been drawn since.
     DWORD unk_18c;
     unsigned char unk_190[0x8];
     D3DCAPS8 caps;
@@ -170,6 +180,8 @@ int CreateGameWindow(HINSTANCE instance);
 // Brings `hwnd` to the foreground, lifting the foreground lock timeout
 // for the time. Not in th06.
 void Func435e30(HWND hwnd);
+// Clears the whole back buffer to `color`.
+void ClearViewport(D3DCOLOR color);
 // Creates the Direct3D device. Returns 0, or nonzero on failure.
 int InitD3dDevice();
 // Prints `name` and then 可 or 不可 (yes or no), by whether `caps` has

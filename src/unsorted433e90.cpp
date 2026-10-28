@@ -390,6 +390,196 @@ int CreateGameWindow(HINSTANCE instance)
     return 0;
 }
 
+int InitD3dDevice()
+{
+    char buffer[0x2000];
+    float fovAngle;
+    float aspectXY;
+    float halfWidth;
+    float halfHeight4;
+    float dist;
+    D3DPRESENT_PARAMETERS params3;
+    D3DDISPLAYMODE displayMode2;
+    bool checkFormat = true;
+    int retried;
+
+    memset(&params3, 0, sizeof(params3));
+    g_App.d3d->GetAdapterDisplayMode(D3DADAPTER_DEFAULT, &displayMode2);
+    if (!g_App.windowed)
+    {
+        if (g_App.flags.force16BitTextures == 1)
+        {
+            params3.BackBufferFormat = D3DFMT_R5G6B5;
+            g_App.colorMode16Bits = 1;
+        }
+        else if (g_App.colorMode16Bits == 0xff)
+        {
+            params3.BackBufferFormat = D3DFMT_X8R8G8B8;
+            g_App.colorMode16Bits = 0;
+            LogPrintf(&g_Log, "初回起動、画面を 32Bits で初期化しました\r\n");
+        }
+        else if (g_App.colorMode16Bits == 0)
+        {
+            params3.BackBufferFormat = D3DFMT_X8R8G8B8;
+        }
+        else
+        {
+            params3.BackBufferFormat = D3DFMT_R5G6B5;
+        }
+        if (g_GameWindow.unk_1c)
+        {
+            g_App.presentImmediate = 1;
+        }
+        if (g_App.presentImmediate == 0)
+        {
+            params3.FullScreen_RefreshRateInHz = 60;
+            params3.FullScreen_PresentationInterval = D3DPRESENT_INTERVAL_ONE;
+            LogPrintf(&g_Log, "リフレッシュレートを60Hzに変更を試みます\r\n");
+            if (g_App.frameSkip == 0)
+            {
+                params3.SwapEffect = D3DSWAPEFFECT_FLIP;
+            }
+            else
+            {
+                params3.SwapEffect = D3DSWAPEFFECT_COPY_VSYNC;
+            }
+        }
+        else
+        {
+            params3.FullScreen_RefreshRateInHz = 0;
+            params3.SwapEffect = D3DSWAPEFFECT_COPY;
+            params3.FullScreen_PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
+            LogPrintf(&g_Log, "VSync非同期可能かどうかを試みます\r\n");
+        }
+    }
+    else
+    {
+        params3.BackBufferFormat = displayMode2.Format;
+        params3.SwapEffect = D3DSWAPEFFECT_COPY;
+        params3.Windowed = TRUE;
+    }
+    params3.BackBufferWidth = 640;
+    params3.BackBufferHeight = 480;
+    params3.EnableAutoDepthStencil = TRUE;
+    params3.AutoDepthStencilFormat = D3DFMT_D16;
+    params3.Flags = D3DPRESENTFLAG_LOCKABLE_BACKBUFFER;
+    g_App.unk_18c |= 2;
+    g_App.unk_170 = 1;
+    retried = 0;
+retry:
+    if (g_App.flags.referenceRasterizer)
+    {
+        goto reference;
+    }
+    if (g_App.d3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, g_GameWindow.hwnd,
+                                D3DCREATE_HARDWARE_VERTEXPROCESSING, &params3, &g_App.d3dDevice) < 0)
+    {
+        if (retried)
+        {
+            LogPrintf(&g_Log, "T&L HAL は使用できないようです\r\n");
+        }
+        if (g_App.d3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, g_GameWindow.hwnd,
+                                    D3DCREATE_SOFTWARE_VERTEXPROCESSING, &params3, &g_App.d3dDevice) < 0)
+        {
+            if (retried)
+            {
+                LogPrintf(&g_Log, "HAL も使用できないようです\r\n");
+            }
+        reference:
+            if (g_App.d3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_REF, g_GameWindow.hwnd,
+                                        D3DCREATE_SOFTWARE_VERTEXPROCESSING, &params3, &g_App.d3dDevice) < 0)
+            {
+                if (g_App.presentImmediate == 0)
+                {
+                    LogPrintf(&g_Log, "リフレッシュレートが変更できません\r\n");
+                    params3.FullScreen_RefreshRateInHz = 0;
+                    g_App.unk_170 = 0;
+                    retried = 1;
+                    goto retry;
+                }
+                if (params3.FullScreen_PresentationInterval == D3DPRESENT_INTERVAL_IMMEDIATE)
+                {
+                    LogPrintf(&g_Log, "非同期更新も行えません。一番汚いモードに変更します\r\n");
+                    LogError(&g_Log, "*** リフレッシュレートを60Hzに変更することを推奨します ***\r\n");
+                    params3.FullScreen_PresentationInterval = D3DPRESENT_INTERVAL_ONE;
+                    params3.SwapEffect = D3DSWAPEFFECT_COPY;
+                    goto retry;
+                }
+                LogError(&g_Log, "Direct3D の初期化に失敗、これではゲームは出来ません\r\n");
+                if (g_App.d3d != NULL)
+                {
+                    g_App.d3d->Release();
+                    g_App.d3d = NULL;
+                }
+                return 1;
+            }
+            else
+            {
+                LogPrintf(&g_Log, "REF で動作しますが、重すぎて恐らくゲームになりません...\r\n");
+                g_App.unk_18c &= ~1;
+                checkFormat = false;
+            }
+        }
+        else
+        {
+            LogPrintf(&g_Log, "HAL で動作します\r\n");
+            g_App.unk_18c &= ~1;
+        }
+    }
+    else
+    {
+        LogPrintf(&g_Log, "T&L HAL で動作しま～す\r\n");
+        g_App.unk_18c |= 1;
+    }
+    memcpy(&g_App.presentParams, &params3, sizeof(params3));
+    halfWidth = 320.0f;
+    halfHeight4 = 240.0f;
+    aspectXY = 640.0f / 480.0f;
+    fovAngle = 0.5235988f;
+    dist = halfHeight4 / tanf(fovAngle / 2.0f);
+    {
+        D3DXVECTOR3 up(0.0f, 1.0f, 0.0f);
+        D3DXVECTOR3 lookAt(halfWidth, -halfHeight4, 0.0f);
+        D3DXVECTOR3 from(halfWidth, -halfHeight4, -dist);
+        D3DXMatrixLookAtLH(&g_App.viewMatrix, &from, &lookAt, &up);
+        D3DXMatrixPerspectiveFovLH(&g_App.projectionMatrix, fovAngle, aspectXY, 100.0f, 10000.0f);
+    }
+    g_App.d3dDevice->SetTransform(D3DTS_VIEW, &g_App.viewMatrix);
+    g_App.d3dDevice->SetTransform(D3DTS_PROJECTION, &g_App.projectionMatrix);
+    g_App.d3dDevice->GetViewport(&g_App.viewport);
+    g_App.d3dDevice->GetDeviceCaps(&g_App.caps);
+    if (g_App.flags.emulateColorAdd == 0 && (g_App.caps.TextureOpCaps & D3DTEXOPCAPS_ADD) == 0)
+    {
+        LogPrintf(&g_Log, "D3DTEXOPCAPS_ADD をサポートしていません、色加算エミュレートモードで動作します\r\n");
+        g_App.flags.emulateColorAdd = 1;
+    }
+    if (g_App.caps.MaxTextureWidth <= 256)
+    {
+        LogPrintf(&g_Log, "512 以上のテクスチャをサポートしていません。殆どの絵がボケて表示されます。\r\n");
+    }
+    FormatCapsReport(&g_App.caps, buffer);
+    LogPrintf(&g_Log, buffer);
+    if (g_App.flags.force16BitTextures == 0 && checkFormat)
+    {
+        if (g_App.d3d->CheckDeviceFormat(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, params3.BackBufferFormat, 0,
+                                         D3DRTYPE_TEXTURE, D3DFMT_A8R8G8B8) == D3D_OK)
+        {
+            g_App.unk_18c |= 4;
+        }
+        else
+        {
+            g_App.unk_18c &= ~4;
+            g_App.flags.force16BitTextures = 1;
+            LogPrintf(&g_Log, "D3DFMT_A8R8G8B8 をサポートしていません、減色モードで動作します\r\n");
+        }
+    }
+    SetDefaultRenderStates();
+    ClearViewport(0xff000000);
+    g_GameWindow.isClosing = 0;
+    g_App.unk_174 = 0;
+    return 0;
+}
+
 char *AppendCapsFlagText(char *name, DWORD caps, DWORD flag, char *out)
 {
     out += sprintf(out, name);
