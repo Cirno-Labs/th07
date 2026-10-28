@@ -90,6 +90,9 @@ public:
     // returns 0 when it was. Not in th06.
     int EnableFog();
     int DisableFog();
+    // Flushes the sprites and sets render state `state` to `value`.
+    // Returns what SetRenderState returned. Not in th06.
+    int SetRenderState(D3DRENDERSTATETYPE state, DWORD value);
     // Advances `frames` by one frame, or by a fraction of one into
     // `subFrame` while the game runs slow.
     void TickTimer(int *frames, float *subFrame);

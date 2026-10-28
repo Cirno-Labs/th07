@@ -393,3 +393,9 @@ int App::DisableFog()
     }
     return 0;
 }
+
+int App::SetRenderState(D3DRENDERSTATETYPE state, DWORD value)
+{
+    g_SpriteEngine->Func44f5c0();
+    return this->d3dDevice->SetRenderState(state, value);
+}
