@@ -190,7 +190,7 @@ void SaveScoreDat(ResultScreen *screen)
     }
     memcpy(buf + size0, &screen->lsnm, sizeof(Lsnm));
     size0 += sizeof(Lsnm);
-    g_App.Func43a27f();
+    g_App.AddPlayTime();
     memcpy(buf + size0, &g_Unknown626270.plst, sizeof(Plst));
     size0 += sizeof(Plst);
     vrsm13.magic = 0x4d535256;
@@ -1285,10 +1285,10 @@ int ResultScreen::RunStatisticsMenu()
             pos2.z = 0.0f;
             sprite0 = &this->textSprites[0];
             sprite0->pos = pos2;
-            g_App.Func43a27f();
+            g_App.AddPlayTime();
             g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "総起動時間   %.2d:%.2d:%.2d", g_Unknown626270.plst.runHours,
                                        g_Unknown626270.plst.runMinutes, g_Unknown626270.plst.runSeconds);
-            g_App.Func43a27f();
+            g_App.AddPlayTime();
             this->unk_6c = g_Unknown626270.plst.runSeconds;
             sprite0++;
             pos2.y += 17.0f;
@@ -1413,7 +1413,7 @@ int ResultScreen::RunStatisticsMenu()
     case 0x15:
         if (this->frame % 60 == 0)
         {
-            g_App.Func43a27f();
+            g_App.AddPlayTime();
             if (g_Unknown626270.plst.runSeconds != this->unk_6c)
             {
                 sprite0 = &this->textSprites[0];

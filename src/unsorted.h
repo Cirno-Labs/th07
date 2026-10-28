@@ -78,7 +78,7 @@ public:
     static int OnDraw(App *arg);
     // Adds the time since the last call to the play time in
     // g_Unknown626270.plst. Not in th06.
-    void Func43a27f();
+    void AddPlayTime();
     // Whether g_Unknown626270.unk_4 is set and its byte at 0x25 is not
     // 0. The result screen records no score then. Not in th06.
     int IsScoreDisabled();
@@ -210,7 +210,8 @@ public:
     // lockable; 4: A8R8G8B8 textures work; 8: no score is recorded;
     // 0x10: the device was reset and no frame has been drawn since.
     DWORD unk_18c;
-    int unk_190;
+    // timeGetTime() when AddPlayTime last added to the run time.
+    DWORD unk_190;
     unsigned char unk_194[0x4];
     D3DCAPS8 caps;
     unsigned char unk_26c[0x38];

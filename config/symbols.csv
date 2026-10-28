@@ -412,7 +412,7 @@ address,size,name,symbol
 0x0043a1bd,74,App::EnableFog,?EnableFog@App@@QAEHXZ
 0x0043a207,71,App::DisableFog,?DisableFog@App@@QAEHXZ
 0x0043a24e,49,App::SetRenderState,?SetRenderState@App@@QAEHW4_D3DRENDERSTATETYPE@@K@Z
-0x0043a27f,373,App::Func43a27f,?Func43a27f@App@@QAEXXZ
+0x0043a27f,373,App::AddPlayTime,?AddPlayTime@App@@QAEXXZ
 0x0043a3f4,373,Func43a3f4,
 0x0043a569,306,Func43a569,
 0x0043a69b,197,Func43a69b,

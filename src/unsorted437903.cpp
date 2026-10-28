@@ -399,3 +399,38 @@ int App::SetRenderState(D3DRENDERSTATETYPE state, DWORD value)
     g_SpriteEngine->Func44f5c0();
     return this->d3dDevice->SetRenderState(state, value);
 }
+
+void App::AddPlayTime()
+{
+    DWORD now = timeGetTime();
+    DWORD delta;
+
+    if (now < this->unk_190)
+    {
+        this->unk_190 = 0;
+    }
+    delta = now - this->unk_190;
+    g_Unknown626270.plst.runHours += delta / 3600000;
+    delta %= 3600000;
+    g_Unknown626270.plst.runMinutes += delta / 60000;
+    delta %= 60000;
+    g_Unknown626270.plst.runSeconds += delta / 1000;
+    delta %= 1000;
+    g_Unknown626270.plst.runMilliseconds += delta;
+    if (g_Unknown626270.plst.runMilliseconds >= 1000)
+    {
+        g_Unknown626270.plst.runSeconds += g_Unknown626270.plst.runMilliseconds / 1000;
+        g_Unknown626270.plst.runMilliseconds %= 1000;
+    }
+    if (g_Unknown626270.plst.runSeconds >= 60)
+    {
+        g_Unknown626270.plst.runMinutes += g_Unknown626270.plst.runSeconds / 60;
+        g_Unknown626270.plst.runSeconds %= 60;
+    }
+    if (g_Unknown626270.plst.runMinutes >= 60)
+    {
+        g_Unknown626270.plst.runHours += g_Unknown626270.plst.runMinutes / 60;
+        g_Unknown626270.plst.runMinutes %= 60;
+    }
+    this->unk_190 = now;
+}
