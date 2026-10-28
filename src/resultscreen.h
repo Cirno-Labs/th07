@@ -231,8 +231,12 @@ DWORD LoadHighScores(void *scoreDat, ListNode *list, int shot, int difficulty, B
 // Copies the score file's version 1 "LSNM" chunk to `lsnm`. Returns 1,
 // or 0 if there is none. Not in th06.
 int Func445110(void *scoreDat, Lsnm *lsnm);
-// Reads "score.dat" at `path`, or makes a new one. Placeholder for the
-// details.
+// Reads "score.dat" at `path`: decodes it, checks the checksum, the
+// header size and version 0xb, unpacks the chunks into a new block with
+// room for 0xa0000 bytes, then checks every "VRSM" chunk against the
+// executable, that no chunk has size 0 and that a version 1 "TH7K"
+// chunk is there. On any failure it makes a new, empty one. Either way
+// it gives it an empty list.
 ScoreDat *LoadScoreDat(char *path);
 // Fills `clrds` with fresh chunks, then copies the score file's "CLRD"
 // chunks over them.

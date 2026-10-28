@@ -48,6 +48,122 @@ void FreeListNodes(ListNode *head)
     }
 }
 
+ScoreDat *LoadScoreDat(char *path)
+{
+    Vrsm *vrsm2;
+    BOOL found2;
+    Th7k *th7k1;
+    int rest;
+    Th7k *chunk;
+    int remaining0;
+    BYTE *p2;
+    WORD checksumVal0;
+    BYTE key;
+    int n;
+    ScoreDat *dat;
+    ScoreDat *unpacked;
+
+    DebugPrint2("info : score load\r\n");
+    dat = (ScoreDat *)LoadFileData(path, 1);
+    if (dat == NULL)
+    {
+    fail:
+        DebugPrint2("info : score recreate\r\n");
+        if (dat != NULL)
+        {
+            free(dat);
+        }
+        dat = (ScoreDat *)MemAlloc(sizeof(ScoreDat));
+        dat->dataOffset = sizeof(ScoreDat);
+        dat->fileSize = sizeof(ScoreDat);
+        goto done;
+    }
+    if (g_FileSize < sizeof(ScoreDat))
+    {
+        DebugPrint2("warning : score.dat size is short\r\n");
+        free(dat);
+        goto fail;
+    }
+    remaining0 = g_FileSize - 2;
+    checksumVal0 = 0;
+    key = 0;
+    n = 0;
+    p2 = (BYTE *)dat + 1;
+    while (remaining0 > 0)
+    {
+        key += *p2;
+        key = ((key & 0xe0) >> 5) | ((key & 0x1f) << 3);
+        p2[1] ^= key;
+        if (n >= 2)
+        {
+            checksumVal0 += p2[1];
+        }
+        p2++;
+        remaining0--;
+        n++;
+    }
+    if (dat->checksum != checksumVal0)
+    {
+        DebugPrint2("warning : score.dat chksum error\r\n");
+        goto fail;
+    }
+    if (dat->dataOffset != sizeof(ScoreDat))
+    {
+        DebugPrint2("warning : header size is mismatch\r\n");
+        goto fail;
+    }
+    if (dat->version != 0xb)
+    {
+        DebugPrint2("warning : score.dat version mismatch\r\n");
+        goto fail;
+    }
+    unpacked = (ScoreDat *)MemAlloc(sizeof(ScoreDat) + 0xa0000);
+    memcpy(unpacked, dat, sizeof(ScoreDat));
+    LzssDecompress((BYTE *)dat + sizeof(ScoreDat), dat->packedSize, (BYTE *)unpacked + sizeof(ScoreDat),
+               dat->dataSize);
+    free(dat);
+    dat = unpacked;
+    rest = dat->fileSize;
+    found2 = FALSE;
+    chunk = (Th7k *)((BYTE *)dat + dat->dataOffset);
+    rest -= dat->dataOffset;
+    while (rest > 0)
+    {
+        if (chunk->magic == 0x4b374854)
+        {
+            found2 = TRUE;
+            th7k1 = chunk;
+        }
+        if (chunk->magic == 0x4d535256 && chunk->version == 1)
+        {
+            vrsm2 = (Vrsm *)chunk;
+            if (g_App.CheckVersionFile(vrsm2->gameVersion, vrsm2->exeSize, vrsm2->exeChecksum) != 0)
+            {
+                DebugPrint2("warning : score.dat exesumcheck error\r\n");
+                goto fail;
+            }
+        }
+        if (chunk->size == 0)
+        {
+            DebugPrint2("warning : score.dat chapter size is ZERO\r\n");
+            goto fail;
+        }
+        rest -= chunk->size;
+        chunk = (Th7k *)((BYTE *)chunk + chunk->size);
+    }
+    if (!found2 || th7k1->version != 1)
+    {
+        DebugPrint2("warning : score.dat version mismatch\r\n");
+        goto fail;
+    }
+done:
+    dat->scores = (ListNode *)MemAlloc(sizeof(ListNode));
+    dat->scores->next = NULL;
+    dat->scores->data = NULL;
+    dat->scores->prev = NULL;
+    return dat;
+}
+
 int LoadPracticeScores(void *scoreDat, Pscr *pscrs)
 {
     Pscr *p;
