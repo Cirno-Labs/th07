@@ -61,6 +61,9 @@ public:
     int RunCalcChain();
     // Like RunCalcChain for the draw chain, without starting over.
     int RunDrawChain();
+    // Releases the elements of the list that starts at `root`, going
+    // through a copy of the list it allocates.
+    void ReleaseList(ChainElem *root);
 
     ChainElem calcChain;
     ChainElem drawChain;

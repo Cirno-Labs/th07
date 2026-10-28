@@ -248,3 +248,36 @@ int Chain::RunDrawChain()
     }
     return updateCount;
 }
+
+void Chain::ReleaseList(ChainElem *root)
+{
+    ChainElem list;
+    ChainElem *tail;
+    ChainElem *tmp;
+    ChainElem *cur;
+
+    tail = new ChainElem();
+    list.next = tail;
+    cur = root;
+    while (cur != NULL)
+    {
+        tail->self = cur;
+        tail->next = new ChainElem();
+        tail = tail->next;
+        cur = cur->next;
+    }
+    cur = &list;
+    while (cur != NULL)
+    {
+        this->Remove(cur->self);
+        cur = cur->next;
+    }
+    tail = list.next;
+    while (tail != NULL)
+    {
+        tmp = tail->next;
+        delete tail;
+        tail = NULL;
+        tail = tmp;
+    }
+}
