@@ -41,12 +41,24 @@ public:
         return this->format;
     }
 
-    unsigned char unk_0[0x2c];
+    // The SDK's fields, without th06's HMMIO: the wave format is the
+    // BgmFormat's, and only m_ck.cksize is used, as the bytes left.
+    WAVEFORMATEX *m_pwfx;
+    MMCKINFO m_ck;
+    MMCKINFO m_ckRiff;
     DWORD m_dwSize;
-    unsigned char unk_30[0x60];
-    // The track streamed.
+    MMIOINFO m_mmioinfoOut;
+    DWORD m_dwFlags;
+    BOOL m_bIsReadingFromMemory;
+    BYTE *m_pbData;
+    BYTE *m_pbDataCur;
+    ULONG m_ulDataSize;
+    // Not in the SDK: the file streamed from, in place of th06's HMMIO.
+    HANDLE hFile;
+    // The track streamed, in place of th06's loopStart and loopEnd.
     BgmFormat *format;
 };
+ASSERT_SIZE(CWaveFile, 0x94);
 
 class CSoundManager
 {
