@@ -30,6 +30,8 @@ struct ControllerMapping
 };
 ASSERT_SIZE(ControllerMapping, 0x12);
 
+class MidiPlayer;
+
 class App
 {
 public:
@@ -71,7 +73,10 @@ public:
     unsigned char unk_13f[0x25];
     // How many more frames to draw in full, after the device was reset.
     int redrawFrames;
-    unsigned char unk_168[0x24];
+    unsigned char unk_168[0x14];
+    // The MIDI player; its long messages come back to WindowProc.
+    MidiPlayer *midi;
+    unsigned char unk_180[0xc];
     // Bit 0x10 is set after the device is reset, until the next frame
     // is drawn.
     DWORD unk_18c;
@@ -102,6 +107,11 @@ struct GameWindow
     int powerOffActive;
 };
 extern GameWindow g_GameWindow;
+
+// Hands finished MIDI long messages back to g_App.midi, keeps the
+// cursor shown only in a window or while inactive, swallows
+// WM_ERASEBKGND, and has WM_CLOSE end the main loop.
+LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 // Creates g_App.d3d. Returns 0, or 1 on failure.
 int CreateD3d();

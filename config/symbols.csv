@@ -339,7 +339,7 @@ address,size,name,symbol
 0x00433f20,104,SpriteEngine::ReleaseSurfaces,?ReleaseSurfaces@SpriteEngine@@QAEXXZ
 0x00433f90,134,SpriteEngine::DoPendingCopy,?DoPendingCopy@SpriteEngine@@QAEXXZ
 0x00434020,1131,WinMain,_WinMain@16
-0x00434490,292,Func434490,
+0x00434490,292,WindowProc,?WindowProc@@YGJPAUHWND__@@IIJ@Z
 0x004345c0,284,Func4345c0,
 0x004346e0,855,GameWindow::RunFrame,?RunFrame@GameWindow@@QAEHXZ
 0x00434a40,53,CreateD3d,?CreateD3d@@YIHXZ
