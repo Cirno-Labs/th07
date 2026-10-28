@@ -71,3 +71,13 @@ void FireShot(Player *player, PlayerBullet *bullet, ShotData *sd)
     }
     g_SpriteEngine->StartScript(&bullet->sprite, sd->script);
 }
+
+int TryFireShot(Player *player, PlayerBullet *bullet, int frame, ShotData *sd)
+{
+    if (frame % sd->interval == sd->phase)
+    {
+        FireShot(player, bullet, sd);
+        return 1;
+    }
+    return 0;
+}

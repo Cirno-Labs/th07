@@ -60,6 +60,11 @@ class Player;
 // option, its script and its sound. th06's FireShot did this inline.
 void FireShot(Player *player, PlayerBullet *bullet, ShotData *sd);
 
+// The shot types' fire functions, by ShotData: fire `sd` into
+// `bullet` if it fires on `frame`, returning 1 if it did, else 0.
+// Fires on frames where frame % interval is phase.
+int TryFireShot(Player *player, PlayerBullet *bullet, int frame, ShotData *sd);
+
 // One of the 0x70 entries at Player+0x9dc, probably th06's bomb
 // hitboxes (bombHitPos, bombHitSize, ...) as one struct.
 struct PlayerBombHit
