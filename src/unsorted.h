@@ -985,3 +985,13 @@ public:
     int unk_9630;
 };
 extern Unknown626270 g_Unknown626270;
+
+// The object at 0x49fbf0. Placeholder name; only what is known so far.
+class Unknown49fbf0
+{
+public:
+    // Whether the pointer at +8 is set and the int at its +0x1fbac is
+    // not negative, or is -2.
+    int Func42ad66();
+};
+extern Unknown49fbf0 g_Unknown49fbf0;

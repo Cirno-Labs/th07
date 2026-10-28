@@ -246,7 +246,7 @@ address,size,name,symbol
 0x00429c42,3064,Func429c42,
 0x0042a876,1203,Func42a876,
 0x0042ad29,61,Func42ad29,
-0x0042ad66,69,Func42ad66,
+0x0042ad66,69,Unknown49fbf0::Func42ad66,?Func42ad66@Unknown49fbf0@@QAEHXZ
 0x0042adab,2136,Func42adab,
 0x0042b603,3956,Func42b603,
 0x0042c577,2755,Func42c577,
@@ -439,7 +439,7 @@ address,size,name,symbol
 0x0043c250,554,UpdateHomingOrb,?UpdateHomingOrb@@YIHPAVPlayer@@PAUPlayerBullet@@@Z
 0x0043c480,554,UpdateHomingOrbFast,?UpdateHomingOrbFast@@YIHPAVPlayer@@PAUPlayerBullet@@@Z
 0x0043c6b0,73,UpdateAcceleratingBullet,?UpdateAcceleratingBullet@@YIHPAVPlayer@@PAUPlayerBullet@@@Z
-0x0043c700,566,Func43c700,
+0x0043c700,566,UpdateLaserBullet,?UpdateLaserBullet@@YIHPAVPlayer@@PAUPlayerBullet@@@Z
 0x0043c940,868,Func43c940,
 0x0043ccb0,299,Func43ccb0,
 0x0043cde0,725,Func43cde0,
@@ -1751,6 +1751,7 @@ address,size,name,symbol
 0x0049f4ec,,g_ShotTypeNames,?g_ShotTypeNames@@3PAPADA
 0x0049f504,,g_SpellCardRatings,?g_SpellCardRatings@@3PAMA
 0x0049f518,,g_DifficultyNames,?g_DifficultyNames@@3PAPADA
+0x0049fbf0,,g_Unknown49fbf0,?g_Unknown49fbf0@@3VUnknown49fbf0@@A
 0x0049fc88,,g_JoyCaps,?g_JoyCaps@@3UtagJOYCAPSA@@A
 0x0049fe1c,,g_ShotHeldFrames,?g_ShotHeldFrames@@3GA
 0x0049fe20,,g_Rng,?g_Rng@@3VRng@@A

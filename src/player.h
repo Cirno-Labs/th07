@@ -96,6 +96,12 @@ int UpdateHomingOrbFast(Player *player, PlayerBullet *bullet);
 // A flying bullet accelerating up, as th06's UpdateBullets case 2, by
 // a random 0.27 to 0.37 a frame. Returns 0.
 int UpdateAcceleratingBullet(Player *player, PlayerBullet *bullet);
+// A laser, as th06's UpdateBullets case 3: cut short to 20 frames while
+// g_Unknown49fbf0.Func42ad66() or a bomb runs; ends it (returning 1)
+// once its timer runs out, else keeps it on its option, and unless
+// Player::unk_2408 is 2 (returning 1) stretches it to the top. Returns
+// 0 otherwise.
+int UpdateLaserBullet(Player *player, PlayerBullet *bullet);
 
 // One of the 0x70 entries at Player+0x9dc, probably th06's bomb
 // hitboxes (bombHitPos, bombHitSize, ...) as one struct.
@@ -123,7 +129,9 @@ ASSERT_SIZE(PlayerBombPart, 0x1428);
 // Presumably th06's PlayerBomb. Its implicit constructor is 0x43baa0.
 struct PlayerBomb
 {
-    unsigned char unk_0[0x10];
+    // Whether a bomb runs, as in th06.
+    int running;
+    unsigned char unk_4[0xc];
     Timer timer;
     unsigned char unk_1c[0x10];
     PlayerBombPart parts[0x80];
@@ -157,7 +165,10 @@ public:
     unsigned char unk_17dc[0xc04];
     // The shot each laser was fired from, by ShotData::phase.
     ShotData *laserShots[3];
-    unsigned char unk_23ec[0x1e];
+    unsigned char unk_23ec[0x1c];
+    // While it is 2, UpdateLaserBullet leaves its lasers' length alone.
+    char unk_2408;
+    unsigned char unk_2409[0x1];
     // FireLaser fires its lasers while it is 1, FireTrailLaser while it
     // is 3.
     char unk_240a;

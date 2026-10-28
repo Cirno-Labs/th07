@@ -276,3 +276,38 @@ int UpdateAcceleratingBullet(Player *player, PlayerBullet *bullet)
     }
     return 0;
 }
+
+int UpdateLaserBullet(Player *player, PlayerBullet *bullet)
+{
+    if (player->lasers[bullet->laserIndex].bullet != bullet && (bullet->sprite.flags >> 13 & 1))
+    {
+        bullet->sprite.pendingInterrupt = 1;
+    }
+    if ((g_Unknown49fbf0.Func42ad66() || player->bomb.running) &&
+        player->lasers[bullet->laserIndex].timer.AsFrames() > 20)
+    {
+        player->lasers[bullet->laserIndex].timer.Set(20);
+    }
+    if (player->lasers[bullet->laserIndex].timer <= 0)
+    {
+        player->lasers[bullet->laserIndex].timer.Set(0);
+        player->lasers[bullet->laserIndex].bullet = NULL;
+        bullet->state = 0;
+        return 1;
+    }
+    if (player->lasers[bullet->laserIndex].timer <= 70 && (bullet->sprite.flags >> 13 & 1))
+    {
+        bullet->sprite.pendingInterrupt = 1;
+    }
+    bullet->pos = player->optionPos[bullet->option - 1];
+    bullet->pos.x += bullet->velocity.z;
+    bullet->pos.z = 0.44f;
+    if (player->unk_2408 == 2)
+    {
+        return 1;
+    }
+    bullet->sprite.scaleX = bullet->pos.y / 14.0f;
+    bullet->size.y = bullet->pos.y;
+    bullet->pos.y /= 2.0f;
+    return 0;
+}

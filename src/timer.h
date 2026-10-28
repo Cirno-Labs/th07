@@ -63,6 +63,10 @@ struct Timer
     {
         return this->current >= frames;
     }
+    BOOL operator<=(int frames)
+    {
+        return this->current <= frames;
+    }
 
     // `current` before the last change.
     int previous;
