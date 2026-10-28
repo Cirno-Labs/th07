@@ -315,8 +315,8 @@ address,size,name,symbol
 0x00431930,127,AddNormalizeAngle,?AddNormalizeAngle@@YIMMM@Z
 0x004319b0,95,Rotate2D,?Rotate2D@@YIXPAUD3DXVECTOR3@@0M@Z
 0x00431a0f,60,GdiSurface::GdiSurface,??0GdiSurface@@QAE@XZ
-0x00431a4b,17,Func431a4b,
-0x00431a5c,114,Func431a5c,
+0x00431a4b,17,GdiSurface::~GdiSurface,??1GdiSurface@@QAE@XZ
+0x00431a5c,114,GdiSurface::Release,?Release@GdiSurface@@QAE_NXZ
 0x00431ace,95,Func431ace,
 0x00431b2d,447,Func431b2d,
 0x00431cec,80,Func431cec,
