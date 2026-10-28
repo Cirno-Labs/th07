@@ -656,3 +656,8 @@ void Unknown4378b0::StartTimer()
 {
     this->Start(6, NULL, 0);
 }
+
+void Unknown4378b0::StopTimer()
+{
+    this->Stop();
+}

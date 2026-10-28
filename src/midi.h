@@ -255,4 +255,6 @@ public:
 
     // Starts the timer, ticking every 6 ms.
     void StartTimer();
+    // Stops the timer.
+    void StopTimer();
 };
