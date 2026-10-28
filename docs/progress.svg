@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">39.48% (274)</tspan> · <tspan class="decompiled">1.59% (11)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">58.79% (408)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">39.63% (275)</tspan> · <tspan class="decompiled">1.59% (11)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">58.65% (407)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="294.93" height="6" x="0" y="0" class="named"/>
-<rect width="11.84" height="6" x="294.93" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="306.77" y="0" class="nonmatching"/>
-<rect width="439.16" height="6" x="307.84" y="0" class="todo"/>
+<rect width="296" height="6" x="0" y="0" class="named"/>
+<rect width="11.84" height="6" x="296" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="307.84" y="0" class="nonmatching"/>
+<rect width="438.08" height="6" x="308.92" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (173 bytes)</title></rect>
@@ -496,7 +496,7 @@
 <rect width="12" height="12" x="360" y="120" class="decompiled"><title>0x0043b5c0 Unknown626270::RerollLifeChecksumKeys (396 bytes)</title></rect>
 <rect width="12" height="12" x="375" y="120" class="decompiled"><title>0x0043b750 Unknown626270::AddDeaths (71 bytes)</title></rect>
 <rect width="12" height="12" x="390" y="120" class="decompiled"><title>0x0043b7a0 Unknown626270::AddBombsUsed (71 bytes)</title></rect>
-<rect width="12" height="12" x="405" y="120" class="todo"><title>0x0043b7f0 Func43b7f0 (532 bytes)</title></rect>
+<rect width="12" height="12" x="405" y="120" class="named"><title>0x0043b7f0 Player::Player (532 bytes)</title></rect>
 <rect width="12" height="12" x="420" y="120" class="todo"><title>0x0043ba10 Func43ba10 (143 bytes)</title></rect>
 <rect width="12" height="12" x="435" y="120" class="todo"><title>0x0043baa0 Func43baa0 (111 bytes)</title></rect>
 <rect width="12" height="12" x="450" y="120" class="todo"><title>0x0043bb10 Func43bb10 (191 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">30.98%</tspan> · <tspan class="decompiled">0.21%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">68.73%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">31.12%</tspan> · <tspan class="decompiled">0.21%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">68.59%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="231.39" height="6" x="0" y="0" class="named"/>
-<rect width="1.55" height="6" x="231.39" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="232.94" y="0" class="nonmatching"/>
-<rect width="513.39" height="6" x="233.61" y="0" class="todo"/>
+<rect width="232.44" height="6" x="0" y="0" class="named"/>
+<rect width="1.55" height="6" x="232.44" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="233.99" y="0" class="nonmatching"/>
+<rect width="512.35" height="6" x="234.65" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -948,7 +948,7 @@
 <rect width="12.45" height="11.70" x="614.27" y="0" class="todo"><title>0x00419ff0 Func419ff0 (542 bytes)</title></rect>
 <rect width="12.28" height="11.70" x="629.72" y="0" class="todo"><title>0x0042d24d Func42d24d (536 bytes)</title></rect>
 <rect width="12.19" height="11.70" x="644.99" y="0" class="todo"><title>0x00417c30 Func417c30 (533 bytes)</title></rect>
-<rect width="12.16" height="11.70" x="660.19" y="0" class="todo"><title>0x0043b7f0 Func43b7f0 (532 bytes)</title></rect>
+<rect width="12.16" height="11.70" x="660.19" y="0" class="named"><title>0x0043b7f0 Player::Player (532 bytes)</title></rect>
 <rect width="12.05" height="11.70" x="675.35" y="0" class="todo"><title>0x0040f3c0 Func40f3c0 (528 bytes)</title></rect>
 <rect width="11.96" height="11.70" x="690.40" y="0" class="named"><title>0x00438de2 App::DeletedCallback (525 bytes)</title></rect>
 <rect width="11.91" height="11.70" x="705.36" y="0" class="named"><title>0x0044baf0 SoundPlayer::FindTrackIndex (523 bytes)</title></rect>

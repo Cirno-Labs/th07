@@ -1,6 +1,7 @@
 // The code from 0x43b5c0: helpers out of line, then what looks like
 // th06's player.cpp (0x43b7f0 constructs the static at 0x4bdad8).
 
+#include "player.h"
 #include "unsorted.h"
 
 void Unknown626270::RerollLifeChecksumKeys()
@@ -33,4 +34,8 @@ void Unknown626270::AddBombsUsed(int bombs)
     }
     this->stats->bombsUsed += bombs;
     this->Func4012b0();
+}
+
+Player::Player()
+{
 }
