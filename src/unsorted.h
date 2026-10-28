@@ -127,6 +127,10 @@ extern WORD g_ShotHeldFrames;
 // them: through DirectInput if there is a device, else joyGetPosEx.
 WORD ReadJoystick(WORD buttons);
 
+// Checks that joystick 1 is there and reads its capabilities into
+// g_JoyCaps. Returns 1 when there is none.
+WORD InitJoystick();
+
 // The pad's buttons as GetPadButtons last read them: 0x80 when down.
 extern BYTE g_PadButtons[0x80];
 // Reads which pad buttons are down into g_PadButtons and returns it.

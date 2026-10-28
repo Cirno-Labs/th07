@@ -297,7 +297,7 @@ address,size,name,symbol
 0x00430060,38,Chain::Release,?Release@Chain@@QAEXXZ
 0x00430090,161,Chain::CreateElem,?CreateElem@Chain@@QAEPAUChainElem@@P6IHPAX@Z@Z
 0x00430140,325,Chain::Remove,?Remove@Chain@@QAEXPAUChainElem@@@Z
-0x00430290,85,Func430290,
+0x00430290,85,InitJoystick,?InitJoystick@@YIGXZ
 0x004302f0,122,SetButtonFromDirectInput,?SetButtonFromDirectInput@@YIHPAGFGPAE@Z
 0x00430370,115,SetButtonFromJoystick,?SetButtonFromJoystick@@YIHPAGFGK@Z
 0x004303f0,1488,ReadJoystick,?ReadJoystick@@YIGG@Z

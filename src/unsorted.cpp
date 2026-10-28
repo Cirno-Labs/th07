@@ -13,6 +13,21 @@ int Unknown45e1f0::GetField2c()
     return field2c;
 }
 
+WORD InitJoystick()
+{
+    JOYINFOEX joyInfo;
+
+    joyInfo.dwSize = sizeof(joyInfo);
+    joyInfo.dwFlags = JOY_RETURNALL;
+    if (joyGetPosEx(JOYSTICKID1, &joyInfo) != JOYERR_NOERROR)
+    {
+        LogPrintf(&g_Log, "使えるパッドが存在しないようです、残念\r\n");
+        return 1;
+    }
+    joyGetDevCapsA(JOYSTICKID1, &g_JoyCaps, sizeof(g_JoyCaps));
+    return 0;
+}
+
 int SetButtonFromJoystick(WORD *buttons, short button, WORD bit, DWORD joyButtons)
 {
     if (button < 0)
