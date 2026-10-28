@@ -234,6 +234,27 @@ int LoadSpellCards(void *scoreDat, Catk *catks)
     return 0;
 }
 
+int LoadLsnmChunk(void *scoreDat, Lsnm *lsnm)
+{
+    Lsnm *chunk;
+    int left;
+    ScoreDat *dat1 = (ScoreDat *)scoreDat;
+
+    chunk = (Lsnm *)((BYTE *)dat1 + dat1->dataOffset);
+    left = dat1->fileSize - dat1->dataOffset;
+    while (left > 0)
+    {
+        if (chunk->magic == 0x4d4e534c && chunk->version == 1)
+        {
+            *lsnm = *chunk;
+            return 1;
+        }
+        left -= chunk->size;
+        chunk = (Lsnm *)((BYTE *)chunk + chunk->size);
+    }
+    return 0;
+}
+
 int LoadPracticeScores(void *scoreDat, Pscr *pscrs)
 {
     Pscr *p;
@@ -2152,7 +2173,7 @@ int ResultScreen::AddedCallback(ResultScreen *screen)
     screen->lsnm.size2 = 0x18;
     screen->lsnm.size = 0x18;
     strcpy(screen->lsnm.name, "        ");
-    screen->unk_40 = Func445110(screen->scoreDat, &screen->lsnm);
+    screen->unk_40 = LoadLsnmChunk(screen->scoreDat, &screen->lsnm);
     if (screen->state != 10 && screen->state != 0x12)
     {
         LoadSpellCards(screen->scoreDat, g_Unknown626270.catks);

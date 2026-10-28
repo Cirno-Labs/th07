@@ -230,7 +230,7 @@ int LoadPracticeScores(void *scoreDat, Pscr *pscrs);
 DWORD LoadHighScores(void *scoreDat, ListNode *list, int shot, int difficulty, BYTE *unk);
 // Copies the score file's version 1 "LSNM" chunk to `lsnm`. Returns 1,
 // or 0 if there is none. Not in th06.
-int Func445110(void *scoreDat, Lsnm *lsnm);
+int LoadLsnmChunk(void *scoreDat, Lsnm *lsnm);
 // Reads "score.dat" at `path`: decodes it, checks the checksum, the
 // header size and version 0xb, unpacks the chunks into a new block with
 // room for 0xa0000 bytes, then checks every "VRSM" chunk against the
