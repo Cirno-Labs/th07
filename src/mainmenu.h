@@ -18,8 +18,9 @@ public:
     // The draw element's callback: draws the background, the replay
     // menu's or the practice scores' text, then the sprites. Returns 1.
     static int OnDraw(MainMenu *menu);
-    // The update element's added callback (through a static wrapper):
-    // resets the game's numbers, reloads the score file, shows the
+    // The update element's added callback: runs InitTitleScene.
+    static int AddedCallback(MainMenu *menu);
+    // The body of the added callback: resets the game's numbers, reloads the score file, shows the
     // Phantasm splash once it opens, puts the cursor on the entry the
     // previous scene came from, loads "data/title01.anm" and the title
     // music. Returns 0, or -1 if the ANM fails to load.

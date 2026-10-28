@@ -1565,3 +1565,8 @@ int MainMenu::InitTitleScene()
     g_Unknown626270.unk_93e0 = 0;
     return 0;
 }
+
+int MainMenu::AddedCallback(MainMenu *menu)
+{
+    return menu->InitTitleScene();
+}
