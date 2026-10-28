@@ -313,7 +313,7 @@ address,size,name,symbol
 0x004318d0,40,Rng::GetRandomU32,?GetRandomU32@Rng@@QAEKXZ
 0x00431900,40,Rng::GetRandomF32ZeroToOne,?GetRandomF32ZeroToOne@Rng@@QAEMXZ
 0x00431930,127,AddNormalizeAngle,?AddNormalizeAngle@@YIMMM@Z
-0x004319b0,95,Func4319b0,
+0x004319b0,95,Rotate2D,?Rotate2D@@YIXPAUD3DXVECTOR3@@0M@Z
 0x00431a0f,60,Func431a0f,
 0x00431a4b,17,Func431a4b,
 0x00431a5c,114,Func431a5c,
@@ -1448,9 +1448,9 @@ address,size,name,symbol
 0x0048ba20,79,Func48ba20,
 0x0048ba78,125,Func48ba78,
 0x0048bb0a,10,Func48bb0a,
-0x0048bb40,20,Func48bb40,
+0x0048bb40,20,__CIsin,__CIsin
 0x0048bb5d,145,Func48bb5d,
-0x0048bbf0,20,Func48bbf0,
+0x0048bbf0,20,__CIcos,__CIcos
 0x0048bc0d,145,Func48bc0d,
 0x0048bcaa,10,Func48bcaa,
 0x0048bcc0,20,Func48bcc0,

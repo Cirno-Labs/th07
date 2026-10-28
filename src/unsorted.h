@@ -7,6 +7,7 @@
 #include <mmsystem.h>
 #define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
+#include <d3dx8math.h>
 
 #include "common.h"
 
@@ -166,3 +167,7 @@ public:
 
 // a + b, brought back into [-pi, pi] (giving up after 17 turns).
 float AddNormalizeAngle(float a, float b);
+
+// Rotates `in` by `angle` radians in the xy plane into `out` (z is left
+// alone).
+void Rotate2D(D3DXVECTOR3 *out, D3DXVECTOR3 *in, float angle);
