@@ -117,6 +117,9 @@ int DrawTrailLaserBullet(Player *player, PlayerBullet *bullet);
 // to 0x448) and sent upwards, up to 45 degrees off at random. Every 6
 // frames it bursts effect 5 at `pos`. Returns 0.
 int UpdateBombShot(Player *player, PlayerBullet *bullet, D3DXVECTOR3 *pos);
+// A hit at `pos`: on every eighth (Player::hitCounter) bursts effect 5
+// at the bullet's x and pos's y. Returns 0.
+int BurstHitEffect(Player *player, PlayerBullet *bullet, D3DXVECTOR3 *pos);
 
 // One of the 0x70 entries at Player+0x9dc, probably th06's bomb
 // hitboxes (bombHitPos, bombHitSize, ...) as one struct.
@@ -187,7 +190,10 @@ public:
     // FireLaser fires its lasers while it is 1, FireTrailLaser while it
     // is 3.
     char unk_240a;
-    unsigned char unk_240b[0x5];
+    unsigned char unk_240b[0x1];
+    // Counts hits on enemies, to burst an effect every few, as in th06.
+    BYTE hitCounter;
+    unsigned char unk_240d[0x3];
     Timer unk_2410;
     unsigned char unk_241c[0xc];
     // What UpdateHomingOrb's and UpdateHomingOrbFast's shots home in on; x is -100 or
