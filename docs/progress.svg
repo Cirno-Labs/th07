@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">37.46% (260)</tspan> · <tspan class="decompiled">1.15% (8)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">61.24% (425)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">37.61% (261)</tspan> · <tspan class="decompiled">1.15% (8)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">61.10% (424)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="279.86" height="6" x="0" y="0" class="named"/>
-<rect width="8.61" height="6" x="279.86" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="288.47" y="0" class="nonmatching"/>
-<rect width="457.46" height="6" x="289.54" y="0" class="todo"/>
+<rect width="280.93" height="6" x="0" y="0" class="named"/>
+<rect width="8.61" height="6" x="280.93" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="289.54" y="0" class="nonmatching"/>
+<rect width="456.38" height="6" x="290.62" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (173 bytes)</title></rect>
@@ -454,7 +454,7 @@
 <rect width="12" height="12" x="480" y="105" class="decompiled"><title>0x004378d0 Unknown4378b0::StartTimer (25 bytes)</title></rect>
 <rect width="12" height="12" x="495" y="105" class="decompiled"><title>0x004378f0 Unknown4378b0::StopTimer (19 bytes)</title></rect>
 <rect width="12" height="12" x="510" y="105" class="named"><title>0x00437903 DebugPrint2 (5 bytes)</title></rect>
-<rect width="12" height="12" x="525" y="105" class="todo"><title>0x00437908 Func437908 (817 bytes)</title></rect>
+<rect width="12" height="12" x="525" y="105" class="todo"><title>0x00437908 App::Func437908 (817 bytes)</title></rect>
 <rect width="12" height="12" x="540" y="105" class="named"><title>0x00437c39 SpriteEngine::ReleaseVertexBuffer (55 bytes)</title></rect>
 <rect width="12" height="12" x="555" y="105" class="todo"><title>0x00437c70 App::OnUpdate (1707 bytes)</title></rect>
 <rect width="12" height="12" x="570" y="105" class="named"><title>0x0043831b App::OnDraw (20 bytes)</title></rect>
@@ -467,7 +467,7 @@
 <rect width="12" height="12" x="675" y="105" class="named"><title>0x00438de2 App::DeletedCallback (525 bytes)</title></rect>
 <rect width="12" height="12" x="690" y="105" class="decompiled"><title>0x00438fef Unknown4378b0::~Unknown4378b0 (17 bytes)</title></rect>
 <rect width="12" height="12" x="705" y="105" class="named"><title>0x00439000 App::RegisterChain (165 bytes)</title></rect>
-<rect width="12" height="12" x="720" y="105" class="todo"><title>0x004390a5 DrawFps (860 bytes)</title></rect>
+<rect width="12" height="12" x="720" y="105" class="named"><title>0x004390a5 DrawFps (860 bytes)</title></rect>
 <rect width="12" height="12" x="735" y="105" class="named"><title>0x00439401 Timer::Add (198 bytes)</title></rect>
 <rect width="12" height="12" x="0" y="120" class="named"><title>0x004394c7 Timer::Sub (198 bytes)</title></rect>
 <rect width="12" height="12" x="15" y="120" class="named"><title>0x0043958d App::TickTimer (110 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">28.47%</tspan> · <tspan class="decompiled">0.07%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">71.38%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">28.69%</tspan> · <tspan class="decompiled">0.07%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">71.15%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="212.65" height="6" x="0" y="0" class="named"/>
-<rect width="0.50" height="6" x="212.65" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="213.14" y="0" class="nonmatching"/>
-<rect width="533.19" height="6" x="213.81" y="0" class="todo"/>
+<rect width="214.33" height="6" x="0" y="0" class="named"/>
+<rect width="0.50" height="6" x="214.33" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="214.83" y="0" class="nonmatching"/>
+<rect width="531.51" height="6" x="215.49" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -876,14 +876,14 @@
 <rect width="16.17" height="15.98" x="446.82" y="137.52" class="named"><title>0x0045ef00 LzssDecompress (868 bytes)</title></rect>
 <rect width="16.17" height="15.87" x="446.82" y="156.50" class="todo"><title>0x0043a801 Func43a801 (863 bytes)</title></rect>
 <rect width="16.17" height="15.83" x="446.82" y="175.37" class="todo"><title>0x0044dbe0 Func44dbe0 (861 bytes)</title></rect>
-<rect width="16.17" height="15.81" x="446.82" y="194.19" class="todo"><title>0x004390a5 DrawFps (860 bytes)</title></rect>
+<rect width="16.17" height="15.81" x="446.82" y="194.19" class="named"><title>0x004390a5 DrawFps (860 bytes)</title></rect>
 <rect width="16.34" height="15.53" x="465.98" y="0" class="named"><title>0x004346e0 GameWindow::RunFrame (855 bytes)</title></rect>
 <rect width="16.34" height="15.35" x="465.98" y="18.53" class="todo"><title>0x0041ff80 Func41ff80 (847 bytes)</title></rect>
 <rect width="16.34" height="15.29" x="465.98" y="36.88" class="named"><title>0x0045c8e0 CSoundManager::CreateStreaming (844 bytes)</title></rect>
 <rect width="16.34" height="14.98" x="465.98" y="55.17" class="todo"><title>0x0040be20 Func40be20 (830 bytes)</title></rect>
 <rect width="16.34" height="14.88" x="465.98" y="73.15" class="todo"><title>0x00441330 Func441330 (825 bytes)</title></rect>
 <rect width="16.34" height="14.77" x="465.98" y="91.03" class="todo"><title>0x00418b40 Func418b40 (820 bytes)</title></rect>
-<rect width="16.34" height="14.70" x="465.98" y="108.80" class="todo"><title>0x00437908 Func437908 (817 bytes)</title></rect>
+<rect width="16.34" height="14.70" x="465.98" y="108.80" class="todo"><title>0x00437908 App::Func437908 (817 bytes)</title></rect>
 <rect width="16.34" height="14.44" x="465.98" y="126.50" class="todo"><title>0x0044fe00 Func44fe00 (805 bytes)</title></rect>
 <rect width="16.34" height="14.33" x="465.98" y="143.94" class="todo"><title>0x00419a50 Func419a50 (800 bytes)</title></rect>
 <rect width="16.34" height="14.25" x="465.98" y="161.28" class="todo"><title>0x00426c40 Func426c40 (796 bytes)</title></rect>

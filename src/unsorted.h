@@ -82,6 +82,9 @@ public:
     // Adds the time since the last call to the play time in
     // g_Unknown626270.plst. Not in th06.
     void AddPlayTime();
+    // Compares the time the clock and the performance counter say
+    // passed; called by DrawFps. Not in th06.
+    void Func437908();
     // Adds the time since the last call to the time played in
     // g_Unknown626270.plst. Not in th06.
     void AddTotalPlayTime();
@@ -214,7 +217,10 @@ public:
     // as slowdown.
     float unk_180;
     float unk_184;
-    unsigned char unk_188[0x4];
+    // The frame rate rounded, as DrawFps shows it with bit 3 of
+    // g_Unknown626270.unk_93d8.
+    short unk_188;
+    unsigned char unk_18a[0x2];
     // Bit 1: the device does T&L in hardware; 2: the back buffer is
     // lockable; 4: A8R8G8B8 textures work; 8: no score is recorded;
     // 0x10: the device was reset and no frame has been drawn since.
@@ -229,7 +235,8 @@ public:
     DWORD perfFrequency[2];
     unsigned char unk_274[0x30];
     DWORD unk_2a4;
-    unsigned char unk_2a8[0x4];
+    // DrawFps shows the speed in red when it is set.
+    int unk_2a8;
     DWORD unk_2ac;
     DWORD unk_2b0;
     DWORD unk_2b4;
@@ -247,8 +254,12 @@ public:
 
 extern App g_App;
 
-// Measures the frame rate every half second and, when `draw` is set,
-// shows it. Not named yet as th06's beyond this.
+// Measures the frame rate every half second, with the performance
+// counter when there is one (calling g_App.Func437908 every eighth
+// time), and adds up the frames there should have been and those there
+// were while bit 2 of g_Unknown626270.unk_93d8 is set and `draw` is.
+// Shows the rate when `draw` is set and hideFps is not, with the speed
+// in percent below it while bits 2 and 3 are set.
 void DrawFps(int draw);
 
 // Sets up DirectInput as the DirectX 8 SDK's Keyboard and Joystick
@@ -849,7 +860,9 @@ public:
     // Set while the game is paused: the screen shake holds still. As
     // th06's GameManager::isFrozen, probably.
     char isFrozen;
-    unsigned char unk_d[0x3];
+    // DrawFps measures nothing while it is set.
+    char unk_d;
+    unsigned char unk_e[0x2];
     int difficulty;
     unsigned char unk_14[0x4];
     // The spell card chunks of the score file, by card.
