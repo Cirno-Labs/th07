@@ -89,6 +89,7 @@ public:
     HRESULT Func45d910();
     // Plays the first buffer again. Not in th06.
     HRESULT Func45d960();
+    HRESULT Reset();
 
     CWaveFile *GetWaveFile()
     {
@@ -104,7 +105,12 @@ public:
     int fadeFrames;
     int fadeTotal;
     int fading;
-    unsigned char unk_20[0x10];
+    // Not in th06: Play's priority and flags, for Func45d960.
+    DWORD dwPlayPriority;
+    DWORD dwPlayFlags;
+    DWORD unk_28;
+    // Cleared by Play.
+    DWORD unk_2c;
     // Set while the first buffer plays: Func45d960 sets it, Func45d910
     // clears it. Not in th06.
     BOOL unk_30;

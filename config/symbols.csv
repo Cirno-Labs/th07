@@ -641,7 +641,7 @@ address,size,name,symbol
 0x0045d860,171,CSound::Stop,?Stop@CSound@@QAEJXZ
 0x0045d910,79,CSound::Func45d910,?Func45d910@CSound@@QAEJXZ
 0x0045d960,78,CSound::Func45d960,?Func45d960@CSound@@QAEJXZ
-0x0045d9b0,110,Func45d9b0,
+0x0045d9b0,110,CSound::Reset,?Reset@CSound@@QAEJXZ
 0x0045da20,96,CStreamingSound::CStreamingSound,??0CStreamingSound@@QAE@PAUIDirectSoundBuffer@@KPAVCWaveFile@@K@Z
 0x0045da80,46,Func45da80,
 0x0045dab0,28,Func45dab0,
