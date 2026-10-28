@@ -102,6 +102,11 @@ public:
     char *cursor;
     // Set by LogError, the error logger.
     char hasError;
+
+    // Writes the log to ./log.txt, if anything was logged, after a
+    // closing line; shows it in a message box first if it holds an
+    // error.
+    void Flush();
 };
 extern Log g_Log;
 

@@ -335,7 +335,7 @@ address,size,name,symbol
 0x00433b20,275,ItemManager::ConvertPowerItems,?ConvertPowerItems@ItemManager@@QAEXH@Z
 0x00433c40,141,ItemManager::RecycleCollectedItems,?RecycleCollectedItems@ItemManager@@QAEXXZ
 0x00433cd0,434,ItemManager::DrawItems,?DrawItems@ItemManager@@QAEXXZ
-0x00433e90,133,Func433e90,
+0x00433e90,133,Log::Flush,?Flush@Log@@QAEXXZ
 0x00433f20,104,Func433f20,
 0x00433f90,134,Func433f90,
 0x00434020,1131,Func434020,
