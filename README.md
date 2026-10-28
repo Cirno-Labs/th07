@@ -31,7 +31,7 @@ yet. Before decompilation can start:
 
 ## Target
 
-Retail 1.00b, the last official update.
+Retail 1.00b, released 2003-10-24, the last official update.
 
 ## Toolchain
 
