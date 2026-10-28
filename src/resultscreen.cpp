@@ -687,7 +687,7 @@ int ResultScreen::HandleNameEntry()
     int i;
     float rate;
 
-    if (g_App.Func43a18d() || (g_App.unk_18c >> 3 & 1))
+    if (g_App.IsScoreDisabled() || (g_App.unk_18c >> 3 & 1))
     {
         this->state = 0x10;
         this->frame = 0;
@@ -898,7 +898,7 @@ int ResultScreen::HandleReplaySaving()
     case 0xb:
         if (this->frame == 60)
         {
-            if (g_App.Func43a18d() || (g_App.unk_18c >> 3 & 1))
+            if (g_App.IsScoreDisabled() || (g_App.unk_18c >> 3 & 1))
             {
                 interrupt = 0x13;
             }

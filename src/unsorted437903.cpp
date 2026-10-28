@@ -365,3 +365,8 @@ int App::FadeOutMusic(float seconds)
     }
     return 0;
 }
+
+int App::IsScoreDisabled()
+{
+    return g_Unknown626270.unk_4 != NULL && g_Unknown626270.unk_4->unk_25 != 0;
+}

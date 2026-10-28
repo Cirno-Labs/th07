@@ -81,7 +81,7 @@ public:
     void Func43a27f();
     // Whether g_Unknown626270.unk_4 is set and its byte at 0x25 is not
     // 0. The result screen records no score then. Not in th06.
-    int Func43a18d();
+    int IsScoreDisabled();
     // Saves the back buffer as a bitmap at `path`. Not in th06.
     int Func4395fb(char *path);
     // Flushes the sprites and turns fog off if unk_2bc is set; returns
@@ -764,10 +764,13 @@ struct Unknown626270Stats
 };
 ASSERT_SIZE(Unknown626270Stats, 0xc8);
 
-// What Unknown626270::unk_4 points at. Only its size is known.
+// What Unknown626270::unk_4 points at.
 struct Unknown626270Unk4
 {
-    unsigned char unk_0[0x38];
+    unsigned char unk_0[0x25];
+    // App::IsScoreDisabled tests it.
+    BYTE unk_25;
+    unsigned char unk_26[0x12];
 };
 
 // Holds the player's numbers (at 0x626270), with checksums against
