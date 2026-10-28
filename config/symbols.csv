@@ -311,7 +311,7 @@ address,size,name,symbol
 0x00431730,319,LogError,?LogError@@YAHPAVLog@@PBDZZ
 0x00431870,88,Rng::GetRandomU16,?GetRandomU16@Rng@@QAEGXZ
 0x004318d0,40,Rng::GetRandomU32,?GetRandomU32@Rng@@QAEKXZ
-0x00431900,40,Func431900,
+0x00431900,40,Rng::GetRandomF32ZeroToOne,?GetRandomF32ZeroToOne@Rng@@QAEMXZ
 0x00431930,127,Func431930,
 0x004319b0,95,Func4319b0,
 0x00431a0f,60,Func431a0f,
