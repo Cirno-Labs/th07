@@ -228,6 +228,9 @@ public:
     int Release();
     // Not in th06. WinMain calls it until it returns 0.
     int Func44c9c0();
+    // Queues sound effect `idx` to start on the next update, unless
+    // it is already queued or five are.
+    void QueueSound(int idx, int unk);
 };
 extern SoundPlayer g_SoundPlayer;
 
@@ -323,6 +326,14 @@ WORD ReadButtons();
 // The buttons held this frame and the frame before, as bits.
 extern WORD g_Buttons;
 extern WORD g_PrevButtons;
+// 1 on every 8th frame once the buttons have been held unchanged for 30
+// frames, for key repeat.
+extern WORD g_ButtonRepeat;
+
+// Whether a button in `mask` went down this frame.
+#define WAS_PRESSED(mask) ((g_Buttons & (mask)) && (g_Buttons & (mask)) != (g_PrevButtons & (mask)))
+// Also while they are held, once the repeat delay has passed.
+#define WAS_PRESSED_OR_HELD(mask) (WAS_PRESSED(mask) || ((g_Buttons & (mask)) && g_ButtonRepeat))
 
 // Clears the down bit (0x80) of every key in the thread's keyboard
 // state.

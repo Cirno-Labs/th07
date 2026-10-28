@@ -173,6 +173,11 @@ void ReleaseScoreDat(ScoreDat *dat);
 // compressed and encrypted.
 void SaveScoreDat(class ResultScreen *screen);
 
+
+// Moves `screen`'s cursor up or down through `count` items, wrapping.
+// Returns -1 for up, 1 for down, 0 if it did not move.
+int MoveCursorVertical(ResultScreen *screen, int count);
+
 // The result screen's scene object (0xce6c bytes). Only the fields
 // known so far.
 class ResultScreen
@@ -180,7 +185,10 @@ class ResultScreen
 public:
     // The score file, as loaded.
     ScoreDat *scoreDat;
-    BYTE unk_4[0x85a4];
+    BYTE unk_4[0xc];
+    // The menu item selected.
+    int cursor;
+    BYTE unk_14[0x8594];
     // The high score lists, by difficulty and shot.
     ListNode scores[6][6];
     BYTE unk_8758[0x3868];

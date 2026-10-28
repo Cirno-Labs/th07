@@ -503,7 +503,7 @@ address,size,name,symbol
 0x0044547f,125,LoadPlstChunk,?LoadPlstChunk@@YIHPAXPAUPlst@@@Z
 0x004454fc,48,ReleaseScoreDat,?ReleaseScoreDat@@YIXPAUScoreDat@@@Z
 0x0044552c,1323,SaveScoreDat,?SaveScoreDat@@YIXPAVResultScreen@@@Z
-0x00445a57,255,Func445a57,
+0x00445a57,255,MoveCursorVertical,?MoveCursorVertical@@YIHPAVResultScreen@@H@Z
 0x00445b56,255,Func445b56,
 0x00445c55,267,Func445c55,
 0x00445d60,43,Func445d60,
@@ -546,7 +546,7 @@ address,size,name,symbol
 0x0044c4d0,472,Func44c4d0,
 0x0044c6b0,287,Func44c6b0,
 0x0044c7d0,342,Func44c7d0,
-0x0044c930,133,Func44c930,
+0x0044c930,133,SoundPlayer::QueueSound,?QueueSound@SoundPlayer@@QAEXHH@Z
 0x0044c9c0,2073,SoundPlayer::Func44c9c0,?Func44c9c0@SoundPlayer@@QAEHXZ
 0x0044d200,226,Func44d200,
 0x0044d2f0,225,Func44d2f0,
@@ -1719,6 +1719,7 @@ address,size,name,symbol
 0x004b9e44,,g_SpriteEngine,?g_SpriteEngine@@3PAVSpriteEngine@@A
 0x004b9e4c,,g_Buttons,?g_Buttons@@3GA
 0x004b9e54,,g_PrevButtons,?g_PrevButtons@@3GA
+0x004b9e5c,,g_ButtonRepeat,?g_ButtonRepeat@@3GA
 0x004b9e64,,g_FileSize,?g_FileSize@@3HA
 0x004ba0d8,,g_SoundPlayer,?g_SoundPlayer@@3VSoundPlayer@@A
 0x00575950,,g_App,?g_App@@3VApp@@A
