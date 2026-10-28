@@ -23,7 +23,7 @@ public:
     int Func4555dd();
     int Func45624d();
     int Func456f6b();
-    int Func45798b();
+    int UpdateDifficultyMenu();
     int Func457fe5();
     int Func459518();
     int Func45a1dd();
@@ -34,15 +34,22 @@ public:
     // Shows `value` as two digits on `vm` and the sprite after it, or
     // hides both when it is negative. Returns 0. Not in th06.
     int ShowButtonDigits(Sprite *vm, short value);
+    // Moves the cursor up or down among `count` entries, wrapping, when
+    // up or down is pressed or repeats. Returns -1 for up, 1 for down,
+    // else 0.
+    int MoveMenuCursor(int count);
 
-    unsigned char unk_0[0x8];
+    // The selected entry.
+    int cursor;
+    unsigned char unk_4[0x4];
     int unk_8;
     // Counts the frames in the current state.
     int stateFrames;
     unsigned char unk_10[0x54];
     // The state before the current one.
     int prevState;
-    unsigned char unk_68[0xb058];
+    int unk_68;
+    unsigned char unk_6c[0xb054];
     int unk_b0c0;
     // The menu's sprites, spriteCount of them.
     Sprite *sprites;

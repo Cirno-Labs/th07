@@ -121,7 +121,9 @@ public:
     BYTE musicMode;
     // Whether sound effects are played.
     BYTE playSounds;
-    unsigned char unk_139;
+    // The difficulty the difficulty select starts on: 0 to 3, or 4 and
+    // 5 for Extra and Phantasm.
+    BYTE defaultDifficulty;
     // Played in a window rather than full screen.
     BYTE windowed;
     // How many frames to skip drawing between drawn ones.

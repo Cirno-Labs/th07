@@ -60,6 +60,12 @@ public:
     // Steps the `count` sprites from `vms` that run a script. Not in
     // th06.
     void Func4550c0(Sprite *vms, int count);
+    // Sends interrupt `interrupt` to the `count` sprites from `vms` that
+    // show a loaded sprite. Not in th06.
+    void Func455030(Sprite *vms, int count, short interrupt);
+    // Loads the image at `path` as surface `surface`. Returns 0, or -1 on
+    // failure.
+    int LoadSurface(int surface, char *path);
     // Renders text from `fmt` into `sprite`'s texture.
     void RenderText(Sprite *sprite, D3DCOLOR textColor, D3DCOLOR shadowColor, char *fmt, ...);
     // RenderText, centered on the sprite.
