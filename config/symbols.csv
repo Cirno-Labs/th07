@@ -692,7 +692,7 @@ address,size,name,symbol
 0x0045fae0,101,DatArchive::FindEntry,?FindEntry@DatArchive@@QAEPAUDatArchiveEntry@@PAD@Z
 0x0045fb50,645,DatArchive::ReadTable,?ReadTable@DatArchive@@QAE_NPAD@Z
 0x0045fde0,471,DatArchive::BuildEntryTable,?BuildEntryTable@DatArchive@@QAEPAUDatArchiveEntry@@PAEHK@Z
-0x0045ffc0,139,DatArchive::Func45ffc0,?Func45ffc0@DatArchive@@QAEPADPAD@Z
+0x0045ffc0,139,DatArchive::DuplicateString,?DuplicateString@DatArchive@@QAEPADPAD@Z
 0x00461a96,,DirectSoundCreate8,_DirectSoundCreate8@12
 0x00461a9c,,Direct3DCreate8,_Direct3DCreate8@4
 0x00461aa2,227,Func461aa2,

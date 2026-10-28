@@ -125,7 +125,7 @@ public:
     // `tableOffset`. Returns a new[]'d array, or NULL.
     DatArchiveEntry *BuildEntryTable(BYTE *table, int count, DWORD tableOffset);
     // A GlobalAlloc'd copy of `str`, or NULL.
-    char *Func45ffc0(char *str);
+    char *DuplicateString(char *str);
 
     DatArchiveEntry *entries;
     int numEntries;

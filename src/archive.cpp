@@ -28,7 +28,7 @@ bool DatArchive::Open(char *path)
     }
     if (this->ReadTable(path))
     {
-        this->path = this->Func45ffc0(path);
+        this->path = this->DuplicateString(path);
         if (this->path != NULL)
         {
             return true;
@@ -265,7 +265,7 @@ DatArchiveEntry *DatArchive::BuildEntryTable(BYTE *table, int count, DWORD table
     p = table;
     for (i = 0; i < count; i++)
     {
-        entries[i].name = this->Func45ffc0((char *)p);
+        entries[i].name = this->DuplicateString((char *)p);
         p += strlen((char *)p) + 1;
         entries[i].offset = *(DWORD *)p;
         p += 4;
@@ -285,4 +285,16 @@ fail:
         entries = NULL;
     }
     return NULL;
+}
+
+char *DatArchive::DuplicateString(char *str)
+{
+    char *copy;
+
+    copy = (char *)GlobalAlloc(GMEM_FIXED, strlen(str) + 1);
+    if (copy != NULL)
+    {
+        strcpy(copy, str);
+    }
+    return copy;
 }
