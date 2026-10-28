@@ -304,3 +304,26 @@ int FileExists(char *path)
     }
     return 0;
 }
+
+int WriteToFile(char *path, void *data, int size)
+{
+    HANDLE file;
+    DWORD written;
+
+    file = CreateFileA(path, GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+    if (file == INVALID_HANDLE_VALUE)
+    {
+        DebugPrint("error : %s write error\r\n", path);
+        return -1;
+    }
+    WriteFile(file, data, size, &written, NULL);
+    if (size != written)
+    {
+        CloseHandle(file);
+        DebugPrint("error : %s write error\r\n", path);
+        return -2;
+    }
+    CloseHandle(file);
+    DebugPrint("%s write ...\r\n", path);
+    return 0;
+}

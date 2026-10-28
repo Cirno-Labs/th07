@@ -306,7 +306,7 @@ address,size,name,symbol
 0x004312c0,110,ResetKeyboard,?ResetKeyboard@@YIXXZ
 0x00431330,434,LoadFileData,?LoadFileData@@YIPAXPADH@Z
 0x004314f0,69,FileExists,?FileExists@@YIHPAD@Z
-0x00431540,172,Func431540,
+0x00431540,172,WriteToFile,?WriteToFile@@YIHPADPAXH@Z
 0x004315f0,313,LogPrintf,?LogPrintf@@YAHPAVLog@@PBDZZ
 0x00431730,319,LogError,?LogError@@YAHPAVLog@@PBDZZ
 0x00431870,88,Func431870,
