@@ -6,6 +6,14 @@
 
 struct Timer
 {
+    // Starts counting from 0.
+    Timer()
+    {
+        this->current = 0;
+        this->previous = -999;
+        this->subFrame = 0.0f;
+    }
+
     // Sets the count to `frames`, with no fraction and no previous count
     // (-999).
     void Set(int frames)
