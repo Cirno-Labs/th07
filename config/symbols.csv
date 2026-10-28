@@ -294,7 +294,7 @@ address,size,name,symbol
 0x0042fd60,153,Chain::RunCalcChain,?RunCalcChain@Chain@@QAEHXZ
 0x0042fe20,154,Chain::RunDrawChain,?RunDrawChain@Chain@@QAEHXZ
 0x0042fee0,383,Chain::ReleaseList,?ReleaseList@Chain@@QAEXPAUChainElem@@@Z
-0x00430060,38,Func430060,
+0x00430060,38,Chain::Release,?Release@Chain@@QAEXXZ
 0x00430090,161,Func430090,
 0x00430140,325,Chain::Remove,?Remove@Chain@@QAEXPAUChainElem@@@Z
 0x00430290,85,Func430290,

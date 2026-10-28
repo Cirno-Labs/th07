@@ -281,3 +281,9 @@ void Chain::ReleaseList(ChainElem *root)
         tail = tmp;
     }
 }
+
+void Chain::Release()
+{
+    this->ReleaseList(&this->calcChain);
+    this->ReleaseList(&this->drawChain);
+}

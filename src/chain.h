@@ -64,6 +64,8 @@ public:
     // Releases the elements of the list that starts at `root`, going
     // through a copy of the list it allocates.
     void ReleaseList(ChainElem *root);
+    // Releases both chains.
+    void Release();
 
     ChainElem calcChain;
     ChainElem drawChain;
