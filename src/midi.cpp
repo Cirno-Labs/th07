@@ -288,3 +288,15 @@ int MidiPlayer::Stop()
     this->playingSlot = -1;
     return 0;
 }
+
+MidiPlayer::~MidiPlayer()
+{
+    int i;
+
+    this->Stop();
+    this->FreeTracks();
+    for (i = 0; i < 0x20; i++)
+    {
+        this->UnloadFile(i);
+    }
+}

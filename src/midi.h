@@ -126,6 +126,7 @@ class MidiPlayer : public MmTimer
 {
 public:
     MidiPlayer();
+    ~MidiPlayer();
 
     virtual void OnTimer();
 

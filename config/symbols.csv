@@ -366,7 +366,7 @@ address,size,name,symbol
 0x004363e0,30,SwapBytes16,?SwapBytes16@@YIGG@Z
 0x00436400,78,ReadVarLen,?ReadVarLen@@YIKPAPAE@Z
 0x00436450,351,MidiPlayer::MidiPlayer,??0MidiPlayer@@QAE@XZ
-0x004365b0,147,Func4365b0,
+0x004365b0,147,MidiPlayer::~MidiPlayer,??1MidiPlayer@@QAE@XZ
 0x00436650,112,Func436650,
 0x004366c0,60,MidiPlayer::UnloadFile,?UnloadFile@MidiPlayer@@QAEXH@Z
 0x00436700,131,MidiPlayer::FreeTracks,?FreeTracks@MidiPlayer@@QAEXXZ
