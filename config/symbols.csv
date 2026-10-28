@@ -671,7 +671,7 @@ address,size,name,symbol
 0x0045e880,39,File::GetSize,?GetSize@File@@UAEKXZ
 0x0045e8b0,51,File::Seek,?Seek@File@@UAE_NJK@Z
 0x0045e8f0,210,Func45e8f0,
-0x0045e9d0,253,Func45e9d0,
+0x0045e9d0,253,Func45e9d0,?Func45e9d0@@YIXPAD0@Z
 0x0045ead0,1065,Func45ead0,?Func45ead0@@YIPAXPAEHPAH@Z
 0x0045ef00,868,Func45ef00,
 0x0045f270,67,Func45f270,
