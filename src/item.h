@@ -32,6 +32,9 @@ public:
     // power (128), power items (0 and 2) turn into type 7. States 3 and 4
     // spawn in state 1 and 0.
     Item *SpawnItem(D3DXVECTOR3 *pos, int type, int state);
+    // Draws every active item to the player (state 1), starting it off
+    // at a slow upward drift.
+    void CollectAll();
 
     // The last one is what SpawnItem returns when all others are taken.
     Item items[0x44d];

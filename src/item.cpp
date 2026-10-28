@@ -89,3 +89,19 @@ Item *ItemManager::SpawnItem(D3DXVECTOR3 *pos, int type, int state)
     }
     return i < 0x44c ? item : &this->items[0x44c];
 }
+
+void ItemManager::CollectAll()
+{
+    Item *entry = this->items;
+    int i;
+
+    for (i = 0; i < 0x44c; i++, entry++)
+    {
+        if (!entry->active)
+        {
+            continue;
+        }
+        entry->state = 1;
+        entry->velocity = D3DXVECTOR3(0.0f, -0.5f, 0.0f);
+    }
+}

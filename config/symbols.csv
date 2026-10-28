@@ -331,7 +331,7 @@ address,size,name,symbol
 0x00432690,91,Func432690,
 0x004326f0,660,ItemManager::SpawnItem,?SpawnItem@ItemManager@@QAEPAUItem@@PAUD3DXVECTOR3@@HH@Z
 0x00432990,4298,Func432990,
-0x00433a90,132,Func433a90,
+0x00433a90,132,ItemManager::CollectAll,?CollectAll@ItemManager@@QAEXXZ
 0x00433b20,275,Func433b20,
 0x00433c40,141,Func433c40,
 0x00433cd0,434,Func433cd0,
