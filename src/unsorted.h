@@ -79,6 +79,9 @@ public:
     // Adds the time since the last call to the play time in
     // g_Unknown626270.plst. Not in th06.
     void AddPlayTime();
+    // Adds the time since the last call to the time played in
+    // g_Unknown626270.plst. Not in th06.
+    void AddTotalPlayTime();
     // Whether g_Unknown626270.unk_4 is set and its byte at 0x25 is not
     // 0. The result screen records no score then. Not in th06.
     int IsScoreDisabled();
@@ -212,7 +215,8 @@ public:
     DWORD unk_18c;
     // timeGetTime() when AddPlayTime last added to the run time.
     DWORD unk_190;
-    unsigned char unk_194[0x4];
+    // timeGetTime() when AddTotalPlayTime last added to the play time.
+    DWORD unk_194;
     D3DCAPS8 caps;
     unsigned char unk_26c[0x38];
     DWORD unk_2a4;

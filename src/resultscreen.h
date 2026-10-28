@@ -161,11 +161,11 @@ struct Plst
     DWORD runMinutes;
     DWORD runSeconds;
     DWORD runMilliseconds;
-    // How long it has been played.
-    int playHours;
-    int playMinutes;
-    int playSeconds;
-    int playMilliseconds;
+    // How long it has been played, App::AddTotalPlayTime keeps it up to date.
+    DWORD playHours;
+    DWORD playMinutes;
+    DWORD playSeconds;
+    DWORD playMilliseconds;
     // By difficulty, then the totals.
     PlstCounts counts[7];
 };

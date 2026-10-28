@@ -434,3 +434,38 @@ void App::AddPlayTime()
     }
     this->unk_190 = now;
 }
+
+void App::AddTotalPlayTime()
+{
+    DWORD now = timeGetTime();
+    DWORD delta;
+
+    if (now < this->unk_194)
+    {
+        this->unk_194 = 0;
+    }
+    delta = now - this->unk_194;
+    g_Unknown626270.plst.playHours += delta / 3600000;
+    delta %= 3600000;
+    g_Unknown626270.plst.playMinutes += delta / 60000;
+    delta %= 60000;
+    g_Unknown626270.plst.playSeconds += delta / 1000;
+    delta %= 1000;
+    g_Unknown626270.plst.playMilliseconds += delta;
+    if (g_Unknown626270.plst.playMilliseconds >= 1000)
+    {
+        g_Unknown626270.plst.playSeconds += g_Unknown626270.plst.playMilliseconds / 1000;
+        g_Unknown626270.plst.playMilliseconds %= 1000;
+    }
+    if (g_Unknown626270.plst.playSeconds >= 60)
+    {
+        g_Unknown626270.plst.playMinutes += g_Unknown626270.plst.playSeconds / 60;
+        g_Unknown626270.plst.playSeconds %= 60;
+    }
+    if (g_Unknown626270.plst.playMinutes >= 60)
+    {
+        g_Unknown626270.plst.playHours += g_Unknown626270.plst.playMinutes / 60;
+        g_Unknown626270.plst.playMinutes %= 60;
+    }
+    this->unk_194 = now;
+}
