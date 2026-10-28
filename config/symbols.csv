@@ -357,7 +357,7 @@ address,size,name,symbol
 0x00436160,89,MidiDevice::Open,?Open@MidiDevice@@QAEHI@Z
 0x004361c0,59,MidiDevice::Close,?Close@MidiDevice@@QAEHXZ
 0x00436200,78,MidiDevice::SendLongMsg,?SendLongMsg@MidiDevice@@QAEHPAUmidihdr_tag@@@Z
-0x00436250,67,Func436250,
+0x00436250,67,MidiDevice::SendShortMsg,?SendShortMsg@MidiDevice@@QAEHEEE@Z
 0x004362a0,48,Func4362a0,
 0x004362d0,41,Func4362d0,
 0x00436300,115,Func436300,

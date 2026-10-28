@@ -7,6 +7,14 @@
 
 #include "common.h"
 
+// A short MIDI message as midiOutShortMsg takes it: status and two data
+// bytes, low byte first.
+union MidiShortMsg
+{
+    DWORD dword;
+    BYTE bytes[4];
+};
+
 // Wraps a MIDI output device (midiOutOpen and friends).
 class MidiDevice
 {
@@ -24,6 +32,10 @@ public:
     // Prepares and sends a system-exclusive message. Returns 0 if no
     // device is open, nonzero if either step fails.
     int SendLongMsg(LPMIDIHDR header);
+
+    // Sends a channel message. Returns 0 if no device is open, nonzero on
+    // failure.
+    int SendShortMsg(BYTE status, BYTE data1, BYTE data2);
 
     HMIDIOUT handle;
     UINT deviceId;
