@@ -38,6 +38,14 @@ public:
     int Draw(Sprite *vm);
     // Releases the loaded surfaces, before the device is reset.
     void ReleaseSurfaces();
+    // Copies the `srcWidth` by `srcHeight` rectangle at (`srcLeft`,
+    // `srcTop`) of the back buffer into the `dstWidth` by `dstHeight`
+    // rectangle at (`dstLeft`, `dstTop`) of texture `texture`.
+    void CopyBackBufferToTexture(int texture, int srcLeft, int srcTop, int srcWidth, int srcHeight, int dstLeft,
+                                 int dstTop, int dstWidth, int dstHeight);
+    // Does the copy CopyBackBufferToTexture that `pendingCopy` asks for,
+    // if any, and clears it.
+    void DoPendingCopy();
 
     // Runs script `script` of the loaded ANM files on `vm`.
     void StartScript(Sprite *vm, int script)
@@ -51,5 +59,18 @@ public:
     unsigned char unk_28ef4[0x5254];
     // Images loaded as surfaces to copy to the back buffer from.
     IDirect3DSurface8 *surfaces[0x20];
+    unsigned char unk_2e1c8[0x150374];
+    // A copy of the back buffer into a texture to do after the frame is
+    // drawn: CopyBackBufferToTexture's arguments, the texture -1 when
+    // there is none.
+    int pendingCopyTexture;
+    int pendingCopySrcLeft;
+    int pendingCopySrcTop;
+    int pendingCopySrcWidth;
+    int pendingCopySrcHeight;
+    int pendingCopyDstLeft;
+    int pendingCopyDstTop;
+    int pendingCopyDstWidth;
+    int pendingCopyDstHeight;
 };
 extern SpriteEngine *g_SpriteEngine;

@@ -337,7 +337,7 @@ address,size,name,symbol
 0x00433cd0,434,ItemManager::DrawItems,?DrawItems@ItemManager@@QAEXXZ
 0x00433e90,133,Log::Flush,?Flush@Log@@QAEXXZ
 0x00433f20,104,SpriteEngine::ReleaseSurfaces,?ReleaseSurfaces@SpriteEngine@@QAEXXZ
-0x00433f90,134,Func433f90,
+0x00433f90,134,SpriteEngine::DoPendingCopy,?DoPendingCopy@SpriteEngine@@QAEXXZ
 0x00434020,1131,Func434020,
 0x00434490,292,Func434490,
 0x004345c0,284,Func4345c0,
@@ -592,7 +592,7 @@ address,size,name,symbol
 0x00454a10,143,Func454a10,
 0x00454aa0,445,Func454aa0,
 0x00454c60,424,Func454c60,
-0x00454e10,280,Func454e10,
+0x00454e10,280,SpriteEngine::CopyBackBufferToTexture,?CopyBackBufferToTexture@SpriteEngine@@QAEXHHHHHHHHH@Z
 0x00454f30,251,Func454f30,
 0x00455030,140,Func455030,
 0x004550c0,70,Func4550c0,
