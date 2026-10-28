@@ -7,6 +7,7 @@
 #include <string.h>
 #include <time.h>
 
+#include "ascii.h"
 #include "resultscreen.h"
 #include "unsorted.h"
 
@@ -706,7 +707,7 @@ int ResultScreen::HandleNameEntry()
         this->entry.shot = this->character;
         this->entry.difficulty = this->difficulty;
         this->entry.score = g_Unknown626270.stats->score;
-        this->entry.unk_26 = g_Unknown626270.stats->unk_20;
+        this->entry.unk_26 = g_Unknown626270.stats->continuesUsed;
         this->entry.version = 1;
         this->entry.magic = *(DWORD *)"HSCR";
         if ((g_Unknown626270.unk_93d8 >> 4 & 1) == 0)
@@ -900,7 +901,7 @@ int ResultScreen::HandleReplaySaving()
             {
                 interrupt = 0x13;
             }
-            else if (g_Unknown626270.stats->unk_20 != 0)
+            else if (g_Unknown626270.stats->continuesUsed != 0)
             {
                 interrupt = 0xe;
             }
@@ -1442,6 +1443,121 @@ int ResultScreen::RunStatisticsMenu()
             this->frame = 0;
             return 1;
         }
+        break;
+    }
+    return 0;
+}
+
+int ResultScreen::DrawStatistics()
+{
+    Sprite *spr;
+    D3DXVECTOR3 cursorPos;
+    float progress;
+    float rating;
+    float slowdown;
+
+    switch (this->state)
+    {
+    case 0x10:
+    case 0x11:
+        spr = &this->sprites[0x28];
+        {
+            D3DCOLOR color = spr->color;
+
+            g_AsciiText.color = color;
+        }
+        rating = 0.0f;
+        progress = g_Unknown626270.difficulty < 4
+                       ? g_Unknown626270.progressFrames / 180621.0f
+                       : progress = g_Unknown626270.difficulty == 4 ? g_Unknown626270.progressFrames / 80000.0f
+                                                                    : g_Unknown626270.progressFrames / 85000.0f;
+        cursorPos = spr->pos;
+        cursorPos.x += 210.0f;
+        cursorPos.y += 32.0f;
+        g_AsciiText.AddFormat(&cursorPos, "%9d", g_Unknown626270.stats->guiScore);
+        cursorPos.x += 126.0f;
+        g_AsciiText.AddFormat(&cursorPos, "%1d", g_Unknown626270.stats->continuesUsed);
+        cursorPos.x -= 126.0f;
+        if (g_Unknown626270.stats->guiScore < 2000000)
+        {
+            rating -= 20.0f;
+        }
+        else if (g_Unknown626270.stats->guiScore < 200000000)
+        {
+            rating += (g_Unknown626270.stats->guiScore - 2000000) / 198000000.0f * 60.0f - 20.0f;
+        }
+        else
+        {
+            rating += 40.0f;
+        }
+        cursorPos.y += 22.0f;
+        g_AsciiText.AddString(&cursorPos, g_DifficultyNames[g_Unknown626270.difficulty]);
+        rating += g_DifficultyRatings[g_Unknown626270.difficulty];
+        cursorPos.x += 14.0f;
+        cursorPos.y += 22.0f;
+        if ((g_Unknown626270.unk_93d8 >> 4 & 1) == 0)
+        {
+            if (progress >= 1.0f)
+            {
+                progress = 0.99f;
+            }
+            g_AsciiText.AddFormat(&cursorPos, "    %3.2f%%", progress * 100.0f);
+            rating += progress * 70.0f;
+        }
+        else
+        {
+            g_AsciiText.AddFormat(&cursorPos, "      100%%");
+            rating += 70.0f;
+        }
+        cursorPos.y += 22.0f;
+        g_AsciiText.AddFormat(&cursorPos, "%9d", g_Unknown626270.stats->continuesUsed);
+        rating -= g_Unknown626270.stats->continuesUsed * 10.0f;
+        cursorPos.y += 22.0f;
+        g_AsciiText.AddFormat(&cursorPos, "%9d", (int)g_Unknown626270.stats->deaths);
+        rating -= (int)g_Unknown626270.stats->deaths * 5.0f - 10.0f;
+        cursorPos.y += 22.0f;
+        g_AsciiText.AddFormat(&cursorPos, "%9d", (int)g_Unknown626270.stats->bombsUsed);
+        rating -= (int)g_Unknown626270.stats->bombsUsed * 2.0f - 10.0f;
+        cursorPos.y += 22.0f;
+        g_AsciiText.AddFormat(&cursorPos, "%9d", g_Unknown626270.stats->spellCardsCaptured);
+        rating += g_Unknown626270.stats->spellCardsCaptured * g_SpellCardRatings[g_Unknown626270.difficulty];
+        slowdown = (g_App.unk_180 / g_App.unk_184 - 0.5f) * 2.0f;
+        if (slowdown < 0.0f)
+        {
+            slowdown = 0.0f;
+        }
+        else if (slowdown >= 1.0f)
+        {
+            slowdown = 1.0f;
+        }
+        slowdown = (1.0f - slowdown) * 100.0f;
+        cursorPos.y += 22.0f;
+        g_AsciiText.AddFormat(&cursorPos, "    %3.2f%%", slowdown);
+        if (slowdown < 50.0f)
+        {
+            rating -= 70.0f * slowdown / 100.0f;
+        }
+        else
+        {
+            rating = -999.0f;
+        }
+        if (g_Unknown626270.stats->pointItemsTotal < 800)
+        {
+            rating += 0.01f * g_Unknown626270.stats->pointItemsTotal;
+        }
+        else
+        {
+            rating += 8.0f;
+        }
+        if (g_Unknown626270.stats->grazeTotal < 5000)
+        {
+            rating += 0.0025f * g_Unknown626270.stats->grazeTotal;
+        }
+        else
+        {
+            rating += 12.5f;
+        }
+        g_AsciiText.color = 0xffffffff;
         break;
     }
     return 0;

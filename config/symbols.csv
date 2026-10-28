@@ -20,8 +20,8 @@ address,size,name,symbol
 0x00401de0,65,Func401de0,
 0x00401e30,213,Func401e30,
 0x00401f10,35,Func401f10,
-0x00401f40,277,Func401f40,
-0x00402060,68,Func402060,
+0x00401f40,277,AsciiText::AddString,?AddString@AsciiText@@QAEXPAUD3DXVECTOR3@@PAD@Z
+0x00402060,68,AsciiText::AddFormat,?AddFormat@AsciiText@@QAAXPAUD3DXVECTOR3@@PADZZ
 0x004020b0,1082,Func4020b0,
 0x004024f0,320,Func4024f0,
 0x00402630,322,Func402630,
@@ -514,7 +514,7 @@ address,size,name,symbol
 0x00447198,3640,ResultScreen::HandleReplaySaving,?HandleReplaySaving@ResultScreen@@QAEHXZ
 0x00447fd0,200,ResultScreen::WaitAfterNameEntry,?WaitAfterNameEntry@ResultScreen@@QAEHXZ
 0x00448098,2065,ResultScreen::RunStatisticsMenu,?RunStatisticsMenu@ResultScreen@@QAEHXZ
-0x004488a9,1175,Func4488a9,
+0x004488a9,1175,ResultScreen::DrawStatistics,?DrawStatistics@ResultScreen@@QAEHXZ
 0x00448d40,3525,Func448d40,
 0x00449b05,1780,Func449b05,
 0x0044a1f9,265,Func44a1f9,
@@ -1711,9 +1711,12 @@ address,size,name,symbol
 0x0048d264,4,CoUninitialize,__imp__CoUninitialize@0
 0x0048d268,4,CoCreateInstance,__imp__CoCreateInstance@20
 0x0048d26c,4,CoInitialize,__imp__CoInitialize@4
+0x004964f4,,g_DifficultyRatings,?g_DifficultyRatings@@3PAMA
 0x0049ec30,,g_NameAlphabet,?g_NameAlphabet@@3PADA
 0x0049ec34,,g_ShotNames,?g_ShotNames@@3PAPADA
 0x0049ed98,,g_FormatInfos,?g_FormatInfos@@3PAUFormatInfo@@A
+0x0049f504,,g_SpellCardRatings,?g_SpellCardRatings@@3PAMA
+0x0049f518,,g_DifficultyNames,?g_DifficultyNames@@3PAPADA
 0x0049fc88,,g_JoyCaps,?g_JoyCaps@@3UtagJOYCAPSA@@A
 0x0049fe1c,,g_ShotHeldFrames,?g_ShotHeldFrames@@3GA
 0x0049fe20,,g_Rng,?g_Rng@@3VRng@@A
@@ -1732,5 +1735,6 @@ address,size,name,symbol
 0x00626270,,g_Unknown626270,?g_Unknown626270@@3VUnknown626270@@A
 0x012fe250,,g_EffectManager,?g_EffectManager@@3VEffectManager@@A
 0x01348010,,g_Unknown1348010,?g_Unknown1348010@@3EA
+0x0134ce18,,g_AsciiText,?g_AsciiText@@3VAsciiText@@A
 0x0135e1f4,,g_AppMutex,?g_AppMutex@@3PAXA
 0x0135e218,,g_PadButtons,?g_PadButtons@@3PAEA

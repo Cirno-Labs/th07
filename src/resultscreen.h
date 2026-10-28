@@ -238,6 +238,13 @@ extern char *g_ShotNames[7];
 // stand for a space and the end.
 extern char *g_NameAlphabet;
 
+// The difficulties' names ("     Easy", ...), right-aligned.
+extern char *g_DifficultyNames[6];
+// By difficulty: what the statistics' rating starts from, and what
+// each spell card captured adds to it.
+extern float g_DifficultyRatings[5];
+extern float g_SpellCardRatings[5];
+
 // Writes today's date as "%m/%d" to `date`. Not in th06.
 void FormatTodayDate(char *date);
 
@@ -265,6 +272,11 @@ public:
     // Runs states 0x14 to 0x16, entered from menu item 7. Returns
     // nonzero to go back to the menu.
     int RunStatisticsMenu();
+    // In states 0x10 and 0x11, shows the game's statistics next to sprite
+    // 0x28: score (with the continues as its last digit), difficulty,
+    // progress, continues, deaths, bombs, spell cards and slowdown. It
+    // also works out a rating from them that it never shows. Returns 0.
+    int DrawStatistics();
     // Frees the entries of the high score list for `difficulty` and
     // `shot`.
     void ReleaseScores(int difficulty, int shot);

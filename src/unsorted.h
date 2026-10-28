@@ -508,11 +508,20 @@ struct Unknown4325c0
 // known so far.
 struct Unknown626270Stats
 {
-    unsigned char unk_0[0x4];
+    // The score shown, and the score.
+    DWORD guiScore;
     DWORD score;
-    unsigned char unk_8[0x18];
-    BYTE unk_20;
-    unsigned char unk_21[0x5b];
+    unsigned char unk_8[0x10];
+    int grazeTotal;
+    int spellCardsCaptured;
+    BYTE continuesUsed;
+    unsigned char unk_21[0x7];
+    int pointItemsTotal;
+    unsigned char unk_2c[0x24];
+    float deaths;
+    unsigned char unk_54[0x18];
+    float bombsUsed;
+    unsigned char unk_70[0xc];
     // The shot power, up to 128.
     float power;
 };
@@ -562,6 +571,9 @@ public:
     // byte replay file name, the stage) are th06's GameManager's, so
     // this is probably th07's GameManager.
     float arena[4];
+    unsigned char unk_9604[0x24];
+    // The frames played, which the result screen shows as progress.
+    int progressFrames;
 };
 extern Unknown626270 g_Unknown626270;
 
