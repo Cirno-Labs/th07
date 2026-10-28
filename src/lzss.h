@@ -45,6 +45,6 @@ void LzssDeleteNode(int pos);
 // the tree, linking the child to its parent.
 void LzssReplaceNode(int oldNode, int newNode);
 // Puts node `newNode` in the place of `oldNode` in the tree.
-void Func45f580(int oldNode, int newNode);
+void LzssReplaceChild(int oldNode, int newNode);
 // The node that comes before `node`: the largest in its smaller subtree.
 int Func45f640(int node);
