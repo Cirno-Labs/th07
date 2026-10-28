@@ -379,7 +379,7 @@ address,size,name,symbol
 0x00436c90,79,MidiPlayer::FadeOut,?FadeOut@MidiPlayer@@QAEHH@Z
 0x00436ce0,619,MidiPlayer::OnTimer,?OnTimer@MidiPlayer@@UAEXXZ
 0x00436f50,1868,Func436f50,
-0x004377f0,187,Func4377f0,
+0x004377f0,187,MidiPlayer::SendVolume,?SendVolume@MidiPlayer@@QAEXH@Z
 0x004378b0,22,Func4378b0,
 0x004378d0,25,Func4378d0,
 0x004378f0,19,Func4378f0,
@@ -1441,7 +1441,7 @@ address,size,name,symbol
 0x0048b7bc,43,__freebuf,
 0x0048b7e7,43,__strdup,
 0x0048b812,123,__mbschr,
-0x0048b8a0,117,Func48b8a0,
+0x0048b8a0,117,__ftol2,__ftol2
 0x0048b920,20,Func48b920,
 0x0048b93d,149,Func48b93d,
 0x0048ba20,79,Func48ba20,
