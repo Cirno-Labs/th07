@@ -110,6 +110,11 @@ public:
     // mode it queues sound command 2 for the .wav of the same name.
     // Returns -1 if the music mode is neither, otherwise 0.
     int PlayMusic(char *path);
+    // Fades the music out over `seconds`: in wave mode by queueing sound
+    // command 5 with the whole seconds, stretched by unk_178 while the
+    // game runs slow. Returns -1 if the music mode is neither wave nor
+    // MIDI, otherwise 0.
+    int FadeOutMusic(float seconds);
 
     BOOL UsesPresentImmediate()
     {

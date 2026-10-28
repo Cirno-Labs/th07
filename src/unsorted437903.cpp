@@ -329,3 +329,39 @@ int App::StopMusic()
     }
     return 0;
 }
+
+int App::FadeOutMusic(float seconds)
+{
+    float duration;
+
+    if (g_App.musicMode == 2)
+    {
+        if (g_App.midi != NULL)
+        {
+            g_App.midi->FadeOut(1000.0f * seconds);
+        }
+    }
+    else if (g_App.musicMode == 1)
+    {
+        // The wave fade counts frames, so it is stretched while the game
+        // runs slow.
+        if (this->unk_178 == 0.0f)
+        {
+            duration = seconds;
+        }
+        else if (this->unk_178 > 1.0f)
+        {
+            duration = seconds;
+        }
+        else
+        {
+            duration = seconds / this->unk_178;
+        }
+        g_SoundPlayer.Func44d2f0(5, duration, "");
+    }
+    else
+    {
+        return -1;
+    }
+    return 0;
+}
