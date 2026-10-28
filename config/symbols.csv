@@ -314,7 +314,7 @@ address,size,name,symbol
 0x00431900,40,Rng::GetRandomF32ZeroToOne,?GetRandomF32ZeroToOne@Rng@@QAEMXZ
 0x00431930,127,AddNormalizeAngle,?AddNormalizeAngle@@YIMMM@Z
 0x004319b0,95,Rotate2D,?Rotate2D@@YIXPAUD3DXVECTOR3@@0M@Z
-0x00431a0f,60,Func431a0f,
+0x00431a0f,60,GdiSurface::GdiSurface,??0GdiSurface@@QAE@XZ
 0x00431a4b,17,Func431a4b,
 0x00431a5c,114,Func431a5c,
 0x00431ace,95,Func431ace,

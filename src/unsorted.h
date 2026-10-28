@@ -175,3 +175,72 @@ float AddNormalizeAngle(float a, float b);
 // Rotates `in` by `angle` radians in the xy plane into `out` (z is left
 // alone).
 void Rotate2D(D3DXVECTOR3 *out, D3DXVECTOR3 *in, float angle);
+
+// How a D3DFORMAT's pixels are laid out, for a DIB section.
+struct FormatInfo
+{
+    // A D3DFORMAT; -1 ends the table.
+    int format;
+    int bitCount;
+    DWORD alphaMask;
+    DWORD redMask;
+    DWORD greenMask;
+    DWORD blueMask;
+};
+
+// A GDI DIB section text is drawn into before it is copied to a Direct3D
+// surface; `format` is the D3DFORMAT its pixels follow. As in th06.
+class GdiSurface
+{
+public:
+    GdiSurface();
+    ~GdiSurface();
+    // Selects the old object back into `hdc`, then deletes the DC and the
+    // bitmap. Returns whether there was a DC.
+    bool Release();
+    // Creates the DIB section in `format`, or failing that in a 32-bit
+    // format with the same channels. Returns whether it was created.
+    bool Create(int width, int height, int format);
+    // Creates the DIB section and its DC, after releasing any old ones.
+    bool CreateInFormat(int width, int height, int format);
+    // The entry of g_FormatInfos for `format`, or the end of the table
+    // when it is missing; NULL for -1.
+    FormatInfo *FindFormat(int format);
+    // Copies the pixels into `surface` when it has the same format.
+    // Returns false when there is no bitmap or the surface can't be
+    // locked.
+    bool CopyToSurface(IDirect3DSurface8 *surface);
+    bool InvertAlpha(int x, int y, int width, int height);
+
+    void *GetBits()
+    {
+        return this->bits;
+    }
+    bool IsCreated()
+    {
+        return this->bitmap != NULL;
+    }
+    int GetWidth()
+    {
+        return this->width;
+    }
+    int GetHeight()
+    {
+        return this->height;
+    }
+    int GetFormat()
+    {
+        return this->format;
+    }
+
+    int format;
+    int width;
+    int height;
+    DWORD imageSize;
+    int widthBytes;
+    HDC hdc;
+    HGDIOBJ oldObject;
+    HBITMAP bitmap;
+    void *bits;
+};
+ASSERT_SIZE(GdiSurface, 0x24);
