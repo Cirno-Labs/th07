@@ -623,9 +623,9 @@ address,size,name,symbol
 0x0045c4d9,109,Func45c4d9,
 0x0045c546,138,Func45c546,
 0x0045c5d0,273,Func45c5d0,
-0x0045c6f0,23,Func45c6f0,
-0x0045c710,44,Func45c710,
-0x0045c740,142,Func45c740,
+0x0045c6f0,23,CSoundManager::CSoundManager,??0CSoundManager@@QAE@XZ
+0x0045c710,44,CSoundManager::~CSoundManager,??1CSoundManager@@QAE@XZ
+0x0045c740,142,CSoundManager::Initialize,?Initialize@CSoundManager@@QAEJPAUHWND__@@KKKK@Z
 0x0045c7d0,265,Func45c7d0,
 0x0045c8e0,844,Func45c8e0,
 0x0045cc30,795,Func45cc30,
