@@ -279,3 +279,14 @@ void ReleaseTextSurface();
 // it into `texture`, `unk6` rows high at row `y`.
 void RenderTextToTexture(int x, int y, int width, int unk4, int fontHeight, int unk6, COLORREF textColor,
                          COLORREF shadowColor, char *text, IDirect3DTexture8 *texture);
+
+// A 2D vector with a polar setter, out of line in the item file. Its
+// callers use it on fields of several objects. Placeholder name.
+struct Unknown4325c0
+{
+    // Sets x and y to `radius` along `angle`, with one fsincos.
+    void SetPolar(float angle, float radius);
+
+    float x;
+    float y;
+};

@@ -325,7 +325,7 @@ address,size,name,symbol
 0x0043225b,35,CreateTextSurface,?CreateTextSurface@@YIXXZ
 0x0043227e,37,ReleaseTextSurface,?ReleaseTextSurface@@YIXXZ
 0x004322a3,796,RenderTextToTexture,?RenderTextToTexture@@YIXHHHHHHKKPADPAUIDirect3DTexture8@@@Z
-0x004325c0,32,Func4325c0,
+0x004325c0,32,Unknown4325c0::SetPolar,?SetPolar@Unknown4325c0@@QAEXMM@Z
 0x004325e0,71,Func4325e0,
 0x00432630,84,Func432630,
 0x00432690,91,Func432690,

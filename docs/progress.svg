@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">9.94% (69)</tspan> · <tspan class="decompiled">0.14% (1)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">89.91% (624)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">9.94% (69)</tspan> · <tspan class="decompiled">0.29% (2)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">89.77% (623)</tspan></tspan></text>
 <g transform="translate(0 20)">
 <rect width="74.27" height="6" x="0" y="0" class="named"/>
-<rect width="1.08" height="6" x="74.27" y="0" class="decompiled"/>
-<rect width="671.65" height="6" x="75.35" y="0" class="todo"/>
+<rect width="2.15" height="6" x="74.27" y="0" class="decompiled"/>
+<rect width="670.58" height="6" x="76.42" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (173 bytes)</title></rect>
@@ -394,7 +394,7 @@
 <rect width="12" height="12" x="345" y="90" class="named"><title>0x0043225b CreateTextSurface (35 bytes)</title></rect>
 <rect width="12" height="12" x="360" y="90" class="named"><title>0x0043227e ReleaseTextSurface (37 bytes)</title></rect>
 <rect width="12" height="12" x="375" y="90" class="named"><title>0x004322a3 RenderTextToTexture (796 bytes)</title></rect>
-<rect width="12" height="12" x="390" y="90" class="todo"><title>0x004325c0 Func4325c0 (32 bytes)</title></rect>
+<rect width="12" height="12" x="390" y="90" class="decompiled"><title>0x004325c0 Unknown4325c0::SetPolar (32 bytes)</title></rect>
 <rect width="12" height="12" x="405" y="90" class="todo"><title>0x004325e0 Func4325e0 (71 bytes)</title></rect>
 <rect width="12" height="12" x="420" y="90" class="todo"><title>0x00432630 Func432630 (84 bytes)</title></rect>
 <rect width="12" height="12" x="435" y="90" class="todo"><title>0x00432690 Func432690 (91 bytes)</title></rect>
@@ -766,11 +766,11 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">4.18%</tspan> · <tspan class="decompiled">0%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">95.81%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">4.18%</tspan> · <tspan class="decompiled">0.01%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">95.81%</tspan></tspan></text>
 <g transform="translate(0 20)">
 <rect width="31.23" height="6" x="0" y="0" class="named"/>
 <rect width="0.10" height="6" x="31.23" y="0" class="decompiled"/>
-<rect width="715.74" height="6" x="31.26" y="0" class="todo"/>
+<rect width="715.67" height="6" x="31.33" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1435,7 +1435,7 @@
 <rect width="0.52" height="1.17" x="743.16" y="192.08" class="named"><title>0x0043225b CreateTextSurface (35 bytes)</title></rect>
 <rect width="0.32" height="1.17" x="746.68" y="192.08" class="todo"><title>0x00417af0 Func417af0 (33 bytes)</title></rect>
 <rect width="0.85" height="0.59" x="732.59" y="196.24" class="named"><title>0x00436110 MidiDevice::MidiDevice (33 bytes)</title></rect>
-<rect width="0.85" height="0.48" x="732.59" y="199.83" class="todo"><title>0x004325c0 Func4325c0 (32 bytes)</title></rect>
+<rect width="0.85" height="0.48" x="732.59" y="199.83" class="decompiled"><title>0x004325c0 Unknown4325c0::SetPolar (32 bytes)</title></rect>
 <rect width="0.85" height="0.37" x="732.59" y="203.32" class="todo"><title>0x00419d70 Func419d70 (31 bytes)</title></rect>
 <rect width="0.85" height="0.26" x="732.59" y="206.69" class="named"><title>0x004363e0 SwapBytes16 (30 bytes)</title></rect>
 <rect width="0.85" height="0.10" x="732.59" y="209.95" class="todo"><title>0x0045dab0 Func45dab0 (28 bytes)</title></rect>
