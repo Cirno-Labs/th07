@@ -290,3 +290,17 @@ void ResetKeyboard()
     }
     SetKeyboardState(keyState);
 }
+
+int FileExists(char *path)
+{
+    HANDLE file;
+
+    file = CreateFileA(path, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING,
+                       FILE_ATTRIBUTE_NORMAL | FILE_FLAG_SEQUENTIAL_SCAN, NULL);
+    if (file != INVALID_HANDLE_VALUE)
+    {
+        CloseHandle(file);
+        return 1;
+    }
+    return 0;
+}

@@ -73,6 +73,21 @@ void DebugPrint(const char *fmt, ...);
 // th06, where the second argument says whether the file is read from
 // disk rather than from the archives.
 void *LoadFileData(char *path, int isExternal);
+// The size of the file LoadFileData loaded last.
+extern int g_FileSize;
+
+// The game's data archive, at 0x626258: files are looked up by name
+// (without the directory). Its layout is not known yet.
+class Archive
+{
+public:
+    // The decoded size of entry `name`; 0 if there is none.
+    DWORD GetEntrySize(char *name);
+    // Decodes entry `name` into `buffer`, which must hold GetEntrySize
+    // bytes.
+    void *Decode(char *name, void *buffer);
+};
+extern Archive g_Archive;
 
 // The object error messages go to, e.g. "error : MIDI File が読み込めない".
 // Its layout is not known yet.
@@ -81,6 +96,8 @@ extern Log g_Log;
 
 // Logs a printf-style message to a log object.
 int LogPrintf(Log *log, const char *fmt, ...);
+// Like LogPrintf, and marks the log as holding an error.
+int LogError(Log *log, const char *fmt, ...);
 
 // Ors `bit` into `buttons` while button `button` (a bit index into
 // joyGetPosEx's dwButtons) is down, and returns what it ored in. A
@@ -113,3 +130,7 @@ WORD ReadButtons();
 // Clears the down bit (0x80) of every key in the thread's keyboard
 // state.
 void ResetKeyboard();
+
+// Whether the file at `path` exists and can be opened for reading: 1 or
+// 0. Not in th06.
+int FileExists(char *path);

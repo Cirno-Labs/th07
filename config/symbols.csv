@@ -305,10 +305,10 @@ address,size,name,symbol
 0x00430b50,1904,ReadButtons,?ReadButtons@@YIGXZ
 0x004312c0,110,ResetKeyboard,?ResetKeyboard@@YIXXZ
 0x00431330,434,LoadFileData,?LoadFileData@@YIPAXPADH@Z
-0x004314f0,69,Func4314f0,
+0x004314f0,69,FileExists,?FileExists@@YIHPAD@Z
 0x00431540,172,Func431540,
 0x004315f0,313,LogPrintf,?LogPrintf@@YAHPAVLog@@PBDZZ
-0x00431730,319,Func431730,
+0x00431730,319,LogError,?LogError@@YAHPAVLog@@PBDZZ
 0x00431870,88,Func431870,
 0x004318d0,40,Func4318d0,
 0x00431900,40,Func431900,
@@ -687,8 +687,8 @@ address,size,name,symbol
 0x0045f710,229,Func45f710,
 0x0045f800,199,Func45f800,
 0x0045f8d0,133,Func45f8d0,
-0x0045f960,321,Func45f960,
-0x0045fab0,46,Func45fab0,
+0x0045f960,321,Archive::Decode,?Decode@Archive@@QAEPAXPADPAX@Z
+0x0045fab0,46,Archive::GetEntrySize,?GetEntrySize@Archive@@QAEKPAD@Z
 0x0045fae0,101,Func45fae0,
 0x0045fb50,645,Func45fb50,
 0x0045fde0,471,Func45fde0,
@@ -1117,7 +1117,7 @@ address,size,name,symbol
 0x0047d43c,,operator delete,??3@YAXPAX@Z
 0x0047d441,14,operator new,??2@YAPAXI@Z
 0x0047d44f,88,Func47d44f,
-0x0047d4b0,45,_strrchr,
+0x0047d4b0,45,_strrchr,_strrchr
 0x0047d4e0,672,_memcpy,
 0x0047d820,672,_memmove,
 0x0047db60,139,_strlen,
@@ -1711,7 +1711,9 @@ address,size,name,symbol
 0x0048d26c,4,CoInitialize,__imp__CoInitialize@4
 0x0049fc88,,g_JoyCaps,?g_JoyCaps@@3UtagJOYCAPSA@@A
 0x0049fe1c,,g_ShotHeldFrames,?g_ShotHeldFrames@@3GA
+0x004b9e64,,g_FileSize,?g_FileSize@@3HA
 0x00575950,,g_App,?g_App@@3VApp@@A
 0x00624210,,g_Log,?g_Log@@3VLog@@A
 0x00626218,,g_Chain,?g_Chain@@3VChain@@A
+0x00626258,,g_Archive,?g_Archive@@3VArchive@@A
 0x0135e218,,g_PadButtons,?g_PadButtons@@3PAEA
