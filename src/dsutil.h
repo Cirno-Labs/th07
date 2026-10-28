@@ -29,6 +29,8 @@ public:
     // The game's reset limits the data to the track's loopEnd bytes
     // and, when `bLoop` is set, skips its first loopStart bytes, as
     // th06's.
+    HRESULT ResetFile(bool bLoop);
+    HRESULT Read(BYTE *pBuffer, DWORD dwSizeToRead, DWORD *pdwSizeRead);
     // Switches the stream to the track `format` describes. Returns
     // E_FAIL while (+0x7c) is set or without a file. Not in th06.
     HRESULT Func45e130(BgmFormat *format);
@@ -78,6 +80,7 @@ public:
     virtual ~CSound();
 
     HRESULT FillBufferWithSound(LPDIRECTSOUNDBUFFER pDSB, BOOL bRepeatWavIfBufferLarger);
+    HRESULT RestoreBuffer(LPDIRECTSOUNDBUFFER pDSB, BOOL *pbWasRestored);
     LPDIRECTSOUNDBUFFER GetBuffer(DWORD dwIndex);
     HRESULT Play(DWORD dwPriority, DWORD dwFlags);
     HRESULT Stop();

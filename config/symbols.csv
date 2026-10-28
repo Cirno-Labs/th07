@@ -634,7 +634,7 @@ address,size,name,symbol
 0x0045d060,599,CStreamingSound::RecreateBuffers,?RecreateBuffers@CStreamingSound@@QAEJXZ
 0x0045d2c0,241,CSound::~CSound,??1CSound@@UAE@XZ
 0x0045d3c0,484,CSound::FillBufferWithSound,?FillBufferWithSound@CSound@@QAEJPAUIDirectSoundBuffer@@H@Z
-0x0045d5b0,163,Func45d5b0,
+0x0045d5b0,163,CSound::RestoreBuffer,?RestoreBuffer@CSound@@QAEJPAUIDirectSoundBuffer@@PAH@Z
 0x0045d660,182,Func45d660,
 0x0045d720,53,CSound::GetBuffer,?GetBuffer@CSound@@QAEPAUIDirectSoundBuffer@@K@Z
 0x0045d760,250,CSound::Play,?Play@CSound@@QAEJKK@Z
@@ -654,8 +654,8 @@ address,size,name,symbol
 0x0045e130,84,CWaveFile::Func45e130,?Func45e130@CWaveFile@@QAEJPAUBgmFormat@@@Z
 0x0045e190,92,CWaveFile::OpenFromMemory,?OpenFromMemory@CWaveFile@@QAEJPAEKPAUBgmFormat@@K@Z
 0x0045e1f0,17,Unknown45e1f0::GetField2c,?GetField2c@Unknown45e1f0@@QAEHXZ
-0x0045e210,328,Func45e210,
-0x0045e360,328,Func45e360,
+0x0045e210,328,CWaveFile::ResetFile,?ResetFile@CWaveFile@@QAEJ_N@Z
+0x0045e360,328,CWaveFile::Read,?Read@CWaveFile@@QAEJPAEKPAK@Z
 0x0045e4b0,51,Func45e4b0,
 0x0045e4f0,5,DebugPrint,?DebugPrint@@YAXPBDZZ
 0x0045e500,20,Func45e500,
