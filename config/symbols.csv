@@ -298,9 +298,9 @@ address,size,name,symbol
 0x00430090,161,Chain::CreateElem,?CreateElem@Chain@@QAEPAUChainElem@@P6IHPAX@Z@Z
 0x00430140,325,Chain::Remove,?Remove@Chain@@QAEXPAUChainElem@@@Z
 0x00430290,85,Func430290,
-0x004302f0,122,Func4302f0,
+0x004302f0,122,SetButtonFromDirectInput,?SetButtonFromDirectInput@@YIHPAGFGPAE@Z
 0x00430370,115,SetButtonFromJoystick,?SetButtonFromJoystick@@YIHPAGFGK@Z
-0x004303f0,1488,Func4303f0,
+0x004303f0,1488,ReadJoystick,?ReadJoystick@@YIGG@Z
 0x004309c0,392,Func4309c0,
 0x00430b50,1904,Func430b50,
 0x004312c0,110,Func4312c0,
@@ -1709,6 +1709,8 @@ address,size,name,symbol
 0x0048d264,4,CoUninitialize,__imp__CoUninitialize@0
 0x0048d268,4,CoCreateInstance,__imp__CoCreateInstance@20
 0x0048d26c,4,CoInitialize,__imp__CoInitialize@4
+0x0049fc88,,g_JoyCaps,?g_JoyCaps@@3UtagJOYCAPSA@@A
+0x0049fe1c,,g_ShotHeldFrames,?g_ShotHeldFrames@@3GA
 0x00575950,,g_App,?g_App@@3VApp@@A
 0x00624210,,g_Log,?g_Log@@3VLog@@A
 0x00626218,,g_Chain,?g_Chain@@3VChain@@A
