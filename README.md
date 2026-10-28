@@ -18,26 +18,52 @@ our own analysis or, for library code, from the libraries themselves.
 
 ## Status
 
-The workflow is set up from the th06 project; nothing has been analyzed
-yet. Before decompilation can start:
+The toolchain and workflow are up, taken from the th06 project, and the
+first function matches and is hooked.
 
-1. Verify the original and record its checksum in `orig/th07_100b.sha1`.
-2. Read the toolchain from the Rich header (`python3 tools/peinfo.py
-   build/th07_100b.exe`) and check that the compiler and flags in
-   `tools/build.py` still apply.
-3. Run `just analyze`, find where the game code ends and the statically
-   linked libraries begin, and set `GAME_END` in `tools/seed_symbols.py`.
-4. Prove the workflow on one small function: match it, hook it and play.
+Ghidra finds 1561 functions. As in th06, the game code is compiled
+without optimization, so its functions start with `push ebp; mov ebp,
+esp`; the statically linked D3DX8 and CRT code is optimized. That puts
+the game code at `0x401000`–`0x46004b`: 694 functions, about 381 KB.
+D3DX8's tables follow it, then D3DX8 and the CRT.
+
+```sh
+just analyze   # writes build/functions_100b.csv
+```
 
 ## Target
 
-Retail 1.00b, released 2003-10-24, the last official update.
+Retail 1.00b, released 2003-10-24, the last official update:
+
+- 32-bit PE, image base `0x400000`, entry point `0x47ea7d`, `.text` is
+  0x8bd38 bytes
+- `.data` is 0xec9258 bytes in memory but only 0x3800 on disk, so most of
+  it is zero-initialized globals
+- Imports `d3d8`, `DSOUND`, `DINPUT8`, `WINMM`, `GDI32`, `USER32`,
+  `KERNEL32` and `ole32`. Only `Direct3DCreate8` is imported from D3D, so
+  D3DX8 is statically linked.
 
 ## Toolchain
 
-Not confirmed yet. The tools assume the th06 toolchain: Visual C++ .NET
-2002 (MSVC 7.0, `cl` 13.00.9466) with the DirectX 8 SDK and the Windows
-XP SP2 Platform SDK. The Rich header decides.
+Read from the Rich header (`tools/peinfo.py`):
+
+| Tool | Build | Objects | Probably |
+| --- | --- | --- | --- |
+| C++ compiler 13.00, `/GL` | 9466 | 37 | Game code |
+| C++ compiler 13.00 | 9466 | 15 | |
+| C compiler 13.00 | 9466 | 129 | MSVC CRT |
+| MASM 7.00 | 9466 | 47 | MSVC CRT |
+| C++ compiler 13.00 | 8830 | 58 | Static libraries, probably D3DX8 |
+| Older linker objects | 8755 | 10 | Static libraries |
+| Import library 7.00 | 9210 | 10 | DirectX SDK import libraries |
+| Linker 7.00 | 9466 | | |
+
+This is the th06 toolchain: Visual C++ .NET 2002 (MSVC 7.0, `cl`
+13.00.9466) with the DirectX 8 SDK. The difference is that most C++
+objects were compiled with `/GL` (product id 44, confirmed by linking a
+test object with `/GL` and `/LTCG`). So far that does not show in the
+code: functions match when compiled without it. `/GL` needs
+`msobj10.dll` from the Visual Studio CD in the compiler's directory.
 
 ## Workflow
 
