@@ -504,7 +504,7 @@ address,size,name,symbol
 0x004454fc,48,ReleaseScoreDat,?ReleaseScoreDat@@YIXPAUScoreDat@@@Z
 0x0044552c,1323,SaveScoreDat,?SaveScoreDat@@YIXPAVResultScreen@@@Z
 0x00445a57,255,MoveCursorVertical,?MoveCursorVertical@@YIHPAVResultScreen@@H@Z
-0x00445b56,255,Func445b56,
+0x00445b56,255,LoadScreenPlstChunk,?LoadScreenPlstChunk@@YIHPAVResultScreen@@H@Z
 0x00445c55,267,Func445c55,
 0x00445d60,43,Func445d60,
 0x00445d8b,40,Func445d8b,

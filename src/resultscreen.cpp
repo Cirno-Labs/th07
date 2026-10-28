@@ -258,3 +258,28 @@ int MoveCursorVertical(ResultScreen *screen, int count)
     }
     return 0;
 }
+
+int LoadScreenPlstChunk(ResultScreen *screen, int count)
+{
+    if (WAS_PRESSED_OR_HELD(0x10))
+    {
+        screen->unk_24--;
+        if (screen->unk_24 < 0)
+        {
+            screen->unk_24 += count;
+        }
+        g_SoundPlayer.QueueSound(0xc, 0);
+        return -1;
+    }
+    if (WAS_PRESSED_OR_HELD(0x20))
+    {
+        screen->unk_24++;
+        if (screen->unk_24 >= count)
+        {
+            screen->unk_24 -= count;
+        }
+        g_SoundPlayer.QueueSound(0xc, 0);
+        return 1;
+    }
+    return 0;
+}
