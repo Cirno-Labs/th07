@@ -26,7 +26,7 @@ public:
     int UpdateDifficultyMenu();
     int UpdateCharacterMenu();
     int UpdateShotTypeMenu();
-    int Func45a1dd();
+    int UpdateGameStartMenu();
     int Func45a924();
     // Gives every button of controllerMapping assigned `button` the
     // value `replacement`. Unlike th06's, `unk` is unused.

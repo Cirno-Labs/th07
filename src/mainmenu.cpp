@@ -58,7 +58,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
         status = menu->UpdateShotTypeMenu();
         break;
     case 11:
-        status = menu->Func45a1dd();
+        status = menu->UpdateGameStartMenu();
         break;
     }
     g_SpriteEngine->Func4550c0(menu->sprites, menu->spriteCount);
@@ -765,6 +765,117 @@ int MainMenu::UpdateShotTypeMenu()
             {
                 this->SetState(13);
             }
+            this->sprites[0x48].flags |= 2;
+            this->sprites[0x49].flags |= 2;
+            this->sprites[0x47].flags |= 2;
+            this->sprites[0x50].flags |= 2;
+            this->sprites[0x53].flags |= 2;
+            this->sprites[0x4b].flags |= 2;
+            this->sprites[0x4c].flags |= 2;
+            this->sprites[0x4a].flags |= 2;
+            this->sprites[0x51].flags |= 2;
+            this->sprites[0x54].flags |= 2;
+            this->sprites[0x4e].flags |= 2;
+            this->sprites[0x4f].flags |= 2;
+            this->sprites[0x4d].flags |= 2;
+            this->sprites[0x52].flags |= 2;
+            this->sprites[0x55].flags |= 2;
+            return 2;
+        }
+        break;
+    }
+    this->unk_b0c0++;
+    this->stateFrames++;
+    this->unk_d0fc++;
+    return 1;
+}
+
+int MainMenu::UpdateGameStartMenu()
+{
+    int count;
+
+    switch (this->unk_8)
+    {
+    case 0:
+        if (this->unk_d0fc == 0)
+        {
+            g_SpriteEngine->Func455030(this->sprites, this->spriteCount, 18);
+            this->sprites[0x48].flags &= ~2;
+            this->sprites[0x49].flags &= ~2;
+            this->sprites[0x47].flags &= ~2;
+            this->sprites[0x50].flags &= ~2;
+            this->sprites[0x53].flags &= ~2;
+            this->sprites[0x4b].flags &= ~2;
+            this->sprites[0x4c].flags &= ~2;
+            this->sprites[0x4a].flags &= ~2;
+            this->sprites[0x51].flags &= ~2;
+            this->sprites[0x54].flags &= ~2;
+            this->sprites[0x4e].flags &= ~2;
+            this->sprites[0x4f].flags &= ~2;
+            this->sprites[0x4d].flags &= ~2;
+            this->sprites[0x52].flags &= ~2;
+            this->sprites[0x55].flags &= ~2;
+            switch (g_Unknown626270.character)
+            {
+            case 0:
+                this->sprites[0x48].flags |= 2;
+                this->sprites[0x49].flags |= 2;
+                this->sprites[0x47].flags |= 2;
+                break;
+            case 1:
+                this->sprites[0x4b].flags |= 2;
+                this->sprites[0x4c].flags |= 2;
+                this->sprites[0x4a].flags |= 2;
+                break;
+            case 2:
+                this->sprites[0x4e].flags |= 2;
+                this->sprites[0x4f].flags |= 2;
+                this->sprites[0x4d].flags |= 2;
+                break;
+            }
+            this->unk_8 = 0;
+            this->stateFrames = 0;
+            g_Unknown626270.unk_93d8 |= 1;
+        }
+        if (this->unk_d0fc == 30)
+        {
+            this->unk_8 = 1;
+        }
+        break;
+    case 1:
+        count = g_Unknown626270.clrds[g_Unknown626270.character * 2 + g_Unknown626270.shotType]
+                    .stagesCleared[g_App.defaultDifficulty];
+        if (count < 0)
+        {
+            count = 1;
+        }
+        else if (count >= 99)
+        {
+            count = 6;
+        }
+        if (this->cursor >= count)
+        {
+            this->cursor = 0;
+        }
+        this->MoveMenuCursor(count);
+        if (WAS_PRESSED(0x1001))
+        {
+            g_SoundPlayer.QueueSound(10, 0);
+            g_Unknown626270.difficulty = g_App.defaultDifficulty;
+            g_Unknown626270.stage = this->cursor;
+            g_App.scene = 2;
+            g_Unknown626270.SetUnk93d8Bit3(0);
+            g_App.Func43a05f();
+            while (g_SoundPlayer.PlayQueuedSounds())
+            {
+            }
+            return 0;
+        }
+        if (WAS_PRESSED(0xa))
+        {
+            g_SoundPlayer.QueueSound(11, 0);
+            this->cursor = g_Unknown626270.shotType;
+            this->SetState(6);
             this->sprites[0x48].flags |= 2;
             this->sprites[0x49].flags |= 2;
             this->sprites[0x47].flags |= 2;

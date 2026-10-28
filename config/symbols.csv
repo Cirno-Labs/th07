@@ -611,7 +611,7 @@ address,size,name,symbol
 0x0045798b,1626,MainMenu::UpdateDifficultyMenu,?UpdateDifficultyMenu@MainMenu@@QAEHXZ
 0x00457fe5,5427,MainMenu::UpdateCharacterMenu,?UpdateCharacterMenu@MainMenu@@QAEHXZ
 0x00459518,3269,MainMenu::UpdateShotTypeMenu,?UpdateShotTypeMenu@MainMenu@@QAEHXZ
-0x0045a1dd,1863,MainMenu::Func45a1dd,?Func45a1dd@MainMenu@@QAEHXZ
+0x0045a1dd,1863,MainMenu::UpdateGameStartMenu,?UpdateGameStartMenu@MainMenu@@QAEHXZ
 0x0045a924,3275,MainMenu::Func45a924,?Func45a924@MainMenu@@QAEHXZ
 0x0045b5ef,958,Func45b5ef,
 0x0045b9ad,413,Func45b9ad,
