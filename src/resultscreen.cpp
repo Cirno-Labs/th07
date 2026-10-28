@@ -664,7 +664,7 @@ int ResultScreen::OnUpdate(ResultScreen *screen)
     case 0x14:
     case 0x15:
     case 0x16:
-        if (screen->Func448098())
+        if (screen->RunStatisticsMenu())
         {
             goto menu;
         }
@@ -1259,6 +1259,188 @@ int ResultScreen::WaitAfterNameEntry()
         {
             this->frame = 59;
             this->state = 0xb;
+        }
+        break;
+    }
+    return 0;
+}
+
+int ResultScreen::RunStatisticsMenu()
+{
+    int k;
+    int j1;
+    int i;
+    D3DXVECTOR3 pos2;
+    Sprite *sprite0;
+
+    switch (this->state)
+    {
+    case 0x14:
+        if (this->frame == 1)
+        {
+            pos2.x = 56.0f;
+            pos2.y = 128.0f;
+            pos2.z = 0.0f;
+            sprite0 = &this->textSprites[0];
+            sprite0->pos = pos2;
+            g_App.Func43a27f();
+            g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "総起動時間   %.2d:%.2d:%.2d", g_Unknown626270.plst.runHours,
+                                       g_Unknown626270.plst.runMinutes, g_Unknown626270.plst.runSeconds);
+            g_App.Func43a27f();
+            this->unk_6c = g_Unknown626270.plst.runSeconds;
+            sprite0++;
+            pos2.y += 17.0f;
+            sprite0->pos = pos2;
+            g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "総プレイ時間 %.2d:%.2d:%.2d", g_Unknown626270.plst.playHours,
+                                       g_Unknown626270.plst.playMinutes, g_Unknown626270.plst.playSeconds);
+            sprite0++;
+            pos2.y += 17.0f;
+            sprite0->pos = pos2;
+            if (g_Unknown626270.Func42f94c())
+            {
+                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0,
+                                           "プレイ回数　　　 　Easy 　Norm 　Hard 　Luna  Extra Phants  Total");
+            }
+            else
+            {
+                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "プレイ回数　　　 　Easy 　Norm 　Hard 　Luna  Extra  Total");
+            }
+            for (i = 0; i < 6; i++)
+            {
+                sprite0++;
+                pos2.y += 17.0f;
+                sprite0->pos = pos2;
+                if (g_Unknown626270.Func42f94c())
+                {
+                    g_SpriteEngine->RenderText(
+                        sprite0, 0xffffff, 0, "%s %6d %6d %6d %6d %6d %6d %6d", g_ShotNames[i],
+                        g_Unknown626270.plst.counts[0].plays[i + 1], g_Unknown626270.plst.counts[1].plays[i + 1],
+                        g_Unknown626270.plst.counts[2].plays[i + 1], g_Unknown626270.plst.counts[3].plays[i + 1],
+                        g_Unknown626270.plst.counts[4].plays[i + 1], g_Unknown626270.plst.counts[5].plays[i + 1],
+                        g_Unknown626270.plst.counts[6].plays[i + 1]);
+                }
+                else
+                {
+                    g_SpriteEngine->RenderText(
+                        sprite0, 0xffffff, 0, "%s %6d %6d %6d %6d %6d %6d", g_ShotNames[i],
+                        g_Unknown626270.plst.counts[0].plays[i + 1], g_Unknown626270.plst.counts[1].plays[i + 1],
+                        g_Unknown626270.plst.counts[2].plays[i + 1], g_Unknown626270.plst.counts[3].plays[i + 1],
+                        g_Unknown626270.plst.counts[4].plays[i + 1], g_Unknown626270.plst.counts[6].plays[i + 1]);
+                }
+            }
+            sprite0++;
+            pos2.y += 17.0f;
+            sprite0->pos = pos2;
+            if (g_Unknown626270.Func42f94c())
+            {
+                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "%s %6d %6d %6d %6d %6d %6d %6d", g_ShotNames[6],
+                                           g_Unknown626270.plst.counts[0].plays[0], g_Unknown626270.plst.counts[1].plays[0],
+                                           g_Unknown626270.plst.counts[2].plays[0], g_Unknown626270.plst.counts[3].plays[0],
+                                           g_Unknown626270.plst.counts[4].plays[0], g_Unknown626270.plst.counts[5].plays[0],
+                                           g_Unknown626270.plst.counts[6].plays[0]);
+            }
+            else
+            {
+                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "%s %6d %6d %6d %6d %6d %6d", g_ShotNames[6],
+                                           g_Unknown626270.plst.counts[0].plays[0], g_Unknown626270.plst.counts[1].plays[0],
+                                           g_Unknown626270.plst.counts[2].plays[0], g_Unknown626270.plst.counts[3].plays[0],
+                                           g_Unknown626270.plst.counts[4].plays[0], g_Unknown626270.plst.counts[6].plays[0]);
+            }
+            sprite0++;
+            pos2.y += 34.0f;
+            sprite0->pos = pos2;
+            g_Unknown626270.plst.counts[6].clears =
+                g_Unknown626270.plst.counts[0].clears + g_Unknown626270.plst.counts[1].clears +
+                g_Unknown626270.plst.counts[2].clears + g_Unknown626270.plst.counts[3].clears +
+                g_Unknown626270.plst.counts[4].clears + g_Unknown626270.plst.counts[5].clears;
+            if (g_Unknown626270.Func42f94c())
+            {
+                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "クリア回数  　　 %6d %6d %6d %6d %6d %6d %6d", g_Unknown626270.plst.counts[0].clears, g_Unknown626270.plst.counts[1].clears, g_Unknown626270.plst.counts[2].clears, g_Unknown626270.plst.counts[3].clears, g_Unknown626270.plst.counts[4].clears, g_Unknown626270.plst.counts[5].clears, g_Unknown626270.plst.counts[6].clears);
+            }
+            else
+            {
+                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "クリア回数  　　 %6d %6d %6d %6d %6d %6d", g_Unknown626270.plst.counts[0].clears, g_Unknown626270.plst.counts[1].clears, g_Unknown626270.plst.counts[2].clears, g_Unknown626270.plst.counts[3].clears, g_Unknown626270.plst.counts[4].clears, g_Unknown626270.plst.counts[6].clears);
+            }
+            sprite0++;
+            pos2.y += 17.0f;
+            sprite0->pos = pos2;
+            if (g_Unknown626270.Func42f94c())
+            {
+                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "コンティニュー   %6d %6d %6d %6d %6d %6d %6d", g_Unknown626270.plst.counts[0].continues, g_Unknown626270.plst.counts[1].continues, g_Unknown626270.plst.counts[2].continues, g_Unknown626270.plst.counts[3].continues, g_Unknown626270.plst.counts[4].continues, g_Unknown626270.plst.counts[5].continues, g_Unknown626270.plst.counts[6].continues);
+            }
+            else
+            {
+                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "コンティニュー   %6d %6d %6d %6d %6d %6d", g_Unknown626270.plst.counts[0].continues, g_Unknown626270.plst.counts[1].continues, g_Unknown626270.plst.counts[2].continues, g_Unknown626270.plst.counts[3].continues, g_Unknown626270.plst.counts[4].continues, g_Unknown626270.plst.counts[6].continues);
+            }
+            sprite0++;
+            pos2.y += 17.0f;
+            sprite0->pos = pos2;
+            if (g_Unknown626270.Func42f94c())
+            {
+                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "プラクティス　   %6d %6d %6d %6d %6d %6d %6d", g_Unknown626270.plst.counts[0].practices, g_Unknown626270.plst.counts[1].practices, g_Unknown626270.plst.counts[2].practices, g_Unknown626270.plst.counts[3].practices, g_Unknown626270.plst.counts[4].practices, g_Unknown626270.plst.counts[5].practices, g_Unknown626270.plst.counts[6].practices);
+            }
+            else
+            {
+                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "プラクティス　   %6d %6d %6d %6d %6d %6d", g_Unknown626270.plst.counts[0].practices, g_Unknown626270.plst.counts[1].practices, g_Unknown626270.plst.counts[2].practices, g_Unknown626270.plst.counts[3].practices, g_Unknown626270.plst.counts[4].practices, g_Unknown626270.plst.counts[6].practices);
+            }
+            sprite0++;
+            pos2.y += 17.0f;
+            sprite0->pos = pos2;
+            if (g_Unknown626270.Func42f94c())
+            {
+                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "リトライ回数  　 %6d %6d %6d %6d %6d %6d %6d", g_Unknown626270.plst.counts[0].retries, g_Unknown626270.plst.counts[1].retries, g_Unknown626270.plst.counts[2].retries, g_Unknown626270.plst.counts[3].retries, g_Unknown626270.plst.counts[4].retries, g_Unknown626270.plst.counts[5].retries, g_Unknown626270.plst.counts[6].retries);
+            }
+            else
+            {
+                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "リトライ回数  　 %6d %6d %6d %6d %6d %6d", g_Unknown626270.plst.counts[0].retries, g_Unknown626270.plst.counts[1].retries, g_Unknown626270.plst.counts[2].retries, g_Unknown626270.plst.counts[3].retries, g_Unknown626270.plst.counts[4].retries, g_Unknown626270.plst.counts[6].retries);
+            }
+        }
+        if (this->frame < 40)
+        {
+            sprite0 = &this->textSprites[0];
+            for (j1 = 0; j1 < 0xe; j1++, sprite0++)
+            {
+                sprite0->alpha = this->frame * 0xff / 40;
+            }
+        }
+        else
+        {
+            this->state = 0x15;
+        }
+        break;
+    case 0x15:
+        if (this->frame % 60 == 0)
+        {
+            g_App.Func43a27f();
+            if (g_Unknown626270.plst.runSeconds != this->unk_6c)
+            {
+                sprite0 = &this->textSprites[0];
+                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "総起動時間   %.2d:%.2d:%.2d",
+                                           g_Unknown626270.plst.runHours, g_Unknown626270.plst.runMinutes,
+                                           g_Unknown626270.plst.runSeconds);
+                this->unk_6c = g_Unknown626270.plst.runSeconds;
+            }
+        }
+        if (WAS_PRESSED(0x100b))
+        {
+            this->state = 0x16;
+            this->frame = 0;
+        }
+        break;
+    case 0x16:
+        if (this->frame < 20)
+        {
+            sprite0 = &this->textSprites[0];
+            for (k = 0; k < 0xe; k++, sprite0++)
+            {
+                sprite0->alpha = 0xff - this->frame * 0xff / 20;
+            }
+        }
+        else
+        {
+            this->state = 0;
+            this->frame = 0;
+            return 1;
         }
         break;
     }

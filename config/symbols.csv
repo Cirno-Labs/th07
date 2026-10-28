@@ -513,7 +513,7 @@ address,size,name,symbol
 0x00447161,55,FormatTodayDate,?FormatTodayDate@@YIXPAD@Z
 0x00447198,3640,ResultScreen::HandleReplaySaving,?HandleReplaySaving@ResultScreen@@QAEHXZ
 0x00447fd0,200,ResultScreen::WaitAfterNameEntry,?WaitAfterNameEntry@ResultScreen@@QAEHXZ
-0x00448098,2065,ResultScreen::Func448098,?Func448098@ResultScreen@@QAEHXZ
+0x00448098,2065,ResultScreen::RunStatisticsMenu,?RunStatisticsMenu@ResultScreen@@QAEHXZ
 0x004488a9,1175,Func4488a9,
 0x00448d40,3525,Func448d40,
 0x00449b05,1780,Func449b05,

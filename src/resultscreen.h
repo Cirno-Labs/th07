@@ -130,14 +130,39 @@ struct Pscr
 };
 ASSERT_SIZE(Pscr, 0x18);
 
-// A chunk of the score file ("PLST"), new in th07.
+// One difficulty's line of the play statistics.
+struct PlstCounts
+{
+    // The games played: [0] with every shot type, then by shot type.
+    int plays[7];
+    int retries;
+    int clears;
+    int continues;
+    int practices;
+};
+ASSERT_SIZE(PlstCounts, 0x2c);
+
+// A chunk of the score file ("PLST") with the play statistics, new in
+// th07.
 struct Plst
 {
     DWORD magic;
     WORD size;
     WORD size2;
     BYTE version;
-    BYTE unk_09[0x157];
+    BYTE unk_09[0x3];
+    // How long the game has run, App::Func43a27f keeps it up to date.
+    int runHours;
+    int runMinutes;
+    int runSeconds;
+    int runMilliseconds;
+    // How long it has been played.
+    int playHours;
+    int playMinutes;
+    int playSeconds;
+    int playMilliseconds;
+    // By difficulty, then the totals.
+    PlstCounts counts[7];
 };
 ASSERT_SIZE(Plst, 0x160);
 
@@ -227,7 +252,7 @@ public:
     // The menu (states 0 and 1), the score lists (3 to 8, by
     // difficulty), the spell cards (9), after a game the name entry
     // (10), replay saving (11 to 15) and statistics (16, 17), and states
-    // 0x14 to 0x16 (Func448098). Steps the sprites. Returns 1, or 0 once
+    // 0x14 to 0x16 (RunStatisticsMenu). Steps the sprites. Returns 1, or 0 once
     // it sets the scene back to the title.
     static int OnUpdate(ResultScreen *screen);
 
@@ -239,7 +264,7 @@ public:
     int WaitAfterNameEntry();
     // Runs states 0x14 to 0x16, entered from menu item 7. Returns
     // nonzero to go back to the menu.
-    int Func448098();
+    int RunStatisticsMenu();
     // Frees the entries of the high score list for `difficulty` and
     // `shot`.
     void ReleaseScores(int difficulty, int shot);
@@ -282,7 +307,9 @@ public:
     char name[0xc];
     // By shot type (and all of them): the spell cards captured.
     int unk_50[7];
-    BYTE unk_6c[0x4];
+    // The runSeconds that textSprites[0] shows, in states 0x14 to 0x16.
+    BYTE unk_6c;
+    BYTE unk_6d[0x3];
     Sprite sprites[0x29];
     // Text drawn with RenderText; the first holds the shot's name.
     Sprite textSprites[0x11];
