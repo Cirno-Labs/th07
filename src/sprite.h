@@ -94,6 +94,14 @@ public:
     {
         this->currentTexture = NULL;
     }
+    void ClearZWrite()
+    {
+        this->zWriteDisabled = 0xff;
+    }
+    void ClearSpriteData()
+    {
+        this->currentSpriteData = NULL;
+    }
     void ClearUnk2e4d4()
     {
         this->unk_2e4d4 = 0xff;
@@ -118,9 +126,12 @@ public:
     BYTE blendMode;
     BYTE colorOp;
     BYTE vertexFormat;
-    unsigned char unk_2e4d3;
+    BYTE zWriteDisabled;
     BYTE unk_2e4d4;
-    unsigned char unk_2e4d5[0x150067];
+    unsigned char unk_2e4d5[0x3];
+    // The sprite data Draw last used, NULL when unknown.
+    void *currentSpriteData;
+    unsigned char unk_2e4dc[0x150060];
     // A copy of the back buffer into a texture to do after the frame is
     // drawn: CopyBackBufferToTexture's arguments, the texture -1 when
     // there is none.
@@ -136,3 +147,12 @@ public:
 };
 ASSERT_SIZE(SpriteEngine, 0x17e560);
 extern SpriteEngine *g_SpriteEngine;
+
+// A vertex with a transformed position and a color, as
+// D3DFVF_XYZRHW | D3DFVF_DIFFUSE.
+struct VertexDiffuseXyzrwh
+{
+    D3DXVECTOR3 pos;
+    float w;
+    D3DCOLOR diffuse;
+};

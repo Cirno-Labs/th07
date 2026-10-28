@@ -214,6 +214,9 @@ void Func435e30(HWND hwnd);
 void ClearScreen(D3DCOLOR color);
 // Draws the batched quads, then clears the whole back buffer to `color`.
 void ClearViewport(D3DCOLOR color);
+// Fills `rect` (left, top, right, bottom) with `color`, blended by its
+// alpha, after drawing the batched quads.
+void DrawColorRect(float *rect, D3DCOLOR color);
 // Creates the Direct3D device. Returns 0, or nonzero on failure.
 int InitD3dDevice();
 // Prints `name` and then 可 or 不可 (yes or no), by whether `caps` has
