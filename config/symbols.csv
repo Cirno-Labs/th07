@@ -334,7 +334,7 @@ address,size,name,symbol
 0x00433a90,132,ItemManager::CollectAll,?CollectAll@ItemManager@@QAEXXZ
 0x00433b20,275,ItemManager::ConvertPowerItems,?ConvertPowerItems@ItemManager@@QAEXH@Z
 0x00433c40,141,ItemManager::RecycleCollectedItems,?RecycleCollectedItems@ItemManager@@QAEXXZ
-0x00433cd0,434,Func433cd0,
+0x00433cd0,434,ItemManager::DrawItems,?DrawItems@ItemManager@@QAEXXZ
 0x00433e90,133,Func433e90,
 0x00433f20,104,Func433f20,
 0x00433f90,134,Func433f90,
@@ -562,7 +562,7 @@ address,size,name,symbol
 0x0044e4e0,514,Func44e4e0,
 0x0044e6f0,142,Func44e6f0,
 0x0044e780,347,Func44e780,
-0x0044e8e0,308,Func44e8e0,
+0x0044e8e0,308,SpriteEngine::SetSprite,?SetSprite@SpriteEngine@@QAEHPAVSprite@@H@Z
 0x0044ea20,188,SpriteEngine::SetScript,?SetScript@SpriteEngine@@QAEXPAVSprite@@PAX@Z
 0x0044eae0,992,Func44eae0,
 0x0044eec0,237,Func44eec0,
@@ -572,7 +572,7 @@ address,size,name,symbol
 0x0044f690,211,Func44f690,
 0x0044f770,487,Func44f770,
 0x0044f960,58,Func44f960,
-0x0044f9a0,616,Func44f9a0,
+0x0044f9a0,616,SpriteEngine::Draw,?Draw@SpriteEngine@@QAEHPAVSprite@@@Z
 0x0044fc10,487,Func44fc10,
 0x0044fe00,805,Func44fe00,
 0x00450130,111,Func450130,

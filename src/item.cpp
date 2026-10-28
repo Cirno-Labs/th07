@@ -153,3 +153,41 @@ void ItemManager::RecycleCollectedItems()
         }
     }
 }
+
+void ItemManager::DrawItems()
+{
+    Item *entry = this->drawList.next;
+    int alpha;
+
+    while (entry != NULL)
+    {
+        entry->sprite.pos.x = g_Unknown626270.arena[0] + entry->pos.x;
+        entry->sprite.pos.y = g_Unknown626270.arena[1] + entry->pos.y;
+        entry->sprite.pos.z = 0.01f;
+        if (entry->pos.y < -8.0f)
+        {
+            entry->sprite.pos.y = 8.0f + g_Unknown626270.arena[1];
+            if (entry->onScreen)
+            {
+                g_SpriteEngine->SetSprite(&entry->sprite, entry->type + 0x2b6);
+                entry->onScreen = 0;
+                entry->sprite.flags |= 0x1000;
+            }
+            alpha = 255 - (int)((8.0f - entry->pos.y) * 255.0f / 128.0f);
+            if (alpha < 64)
+            {
+                alpha = 64;
+            }
+            entry->sprite.color = entry->sprite.color & 0xffffff | alpha << 24;
+        }
+        else if (!entry->onScreen)
+        {
+            g_SpriteEngine->SetSprite(&entry->sprite, entry->type + 0x2ac);
+            entry->onScreen = 1;
+            entry->sprite.color = 0xffffffff;
+            entry->sprite.flags |= 0x1000;
+        }
+        g_SpriteEngine->Draw(&entry->sprite);
+        entry = entry->next;
+    }
+}

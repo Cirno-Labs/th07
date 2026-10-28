@@ -20,7 +20,9 @@ struct Item
     char onScreen;
     char state;
     char unk_280;
-    char unk_281[7];
+    char unk_281[3];
+    // The next item to draw; NULL after the last.
+    Item *next;
 };
 ASSERT_SIZE(Item, 0x288);
 
@@ -42,8 +44,14 @@ public:
     // Lets every item drawn to the player (state 1) fall again, starting
     // at a slow upward drift.
     void RecycleCollectedItems();
+    // Draws the items in the order UpdateItems listed them; those above
+    // the top as markers at its edge, fading out with the distance.
+    void DrawItems();
 
     // The last one is what SpawnItem returns when all others are taken.
     Item items[0x44d];
     int nextIndex;
+    int activeCount;
+    // The head of the list of items to draw, which UpdateItems builds.
+    Item drawList;
 };

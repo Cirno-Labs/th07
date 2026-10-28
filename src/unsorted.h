@@ -316,5 +316,10 @@ public:
 
     unsigned char unk_0[0x8];
     Unknown626270Stats *stats;
+    unsigned char unk_c[0x95e8];
+    // The play area: x, y, width and height. Its neighbours (a 0x200
+    // byte replay file name, the stage) are th06's GameManager's, so
+    // this is probably th07's GameManager.
+    float arena[4];
 };
 extern Unknown626270 g_Unknown626270;
