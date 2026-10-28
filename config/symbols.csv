@@ -645,7 +645,7 @@ address,size,name,symbol
 0x0045da20,96,CStreamingSound::CStreamingSound,??0CStreamingSound@@QAE@PAUIDirectSoundBuffer@@KPAVCWaveFile@@K@Z
 0x0045da80,46,CStreamingSound::`scalar deleting destructor',??_GCStreamingSound@@UAEPAXI@Z
 0x0045dab0,28,CStreamingSound::~CStreamingSound,??1CStreamingSound@@UAE@XZ
-0x0045dad0,143,Func45dad0,
+0x0045dad0,143,CStreamingSound::UpdateFade,?UpdateFade@CStreamingSound@@QAEHXZ
 0x0045db60,1000,CStreamingSound::HandleWaveStreamNotification,?HandleWaveStreamNotification@CStreamingSound@@QAEJH@Z
 0x0045df50,194,CStreamingSound::Reset,?Reset@CStreamingSound@@QAEJXZ
 0x0045e020,56,CWaveFile::CWaveFile,??0CWaveFile@@QAE@XZ
