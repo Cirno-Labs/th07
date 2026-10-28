@@ -13,6 +13,7 @@
 #include "dsutil.h"
 #include "mainmenu.h"
 #include "midi.h"
+#include "musicscreen.h"
 #include "sprite.h"
 #include "unsorted.h"
 
@@ -172,7 +173,7 @@ int App::OnUpdate(App *arg)
                 }
                 break;
             case 8:
-                if (Func43b4db() != 0)
+                if (MusicScreen::RegisterChain() != 0)
                 {
                     return 4;
                 }

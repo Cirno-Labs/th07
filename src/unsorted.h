@@ -301,8 +301,6 @@ int Func42f3c5();
 void Func42f45d();
 // th06's Ending::RegisterChain.
 int Func41e820();
-// th06's MusicScreen::RegisterChain.
-int Func43b4db();
 
 // Measures the frame rate every half second, with the performance
 // counter when there is one (calling g_App.CheckClockDrift every eighth

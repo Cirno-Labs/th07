@@ -415,14 +415,14 @@ address,size,name,symbol
 0x0043a27f,373,App::AddPlayTime,?AddPlayTime@App@@QAEXXZ
 0x0043a3f4,373,App::AddTotalPlayTime,?AddTotalPlayTime@App@@QAEXXZ
 0x0043a569,306,App::CheckVersionFile,?CheckVersionFile@App@@QAEHPADKK@Z
-0x0043a69b,197,Func43a69b,
+0x0043a69b,197,MusicScreen::MusicScreen,??0MusicScreen@@QAE@XZ
 0x0043a760,161,MusicScreen::UpdateIntro,?UpdateIntro@MusicScreen@@QAEHXZ
 0x0043a801,863,MusicScreen::UpdateList,?UpdateList@MusicScreen@@QAEHXZ
 0x0043ab60,236,MusicScreen::OnUpdate,?OnUpdate@MusicScreen@@SIHPAV1@@Z
 0x0043ac4c,468,MusicScreen::OnDraw,?OnDraw@MusicScreen@@SIHPAV1@@Z
 0x0043ae20,1624,MusicScreen::AddedCallback,?AddedCallback@MusicScreen@@SIHPAV1@@Z
 0x0043b478,99,MusicScreen::DeletedCallback,?DeletedCallback@MusicScreen@@SIHPAV1@@Z
-0x0043b4db,223,Func43b4db,?Func43b4db@@YIHXZ
+0x0043b4db,223,MusicScreen::RegisterChain,?RegisterChain@MusicScreen@@SIHXZ
 0x0043b5c0,396,Func43b5c0,
 0x0043b750,71,Func43b750,
 0x0043b7a0,71,Func43b7a0,

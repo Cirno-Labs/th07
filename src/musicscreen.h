@@ -30,6 +30,16 @@ ASSERT_SIZE(MusicTune, 0x292);
 class MusicScreen
 {
 public:
+    // Constructs the Sprites, then zeroes the whole screen. Inline, but
+    // too large to expand: RegisterChain calls the copy at 0x43a69b.
+    MusicScreen()
+    {
+        memset(this, 0, sizeof(MusicScreen));
+    }
+
+    // Sets up the music screen, a static constructed on first use, and
+    // adds it to the chains. Returns 0, or -1 if adding fails.
+    static int RegisterChain();
     // The update chain element's added callback: loads the screen's
     // image, data/music00.anm and data/musiccmt.txt, the list of tunes,
     // and sets up the title and comment sprites. Returns 0, or -1 on
