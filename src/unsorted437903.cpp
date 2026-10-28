@@ -40,3 +40,18 @@ int App::RegisterChain()
     g_Chain.AddToDrawChain(elem, 0xf);
     return 0;
 }
+
+BOOL CALLBACK EnumJoysticksCallback(const DIDEVICEINSTANCE *pdidInstance, VOID *pContext)
+{
+    HRESULT hr;
+
+    if (g_App.joystick == NULL)
+    {
+        hr = g_App.dinput->CreateDevice(pdidInstance->guidInstance, &g_App.joystick, NULL);
+        if (FAILED(hr))
+        {
+            return DIENUM_CONTINUE;
+        }
+    }
+    return DIENUM_STOP;
+}

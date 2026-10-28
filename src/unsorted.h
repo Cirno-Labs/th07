@@ -110,7 +110,8 @@ public:
     HINSTANCE hInstance;
     IDirect3D8 *d3d;
     IDirect3DDevice8 *d3dDevice;
-    unsigned char unk_c[0x4];
+    // Created by DirectInput8Create.
+    IDirectInput8 *dinput;
     // The keyboard's DirectInput device; NULL without one.
     IDirectInputDevice8 *keyboard;
     // The first joystick found; NULL without one.
@@ -211,6 +212,11 @@ extern App g_App;
 // Measures the frame rate every half second and, when `draw` is set,
 // shows it. Not named yet as th06's beyond this.
 void DrawFps(int draw);
+
+// IDirectInput8::EnumDevices's callback for joysticks, from the DirectX
+// 8 SDK's Joystick sample: creates a device for the first joystick that
+// works, unless there already is one.
+BOOL CALLBACK EnumJoysticksCallback(const DIDEVICEINSTANCE *pdidInstance, VOID *pContext);
 
 inline void Timer::Tick()
 {

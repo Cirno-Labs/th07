@@ -388,7 +388,7 @@ address,size,name,symbol
 0x00437c39,55,Func437c39,
 0x00437c70,1707,App::OnUpdate,?OnUpdate@App@@SIHPAV1@@Z
 0x0043831b,20,App::OnDraw,?OnDraw@App@@SIHPAV1@@Z
-0x0043832f,63,Func43832f,
+0x0043832f,63,EnumJoysticksCallback,?EnumJoysticksCallback@@YGHPBUDIDEVICEINSTANCEA@@PAX@Z
 0x0043836e,106,Func43836e,
 0x004383d8,656,Func4383d8,
 0x00438668,139,Func438668,
