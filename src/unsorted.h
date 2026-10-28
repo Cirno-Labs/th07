@@ -53,11 +53,15 @@ struct GameConfigFlags
     unsigned int referenceRasterizer : 1;
     unsigned int noFog : 1;
     unsigned int noDirectInput : 1;
+    // Draws the items around the game every frame ("画面周りを毎回描画
+    // します"). Not in th06.
     unsigned int unk12 : 1;
     // Each track of the wave music is read into memory before it plays,
     // rather than streamed from thbgm.dat. Not in th06.
     unsigned int preloadBgm : 1;
-    // Skips MeasureRefreshRate's refresh rate measurement. Not in th06.
+    // Not waiting for vsync ("垂直同期を取りません"): LoadConfig turns
+    // presentImmediate on, and MeasureRefreshRate skips its measurement. Not in
+    // th06.
     unsigned int unk14 : 1;
     unsigned int unk15 : 17;
 };
@@ -65,8 +69,11 @@ struct GameConfigFlags
 class App
 {
 public:
-    // Reads the config file at `path` into the config. Returns 0, or
-    // nonzero to quit.
+    // Reads the config file at `path` into the config, resetting it to
+    // the defaults if the file is missing or invalid, checks the header
+    // of thbgm.dat, logs the options in effect and writes the config
+    // back. Returns 0, or -1 if thbgm.dat has the wrong version or
+    // writing fails.
     int LoadConfig(char *path);
     // Resets the scene and adds OnUpdate at priority 0, with its added
     // and deleted callbacks, and OnDraw at 0xf. Returns 0, -1 to quit,
@@ -137,6 +144,14 @@ public:
     // MIDI, otherwise 0.
     int FadeOutMusic(float seconds);
 
+    // Whether the back buffer is cleared every frame: forced, or because
+    // the items around the game are not drawn. Inline; the operands are
+    // evaluated right to left.
+    int ClearsBackBuffer()
+    {
+        return this->flags.clearBackBuffer | this->flags.noFrameItems;
+    }
+
     BOOL UsesPresentImmediate()
     {
         return this->presentImmediate;
@@ -162,7 +177,8 @@ public:
     Unknown4378b0 *timer;
     // The start of the config, which is 0x38 bytes long, as in th06.
     ControllerMapping controllerMapping;
-    unsigned char unk_12a[0x6];
+    // 0x70002; LoadConfig resets a config with any other.
+    DWORD version;
     // How far a DirectInput pad axis goes before it counts as a
     // direction.
     short padThresholdX;
@@ -184,7 +200,8 @@ public:
     BYTE windowed;
     // How many frames to skip drawing between drawn ones.
     BYTE frameSkip;
-    unsigned char unk_13c[0x1];
+    // 0 to 2, 2 by default.
+    BYTE unk_13c;
     // The options screen's last entry: 0 or 1.
     BYTE unk_13d;
     // Whether holding shoot also focuses: ReadJoystick reports focus
