@@ -10,6 +10,7 @@
 
 // Chain callbacks take the element's `arg`. They return a status; 1
 // keeps the element and moves on to the next.
+// With /Gr they are __fastcall, taking `arg` in ecx; th06's were cdecl.
 typedef int (*ChainCallback)(void *arg);
 
 // An element of a chain. Allocated with new by Chain::CreateElem.
@@ -45,6 +46,10 @@ class Chain
 public:
     Chain();
     ~Chain();
+
+    // Inserts `elem` into the update chain by priority and calls its
+    // added callback. Returns that callback's result, or 0 without one.
+    int AddToCalcChain(ChainElem *elem, int priority);
 
     ChainElem calcChain;
     ChainElem drawChain;

@@ -289,7 +289,7 @@ address,size,name,symbol
 0x0042fab0,99,ChainElem::ChainElem,??0ChainElem@@QAE@XZ
 0x0042fb20,82,ChainElem::~ChainElem,??1ChainElem@@QAE@XZ
 0x0042fb80,78,Chain::Chain,??0Chain@@QAE@XZ
-0x0042fbd0,197,Func42fbd0,
+0x0042fbd0,197,Chain::AddToCalcChain,?AddToCalcChain@Chain@@QAEHPAUChainElem@@H@Z
 0x0042fca0,184,Func42fca0,
 0x0042fd60,153,Func42fd60,
 0x0042fe20,154,Func42fe20,
