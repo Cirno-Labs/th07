@@ -347,3 +347,15 @@ done:
     free(data);
     return 0;
 }
+
+int MusicScreen::DeletedCallback(MusicScreen *screen)
+{
+    delete screen->tunes;
+    screen->tunes = NULL;
+    g_SpriteEngine->ReleaseSurface(0);
+    g_SpriteEngine->ReleaseAnm(0x2e);
+    g_SpriteEngine->ReleaseAnm(0x2f);
+    g_Chain.Remove(screen->drawChain);
+    screen->drawChain = NULL;
+    return 0;
+}

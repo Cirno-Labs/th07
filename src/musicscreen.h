@@ -35,6 +35,9 @@ public:
     // and sets up the title and comment sprites. Returns 0, or -1 on
     // failure.
     static int AddedCallback(MusicScreen *screen);
+    // The update chain element's deleted callback: frees what
+    // AddedCallback loaded and removes the draw chain element.
+    static int DeletedCallback(MusicScreen *screen);
     // The update chain element's callback: runs the current state's
     // handler and counts its frames, then steps the sprites. Returns 0
     // while a handler asks to stop, otherwise 1.
