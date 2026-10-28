@@ -659,17 +659,17 @@ address,size,name,symbol
 0x0045e4b0,51,CWaveFile::Close,?Close@CWaveFile@@QAEJXZ
 0x0045e4f0,5,DebugPrint,?DebugPrint@@YAXPBDZZ
 0x0045e500,20,Func45e500,
-0x0045e520,47,Func45e520,
-0x0045e550,52,Func45e550,
-0x0045e590,46,Func45e590,
-0x0045e5c0,82,Func45e5c0,
-0x0045e620,330,Func45e620,
-0x0045e770,53,Func45e770,
-0x0045e7b0,68,Func45e7b0,
-0x0045e800,74,Func45e800,
-0x0045e850,43,Func45e850,
-0x0045e880,39,Func45e880,
-0x0045e8b0,51,Func45e8b0,
+0x0045e520,47,Unknown45e500::`scalar deleting destructor',??_GUnknown45e500@@UAEPAXI@Z
+0x0045e550,52,File::File,??0File@@QAE@XZ
+0x0045e590,46,File::`scalar deleting destructor',??_GFile@@UAEPAXI@Z
+0x0045e5c0,82,File::~File,??1File@@UAE@XZ
+0x0045e620,330,File::Open,?Open@File@@UAE_NPAD0@Z
+0x0045e770,53,File::Close,?Close@File@@UAEXXZ
+0x0045e7b0,68,File::Read,?Read@File@@UAEKPAXK@Z
+0x0045e800,74,File::Write,?Write@File@@UAE_NPAXK@Z
+0x0045e850,43,File::Tell,?Tell@File@@UAEKXZ
+0x0045e880,39,File::GetSize,?GetSize@File@@UAEKXZ
+0x0045e8b0,51,File::Seek,?Seek@File@@UAE_NJK@Z
 0x0045e8f0,210,Func45e8f0,
 0x0045e9d0,253,Func45e9d0,
 0x0045ead0,1065,Func45ead0,?Func45ead0@@YIPAXPAEHPAH@Z
@@ -1142,6 +1142,7 @@ address,size,name,symbol
 0x0047e814,57,_time,_time
 0x0047e84d,156,Func47e84d,
 0x0047e8e9,34,_rand,_rand
+0x0047e90b,,_purecall,__purecall
 0x0047e914,47,__ArrayUnwind,
 0x0047e972,72,`eh_vector_destructor_iterator',
 0x0047e9ba,24,Func47e9ba,
@@ -1716,6 +1717,8 @@ address,size,name,symbol
 0x0048d26c,4,CoInitialize,__imp__CoInitialize@4
 0x004903f8,,IID_IDirectSoundNotify,_IID_IDirectSoundNotify
 0x004904e8,,GUID_NULL,_GUID_NULL
+0x00495248,32,File::`vftable',??_7File@@6B@
+0x0049526c,32,Unknown45e500::`vftable',??_7Unknown45e500@@6B@
 0x0049528c,4,CStreamingSound::`vftable',??_7CStreamingSound@@6B@
 0x00495290,4,CSound::`vftable',??_7CSound@@6B@
 0x004964f4,,g_DifficultyRatings,?g_DifficultyRatings@@3PAMA
