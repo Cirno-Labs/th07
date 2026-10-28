@@ -6,6 +6,7 @@
 
 #include "common.h"
 #include "sprite.h"
+#include "unsorted.h"
 
 class MainMenu
 {
@@ -27,6 +28,9 @@ public:
     int Func459518();
     int Func45a1dd();
     int Func45a924();
+    // Gives every button of controllerMapping assigned `button` the
+    // value `replacement`. Unlike th06's, `unk` is unused.
+    void ReassignButton(short button, short replacement, int unk);
 
     unsigned char unk_0[0x8];
     int unk_8;
@@ -45,6 +49,9 @@ public:
     // The menu's state.
     int state;
     int unk_d0fc;
-    unsigned char unk_d100[0x58];
+    unsigned char unk_d100[0xc];
+    // The button mapping the options screen edits.
+    ControllerMapping controllerMapping;
+    unsigned char unk_d11e[0x3a];
 };
 ASSERT_SIZE(MainMenu, 0xd158);

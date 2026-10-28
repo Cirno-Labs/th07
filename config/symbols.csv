@@ -605,7 +605,7 @@ address,size,name,symbol
 0x004554d6,212,MainMenu::OnUpdate,?OnUpdate@MainMenu@@SIHPAV1@@Z
 0x004555dd,3152,MainMenu::Func4555dd,?Func4555dd@MainMenu@@QAEHXZ
 0x0045624d,3059,MainMenu::Func45624d,?Func45624d@MainMenu@@QAEHXZ
-0x00456e40,299,Func456e40,
+0x00456e40,299,MainMenu::ReassignButton,?ReassignButton@MainMenu@@QAEXFFH@Z
 0x00456f6b,2365,MainMenu::Func456f6b,?Func456f6b@MainMenu@@QAEHXZ
 0x004578cc,191,Func4578cc,
 0x0045798b,1626,MainMenu::Func45798b,?Func45798b@MainMenu@@QAEHXZ
