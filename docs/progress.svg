@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">41.07% (285)</tspan> · <tspan class="decompiled">1.59% (11)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">57.20% (397)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">41.21% (286)</tspan> · <tspan class="decompiled">1.59% (11)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">57.06% (396)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="306.77" height="6" x="0" y="0" class="named"/>
-<rect width="11.84" height="6" x="306.77" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="318.61" y="0" class="nonmatching"/>
-<rect width="427.32" height="6" x="319.68" y="0" class="todo"/>
+<rect width="307.84" height="6" x="0" y="0" class="named"/>
+<rect width="11.84" height="6" x="307.84" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="319.68" y="0" class="nonmatching"/>
+<rect width="426.24" height="6" x="320.76" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (173 bytes)</title></rect>
@@ -507,7 +507,7 @@
 <rect width="12" height="12" x="525" y="120" class="named"><title>0x0043c0d0 FireHomingShot (228 bytes)</title></rect>
 <rect width="12" height="12" x="540" y="120" class="named"><title>0x0043c1c0 FireAimedShot (142 bytes)</title></rect>
 <rect width="12" height="12" x="555" y="120" class="named"><title>0x0043c250 UpdateHomingOrb (554 bytes)</title></rect>
-<rect width="12" height="12" x="570" y="120" class="todo"><title>0x0043c480 Func43c480 (554 bytes)</title></rect>
+<rect width="12" height="12" x="570" y="120" class="named"><title>0x0043c480 UpdateHomingOrbFast (554 bytes)</title></rect>
 <rect width="12" height="12" x="585" y="120" class="todo"><title>0x0043c6b0 Func43c6b0 (73 bytes)</title></rect>
 <rect width="12" height="12" x="600" y="120" class="todo"><title>0x0043c700 Func43c700 (566 bytes)</title></rect>
 <rect width="12" height="12" x="615" y="120" class="todo"><title>0x0043c940 Func43c940 (868 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">31.80%</tspan> · <tspan class="decompiled">0.21%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">67.90%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">31.95%</tspan> · <tspan class="decompiled">0.21%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">67.76%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="237.56" height="6" x="0" y="0" class="named"/>
-<rect width="1.55" height="6" x="237.56" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="239.11" y="0" class="nonmatching"/>
-<rect width="507.22" height="6" x="239.78" y="0" class="todo"/>
+<rect width="238.65" height="6" x="0" y="0" class="named"/>
+<rect width="1.55" height="6" x="238.65" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="240.20" y="0" class="nonmatching"/>
+<rect width="506.14" height="6" x="240.86" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -940,7 +940,7 @@
 <rect width="12.83" height="11.94" x="536.19" y="153.92" class="todo"><title>0x0041c1c0 EffectManager::SpawnEffect (564 bytes)</title></rect>
 <rect width="12.83" height="11.80" x="536.19" y="168.85" class="todo"><title>0x0041b9f0 Func41b9f0 (559 bytes)</title></rect>
 <rect width="12.83" height="11.67" x="536.19" y="183.66" class="named"><title>0x0043c250 UpdateHomingOrb (554 bytes)</title></rect>
-<rect width="12.83" height="11.67" x="536.19" y="198.33" class="todo"><title>0x0043c480 Func43c480 (554 bytes)</title></rect>
+<rect width="12.83" height="11.67" x="536.19" y="198.33" class="named"><title>0x0043c480 UpdateHomingOrbFast (554 bytes)</title></rect>
 <rect width="12.65" height="11.70" x="552.02" y="0" class="todo"><title>0x0043eb90 Func43eb90 (549 bytes)</title></rect>
 <rect width="12.59" height="11.70" x="567.67" y="0" class="named"><title>0x00436790 MidiPlayer::ParseFile (547 bytes)</title></rect>
 <rect width="12.56" height="11.70" x="583.26" y="0" class="todo"><title>0x00419dc0 Func419dc0 (546 bytes)</title></rect>

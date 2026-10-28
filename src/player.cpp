@@ -226,3 +226,44 @@ int UpdateHomingOrb(Player *player, PlayerBullet *bullet)
     }
     return 0;
 }
+
+int UpdateHomingOrbFast(Player *player, PlayerBullet *bullet)
+{
+    float x;
+    float y;
+    float len;
+
+    if (bullet->state == 1)
+    {
+        if (player->unk_2428.x > -100.0f && bullet->timer.AsFrames() < 40 && bullet->timer.HasTicked())
+        {
+            x = player->unk_2428.x - bullet->pos.x;
+            y = player->unk_2428.y - bullet->pos.y;
+            len = sqrtf(x * x + y * y) / (bullet->speed / 4.0f);
+            if (len < 1.0f)
+            {
+                len = 1.0f;
+            }
+            x = x / len + bullet->velocity.x;
+            y = y / len + bullet->velocity.y;
+            len = sqrtf(x * x + y * y);
+            bullet->speed = (len > 18.0f) ? 18.0f : len;
+            if (bullet->speed < 1.0f)
+            {
+                bullet->speed = 1.0f;
+            }
+            bullet->velocity.x = x * bullet->speed / len;
+            bullet->velocity.y = y * bullet->speed / len;
+        }
+        else if (bullet->speed < 18.0f)
+        {
+            bullet->speed += 0.6f;
+            x = bullet->velocity.x;
+            y = bullet->velocity.y;
+            len = sqrtf(x * x + y * y);
+            bullet->velocity.x = x * bullet->speed / len;
+            bullet->velocity.y = y * bullet->speed / len;
+        }
+    }
+    return 0;
+}

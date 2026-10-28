@@ -91,6 +91,8 @@ int FireAimedShot(Player *player, PlayerBullet *bullet, int frame, ShotData *sd)
 // orbs: for its first 40 frames towards Player::unk_2428, if any, at up
 // to 10; otherwise speeds it up by a third up to 10. Returns 0.
 int UpdateHomingOrb(Player *player, PlayerBullet *bullet);
+// The same at up to 18, speeding up by 0.6.
+int UpdateHomingOrbFast(Player *player, PlayerBullet *bullet);
 
 // One of the 0x70 entries at Player+0x9dc, probably th06's bomb
 // hitboxes (bombHitPos, bombHitSize, ...) as one struct.
@@ -159,7 +161,7 @@ public:
     unsigned char unk_240b[0x5];
     Timer unk_2410;
     unsigned char unk_241c[0xc];
-    // What UpdateHomingOrb's and Func43c480's shots home in on; x is -100 or
+    // What UpdateHomingOrb's and UpdateHomingOrbFast's shots home in on; x is -100 or
     // less when there is nothing.
     D3DXVECTOR3 unk_2428;
     // What the homing shots aim at; x is -100 or less when there is
