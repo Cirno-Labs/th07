@@ -36,6 +36,8 @@ public:
     int SetSprite(Sprite *vm, int sprite);
     // Draws `vm` at its position.
     int Draw(Sprite *vm);
+    // Releases the loaded surfaces, before the device is reset.
+    void ReleaseSurfaces();
 
     // Runs script `script` of the loaded ANM files on `vm`.
     void StartScript(Sprite *vm, int script)
@@ -46,5 +48,8 @@ public:
 
     unsigned char unk_0[0x28ef0];
     void *scripts[1];
+    unsigned char unk_28ef4[0x5254];
+    // Images loaded as surfaces to copy to the back buffer from.
+    IDirect3DSurface8 *surfaces[0x20];
 };
 extern SpriteEngine *g_SpriteEngine;

@@ -3,6 +3,7 @@
 
 #include <string.h>
 
+#include "sprite.h"
 #include "unsorted.h"
 
 void Log::Flush()
@@ -15,5 +16,19 @@ void Log::Flush()
             MessageBoxA(NULL, this->buffer, "log", MB_ICONERROR);
         }
         WriteToFile("./log.txt", this->buffer, strlen(this->buffer));
+    }
+}
+
+void SpriteEngine::ReleaseSurfaces()
+{
+    int i;
+
+    for (i = 0; i < 0x20; i++)
+    {
+        if (this->surfaces[i] != NULL)
+        {
+            this->surfaces[i]->Release();
+            this->surfaces[i] = NULL;
+        }
     }
 }
