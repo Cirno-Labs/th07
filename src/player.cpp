@@ -1,6 +1,8 @@
 // The code from 0x43b5c0: helpers out of line, then what looks like
 // th06's player.cpp (0x43b7f0 constructs the static at 0x4bdad8).
 
+#include <math.h>
+
 #include "player.h"
 #include "unsorted.h"
 
@@ -38,4 +40,34 @@ void Unknown626270::AddBombsUsed(int bombs)
 
 Player::Player()
 {
+}
+
+void FireShot(Player *player, PlayerBullet *bullet, ShotData *sd)
+{
+    if (sd->option == 0)
+    {
+        bullet->pos = player->position;
+    }
+    else
+    {
+        bullet->pos = player->optionPos[sd->option - 1];
+    }
+    bullet->pos[0] += sd->offsetX;
+    bullet->pos[1] += sd->offsetY;
+    bullet->pos.z = 0.495f;
+    bullet->size.x = sd->sizeX;
+    bullet->size.y = sd->sizeY;
+    bullet->size.z = 1.0f;
+    bullet->angle = sd->angle;
+    bullet->speed = sd->speed;
+    bullet->velocity.x = cosf(sd->angle) * sd->speed;
+    bullet->velocity.y = sinf(sd->angle) * sd->speed;
+    bullet->timer.Set(0);
+    bullet->type = sd->type;
+    bullet->damage = sd->damage;
+    if (sd->sound >= 0)
+    {
+        g_SoundPlayer.QueueSound(sd->sound, 0);
+    }
+    g_SpriteEngine->StartScript(&bullet->sprite, sd->script);
 }

@@ -15,11 +15,50 @@ struct PlayerBullet
     Sprite sprite;
     D3DXVECTOR3 pos;
     D3DXVECTOR3 unk_258[0x10];
-    unsigned char unk_318[0x24];
+    D3DXVECTOR3 size;
+    D3DXVECTOR3 velocity;
+    unsigned char unk_330[0x4];
+    float speed;
+    // The direction it flies in.
+    float angle;
     Timer timer;
-    unsigned char unk_348[0x1c];
+    short damage;
+    unsigned char unk_34a[0x2];
+    // ShotData::type.
+    short type;
+    unsigned char unk_34e[0x16];
 };
 ASSERT_SIZE(PlayerBullet, 0x364);
+
+// One shot of a shot type, as th06's ShotData.
+struct ShotData
+{
+    // Fired on frames where frame % interval is phase.
+    short interval;
+    short phase;
+    // Where it starts, from the player or its option.
+    float offsetX;
+    float offsetY;
+    float sizeX;
+    float sizeY;
+    float angle;
+    float speed;
+    short damage;
+    // 0 for the player, else the option, from 1.
+    char option;
+    // PlayerBullet::type.
+    char type;
+    // Its script, and its sound or -1.
+    short script;
+    short sound;
+};
+ASSERT_SIZE(ShotData, 0x24);
+
+class Player;
+
+// Fills `bullet` with shot `sd` and starts it: from the player or its
+// option, its script and its sound. th06's FireShot did this inline.
+void FireShot(Player *player, PlayerBullet *bullet, ShotData *sd);
 
 // One of the 0x70 entries at Player+0x9dc, probably th06's bomb
 // hitboxes (bombHitPos, bombHitSize, ...) as one struct.
@@ -74,7 +113,8 @@ public:
     Sprite optionSprites[3];
     D3DXVECTOR3 position;
     unsigned char unk_93c[0x78];
-    D3DXVECTOR3 unk_9b4[2];
+    // Where the two options are.
+    D3DXVECTOR3 optionPos[2];
     unsigned char unk_9cc[0x10];
     PlayerBombHit unk_9dc[0x70];
     unsigned char unk_17dc[0xc34];

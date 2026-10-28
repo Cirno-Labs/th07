@@ -430,7 +430,7 @@ address,size,name,symbol
 0x0043ba10,143,PlayerBullet::PlayerBullet,??0PlayerBullet@@QAE@XZ
 0x0043baa0,111,PlayerBomb::PlayerBomb,??0PlayerBomb@@QAE@XZ
 0x0043bb10,191,PlayerBombPart::PlayerBombPart,??0PlayerBombPart@@QAE@XZ
-0x0043bbd0,490,Func43bbd0,
+0x0043bbd0,490,FireShot,?FireShot@@YIXPAVPlayer@@PAUPlayerBullet@@PAUShotData@@@Z
 0x0043bdc0,65,Func43bdc0,
 0x0043be10,312,Func43be10,
 0x0043bf50,379,Func43bf50,
