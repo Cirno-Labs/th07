@@ -287,3 +287,11 @@ void Chain::Release()
     this->ReleaseList(&this->calcChain);
     this->ReleaseList(&this->drawChain);
 }
+
+ChainElem *Chain::CreateElem(ChainCallback callback)
+{
+    ChainElem *elem = new ChainElem();
+    elem->SetCallback(callback);
+    elem->allocated = 1;
+    return elem;
+}
