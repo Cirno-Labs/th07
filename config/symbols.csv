@@ -626,7 +626,7 @@ address,size,name,symbol
 0x0045c6f0,23,CSoundManager::CSoundManager,??0CSoundManager@@QAE@XZ
 0x0045c710,44,CSoundManager::~CSoundManager,??1CSoundManager@@QAE@XZ
 0x0045c740,142,CSoundManager::Initialize,?Initialize@CSoundManager@@QAEJPAUHWND__@@KKKK@Z
-0x0045c7d0,265,Func45c7d0,
+0x0045c7d0,265,CSoundManager::SetPrimaryBufferFormat,?SetPrimaryBufferFormat@CSoundManager@@QAEJKKK@Z
 0x0045c8e0,844,CSoundManager::CreateStreaming,?CreateStreaming@CSoundManager@@QAEJPAPAVCStreamingSound@@PADKU_GUID@@KKPAXPAUBgmFormat@@@Z
 0x0045cc30,795,CSoundManager::Func45cc30,?Func45cc30@CSoundManager@@QAEJPAPAVCStreamingSound@@PAXKPAUBgmFormat@@KU_GUID@@KK1@Z
 0x0045cf50,221,Func45cf50,
@@ -693,6 +693,7 @@ address,size,name,symbol
 0x0045fb50,645,Func45fb50,
 0x0045fde0,471,Func45fde0,
 0x0045ffc0,139,Func45ffc0,
+0x00461a96,,DirectSoundCreate8,_DirectSoundCreate8@12
 0x00461a9c,,Direct3DCreate8,_Direct3DCreate8@4
 0x00461aa2,227,Func461aa2,
 0x00461b85,122,Func461b85,
@@ -1565,6 +1566,7 @@ address,size,name,symbol
 0x0048cd10,15,Func48cd10,
 0x0048cd20,24,Func48cd20,
 0x0048d000,4,DirectInput8Create,__imp__DirectInput8Create@20
+0x0048d008,,DirectSoundCreate8,__imp__DirectSoundCreate8@12
 0x0048d010,4,GetStockObject,__imp__GetStockObject@4
 0x0048d014,4,SetTextColor,__imp__SetTextColor@8
 0x0048d018,4,DeleteDC,__imp__DeleteDC@4

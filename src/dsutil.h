@@ -37,6 +37,7 @@ public:
 
     HRESULT Initialize(HWND hWnd, DWORD dwCoopLevel, DWORD dwPrimaryChannels, DWORD dwPrimaryFreq,
                        DWORD dwPrimaryBitRate);
+    HRESULT SetPrimaryBufferFormat(DWORD dwPrimaryChannels, DWORD dwPrimaryFreq, DWORD dwPrimaryBitRate);
     // As th06's, streaming the track `format` describes out of
     // `strWaveFileName` (thbgm.dat).
     HRESULT CreateStreaming(CStreamingSound **ppStreamingSound, LPTSTR strWaveFileName, DWORD dwCreationFlags,
