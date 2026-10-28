@@ -354,7 +354,7 @@ address,size,name,symbol
 0x00435fc0,322,Func435fc0,
 0x00436110,33,MidiDevice::MidiDevice,??0MidiDevice@@QAE@XZ
 0x00436140,19,MidiDevice::~MidiDevice,??1MidiDevice@@QAE@XZ
-0x00436160,89,Func436160,
+0x00436160,89,MidiDevice::Open,?Open@MidiDevice@@QAEHI@Z
 0x004361c0,59,MidiDevice::Close,?Close@MidiDevice@@QAEHXZ
 0x00436200,78,Func436200,
 0x00436250,67,Func436250,
@@ -1708,3 +1708,4 @@ address,size,name,symbol
 0x0048d264,4,CoUninitialize,__imp__CoUninitialize@0
 0x0048d268,4,CoCreateInstance,__imp__CoCreateInstance@20
 0x0048d26c,4,CoInitialize,__imp__CoInitialize@4
+0x00575950,,g_App,?g_App@@3VApp@@A
