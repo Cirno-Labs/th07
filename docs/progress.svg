@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">14.70% (102)</tspan> · <tspan class="decompiled">0.43% (3)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">84.87% (589)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">14.84% (103)</tspan> · <tspan class="decompiled">0.43% (3)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">84.73% (588)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="109.79" height="6" x="0" y="0" class="named"/>
-<rect width="3.23" height="6" x="109.79" y="0" class="decompiled"/>
-<rect width="633.98" height="6" x="113.02" y="0" class="todo"/>
+<rect width="110.87" height="6" x="0" y="0" class="named"/>
+<rect width="3.23" height="6" x="110.87" y="0" class="decompiled"/>
+<rect width="632.90" height="6" x="114.10" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (173 bytes)</title></rect>
@@ -581,7 +581,7 @@
 <rect width="12" height="12" x="150" y="150" class="named"><title>0x00446a66 ResultScreen::HandleNameEntry (1787 bytes)</title></rect>
 <rect width="12" height="12" x="165" y="150" class="named"><title>0x00447161 FormatTodayDate (55 bytes)</title></rect>
 <rect width="12" height="12" x="180" y="150" class="named"><title>0x00447198 ResultScreen::HandleReplaySaving (3640 bytes)</title></rect>
-<rect width="12" height="12" x="195" y="150" class="todo"><title>0x00447fd0 ResultScreen::WaitAfterNameEntry (200 bytes)</title></rect>
+<rect width="12" height="12" x="195" y="150" class="named"><title>0x00447fd0 ResultScreen::WaitAfterNameEntry (200 bytes)</title></rect>
 <rect width="12" height="12" x="210" y="150" class="todo"><title>0x00448098 ResultScreen::Func448098 (2065 bytes)</title></rect>
 <rect width="12" height="12" x="225" y="150" class="todo"><title>0x004488a9 Func4488a9 (1175 bytes)</title></rect>
 <rect width="12" height="12" x="240" y="150" class="todo"><title>0x00448d40 Func448d40 (3525 bytes)</title></rect>
@@ -766,11 +766,11 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">9.81%</tspan> · <tspan class="decompiled">0.03%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">90.16%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">9.86%</tspan> · <tspan class="decompiled">0.03%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">90.11%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="73.27" height="6" x="0" y="0" class="named"/>
-<rect width="0.24" height="6" x="73.27" y="0" class="decompiled"/>
-<rect width="673.49" height="6" x="73.51" y="0" class="todo"/>
+<rect width="73.66" height="6" x="0" y="0" class="named"/>
+<rect width="0.24" height="6" x="73.66" y="0" class="decompiled"/>
+<rect width="673.10" height="6" x="73.90" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1147,7 +1147,7 @@
 <rect width="6.25" height="6.52" x="670.36" y="96.15" class="todo"><title>0x0045e8f0 Func45e8f0 (210 bytes)</title></rect>
 <rect width="5.98" height="6.52" x="679.61" y="96.15" class="todo"><title>0x00423660 Func423660 (204 bytes)</title></rect>
 <rect width="5.94" height="6.52" x="688.59" y="96.15" class="named"><title>0x00436a00 MidiPlayer::Rewind (203 bytes)</title></rect>
-<rect width="5.80" height="6.52" x="697.52" y="96.15" class="todo"><title>0x00447fd0 ResultScreen::WaitAfterNameEntry (200 bytes)</title></rect>
+<rect width="5.80" height="6.52" x="697.52" y="96.15" class="named"><title>0x00447fd0 ResultScreen::WaitAfterNameEntry (200 bytes)</title></rect>
 <rect width="5.76" height="6.52" x="706.33" y="96.15" class="named"><title>0x00436bc0 MidiPlayer::ReleaseHeader (199 bytes)</title></rect>
 <rect width="5.76" height="6.52" x="715.09" y="96.15" class="todo"><title>0x0045f800 Func45f800 (199 bytes)</title></rect>
 <rect width="5.72" height="6.52" x="723.85" y="96.15" class="todo"><title>0x00439401 Func439401 (198 bytes)</title></rect>
