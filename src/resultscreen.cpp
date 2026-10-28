@@ -1564,6 +1564,131 @@ int ResultScreen::DrawStatistics()
     return 0;
 }
 
+int ResultScreen::AddedCallback(ResultScreen *screen)
+{
+    int i;
+    Sprite *sprite;
+    int shot;
+    int k;
+    Catk *card;
+    int j;
+
+    g_Unknown626270.Func42f94c();
+    for (i = 0; i < 6; i++)
+    {
+        for (shot = 0; shot < 6; shot++)
+        {
+            for (k = 0; k < 10; k++)
+            {
+                screen->defaultScores[i][shot][k].score = 100000 - k * 10000;
+                screen->defaultScores[i][shot][k].slowdown = 0.0f;
+                screen->defaultScores[i][shot][k].magic = *(DWORD *)"DMYS";
+                screen->defaultScores[i][shot][k].difficulty = i;
+                screen->defaultScores[i][shot][k].version = 1;
+                screen->defaultScores[i][shot][k].size2 = 0x28;
+                screen->defaultScores[i][shot][k].size = 0x28;
+                screen->defaultScores[i][shot][k].stage = 1;
+                screen->defaultScores[i][shot][k].isNew = 0;
+                screen->defaultScores[i][shot][k].unk_26 = 0;
+                screen->AddScore(&screen->defaultScores[i][shot][k], i, shot);
+                strcpy(screen->defaultScores[i][shot][k].name, "--------");
+                strcpy(screen->defaultScores[i][shot][k].date, "--/--");
+            }
+        }
+    }
+    if (screen->state != 0x13)
+    {
+        if (g_SpriteEngine->LoadSurface(0, "data/result/result.jpg") != 0)
+        {
+            return -1;
+        }
+        if (g_SpriteEngine->LoadAnm(0x2a, "data/result00.anm", 0x900) != 0)
+        {
+            return -1;
+        }
+        sprite = screen->sprites;
+        for (i = 0; i < 0x29; i++, sprite++)
+        {
+            sprite->pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+            sprite->posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+            g_SpriteEngine->StartScript(sprite, i + 0x900);
+        }
+        g_SpriteEngine->InitSprite(&screen->unk_835c, 0x910);
+        sprite = screen->textSprites;
+        for (i = 0; i < 0xf; i++, sprite++)
+        {
+            g_SpriteEngine->InitSprite(sprite, i + 0x715);
+            sprite->pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+            sprite->flags |= 0xc00;
+            sprite->fontWidth = 15;
+            sprite->fontHeight = 15;
+        }
+    }
+    screen->savedCursor = 0;
+    screen->scoreDat = LoadScoreDat("score.dat");
+    for (i = 0; i < 6; i++)
+    {
+        for (shot = 0; shot < 6; shot++)
+        {
+            LoadHighScores(screen->scoreDat, &screen->scores[i][shot], shot, i, NULL);
+        }
+    }
+    screen->lsnm.magic = 0x4d4e534c;
+    screen->lsnm.version = 1;
+    screen->lsnm.size2 = 0x18;
+    screen->lsnm.size = 0x18;
+    strcpy(screen->lsnm.name, "        ");
+    screen->unk_40 = Func445110(screen->scoreDat, &screen->lsnm);
+    if (screen->state != 10 && screen->state != 0x12)
+    {
+        Func445069(screen->scoreDat, g_Unknown626270.catks);
+        LoadClears(screen->scoreDat, g_Unknown626270.clrds);
+        g_Unknown626270.Func42f94c();
+        LoadPracticeScores(screen->scoreDat, &g_Unknown626270.pscrs[0][0][0]);
+    }
+    if (screen->state == 0x12)
+    {
+        if (g_Unknown626270
+                .pscrs[g_Unknown626270.character * 2 + g_Unknown626270.shotType][g_Unknown626270.stage - 1]
+                      [g_Unknown626270.difficulty]
+                .score < g_Unknown626270.stats->score)
+        {
+            g_Unknown626270
+                .pscrs[g_Unknown626270.character * 2 + g_Unknown626270.shotType][g_Unknown626270.stage - 1]
+                      [g_Unknown626270.difficulty]
+                .score = g_Unknown626270.stats->score;
+        }
+        screen->state = 0xb;
+        strcpy(screen->name, screen->lsnm.name);
+    }
+    for (i = 0; i < 7; i++)
+    {
+        card = g_Unknown626270.catks;
+        screen->unk_50[i] = 0;
+        for (j = 0; j < 0x8d; j++, card++)
+        {
+            if (card->magic != 0x4b544143 || card->version != 1)
+            {
+                continue;
+            }
+            if (card->captures[i] != 0)
+            {
+                screen->unk_50[i]++;
+            }
+        }
+    }
+    screen->unk_24 = 6;
+    screen->unk_28 = 6;
+    screen->unk_2c = 0;
+    screen->unk_8110.spriteIndex = -1;
+    if (screen->state == 0x13)
+    {
+        ResultScreen::DeletedCallback(screen);
+        return -1;
+    }
+    return 0;
+}
+
 int ResultScreen::DeletedCallback(ResultScreen *screen)
 {
     int i;

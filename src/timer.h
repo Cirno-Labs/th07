@@ -14,6 +14,14 @@ struct Timer
         this->subFrame = 0.0f;
     }
 
+    // Starts counting from 0 again, as the constructor.
+    void Initialize()
+    {
+        this->current = 0;
+        this->previous = -999;
+        this->subFrame = 0.0f;
+    }
+
     // Sets the count to `frames`, with no fraction and no previous count
     // (-999).
     void Set(int frames)

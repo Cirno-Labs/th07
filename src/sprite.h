@@ -23,7 +23,11 @@ struct SpriteBase
     unsigned char unk_0[0x8];
     // The sprite's rotation about z.
     float rotationZ;
-    unsigned char unk_c[0x24];
+    unsigned char unk_c[0xc];
+    // SpriteEngine::Draw scales the sprite's height and width by these.
+    float scaleY;
+    float scaleX;
+    unsigned char unk_20[0x10];
     Timer unk_30;
     Timer unk_3c;
     Timer unk_48[5];
@@ -62,6 +66,19 @@ public:
         memset(this, 0, sizeof(Sprite));
         this->spriteIndex = -1;
     }
+    // Resets the sprite's state up to pos: a scale of 1, white, the
+    // identity matrix, flags 7. Inline, but too large to expand: callers
+    // call the copy at 0x4010f0 and keep a slot for it.
+    void Initialize()
+    {
+        memset(this, 0, sizeof(SpriteBase));
+        this->scaleY = 1.0f;
+        this->scaleX = 1.0f;
+        this->color = 0xffffffff;
+        D3DXMatrixIdentity(&this->matrix);
+        *(WORD *)&this->flags = 7;
+        this->unk_30.Initialize();
+    }
     // Whether the sprite shows a sprite whose texture is loaded. Defined
     // after SpriteEngine.
     __forceinline BOOL HasTexture();
@@ -89,7 +106,11 @@ public:
     D3DXVECTOR3 unk_224;
     // Added to pos when it is drawn.
     D3DXVECTOR3 posOffset;
-    unsigned char unk_23c[0x10];
+    unsigned char unk_23c[0x4];
+    // The size of the characters RenderText draws.
+    BYTE fontWidth;
+    BYTE fontHeight;
+    unsigned char unk_242[0xa];
 };
 ASSERT_SIZE(Sprite, 0x24c);
 
@@ -187,6 +208,13 @@ public:
     {
         this->unk_4 = 0;
         this->unk_0 = 0x80808080;
+    }
+
+    // Resets `vm` and shows sprite `sprite` on it.
+    void InitSprite(Sprite *vm, int sprite)
+    {
+        vm->Initialize();
+        this->SetSprite(vm, sprite);
     }
 
     // Runs script `script` of the loaded ANM files on `vm`.

@@ -65,7 +65,8 @@ struct Catk
     char name[0x3d];
     // The result screen shows "？？？？？" for the name while it is 0.
     WORD unk_68;
-    BYTE unk_6a[0xe];
+    // By shot type, then with every shot type: the times captured.
+    WORD captures[7];
 };
 ASSERT_SIZE(Catk, 0x78);
 
@@ -219,6 +220,14 @@ ASSERT_SIZE(ScoreDat, 0x1c);
 // chunks, then copies the score file's "PSCR" chunks over them, stopping
 // at one out of range. Returns 0, or -1 if `pscrs` is NULL.
 int LoadPracticeScores(void *scoreDat, Pscr *pscrs);
+// Inserts the score file's high score chunks for `shot` and
+// `difficulty` into `list`, or into the file's own list if `list` is
+// NULL. Stores the best entry's unk_26 in `unk` if it is not NULL.
+// Returns the best score, at least 100000.
+DWORD LoadHighScores(void *scoreDat, ListNode *list, int shot, int difficulty, BYTE *unk);
+// Copies the score file's version 1 "LSNM" chunk to `lsnm`. Returns 1,
+// or 0 if there is none. Not in th06.
+int Func445110(void *scoreDat, Lsnm *lsnm);
 // Reads "score.dat" at `path`, or makes a new one. Placeholder for the
 // details.
 ScoreDat *LoadScoreDat(char *path);
@@ -374,7 +383,8 @@ public:
     Sprite unk_835c;
     // The high score lists, by difficulty and shot.
     ListNode scores[6][6];
-    BYTE unk_8758[0x3840];
+    // The entries the lists start with, by difficulty, shot and rank.
+    Hscr defaultScores[6][6][10];
     // The score being entered.
     Hscr entry;
     // The "TH7K" chunk SaveScoreDat writes.
