@@ -10,6 +10,7 @@
 #include <dsound.h>
 #include <d3dx8math.h>
 
+#include "archive.h"
 #include "common.h"
 #include "resultscreen.h"
 #include "timer.h"
@@ -421,19 +422,6 @@ void DebugPrint2(const char *fmt, ...);
 void *LoadFileData(char *path, int isExternal);
 // The size of the file LoadFileData loaded last.
 extern int g_FileSize;
-
-// The game's data archive, at 0x626258: files are looked up by name
-// (without the directory). Its layout is not known yet.
-class DatArchive
-{
-public:
-    // The decoded size of entry `name`; 0 if there is none.
-    DWORD GetEntrySize(char *name);
-    // Decodes entry `name` into `buffer`, which must hold GetEntrySize
-    // bytes.
-    void *Decode(char *name, void *buffer);
-};
-extern DatArchive g_Archive;
 
 // The object error messages go to, e.g. "error : MIDI File が読み込めない".
 // Larger than th06's: the text buffer holds 0x2000 bytes, not 0x800.

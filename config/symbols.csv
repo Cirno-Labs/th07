@@ -682,7 +682,7 @@ address,size,name,symbol
 0x0045f580,183,LzssReplaceChild,?LzssReplaceChild@@YIXHH@Z
 0x0045f640,63,LzssPredecessor,?LzssPredecessor@@YIHH@Z
 0x0045f680,40,Func45f680,
-0x0045f6b0,53,Func45f6b0,
+0x0045f6b0,53,DatArchive::DatArchive,??0DatArchive@@QAE@XZ
 0x0045f6f0,19,Func45f6f0,
 0x0045f710,229,Func45f710,
 0x0045f800,199,Func45f800,
