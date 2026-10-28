@@ -90,8 +90,16 @@ public:
 extern Archive g_Archive;
 
 // The object error messages go to, e.g. "error : MIDI File が読み込めない".
-// Its layout is not known yet.
-class Log;
+// Larger than th06's: the text buffer holds 0x2000 bytes, not 0x800.
+class Log
+{
+public:
+    char buffer[0x2000];
+    // The end of the text in `buffer`.
+    char *cursor;
+    // Set by LogError, the error logger.
+    char hasError;
+};
 extern Log g_Log;
 
 // Logs a printf-style message to a log object.

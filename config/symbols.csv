@@ -1101,7 +1101,7 @@ address,size,name,symbol
 0x0047bd10,937,Func47bd10,
 0x0047c0b9,3539,Func47c0b9,
 0x0047ce8c,682,Func47ce8c,
-0x0047d13c,87,Func47d13c,
+0x0047d13c,87,_vsprintf,_vsprintf
 0x0047d193,128,__onexit_lk,
 0x0047d213,40,___onexitinit,
 0x0047d23b,50,__onexit,
@@ -1161,7 +1161,7 @@ address,size,name,symbol
 0x0047f150,84,Func47f150,
 0x0047f1ad,453,Func47f1ad,
 0x0047f372,40,Func47f372,
-0x0047f3a0,61,__chkstk,
+0x0047f3a0,61,__chkstk,__chkstk
 0x0047f3dd,43,_JumpToContinuation,
 0x0047f40d,7,FID_conflict:_CallMemberFunction1,
 0x0047f414,82,_UnwindNestedFrames,

@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdarg.h>
+
 #include "unsorted.h"
 
 void DebugPrint(const char *fmt, ...)
@@ -326,4 +329,23 @@ int WriteToFile(char *path, void *data, int size)
     CloseHandle(file);
     DebugPrint("%s write ...\r\n", path);
     return 0;
+}
+
+int LogPrintf(Log *log, const char *fmt, ...)
+{
+    int len2;
+    char buf[0x2000];
+    va_list args;
+
+    va_start(args, fmt);
+    vsprintf(buf, fmt, args);
+    len2 = strlen(buf);
+    if (log->cursor + len2 < log->buffer + sizeof(log->buffer) - 1)
+    {
+        strcpy(log->cursor, buf);
+        log->cursor += len2;
+        *log->cursor = '\0';
+    }
+    va_end(args);
+    return (int)fmt;
 }
