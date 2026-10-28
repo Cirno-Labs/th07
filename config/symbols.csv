@@ -435,7 +435,7 @@ address,size,name,symbol
 0x0043be10,312,FireLaser,?FireLaser@@YIHPAVPlayer@@PAUPlayerBullet@@HPAUShotData@@@Z
 0x0043bf50,379,FireTrailLaser,?FireTrailLaser@@YIHPAVPlayer@@PAUPlayerBullet@@HPAUShotData@@@Z
 0x0043c0d0,228,FireHomingShot,?FireHomingShot@@YIHPAVPlayer@@PAUPlayerBullet@@HPAUShotData@@@Z
-0x0043c1c0,142,Func43c1c0,
+0x0043c1c0,142,FireAimedShot,?FireAimedShot@@YIHPAVPlayer@@PAUPlayerBullet@@HPAUShotData@@@Z
 0x0043c250,554,Func43c250,
 0x0043c480,554,Func43c480,
 0x0043c6b0,73,Func43c6b0,

@@ -168,3 +168,20 @@ int FireHomingShot(Player *player, PlayerBullet *bullet, int frame, ShotData *sd
     }
     return 0;
 }
+
+int FireAimedShot(Player *player, PlayerBullet *bullet, int frame, ShotData *sd)
+{
+    float angle;
+    float speed;
+
+    if (frame % sd->interval == sd->phase)
+    {
+        FireShot(player, bullet, sd);
+        angle = AddNormalizeAngle(player->unk_b7e58, sd->angle + 1.5707964f);
+        speed = sd->speed;
+        ((Unknown4325c0 *)&bullet->velocity)->SetPolar(angle, speed);
+        bullet->angle = angle;
+        return 1;
+    }
+    return 0;
+}

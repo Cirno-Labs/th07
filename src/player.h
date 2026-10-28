@@ -82,6 +82,9 @@ int FireTrailLaser(Player *player, PlayerBullet *bullet, int frame, ShotData *sd
 // A plain shot that, when there is a homingTarget, flies at it, turned
 // by sd->angle + pi / 2, at 1.5 times its speed.
 int FireHomingShot(Player *player, PlayerBullet *bullet, int frame, ShotData *sd);
+// A plain shot that flies at Player::unk_b7e58, turned by sd->angle +
+// pi / 2.
+int FireAimedShot(Player *player, PlayerBullet *bullet, int frame, ShotData *sd);
 
 // One of the 0x70 entries at Player+0x9dc, probably th06's bomb
 // hitboxes (bombHitPos, bombHitSize, ...) as one struct.
@@ -161,7 +164,9 @@ public:
     Timer unk_16a0c;
     unsigned char unk_16a18[0x8];
     PlayerBomb bomb;
-    unsigned char unk_b7e4c[0x10];
+    unsigned char unk_b7e4c[0xc];
+    // The angle FireAimedShot's shots fly at, turned by sd->angle + pi / 2.
+    float unk_b7e58;
     // The update element and the two draw elements, as in th06
     // (removed together by 0x442b13's function).
     ChainElem *calcChain;
