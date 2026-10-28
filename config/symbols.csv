@@ -322,7 +322,7 @@ address,size,name,symbol
 0x00431cec,80,GdiSurface::FindFormat,?FindFormat@GdiSurface@@QAEPAUFormatInfo@@H@Z
 0x00431d3c,1064,GdiSurface::InvertAlpha,?InvertAlpha@GdiSurface@@QAE_NHHHHH@Z
 0x00432164,247,GdiSurface::CopyToSurface,?CopyToSurface@GdiSurface@@QAE_NPAUIDirect3DSurface8@@@Z
-0x0043225b,35,Func43225b,
+0x0043225b,35,CreateTextSurface,?CreateTextSurface@@YIXXZ
 0x0043227e,37,Func43227e,
 0x004322a3,796,Func4322a3,
 0x004325c0,32,Func4325c0,
@@ -1712,6 +1712,7 @@ address,size,name,symbol
 0x0049ed98,,g_FormatInfos,?g_FormatInfos@@3PAUFormatInfo@@A
 0x0049fc88,,g_JoyCaps,?g_JoyCaps@@3UtagJOYCAPSA@@A
 0x0049fe1c,,g_ShotHeldFrames,?g_ShotHeldFrames@@3GA
+0x0049fe28,,g_TextSurface,?g_TextSurface@@3PAUIDirect3DSurface8@@A
 0x004b9e64,,g_FileSize,?g_FileSize@@3HA
 0x00575950,,g_App,?g_App@@3VApp@@A
 0x00624210,,g_Log,?g_Log@@3VLog@@A
