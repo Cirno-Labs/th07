@@ -38,6 +38,8 @@ void LzssTreeInitNode(int pos);
 // Adds the string at window position `pos` to the tree. Returns the
 // length of the longest match found and stores its position in
 // `matchPosition`.
-int Func45f340(int pos, int *matchPosition);
+int LzssInsertNode(int pos, int *matchPosition);
 // Removes the string at window position `pos` from the tree.
 void Func45f460(int pos);
+// Puts node `newNode` in the place of `oldNode` in the tree.
+void Func45f580(int oldNode, int newNode);

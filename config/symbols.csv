@@ -676,10 +676,10 @@ address,size,name,symbol
 0x0045ef00,868,LzssDecompress,?LzssDecompress@@YIPAXPAEH0H@Z
 0x0045f270,67,LzssTreeInitNode,?LzssTreeInitNode@@YIXH@Z
 0x0045f2c0,124,LzssClearWindow,?LzssClearWindow@@YIXXZ
-0x0045f340,284,Func45f340,?Func45f340@@YIHHPAH@Z
+0x0045f340,284,LzssInsertNode,?LzssInsertNode@@YIHHPAH@Z
 0x0045f460,134,Func45f460,?Func45f460@@YIXH@Z
 0x0045f4f0,132,Func45f4f0,
-0x0045f580,183,Func45f580,
+0x0045f580,183,Func45f580,?Func45f580@@YIXHH@Z
 0x0045f640,63,Func45f640,
 0x0045f680,40,Func45f680,
 0x0045f6b0,53,Func45f6b0,

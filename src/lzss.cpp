@@ -127,7 +127,7 @@ void *LzssCompress(BYTE *data, int size, int *outSize)
             wndPos = (wndPos + 1) & 0x1fff;
             if (lookAheadBytes != 0)
             {
-                len = Func45f340(wndPos, &position);
+                len = LzssInsertNode(wndPos, &position);
             }
         }
     }
@@ -285,5 +285,59 @@ void LzssClearWindow()
         g_LzssTree[i].parent = 0;
         g_LzssTree[i].smallerChild = 0;
         g_LzssTree[i].largerChild = 0;
+    }
+}
+
+int LzssInsertNode(int pos, int *matchPosition)
+{
+    int delta;
+    int bestLen;
+    int test;
+    int *child;
+    int i;
+
+    if (pos == 0)
+    {
+        return 0;
+    }
+    test = g_LzssTree[0x2000].largerChild;
+    bestLen = 0;
+    for (;;)
+    {
+        for (i = 0; i < 0x12; i++)
+        {
+            delta = g_LzssWindow[(pos + i) & 0x1fff] - g_LzssWindow[(test + i) & 0x1fff];
+            if (delta != 0)
+            {
+                break;
+            }
+        }
+        if (i >= bestLen)
+        {
+            bestLen = i;
+            *matchPosition = test;
+            if (bestLen >= 0x12)
+            {
+                Func45f580(test, pos);
+                return bestLen;
+            }
+        }
+        if (delta >= 0)
+        {
+            child = &g_LzssTree[test].largerChild;
+        }
+        else
+        {
+            child = &g_LzssTree[test].smallerChild;
+        }
+        if (*child == 0)
+        {
+            *child = pos;
+            g_LzssTree[pos].parent = test;
+            g_LzssTree[pos].largerChild = 0;
+            g_LzssTree[pos].smallerChild = 0;
+            return bestLen;
+        }
+        test = *child;
     }
 }

@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">26.95% (187)</tspan> · <tspan class="decompiled">0.58% (4)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">72.48% (503)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">27.09% (188)</tspan> · <tspan class="decompiled">0.58% (4)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">72.33% (502)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="201.28" height="6" x="0" y="0" class="named"/>
-<rect width="4.31" height="6" x="201.28" y="0" class="decompiled"/>
-<rect width="541.41" height="6" x="205.59" y="0" class="todo"/>
+<rect width="202.36" height="6" x="0" y="0" class="named"/>
+<rect width="4.31" height="6" x="202.36" y="0" class="decompiled"/>
+<rect width="540.34" height="6" x="206.66" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (173 bytes)</title></rect>
@@ -745,7 +745,7 @@
 <rect width="12" height="12" x="360" y="195" class="named"><title>0x0045ef00 LzssDecompress (868 bytes)</title></rect>
 <rect width="12" height="12" x="375" y="195" class="named"><title>0x0045f270 LzssTreeInitNode (67 bytes)</title></rect>
 <rect width="12" height="12" x="390" y="195" class="named"><title>0x0045f2c0 LzssClearWindow (124 bytes)</title></rect>
-<rect width="12" height="12" x="405" y="195" class="todo"><title>0x0045f340 Func45f340 (284 bytes)</title></rect>
+<rect width="12" height="12" x="405" y="195" class="named"><title>0x0045f340 LzssInsertNode (284 bytes)</title></rect>
 <rect width="12" height="12" x="420" y="195" class="todo"><title>0x0045f460 Func45f460 (134 bytes)</title></rect>
 <rect width="12" height="12" x="435" y="195" class="todo"><title>0x0045f4f0 Func45f4f0 (132 bytes)</title></rect>
 <rect width="12" height="12" x="450" y="195" class="todo"><title>0x0045f580 Func45f580 (183 bytes)</title></rect>
@@ -766,11 +766,11 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">16.78%</tspan> · <tspan class="decompiled">0.04%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">83.18%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">16.85%</tspan> · <tspan class="decompiled">0.04%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">83.10%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="125.32" height="6" x="0" y="0" class="named"/>
-<rect width="0.33" height="6" x="125.32" y="0" class="decompiled"/>
-<rect width="621.35" height="6" x="125.65" y="0" class="todo"/>
+<rect width="125.88" height="6" x="0" y="0" class="named"/>
+<rect width="0.33" height="6" x="125.88" y="0" class="decompiled"/>
+<rect width="620.79" height="6" x="126.21" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1063,7 +1063,7 @@
 <rect width="8.04" height="7.90" x="727.97" y="54.84" class="named"><title>0x0044c6b0 SoundPlayer::StopBgm (287 bytes)</title></rect>
 <rect width="8" height="7.90" x="739" y="54.84" class="todo"><title>0x004084f0 Func4084f0 (286 bytes)</title></rect>
 <rect width="7.98" height="7.84" x="602.68" y="65.73" class="named"><title>0x004345c0 PresentFrame (284 bytes)</title></rect>
-<rect width="7.98" height="7.84" x="602.68" y="76.57" class="todo"><title>0x0045f340 Func45f340 (284 bytes)</title></rect>
+<rect width="7.98" height="7.84" x="602.68" y="76.57" class="named"><title>0x0045f340 LzssInsertNode (284 bytes)</title></rect>
 <rect width="7.98" height="7.72" x="602.68" y="87.41" class="todo"><title>0x0045bb4a Func45bb4a (281 bytes)</title></rect>
 <rect width="7.98" height="7.69" x="602.68" y="98.13" class="todo"><title>0x00454e10 SpriteEngine::CopyBackBufferToTexture (280 bytes)</title></rect>
 <rect width="7.98" height="7.65" x="602.68" y="108.82" class="todo"><title>0x0042d136 Func42d136 (279 bytes)</title></rect>
