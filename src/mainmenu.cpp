@@ -2,6 +2,7 @@
 // The /Os file from 0x4553fa to 0x45c6e0, with the title menu, th06's
 // mainmenu.cpp.
 
+#include "mainmenu.h"
 #include "unsorted.h"
 
 void App::ResetClockDriftCounters()
@@ -11,4 +12,14 @@ void App::ResetClockDriftCounters()
     this->unk_2b8 = 0;
     this->unk_2b0 = 0;
     this->unk_2b4 = 0;
+}
+
+void MainMenu::SetState(int state)
+{
+    this->prevState = this->state;
+    this->state = state;
+    this->stateFrames = 0;
+    this->unk_d0fc = 0;
+    this->unk_8 = 0;
+    this->unk_b0c0 = 0;
 }

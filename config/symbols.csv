@@ -600,7 +600,7 @@ address,size,name,symbol
 0x00455170,352,Func455170,
 0x004552d0,298,Func4552d0,
 0x004553fa,59,App::ResetClockDriftCounters,?ResetClockDriftCounters@App@@QAEXXZ
-0x00455435,72,Func455435,
+0x00455435,72,MainMenu::SetState,?SetState@MainMenu@@QAEXH@Z
 0x0045547d,89,Func45547d,
 0x004554d6,212,Func4554d6,
 0x004555dd,3152,Func4555dd,
