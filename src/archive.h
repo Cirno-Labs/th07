@@ -54,6 +54,8 @@ ASSERT_SIZE(File, 0xc);
 
 // FILE_BEGIN, FILE_CURRENT and FILE_END, in .rdata. Only the first is used.
 extern const DWORD g_SeekOrigins[3];
+// "r" and "w", the modes for File::Open. Only the first is used.
+extern char *g_FileModes[2];
 
 // Writes `path` to `dst` (MAX_PATH bytes) as a full path: in the game's
 // directory unless it has a drive. Not in th06.
@@ -103,6 +105,8 @@ public:
     // Decodes entry `name` into `buffer`, which must hold GetEntrySize
     // bytes.
     void *Decode(char *name, void *buffer);
+    // The entry named `name` (case-insensitive), or NULL.
+    DatArchiveEntry *FindEntry(char *name);
     // Opens the file at `path` and reads the table. Returns true on
     // success; on failure deletes the file.
     bool ReadTable(char *path);

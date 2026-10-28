@@ -689,7 +689,7 @@ address,size,name,symbol
 0x0045f8d0,133,DatArchiveEntry::`vector deleting destructor',??_EDatArchiveEntry@@QAEPAXI@Z
 0x0045f960,321,DatArchive::Decode,?Decode@DatArchive@@QAEPAXPADPAX@Z
 0x0045fab0,46,DatArchive::GetEntrySize,?GetEntrySize@DatArchive@@QAEKPAD@Z
-0x0045fae0,101,Func45fae0,
+0x0045fae0,101,DatArchive::FindEntry,?FindEntry@DatArchive@@QAEPAUDatArchiveEntry@@PAD@Z
 0x0045fb50,645,DatArchive::ReadTable,?ReadTable@DatArchive@@QAE_NPAD@Z
 0x0045fde0,471,Func45fde0,
 0x0045ffc0,139,DatArchive::Func45ffc0,?Func45ffc0@DatArchive@@QAEPADPAD@Z
@@ -1723,6 +1723,7 @@ address,size,name,symbol
 0x0049528c,4,CStreamingSound::`vftable',??_7CStreamingSound@@6B@
 0x00495290,4,CSound::`vftable',??_7CSound@@6B@
 0x004964f4,,g_DifficultyRatings,?g_DifficultyRatings@@3PAMA
+0x0049ea70,,g_FileModes,?g_FileModes@@3PAPADA
 0x0049ea88,,g_SoundInfos,?g_SoundInfos@@3PAUSoundInfo@@A
 0x0049ebb8,,g_SoundPaths,?g_SoundPaths@@3PAPADA
 0x0049ec30,,g_NameAlphabet,?g_NameAlphabet@@3PADA
