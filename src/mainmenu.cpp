@@ -2,6 +2,9 @@
 // The /Os file from 0x4553fa to 0x45c6e0, with the title menu, th06's
 // mainmenu.cpp.
 
+#include <direct.h>
+#include <stdio.h>
+
 #include "mainmenu.h"
 #include "unsorted.h"
 
@@ -34,7 +37,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
         status = menu->Func4555dd();
         break;
     case 7:
-        status = menu->Func45a924();
+        status = menu->UpdateReplayMenu();
         break;
     case 2:
         status = menu->Func45624d();
@@ -892,6 +895,255 @@ int MainMenu::UpdateGameStartMenu()
             this->sprites[0x52].flags |= 2;
             this->sprites[0x55].flags |= 2;
             return 2;
+        }
+        break;
+    }
+    this->unk_b0c0++;
+    this->stateFrames++;
+    this->unk_d0fc++;
+    return 1;
+}
+
+int MainMenu::UpdateReplayMenu()
+{
+    int i;
+    HANDLE findHandle;
+    int replayCount;
+    ReplayHeader *data;
+    char path[0x40];
+    WIN32_FIND_DATAA fd;
+
+    switch (this->unk_8)
+    {
+    case 0:
+        if (this->unk_d0fc == 0)
+        {
+            if (this->prevState != 7 && g_SpriteEngine->LoadSurface(0, "data/title/select00.jpg") != 0)
+            {
+                return 0;
+            }
+            g_SpriteEngine->Func455030(this->sprites, this->spriteCount, 14);
+            this->cursor = 0;
+            this->unk_8 = 0;
+            this->stateFrames = 0;
+            this->unk_b0c8 = NULL;
+            replayCount = 0;
+            for (i = 0; i < 15; i++)
+            {
+                sprintf(path, "./replay/th7_%.2d.rpy", i + 1);
+                data = (ReplayHeader *)LoadFileData(path, 1);
+                if (data == NULL)
+                {
+                    continue;
+                }
+                data = ValidateReplay(data, g_FileSize);
+                if (data != NULL)
+                {
+                    this->replays[replayCount] = *data;
+                    strcpy(this->replayPaths[replayCount], path);
+                    sprintf(this->replayLabels[replayCount], "No.%.2d", i + 1);
+                    replayCount++;
+                    free(data);
+                }
+            }
+            _mkdir("./replay");
+            _chdir("./replay");
+            findHandle = FindFirstFileA("th7_ud????.rpy", &fd);
+            if (findHandle != INVALID_HANDLE_VALUE)
+            {
+                for (i = 0; i < 45; i++)
+                {
+                    data = (ReplayHeader *)LoadFileData(fd.cFileName, 1);
+                    if (data == NULL)
+                    {
+                        continue;
+                    }
+                    data = ValidateReplay(data, g_FileSize);
+                    if (data != NULL)
+                    {
+                        this->replays[replayCount] = *data;
+                        sprintf(this->replayPaths[replayCount], "./replay/%s", fd.cFileName);
+                        sprintf(this->replayLabels[replayCount], "User ");
+                        free(data);
+                        replayCount++;
+                    }
+                    if (!FindNextFileA(findHandle, &fd))
+                    {
+                        break;
+                    }
+                }
+            }
+            FindClose(findHandle);
+            _chdir("../");
+            this->replayCount = replayCount;
+            this->unk_b0b0 = 0;
+        }
+        if (this->unk_d0fc >= 30)
+        {
+            this->unk_8 = 1;
+            this->stateFrames = 0;
+        }
+        break;
+    case 1:
+        this->MoveMenuCursor(this->replayCount);
+        if (this->replayCount > 15)
+        {
+            if (WAS_PRESSED_OR_HELD(0x40))
+            {
+                this->cursor -= 15;
+                if (this->cursor < 0)
+                {
+                    this->cursor += this->replayCount;
+                }
+                g_SoundPlayer.QueueSound(12, 0);
+            }
+            if (WAS_PRESSED_OR_HELD(0x80))
+            {
+                this->cursor += 15;
+                if (this->cursor >= this->replayCount)
+                {
+                    this->cursor -= this->replayCount;
+                }
+                g_SoundPlayer.QueueSound(12, 0);
+            }
+        }
+        this->replayCursor = this->cursor;
+        if (this->stateFrames < 10)
+        {
+            break;
+        }
+        if (WAS_PRESSED(0x1001))
+        {
+            if (this->replayCount == 0)
+            {
+                break;
+            }
+            g_SoundPlayer.QueueSound(10, 0);
+            this->unk_8 = 2;
+            g_SpriteEngine->Func455030(this->sprites, this->spriteCount, 15);
+            this->sprites[this->replayCursor % 15 + 0x87].SetPendingInterrupt(17);
+            this->loadedReplay = (ReplayHeader *)LoadFileData(this->replayPaths[this->replayCursor], 1);
+            this->loadedReplay = ValidateReplay(this->loadedReplay, g_FileSize);
+            for (i = 0; i < 7; i++)
+            {
+                if (this->loadedReplay->stages[i] != NULL)
+                {
+                    this->loadedReplay->stages[i] =
+                        (ReplayStage *)((int)this->loadedReplay + (int)this->loadedReplay->stages[i]);
+                }
+            }
+            this->cursor = 0;
+            while (this->replays[this->replayCursor].stages[this->cursor] == NULL)
+            {
+                this->cursor++;
+                if (this->cursor >= 7)
+                {
+                    LogError(&g_Log, "リプレイデータが異常\r\n");
+                    return 0;
+                }
+            }
+            break;
+        }
+        if (WAS_PRESSED(0xa))
+        {
+            g_SoundPlayer.QueueSound(11, 0);
+            this->unk_8 = 4;
+            this->stateFrames = 0;
+            g_SpriteEngine->Func455030(this->sprites, this->spriteCount, 16);
+        }
+        break;
+    case 2:
+        i = this->MoveMenuCursor(7);
+        if (i < 0)
+        {
+            while (this->replays[this->replayCursor].stages[this->cursor] == NULL)
+            {
+                this->cursor--;
+                if (this->cursor < 0)
+                {
+                    this->cursor = 6;
+                }
+            }
+        }
+        else if (i > 0)
+        {
+            while (this->replays[this->replayCursor].stages[this->cursor] == NULL)
+            {
+                this->cursor++;
+                if (this->cursor >= 7)
+                {
+                    this->cursor = 0;
+                }
+            }
+        }
+        this->replayStage = this->cursor;
+        if (WAS_PRESSED(0x1001))
+        {
+            g_SpriteEngine->Func455030(this->sprites, this->spriteCount, 19);
+            this->sprites[this->replayCursor % 15 + 0x87].SetPendingInterrupt(17);
+            this->unk_8 = 3;
+            this->cursor = 0;
+            this->sprites[0x9e].pendingInterrupt = 21;
+            this->sprites[0x9f].pendingInterrupt = 21;
+            this->sprites[0xa0].pendingInterrupt = 21;
+            this->sprites[this->cursor + 0x9e].pendingInterrupt = 20;
+            break;
+        }
+        if (WAS_PRESSED(0xa))
+        {
+            MemFree(this->loadedReplay);
+            this->loadedReplay = NULL;
+            this->unk_8 = 1;
+            this->unk_d0fc = 0;
+            g_SpriteEngine->Func455030(this->sprites, this->spriteCount, 14);
+            this->cursor = this->replayCursor;
+            break;
+        }
+        break;
+    case 3:
+        i = this->MoveMenuCursor(3);
+        if (i != 0)
+        {
+            this->sprites[0x9e].pendingInterrupt = 21;
+            this->sprites[0x9f].pendingInterrupt = 21;
+            this->sprites[0xa0].pendingInterrupt = 21;
+            this->sprites[this->cursor + 0x9e].pendingInterrupt = 20;
+        }
+        if (WAS_PRESSED(0x1001))
+        {
+            g_Unknown626270.SetUnk93d8Bit3(1);
+            strcpy(g_Unknown626270.replayFile, this->replayPaths[this->replayCursor]);
+            g_Unknown626270.difficulty = this->loadedReplay->difficulty;
+            g_Unknown626270.character = this->loadedReplay->shotType / 2;
+            g_Unknown626270.shotType = this->loadedReplay->shotType % 2;
+            g_Unknown626270.unk_93d7 = this->loadedReplay->shotType;
+            MemFree(this->loadedReplay);
+            this->loadedReplay = NULL;
+            g_Unknown626270.stage = g_Unknown626270.difficulty >= 5 ? 7 : this->replayStage;
+            g_App.scene = 2;
+            g_Unknown626270.unk_93df = this->cursor;
+            g_App.Func43a05f();
+            while (g_SoundPlayer.PlayQueuedSounds())
+            {
+            }
+            return 0;
+        }
+        if (WAS_PRESSED(0xa))
+        {
+            this->unk_8 = 2;
+            this->unk_d0fc = 0;
+            this->cursor = this->replayStage;
+            g_SpriteEngine->Func455030(this->sprites, this->spriteCount, 15);
+            this->sprites[this->replayCursor % 15 + 0x87].SetPendingInterrupt(17);
+            break;
+        }
+        break;
+    case 4:
+        if (this->stateFrames >= 30)
+        {
+            this->SetState(0);
+            this->cursor = 3;
+            return 1;
         }
         break;
     }

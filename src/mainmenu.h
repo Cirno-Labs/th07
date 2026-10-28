@@ -5,6 +5,7 @@
 #include <windows.h>
 
 #include "common.h"
+#include "replay.h"
 #include "sprite.h"
 #include "unsorted.h"
 
@@ -27,7 +28,11 @@ public:
     int UpdateCharacterMenu();
     int UpdateShotTypeMenu();
     int UpdateGameStartMenu();
-    int Func45a924();
+    // The replay menu (state 7): lists the replays in "./replay" (the
+    // numbered slots, then up to 45 "th7_ud????.rpy" files), then lets
+    // the player pick one, one of its stages and an option, and starts
+    // it (scene 2, returns 0). Returns 1 otherwise.
+    int UpdateReplayMenu();
     // Gives every button of controllerMapping assigned `button` the
     // value `replacement`. Unlike th06's, `unk` is unused.
     void ReassignButton(short button, short replacement, int unk);
@@ -51,7 +56,19 @@ public:
     // The state before the current one.
     int prevState;
     int unk_68;
-    unsigned char unk_6c[0xb054];
+    // The replay menu's entries: their files' paths, the numbers shown
+    // for them, and the replays' headers.
+    char replayPaths[60][0x200];
+    char replayLabels[60][8];
+    ReplayHeader replays[60];
+    // The replay picked in the replay menu.
+    ReplayHeader *loadedReplay;
+    int unk_b0b0;
+    // The number of replays listed, the one at the cursor and the
+    // stage picked from it.
+    int replayCount;
+    int replayCursor;
+    int replayStage;
     int unk_b0c0;
     // The menu's sprites, spriteCount of them.
     Sprite *sprites;

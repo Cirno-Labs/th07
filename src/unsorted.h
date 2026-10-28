@@ -733,7 +733,8 @@ public:
     unsigned char unk_93d0[0x5];
     BYTE character;
     BYTE shotType;
-    unsigned char unk_93d7;
+    // character * 2 + shotType, as a replay stores it.
+    BYTE unk_93d7;
     // Bit 1: the game is a practice; 0x10: it was cleared.
     union
     {
@@ -744,7 +745,13 @@ public:
             unsigned int unk_93d8Bit3 : 1;
         };
     };
-    unsigned char unk_93dc[0x20c];
+    unsigned char unk_93dc[0x3];
+    // Set from the replay menu's last choice when a replay starts.
+    BYTE unk_93df;
+    unsigned char unk_93e0[0x4];
+    // The replay to play.
+    char replayFile[0x200];
+    unsigned char unk_95e4[0x4];
     // The screen shake ends at once while this is 1 or less.
     int unk_95e8;
     int stage;

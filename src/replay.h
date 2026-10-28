@@ -6,6 +6,8 @@
 
 #include "common.h"
 
+struct ReplayStage;
+
 // The start of a replay file. Only the fields known so far.
 struct ReplayHeader
 {
@@ -13,7 +15,13 @@ struct ReplayHeader
     char magic[4];
     // 0x100 in its low 12 bits.
     WORD version;
-    BYTE unk_06[0x52];
+    BYTE unk_06[0x16];
+    // Indexed by stage. In the file, the offsets of the stages' data.
+    ReplayStage *stages[7];
+    BYTE unk_38[0x1e];
+    // character * 2 + shot type.
+    BYTE shotType;
+    BYTE difficulty;
     // The date it was saved, "%m/%d".
     char date[6];
     BYTE unk_5e[0xe];

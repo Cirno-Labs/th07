@@ -612,7 +612,7 @@ address,size,name,symbol
 0x00457fe5,5427,MainMenu::UpdateCharacterMenu,?UpdateCharacterMenu@MainMenu@@QAEHXZ
 0x00459518,3269,MainMenu::UpdateShotTypeMenu,?UpdateShotTypeMenu@MainMenu@@QAEHXZ
 0x0045a1dd,1863,MainMenu::UpdateGameStartMenu,?UpdateGameStartMenu@MainMenu@@QAEHXZ
-0x0045a924,3275,MainMenu::Func45a924,?Func45a924@MainMenu@@QAEHXZ
+0x0045a924,3275,MainMenu::UpdateReplayMenu,?UpdateReplayMenu@MainMenu@@QAEHXZ
 0x0045b5ef,958,Func45b5ef,
 0x0045b9ad,413,Func45b9ad,
 0x0045bb4a,281,MainMenu::MoveMenuCursor,?MoveMenuCursor@MainMenu@@QAEHH@Z
@@ -1140,7 +1140,7 @@ address,size,name,symbol
 0x0047e7c7,50,__Strftime,
 0x0047e7f9,27,_strftime,_strftime
 0x0047e814,57,_time,_time
-0x0047e84d,156,Func47e84d,
+0x0047e84d,156,_chdir,__chdir
 0x0047e8e9,34,_rand,_rand
 0x0047e90b,,_purecall,__purecall
 0x0047e914,47,__ArrayUnwind,
