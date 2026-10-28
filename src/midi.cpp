@@ -651,3 +651,8 @@ void Unknown4378b0::OnTimer()
 {
     QueryPerformanceCounter(&g_Unknown135e210);
 }
+
+void Unknown4378b0::StartTimer()
+{
+    this->Start(6, NULL, 0);
+}

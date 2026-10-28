@@ -252,4 +252,7 @@ class Unknown4378b0 : public MmTimer
 {
 public:
     virtual void OnTimer();
+
+    // Starts the timer, ticking every 6 ms.
+    void StartTimer();
 };
