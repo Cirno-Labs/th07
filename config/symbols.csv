@@ -391,7 +391,7 @@ address,size,name,symbol
 0x0043832f,63,EnumJoysticksCallback,?EnumJoysticksCallback@@YGHPBUDIDEVICEINSTANCEA@@PAX@Z
 0x0043836e,106,EnumAxesCallback,?EnumAxesCallback@@YGHPBUDIDEVICEOBJECTINSTANCEA@@PAX@Z
 0x004383d8,656,InitDirectInput,?InitDirectInput@@YIHPAVApp@@@Z
-0x00438668,139,Func438668,
+0x00438668,139,OpenGameArchive,?OpenGameArchive@@YIHXZ
 0x004386f3,659,Func4386f3,
 0x00438986,1116,App::AddedCallback,?AddedCallback@App@@SIHPAV1@@Z
 0x00438de2,525,App::DeletedCallback,?DeletedCallback@App@@SIHPAV1@@Z

@@ -231,6 +231,9 @@ public:
     // startup.
     DWORD exeChecksum;
     DWORD exeSize;
+    // The version file OpenGameArchive loads from th07.dat, and its size.
+    int verFileSize;
+    void *verFile;
 };
 
 extern App g_App;
@@ -243,6 +246,11 @@ void DrawFps(int draw);
 // samples: the keyboard, then the first joystick found, if any. Returns
 // 0, or -1 if DirectInput is off or the keyboard fails.
 int InitDirectInput(App *game);
+
+// Opens th07.dat as g_Archive and loads its version file,
+// "th07_0100b.ver", into g_App.verFile. Returns 0, or -1 after logging
+// an error if either is missing. Not in th06.
+int OpenGameArchive();
 
 // IDirectInput8::EnumDevices's callback for joysticks, from the DirectX
 // 8 SDK's Joystick sample: creates a device for the first joystick that

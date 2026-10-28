@@ -4,6 +4,7 @@
 // unsorted42333b.cpp. Built with /Os: its functions are laid out without
 // alignment.
 
+#include <stdio.h>
 #include <string.h>
 
 #include "chain.h"
@@ -156,6 +157,29 @@ int InitDirectInput(App *game)
         game->joystick->GetCapabilities(&g_App.joystickCaps);
         game->joystick->EnumObjects(EnumAxesCallback, NULL, DIDFT_ALL);
         LogPrintf(&g_Log, "有効なパッドを発見しました\r\n");
+    }
+    return 0;
+}
+
+int OpenGameArchive()
+{
+    char path[0x80];
+
+    if (g_Archive.Open("th07.dat"))
+    {
+        sprintf(path, "th07_%.4x%c.ver", 0x100, 'b');
+        g_App.verFile = LoadFileData(path, 0);
+        g_App.verFileSize = g_FileSize;
+        if (g_App.verFile == NULL)
+        {
+            LogError(&g_Log, "error : データのバージョンが違います\r\n");
+            return -1;
+        }
+    }
+    else
+    {
+        LogError(&g_Log, "error : データファイルが存在しません\r\n");
+        return -1;
     }
     return 0;
 }
