@@ -7,6 +7,8 @@
 
 #include "ascii.h"
 #include "mainmenu.h"
+#include "resultscreen.h"
+#include "screeneffect.h"
 #include "unsorted.h"
 
 void App::ResetClockDriftCounters()
@@ -1399,4 +1401,167 @@ int MainMenu::OnDraw(MainMenu *menu)
         g_SpriteEngine->Func44f770(menu->unk_b0c8);
     }
     return 1;
+}
+
+int MainMenu::InitTitleScene()
+{
+    ScoreDat *dat;
+    int i;
+
+    if (g_Unknown626270.unk_4 != NULL)
+    {
+        delete g_Unknown626270.unk_4;
+        g_Unknown626270.unk_4 = NULL;
+    }
+    g_Unknown626270.unk_4 = new Unknown626270Unk4;
+    if (g_Unknown626270.stats != NULL)
+    {
+        delete g_Unknown626270.stats;
+        g_Unknown626270.stats = NULL;
+    }
+    g_Unknown626270.stats = new Unknown626270Stats;
+    g_App.unk_178 = 1.0f;
+    if (g_Unknown626270.unk_93d8 >> 3 & 1)
+    {
+        g_Unknown626270.character = g_Unknown626270.unk_93d7 = 0;
+    }
+    if (g_Unknown626270.unk_93d8 >> 1 & 1)
+    {
+        g_Unknown626270.unk_93d8 &= ~8;
+    }
+    dat = LoadScoreDat("score.dat");
+    LoadClears(dat, g_Unknown626270.clrds);
+    LoadPracticeScores(dat, &g_Unknown626270.pscrs[0][0][0]);
+    Func445069(dat, g_Unknown626270.catks);
+    ReleaseScoreDat(dat);
+    if ((DWORD)g_Unknown626270.plst.playHours < 7)
+    {
+        g_Unknown626270.unk_9630 = 3;
+    }
+    else if ((DWORD)g_Unknown626270.plst.playHours < 14)
+    {
+        g_Unknown626270.unk_9630 = 4;
+    }
+    else
+    {
+        g_Unknown626270.unk_9630 = 5;
+    }
+    if (!g_Unknown626270.unk_9624 && g_Unknown626270.Func42f94c())
+    {
+        i = 0;
+        g_SpriteEngine->LoadSurface(0, "data/title/phantasm.jpg");
+        while (i < 900)
+        {
+            g_SpriteEngine->ClearVertexFormat();
+            g_SpriteEngine->ClearSpriteData();
+            g_SpriteEngine->ClearTexture();
+            g_SpriteEngine->ClearColorOp();
+            g_SpriteEngine->ClearBlendMode();
+            g_SpriteEngine->ClearZWrite();
+            g_SpriteEngine->ClearUnk8();
+            g_SpriteEngine->ClearUnk2e4d4();
+            g_SpriteEngine->ResetUnk0();
+            g_App.d3dDevice->BeginScene();
+            g_SpriteEngine->CopySurfaceToBackBuffer(0, 0, 0, 0, 0);
+            if (i < 60)
+            {
+                float rect[4];
+                ColorBytes fade;
+
+                rect[0] = 0.0f;
+                rect[1] = 0.0f;
+                rect[2] = 639.0f;
+                rect[3] = 479.0f;
+                fade.a = (60 - i) * 255 / 60;
+                fade.r = fade.g = fade.b = 0;
+                DrawColorRect(rect, fade.color);
+            }
+            else if (i > 840)
+            {
+                ColorBytes color;
+                float area[4];
+
+                area[0] = 0.0f;
+                area[1] = 0.0f;
+                area[2] = 639.0f;
+                area[3] = 479.0f;
+                color.a = (i - 840) * 255 / 60;
+                color.r = color.g = color.b = 0;
+                DrawColorRect(area, color.color);
+            }
+            g_Buttons = ReadButtons();
+            g_App.d3dDevice->EndScene();
+            if (g_App.d3dDevice->Present(NULL, NULL, NULL, NULL) < 0)
+            {
+                g_App.d3dDevice->Reset(&g_App.presentParams);
+            }
+            if (i >= 120 && i < 840 && WAS_PRESSED(0x1003))
+            {
+                i = 840;
+                g_SoundPlayer.QueueSound(10, 0);
+            }
+            i++;
+            g_SoundPlayer.PlayQueuedSounds();
+        }
+        g_SpriteEngine->ReleaseSurface(0);
+    }
+    g_Unknown626270.unk_9624 = g_Unknown626270.Func42f94c();
+    this->state = 0;
+    g_App.ResetClockDriftCounters();
+    switch (g_App.prevScene)
+    {
+    case 2:
+    case 3:
+    case 6:
+        this->cursor = g_Unknown626270.difficulty >= 4;
+        break;
+    case 5:
+        this->cursor = 4;
+        break;
+    case 8:
+        this->cursor = 5;
+        break;
+    default:
+        this->cursor = 0;
+        break;
+    }
+    this->unk_68 = 0;
+    if (g_Unknown626270.unk_93d8 & 1)
+    {
+        this->cursor = 2;
+        this->unk_68 = 1;
+    }
+    g_Unknown626270.unk_93d8 &= ~1;
+    if (g_App.prevScene != 0)
+    {
+        Func42e1f8();
+    }
+    if (g_SpriteEngine->LoadAnm(0x20, "data/title01.anm", 0x900) != 0)
+    {
+        return -1;
+    }
+    if (!(g_Unknown626270.unk_93d8 >> 1 & 1))
+    {
+        if (g_App.prevScene != 5)
+        {
+            g_App.Func439dd0(8, "bgm/th07_01.mid");
+        }
+        if (g_App.unk_190 == 0)
+        {
+            ScreenEffect::StartEffect(0, 70, 0xffffff, 0, 0);
+        }
+        else
+        {
+            ScreenEffect::StartEffect(0, 70, 0xffffff, 0, 0);
+        }
+    }
+    for (int j = 0; j < 0xe; j++)
+    {
+        g_SpriteEngine->StartScript(&this->unk_b0cc[j], 0x706);
+        g_SpriteEngine->SetSprite(&this->unk_b0cc[j], this->unk_b0cc[j].spriteIndex + j);
+    }
+    this->unk_b0c8 = this->unk_b0cc;
+    g_Unknown626270.unk_93d8 &= ~2;
+    g_Unknown626270.unk_93e0 = 0;
+    return 0;
 }

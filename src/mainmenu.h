@@ -18,6 +18,12 @@ public:
     // The draw element's callback: draws the background, the replay
     // menu's or the practice scores' text, then the sprites. Returns 1.
     static int OnDraw(MainMenu *menu);
+    // The update element's added callback (through a static wrapper):
+    // resets the game's numbers, reloads the score file, shows the
+    // Phantasm splash once it opens, puts the cursor on the entry the
+    // previous scene came from, loads "data/title01.anm" and the title
+    // music. Returns 0, or -1 if the ANM fails to load.
+    int InitTitleScene();
 
     // Moves to state `state`, remembering the one it leaves in
     // prevState, and resets the frame counters. Not in th06 as a
@@ -86,7 +92,7 @@ public:
     // The menu's sprites, spriteCount of them.
     Sprite *sprites;
     Sprite *unk_b0c8;
-    unsigned char unk_b0cc[0x2028];
+    Sprite unk_b0cc[0xe];
     int spriteCount;
     // The menu's state.
     int state;

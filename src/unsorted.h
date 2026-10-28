@@ -88,6 +88,8 @@ public:
     // Stops the music. Returns 0, or -1 with no music mode. Not in
     // th06 as a function.
     int Func43a05f();
+    // Loads music `path` in slot `slot`. Not named yet.
+    int Func439dd0(int slot, char *path);
 
     BOOL UsesPresentImmediate()
     {
@@ -142,7 +144,9 @@ public:
     // The scene the game is in or switches to; the result screen sets it
     // to 1 to leave.
     int scene;
-    unsigned char unk_15c[0x8];
+    // The scene the game came from.
+    int prevScene;
+    unsigned char unk_160[0x4];
     // How many more frames to draw in full, after the device was reset.
     int redrawFrames;
     unsigned char unk_168[0x4];
@@ -152,7 +156,8 @@ public:
     int unk_170;
     // Cleared by InitD3dDevice.
     int unk_174;
-    unsigned char unk_178[0x4];
+    // Set to 1 by the title menu.
+    float unk_178;
     // The MIDI player; its long messages come back to WindowProc.
     MidiPlayer *midi;
     // Their ratio is the game's speed, which the score entry records
@@ -164,7 +169,8 @@ public:
     // lockable; 4: A8R8G8B8 textures work; 8: no score is recorded;
     // 0x10: the device was reset and no frame has been drawn since.
     DWORD unk_18c;
-    unsigned char unk_190[0x8];
+    int unk_190;
+    unsigned char unk_194[0x4];
     D3DCAPS8 caps;
     unsigned char unk_26c[0x38];
     DWORD unk_2a4;
@@ -241,6 +247,18 @@ void ClearViewport(D3DCOLOR color);
 // Fills `rect` (left, top, right, bottom) with `color`, blended by its
 // alpha, after drawing the batched quads.
 void DrawColorRect(float *rect, D3DCOLOR color);
+// A color by its bytes.
+union ColorBytes
+{
+    D3DCOLOR color;
+    struct
+    {
+        BYTE b;
+        BYTE g;
+        BYTE r;
+        BYTE a;
+    };
+};
 // DrawColorRect with a color for each corner, blended across. Not in
 // th06.
 void DrawGradientRect(float *rect, D3DCOLOR topLeft, D3DCOLOR topRight, D3DCOLOR bottomLeft, D3DCOLOR bottomRight);
@@ -491,6 +509,9 @@ BYTE *GetPadButtons();
 // Reads the keyboard and the joystick into button bits: through
 // DirectInput if there is a keyboard device, else GetKeyboardState.
 WORD ReadButtons();
+// Not named yet; the title menu calls it when it comes back from
+// another scene.
+void Func42e1f8();
 
 // The buttons held this frame and the frame before, as bits.
 extern WORD g_Buttons;
@@ -682,6 +703,14 @@ struct Unknown626270Stats
     unsigned char unk_70[0xc];
     // The shot power, up to 128.
     float power;
+    unsigned char unk_80[0x48];
+};
+ASSERT_SIZE(Unknown626270Stats, 0xc8);
+
+// What Unknown626270::unk_4 points at. Only its size is known.
+struct Unknown626270Unk4
+{
+    unsigned char unk_0[0x38];
 };
 
 // Holds the player's numbers (at 0x626270), with checksums against
@@ -711,7 +740,8 @@ public:
         this->unk_93d8Bit3 = value;
     }
 
-    unsigned char unk_0[0x8];
+    unsigned char unk_0[0x4];
+    Unknown626270Unk4 *unk_4;
     Unknown626270Stats *stats;
     // Set while the game is paused: the screen shake holds still. As
     // th06's GameManager::isFrozen, probably.
@@ -748,7 +778,7 @@ public:
     unsigned char unk_93dc[0x3];
     // Set from the replay menu's last choice when a replay starts.
     BYTE unk_93df;
-    unsigned char unk_93e0[0x4];
+    DWORD unk_93e0;
     // The replay to play.
     char replayFile[0x200];
     unsigned char unk_95e4[0x4];
@@ -760,8 +790,14 @@ public:
     // byte replay file name, the stage) are th06's GameManager's, so
     // this is probably th07's GameManager.
     float arena[4];
-    unsigned char unk_9604[0x24];
+    unsigned char unk_9604[0x20];
+    // Whether Phantasm was open when the title menu last came up.
+    int unk_9624;
     // The frames played, which the result screen shows as progress.
     int progressFrames;
+    unsigned char unk_962c[0x4];
+    // Set by the title menu from the play time: 3 under 7 hours, 4
+    // under 14, else 5.
+    int unk_9630;
 };
 extern Unknown626270 g_Unknown626270;

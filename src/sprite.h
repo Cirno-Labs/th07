@@ -93,6 +93,9 @@ public:
     // Loads the image at `path` as surface `surface`. Returns 0, or -1 on
     // failure.
     int LoadSurface(int surface, char *path);
+    // Loads the ANM file at `path` into slot `slot`, its sprites from
+    // `firstSprite` on. Returns 0, or -1 on failure.
+    int LoadAnm(int slot, char *path, int firstSprite);
     // Renders text from `fmt` into `sprite`'s texture.
     void RenderText(Sprite *sprite, D3DCOLOR textColor, D3DCOLOR shadowColor, char *fmt, ...);
     // RenderText, centered on the sprite.
@@ -144,6 +147,18 @@ public:
     {
         this->unk_2e4d4 = 0xff;
     }
+    void ClearUnk8()
+    {
+        this->unk_c = 0;
+        this->unk_10 = 0;
+        this->unk_8 = 0;
+        this->unk_14 = 0;
+    }
+    void ResetUnk0()
+    {
+        this->unk_4 = 0;
+        this->unk_0 = 0x80808080;
+    }
 
     // Runs script `script` of the loaded ANM files on `vm`.
     void StartScript(Sprite *vm, int script)
@@ -152,7 +167,12 @@ public:
         this->SetScript(vm, this->scripts[script]);
     }
 
-    unsigned char unk_0[0x18];
+    D3DCOLOR unk_0;
+    DWORD unk_4;
+    DWORD unk_8;
+    DWORD unk_c;
+    DWORD unk_10;
+    DWORD unk_14;
     // How far the screen is shaken, set by ScreenEffect's shake.
     float shakeX;
     float shakeY;

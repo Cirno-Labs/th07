@@ -212,6 +212,14 @@ ASSERT_SIZE(ScoreDat, 0x1c);
 // chunks, then copies the score file's "PSCR" chunks over them, stopping
 // at one out of range. Returns 0, or -1 if `pscrs` is NULL.
 int LoadPracticeScores(void *scoreDat, Pscr *pscrs);
+// Reads "score.dat" at `path`, or makes a new one. Placeholder for the
+// details.
+ScoreDat *LoadScoreDat(char *path);
+// Fills `clrds` with fresh chunks, then copies the score file's "CLRD"
+// chunks over them.
+int LoadClears(void *scoreDat, Clrd *clrds);
+// The same for the spell card chunks. Not named yet.
+int Func445069(void *scoreDat, Catk *catks);
 // Copies the score file's last version 1 "PLST" chunk to `plst`.
 // Returns 0.
 int LoadPlstChunk(void *scoreDat, Plst *plst);
