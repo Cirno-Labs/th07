@@ -116,7 +116,8 @@ public:
     IDirectInputDevice8 *keyboard;
     // The first joystick found; NULL without one.
     IDirectInputDevice8 *joystick;
-    unsigned char unk_18[0x2c];
+    // The joystick's capabilities.
+    DIDEVCAPS joystickCaps;
     HWND hwnd;
     D3DXMATRIX viewMatrix;
     D3DXMATRIX projectionMatrix;
@@ -212,6 +213,11 @@ extern App g_App;
 // Measures the frame rate every half second and, when `draw` is set,
 // shows it. Not named yet as th06's beyond this.
 void DrawFps(int draw);
+
+// Sets up DirectInput as the DirectX 8 SDK's Keyboard and Joystick
+// samples: the keyboard, then the first joystick found, if any. Returns
+// 0, or -1 if DirectInput is off or the keyboard fails.
+int InitDirectInput(App *game);
 
 // IDirectInput8::EnumDevices's callback for joysticks, from the DirectX
 // 8 SDK's Joystick sample: creates a device for the first joystick that

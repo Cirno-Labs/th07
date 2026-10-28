@@ -390,7 +390,7 @@ address,size,name,symbol
 0x0043831b,20,App::OnDraw,?OnDraw@App@@SIHPAV1@@Z
 0x0043832f,63,EnumJoysticksCallback,?EnumJoysticksCallback@@YGHPBUDIDEVICEINSTANCEA@@PAX@Z
 0x0043836e,106,EnumAxesCallback,?EnumAxesCallback@@YGHPBUDIDEVICEOBJECTINSTANCEA@@PAX@Z
-0x004383d8,656,Func4383d8,
+0x004383d8,656,InitDirectInput,?InitDirectInput@@YIHPAVApp@@@Z
 0x00438668,139,Func438668,
 0x004386f3,659,Func4386f3,
 0x00438986,1116,App::AddedCallback,?AddedCallback@App@@SIHPAV1@@Z
@@ -693,6 +693,7 @@ address,size,name,symbol
 0x0045fb50,645,DatArchive::ReadTable,?ReadTable@DatArchive@@QAE_NPAD@Z
 0x0045fde0,471,DatArchive::BuildEntryTable,?BuildEntryTable@DatArchive@@QAEPAUDatArchiveEntry@@PAEHK@Z
 0x0045ffc0,139,DatArchive::DuplicateString,?DuplicateString@DatArchive@@QAEPADPAD@Z
+0x00461a90,,DirectInput8Create,_DirectInput8Create@20
 0x00461a96,,DirectSoundCreate8,_DirectSoundCreate8@12
 0x00461a9c,,Direct3DCreate8,_Direct3DCreate8@4
 0x00461aa2,227,Func461aa2,
@@ -1715,7 +1716,11 @@ address,size,name,symbol
 0x0048d264,4,CoUninitialize,__imp__CoUninitialize@0
 0x0048d268,4,CoCreateInstance,__imp__CoCreateInstance@20
 0x0048d26c,4,CoInitialize,__imp__CoInitialize@4
+0x0048d46c,,c_dfDIJoystick2,_c_dfDIJoystick2
+0x0048d674,,c_dfDIKeyboard,_c_dfDIKeyboard
 0x004903f8,,IID_IDirectSoundNotify,_IID_IDirectSoundNotify
+0x00490408,,GUID_SysKeyboard,_GUID_SysKeyboard
+0x004904a8,,IID_IDirectInput8A,_IID_IDirectInput8A
 0x004904b8,,IID_IShellLinkA,_IID_IShellLinkA
 0x004904c8,,CLSID_ShellLink,_CLSID_ShellLink
 0x004904d8,,IID_IPersistFile,_IID_IPersistFile
