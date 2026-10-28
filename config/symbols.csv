@@ -333,7 +333,7 @@ address,size,name,symbol
 0x00432990,4298,Func432990,
 0x00433a90,132,ItemManager::CollectAll,?CollectAll@ItemManager@@QAEXXZ
 0x00433b20,275,ItemManager::ConvertPowerItems,?ConvertPowerItems@ItemManager@@QAEXH@Z
-0x00433c40,141,Func433c40,
+0x00433c40,141,ItemManager::RecycleCollectedItems,?RecycleCollectedItems@ItemManager@@QAEXXZ
 0x00433cd0,434,Func433cd0,
 0x00433e90,133,Func433e90,
 0x00433f20,104,Func433f20,

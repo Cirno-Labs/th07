@@ -132,3 +132,24 @@ void ItemManager::ConvertPowerItems(int except)
         }
     }
 }
+
+void ItemManager::RecycleCollectedItems()
+{
+    Item *entry = this->items;
+    int i;
+
+    for (i = 0; i < 0x44c; i++, entry++)
+    {
+        if (entry->active != 1)
+        {
+            continue;
+        }
+        if (entry->state == 1)
+        {
+            entry->state = 0;
+            entry->velocity.x = 0.0f;
+            entry->velocity.y = -0.9f;
+            entry->velocity.z = 0.0f;
+        }
+    }
+}

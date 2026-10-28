@@ -39,6 +39,9 @@ public:
     // `except` into type 7, with effect 0 on it. Those not rising
     // faster are set to drift up at 0.5.
     void ConvertPowerItems(int except);
+    // Lets every item drawn to the player (state 1) fall again, starting
+    // at a slow upward drift.
+    void RecycleCollectedItems();
 
     // The last one is what SpawnItem returns when all others are taken.
     Item items[0x44d];
