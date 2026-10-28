@@ -500,7 +500,7 @@ address,size,name,symbol
 0x00445110,130,Func445110,
 0x00445192,354,Func445192,
 0x004452f4,395,LoadPracticeScores,?LoadPracticeScores@@YIHPAXPAUPscr@@@Z
-0x0044547f,125,Func44547f,
+0x0044547f,125,LoadPlstChunk,?LoadPlstChunk@@YIHPAXPAUPlst@@@Z
 0x004454fc,48,Func4454fc,
 0x0044552c,1323,Func44552c,
 0x00445a57,255,Func445a57,

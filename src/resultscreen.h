@@ -25,6 +25,17 @@ struct Pscr
 };
 ASSERT_SIZE(Pscr, 0x18);
 
+// A chunk of the score file ("PLST"), new in th07.
+struct Plst
+{
+    DWORD magic;
+    WORD size;
+    WORD size2;
+    BYTE version;
+    BYTE unk_09[0x157];
+};
+ASSERT_SIZE(Plst, 0x160);
+
 // "score.dat" as loaded: a 0x14-byte header, then chunks.
 struct ScoreDat
 {
@@ -40,3 +51,6 @@ ASSERT_SIZE(ScoreDat, 0x14);
 // chunks, then copies the score file's "PSCR" chunks over them, stopping
 // at one out of range. Returns 0, or -1 if `pscrs` is NULL.
 int LoadPracticeScores(void *scoreDat, Pscr *pscrs);
+// Copies the score file's last version 1 "PLST" chunk to `plst`.
+// Returns 0.
+int LoadPlstChunk(void *scoreDat, Plst *plst);
