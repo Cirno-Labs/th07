@@ -290,3 +290,30 @@ struct Unknown4325c0
     float x;
     float y;
 };
+
+// The player's numbers, behind Unknown626270::stats. Only the fields
+// known so far.
+struct Unknown626270Stats
+{
+    unsigned char unk_0[0x7c];
+    // The shot power, up to 128.
+    float power;
+};
+
+// Holds the player's numbers (at 0x626270), with checksums against
+// tampering. Placeholder name.
+class Unknown626270
+{
+public:
+    // Whether the checksummed fields of `stats` no longer agree.
+    int Func404fe0();
+    // Rerolls the checksum keys and recomputes the checksums.
+    void Func4012b0();
+    // Adds `power` to stats->power and recomputes the checksums; wipes
+    // g_App with 0xff first if the checksums were already wrong.
+    void AddPower(int power);
+
+    unsigned char unk_0[0x8];
+    Unknown626270Stats *stats;
+};
+extern Unknown626270 g_Unknown626270;
