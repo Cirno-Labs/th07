@@ -30,6 +30,9 @@ public:
     // 0 over `duration` frames, `flashes` times over. Returns 0 when
     // done, else 1. Not in th06.
     static int OnUpdateFlash(ScreenEffect *effect);
+    // Type 3's draw callback: covers the play area in flashColor at
+    // `alpha`. Returns 1. Not in th06.
+    static int OnDrawFlash(ScreenEffect *effect);
 
     int type;
     ChainElem *calcElem;
