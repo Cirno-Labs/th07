@@ -180,6 +180,9 @@ public:
     // Parses the file in a slot into tracks. Returns -1 if the slot is
     // empty, otherwise 0.
     int ParseFile(int slot);
+    // Loads and parses a MIDI file through the scratch slot 31. Returns -1
+    // if it cannot be loaded, otherwise 0.
+    int Load(char *path);
 
     // The slot of the file being played, -1 for none. LoadFile stops
     // playback before it replaces that file.
