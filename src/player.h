@@ -111,6 +111,12 @@ int UpdateTrailLaserBullet(Player *player, PlayerBullet *bullet);
 // Draws a UpdateTrailLaserBullet laser's sprite at each set point of its trail,
 // fading towards the tail. Returns 0.
 int DrawTrailLaserBullet(Player *player, PlayerBullet *bullet);
+// A bomb-like shot: once it has hit (state 2), every other frame its
+// damage drops to a third (at least 1) and it slows by 12%, returning
+// 1 on the frames between; otherwise it is sized by its script (0x441
+// to 0x448) and sent upwards, up to 45 degrees off at random. Every 6
+// frames it bursts effect 5 at `pos`. Returns 0.
+int UpdateBombShot(Player *player, PlayerBullet *bullet, D3DXVECTOR3 *pos);
 
 // One of the 0x70 entries at Player+0x9dc, probably th06's bomb
 // hitboxes (bombHitPos, bombHitSize, ...) as one struct.

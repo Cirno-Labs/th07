@@ -3,6 +3,7 @@
 
 #include <math.h>
 
+#include "effect.h"
 #include "player.h"
 #include "unsorted.h"
 
@@ -383,5 +384,77 @@ int DrawTrailLaserBullet(Player *player, PlayerBullet *bullet)
         g_SpriteEngine->Draw(&bullet->sprite);
     }
     bullet->sprite.alpha = alpha;
+    return 0;
+}
+
+int UpdateBombShot(Player *player, PlayerBullet *bullet, D3DXVECTOR3 *pos)
+{
+    float angle;
+
+    if (bullet->state == 2)
+    {
+        if (bullet->timer.AsFrames() % 2 != 0)
+        {
+            return 1;
+        }
+        bullet->damage /= 3;
+        if (bullet->damage == 0)
+        {
+            bullet->damage = 1;
+        }
+        bullet->velocity.x *= 0.88f;
+        bullet->velocity.y *= 0.88f;
+    }
+    else
+    {
+        angle = g_Rng.GetRandomF32ZeroToOne() * 1.5707964f - 2.3561945f;
+        switch (bullet->sprite.scriptIndex)
+        {
+        case 0x441:
+            bullet->size.x = 32.0f;
+            bullet->size.y = 32.0f;
+            ((Unknown4325c0 *)&bullet->velocity)->SetPolar(angle, 4.0f);
+            break;
+        case 0x442:
+            bullet->size.x = 42.0f;
+            bullet->size.y = 42.0f;
+            ((Unknown4325c0 *)&bullet->velocity)->SetPolar(angle, 4.0f);
+            break;
+        case 0x443:
+            bullet->size.x = 48.0f;
+            bullet->size.y = 48.0f;
+            ((Unknown4325c0 *)&bullet->velocity)->SetPolar(angle, 4.0f);
+            break;
+        case 0x444:
+            bullet->size.x = 56.0f;
+            bullet->size.y = 56.0f;
+            ((Unknown4325c0 *)&bullet->velocity)->SetPolar(angle, 4.0f);
+            break;
+        case 0x445:
+            bullet->size.x = 48.0f;
+            bullet->size.y = 48.0f;
+            ((Unknown4325c0 *)&bullet->velocity)->SetPolar(angle, 6.0f);
+            break;
+        case 0x446:
+            bullet->size.x = 64.0f;
+            bullet->size.y = 64.0f;
+            ((Unknown4325c0 *)&bullet->velocity)->SetPolar(angle, 6.0f);
+            break;
+        case 0x447:
+            bullet->size.x = 80.0f;
+            bullet->size.y = 80.0f;
+            ((Unknown4325c0 *)&bullet->velocity)->SetPolar(angle, 6.0f);
+            break;
+        case 0x448:
+            bullet->size.x = 96.0f;
+            bullet->size.y = 96.0f;
+            ((Unknown4325c0 *)&bullet->velocity)->SetPolar(angle, 6.0f);
+            break;
+        }
+    }
+    if (bullet->timer.AsFrames() % 6 == 0)
+    {
+        g_EffectManager.SpawnEffect(5, pos, 1, 0xffffffff);
+    }
     return 0;
 }
