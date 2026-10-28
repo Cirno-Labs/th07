@@ -131,6 +131,8 @@ public:
 
     // Frees the MIDI file loaded into a slot.
     void UnloadFile(int slot);
+    // Unprepares and frees a header from `headers`.
+    int ReleaseHeader(LPMIDIHDR header);
     // Plays the loaded tracks on the MIDI mapper, ticking every 1 ms.
     // Returns -1 if nothing is loaded, otherwise 0.
     int Play();

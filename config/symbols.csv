@@ -375,7 +375,7 @@ address,size,name,symbol
 0x00436a00,203,MidiPlayer::Rewind,?Rewind@MidiPlayer@@QAEXXZ
 0x00436ad0,81,MidiPlayer::Play,?Play@MidiPlayer@@QAEHXZ
 0x00436b30,134,Func436b30,
-0x00436bc0,199,Func436bc0,
+0x00436bc0,199,MidiPlayer::ReleaseHeader,?ReleaseHeader@MidiPlayer@@QAEHPAUmidihdr_tag@@@Z
 0x00436c90,79,MidiPlayer::FadeOut,?FadeOut@MidiPlayer@@QAEHH@Z
 0x00436ce0,619,MidiPlayer::OnTimer,?OnTimer@MidiPlayer@@UAEXXZ
 0x00436f50,1868,Func436f50,
