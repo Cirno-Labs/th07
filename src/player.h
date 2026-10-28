@@ -31,7 +31,9 @@ struct PlayerBullet
     // A laser's: its entry in Player::lasers, and its option, from 1.
     short laserIndex;
     short option;
-    unsigned char unk_352[0x12];
+    // FireTrailLaser sets it to ShotData::interval.
+    short unk_352;
+    unsigned char unk_354[0x10];
 };
 ASSERT_SIZE(PlayerBullet, 0x364);
 
@@ -73,6 +75,10 @@ int TryFireShot(Player *player, PlayerBullet *bullet, int frame, ShotData *sd);
 // free, running its timer for sd->interval frames; while it flies from
 // another shot, sends its bullet interrupt 1 and frees it.
 int FireLaser(Player *player, PlayerBullet *bullet, int frame, ShotData *sd);
+// The same while Player::unk_240a is 3, with the timer at 999: also
+// keeps sd->interval in bullet->unk_352 and moves its pos and the 16
+// unk_258 to x = -999.
+int FireTrailLaser(Player *player, PlayerBullet *bullet, int frame, ShotData *sd);
 
 // One of the 0x70 entries at Player+0x9dc, probably th06's bomb
 // hitboxes (bombHitPos, bombHitSize, ...) as one struct.
@@ -135,7 +141,7 @@ public:
     // The shot each laser was fired from, by ShotData::phase.
     ShotData *laserShots[3];
     unsigned char unk_23ec[0x1e];
-    // FireLaser fires its lasers while it is 1, Func43bf50 while it
+    // FireLaser fires its lasers while it is 1, FireTrailLaser while it
     // is 3.
     char unk_240a;
     unsigned char unk_240b[0x5];

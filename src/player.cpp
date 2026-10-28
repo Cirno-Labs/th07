@@ -109,3 +109,38 @@ int FireLaser(Player *player, PlayerBullet *bullet, int frame, ShotData *sd)
     player->laserShots[laser] = sd;
     return 1;
 }
+
+int FireTrailLaser(Player *player, PlayerBullet *bullet, int frame, ShotData *sd)
+{
+    int laser = sd->phase;
+    int j;
+
+    if (player->lasers[laser].bullet != NULL)
+    {
+        if (player->laserShots[laser] != sd)
+        {
+            player->lasers[laser].bullet->sprite.pendingInterrupt = 1;
+            player->lasers[laser].bullet = NULL;
+        }
+        return 0;
+    }
+    if (player->unk_240a != 3)
+    {
+        return 0;
+    }
+    player->lasers[laser].timer.Set(999);
+    player->lasers[laser].bullet = bullet;
+    bullet->laserIndex = laser;
+    bullet->option = sd->option;
+    bullet->velocity.z = sd->offsetX;
+    bullet->laserOffsetY = sd->offsetY;
+    bullet->unk_352 = sd->interval;
+    FireShot(player, bullet, sd);
+    for (j = 15; j >= 0; j--)
+    {
+        bullet->unk_258[j].x = -999.0f;
+    }
+    bullet->pos.x = -999.0f;
+    player->laserShots[laser] = sd;
+    return 1;
+}

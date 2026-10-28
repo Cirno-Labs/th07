@@ -433,7 +433,7 @@ address,size,name,symbol
 0x0043bbd0,490,FireShot,?FireShot@@YIXPAVPlayer@@PAUPlayerBullet@@PAUShotData@@@Z
 0x0043bdc0,65,TryFireShot,?TryFireShot@@YIHPAVPlayer@@PAUPlayerBullet@@HPAUShotData@@@Z
 0x0043be10,312,FireLaser,?FireLaser@@YIHPAVPlayer@@PAUPlayerBullet@@HPAUShotData@@@Z
-0x0043bf50,379,Func43bf50,
+0x0043bf50,379,FireTrailLaser,?FireTrailLaser@@YIHPAVPlayer@@PAUPlayerBullet@@HPAUShotData@@@Z
 0x0043c0d0,228,Func43c0d0,
 0x0043c1c0,142,Func43c1c0,
 0x0043c250,554,Func43c250,
