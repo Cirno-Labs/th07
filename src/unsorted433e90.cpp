@@ -340,6 +340,17 @@ int GameWindow::RunFrame()
     return 0;
 }
 
+int CreateD3d()
+{
+    g_App.d3d = Direct3DCreate8(D3D_SDK_VERSION);
+    if (g_App.d3d == NULL)
+    {
+        LogError(&g_Log, "Direct3D オブジェクトは何故か作成出来なかった\r\n");
+        return 1;
+    }
+    return 0;
+}
+
 inline void SpriteEngine::ReleaseSurfaces()
 {
     int i;

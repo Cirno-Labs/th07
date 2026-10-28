@@ -693,6 +693,7 @@ address,size,name,symbol
 0x0045fb50,645,Func45fb50,
 0x0045fde0,471,Func45fde0,
 0x0045ffc0,139,Func45ffc0,
+0x00461a9c,,Direct3DCreate8,_Direct3DCreate8@4
 0x00461aa2,227,Func461aa2,
 0x00461b85,122,Func461b85,
 0x00461bff,123,Func461bff,
