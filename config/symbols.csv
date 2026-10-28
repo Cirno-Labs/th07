@@ -323,7 +323,7 @@ address,size,name,symbol
 0x00431d3c,1064,GdiSurface::InvertAlpha,?InvertAlpha@GdiSurface@@QAE_NHHHHH@Z
 0x00432164,247,GdiSurface::CopyToSurface,?CopyToSurface@GdiSurface@@QAE_NPAUIDirect3DSurface8@@@Z
 0x0043225b,35,CreateTextSurface,?CreateTextSurface@@YIXXZ
-0x0043227e,37,Func43227e,
+0x0043227e,37,ReleaseTextSurface,?ReleaseTextSurface@@YIXXZ
 0x004322a3,796,Func4322a3,
 0x004325c0,32,Func4325c0,
 0x004325e0,71,Func4325e0,
