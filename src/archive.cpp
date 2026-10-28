@@ -145,3 +145,107 @@ DatArchiveEntry *DatArchive::FindEntry(char *name)
     }
     return NULL;
 }
+
+bool DatArchive::ReadTable(char *path)
+{
+    BYTE *unpacked;
+    DWORD decodedSize;
+    DWORD magic;
+    DWORD size;
+    DWORD tableOffset;
+    HGLOBAL packed;
+
+    packed = NULL;
+    unpacked = NULL;
+    if (this->file == NULL)
+    {
+        return false;
+    }
+    if (!this->file->Open(path, g_FileModes[0]))
+    {
+        goto fail;
+    }
+    if (!this->file->ReadDword(&magic))
+    {
+        goto fail;
+    }
+    if (magic != 0x34474250)
+    {
+        goto fail;
+    }
+    if (!this->file->ReadDword(&this->numEntries))
+    {
+        goto fail;
+    }
+    if (this->numEntries <= 0)
+    {
+        goto fail;
+    }
+    size = this->file->GetSize();
+    if (!this->file->ReadDword(&tableOffset))
+    {
+        goto fail;
+    }
+    if (tableOffset >= size)
+    {
+        goto fail;
+    }
+    size -= tableOffset;
+    if (!this->file->ReadDword(&decodedSize))
+    {
+        goto fail;
+    }
+    this->file->Seek(tableOffset, g_SeekOrigins[0]);
+    packed = GlobalAlloc(GMEM_FIXED, size);
+    if (packed == NULL)
+    {
+        goto fail;
+    }
+    if (this->file->Read(packed, size) == 0)
+    {
+        goto fail;
+    }
+    unpacked = (BYTE *)LzssDecompress((BYTE *)packed, size, NULL, decodedSize);
+    if (unpacked == NULL)
+    {
+        goto fail;
+    }
+    this->entries = this->Func45fde0(unpacked, this->numEntries, tableOffset);
+    if (this->entries == NULL)
+    {
+        goto fail;
+    }
+    if (packed != NULL)
+    {
+        GlobalFree(packed);
+        packed = NULL;
+    }
+    if (unpacked != NULL)
+    {
+        GlobalFree(unpacked);
+        unpacked = NULL;
+    }
+    return true;
+
+fail:
+    if (packed != NULL)
+    {
+        GlobalFree(packed);
+        packed = NULL;
+    }
+    if (unpacked != NULL)
+    {
+        GlobalFree(unpacked);
+        unpacked = NULL;
+    }
+    if (this->file != NULL)
+    {
+        delete this->file;
+        this->file = NULL;
+    }
+    DebugPrint("ファイル %s のオープン中にエラーが発生しました\r\n", path);
+    while (0)
+    {
+    }
+    return false;
+}

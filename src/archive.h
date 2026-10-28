@@ -46,6 +46,12 @@ public:
     // GlobalAlloc'd buffer, and seeks back to where it was.
     virtual void *ReadAll(DWORD maxSize);
 
+    // Reads 4 bytes into `dst`. Returns the bytes read.
+    DWORD ReadDword(void *dst)
+    {
+        return this->Read(dst, 4);
+    }
+
     HANDLE handle;
     // GENERIC_READ or GENERIC_WRITE.
     DWORD access;
@@ -110,6 +116,10 @@ public:
     // Opens the file at `path` and reads the table. Returns true on
     // success; on failure deletes the file.
     bool ReadTable(char *path);
+    // Builds the entry table from the `count` entries at `table` (each a
+    // name, then offset, size and unk_0c), plus an end entry at
+    // `tableOffset`. Returns a new[]'d array, or NULL.
+    DatArchiveEntry *Func45fde0(BYTE *table, int count, DWORD tableOffset);
     // A GlobalAlloc'd copy of `str`, or NULL.
     char *Func45ffc0(char *str);
 
