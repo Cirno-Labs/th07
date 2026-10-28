@@ -24,3 +24,13 @@ void Unknown626270::AddDeaths(int deaths)
     this->stats->deaths += deaths;
     this->Func4012b0();
 }
+
+void Unknown626270::AddBombsUsed(int bombs)
+{
+    if (this->Func404fe0())
+    {
+        memset(&g_App, 0xff, 0x2d0);
+    }
+    this->stats->bombsUsed += bombs;
+    this->Func4012b0();
+}

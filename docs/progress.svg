@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">39.48% (274)</tspan> · <tspan class="decompiled">1.44% (10)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">58.93% (409)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">39.48% (274)</tspan> · <tspan class="decompiled">1.59% (11)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">58.79% (408)</tspan></tspan></text>
 <g transform="translate(0 20)">
 <rect width="294.93" height="6" x="0" y="0" class="named"/>
-<rect width="10.76" height="6" x="294.93" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="305.69" y="0" class="nonmatching"/>
-<rect width="440.23" height="6" x="306.77" y="0" class="todo"/>
+<rect width="11.84" height="6" x="294.93" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="306.77" y="0" class="nonmatching"/>
+<rect width="439.16" height="6" x="307.84" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (173 bytes)</title></rect>
@@ -495,7 +495,7 @@
 <rect width="12" height="12" x="345" y="120" class="named"><title>0x0043b4db MusicScreen::RegisterChain (223 bytes)</title></rect>
 <rect width="12" height="12" x="360" y="120" class="decompiled"><title>0x0043b5c0 Unknown626270::RerollLifeChecksumKeys (396 bytes)</title></rect>
 <rect width="12" height="12" x="375" y="120" class="decompiled"><title>0x0043b750 Unknown626270::AddDeaths (71 bytes)</title></rect>
-<rect width="12" height="12" x="390" y="120" class="todo"><title>0x0043b7a0 Func43b7a0 (71 bytes)</title></rect>
+<rect width="12" height="12" x="390" y="120" class="decompiled"><title>0x0043b7a0 Unknown626270::AddBombsUsed (71 bytes)</title></rect>
 <rect width="12" height="12" x="405" y="120" class="todo"><title>0x0043b7f0 Func43b7f0 (532 bytes)</title></rect>
 <rect width="12" height="12" x="420" y="120" class="todo"><title>0x0043ba10 Func43ba10 (143 bytes)</title></rect>
 <rect width="12" height="12" x="435" y="120" class="todo"><title>0x0043baa0 Func43baa0 (111 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">30.98%</tspan> · <tspan class="decompiled">0.19%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">68.75%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">30.98%</tspan> · <tspan class="decompiled">0.21%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">68.73%</tspan></tspan></text>
 <g transform="translate(0 20)">
 <rect width="231.39" height="6" x="0" y="0" class="named"/>
-<rect width="1.41" height="6" x="231.39" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="232.81" y="0" class="nonmatching"/>
-<rect width="513.53" height="6" x="233.47" y="0" class="todo"/>
+<rect width="1.55" height="6" x="231.39" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="232.94" y="0" class="nonmatching"/>
+<rect width="513.39" height="6" x="233.61" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1348,7 +1348,7 @@
 <rect width="2.49" height="2.42" x="733.52" y="162.71" class="decompiled"><title>0x004325e0 Unknown626270::AddPower (71 bytes)</title></rect>
 <rect width="2.49" height="2.42" x="739.01" y="162.71" class="named"><title>0x0043a207 App::DisableFog (71 bytes)</title></rect>
 <rect width="2.49" height="2.42" x="744.51" y="162.71" class="decompiled"><title>0x0043b750 Unknown626270::AddDeaths (71 bytes)</title></rect>
-<rect width="2.17" height="2.75" x="699.79" y="168.13" class="todo"><title>0x0043b7a0 Func43b7a0 (71 bytes)</title></rect>
+<rect width="2.17" height="2.75" x="699.79" y="168.13" class="decompiled"><title>0x0043b7a0 Unknown626270::AddBombsUsed (71 bytes)</title></rect>
 <rect width="2.17" height="2.67" x="699.79" y="173.88" class="todo"><title>0x004550c0 SpriteEngine::Func4550c0 (70 bytes)</title></rect>
 <rect width="2.17" height="2.59" x="699.79" y="179.55" class="todo"><title>0x0042ad66 Func42ad66 (69 bytes)</title></rect>
 <rect width="2.17" height="2.59" x="699.79" y="185.14" class="todo"><title>0x0042d5cd Func42d5cd (69 bytes)</title></rect>

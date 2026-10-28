@@ -910,6 +910,8 @@ public:
     void RerollLifeChecksumKeys();
     // Adds `deaths` to stats->deaths, checked like AddPower.
     void AddDeaths(int deaths);
+    // Adds `bombs` to stats->bombsUsed, checked like AddPower.
+    void AddBombsUsed(int bombs);
     // Sets bit 3 (0x8) of unk_93d8 to `value`.
     void SetUnk93d8Bit3(int value)
     {
