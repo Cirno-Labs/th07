@@ -82,6 +82,9 @@ public:
     // Advances `frames` by one frame, or by a fraction of one into
     // `subFrame` while the game runs slow.
     void TickTimer(int *frames, float *subFrame);
+    // Clears unk_2a4 and unk_2ac to unk_2b8. Called by the title menu's
+    // added callback. Not in th06.
+    void ResetClockDriftCounters();
 
     BOOL UsesPresentImmediate()
     {
@@ -158,7 +161,13 @@ public:
     DWORD unk_18c;
     unsigned char unk_190[0x8];
     D3DCAPS8 caps;
-    unsigned char unk_26c[0x50];
+    unsigned char unk_26c[0x38];
+    DWORD unk_2a4;
+    unsigned char unk_2a8[0x4];
+    DWORD unk_2ac;
+    DWORD unk_2b0;
+    DWORD unk_2b4;
+    DWORD unk_2b8;
     // Set to 0xff before each frame is drawn; Func43a207 clears it.
     DWORD unk_2bc;
     // The sum of the executable's dwords and its size, as read at

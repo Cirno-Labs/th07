@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">29.39% (204)</tspan> · <tspan class="decompiled">0.58% (4)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">70.03% (486)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">29.54% (205)</tspan> · <tspan class="decompiled">0.58% (4)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">69.88% (485)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="219.58" height="6" x="0" y="0" class="named"/>
-<rect width="4.31" height="6" x="219.58" y="0" class="decompiled"/>
-<rect width="523.12" height="6" x="223.88" y="0" class="todo"/>
+<rect width="220.66" height="6" x="0" y="0" class="named"/>
+<rect width="4.31" height="6" x="220.66" y="0" class="decompiled"/>
+<rect width="522.04" height="6" x="224.96" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (173 bytes)</title></rect>
@@ -668,7 +668,7 @@
 <rect width="12" height="12" x="705" y="165" class="todo"><title>0x00455110 Func455110 (91 bytes)</title></rect>
 <rect width="12" height="12" x="720" y="165" class="todo"><title>0x00455170 Func455170 (352 bytes)</title></rect>
 <rect width="12" height="12" x="735" y="165" class="todo"><title>0x004552d0 Func4552d0 (298 bytes)</title></rect>
-<rect width="12" height="12" x="0" y="180" class="todo"><title>0x004553fa Func4553fa (59 bytes)</title></rect>
+<rect width="12" height="12" x="0" y="180" class="named"><title>0x004553fa App::ResetClockDriftCounters (59 bytes)</title></rect>
 <rect width="12" height="12" x="15" y="180" class="todo"><title>0x00455435 Func455435 (72 bytes)</title></rect>
 <rect width="12" height="12" x="30" y="180" class="todo"><title>0x0045547d Func45547d (89 bytes)</title></rect>
 <rect width="12" height="12" x="45" y="180" class="todo"><title>0x004554d6 Func4554d6 (212 bytes)</title></rect>
@@ -766,11 +766,11 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">17.61%</tspan> · <tspan class="decompiled">0.04%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">82.34%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">17.63%</tspan> · <tspan class="decompiled">0.04%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">82.33%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="131.58" height="6" x="0" y="0" class="named"/>
-<rect width="0.33" height="6" x="131.58" y="0" class="decompiled"/>
-<rect width="615.09" height="6" x="131.91" y="0" class="todo"/>
+<rect width="131.69" height="6" x="0" y="0" class="named"/>
+<rect width="0.33" height="6" x="131.69" y="0" class="decompiled"/>
+<rect width="614.98" height="6" x="132.02" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1379,7 +1379,7 @@
 <rect width="1.88" height="2.15" x="735.43" y="173.46" class="named"><title>0x004366c0 MidiPlayer::UnloadFile (60 bytes)</title></rect>
 <rect width="1.88" height="2.15" x="740.31" y="173.46" class="todo"><title>0x0044f580 SpriteEngine::Func44f580 (60 bytes)</title></rect>
 <rect width="1.80" height="2.15" x="745.20" y="173.46" class="named"><title>0x004361c0 MidiDevice::Close (59 bytes)</title></rect>
-<rect width="1.80" height="2.15" x="710.52" y="178.61" class="todo"><title>0x004553fa Func4553fa (59 bytes)</title></rect>
+<rect width="1.80" height="2.15" x="710.52" y="178.61" class="named"><title>0x004553fa App::ResetClockDriftCounters (59 bytes)</title></rect>
 <rect width="1.80" height="2.06" x="710.52" y="183.76" class="named"><title>0x004369c0 MidiPlayer::Load (58 bytes)</title></rect>
 <rect width="1.80" height="2.06" x="710.52" y="188.82" class="todo"><title>0x0044f960 Func44f960 (58 bytes)</title></rect>
 <rect width="1.80" height="1.89" x="710.52" y="193.88" class="named"><title>0x0045e020 CWaveFile::CWaveFile (56 bytes)</title></rect>

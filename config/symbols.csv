@@ -599,7 +599,7 @@ address,size,name,symbol
 0x00455110,91,Func455110,
 0x00455170,352,Func455170,
 0x004552d0,298,Func4552d0,
-0x004553fa,59,Func4553fa,
+0x004553fa,59,App::ResetClockDriftCounters,?ResetClockDriftCounters@App@@QAEXXZ
 0x00455435,72,Func455435,
 0x0045547d,89,Func45547d,
 0x004554d6,212,Func4554d6,
