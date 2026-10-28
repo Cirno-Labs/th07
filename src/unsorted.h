@@ -95,8 +95,10 @@ public:
     // Whether g_Unknown626270.unk_4 is set and its byte at 0x25 is not
     // 0. The result screen records no score then. Not in th06.
     int IsScoreDisabled();
-    // Saves the back buffer as a bitmap at `path`. Not in th06.
-    int Func4395fb(char *path);
+    // Saves the back buffer as a 24-bit 640x480 bitmap at `path`, from an
+    // X8R8G8B8 back buffer only (a 16-bit one is logged and skipped).
+    // Returns 1 for any other format, otherwise 0. Not in th06.
+    int SaveScreenshot(char *path);
     // Flushes the sprites and turns fog off if unk_2bc is set; returns
     // 0 when it was not. Not in th06.
     // Flushes the sprites and turns fog on unless unk_2bc is 1 already;

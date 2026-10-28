@@ -222,7 +222,7 @@ void PresentFrame()
         }
         if (i < 1000)
         {
-            g_App.Func4395fb(path);
+            g_App.SaveScreenshot(path);
         }
     }
     if (g_App.redrawFrames != 0)

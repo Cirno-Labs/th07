@@ -401,7 +401,7 @@ address,size,name,symbol
 0x00439401,198,Timer::Add,?Add@Timer@@QAEXH@Z
 0x004394c7,198,Timer::Sub,?Sub@Timer@@QAEXH@Z
 0x0043958d,110,App::TickTimer,?TickTimer@App@@QAEXPAHPAM@Z
-0x004395fb,699,App::Func4395fb,?Func4395fb@App@@QAEHPAD@Z
+0x004395fb,699,App::SaveScreenshot,?SaveScreenshot@App@@QAEHPAD@Z
 0x004398b6,1306,App::LoadConfig,?LoadConfig@App@@QAEHPAD@Z
 0x00439dd0,241,App::LoadMidi,?LoadMidi@App@@QAEHHPAD@Z
 0x00439ec1,140,App::PlayMidi,?PlayMidi@App@@QAEHH@Z
