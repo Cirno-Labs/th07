@@ -328,7 +328,7 @@ address,size,name,symbol
 0x004325c0,32,Unknown4325c0::SetPolar,?SetPolar@Unknown4325c0@@QAEXMM@Z
 0x004325e0,71,Unknown626270::AddPower,?AddPower@Unknown626270@@QAEXH@Z
 0x00432630,84,ItemManager::ItemManager,??0ItemManager@@QAE@XZ
-0x00432690,91,Func432690,
+0x00432690,91,Item::Item,??0Item@@QAE@XZ
 0x004326f0,660,ItemManager::SpawnItem,?SpawnItem@ItemManager@@QAEPAUItem@@PAUD3DXVECTOR3@@HH@Z
 0x00432990,4298,Func432990,
 0x00433a90,132,ItemManager::CollectAll,?CollectAll@ItemManager@@QAEXXZ
