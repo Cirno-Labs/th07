@@ -6,6 +6,7 @@
 #include <d3dx8math.h>
 
 #include "common.h"
+#include "timer.h"
 
 // An entry of a loaded ANM file's sprite list. Only the fields known so
 // far.
@@ -15,21 +16,24 @@ struct SpriteData
     int sourceFileIndex;
 };
 
-class Sprite
+// The part of Sprite up to pos. Its implicit constructor (0x4011b0)
+// constructs the Timers; Sprite's calls it rather than expanding it.
+struct SpriteBase
 {
-public:
-    // Whether the sprite shows a sprite whose texture is loaded. Defined
-    // after SpriteEngine.
-    __forceinline BOOL HasTexture();
-    void SetPendingInterrupt(short interrupt)
-    {
-        this->pendingInterrupt = interrupt;
-    }
-
     unsigned char unk_0[0x8];
     // The sprite's rotation about z.
     float rotationZ;
-    unsigned char unk_c[0x1ac];
+    unsigned char unk_c[0x24];
+    Timer unk_30;
+    Timer unk_3c;
+    Timer unk_48[5];
+    Timer unk_84[5];
+    unsigned char unk_c0[0x38];
+    D3DXMATRIX matrix;
+    D3DXVECTOR3 unk_138;
+    D3DXVECTOR3 unk_144;
+    D3DXVECTOR3 unk_150;
+    unsigned char unk_15c[0x5c];
     union
     {
         D3DCOLOR color;
@@ -46,6 +50,26 @@ public:
     unsigned char unk_1c4[0x2];
     // The interrupt label to jump to on the next Step; 0 for none.
     short pendingInterrupt;
+};
+
+class Sprite : public SpriteBase
+{
+public:
+    // Inline, expanded in /Od files; /Os files call the copy at
+    // 0x401170.
+    Sprite()
+    {
+        memset(this, 0, sizeof(Sprite));
+        this->spriteIndex = -1;
+    }
+    // Whether the sprite shows a sprite whose texture is loaded. Defined
+    // after SpriteEngine.
+    __forceinline BOOL HasTexture();
+    void SetPendingInterrupt(short interrupt)
+    {
+        this->pendingInterrupt = interrupt;
+    }
+
     // Where it is drawn.
     D3DXVECTOR3 pos;
     short spriteIndex;
@@ -57,7 +81,12 @@ public:
     unsigned char unk_1da[0xa];
     // The entry SetSprite chose.
     SpriteData *spriteData;
-    unsigned char unk_1e8[0x48];
+    D3DXVECTOR3 unk_1e8;
+    D3DXVECTOR3 unk_1f4;
+    D3DXVECTOR3 unk_200;
+    D3DXVECTOR3 unk_20c;
+    D3DXVECTOR3 unk_218;
+    D3DXVECTOR3 unk_224;
     // Added to pos when it is drawn.
     D3DXVECTOR3 posOffset;
     unsigned char unk_23c[0x10];

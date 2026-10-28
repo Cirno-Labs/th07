@@ -171,6 +171,13 @@ ASSERT_SIZE(Plst, 0x160);
 // whose `data` is NULL; the entries after it are sorted.
 struct ListNode
 {
+    ListNode()
+    {
+        this->prev = NULL;
+        this->next = NULL;
+        this->data = NULL;
+    }
+
     ListNode *prev;
     ListNode *next;
     struct Hscr *data;
@@ -262,10 +269,9 @@ void FormatTodayDate(char *date);
 class ResultScreen
 {
 public:
-    // Zeroes the whole screen and sets the cursor to 1. Inline, but not
-    // expanded: RegisterChain's frame keeps slots for it. The original
-    // (0x444a5b) also constructs the Sprites and lists first, which this
-    // one cannot until Sprite has its constructor.
+    // Constructs the Sprites and lists, then zeroes the whole screen and
+    // sets the cursor to 1. Inline, but too large to expand: RegisterChain
+    // calls the copy at 0x444a5b and keeps slots for it.
     ResultScreen()
     {
         memset(this, 0, sizeof(ResultScreen));
