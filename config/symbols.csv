@@ -643,8 +643,8 @@ address,size,name,symbol
 0x0045d960,78,CSound::ResumeBuffer,?ResumeBuffer@CSound@@QAEJXZ
 0x0045d9b0,110,CSound::Reset,?Reset@CSound@@QAEJXZ
 0x0045da20,96,CStreamingSound::CStreamingSound,??0CStreamingSound@@QAE@PAUIDirectSoundBuffer@@KPAVCWaveFile@@K@Z
-0x0045da80,46,Func45da80,
-0x0045dab0,28,Func45dab0,
+0x0045da80,46,CStreamingSound::`scalar deleting destructor',??_GCStreamingSound@@UAEPAXI@Z
+0x0045dab0,28,CStreamingSound::~CStreamingSound,??1CStreamingSound@@UAE@XZ
 0x0045dad0,143,Func45dad0,
 0x0045db60,1000,CStreamingSound::HandleWaveStreamNotification,?HandleWaveStreamNotification@CStreamingSound@@QAEJH@Z
 0x0045df50,194,CStreamingSound::Reset,?Reset@CStreamingSound@@QAEJXZ
@@ -1716,6 +1716,7 @@ address,size,name,symbol
 0x0048d26c,4,CoInitialize,__imp__CoInitialize@4
 0x004903f8,,IID_IDirectSoundNotify,_IID_IDirectSoundNotify
 0x004904e8,,GUID_NULL,_GUID_NULL
+0x0049528c,4,CStreamingSound::`vftable',??_7CStreamingSound@@6B@
 0x00495290,4,CSound::`vftable',??_7CSound@@6B@
 0x004964f4,,g_DifficultyRatings,?g_DifficultyRatings@@3PAMA
 0x0049ea88,,g_SoundInfos,?g_SoundInfos@@3PAUSoundInfo@@A
