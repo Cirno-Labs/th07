@@ -31,6 +31,9 @@ public:
     // Gives every button of controllerMapping assigned `button` the
     // value `replacement`. Unlike th06's, `unk` is unused.
     void ReassignButton(short button, short replacement, int unk);
+    // Shows `value` as two digits on `vm` and the sprite after it, or
+    // hides both when it is negative. Returns 0. Not in th06.
+    int ShowButtonDigits(Sprite *vm, short value);
 
     unsigned char unk_0[0x8];
     int unk_8;

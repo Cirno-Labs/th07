@@ -30,7 +30,9 @@ public:
     // Where it is drawn.
     D3DXVECTOR3 pos;
     short spriteIndex;
-    unsigned char unk_1d6[0x2];
+    // The first sprite of the script: games show variants of it as
+    // baseSpriteIndex + an offset, such as digits.
+    short baseSpriteIndex;
     // The script SpriteEngine::StartScript started.
     short scriptIndex;
     unsigned char unk_1da[0x56];
