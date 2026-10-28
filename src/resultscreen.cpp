@@ -2,6 +2,8 @@
 // The /Os file with the result screen: the score file and its sorted
 // lists, th06's resultscreen.cpp.
 
+#include <direct.h>
+#include <stdio.h>
 #include <string.h>
 #include <time.h>
 
@@ -879,4 +881,355 @@ void FormatTodayDate(char *date)
     time(&t);
     tm = localtime(&t);
     strftime(date, 6, "%m/%d", tm);
+}
+
+int ResultScreen::HandleReplaySaving()
+{
+    Sprite *spr;
+    int interrupt;
+    int k;
+    ReplayHeader *replay;
+    char path[0x40];
+
+    switch (this->state)
+    {
+    case 0xb:
+        if (this->frame == 60)
+        {
+            if (g_App.Func43a18d() || (g_App.unk_18c >> 3 & 1))
+            {
+                interrupt = 0x13;
+            }
+            else if (g_Unknown626270.stats->unk_20 != 0)
+            {
+                interrupt = 0xe;
+            }
+            else
+            {
+                interrupt = 0xb;
+            }
+            spr = this->sprites;
+            for (k = 0; k < 0x29; k++, spr++)
+            {
+                spr->pendingInterrupt = interrupt;
+            }
+            if (interrupt != 0xb)
+            {
+                this->state = 0xc;
+            }
+            this->cursor = 0;
+        }
+        spr = &this->sprites[0x13];
+        if (this->cursor == 0)
+        {
+            spr->color = spr->color & 0xff000000 | 0xff6060;
+            spr[1].color = spr[1].color & 0xff000000 | 0x606060;
+        }
+        else
+        {
+            spr->color = spr->color & 0xff000000 | 0x606060;
+            spr[1].color = spr[1].color & 0xff000000 | 0xff6060;
+        }
+        if (this->frame < 80)
+        {
+            return 0;
+        }
+        MoveCursorHorizontal(this, 2);
+        if (WAS_PRESSED(0xa) || WAS_PRESSED(8))
+        {
+            goto cancel;
+        }
+        if (WAS_PRESSED(0x1001))
+        {
+            if (this->cursor == 0)
+            {
+            chooseSlot:
+                g_SoundPlayer.QueueSound(10, 0);
+                this->state = 0xd;
+                spr = this->sprites;
+                for (k = 0; k < 0x29; k++, spr++)
+                {
+                    spr->pendingInterrupt = 0xc;
+                }
+                this->frame = 0;
+                goto listSlots;
+            }
+        cancel:
+            this->frame = 0;
+            g_SoundPlayer.QueueSound(0xb, 0);
+            this->state = 2;
+            spr = this->sprites;
+            for (k = 0; k < 0x29; k++, spr++)
+            {
+                spr->pendingInterrupt = 2;
+            }
+        }
+        break;
+    case 0xc:
+        if (this->frame < 20)
+        {
+            return 0;
+        }
+        if (WAS_PRESSED(0x1001) || WAS_PRESSED(0xa))
+        {
+            this->frame = 0;
+            g_SoundPlayer.QueueSound(0xb, 0);
+            this->state = 2;
+            spr = this->sprites;
+            for (k = 0; k < 0x29; k++, spr++)
+            {
+                spr->pendingInterrupt = 2;
+            }
+        }
+        break;
+    case 0xd:
+    listSlots:
+        if (this->frame == 0)
+        {
+            _mkdir("replay");
+            for (k = 0; k < 0xf; k++)
+            {
+                sprintf(path, "./replay/th7_%.2d.rpy", k + 1);
+                replay = (ReplayHeader *)LoadFileData(path, 1);
+                if (replay == NULL)
+                {
+                    continue;
+                }
+                replay = ValidateReplay(replay, g_FileSize);
+                if (replay != NULL)
+                {
+                    this->replays[k] = *replay;
+                    free(replay);
+                }
+            }
+        }
+        if (this->frame < 20)
+        {
+            return 0;
+        }
+        MoveCursorVertical(this, 0xf);
+        this->replaySlot = this->cursor;
+        if (WAS_PRESSED(0x1001))
+        {
+            g_SoundPlayer.QueueSound(10, 0);
+            this->replaySlot = this->cursor;
+            this->frame = 0;
+            FormatTodayDate(this->replay.date);
+            this->replay.score = g_Unknown626270.stats->score;
+            if (*(DWORD *)this->replays[this->cursor].magic != *(DWORD *)"T7RP" ||
+                (this->replays[this->cursor].version & 0xfff) != 0x100)
+            {
+                spr = this->sprites;
+                for (k = 0; k < 0x29; k++, spr++)
+                {
+                    spr->pendingInterrupt = 0x11;
+                }
+                spr = &this->sprites[this->replaySlot + 0x19];
+                spr->pendingInterrupt = 0x10;
+                this->state = 0xe;
+            }
+            else
+            {
+                spr = this->sprites;
+                for (k = 0; k < 0x29; k++, spr++)
+                {
+                    spr->pendingInterrupt = 0xd;
+                }
+                spr = &this->sprites[this->replaySlot + 0x19];
+                spr->pendingInterrupt = 0x10;
+                this->state = 0xf;
+            }
+            this->cursor = 0;
+            this->charIndex = 0;
+            if (this->unk_40)
+            {
+                this->charIndex = 0x5f;
+            }
+        }
+        if (WAS_PRESSED(0xa))
+        {
+            g_SoundPlayer.QueueSound(0xb, 0);
+            this->state = 0xb;
+            spr = this->sprites;
+            for (k = 0; k < 0x29; k++, spr++)
+            {
+                spr->pendingInterrupt = 2;
+            }
+            this->frame = 0;
+        }
+        break;
+    case 0xe:
+        if (this->frame < 30)
+        {
+            return 0;
+        }
+        if (WAS_PRESSED_OR_HELD(0x10))
+        {
+            for (;;)
+            {
+                this->charIndex -= 16;
+                if (this->charIndex < 0)
+                {
+                    this->charIndex += 0x60;
+                }
+                if (g_NameAlphabet[this->charIndex] == ' ')
+                {
+                    continue;
+                }
+                break;
+            }
+            g_SoundPlayer.QueueSound(0xc, 0);
+        }
+        if (WAS_PRESSED_OR_HELD(0x20))
+        {
+            for (;;)
+            {
+                this->charIndex += 16;
+                if (this->charIndex >= 0x60)
+                {
+                    this->charIndex -= 0x60;
+                }
+                if (g_NameAlphabet[this->charIndex] == ' ')
+                {
+                    continue;
+                }
+                break;
+            }
+            g_SoundPlayer.QueueSound(0xc, 0);
+        }
+        if (WAS_PRESSED_OR_HELD(0x40))
+        {
+            for (;;)
+            {
+                this->charIndex--;
+                if (this->charIndex % 16 == 15)
+                {
+                    this->charIndex += 16;
+                }
+                if (this->charIndex < 0)
+                {
+                    this->charIndex = 15;
+                }
+                if (g_NameAlphabet[this->charIndex] == ' ')
+                {
+                    continue;
+                }
+                break;
+            }
+            g_SoundPlayer.QueueSound(0xc, 0);
+        }
+        if (WAS_PRESSED_OR_HELD(0x80))
+        {
+            for (;;)
+            {
+                this->charIndex++;
+                if (this->charIndex % 16 == 0)
+                {
+                    this->charIndex -= 16;
+                }
+                if (g_NameAlphabet[this->charIndex] == ' ')
+                {
+                    continue;
+                }
+                break;
+            }
+            g_SoundPlayer.QueueSound(0xc, 0);
+        }
+        if (WAS_PRESSED_OR_HELD(0x1001))
+        {
+            int pos = this->cursor >= 8 ? 7 : this->cursor;
+
+            if (this->charIndex < 0x5e)
+            {
+                this->name[pos] = g_NameAlphabet[this->charIndex];
+            }
+            else if (this->charIndex == 0x5e)
+            {
+                this->name[pos] = ' ';
+            }
+            else
+            {
+                char replayPath[0x40];
+
+                sprintf(replayPath, "./replay/th7_%.2d.rpy", this->replaySlot + 1);
+                SaveReplay(replayPath, this->name);
+                this->frame = 0;
+                this->state = 2;
+                spr = this->sprites;
+                for (k = 0; k < 0x29; k++, spr++)
+                {
+                    spr->pendingInterrupt = 2;
+                }
+                strcpy(this->lsnm.name, this->name);
+            }
+            if (this->cursor < 8)
+            {
+                this->cursor++;
+                if (this->cursor == 8)
+                {
+                    this->charIndex = 0x5f;
+                }
+            }
+            g_SoundPlayer.QueueSound(10, 0);
+        }
+        if (WAS_PRESSED_OR_HELD(0xa))
+        {
+            int pos2 = this->cursor >= 8 ? 7 : this->cursor;
+
+            if (this->cursor > 0)
+            {
+                this->cursor--;
+                this->name[pos2] = ' ';
+                this->name[this->cursor] = ' ';
+            }
+            g_SoundPlayer.QueueSound(0xb, 0);
+        }
+        if (WAS_PRESSED(8))
+        {
+            goto chooseSlot;
+        }
+        break;
+    case 0xf:
+        spr = &this->sprites[0x13];
+        if (this->cursor == 0)
+        {
+            spr->color = spr->color & 0xff000000 | 0xff6060;
+            spr[1].color = spr[1].color & 0xff000000 | 0x606060;
+        }
+        else
+        {
+            spr->color = spr->color & 0xff000000 | 0x606060;
+            spr[1].color = spr[1].color & 0xff000000 | 0xff6060;
+        }
+        if (this->frame < 20)
+        {
+            return 0;
+        }
+        MoveCursorHorizontal(this, 2);
+        if (WAS_PRESSED(0xa) || WAS_PRESSED(8))
+        {
+            goto chooseSlot;
+        }
+        if (WAS_PRESSED(0x1001))
+        {
+            this->frame = 0;
+            if (this->cursor == 0)
+            {
+                spr = this->sprites;
+                for (k = 0; k < 0x29; k++, spr++)
+                {
+                    spr->pendingInterrupt = 0x11;
+                }
+                spr = &this->sprites[this->replaySlot + 0x19];
+                spr->pendingInterrupt = 0x10;
+                this->state = 0xe;
+            }
+            else
+            {
+                goto chooseSlot;
+            }
+        }
+        break;
+    }
+    return 0;
 }

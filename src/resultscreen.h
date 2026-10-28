@@ -7,6 +7,7 @@
 #include <windows.h>
 
 #include "common.h"
+#include "replay.h"
 #include "sprite.h"
 
 // A high score chunk of the score file ("HSCR"). Only the fields known
@@ -255,7 +256,8 @@ public:
     // while back in the menu.
     int savedCursor;
     int savedSpellPage;
-    BYTE unk_1c[0x4];
+    // The replay slot chosen, 0 to 14.
+    int replaySlot;
     // The character of g_NameAlphabet selected.
     int charIndex;
     // A second cursor, moved by LoadScreenPlstChunk: the spell cards' shot type.
@@ -292,6 +294,11 @@ public:
     // The "TH7K" chunk SaveScoreDat writes.
     Th7k th7k;
     Lsnm lsnm;
-    BYTE unk_bfe4[0xe88];
+    BYTE unk_bfe4[0x8];
+    // The headers of "./replay/th7_01.rpy" to "th7_15.rpy", where they
+    // are valid.
+    ReplayHeader replays[0xf];
+    // The date and score of the replay being saved.
+    ReplayHeader replay;
 };
 ASSERT_SIZE(ResultScreen, 0xce6c);
