@@ -4,6 +4,7 @@
 // unsorted42333b.cpp. Built with /Os: its functions are laid out without
 // alignment.
 
+#include "chain.h"
 #include "unsorted.h"
 
 void DebugPrint2(const char *fmt, ...)
@@ -14,4 +15,28 @@ int App::OnDraw(App *arg)
 {
     DrawFps(1);
     return 1;
+}
+
+int App::RegisterChain()
+{
+    App *game = &g_App;
+    ChainElem *elem;
+    int ret;
+
+    game->curScene = 0;
+    game->scene = -1;
+    game->frames = 0;
+    elem = g_Chain.CreateElem((ChainCallback)App::OnUpdate);
+    elem->arg = game;
+    elem->addedCallback = (ChainCallback)App::AddedCallback;
+    elem->deletedCallback = (ChainCallback)App::DeletedCallback;
+    ret = g_Chain.AddToCalcChain(elem, 0);
+    if (ret != 0)
+    {
+        return ret;
+    }
+    elem = g_Chain.CreateElem((ChainCallback)App::OnDraw);
+    elem->arg = game;
+    g_Chain.AddToDrawChain(elem, 0xf);
+    return 0;
 }

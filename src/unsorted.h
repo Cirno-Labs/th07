@@ -65,10 +65,16 @@ public:
     // Reads the config file at `path` into the config. Returns 0, or
     // nonzero to quit.
     int LoadConfig(char *path);
-    // Adds the application's chain elements. Returns 0, -1 to quit, or
-    // anything else to restart.
+    // Resets the scene and adds OnUpdate at priority 0, with its added
+    // and deleted callbacks, and OnDraw at 0xf. Returns 0, -1 to quit,
+    // or anything else to restart: what adding OnUpdate returned.
     static int RegisterChain();
-    // Draws the frame rate, at priority 0xe on the draw chain. Returns 1.
+    // The main update chain callback and its added and deleted
+    // callbacks.
+    static int OnUpdate(App *arg);
+    static int AddedCallback(App *arg);
+    static int DeletedCallback(App *arg);
+    // The draw chain callback: draws the frame rate. Returns 1.
     static int OnDraw(App *arg);
     // Adds the time since the last call to the play time in
     // g_Unknown626270.plst. Not in th06.
@@ -149,7 +155,11 @@ public:
     BYTE shootFocuses;
     unsigned char unk_13f[0xd];
     GameConfigFlags flags;
-    unsigned char unk_150[0x8];
+    // Counts OnUpdate's calls.
+    int frames;
+    // The scene set up; OnUpdate switches it to `scene` when they
+    // differ.
+    int curScene;
     // The scene the game is in or switches to; the result screen sets it
     // to 1 to leave.
     int scene;
