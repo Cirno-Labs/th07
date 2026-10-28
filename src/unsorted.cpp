@@ -1,3 +1,4 @@
+#include <math.h>
 #include <stdio.h>
 #include <stdarg.h>
 
@@ -388,4 +389,28 @@ DWORD Rng::GetRandomU32()
 float Rng::GetRandomF32ZeroToOne()
 {
     return this->GetRandomU32() / 4294967296.0f;
+}
+
+float AddNormalizeAngle(float a, float b)
+{
+    int i = 0;
+
+    a += b;
+    while (a > 3.1415927f)
+    {
+        a -= 6.2831855f;
+        if (i++ > 16)
+        {
+            break;
+        }
+    }
+    while (a < -3.1415927f)
+    {
+        a += 6.2831855f;
+        if (i++ > 16)
+        {
+            break;
+        }
+    }
+    return a;
 }
