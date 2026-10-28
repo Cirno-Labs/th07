@@ -728,7 +728,7 @@ again:
             }
             if (this->bgm != NULL)
             {
-                this->bgm->Func45d910();
+                this->bgm->PauseBuffer();
             }
         }
         break;

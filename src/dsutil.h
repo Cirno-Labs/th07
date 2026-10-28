@@ -86,7 +86,7 @@ public:
     HRESULT Play(DWORD dwPriority, DWORD dwFlags);
     HRESULT Stop();
     // Stops the first buffer, keeping its position. Not in th06.
-    HRESULT Func45d910();
+    HRESULT PauseBuffer();
     // Plays the first buffer again. Not in th06.
     HRESULT Func45d960();
     HRESULT Reset();
@@ -111,7 +111,7 @@ public:
     DWORD unk_28;
     // Cleared by Play.
     DWORD unk_2c;
-    // Set while the first buffer plays: Func45d960 sets it, Func45d910
+    // Set while the first buffer plays: Func45d960 sets it, PauseBuffer
     // clears it. Not in th06.
     BOOL unk_30;
 };
