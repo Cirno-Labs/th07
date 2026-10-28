@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">42.51% (295)</tspan> · <tspan class="decompiled">1.59% (11)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">55.76% (387)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">42.65% (296)</tspan> · <tspan class="decompiled">1.59% (11)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">55.62% (386)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="317.53" height="6" x="0" y="0" class="named"/>
-<rect width="11.84" height="6" x="317.53" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="329.37" y="0" class="nonmatching"/>
-<rect width="416.55" height="6" x="330.45" y="0" class="todo"/>
+<rect width="318.61" height="6" x="0" y="0" class="named"/>
+<rect width="11.84" height="6" x="318.61" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="330.45" y="0" class="nonmatching"/>
+<rect width="415.48" height="6" x="331.52" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (173 bytes)</title></rect>
@@ -517,7 +517,7 @@
 <rect width="12" height="12" x="675" y="120" class="named"><title>0x0043d160 FireShots (386 bytes)</title></rect>
 <rect width="12" height="12" x="690" y="120" class="named"><title>0x0043d2f0 UpdateBullets (913 bytes)</title></rect>
 <rect width="12" height="12" x="705" y="120" class="named"><title>0x0043d690 DrawBullets (256 bytes)</title></rect>
-<rect width="12" height="12" x="720" y="120" class="todo"><title>0x0043d790 Func43d790 (229 bytes)</title></rect>
+<rect width="12" height="12" x="720" y="120" class="named"><title>0x0043d790 DrawHitBullets (229 bytes)</title></rect>
 <rect width="12" height="12" x="735" y="120" class="todo"><title>0x0043d880 Func43d880 (264 bytes)</title></rect>
 <rect width="12" height="12" x="0" y="135" class="todo"><title>0x0043d990 Func43d990 (72 bytes)</title></rect>
 <rect width="12" height="12" x="15" y="135" class="todo"><title>0x0043d9e0 Func43d9e0 (1724 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">33.05%</tspan> · <tspan class="decompiled">0.21%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">66.65%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">33.11%</tspan> · <tspan class="decompiled">0.21%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">66.59%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="246.89" height="6" x="0" y="0" class="named"/>
-<rect width="1.55" height="6" x="246.89" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="248.44" y="0" class="nonmatching"/>
-<rect width="497.90" height="6" x="249.10" y="0" class="todo"/>
+<rect width="247.34" height="6" x="0" y="0" class="named"/>
+<rect width="1.55" height="6" x="247.34" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="248.89" y="0" class="nonmatching"/>
+<rect width="497.45" height="6" x="249.55" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1121,7 +1121,7 @@
 <rect width="6.85" height="6.83" x="633.77" y="86.33" class="todo"><title>0x00425310 Func425310 (231 bytes)</title></rect>
 <rect width="6.85" height="6.83" x="643.63" y="86.33" class="todo"><title>0x00442b70 Func442b70 (231 bytes)</title></rect>
 <rect width="6.81" height="6.83" x="653.48" y="86.33" class="todo"><title>0x0041aaf0 Func41aaf0 (230 bytes)</title></rect>
-<rect width="6.77" height="6.83" x="663.29" y="86.33" class="todo"><title>0x0043d790 Func43d790 (229 bytes)</title></rect>
+<rect width="6.77" height="6.83" x="663.29" y="86.33" class="named"><title>0x0043d790 DrawHitBullets (229 bytes)</title></rect>
 <rect width="6.77" height="6.83" x="673.06" y="86.33" class="named"><title>0x0045f710 DatArchive::Open (229 bytes)</title></rect>
 <rect width="6.72" height="6.83" x="682.82" y="86.33" class="named"><title>0x0043c0d0 FireHomingShot (228 bytes)</title></rect>
 <rect width="6.64" height="6.83" x="692.55" y="86.33" class="named"><title>0x0044d200 BgmNotificationProc (226 bytes)</title></rect>

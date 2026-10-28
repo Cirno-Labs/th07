@@ -169,6 +169,9 @@ void UpdateBullets(Player *player);
 // th06's DrawBullets: draws the flying bullets (state 1), turned along
 // their angle and offset by the play area, then their draw callbacks.
 void DrawBullets(Player *player);
+// th06's DrawHitBullets: the same for the bullets that hit (state 2),
+// without the draw callback.
+void DrawHitBullets(Player *player);
 
 // One of the 0x70 entries at Player+0x9dc, probably th06's bomb
 // hitboxes (bombHitPos, bombHitSize, ...) as one struct.
