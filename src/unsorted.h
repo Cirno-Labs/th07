@@ -68,6 +68,8 @@ public:
     // Adds the application's chain elements. Returns 0, -1 to quit, or
     // anything else to restart.
     static int RegisterChain();
+    // Draws the frame rate, at priority 0xe on the draw chain. Returns 1.
+    static int OnDraw(App *arg);
     // Adds the time since the last call to the play time in
     // g_Unknown626270.plst. Not in th06.
     void Func43a27f();
@@ -195,6 +197,10 @@ public:
 };
 
 extern App g_App;
+
+// Measures the frame rate every half second and, when `draw` is set,
+// shows it. Not named yet as th06's beyond this.
+void DrawFps(int draw);
 
 inline void Timer::Tick()
 {

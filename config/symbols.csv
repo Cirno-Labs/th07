@@ -387,7 +387,7 @@ address,size,name,symbol
 0x00437908,817,Func437908,
 0x00437c39,55,Func437c39,
 0x00437c70,1707,Func437c70,
-0x0043831b,20,Func43831b,
+0x0043831b,20,App::OnDraw,?OnDraw@App@@SIHPAV1@@Z
 0x0043832f,63,Func43832f,
 0x0043836e,106,Func43836e,
 0x004383d8,656,Func4383d8,
@@ -397,7 +397,7 @@ address,size,name,symbol
 0x00438de2,525,Func438de2,
 0x00438fef,17,Func438fef,
 0x00439000,165,App::RegisterChain,?RegisterChain@App@@SIHXZ
-0x004390a5,860,Func4390a5,
+0x004390a5,860,DrawFps,?DrawFps@@YIXH@Z
 0x00439401,198,Func439401,
 0x004394c7,198,Func4394c7,
 0x0043958d,110,App::TickTimer,?TickTimer@App@@QAEXPAHPAM@Z

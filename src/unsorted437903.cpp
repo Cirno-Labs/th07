@@ -9,3 +9,9 @@
 void DebugPrint2(const char *fmt, ...)
 {
 }
+
+int App::OnDraw(App *arg)
+{
+    DrawFps(1);
+    return 1;
+}
