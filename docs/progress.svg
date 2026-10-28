@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">26.80% (186)</tspan> · <tspan class="decompiled">0.58% (4)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">72.62% (504)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">26.95% (187)</tspan> · <tspan class="decompiled">0.58% (4)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">72.48% (503)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="200.20" height="6" x="0" y="0" class="named"/>
-<rect width="4.31" height="6" x="200.20" y="0" class="decompiled"/>
-<rect width="542.49" height="6" x="204.51" y="0" class="todo"/>
+<rect width="201.28" height="6" x="0" y="0" class="named"/>
+<rect width="4.31" height="6" x="201.28" y="0" class="decompiled"/>
+<rect width="541.41" height="6" x="205.59" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (173 bytes)</title></rect>
@@ -744,7 +744,7 @@
 <rect width="12" height="12" x="345" y="195" class="named"><title>0x0045ead0 LzssCompress (1065 bytes)</title></rect>
 <rect width="12" height="12" x="360" y="195" class="named"><title>0x0045ef00 LzssDecompress (868 bytes)</title></rect>
 <rect width="12" height="12" x="375" y="195" class="named"><title>0x0045f270 LzssTreeInitNode (67 bytes)</title></rect>
-<rect width="12" height="12" x="390" y="195" class="todo"><title>0x0045f2c0 Func45f2c0 (124 bytes)</title></rect>
+<rect width="12" height="12" x="390" y="195" class="named"><title>0x0045f2c0 LzssClearWindow (124 bytes)</title></rect>
 <rect width="12" height="12" x="405" y="195" class="todo"><title>0x0045f340 Func45f340 (284 bytes)</title></rect>
 <rect width="12" height="12" x="420" y="195" class="todo"><title>0x0045f460 Func45f460 (134 bytes)</title></rect>
 <rect width="12" height="12" x="435" y="195" class="todo"><title>0x0045f4f0 Func45f4f0 (132 bytes)</title></rect>
@@ -766,11 +766,11 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">16.74%</tspan> · <tspan class="decompiled">0.04%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">83.21%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">16.78%</tspan> · <tspan class="decompiled">0.04%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">83.18%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="125.08" height="6" x="0" y="0" class="named"/>
-<rect width="0.33" height="6" x="125.08" y="0" class="decompiled"/>
-<rect width="621.59" height="6" x="125.41" y="0" class="todo"/>
+<rect width="125.32" height="6" x="0" y="0" class="named"/>
+<rect width="0.33" height="6" x="125.32" y="0" class="decompiled"/>
+<rect width="621.35" height="6" x="125.65" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1259,7 +1259,7 @@
 <rect width="3.81" height="4.63" x="736.38" y="129.84" class="todo"><title>0x0042f526 Func42f526 (124 bytes)</title></rect>
 <rect width="3.81" height="4.63" x="743.19" y="129.84" class="named"><title>0x0044a520 ClearViewport (124 bytes)</title></rect>
 <rect width="4.22" height="4.20" x="674.06" y="137.48" class="todo"><title>0x00450c10 Func450c10 (124 bytes)</title></rect>
-<rect width="4.22" height="4.20" x="674.06" y="144.67" class="todo"><title>0x0045f2c0 Func45f2c0 (124 bytes)</title></rect>
+<rect width="4.22" height="4.20" x="674.06" y="144.67" class="named"><title>0x0045f2c0 LzssClearWindow (124 bytes)</title></rect>
 <rect width="4.22" height="4.08" x="674.06" y="151.87" class="named"><title>0x004302f0 SetButtonFromDirectInput (122 bytes)</title></rect>
 <rect width="4.22" height="3.97" x="674.06" y="158.96" class="todo"><title>0x0043d0e0 Func43d0e0 (120 bytes)</title></rect>
 <rect width="4.22" height="3.91" x="674.06" y="165.92" class="todo"><title>0x0043a05f Func43a05f (119 bytes)</title></rect>

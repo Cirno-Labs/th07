@@ -675,7 +675,7 @@ address,size,name,symbol
 0x0045ead0,1065,LzssCompress,?LzssCompress@@YIPAXPAEHPAH@Z
 0x0045ef00,868,LzssDecompress,?LzssDecompress@@YIPAXPAEH0H@Z
 0x0045f270,67,LzssTreeInitNode,?LzssTreeInitNode@@YIXH@Z
-0x0045f2c0,124,Func45f2c0,?Func45f2c0@@YIXXZ
+0x0045f2c0,124,LzssClearWindow,?LzssClearWindow@@YIXXZ
 0x0045f340,284,Func45f340,?Func45f340@@YIHHPAH@Z
 0x0045f460,134,Func45f460,?Func45f460@@YIXH@Z
 0x0045f4f0,132,Func45f4f0,

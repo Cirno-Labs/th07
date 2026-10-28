@@ -32,7 +32,7 @@ void *LzssCompress(BYTE *data, int size, int *outSize);
 // is NULL. Returns the output, or NULL if it cannot be allocated.
 void *LzssDecompress(BYTE *data, int dataSize, BYTE *out, int outSize);
 // Clears the window and the tree.
-void Func45f2c0();
+void LzssClearWindow();
 // Makes window position `pos` the tree's only node.
 void LzssTreeInitNode(int pos);
 // Adds the string at window position `pos` to the tree. Returns the
