@@ -131,6 +131,9 @@ public:
 
     // Frees the MIDI file loaded into a slot.
     void UnloadFile(int slot);
+    // Plays the loaded tracks on the MIDI mapper, ticking every 1 ms.
+    // Returns -1 if nothing is loaded, otherwise 0.
+    int Play();
     // Rewinds the tracks.
     void Rewind();
     // Starts fading the music out over `duration` ms. Returns 0.
