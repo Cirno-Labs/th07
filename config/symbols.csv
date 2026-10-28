@@ -678,7 +678,7 @@ address,size,name,symbol
 0x0045f2c0,124,LzssClearWindow,?LzssClearWindow@@YIXXZ
 0x0045f340,284,LzssInsertNode,?LzssInsertNode@@YIHHPAH@Z
 0x0045f460,134,LzssDeleteNode,?LzssDeleteNode@@YIXH@Z
-0x0045f4f0,132,Func45f4f0,?Func45f4f0@@YIXHH@Z
+0x0045f4f0,132,LzssReplaceNode,?LzssReplaceNode@@YIXHH@Z
 0x0045f580,183,Func45f580,?Func45f580@@YIXHH@Z
 0x0045f640,63,Func45f640,?Func45f640@@YIHH@Z
 0x0045f680,40,Func45f680,

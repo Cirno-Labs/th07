@@ -352,11 +352,11 @@ void LzssDeleteNode(int pos)
     }
     if (g_LzssTree[pos].largerChild == 0)
     {
-        Func45f4f0(pos, g_LzssTree[pos].smallerChild);
+        LzssReplaceNode(pos, g_LzssTree[pos].smallerChild);
     }
     else if (g_LzssTree[pos].smallerChild == 0)
     {
-        Func45f4f0(pos, g_LzssTree[pos].largerChild);
+        LzssReplaceNode(pos, g_LzssTree[pos].largerChild);
     }
     else
     {
@@ -364,4 +364,18 @@ void LzssDeleteNode(int pos)
         LzssDeleteNode(replacement);
         Func45f580(pos, replacement);
     }
+}
+
+void LzssReplaceNode(int oldNode, int newNode)
+{
+    g_LzssTree[newNode].parent = g_LzssTree[oldNode].parent;
+    if (g_LzssTree[g_LzssTree[oldNode].parent].largerChild == oldNode)
+    {
+        g_LzssTree[g_LzssTree[oldNode].parent].largerChild = newNode;
+    }
+    else
+    {
+        g_LzssTree[g_LzssTree[oldNode].parent].smallerChild = newNode;
+    }
+    g_LzssTree[oldNode].parent = 0;
 }
