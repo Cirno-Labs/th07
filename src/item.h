@@ -35,6 +35,10 @@ public:
     // Draws every active item to the player (state 1), starting it off
     // at a slow upward drift.
     void CollectAll();
+    // Turns every active power item (types 0 and 2) except item
+    // `except` into type 7, with effect 0 on it. Those not rising
+    // faster are set to drift up at 0.5.
+    void ConvertPowerItems(int except);
 
     // The last one is what SpawnItem returns when all others are taken.
     Item items[0x44d];

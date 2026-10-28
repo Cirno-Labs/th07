@@ -143,7 +143,7 @@ address,size,name,symbol
 0x0041bfd0,301,Func41bfd0,
 0x0041c100,173,Func41c100,
 0x0041c1b0,16,Func41c1b0,
-0x0041c1c0,564,Func41c1c0,
+0x0041c1c0,564,EffectManager::SpawnEffect,?SpawnEffect@EffectManager@@QAEPAUEffect@@HPAUD3DXVECTOR3@@HK@Z
 0x0041c400,521,Func41c400,
 0x0041c610,374,Func41c610,
 0x0041c790,625,Func41c790,
@@ -332,7 +332,7 @@ address,size,name,symbol
 0x004326f0,660,ItemManager::SpawnItem,?SpawnItem@ItemManager@@QAEPAUItem@@PAUD3DXVECTOR3@@HH@Z
 0x00432990,4298,Func432990,
 0x00433a90,132,ItemManager::CollectAll,?CollectAll@ItemManager@@QAEXXZ
-0x00433b20,275,Func433b20,
+0x00433b20,275,ItemManager::ConvertPowerItems,?ConvertPowerItems@ItemManager@@QAEXH@Z
 0x00433c40,141,Func433c40,
 0x00433cd0,434,Func433cd0,
 0x00433e90,133,Func433e90,
@@ -1721,4 +1721,5 @@ address,size,name,symbol
 0x00626218,,g_Chain,?g_Chain@@3VChain@@A
 0x00626258,,g_Archive,?g_Archive@@3VArchive@@A
 0x00626270,,g_Unknown626270,?g_Unknown626270@@3VUnknown626270@@A
+0x012fe250,,g_EffectManager,?g_EffectManager@@3VEffectManager@@A
 0x0135e218,,g_PadButtons,?g_PadButtons@@3PAEA

@@ -1,5 +1,6 @@
 // The items, and the helpers out of line before them.
 
+#include "effect.h"
 #include "item.h"
 #include "unsorted.h"
 
@@ -103,5 +104,31 @@ void ItemManager::CollectAll()
         }
         entry->state = 1;
         entry->velocity = D3DXVECTOR3(0.0f, -0.5f, 0.0f);
+    }
+}
+
+void ItemManager::ConvertPowerItems(int except)
+{
+    Item *entry = this->items;
+    int i;
+
+    for (i = 0; i < 0x44c; i++, entry++)
+    {
+        if (!entry->active || i == except)
+        {
+            continue;
+        }
+        if (entry->type == 0 || entry->type == 2)
+        {
+            if (entry->velocity.y > -0.5f)
+            {
+                entry->velocity.x = 0.0f;
+                entry->velocity.y = -0.5f;
+                entry->velocity.z = 0.0f;
+            }
+            g_EffectManager.SpawnEffect(0, &entry->pos, 1, 0xffffffff);
+            entry->type = 7;
+            g_SpriteEngine->StartScript(&entry->sprite, 0x2cb);
+        }
     }
 }
