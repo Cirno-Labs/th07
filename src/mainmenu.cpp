@@ -1248,3 +1248,48 @@ int MainMenu::DrawReplayMenu()
     g_AsciiText.SetHighlight(0);
     return 1;
 }
+
+int MainMenu::DrawPracticeScores()
+{
+    Sprite *text;
+    int i;
+    int cleared;
+    D3DXVECTOR3 pos;
+
+    g_AsciiText.SetColor(0xffffffff);
+    g_AsciiText.SetHighlight(0);
+    text = &this->sprites[0x83];
+    g_AsciiText.AddFormat(&text->pos, "Stage    HI-Score");
+    pos = text->pos;
+    pos.y += 16.0f;
+    cleared = g_Unknown626270.clrds[g_Unknown626270.character * 2 + g_Unknown626270.shotType]
+                  .stagesCleared[g_App.defaultDifficulty];
+    if (cleared < 0)
+    {
+        cleared = 1;
+    }
+    for (i = 0; i < 6; i++)
+    {
+        g_AsciiText.SetHighlight(i == this->cursor);
+        if (i == this->cursor)
+        {
+            g_AsciiText.SetColor(0xffffffff);
+        }
+        else if (i < cleared)
+        {
+            g_AsciiText.SetColor(0xffa0a0a0);
+        }
+        else
+        {
+            g_AsciiText.SetColor(0xff404040);
+        }
+        g_AsciiText.AddFormat(
+            &pos, "%s %9d0 (%3d)", g_PracticeStageNames[i],
+            g_Unknown626270.pscrs[g_Unknown626270.character * 2 + g_Unknown626270.shotType][i][g_App.defaultDifficulty].score,
+            g_Unknown626270.pscrs[g_Unknown626270.character * 2 + g_Unknown626270.shotType][i][g_App.defaultDifficulty].unk_0c);
+        pos.y += 16.0f;
+    }
+    g_AsciiText.SetColor(0xffffffff);
+    g_AsciiText.SetHighlight(0);
+    return 1;
+}

@@ -614,7 +614,7 @@ address,size,name,symbol
 0x0045a1dd,1863,MainMenu::UpdateGameStartMenu,?UpdateGameStartMenu@MainMenu@@QAEHXZ
 0x0045a924,3275,MainMenu::UpdateReplayMenu,?UpdateReplayMenu@MainMenu@@QAEHXZ
 0x0045b5ef,958,MainMenu::DrawReplayMenu,?DrawReplayMenu@MainMenu@@QAEHXZ
-0x0045b9ad,413,Func45b9ad,
+0x0045b9ad,413,MainMenu::DrawPracticeScores,?DrawPracticeScores@MainMenu@@QAEHXZ
 0x0045bb4a,281,MainMenu::MoveMenuCursor,?MoveMenuCursor@MainMenu@@QAEHH@Z
 0x0045bc63,265,MainMenu::Func45bc63,?Func45bc63@MainMenu@@QAEHH@Z
 0x0045bd6c,425,Func45bd6c,
@@ -1729,6 +1729,7 @@ address,size,name,symbol
 0x0049ec30,,g_NameAlphabet,?g_NameAlphabet@@3PADA
 0x0049ec34,,g_ShotNames,?g_ShotNames@@3PAPADA
 0x0049ed98,,g_FormatInfos,?g_FormatInfos@@3PAUFormatInfo@@A
+0x0049f40c,,g_PracticeStageNames,?g_PracticeStageNames@@3PAPADA
 0x0049f424,,g_MenuStageNames,?g_MenuStageNames@@3PAPADA
 0x0049f444,,g_MenuDifficultyNames,?g_MenuDifficultyNames@@3PAPADA
 0x0049f45c,,g_MenuShotTypeNames,?g_MenuShotTypeNames@@3PAPADA

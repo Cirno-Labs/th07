@@ -38,6 +38,10 @@ public:
     // 2 and 3 the picked replay's slowdown and the score each stage
     // started with. Returns 1.
     int DrawReplayMenu();
+    // Lists the practice high scores (and play counts) of the six
+    // stages for the shot type and difficulty, the one at the cursor
+    // highlighted and those not reached yet dark. Returns 1.
+    int DrawPracticeScores();
     // Gives every button of controllerMapping assigned `button` the
     // value `replacement`. Unlike th06's, `unk` is unused.
     void ReassignButton(short button, short replacement, int unk);
@@ -95,3 +99,5 @@ ASSERT_SIZE(MainMenu, 0xd158);
 extern char *g_MenuStageNames[8];
 extern char *g_MenuDifficultyNames[6];
 extern char *g_MenuShotTypeNames[6];
+// The stage names the practice scores show.
+extern char *g_PracticeStageNames[6];
