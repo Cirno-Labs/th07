@@ -52,6 +52,8 @@ public:
     int AddToCalcChain(ChainElem *elem, int priority);
     // Like AddToCalcChain, for the draw chain.
     int AddToDrawChain(ChainElem *elem, int priority);
+    // Unlinks `elem` from its chain and deletes it.
+    void Remove(ChainElem *elem);
 
     ChainElem calcChain;
     ChainElem drawChain;

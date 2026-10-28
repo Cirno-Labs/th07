@@ -296,7 +296,7 @@ address,size,name,symbol
 0x0042fee0,383,Func42fee0,
 0x00430060,38,Func430060,
 0x00430090,161,Func430090,
-0x00430140,325,Func430140,
+0x00430140,325,Chain::Remove,?Remove@Chain@@QAEXPAUChainElem@@@Z
 0x00430290,85,Func430290,
 0x004302f0,122,Func4302f0,
 0x00430370,115,Func430370,
@@ -1114,6 +1114,7 @@ address,size,name,symbol
 0x0047d371,44,__nh_malloc,
 0x0047d39d,18,_malloc,_malloc
 0x0047d3af,136,_atol,
+0x0047d43c,,operator delete,??3@YAXPAX@Z
 0x0047d441,14,operator_new,
 0x0047d44f,88,Func47d44f,
 0x0047d4b0,45,_strrchr,
