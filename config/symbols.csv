@@ -362,7 +362,7 @@ address,size,name,symbol
 0x004362d0,41,MmTimer::~MmTimer,??1MmTimer@@QAE@XZ
 0x00436300,115,Func436300,
 0x00436380,61,MmTimer::Stop,?Stop@MmTimer@@QAEHXZ
-0x004363c0,26,Func4363c0,
+0x004363c0,26,MmTimer::DefaultCallback,?DefaultCallback@MmTimer@@SGXIIKKK@Z
 0x004363e0,30,Func4363e0,
 0x00436400,78,Func436400,
 0x00436450,351,Func436450,
