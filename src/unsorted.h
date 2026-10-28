@@ -902,6 +902,9 @@ public:
     int Func42f853(int shot);
     // Rerolls the checksum keys and recomputes the checksums.
     void Func4012b0();
+    // Whether a `width` by `height` box centred on (`x`, `y`) touches the
+    // play area, as th06's GameManager::IsInPlayArea.
+    BOOL IsInPlayArea(float x, float y, float width, float height);
     // Adds `power` to stats->power and recomputes the checksums; wipes
     // g_App with 0xff first if the checksums were already wrong.
     void AddPower(int power);

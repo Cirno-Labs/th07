@@ -260,7 +260,7 @@ address,size,name,symbol
 0x0042d5cd,69,Func42d5cd,
 0x0042d612,69,Func42d612,
 0x0042d657,129,Func42d657,
-0x0042d6d8,130,Func42d6d8,
+0x0042d6d8,130,Unknown626270::IsInPlayArea,?IsInPlayArea@Unknown626270@@QAEHMMMM@Z
 0x0042d75a,100,Func42d75a,
 0x0042d7be,124,Func42d7be,
 0x0042d83a,155,Func42d83a,
@@ -445,7 +445,7 @@ address,size,name,symbol
 0x0043cde0,725,UpdateBombShot,?UpdateBombShot@@YIHPAVPlayer@@PAUPlayerBullet@@PAUD3DXVECTOR3@@@Z
 0x0043d0e0,120,BurstHitEffect,?BurstHitEffect@@YIHPAVPlayer@@PAUPlayerBullet@@PAUD3DXVECTOR3@@@Z
 0x0043d160,386,FireShots,?FireShots@@YIXPAVPlayer@@H@Z
-0x0043d2f0,913,Func43d2f0,
+0x0043d2f0,913,UpdateBullets,?UpdateBullets@@YIXPAVPlayer@@@Z
 0x0043d690,256,Func43d690,
 0x0043d790,229,Func43d790,
 0x0043d880,264,Func43d880,

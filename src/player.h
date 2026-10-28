@@ -159,6 +159,13 @@ int BurstHitEffect(Player *player, PlayerBullet *bullet, D3DXVECTOR3 *pos);
 // player's power, unfocused or focused, for `frame` into free bullets,
 // through each shot's fire function, giving the bullets its callbacks.
 void FireShots(Player *player, int frame);
+// th06's UpdateBullets: drops lasers whose options are gone (lasers 0
+// and 1 unless unk_240a is 1, laser 2 unless it is 3) or all of them
+// while unk_2408 is 2, runs down the laser timers (cut to 50 while
+// unk_169f4 is below 0), then moves the flying bullets, through their
+// update callback first, ending those that leave the play area (but
+// types 4 and 5) or whose script ends.
+void UpdateBullets(Player *player);
 
 // One of the 0x70 entries at Player+0x9dc, probably th06's bomb
 // hitboxes (bombHitPos, bombHitSize, ...) as one struct.
@@ -245,6 +252,7 @@ public:
     unsigned char unk_2440[0x4];
     PlayerBullet bullets[0x60];
     PlayerLaser lasers[3];
+    // UpdateBullets cuts the lasers to 50 frames while it is below 0.
     Timer unk_169f4;
     Timer unk_16a00;
     Timer unk_16a0c;

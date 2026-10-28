@@ -14,6 +14,10 @@ struct SpriteData
 {
     // The ANM slot the sprite comes from; negative when unused.
     int sourceFileIndex;
+    unsigned char unk_4[0x28];
+    // Its size in pixels, as in th06.
+    float height;
+    float width;
 };
 
 // The part of Sprite up to pos. Its implicit constructor (0x4011b0)

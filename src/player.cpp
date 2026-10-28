@@ -523,3 +523,84 @@ void FireShots(Player *player, int frame)
         }
     }
 }
+
+void UpdateBullets(Player *player)
+{
+    int i;
+    PlayerBullet *bullet;
+
+    if (player->unk_240a != 3 && player->lasers[2].bullet != NULL)
+    {
+        player->lasers[2].bullet->state = 0;
+        player->lasers[2].bullet = NULL;
+    }
+    if (player->unk_240a != 1)
+    {
+        if (player->lasers[0].bullet != NULL)
+        {
+            player->lasers[0].bullet->sprite.pendingInterrupt = 1;
+            player->lasers[0].bullet = NULL;
+        }
+        if (player->lasers[1].bullet != NULL)
+        {
+            player->lasers[1].bullet->sprite.pendingInterrupt = 1;
+            player->lasers[1].bullet = NULL;
+        }
+    }
+    if (player->unk_2408 == 2)
+    {
+        for (i = 0; i < 3; i++)
+        {
+            if (player->lasers[i].bullet != NULL)
+            {
+                player->lasers[i].bullet->state = 0;
+                player->lasers[i].bullet = NULL;
+            }
+        }
+    }
+    for (i = 0; i < 3; i++)
+    {
+        if (player->lasers[i].bullet == NULL)
+        {
+            continue;
+        }
+        if (player->lasers[i].timer.AsFrames() > 0 && player->lasers[i].timer.AsFrames() < 999)
+        {
+            player->lasers[i].timer.Sub(1);
+        }
+        if (player->unk_169f4.AsFrames() < 0 && player->lasers[i].timer.AsFrames() > 50)
+        {
+            player->lasers[i].timer.Set(50);
+        }
+        if (player->lasers[i].timer.AsFrames() == 0)
+        {
+            player->lasers[i].bullet = NULL;
+        }
+    }
+    bullet = player->bullets;
+    for (i = 0; i < 0x60; i++, bullet++)
+    {
+        if (bullet->state == 0)
+        {
+            continue;
+        }
+        if (bullet->update != NULL && bullet->update(player, bullet))
+        {
+            bullet->state = 0;
+            continue;
+        }
+        bullet->pos[0] += g_App.unk_178 * bullet->velocity.x;
+        bullet->pos[1] += g_App.unk_178 * bullet->velocity.y;
+        if (bullet->type != 4 && bullet->type != 5 &&
+            !g_Unknown626270.IsInPlayArea(bullet->pos.x, bullet->pos.y, bullet->sprite.spriteData->width,
+                                          bullet->sprite.spriteData->height))
+        {
+            bullet->state = 0;
+        }
+        if (g_SpriteEngine->Step(&bullet->sprite))
+        {
+            bullet->state = 0;
+        }
+        bullet->timer.Tick();
+    }
+}
