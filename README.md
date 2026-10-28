@@ -143,3 +143,9 @@ Touhou Project and 東方妖々夢 are by ZUN / Team Shanghai Alice. This is an
 unofficial fan project. It contains no assets or code from the original
 game, and it is not affiliated with or endorsed by ZUN or Team Shanghai
 Alice.
+
+## License
+
+The source in this repository is licensed under the GNU General Public
+License, version 3 only (`GPL-3.0-only`), see [`LICENSE`](LICENSE). The
+license covers our code, not the original game or its data.
