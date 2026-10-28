@@ -514,10 +514,6 @@ int FileExists(char *path);
 // the file cannot be created, -2 if writing fails.
 int WriteToFile(char *path, void *data, int size);
 
-// Compresses `size` bytes at `data` into a new GlobalAlloc block, which
-// it returns, and stores the compressed size in `outSize`.
-void *Func45ead0(BYTE *data, int size, int *outSize);
-
 // The game's random number generator: a 16-bit state stepped with a xor,
 // a subtraction and a rotation, as in th06.
 class Rng

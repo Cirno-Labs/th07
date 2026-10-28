@@ -8,6 +8,7 @@
 #include <time.h>
 
 #include "ascii.h"
+#include "lzss.h"
 #include "resultscreen.h"
 #include "unsorted.h"
 
@@ -205,7 +206,7 @@ void SaveScoreDat(ResultScreen *screen)
     dat10 = (ScoreDat *)buf;
     dat10->dataSize = size0 - sizeof(ScoreDat);
     dat10->fileSize = size0;
-    packed7 = Func45ead0(buf + sizeof(ScoreDat), dat10->dataSize, &dat10->packedSize);
+    packed7 = LzssCompress(buf + sizeof(ScoreDat), dat10->dataSize, &dat10->packedSize);
     memcpy(buf + sizeof(ScoreDat), packed7, dat10->packedSize);
     GlobalFree(packed7);
     size0 = dat10->packedSize + sizeof(ScoreDat);
