@@ -179,6 +179,8 @@ void SaveScoreDat(class ResultScreen *screen);
 int MoveCursorVertical(ResultScreen *screen, int count);
 // The same for `screen`'s unk_24.
 int LoadScreenPlstChunk(ResultScreen *screen, int count);
+// The same with left and right.
+int MoveCursorHorizontal(ResultScreen *screen, int count);
 
 // The result screen's scene object (0xce6c bytes). Only the fields
 // known so far.
