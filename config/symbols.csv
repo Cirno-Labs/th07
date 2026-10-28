@@ -1739,6 +1739,7 @@ address,size,name,symbol
 0x0049f478,,g_KeyConfigHelpTexts,?g_KeyConfigHelpTexts@@3PAPADA
 0x0049f4a8,,g_OptionsHelpTexts,?g_OptionsHelpTexts@@3PAPADA
 0x0049f4cc,,g_TitleHelpTexts,?g_TitleHelpTexts@@3PAPADA
+0x0049f4ec,,g_ShotTypeNames,?g_ShotTypeNames@@3PAPADA
 0x0049f504,,g_SpellCardRatings,?g_SpellCardRatings@@3PAMA
 0x0049f518,,g_DifficultyNames,?g_DifficultyNames@@3PAPADA
 0x0049fc88,,g_JoyCaps,?g_JoyCaps@@3UtagJOYCAPSA@@A

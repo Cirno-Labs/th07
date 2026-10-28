@@ -25,7 +25,10 @@ public:
     unsigned char unk_0[0x74c0];
     // The color text is queued with.
     D3DCOLOR color;
-    unsigned char unk_74c4[0xc];
+    // The scale of the characters added next.
+    float scaleX;
+    float scaleY;
+    unsigned char unk_74cc[0x4];
     // Drawn with the second glyph set, as in th06.
     int highlight;
 };

@@ -58,14 +58,17 @@ struct Catk
     WORD size;
     WORD size2;
     BYTE version;
-    BYTE unk_09[0x1f];
+    BYTE unk_09[0x3];
+    // By shot type, then with every shot type: the best bonus got.
+    DWORD maxBonus[7];
     // The card's number.
     WORD index;
     BYTE unk_2a;
-    char name[0x3d];
-    // The result screen shows "？？？？？" for the name while it is 0.
-    WORD unk_68;
-    // By shot type, then with every shot type: the times captured.
+    char name[0x31];
+    // By shot type, then with every shot type: the times tried and
+    // captured. The result screen shows "？？？？？" for the name while
+    // no shot type has tried it.
+    WORD attempts[7];
     WORD captures[7];
 };
 ASSERT_SIZE(Catk, 0x78);
@@ -259,6 +262,9 @@ int MoveCursorHorizontal(ResultScreen *screen, int count);
 // The shot types' names ("博麗 霊夢 (霊)", ...), by character * 2 +
 // shotType, then "全主人公合計".
 extern char *g_ShotNames[7];
+// The shot types' short names ("ReimuA", ...), by character * 2 +
+// shotType.
+extern char *g_ShotTypeNames[6];
 // The characters a name can be made of, 16 to a row; the last two
 // stand for a space and the end.
 extern char *g_NameAlphabet;
