@@ -105,6 +105,10 @@ public:
     // mode. In wave mode it queues sound command 2 for the slot, after
     // command 4 with g_App.flags.preloadBgm. Returns 0.
     int PlayMidi(int slot);
+    // Plays the MIDI file at `path` from the start in MIDI mode. In wave
+    // mode it queues sound command 2 for the .wav of the same name.
+    // Returns -1 if the music mode is neither, otherwise 0.
+    int PlayMusic(char *path);
 
     BOOL UsesPresentImmediate()
     {

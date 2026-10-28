@@ -271,3 +271,34 @@ int App::PlayMidi(int slot)
     }
     return 0;
 }
+
+int App::PlayMusic(char *path)
+{
+    char *dot;
+    char wavFile[0x100];
+
+    if (g_App.musicMode == 2)
+    {
+        if (g_App.midi != NULL)
+        {
+            MidiPlayer *midi = g_App.midi;
+            midi->Stop();
+            midi->Load(path);
+            midi->Play();
+        }
+    }
+    else if (g_App.musicMode == 1)
+    {
+        strcpy(wavFile, path);
+        dot = strrchr(wavFile, '.');
+        dot[1] = 'w';
+        dot[2] = 'a';
+        dot[3] = 'v';
+        g_SoundPlayer.Func44d2f0(2, -1, wavFile);
+    }
+    else
+    {
+        return -1;
+    }
+    return 0;
+}
