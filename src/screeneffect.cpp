@@ -136,3 +136,21 @@ void DrawGradientRect(float *rect, D3DCOLOR topLeft, D3DCOLOR topRight, D3DCOLOR
     g_App.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
     g_App.d3dDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
 }
+
+int ScreenEffect::OnDrawScreen(ScreenEffect *effect)
+{
+    float area[4];
+
+    area[0] = 0.0f;
+    area[1] = 0.0f;
+    area[2] = 640.0f;
+    area[3] = 480.0f;
+    g_SpriteEngine->Func44f5c0();
+    g_App.viewport.X = 0;
+    g_App.viewport.Y = 0;
+    g_App.viewport.Width = 640;
+    g_App.viewport.Height = 480;
+    g_App.d3dDevice->SetViewport(&g_App.viewport);
+    DrawColorRect(area, effect->alpha << 24 | effect->color);
+    return 1;
+}
