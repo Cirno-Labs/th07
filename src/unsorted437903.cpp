@@ -321,7 +321,7 @@ int App::OnUpdate(App *arg)
     arg->frames++;
     if (arg->frames % 4000 == 3999)
     {
-        if (g_App.Func43a569("0100b", g_App.exeSize, g_App.exeChecksum) != 0)
+        if (g_App.CheckVersionFile("0100b", g_App.exeSize, g_App.exeChecksum) != 0)
         {
             return 4;
         }
@@ -1465,4 +1465,45 @@ void App::AddTotalPlayTime()
 inline void FreeData(void *data)
 {
     free(data);
+}
+
+int App::CheckVersionFile(char *version, DWORD size, DWORD checksum)
+{
+    DWORD size2;
+    char *start;
+    DWORD left;
+    DWORD checksum2;
+    char *p;
+
+    if (this->verFile == NULL)
+    {
+        return 0;
+    }
+    p = (char *)this->verFile;
+    left = this->verFileSize;
+    if (strncmp(version, "debug", 5) == 0)
+    {
+        return 0;
+    }
+    if (strcmp("0100b", "debug") == 0)
+    {
+        return 0;
+    }
+    while (left > 0)
+    {
+        if (strncmp(version, p, 5) == 0)
+        {
+            p += 6;
+            sscanf(p, "%d %d", &size2, &checksum2);
+            if (size2 == size && checksum2 == checksum)
+            {
+                return 0;
+            }
+            return -1;
+        }
+        start = p;
+        p = strchr(p, '\n') + 1;
+        left -= p - start;
+    }
+    return -1;
 }

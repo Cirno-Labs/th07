@@ -97,9 +97,11 @@ public:
     // 16, and clears it otherwise. Called by DrawFps. Not in th06.
     void CheckClockDrift();
     // Checks the version file against `version` ("0100b") and the
-    // executable's size and checksum. Nonzero makes OnUpdate quit. Not
-    // named yet.
-    int Func43a569(char *version, DWORD size, DWORD checksum);
+    // executable's size and checksum: finds the line starting with the
+    // version and reads "%d %d" after it. Returns 0 without a version
+    // file, for a "debug" version or when both numbers match, otherwise
+    // -1, which makes OnUpdate quit. Not in th06.
+    int CheckVersionFile(char *version, DWORD size, DWORD checksum);
     // Adds the time since the last call to the time played in
     // g_Unknown626270.plst. Not in th06.
     void AddTotalPlayTime();
