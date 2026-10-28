@@ -64,6 +64,9 @@ public:
     // Adds the time since the last call to the play time in
     // g_Unknown626270.plst. Not in th06.
     void Func43a27f();
+    // Whether g_Unknown626270.unk_4 is set and its byte at 0x25 is not
+    // 0. The result screen records no score then. Not in th06.
+    int Func43a18d();
     // Saves the back buffer as a bitmap at `path`. Not in th06.
     int Func4395fb(char *path);
     // Flushes the sprites and turns fog off if unk_2bc is set; returns
@@ -130,10 +133,14 @@ public:
     unsigned char unk_178[0x4];
     // The MIDI player; its long messages come back to WindowProc.
     MidiPlayer *midi;
-    unsigned char unk_180[0xc];
+    // Their ratio is the game's speed, which the score entry records
+    // as slowdown.
+    float unk_180;
+    float unk_184;
+    unsigned char unk_188[0x4];
     // Bit 1: the device does T&L in hardware; 2: the back buffer is
-    // lockable; 4: A8R8G8B8 textures work; 0x10: the device was reset and
-    // no frame has been drawn since.
+    // lockable; 4: A8R8G8B8 textures work; 8: no score is recorded;
+    // 0x10: the device was reset and no frame has been drawn since.
     DWORD unk_18c;
     unsigned char unk_190[0x8];
     D3DCAPS8 caps;
@@ -501,7 +508,11 @@ struct Unknown4325c0
 // known so far.
 struct Unknown626270Stats
 {
-    unsigned char unk_0[0x7c];
+    unsigned char unk_0[0x4];
+    DWORD score;
+    unsigned char unk_8[0x18];
+    BYTE unk_20;
+    unsigned char unk_21[0x5b];
     // The shot power, up to 128.
     float power;
 };
@@ -524,10 +535,13 @@ public:
 
     unsigned char unk_0[0x8];
     Unknown626270Stats *stats;
-    unsigned char unk_c[0xc];
+    unsigned char unk_c[0x4];
+    int difficulty;
+    unsigned char unk_14[0x4];
     // The spell card chunks of the score file, by card.
     Catk catks[0x8d];
-    unsigned char unk_4230[0x4218];
+    // A copy of catks, put back when no score is recorded.
+    Catk savedCatks[0x8d];
     // The clear chunks, by shot type.
     Clrd clrds[6];
     // The practice scores, by shot type, stage and difficulty.
@@ -535,7 +549,15 @@ public:
     // The "PLST" chunk. When its magic is set on exit, WinMain calls
     // Func44a302(2).
     Plst plst;
-    unsigned char unk_93d0[0x224];
+    unsigned char unk_93d0[0x5];
+    BYTE character;
+    BYTE shotType;
+    unsigned char unk_93d7;
+    // Bit 0x10: the game was cleared.
+    DWORD unk_93d8;
+    unsigned char unk_93dc[0x210];
+    int stage;
+    unsigned char unk_95f0[0x4];
     // The play area: x, y, width and height. Its neighbours (a 0x200
     // byte replay file name, the stage) are th06's GameManager's, so
     // this is probably th07's GameManager.

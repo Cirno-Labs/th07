@@ -20,11 +20,21 @@ struct Hscr
     BYTE version;
     // Set on the entry just added, which is the one being named.
     BYTE isNew;
-    BYTE unk_0a[0xa];
+    BYTE unk_0a[0x2];
+    DWORD score;
+    // How much the game slowed down, in percent.
+    float slowdown;
     // The shot and difficulty of its list.
     BYTE shot;
     BYTE difficulty;
-    BYTE unk_16[0x12];
+    // The stage reached, 99 for a clear.
+    BYTE stage;
+    // Eight characters and a NUL.
+    char name[9];
+    // "%m/%d" and a NUL.
+    char date[6];
+    BYTE unk_26;
+    BYTE unk_27;
 };
 ASSERT_SIZE(Hscr, 0x28);
 
@@ -198,6 +208,12 @@ int MoveCursorHorizontal(ResultScreen *screen, int count);
 // The shot types' names ("博麗 霊夢 (霊)", ...), by character * 2 +
 // shotType, then "全主人公合計".
 extern char *g_ShotNames[7];
+// The characters a name can be made of, 16 to a row; the last two
+// stand for a space and the end.
+extern char *g_NameAlphabet;
+
+// Writes today's date as "%m/%d" to `date`. Not in th06.
+void Func447161(char *date);
 
 // The result screen's scene object (0xce6c bytes). Only the fields
 // known so far.
@@ -239,7 +255,9 @@ public:
     // while back in the menu.
     int savedCursor;
     int savedSpellPage;
-    BYTE unk_1c[0x8];
+    BYTE unk_1c[0x4];
+    // The character of g_NameAlphabet selected.
+    int charIndex;
     // A second cursor, moved by LoadScreenPlstChunk: the spell cards' shot type.
     int unk_24;
     // The unk_24 that textSprites show; with spellPage.
@@ -256,7 +274,10 @@ public:
     // got: three of 0x10, two of 0x2000, two of 0x20, three of 0x200
     // while 4 or 0x100 is held.
     int cheatProgress;
-    BYTE unk_40[0x10];
+    // When set, the name entry starts on the end mark.
+    int unk_40;
+    // The name entered last.
+    char name[0xc];
     // By shot type (and all of them): the spell cards captured.
     int unk_50[7];
     BYTE unk_6c[0x4];
@@ -265,7 +286,9 @@ public:
     Sprite textSprites[0x11];
     // The high score lists, by difficulty and shot.
     ListNode scores[6][6];
-    BYTE unk_8758[0x3868];
+    BYTE unk_8758[0x3840];
+    // The score being entered.
+    Hscr entry;
     // The "TH7K" chunk SaveScoreDat writes.
     Th7k th7k;
     Lsnm lsnm;

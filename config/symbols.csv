@@ -408,7 +408,7 @@ address,size,name,symbol
 0x00439f4d,274,Func439f4d,
 0x0043a05f,119,Func43a05f,
 0x0043a0d6,183,Func43a0d6,
-0x0043a18d,48,Func43a18d,
+0x0043a18d,48,App::Func43a18d,?Func43a18d@App@@QAEHXZ
 0x0043a1bd,74,Func43a1bd,
 0x0043a207,71,App::Func43a207,?Func43a207@App@@QAEHXZ
 0x0043a24e,49,Func43a24e,
@@ -510,7 +510,7 @@ address,size,name,symbol
 0x00445d8b,40,ResultScreen::ReleaseScores,?ReleaseScores@ResultScreen@@QAEXHH@Z
 0x00445db3,3180,ResultScreen::OnUpdate,?OnUpdate@ResultScreen@@SIHPAV1@@Z
 0x00446a66,1787,ResultScreen::HandleNameEntry,?HandleNameEntry@ResultScreen@@QAEHXZ
-0x00447161,55,Func447161,
+0x00447161,55,Func447161,?Func447161@@YIXPAD@Z
 0x00447198,3640,ResultScreen::HandleReplaySaving,?HandleReplaySaving@ResultScreen@@QAEHXZ
 0x00447fd0,200,ResultScreen::WaitAfterNameEntry,?WaitAfterNameEntry@ResultScreen@@QAEHXZ
 0x00448098,2065,ResultScreen::Func448098,?Func448098@ResultScreen@@QAEHXZ
@@ -1711,6 +1711,7 @@ address,size,name,symbol
 0x0048d264,4,CoUninitialize,__imp__CoUninitialize@0
 0x0048d268,4,CoCreateInstance,__imp__CoCreateInstance@20
 0x0048d26c,4,CoInitialize,__imp__CoInitialize@4
+0x0049ec30,,g_NameAlphabet,?g_NameAlphabet@@3PADA
 0x0049ec34,,g_ShotNames,?g_ShotNames@@3PAPADA
 0x0049ed98,,g_FormatInfos,?g_FormatInfos@@3PAUFormatInfo@@A
 0x0049fc88,,g_JoyCaps,?g_JoyCaps@@3UtagJOYCAPSA@@A
