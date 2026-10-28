@@ -54,6 +54,11 @@ public:
     int AddToDrawChain(ChainElem *elem, int priority);
     // Unlinks `elem` from its chain and deletes it.
     void Remove(ChainElem *elem);
+    // Runs the update chain's callbacks in order, removing the elements
+    // whose callback returns 0. A callback returns 2 to run again, 3, 4 or
+    // 5 to stop with 1, 0 or -1, and 6 to start over. Returns how many
+    // ran.
+    int RunCalcChain();
 
     ChainElem calcChain;
     ChainElem drawChain;
