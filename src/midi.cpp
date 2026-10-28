@@ -190,3 +190,13 @@ void MidiPlayer::FreeTracks()
     this->tracks = NULL;
     this->trackCount = 0;
 }
+
+int MidiPlayer::FadeOut(int duration)
+{
+    this->volumeScale = 0.0f;
+    this->fadeDuration = duration;
+    this->fadeElapsed = 0;
+    this->unk_2dc = 0;
+    this->fading = 1;
+    return 0;
+}
