@@ -303,7 +303,7 @@ int UpdateLaserBullet(Player *player, PlayerBullet *bullet)
     bullet->pos = player->optionPos[bullet->option - 1];
     bullet->pos.x += bullet->velocity.z;
     bullet->pos.z = 0.44f;
-    if (player->unk_2408 == 2)
+    if (player->playerState == 2)
     {
         return 1;
     }
@@ -351,7 +351,7 @@ int UpdateTrailLaserBullet(Player *player, PlayerBullet *bullet)
         bullet->unk_258[i] = bullet->unk_258[i - 1];
     }
     bullet->unk_258[0] = bullet->pos;
-    if (player->unk_2408 == 2)
+    if (player->playerState == 2)
     {
         return 1;
     }
@@ -547,7 +547,7 @@ void UpdateBullets(Player *player)
             player->lasers[1].bullet = NULL;
         }
     }
-    if (player->unk_2408 == 2)
+    if (player->playerState == 2)
     {
         for (i = 0; i < 3; i++)
         {
@@ -568,7 +568,7 @@ void UpdateBullets(Player *player)
         {
             player->lasers[i].timer.Sub(1);
         }
-        if (player->unk_169f4.AsFrames() < 0 && player->lasers[i].timer.AsFrames() > 50)
+        if (player->fireTimer.AsFrames() < 0 && player->lasers[i].timer.AsFrames() > 50)
         {
             player->lasers[i].timer.Set(50);
         }
@@ -651,4 +651,23 @@ void DrawHitBullets(Player *player)
         bullet->sprite.pos.z = 0.4f;
         g_SpriteEngine->Draw(&bullet->sprite);
     }
+}
+
+int UpdateFiring(Player *player)
+{
+    if (player->fireTimer.AsFrames() < 0)
+    {
+        return 0;
+    }
+    if (player->fireTimer.HasTicked() &&
+        (!g_Player.bomb.running || g_Unknown626270.character != 1 || g_Unknown626270.shotType != 1))
+    {
+        FireShots(player, player->fireTimer.AsFrames());
+    }
+    player->fireTimer.Tick();
+    if (player->fireTimer.AsFrames() >= 30 || player->playerState == 2 || player->playerState == 1)
+    {
+        player->fireTimer.Set(-1);
+    }
+    return 0;
 }

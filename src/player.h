@@ -134,13 +134,13 @@ int UpdateAcceleratingBullet(Player *player, PlayerBullet *bullet);
 // A laser, as th06's UpdateBullets case 3: cut short to 20 frames while
 // g_Unknown49fbf0.Func42ad66() or a bomb runs; ends it (returning 1)
 // once its timer runs out, else keeps it on its option, and unless
-// Player::unk_2408 is 2 (returning 1) stretches it to the top. Returns
+// Player::playerState is 2 (returning 1) stretches it to the top. Returns
 // 0 otherwise.
 int UpdateLaserBullet(Player *player, PlayerBullet *bullet);
 // FireTrailLaser's lasers: ended and cut short like UpdateLaserBullet's; the
 // first unk_352 points of the bullet's trail (unk_258, from pos, newest
 // first) that are set (x at least -900) become Player hitboxes 0x60 on,
-// with the bullet's size. Unless Player::unk_2408 is 2 (returning 1),
+// with the bullet's size. Unless Player::playerState is 2 (returning 1),
 // the laser then runs from the player to the top. Returns 0 otherwise.
 int UpdateTrailLaserBullet(Player *player, PlayerBullet *bullet);
 // Draws a UpdateTrailLaserBullet laser's sprite at each set point of its trail,
@@ -161,8 +161,8 @@ int BurstHitEffect(Player *player, PlayerBullet *bullet, D3DXVECTOR3 *pos);
 void FireShots(Player *player, int frame);
 // th06's UpdateBullets: drops lasers whose options are gone (lasers 0
 // and 1 unless unk_240a is 1, laser 2 unless it is 3) or all of them
-// while unk_2408 is 2, runs down the laser timers (cut to 50 while
-// unk_169f4 is below 0), then moves the flying bullets, through their
+// while playerState is 2, runs down the laser timers (cut to 50 while
+// fireTimer is idle), then moves the flying bullets, through their
 // update callback first, ending those that leave the play area (but
 // types 4 and 5) or whose script ends.
 void UpdateBullets(Player *player);
@@ -172,6 +172,10 @@ void DrawBullets(Player *player);
 // th06's DrawHitBullets: the same for the bullets that hit (state 2),
 // without the draw callback.
 void DrawHitBullets(Player *player);
+// th06's UpdateFiring: runs fireTimer, firing (FireShots) on each new
+// frame, except during a bomb of character 1 shot type 1, and stops it
+// after 30 frames or while respawning or dying. Returns 0.
+int UpdateFiring(Player *player);
 
 // One of the 0x70 entries at Player+0x9dc, probably th06's bomb
 // hitboxes (bombHitPos, bombHitSize, ...) as one struct.
@@ -236,11 +240,12 @@ public:
     // The shot each laser was fired from, by ShotData::phase.
     ShotData *laserShots[3];
     unsigned char unk_23ec[0x1c];
-    // While it is 2, UpdateLaserBullet leaves its lasers' length alone.
-    char unk_2408;
+    // As th06's: 0 normally, 1 respawning, 2 dying, 3 invulnerable.
+    // Firing stops at 1 and 2.
+    char playerState;
     unsigned char unk_2409[0x1];
     // FireLaser fires its lasers while it is 1, FireTrailLaser while it
-    // is 3.
+    // is 3. Where th06 has optionState.
     char unk_240a;
     // Picks shotTypeFocused over shotType, as th06's focused.
     char focused;
@@ -258,8 +263,9 @@ public:
     unsigned char unk_2440[0x4];
     PlayerBullet bullets[0x60];
     PlayerLaser lasers[3];
-    // UpdateBullets cuts the lasers to 50 frames while it is below 0.
-    Timer unk_169f4;
+    // Runs while firing, as th06's: -1 when idle, stopped after 30
+    // frames.
+    Timer fireTimer;
     Timer unk_16a00;
     Timer unk_16a0c;
     unsigned char unk_16a18[0x8];
