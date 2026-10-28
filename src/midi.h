@@ -131,6 +131,8 @@ public:
 
     // Frees the MIDI file loaded into a slot.
     void UnloadFile(int slot);
+    // Rewinds the tracks.
+    void Rewind();
     // Starts fading the music out over `duration` ms. Returns 0.
     int FadeOut(int duration);
     // Frees the parsed tracks.

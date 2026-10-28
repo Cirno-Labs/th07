@@ -372,7 +372,7 @@ address,size,name,symbol
 0x00436700,131,MidiPlayer::FreeTracks,?FreeTracks@MidiPlayer@@QAEXXZ
 0x00436790,547,Func436790,
 0x004369c0,58,Func4369c0,
-0x00436a00,203,Func436a00,
+0x00436a00,203,MidiPlayer::Rewind,?Rewind@MidiPlayer@@QAEXXZ
 0x00436ad0,81,Func436ad0,
 0x00436b30,134,Func436b30,
 0x00436bc0,199,Func436bc0,
