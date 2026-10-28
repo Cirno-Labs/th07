@@ -36,13 +36,26 @@ struct Plst
 };
 ASSERT_SIZE(Plst, 0x160);
 
+// A node of the score file's lists. Each list starts with a head node
+// whose `data` is NULL; the entries after it are sorted.
+struct ListNode
+{
+    ListNode *prev;
+    ListNode *next;
+    struct Hscr *data;
+};
+
+// Frees every node after `head`.
+void FreeListNodes(ListNode *head);
+
 // "score.dat" as loaded: a 0x14-byte header, then chunks.
 struct ScoreDat
 {
     BYTE unk_00[0x8];
     // Where the chunks start.
     int dataOffset;
-    void *scores;
+    // The list of the score entries read from the chunks.
+    ListNode *scores;
     int fileSize;
 };
 ASSERT_SIZE(ScoreDat, 0x14);
@@ -54,3 +67,5 @@ int LoadPracticeScores(void *scoreDat, Pscr *pscrs);
 // Copies the score file's last version 1 "PLST" chunk to `plst`.
 // Returns 0.
 int LoadPlstChunk(void *scoreDat, Plst *plst);
+// Frees `dat` and its list.
+void ReleaseScoreDat(ScoreDat *dat);
