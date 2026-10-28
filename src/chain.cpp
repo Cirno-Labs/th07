@@ -209,3 +209,42 @@ restart:
     }
     return updateCount;
 }
+
+int Chain::RunDrawChain()
+{
+    ChainElem *current;
+    int updateCount;
+    ChainElem *tmp;
+
+    updateCount = 0;
+    current = &this->drawChain;
+    while (current != NULL)
+    {
+        if (current->callback != NULL)
+        {
+        again:
+            switch (current->callback(current->arg))
+            {
+            case 0:
+                tmp = current;
+                current = current->next;
+                this->Remove(tmp);
+                updateCount++;
+                continue;
+            case 2:
+                goto again;
+            case 4:
+                return 0;
+            case 3:
+                return 1;
+            case 5:
+                return -1;
+            default:
+                updateCount++;
+                break;
+            }
+        }
+        current = current->next;
+    }
+    return updateCount;
+}

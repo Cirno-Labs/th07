@@ -292,7 +292,7 @@ address,size,name,symbol
 0x0042fbd0,197,Chain::AddToCalcChain,?AddToCalcChain@Chain@@QAEHPAUChainElem@@H@Z
 0x0042fca0,184,Chain::AddToDrawChain,?AddToDrawChain@Chain@@QAEHPAUChainElem@@H@Z
 0x0042fd60,153,Chain::RunCalcChain,?RunCalcChain@Chain@@QAEHXZ
-0x0042fe20,154,Func42fe20,
+0x0042fe20,154,Chain::RunDrawChain,?RunDrawChain@Chain@@QAEHXZ
 0x0042fee0,383,Func42fee0,
 0x00430060,38,Func430060,
 0x00430090,161,Func430090,
