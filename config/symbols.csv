@@ -350,7 +350,7 @@ address,size,name,symbol
 0x004356a0,1313,SetDefaultRenderStates,?SetDefaultRenderStates@@YIXXZ
 0x00435bd0,595,CheckSingleInstance,?CheckSingleInstance@@YIHPAUHINSTANCE__@@@Z
 0x00435e30,143,ForceForegroundWindow,?ForceForegroundWindow@@YIXPAUHWND__@@@Z
-0x00435ec0,255,Func435ec0,?Func435ec0@@YIHXZ
+0x00435ec0,255,ChecksumExecutable,?ChecksumExecutable@@YIHXZ
 0x00435fc0,322,Func435fc0,?Func435fc0@@YIHPAD0H@Z
 0x00436110,33,MidiDevice::MidiDevice,??0MidiDevice@@QAE@XZ
 0x00436140,19,MidiDevice::~MidiDevice,??1MidiDevice@@QAE@XZ

@@ -293,7 +293,7 @@ extern HANDLE g_AppMutex;
 // th06.
 int Func435fc0(char *path, char *out, int size);
 // Sums the executable's dwords. Not in th06.
-int Func435ec0();
+int ChecksumExecutable();
 
 class CSoundManager;
 class CStreamingSound;

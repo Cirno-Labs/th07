@@ -60,7 +60,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     {
         goto stop;
     }
-    Func435ec0();
+    ChecksumExecutable();
     QueryPerformanceFrequency((LARGE_INTEGER *)g_GameWindow.perfFrequency);
 restart:
     if (CreateD3d() != 0)
@@ -870,4 +870,33 @@ void ForceForegroundWindow(HWND hwnd)
     SetActiveWindow(hwnd);
     SystemParametersInfoA(SPI_SETFOREGROUNDLOCKTIMEOUT, 0, &lockTime, 0);
     AttachThreadInput(thread, activeThread, FALSE);
+}
+
+int ChecksumExecutable()
+{
+    char exePath[0x105];
+    int sum;
+    int *data;
+    DWORD idx;
+    int *words;
+
+    if (GetModuleFileNameA(NULL, exePath, sizeof(exePath)) != 0)
+    {
+        sum = 0;
+        data = words = (int *)LoadFileData(exePath, 1);
+        if (words == NULL)
+        {
+            return -1;
+        }
+        for (idx = 0; idx < (DWORD)g_FileSize / 4 - 1; idx++, words++)
+        {
+            sum += *words;
+        }
+        DebugPrint("main sum %d\r\n", sum);
+        free(data);
+        g_App.exeChecksum = sum;
+        g_App.exeSize = g_FileSize;
+        return sum;
+    }
+    return -1;
 }
