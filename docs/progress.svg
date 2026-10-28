@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">28.67% (199)</tspan> · <tspan class="decompiled">0.58% (4)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">70.75% (491)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">28.82% (200)</tspan> · <tspan class="decompiled">0.58% (4)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">70.61% (490)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="214.20" height="6" x="0" y="0" class="named"/>
-<rect width="4.31" height="6" x="214.20" y="0" class="decompiled"/>
-<rect width="528.50" height="6" x="218.50" y="0" class="todo"/>
+<rect width="215.27" height="6" x="0" y="0" class="named"/>
+<rect width="4.31" height="6" x="215.27" y="0" class="decompiled"/>
+<rect width="527.42" height="6" x="219.58" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (173 bytes)</title></rect>
@@ -757,7 +757,7 @@
 <rect width="12" height="12" x="540" y="195" class="named"><title>0x0045f800 DatArchive::Release (199 bytes)</title></rect>
 <rect width="12" height="12" x="555" y="195" class="named"><title>0x0045f8d0 DatArchiveEntry::`vector deleting destructor&#x27; (133 bytes)</title></rect>
 <rect width="12" height="12" x="570" y="195" class="named"><title>0x0045f960 DatArchive::Decode (321 bytes)</title></rect>
-<rect width="12" height="12" x="585" y="195" class="todo"><title>0x0045fab0 DatArchive::GetEntrySize (46 bytes)</title></rect>
+<rect width="12" height="12" x="585" y="195" class="named"><title>0x0045fab0 DatArchive::GetEntrySize (46 bytes)</title></rect>
 <rect width="12" height="12" x="600" y="195" class="todo"><title>0x0045fae0 DatArchive::FindEntry (101 bytes)</title></rect>
 <rect width="12" height="12" x="615" y="195" class="todo"><title>0x0045fb50 DatArchive::ReadTable (645 bytes)</title></rect>
 <rect width="12" height="12" x="630" y="195" class="todo"><title>0x0045fde0 Func45fde0 (471 bytes)</title></rect>
@@ -766,11 +766,11 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">17.25%</tspan> · <tspan class="decompiled">0.04%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">82.71%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">17.26%</tspan> · <tspan class="decompiled">0.04%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">82.70%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="128.83" height="6" x="0" y="0" class="named"/>
-<rect width="0.33" height="6" x="128.83" y="0" class="decompiled"/>
-<rect width="617.84" height="6" x="129.16" y="0" class="todo"/>
+<rect width="128.92" height="6" x="0" y="0" class="named"/>
+<rect width="0.33" height="6" x="128.92" y="0" class="decompiled"/>
+<rect width="617.75" height="6" x="129.25" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1412,7 +1412,7 @@
 <rect width="1.20" height="1.59" x="733.20" y="183.52" class="named"><title>0x0045d030 CSound::`scalar deleting destructor&#x27; (46 bytes)</title></rect>
 <rect width="1.20" height="1.59" x="737.40" y="183.52" class="named"><title>0x0045da80 CStreamingSound::`scalar deleting destructor&#x27; (46 bytes)</title></rect>
 <rect width="1.20" height="1.59" x="741.60" y="183.52" class="named"><title>0x0045e590 File::`scalar deleting destructor&#x27; (46 bytes)</title></rect>
-<rect width="1.20" height="1.59" x="745.80" y="183.52" class="todo"><title>0x0045fab0 DatArchive::GetEntrySize (46 bytes)</title></rect>
+<rect width="1.20" height="1.59" x="745.80" y="183.52" class="named"><title>0x0045fab0 DatArchive::GetEntrySize (46 bytes)</title></rect>
 <rect width="1.28" height="1.31" x="724.61" y="188.11" class="named"><title>0x0045c710 CSoundManager::~CSoundManager (44 bytes)</title></rect>
 <rect width="1.28" height="1.21" x="724.61" y="192.42" class="named"><title>0x00445d60 ResultScreen::AddScore (43 bytes)</title></rect>
 <rect width="1.28" height="1.21" x="724.61" y="196.63" class="named"><title>0x0045e850 File::Tell (43 bytes)</title></rect>
