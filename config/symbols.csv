@@ -352,7 +352,7 @@ address,size,name,symbol
 0x00435e30,143,Func435e30,
 0x00435ec0,255,Func435ec0,
 0x00435fc0,322,Func435fc0,
-0x00436110,33,Func436110,
+0x00436110,33,MidiDevice::MidiDevice,??0MidiDevice@@QAE@XZ
 0x00436140,19,Func436140,
 0x00436160,89,Func436160,
 0x004361c0,59,Func4361c0,
