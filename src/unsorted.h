@@ -199,6 +199,9 @@ int CreateGameWindow(HINSTANCE instance);
 // Brings `hwnd` to the foreground, lifting the foreground lock timeout
 // for the time. Not in th06.
 void Func435e30(HWND hwnd);
+// Clears the back buffer and the depth buffer to `color` and presents,
+// twice, resetting the device when a present fails.
+void ClearScreen(D3DCOLOR color);
 // Clears the whole back buffer to `color`.
 void ClearViewport(D3DCOLOR color);
 // Creates the Direct3D device. Returns 0, or nonzero on failure.

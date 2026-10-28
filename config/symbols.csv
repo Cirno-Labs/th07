@@ -519,7 +519,7 @@ address,size,name,symbol
 0x00449b05,1780,ResultScreen::AddedCallback,?AddedCallback@ResultScreen@@SIHPAV1@@Z
 0x0044a1f9,265,ResultScreen::DeletedCallback,?DeletedCallback@ResultScreen@@SIHPAV1@@Z
 0x0044a302,339,ResultScreen::RegisterChain,?RegisterChain@ResultScreen@@SIHH@Z
-0x0044a460,190,Func44a460,
+0x0044a460,190,ClearScreen,?ClearScreen@@YIXK@Z
 0x0044a520,124,ClearViewport,?ClearViewport@@YIXK@Z
 0x0044a5a0,165,Func44a5a0,
 0x0044a650,969,Func44a650,
