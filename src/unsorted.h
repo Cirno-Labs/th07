@@ -109,3 +109,7 @@ BYTE *GetPadButtons();
 // Reads the keyboard and the joystick into button bits: through
 // DirectInput if there is a keyboard device, else GetKeyboardState.
 WORD ReadButtons();
+
+// Clears the down bit (0x80) of every key in the thread's keyboard
+// state.
+void ResetKeyboard();
