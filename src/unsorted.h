@@ -424,7 +424,7 @@ extern int g_FileSize;
 
 // The game's data archive, at 0x626258: files are looked up by name
 // (without the directory). Its layout is not known yet.
-class Archive
+class DatArchive
 {
 public:
     // The decoded size of entry `name`; 0 if there is none.
@@ -433,7 +433,7 @@ public:
     // bytes.
     void *Decode(char *name, void *buffer);
 };
-extern Archive g_Archive;
+extern DatArchive g_Archive;
 
 // The object error messages go to, e.g. "error : MIDI File が読み込めない".
 // Larger than th06's: the text buffer holds 0x2000 bytes, not 0x800.
