@@ -384,7 +384,7 @@ address,size,name,symbol
 0x004378d0,25,Unknown4378b0::StartTimer,?StartTimer@Unknown4378b0@@QAEXXZ
 0x004378f0,19,Unknown4378b0::StopTimer,?StopTimer@Unknown4378b0@@QAEXXZ
 0x00437903,5,DebugPrint2,?DebugPrint2@@YAXPBDZZ
-0x00437908,817,App::Func437908,?Func437908@App@@QAEXXZ
+0x00437908,817,App::CheckClockDrift,?CheckClockDrift@App@@QAEXXZ
 0x00437c39,55,SpriteEngine::ReleaseVertexBuffer,?ReleaseVertexBuffer@SpriteEngine@@QAEXXZ
 0x00437c70,1707,App::OnUpdate,?OnUpdate@App@@SIHPAV1@@Z
 0x0043831b,20,App::OnDraw,?OnDraw@App@@SIHPAV1@@Z

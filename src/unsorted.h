@@ -82,9 +82,13 @@ public:
     // Adds the time since the last call to the play time in
     // g_Unknown626270.plst. Not in th06.
     void AddPlayTime();
-    // Compares the time the clock and the performance counter say
-    // passed; called by DrawFps. Not in th06.
-    void Func437908();
+    // Unless unk_2b8 is clear, compares the time the local clock and
+    // the performance counter say passed since startTime and
+    // startCounter, counting in unk_2a4 to unk_2b4 how often the clock
+    // ran over 2.5 times faster, then clears unk_2b8. Sets bit 0x8 of
+    // unk_18c (no score is recorded) once unk_2ac reaches 40 or unk_2b4
+    // 16, and clears it otherwise. Called by DrawFps. Not in th06.
+    void CheckClockDrift();
     // Adds the time since the last call to the time played in
     // g_Unknown626270.plst. Not in th06.
     void AddTotalPlayTime();
@@ -233,14 +237,25 @@ public:
     // QueryPerformanceFrequency's result, as AddedCallback read it. Only
     // 4-aligned, so not a LARGE_INTEGER.
     DWORD perfFrequency[2];
-    unsigned char unk_274[0x30];
-    DWORD unk_2a4;
-    // DrawFps shows the speed in red when it is set.
+    // The performance counter and the local time at the start of
+    // CheckClockDrift's measurement, and at its end.
+    DWORD startCounter[2];
+    DWORD counter[2];
+    SYSTEMTIME startTime;
+    SYSTEMTIME time;
+    // How many measurements in a row found the clock running more than
+    // 2.5 times faster than the performance counter, one fewer for each
+    // that did not.
+    int unk_2a4;
+    // DrawFps shows the rate in red when it is set.
     int unk_2a8;
-    DWORD unk_2ac;
-    DWORD unk_2b0;
-    DWORD unk_2b4;
-    DWORD unk_2b8;
+    // The highest unk_2a4 so far.
+    int unk_2ac;
+    // The same, cleared after reaching 10, which adds one to unk_2b4.
+    int unk_2b0;
+    int unk_2b4;
+    // Set while a measurement is pending; CheckClockDrift clears it.
+    int unk_2b8;
     // Set to 0xff before each frame is drawn; DisableFog clears it.
     DWORD unk_2bc;
     // The sum of the executable's dwords and its size, as read at
@@ -255,11 +270,11 @@ public:
 extern App g_App;
 
 // Measures the frame rate every half second, with the performance
-// counter when there is one (calling g_App.Func437908 every eighth
+// counter when there is one (calling g_App.CheckClockDrift every eighth
 // time), and adds up the frames there should have been and those there
 // were while bit 2 of g_Unknown626270.unk_93d8 is set and `draw` is.
-// Shows the rate when `draw` is set and hideFps is not, with the speed
-// in percent below it while bits 2 and 3 are set.
+// Shows the rate when `draw` is set and hideFps is not, with
+// g_App.unk_188 below it while bits 2 and 3 are set.
 void DrawFps(int draw);
 
 // Sets up DirectInput as the DirectX 8 SDK's Keyboard and Joystick

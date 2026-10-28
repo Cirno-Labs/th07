@@ -18,6 +18,67 @@ void DebugPrint2(const char *fmt, ...)
 {
 }
 
+void App::CheckClockDrift()
+{
+    double counterTime;
+    double clockTime;
+
+    if (this->unk_2b8 == 0)
+    {
+        return;
+    }
+    QueryPerformanceCounter((LARGE_INTEGER *)this->counter);
+    GetLocalTime(&this->time);
+    clockTime = this->time.wDay * 24.0 * 60.0 * 60.0 + this->time.wHour * 60 * 60 + this->time.wMinute * 60 +
+                this->time.wSecond;
+    counterTime = this->startTime.wDay * 24.0 * 60.0 * 60.0 + this->startTime.wHour * 60 * 60 +
+                  this->startTime.wMinute * 60 + this->startTime.wSecond;
+    // Into the next month.
+    if (clockTime < counterTime)
+    {
+        clockTime = (this->startTime.wDay + 1) * 24.0 * 60.0 * 60.0 + this->time.wHour * 60 * 60 +
+                    this->time.wMinute * 60 + this->time.wSecond;
+    }
+    clockTime -= counterTime;
+    clockTime = clockTime * 1000.0 + this->time.wMilliseconds - this->startTime.wMilliseconds;
+    clockTime /= 1000.0;
+    counterTime = (double)(this->counter[0] - this->startCounter[0]) / (double)this->perfFrequency[0];
+    if (counterTime >= 1.0)
+    {
+        if (clockTime / counterTime > 2.5)
+        {
+            this->unk_2a4++;
+            if (this->unk_2ac < this->unk_2a4)
+            {
+                this->unk_2ac = this->unk_2a4;
+            }
+            if (this->unk_2b0 < this->unk_2a4)
+            {
+                this->unk_2b0 = this->unk_2a4;
+            }
+            if (this->unk_2b0 >= 10)
+            {
+                this->unk_2b4++;
+                this->unk_2b0 = 0;
+            }
+            DebugPrint2("alq チェック %f / %f = %f\r\n", clockTime, counterTime, clockTime / counterTime);
+        }
+        else if (this->unk_2a4 != 0)
+        {
+            this->unk_2a4--;
+        }
+        this->unk_2b8 = 0;
+    }
+    if (this->unk_2ac >= 40 || this->unk_2b4 >= 16)
+    {
+        this->unk_18c |= 8;
+    }
+    else
+    {
+        this->unk_18c &= ~8;
+    }
+}
+
 void SpriteEngine::ReleaseVertexBuffer()
 {
     if (this->vertexBuffer != NULL)
@@ -540,7 +601,7 @@ void DrawFps(int draw)
                 measures++;
                 if (measures % 8 == 0)
                 {
-                    g_App.Func437908();
+                    g_App.CheckClockDrift();
                 }
                 goto measured;
             }
