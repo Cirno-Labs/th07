@@ -255,7 +255,7 @@ int GameWindow::RunFrame()
             g_App.d3dDevice->BeginScene();
             g_SpriteEngine->Func44f580();
             g_App.unk_2bc = 0xff;
-            g_App.Func43a207();
+            g_App.DisableFog();
             g_Chain.RunDrawChain();
             g_SpriteEngine->Func44f5c0();
             g_App.d3dDevice->SetTexture(0, NULL);

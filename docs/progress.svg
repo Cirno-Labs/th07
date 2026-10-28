@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">36.17% (251)</tspan> · <tspan class="decompiled">1.01% (7)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">62.68% (435)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">36.31% (252)</tspan> · <tspan class="decompiled">1.01% (7)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">62.54% (434)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="270.17" height="6" x="0" y="0" class="named"/>
-<rect width="7.53" height="6" x="270.17" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="277.70" y="0" class="nonmatching"/>
-<rect width="468.22" height="6" x="278.78" y="0" class="todo"/>
+<rect width="271.24" height="6" x="0" y="0" class="named"/>
+<rect width="7.53" height="6" x="271.24" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="278.78" y="0" class="nonmatching"/>
+<rect width="467.14" height="6" x="279.86" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (173 bytes)</title></rect>
@@ -480,7 +480,7 @@
 <rect width="12" height="12" x="120" y="120" class="named"><title>0x0043a0d6 App::FadeOutMusic (183 bytes)</title></rect>
 <rect width="12" height="12" x="135" y="120" class="named"><title>0x0043a18d App::IsScoreDisabled (48 bytes)</title></rect>
 <rect width="12" height="12" x="150" y="120" class="named"><title>0x0043a1bd App::EnableFog (74 bytes)</title></rect>
-<rect width="12" height="12" x="165" y="120" class="todo"><title>0x0043a207 App::Func43a207 (71 bytes)</title></rect>
+<rect width="12" height="12" x="165" y="120" class="named"><title>0x0043a207 App::DisableFog (71 bytes)</title></rect>
 <rect width="12" height="12" x="180" y="120" class="todo"><title>0x0043a24e Func43a24e (49 bytes)</title></rect>
 <rect width="12" height="12" x="195" y="120" class="todo"><title>0x0043a27f App::Func43a27f (373 bytes)</title></rect>
 <rect width="12" height="12" x="210" y="120" class="todo"><title>0x0043a3f4 Func43a3f4 (373 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">27.59%</tspan> · <tspan class="decompiled">0.06%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">72.26%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">27.60%</tspan> · <tspan class="decompiled">0.06%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">72.25%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="206.06" height="6" x="0" y="0" class="named"/>
-<rect width="0.46" height="6" x="206.06" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="206.52" y="0" class="nonmatching"/>
-<rect width="539.81" height="6" x="207.19" y="0" class="todo"/>
+<rect width="206.20" height="6" x="0" y="0" class="named"/>
+<rect width="0.46" height="6" x="206.20" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="206.66" y="0" class="nonmatching"/>
+<rect width="539.67" height="6" x="207.33" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1346,7 +1346,7 @@
 <rect width="2.57" height="2.42" x="722.38" y="162.71" class="todo"><title>0x0043d990 Func43d990 (72 bytes)</title></rect>
 <rect width="2.57" height="2.42" x="727.95" y="162.71" class="named"><title>0x00455435 MainMenu::SetState (72 bytes)</title></rect>
 <rect width="2.49" height="2.42" x="733.52" y="162.71" class="decompiled"><title>0x004325e0 Unknown626270::AddPower (71 bytes)</title></rect>
-<rect width="2.49" height="2.42" x="739.01" y="162.71" class="todo"><title>0x0043a207 App::Func43a207 (71 bytes)</title></rect>
+<rect width="2.49" height="2.42" x="739.01" y="162.71" class="named"><title>0x0043a207 App::DisableFog (71 bytes)</title></rect>
 <rect width="2.49" height="2.42" x="744.51" y="162.71" class="todo"><title>0x0043b750 Func43b750 (71 bytes)</title></rect>
 <rect width="2.17" height="2.75" x="699.79" y="168.13" class="todo"><title>0x0043b7a0 Func43b7a0 (71 bytes)</title></rect>
 <rect width="2.17" height="2.67" x="699.79" y="173.88" class="todo"><title>0x004550c0 SpriteEngine::Func4550c0 (70 bytes)</title></rect>

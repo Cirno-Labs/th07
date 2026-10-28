@@ -382,3 +382,14 @@ int App::EnableFog()
     }
     return 0;
 }
+
+int App::DisableFog()
+{
+    g_SpriteEngine->Func44f5c0();
+    if (this->unk_2bc != 0)
+    {
+        this->unk_2bc = 0;
+        return this->d3dDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
+    }
+    return 0;
+}

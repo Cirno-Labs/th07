@@ -89,7 +89,7 @@ public:
     // Flushes the sprites and turns fog on unless unk_2bc is 1 already;
     // returns 0 when it was. Not in th06.
     int EnableFog();
-    int Func43a207();
+    int DisableFog();
     // Advances `frames` by one frame, or by a fraction of one into
     // `subFrame` while the game runs slow.
     void TickTimer(int *frames, float *subFrame);
@@ -217,7 +217,7 @@ public:
     DWORD unk_2b0;
     DWORD unk_2b4;
     DWORD unk_2b8;
-    // Set to 0xff before each frame is drawn; Func43a207 clears it.
+    // Set to 0xff before each frame is drawn; DisableFog clears it.
     DWORD unk_2bc;
     // The sum of the executable's dwords and its size, as read at
     // startup.
