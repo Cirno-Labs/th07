@@ -131,6 +131,9 @@ struct ListNode
 
 // Frees every node after `head`.
 void FreeListNodes(ListNode *head);
+// Links `entry` in after `head`, before the first entry whose score is no
+// higher. Returns its rank, from 0.
+int InsertScore(ListNode *head, Hscr *entry);
 
 // "score.dat" as loaded: a 0x1c-byte header, then chunks. On disk the
 // chunks are compressed, and every byte from the third on is xored with
@@ -187,6 +190,9 @@ int MoveCursorHorizontal(ResultScreen *screen, int count);
 class ResultScreen
 {
 public:
+    // Inserts `entry` into the high score list for `difficulty` and
+    // `shot`.
+    int AddScore(Hscr *entry, int difficulty, int shot);
     // The score file, as loaded.
     ScoreDat *scoreDat;
     BYTE unk_4[0xc];

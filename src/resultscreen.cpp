@@ -308,3 +308,8 @@ int MoveCursorHorizontal(ResultScreen *screen, int count)
     }
     return 0;
 }
+
+int ResultScreen::AddScore(Hscr *entry, int difficulty, int shot)
+{
+    return InsertScore(&this->scores[difficulty][shot], entry);
+}

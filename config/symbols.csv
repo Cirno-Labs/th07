@@ -492,7 +492,7 @@ address,size,name,symbol
 0x00443da0,1829,Func443da0,
 0x004444d0,1419,Func4444d0,
 0x00444a5b,251,Func444a5b,
-0x00444b56,151,Func444b56,
+0x00444b56,151,InsertScore,?InsertScore@@YIHPAUListNode@@PAUHscr@@@Z
 0x00444bed,51,FreeListNodes,?FreeListNodes@@YIXPAUListNode@@@Z
 0x00444c20,749,Func444c20,
 0x00444f0d,348,Func444f0d,
@@ -506,7 +506,7 @@ address,size,name,symbol
 0x00445a57,255,MoveCursorVertical,?MoveCursorVertical@@YIHPAVResultScreen@@H@Z
 0x00445b56,255,LoadScreenPlstChunk,?LoadScreenPlstChunk@@YIHPAVResultScreen@@H@Z
 0x00445c55,267,MoveCursorHorizontal,?MoveCursorHorizontal@@YIHPAVResultScreen@@H@Z
-0x00445d60,43,Func445d60,
+0x00445d60,43,ResultScreen::AddScore,?AddScore@ResultScreen@@QAEHPAUHscr@@HH@Z
 0x00445d8b,40,Func445d8b,
 0x00445db3,3180,Func445db3,
 0x00446a66,1787,Func446a66,
