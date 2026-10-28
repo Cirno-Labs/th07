@@ -311,3 +311,54 @@ int UpdateLaserBullet(Player *player, PlayerBullet *bullet)
     bullet->pos.y /= 2.0f;
     return 0;
 }
+
+int UpdateTrailLaserBullet(Player *player, PlayerBullet *bullet)
+{
+    int i;
+
+    if (player->lasers[bullet->laserIndex].bullet != bullet && (bullet->sprite.flags >> 13 & 1))
+    {
+        bullet->sprite.pendingInterrupt = 1;
+    }
+    if ((g_Unknown49fbf0.Func42ad66() || player->bomb.running) &&
+        player->lasers[bullet->laserIndex].timer.AsFrames() > 20)
+    {
+        player->lasers[bullet->laserIndex].timer.Set(20);
+    }
+    if (player->lasers[bullet->laserIndex].timer <= 0)
+    {
+        player->lasers[bullet->laserIndex].timer.Set(0);
+        bullet->state = 0;
+        player->lasers[bullet->laserIndex].bullet = NULL;
+        return 1;
+    }
+    if (player->lasers[bullet->laserIndex].timer <= 70 && (bullet->sprite.flags >> 13 & 1))
+    {
+        bullet->sprite.pendingInterrupt = 1;
+    }
+    for (i = 0; i < bullet->unk_352; i++)
+    {
+        if (bullet->unk_258[i].x >= -900.0f)
+        {
+            player->unk_9dc[i + 0x60].pos = bullet->unk_258[i];
+            player->unk_9dc[i + 0x60].unk_18 = 1;
+            player->unk_9dc[i + 0x60].size = bullet->size;
+        }
+    }
+    for (i = 15; i > 0; i--)
+    {
+        bullet->unk_258[i] = bullet->unk_258[i - 1];
+    }
+    bullet->unk_258[0] = bullet->pos;
+    if (player->unk_2408 == 2)
+    {
+        return 1;
+    }
+    bullet->pos = player->position;
+    bullet->pos.x += bullet->velocity.z;
+    bullet->pos.z = 0.44f;
+    bullet->sprite.scaleX = (bullet->pos.y + 64.0f) / 14.0f;
+    bullet->size.y = player->position.y + 64.0f;
+    bullet->pos.y = bullet->pos.y / 2.0f - 32.0f;
+    return 0;
+}

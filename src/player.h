@@ -102,6 +102,12 @@ int UpdateAcceleratingBullet(Player *player, PlayerBullet *bullet);
 // Player::unk_2408 is 2 (returning 1) stretches it to the top. Returns
 // 0 otherwise.
 int UpdateLaserBullet(Player *player, PlayerBullet *bullet);
+// FireTrailLaser's lasers: ended and cut short like UpdateLaserBullet's; the
+// first unk_352 points of the bullet's trail (unk_258, from pos, newest
+// first) that are set (x at least -900) become Player hitboxes 0x60 on,
+// with the bullet's size. Unless Player::unk_2408 is 2 (returning 1),
+// the laser then runs from the player to the top. Returns 0 otherwise.
+int UpdateTrailLaserBullet(Player *player, PlayerBullet *bullet);
 
 // One of the 0x70 entries at Player+0x9dc, probably th06's bomb
 // hitboxes (bombHitPos, bombHitSize, ...) as one struct.

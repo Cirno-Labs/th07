@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">41.50% (288)</tspan> · <tspan class="decompiled">1.59% (11)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">56.77% (394)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">41.64% (289)</tspan> · <tspan class="decompiled">1.59% (11)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">56.63% (393)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="309.99" height="6" x="0" y="0" class="named"/>
-<rect width="11.84" height="6" x="309.99" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="321.83" y="0" class="nonmatching"/>
-<rect width="424.09" height="6" x="322.91" y="0" class="todo"/>
+<rect width="311.07" height="6" x="0" y="0" class="named"/>
+<rect width="11.84" height="6" x="311.07" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="322.91" y="0" class="nonmatching"/>
+<rect width="423.01" height="6" x="323.99" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (173 bytes)</title></rect>
@@ -510,7 +510,7 @@
 <rect width="12" height="12" x="570" y="120" class="named"><title>0x0043c480 UpdateHomingOrbFast (554 bytes)</title></rect>
 <rect width="12" height="12" x="585" y="120" class="named"><title>0x0043c6b0 UpdateAcceleratingBullet (73 bytes)</title></rect>
 <rect width="12" height="12" x="600" y="120" class="named"><title>0x0043c700 UpdateLaserBullet (566 bytes)</title></rect>
-<rect width="12" height="12" x="615" y="120" class="todo"><title>0x0043c940 Func43c940 (868 bytes)</title></rect>
+<rect width="12" height="12" x="615" y="120" class="named"><title>0x0043c940 UpdateTrailLaserBullet (868 bytes)</title></rect>
 <rect width="12" height="12" x="630" y="120" class="todo"><title>0x0043ccb0 Func43ccb0 (299 bytes)</title></rect>
 <rect width="12" height="12" x="645" y="120" class="todo"><title>0x0043cde0 Func43cde0 (725 bytes)</title></rect>
 <rect width="12" height="12" x="660" y="120" class="todo"><title>0x0043d0e0 Func43d0e0 (120 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">32.12%</tspan> · <tspan class="decompiled">0.21%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">67.59%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">32.34%</tspan> · <tspan class="decompiled">0.21%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">67.36%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="239.90" height="6" x="0" y="0" class="named"/>
-<rect width="1.55" height="6" x="239.90" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="241.45" y="0" class="nonmatching"/>
-<rect width="504.89" height="6" x="242.11" y="0" class="todo"/>
+<rect width="241.60" height="6" x="0" y="0" class="named"/>
+<rect width="1.55" height="6" x="241.60" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="243.15" y="0" class="nonmatching"/>
+<rect width="503.18" height="6" x="243.82" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -872,7 +872,7 @@
 <rect width="16.17" height="16.44" x="446.82" y="61.05" class="todo"><title>0x004101a0 Func4101a0 (889 bytes)</title></rect>
 <rect width="16.17" height="16.02" x="446.82" y="80.49" class="todo"><title>0x0040aba0 Func40aba0 (870 bytes)</title></rect>
 <rect width="16.17" height="16.02" x="446.82" y="99.51" class="todo"><title>0x00443040 Func443040 (870 bytes)</title></rect>
-<rect width="16.17" height="15.98" x="446.82" y="118.54" class="todo"><title>0x0043c940 Func43c940 (868 bytes)</title></rect>
+<rect width="16.17" height="15.98" x="446.82" y="118.54" class="named"><title>0x0043c940 UpdateTrailLaserBullet (868 bytes)</title></rect>
 <rect width="16.17" height="15.98" x="446.82" y="137.52" class="named"><title>0x0045ef00 LzssDecompress (868 bytes)</title></rect>
 <rect width="16.17" height="15.87" x="446.82" y="156.50" class="named"><title>0x0043a801 MusicScreen::UpdateList (863 bytes)</title></rect>
 <rect width="16.17" height="15.83" x="446.82" y="175.37" class="todo"><title>0x0044dbe0 Func44dbe0 (861 bytes)</title></rect>
