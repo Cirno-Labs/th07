@@ -423,7 +423,7 @@ address,size,name,symbol
 0x0043ae20,1624,MusicScreen::AddedCallback,?AddedCallback@MusicScreen@@SIHPAV1@@Z
 0x0043b478,99,MusicScreen::DeletedCallback,?DeletedCallback@MusicScreen@@SIHPAV1@@Z
 0x0043b4db,223,MusicScreen::RegisterChain,?RegisterChain@MusicScreen@@SIHXZ
-0x0043b5c0,396,Func43b5c0,
+0x0043b5c0,396,Unknown626270::RerollLifeChecksumKeys,?RerollLifeChecksumKeys@Unknown626270@@QAEXXZ
 0x0043b750,71,Func43b750,
 0x0043b7a0,71,Func43b7a0,
 0x0043b7f0,532,Func43b7f0,

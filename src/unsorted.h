@@ -856,11 +856,17 @@ struct Unknown626270Stats
     BYTE continuesUsed;
     unsigned char unk_21[0x7];
     int pointItemsTotal;
-    unsigned char unk_2c[0x24];
+    unsigned char unk_2c[0x8];
+    // Set to 6543 plus a random number under 100000 by
+    // Unknown626270::RerollLifeChecksumKeys.
+    DWORD unk_34[5];
+    unsigned char unk_48[0x8];
     float deaths;
     unsigned char unk_54[0x18];
     float bombsUsed;
-    unsigned char unk_70[0xc];
+    // Set to 6543 plus a random float under 100000 by
+    // Unknown626270::RerollLifeChecksumKeys.
+    float unk_70[3];
     // The shot power, up to 128.
     float power;
     unsigned char unk_80[0x48];
@@ -899,6 +905,9 @@ public:
     // Adds `power` to stats->power and recomputes the checksums; wipes
     // g_App with 0xff first if the checksums were already wrong.
     void AddPower(int power);
+    // Sets stats->unk_34 and unk_70 to random numbers from 6543 up.
+    // Not in th06.
+    void RerollLifeChecksumKeys();
     // Sets bit 3 (0x8) of unk_93d8 to `value`.
     void SetUnk93d8Bit3(int value)
     {
