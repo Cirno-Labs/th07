@@ -428,7 +428,7 @@ address,size,name,symbol
 0x0043b7a0,71,Unknown626270::AddBombsUsed,?AddBombsUsed@Unknown626270@@QAEXH@Z
 0x0043b7f0,532,Player::Player,??0Player@@QAE@XZ
 0x0043ba10,143,PlayerBullet::PlayerBullet,??0PlayerBullet@@QAE@XZ
-0x0043baa0,111,Func43baa0,
+0x0043baa0,111,PlayerBomb::PlayerBomb,??0PlayerBomb@@QAE@XZ
 0x0043bb10,191,Func43bb10,
 0x0043bbd0,490,Func43bbd0,
 0x0043bdc0,65,Func43bdc0,
