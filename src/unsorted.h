@@ -32,7 +32,9 @@ ASSERT_SIZE(ControllerMapping, 0x12);
 class App
 {
 public:
-    unsigned char unk_0[0x14];
+    unsigned char unk_0[0x10];
+    // The keyboard's DirectInput device; NULL without one.
+    IDirectInputDevice8 *keyboard;
     // The first joystick found; NULL without one.
     IDirectInputDevice8 *joystick;
     unsigned char unk_18[0x2c];
@@ -103,3 +105,7 @@ WORD ReadJoystick(WORD buttons);
 extern BYTE g_PadButtons[0x80];
 // Reads which pad buttons are down into g_PadButtons and returns it.
 BYTE *GetPadButtons();
+
+// Reads the keyboard and the joystick into button bits: through
+// DirectInput if there is a keyboard device, else GetKeyboardState.
+WORD ReadButtons();

@@ -302,7 +302,7 @@ address,size,name,symbol
 0x00430370,115,SetButtonFromJoystick,?SetButtonFromJoystick@@YIHPAGFGK@Z
 0x004303f0,1488,ReadJoystick,?ReadJoystick@@YIGG@Z
 0x004309c0,392,GetPadButtons,?GetPadButtons@@YIPAEXZ
-0x00430b50,1904,Func430b50,
+0x00430b50,1904,ReadButtons,?ReadButtons@@YIGXZ
 0x004312c0,110,Func4312c0,
 0x00431330,434,LoadFileData,?LoadFileData@@YIPAXPADH@Z
 0x004314f0,69,Func4314f0,
