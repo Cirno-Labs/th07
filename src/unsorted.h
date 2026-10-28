@@ -217,6 +217,9 @@ void ClearViewport(D3DCOLOR color);
 // Fills `rect` (left, top, right, bottom) with `color`, blended by its
 // alpha, after drawing the batched quads.
 void DrawColorRect(float *rect, D3DCOLOR color);
+// DrawColorRect with a color for each corner, blended across. Not in
+// th06.
+void DrawGradientRect(float *rect, D3DCOLOR topLeft, D3DCOLOR topRight, D3DCOLOR bottomLeft, D3DCOLOR bottomRight);
 // Creates the Direct3D device. Returns 0, or nonzero on failure.
 int InitD3dDevice();
 // Prints `name` and then 可 or 不可 (yes or no), by whether `caps` has
