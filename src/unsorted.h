@@ -143,6 +143,9 @@ void PresentFrame();
 int CreateD3d();
 // Creates the game window. Returns 0, or nonzero on failure.
 int CreateGameWindow(HINSTANCE instance);
+// Brings `hwnd` to the foreground, lifting the foreground lock timeout
+// for the time. Not in th06.
+void Func435e30(HWND hwnd);
 // Creates the Direct3D device. Returns 0, or nonzero on failure.
 int InitD3dDevice();
 // Sets the device's render and texture stage states.
