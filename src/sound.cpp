@@ -266,3 +266,9 @@ int SoundPlayer::LoadSound(int index, char *path)
     MemFree(wavBuf);
     return 0;
 }
+
+int SoundPlayer::LoadBgmFormat(char *path)
+{
+    this->bgmFormat = (BgmFormat *)LoadFileData(path, 0);
+    return this->bgmFormat != NULL ? 0 : -1;
+}

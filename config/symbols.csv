@@ -539,7 +539,7 @@ address,size,name,symbol
 0x0044ba80,100,FindRiffChunk,?FindRiffChunk@@YIPADPAD0PAHI@Z
 0x0044baf0,523,SoundPlayer::FindTrackIndex,?FindTrackIndex@SoundPlayer@@QAEHPAD@Z
 0x0044bd00,750,SoundPlayer::LoadSound,?LoadSound@SoundPlayer@@QAEHHPAD@Z
-0x0044bff0,48,Func44bff0,
+0x0044bff0,48,SoundPlayer::LoadBgmFormat,?LoadBgmFormat@SoundPlayer@@QAEHPAD@Z
 0x0044c020,386,Func44c020,
 0x0044c1b0,105,Func44c1b0,
 0x0044c220,677,Func44c220,
