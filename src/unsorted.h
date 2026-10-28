@@ -218,6 +218,11 @@ void DrawFps(int draw);
 // works, unless there already is one.
 BOOL CALLBACK EnumJoysticksCallback(const DIDEVICEINSTANCE *pdidInstance, VOID *pContext);
 
+// IDirectInputDevice8::EnumObjects's callback for the joystick's axes,
+// from the same sample without its dialog updates: sets each axis's
+// range to -1000 to 1000.
+BOOL CALLBACK EnumAxesCallback(const DIDEVICEOBJECTINSTANCE *pdidoi, VOID *pContext);
+
 inline void Timer::Tick()
 {
     this->previous = this->current;
