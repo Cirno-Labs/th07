@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">12.39% (86)</tspan> · <tspan class="decompiled">0.43% (3)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">87.18% (605)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">12.54% (87)</tspan> · <tspan class="decompiled">0.43% (3)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">87.03% (604)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="92.57" height="6" x="0" y="0" class="named"/>
-<rect width="3.23" height="6" x="92.57" y="0" class="decompiled"/>
-<rect width="651.20" height="6" x="95.80" y="0" class="todo"/>
+<rect width="93.64" height="6" x="0" y="0" class="named"/>
+<rect width="3.23" height="6" x="93.64" y="0" class="decompiled"/>
+<rect width="650.13" height="6" x="96.87" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (173 bytes)</title></rect>
@@ -416,7 +416,7 @@
 <rect width="12" height="12" x="675" y="90" class="todo"><title>0x00434bd0 InitD3dDevice (1506 bytes)</title></rect>
 <rect width="12" height="12" x="690" y="90" class="named"><title>0x004351c0 AppendCapsFlagText (107 bytes)</title></rect>
 <rect width="12" height="12" x="705" y="90" class="named"><title>0x00435230 FormatCapsReport (1130 bytes)</title></rect>
-<rect width="12" height="12" x="720" y="90" class="todo"><title>0x004356a0 SetDefaultRenderStates (1313 bytes)</title></rect>
+<rect width="12" height="12" x="720" y="90" class="named"><title>0x004356a0 SetDefaultRenderStates (1313 bytes)</title></rect>
 <rect width="12" height="12" x="735" y="90" class="todo"><title>0x00435bd0 Func435bd0 (595 bytes)</title></rect>
 <rect width="12" height="12" x="0" y="105" class="todo"><title>0x00435e30 Func435e30 (143 bytes)</title></rect>
 <rect width="12" height="12" x="15" y="105" class="todo"><title>0x00435ec0 Func435ec0 (255 bytes)</title></rect>
@@ -766,11 +766,11 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">5.92%</tspan> · <tspan class="decompiled">0.03%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">94.05%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">6.26%</tspan> · <tspan class="decompiled">0.03%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">93.71%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="44.21" height="6" x="0" y="0" class="named"/>
-<rect width="0.24" height="6" x="44.21" y="0" class="decompiled"/>
-<rect width="702.55" height="6" x="44.45" y="0" class="todo"/>
+<rect width="46.79" height="6" x="0" y="0" class="named"/>
+<rect width="0.24" height="6" x="46.79" y="0" class="decompiled"/>
+<rect width="699.98" height="6" x="47.02" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -831,7 +831,7 @@
 <rect width="21.03" height="21.75" x="359.89" y="51.28" class="todo"><title>0x004444d0 Func4444d0 (1419 bytes)</title></rect>
 <rect width="21.03" height="20.08" x="359.89" y="76.03" class="todo"><title>0x0044552c Func44552c (1323 bytes)</title></rect>
 <rect width="21.03" height="19.95" x="359.89" y="99.10" class="todo"><title>0x00450520 Func450520 (1316 bytes)</title></rect>
-<rect width="21.03" height="19.90" x="359.89" y="122.06" class="todo"><title>0x004356a0 SetDefaultRenderStates (1313 bytes)</title></rect>
+<rect width="21.03" height="19.90" x="359.89" y="122.06" class="named"><title>0x004356a0 SetDefaultRenderStates (1313 bytes)</title></rect>
 <rect width="21.03" height="19.85" x="359.89" y="144.96" class="todo"><title>0x0040e5b0 Func40e5b0 (1310 bytes)</title></rect>
 <rect width="21.03" height="19.78" x="359.89" y="167.81" class="todo"><title>0x004398b6 App::LoadConfig (1306 bytes)</title></rect>
 <rect width="21.03" height="19.41" x="359.89" y="190.59" class="todo"><title>0x0040fc90 Func40fc90 (1285 bytes)</title></rect>

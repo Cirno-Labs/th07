@@ -32,6 +32,25 @@ ASSERT_SIZE(ControllerMapping, 0x12);
 
 class MidiPlayer;
 
+// The config's option bits, in th06's order; the ones used so far test
+// the same bits as th06's.
+struct GameConfigFlags
+{
+    unsigned int emulateColorAdd : 1;
+    unsigned int noVertexBuffer : 1;
+    unsigned int force16BitTextures : 1;
+    unsigned int clearBackBuffer : 1;
+    unsigned int noFrameItems : 1;
+    unsigned int noGouraudShading : 1;
+    unsigned int noDepthTest : 1;
+    unsigned int force60Fps : 1;
+    unsigned int noColorBlending : 1;
+    unsigned int referenceRasterizer : 1;
+    unsigned int noFog : 1;
+    unsigned int noDirectInput : 1;
+    unsigned int unk12 : 20;
+};
+
 class App
 {
 public:
@@ -83,7 +102,9 @@ public:
     // once shoot has been held for 10 frames, and for a few frames after
     // it is let go.
     BYTE shootFocuses;
-    unsigned char unk_13f[0x25];
+    unsigned char unk_13f[0xd];
+    GameConfigFlags flags;
+    unsigned char unk_150[0x14];
     // How many more frames to draw in full, after the device was reset.
     int redrawFrames;
     unsigned char unk_168[0x4];
@@ -96,7 +117,9 @@ public:
     // Bit 0x10 is set after the device is reset, until the next frame
     // is drawn.
     DWORD unk_18c;
-    unsigned char unk_190[0x12c];
+    unsigned char unk_190[0x8];
+    D3DCAPS8 caps;
+    unsigned char unk_26c[0x50];
     // Set to 0xff before each frame is drawn; Func43a207 clears it.
     DWORD unk_2bc;
 };
@@ -154,8 +177,12 @@ char *AppendCapsFlagText(char *name, DWORD caps, DWORD flag, char *out);
 // Writes a report of the device capabilities `caps` that matter to the
 // game into `buffer`, in Japanese. Not in th06.
 void FormatCapsReport(D3DCAPS8 *caps, char *buffer);
-// Sets the device's render and texture stage states.
+// Sets the device's render and texture stage states, as the config
+// flags pick them, and forgets SpriteEngine's cached states.
 void SetDefaultRenderStates();
+// Set by SetDefaultRenderStates; th06 sets g_Stage.fogColorChanged
+// there.
+extern BYTE g_Unknown1348010;
 // Returns -1 if the game must not start. Not in th06.
 int Func435bd0(HINSTANCE instance);
 // Sums the executable's dwords. Not in th06.

@@ -54,6 +54,27 @@ public:
     // if any, and clears it.
     void DoPendingCopy();
 
+    void ClearBlendMode()
+    {
+        this->blendMode = 0xff;
+    }
+    void ClearColorOp()
+    {
+        this->colorOp = 0xff;
+    }
+    void ClearVertexFormat()
+    {
+        this->vertexFormat = 0xff;
+    }
+    void ClearTexture()
+    {
+        this->currentTexture = NULL;
+    }
+    void ClearUnk2e4d4()
+    {
+        this->unk_2e4d4 = 0xff;
+    }
+
     // Runs script `script` of the loaded ANM files on `vm`.
     void StartScript(Sprite *vm, int script)
     {
@@ -66,7 +87,16 @@ public:
     unsigned char unk_28ef4[0x5254];
     // Images loaded as surfaces to copy to the back buffer from.
     IDirect3DSurface8 *surfaces[0x20];
-    unsigned char unk_2e1c8[0x150374];
+    unsigned char unk_2e1c8[0x304];
+    // The texture last set on the device.
+    IDirect3DTexture8 *currentTexture;
+    // The states Draw last set, 0xff when unknown.
+    BYTE blendMode;
+    BYTE colorOp;
+    BYTE vertexFormat;
+    unsigned char unk_2e4d3;
+    BYTE unk_2e4d4;
+    unsigned char unk_2e4d5[0x150067];
     // A copy of the back buffer into a texture to do after the frame is
     // drawn: CopyBackBufferToTexture's arguments, the texture -1 when
     // there is none.

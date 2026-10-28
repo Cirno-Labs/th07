@@ -1728,4 +1728,5 @@ address,size,name,symbol
 0x00626258,,g_Archive,?g_Archive@@3VArchive@@A
 0x00626270,,g_Unknown626270,?g_Unknown626270@@3VUnknown626270@@A
 0x012fe250,,g_EffectManager,?g_EffectManager@@3VEffectManager@@A
+0x01348010,,g_Unknown1348010,?g_Unknown1348010@@3EA
 0x0135e218,,g_PadButtons,?g_PadButtons@@3PAEA
