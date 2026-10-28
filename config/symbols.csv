@@ -417,7 +417,7 @@ address,size,name,symbol
 0x0043a569,306,App::CheckVersionFile,?CheckVersionFile@App@@QAEHPADKK@Z
 0x0043a69b,197,Func43a69b,
 0x0043a760,161,MusicScreen::UpdateIntro,?UpdateIntro@MusicScreen@@QAEHXZ
-0x0043a801,863,Func43a801,
+0x0043a801,863,MusicScreen::UpdateList,?UpdateList@MusicScreen@@QAEHXZ
 0x0043ab60,236,Func43ab60,
 0x0043ac4c,468,Func43ac4c,
 0x0043ae20,1624,Func43ae20,

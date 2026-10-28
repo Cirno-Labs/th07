@@ -27,6 +27,11 @@ public:
     // the cursor and the comment lines and 2 to the other titles; after
     // 8 frames moves to state 1. Returns 0.
     int UpdateIntro();
+    // State 1: the list of tunes. Up and down move the cursor, sending
+    // interrupt 1 to the title under it and 2 to the others; shot or
+    // enter plays the tune and shows its comment. Returns nonzero to
+    // stop.
+    int UpdateList();
 
     ChainElem *calcChain;
     ChainElem *drawChain;
