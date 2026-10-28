@@ -114,7 +114,11 @@ public:
         this->SetScript(vm, this->scripts[script]);
     }
 
-    unsigned char unk_0[0x28ef0];
+    unsigned char unk_0[0x18];
+    // How far the screen is shaken, set by ScreenEffect's shake.
+    float shakeX;
+    float shakeY;
+    unsigned char unk_20[0x28ed0];
     void *scripts[1];
     unsigned char unk_28ef4[0x5254];
     // Images loaded as surfaces to copy to the back buffer from.

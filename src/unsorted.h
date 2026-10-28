@@ -396,6 +396,10 @@ public:
     {
         return range != 0 ? this->GetRandomU16() % range : 0;
     }
+    DWORD GetRandomU32InRange(DWORD range)
+    {
+        return range != 0 ? this->GetRandomU32() % range : 0;
+    }
     // A random float from 0 up to 1.
     float GetRandomF32ZeroToOne();
 
@@ -565,7 +569,10 @@ public:
 
     unsigned char unk_0[0x8];
     Unknown626270Stats *stats;
-    unsigned char unk_c[0x4];
+    // Set while the game is paused: the screen shake holds still. As
+    // th06's GameManager::isFrozen, probably.
+    char isFrozen;
+    unsigned char unk_d[0x3];
     int difficulty;
     unsigned char unk_14[0x4];
     // The spell card chunks of the score file, by card.
@@ -585,7 +592,9 @@ public:
     unsigned char unk_93d7;
     // Bit 1: the game is a practice; 0x10: it was cleared.
     DWORD unk_93d8;
-    unsigned char unk_93dc[0x210];
+    unsigned char unk_93dc[0x20c];
+    // The screen shake ends at once while this is 1 or less.
+    int unk_95e8;
     int stage;
     unsigned char unk_95f0[0x4];
     // The play area: x, y, width and height. Its neighbours (a 0x200
