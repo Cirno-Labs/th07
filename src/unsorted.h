@@ -146,3 +146,20 @@ int FileExists(char *path);
 // Writes `size` bytes of `data` to the file at `path`. Returns 0, -1 if
 // the file cannot be created, -2 if writing fails.
 int WriteToFile(char *path, void *data, int size);
+
+// The game's random number generator: a 16-bit state stepped with a xor,
+// a subtraction and a rotation, as in th06.
+class Rng
+{
+public:
+    // Advances the generator and returns 16 random bits.
+    WORD GetRandomU16();
+    // 32 random bits, from two GetRandomU16 calls.
+    DWORD GetRandomU32();
+    // A random float from 0 up to 1.
+    float GetRandomF32ZeroToOne();
+
+    WORD seed;
+    // How many times the generator was advanced.
+    DWORD generated;
+};
