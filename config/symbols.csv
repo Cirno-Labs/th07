@@ -657,7 +657,7 @@ address,size,name,symbol
 0x0045e210,328,Func45e210,
 0x0045e360,328,Func45e360,
 0x0045e4b0,51,Func45e4b0,
-0x0045e4f0,5,Func45e4f0,
+0x0045e4f0,5,DebugPrint,?DebugPrint@@YAXPBDZZ
 0x0045e500,20,Func45e500,
 0x0045e520,47,Func45e520,
 0x0045e550,52,Func45e550,

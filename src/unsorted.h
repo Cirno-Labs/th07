@@ -26,3 +26,7 @@ public:
     char unk0[0x2c];
     int field2c;
 };
+
+// Debug output, compiled out of the release build: an empty function
+// that the game still calls with messages.
+void DebugPrint(const char *fmt, ...);
