@@ -1,0 +1,59 @@
+export WINEPREFIX := justfile_directory() / ".wine"
+export WINEDEBUG := env("WINEDEBUG", "-all")
+
+exe := "build/th07_100b.exe"
+
+# List recipes
+default:
+    @just --list
+
+# Compile src/ and link build/th07.dll
+build:
+    python3 tools/build.py
+
+# Compare compiled functions with the original; show a diff for each SYMBOL
+[positional-arguments]
+compare *symbols: build _orig
+    python3 tools/compare.py "$@"
+
+# Set up build/game: game data, patched th07.exe and th07.dll
+game: build _orig
+    mkdir -p build/game
+    cp -r orig/th07_100b/. build/game/
+    rm build/game/th07.exe
+    python3 tools/patch_exe.py {{ exe }} build/game/th07.exe
+    cp build/th07.dll build/game/
+
+# Run the patched game headless with STEPS (wait:S key:K hold:K:S shot:NAME)
+[positional-arguments]
+run *steps: game
+    python3 tools/play.py "$@"
+
+# Link the standalone build/th07.exe (no DLL); with STEPS, run it like `run`
+[positional-arguments]
+exe *steps: game
+    python3 tools/build.py exe
+    cp build/th07.exe build/game/th07_standalone.exe
+    if [ $# -gt 0 ]; then python3 tools/play.py --exe th07_standalone.exe "$@"; fi
+
+# Analyze the original with headless Ghidra; add new functions to symbols.csv
+analyze: _orig
+    tools/ghidra/analyze.sh
+    python3 tools/seed_symbols.py
+
+# Decompile ADDRs (default: every function) with Ghidra into build/decomp/
+decompile *addrs:
+    tools/ghidra/decompile.sh {{ addrs }}
+
+# Render docs/progress.svg from symbols.csv and the build
+progress: build _orig
+    python3 tools/render_progress.py
+
+# Remove build outputs (keeps the Ghidra project)
+clean:
+    rm -rf build/obj build/src build/game build/th07.* build/th07.*
+
+# Verify the original and copy it into build/
+_orig:
+    cd orig && sha1sum --quiet -c th07_100b.sha1
+    mkdir -p build && cp orig/th07_100b/th07.exe {{ exe }}
