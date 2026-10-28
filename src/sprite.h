@@ -55,6 +55,9 @@ public:
     int Draw(Sprite *vm);
     // Runs `vm`'s script for one frame.
     int Step(Sprite *vm);
+    // Steps the `count` sprites from `vms` that run a script. Not in
+    // th06.
+    void Func4550c0(Sprite *vms, int count);
     // Renders text from `fmt` into `sprite`'s texture.
     void RenderText(Sprite *sprite, D3DCOLOR textColor, D3DCOLOR shadowColor, char *fmt, ...);
     // RenderText, centered on the sprite.

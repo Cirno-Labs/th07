@@ -23,3 +23,48 @@ void MainMenu::SetState(int state)
     this->unk_8 = 0;
     this->unk_b0c0 = 0;
 }
+
+int MainMenu::OnUpdate(MainMenu *menu)
+{
+    int status;
+
+    switch (menu->state)
+    {
+    case 0:
+        status = menu->Func4555dd();
+        break;
+    case 7:
+        status = menu->Func45a924();
+        break;
+    case 2:
+        status = menu->Func45624d();
+        break;
+    case 3:
+        status = menu->Func456f6b();
+        break;
+    case 4:
+    case 8:
+    case 12:
+        status = menu->Func45798b();
+        break;
+    case 5:
+    case 9:
+    case 13:
+        status = menu->Func457fe5();
+        break;
+    case 6:
+    case 10:
+    case 14:
+        status = menu->Func459518();
+        break;
+    case 11:
+        status = menu->Func45a1dd();
+        break;
+    }
+    g_SpriteEngine->Func4550c0(menu->sprites, menu->spriteCount);
+    if (menu->unk_b0c8 != NULL)
+    {
+        g_SpriteEngine->Step(menu->unk_b0c8);
+    }
+    return status;
+}
