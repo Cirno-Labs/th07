@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">24.21% (168)</tspan> · <tspan class="decompiled">0.29% (2)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">75.50% (524)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">24.35% (169)</tspan> · <tspan class="decompiled">0.29% (2)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">75.36% (523)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="180.83" height="6" x="0" y="0" class="named"/>
-<rect width="2.15" height="6" x="180.83" y="0" class="decompiled"/>
-<rect width="564.02" height="6" x="182.98" y="0" class="todo"/>
+<rect width="181.91" height="6" x="0" y="0" class="named"/>
+<rect width="2.15" height="6" x="181.91" y="0" class="decompiled"/>
+<rect width="562.94" height="6" x="184.06" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (173 bytes)</title></rect>
@@ -721,7 +721,7 @@
 <rect width="12" height="12" x="0" y="195" class="named"><title>0x0045e060 CWaveFile::~CWaveFile (19 bytes)</title></rect>
 <rect width="12" height="12" x="15" y="195" class="named"><title>0x0045e080 CWaveFile::Open (163 bytes)</title></rect>
 <rect width="12" height="12" x="30" y="195" class="named"><title>0x0045e130 CWaveFile::SwitchTrack (84 bytes)</title></rect>
-<rect width="12" height="12" x="45" y="195" class="todo"><title>0x0045e190 CWaveFile::OpenFromMemory (92 bytes)</title></rect>
+<rect width="12" height="12" x="45" y="195" class="named"><title>0x0045e190 CWaveFile::OpenFromMemory (92 bytes)</title></rect>
 <rect width="12" height="12" x="60" y="195" class="named"><title>0x0045e1f0 CWaveFile::GetSize (17 bytes)</title></rect>
 <rect width="12" height="12" x="75" y="195" class="todo"><title>0x0045e210 CWaveFile::ResetFile (328 bytes)</title></rect>
 <rect width="12" height="12" x="90" y="195" class="todo"><title>0x0045e360 CWaveFile::Read (328 bytes)</title></rect>
@@ -766,11 +766,11 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">15.68%</tspan> · <tspan class="decompiled">0.03%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">84.29%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">15.71%</tspan> · <tspan class="decompiled">0.03%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">84.27%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="117.14" height="6" x="0" y="0" class="named"/>
-<rect width="0.20" height="6" x="117.14" y="0" class="decompiled"/>
-<rect width="629.66" height="6" x="117.34" y="0" class="todo"/>
+<rect width="117.32" height="6" x="0" y="0" class="named"/>
+<rect width="0.20" height="6" x="117.32" y="0" class="decompiled"/>
+<rect width="629.48" height="6" x="117.52" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1302,7 +1302,7 @@
 <rect width="3.46" height="3.23" x="688.06" y="150.76" class="named"><title>0x0045da20 CStreamingSound::CStreamingSound (96 bytes)</title></rect>
 <rect width="3.40" height="3.23" x="694.53" y="150.76" class="named"><title>0x004319b0 Rotate2D (95 bytes)</title></rect>
 <rect width="3.40" height="3.23" x="700.92" y="150.76" class="named"><title>0x00431ace GdiSurface::Create (95 bytes)</title></rect>
-<rect width="3.19" height="3.23" x="707.32" y="150.76" class="todo"><title>0x0045e190 CWaveFile::OpenFromMemory (92 bytes)</title></rect>
+<rect width="3.19" height="3.23" x="707.32" y="150.76" class="named"><title>0x0045e190 CWaveFile::OpenFromMemory (92 bytes)</title></rect>
 <rect width="3.13" height="3.23" x="713.51" y="150.76" class="todo"><title>0x0041a2f0 Func41a2f0 (91 bytes)</title></rect>
 <rect width="3.13" height="3.23" x="719.64" y="150.76" class="todo"><title>0x004278b0 Func4278b0 (91 bytes)</title></rect>
 <rect width="3.13" height="3.23" x="725.76" y="150.76" class="todo"><title>0x00432690 Func432690 (91 bytes)</title></rect>
