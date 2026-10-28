@@ -55,7 +55,9 @@ struct SpriteBase
     unsigned char unk_1bc[0x4];
     // Bit 0x1000 is set on items as they spawn.
     DWORD flags;
-    unsigned char unk_1c4[0x2];
+    // Whether the bullets' draw functions turn it along their angle, as
+    // th06's autoRotate.
+    short autoRotate;
     // The interrupt label to jump to on the next Step; 0 for none.
     short pendingInterrupt;
 };
@@ -89,6 +91,12 @@ public:
     void SetPendingInterrupt(short interrupt)
     {
         this->pendingInterrupt = interrupt;
+    }
+    // Turns the sprite to `angle` about z and sets flag 0x4. Not in th06.
+    void SetRotationZ(float angle)
+    {
+        this->rotationZ = angle;
+        this->flags |= 4;
     }
 
     // Where it is drawn.

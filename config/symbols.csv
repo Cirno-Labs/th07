@@ -446,7 +446,7 @@ address,size,name,symbol
 0x0043d0e0,120,BurstHitEffect,?BurstHitEffect@@YIHPAVPlayer@@PAUPlayerBullet@@PAUD3DXVECTOR3@@@Z
 0x0043d160,386,FireShots,?FireShots@@YIXPAVPlayer@@H@Z
 0x0043d2f0,913,UpdateBullets,?UpdateBullets@@YIXPAVPlayer@@@Z
-0x0043d690,256,Func43d690,
+0x0043d690,256,DrawBullets,?DrawBullets@@YIXPAVPlayer@@@Z
 0x0043d790,229,Func43d790,
 0x0043d880,264,Func43d880,
 0x0043d990,72,Func43d990,

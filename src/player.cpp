@@ -604,3 +604,29 @@ void UpdateBullets(Player *player)
         bullet->timer.Tick();
     }
 }
+
+void DrawBullets(Player *player)
+{
+    PlayerBullet *bullet = player->bullets;
+    int i;
+
+    for (i = 0; i < 0x60; i++, bullet++)
+    {
+        if (bullet->state != 1)
+        {
+            continue;
+        }
+        if (bullet->sprite.autoRotate != 0)
+        {
+            bullet->sprite.SetRotationZ(AddNormalizeAngle(bullet->angle, 1.5707964f));
+        }
+        bullet->sprite.pos.x = g_Unknown626270.arena[0] + bullet->pos.x;
+        bullet->sprite.pos.y = g_Unknown626270.arena[1] + bullet->pos.y;
+        bullet->sprite.pos.z = 0.4f;
+        g_SpriteEngine->Draw(&bullet->sprite);
+        if (bullet->draw != NULL)
+        {
+            bullet->draw(player, bullet);
+        }
+    }
+}

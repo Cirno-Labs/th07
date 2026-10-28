@@ -166,6 +166,9 @@ void FireShots(Player *player, int frame);
 // update callback first, ending those that leave the play area (but
 // types 4 and 5) or whose script ends.
 void UpdateBullets(Player *player);
+// th06's DrawBullets: draws the flying bullets (state 1), turned along
+// their angle and offset by the play area, then their draw callbacks.
+void DrawBullets(Player *player);
 
 // One of the 0x70 entries at Player+0x9dc, probably th06's bomb
 // hitboxes (bombHitPos, bombHitSize, ...) as one struct.
