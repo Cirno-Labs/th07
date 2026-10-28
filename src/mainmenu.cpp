@@ -1604,3 +1604,23 @@ int MainMenu::DeletedCallback(MainMenu *menu)
     menu = NULL;
     return 0;
 }
+
+int SetUpTitleScene(int unk)
+{
+    MainMenu *menu = new MainMenu;
+
+    memset(menu, 0, sizeof(MainMenu));
+    g_Unknown626270.unk_93dc = 0;
+    menu->calcChain = g_Chain.CreateElem((ChainCallback)MainMenu::OnUpdate);
+    menu->calcChain->arg = menu;
+    menu->calcChain->addedCallback = (ChainCallback)MainMenu::AddedCallback;
+    menu->calcChain->deletedCallback = (ChainCallback)MainMenu::DeletedCallback;
+    if (g_Chain.AddToCalcChain(menu->calcChain, 3) != 0)
+    {
+        return -1;
+    }
+    menu->drawChain = g_Chain.CreateElem((ChainCallback)MainMenu::OnDraw);
+    menu->drawChain->arg = menu;
+    g_Chain.AddToDrawChain(menu->drawChain, 0);
+    return 0;
+}

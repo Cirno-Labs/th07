@@ -775,7 +775,9 @@ public:
             unsigned int unk_93d8Bit3 : 1;
         };
     };
-    unsigned char unk_93dc[0x3];
+    // Cleared by SetUpTitleScene.
+    BYTE unk_93dc;
+    unsigned char unk_93dd[0x2];
     // Set from the replay menu's last choice when a replay starts.
     BYTE unk_93df;
     DWORD unk_93e0;

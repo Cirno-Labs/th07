@@ -13,6 +13,13 @@
 class MainMenu
 {
 public:
+    // Constructs the sprites, then zeroes the menu. Inline, but too large
+    // to expand: SetUpTitleScene calls the copy at 0x45547d.
+    MainMenu()
+    {
+        memset(this, 0, sizeof(MainMenu));
+    }
+
     // The update element's callback: runs the state's function, then
     // steps the sprites.
     static int OnUpdate(MainMenu *menu);
@@ -105,14 +112,21 @@ public:
     // The menu's state.
     int state;
     int unk_d0fc;
-    unsigned char unk_d100[0x8];
-    // The draw element (priority 0), created by SetUpTitleScene.
+    unsigned char unk_d100[0x4];
+    // The update element (priority 3, with the added and deleted
+    // callbacks) and the draw element (priority 0), created by
+    // SetUpTitleScene.
+    ChainElem *calcChain;
     ChainElem *drawChain;
     // The button mapping the options screen edits.
     ControllerMapping controllerMapping;
     unsigned char unk_d11e[0x3a];
 };
 ASSERT_SIZE(MainMenu, 0xd158);
+
+// Creates the title menu and adds its chain elements. Returns 0, or -1
+// if the update element cannot be added. `unk` is unused.
+int SetUpTitleScene(int unk);
 
 // The names the replay menu shows for stages (then Extra and Phantasm),
 // difficulties and shot types.
