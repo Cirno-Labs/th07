@@ -86,6 +86,10 @@ public:
     int fadeFrames;
     int fadeTotal;
     int fading;
+    unsigned char unk_20[0x10];
+    // Set while the first buffer plays: Func45d960 sets it, Func45d910
+    // clears it. Not in th06.
+    BOOL unk_30;
 };
 
 class CStreamingSound : public CSound
@@ -93,9 +97,10 @@ class CStreamingSound : public CSound
 public:
     ~CStreamingSound();
 
+    HRESULT HandleWaveStreamNotification(BOOL bLoopedPlay);
     HRESULT Reset();
 
-    unsigned char unk_20[0x54];
+    unsigned char unk_34[0x40];
     // Set by BgmNotificationProc while it fills the buffer.
     int unk_74;
 };

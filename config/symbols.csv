@@ -646,7 +646,7 @@ address,size,name,symbol
 0x0045da80,46,Func45da80,
 0x0045dab0,28,Func45dab0,
 0x0045dad0,143,Func45dad0,
-0x0045db60,1000,Func45db60,
+0x0045db60,1000,CStreamingSound::HandleWaveStreamNotification,?HandleWaveStreamNotification@CStreamingSound@@QAEJH@Z
 0x0045df50,194,CStreamingSound::Reset,?Reset@CStreamingSound@@QAEJXZ
 0x0045e020,56,Func45e020,
 0x0045e060,19,Func45e060,
