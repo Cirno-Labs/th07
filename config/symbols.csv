@@ -406,7 +406,7 @@ address,size,name,symbol
 0x00439dd0,241,Func439dd0,
 0x00439ec1,140,Func439ec1,
 0x00439f4d,274,Func439f4d,
-0x0043a05f,119,Func43a05f,
+0x0043a05f,119,App::Func43a05f,?Func43a05f@App@@QAEHXZ
 0x0043a0d6,183,Func43a0d6,
 0x0043a18d,48,App::Func43a18d,?Func43a18d@App@@QAEHXZ
 0x0043a1bd,74,Func43a1bd,
@@ -610,7 +610,7 @@ address,size,name,symbol
 0x004578cc,191,MainMenu::ShowButtonDigits,?ShowButtonDigits@MainMenu@@QAEHPAVSprite@@F@Z
 0x0045798b,1626,MainMenu::UpdateDifficultyMenu,?UpdateDifficultyMenu@MainMenu@@QAEHXZ
 0x00457fe5,5427,MainMenu::UpdateCharacterMenu,?UpdateCharacterMenu@MainMenu@@QAEHXZ
-0x00459518,3269,MainMenu::Func459518,?Func459518@MainMenu@@QAEHXZ
+0x00459518,3269,MainMenu::UpdateShotTypeMenu,?UpdateShotTypeMenu@MainMenu@@QAEHXZ
 0x0045a1dd,1863,MainMenu::Func45a1dd,?Func45a1dd@MainMenu@@QAEHXZ
 0x0045a924,3275,MainMenu::Func45a924,?Func45a924@MainMenu@@QAEHXZ
 0x0045b5ef,958,Func45b5ef,

@@ -85,6 +85,9 @@ public:
     // Clears unk_2a4 and unk_2ac to unk_2b8. Called by the title menu's
     // added callback. Not in th06.
     void ResetClockDriftCounters();
+    // Stops the music. Returns 0, or -1 with no music mode. Not in
+    // th06 as a function.
+    int Func43a05f();
 
     BOOL UsesPresentImmediate()
     {
@@ -702,6 +705,11 @@ public:
     // Adds `power` to stats->power and recomputes the checksums; wipes
     // g_App with 0xff first if the checksums were already wrong.
     void AddPower(int power);
+    // Sets bit 3 (0x8) of unk_93d8 to `value`.
+    void SetUnk93d8Bit3(int value)
+    {
+        this->unk_93d8Bit3 = value;
+    }
 
     unsigned char unk_0[0x8];
     Unknown626270Stats *stats;
@@ -727,7 +735,15 @@ public:
     BYTE shotType;
     unsigned char unk_93d7;
     // Bit 1: the game is a practice; 0x10: it was cleared.
-    DWORD unk_93d8;
+    union
+    {
+        DWORD unk_93d8;
+        struct
+        {
+            unsigned int unk_93d8Bits0 : 3;
+            unsigned int unk_93d8Bit3 : 1;
+        };
+    };
     unsigned char unk_93dc[0x20c];
     // The screen shake ends at once while this is 1 or less.
     int unk_95e8;

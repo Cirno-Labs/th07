@@ -25,7 +25,7 @@ public:
     int Func456f6b();
     int UpdateDifficultyMenu();
     int UpdateCharacterMenu();
-    int Func459518();
+    int UpdateShotTypeMenu();
     int Func45a1dd();
     int Func45a924();
     // Gives every button of controllerMapping assigned `button` the

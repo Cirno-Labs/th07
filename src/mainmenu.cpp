@@ -55,7 +55,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
     case 6:
     case 10:
     case 14:
-        status = menu->Func459518();
+        status = menu->UpdateShotTypeMenu();
         break;
     case 11:
         status = menu->Func45a1dd();
@@ -571,6 +571,216 @@ int MainMenu::UpdateCharacterMenu()
             }
             this->cursor = 0;
             return 1;
+        }
+        break;
+    }
+    this->unk_b0c0++;
+    this->stateFrames++;
+    this->unk_d0fc++;
+    return 1;
+}
+
+int MainMenu::UpdateShotTypeMenu()
+{
+    switch (this->unk_8)
+    {
+    case 0:
+        if (this->unk_d0fc == 0)
+        {
+            g_SpriteEngine->Func455030(this->sprites, this->spriteCount, 10);
+            if (g_App.defaultDifficulty < 4)
+            {
+                this->sprites[g_App.defaultDifficulty + 0x43].SetPendingInterrupt(9);
+            }
+            else if (!g_Unknown626270.Func42f94c())
+            {
+                this->sprites[0xa1].SetPendingInterrupt(9);
+            }
+            else
+            {
+                this->sprites[g_App.defaultDifficulty + 0x9e].SetPendingInterrupt(9);
+            }
+            this->sprites[0x48].flags &= ~2;
+            this->sprites[0x49].flags &= ~2;
+            this->sprites[0x47].flags &= ~2;
+            this->sprites[0x50].flags &= ~2;
+            this->sprites[0x53].flags &= ~2;
+            this->sprites[0x4b].flags &= ~2;
+            this->sprites[0x4c].flags &= ~2;
+            this->sprites[0x4a].flags &= ~2;
+            this->sprites[0x51].flags &= ~2;
+            this->sprites[0x54].flags &= ~2;
+            this->sprites[0x4e].flags &= ~2;
+            this->sprites[0x4f].flags &= ~2;
+            this->sprites[0x4d].flags &= ~2;
+            this->sprites[0x52].flags &= ~2;
+            this->sprites[0x55].flags &= ~2;
+            this->cursor = g_Unknown626270.shotType;
+            if (g_App.defaultDifficulty == 4)
+            {
+                while (!g_Unknown626270.Func42f7df(this->cursor + g_Unknown626270.character * 2))
+                {
+                    this->cursor++;
+                    if (this->cursor >= 2)
+                    {
+                        this->cursor -= 2;
+                    }
+                }
+            }
+            else if (g_App.defaultDifficulty == 5)
+            {
+                while (!g_Unknown626270.Func42f853(this->cursor + g_Unknown626270.character * 2))
+                {
+                    this->cursor++;
+                    if (this->cursor >= 2)
+                    {
+                        this->cursor -= 2;
+                    }
+                }
+            }
+            switch (g_Unknown626270.character)
+            {
+            case 0:
+                this->sprites[0x48].flags |= 2;
+                this->sprites[0x49].flags |= 2;
+                this->sprites[0x47].flags |= 2;
+                g_SpriteEngine->SetSprite(&this->sprites[0x49 - this->cursor], this->sprites[0x49 - this->cursor].baseSpriteIndex + 1);
+                g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 0x48], this->sprites[this->cursor + 0x48].baseSpriteIndex);
+                break;
+            case 1:
+                this->sprites[0x4b].flags |= 2;
+                this->sprites[0x4c].flags |= 2;
+                this->sprites[0x4a].flags |= 2;
+                g_SpriteEngine->SetSprite(&this->sprites[0x4c - this->cursor], this->sprites[0x4c - this->cursor].baseSpriteIndex + 1);
+                g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 0x4b], this->sprites[this->cursor + 0x4b].baseSpriteIndex);
+                break;
+            case 2:
+                this->sprites[0x4e].flags |= 2;
+                this->sprites[0x4f].flags |= 2;
+                this->sprites[0x4d].flags |= 2;
+                g_SpriteEngine->SetSprite(&this->sprites[0x4f - this->cursor], this->sprites[0x4f - this->cursor].baseSpriteIndex + 1);
+                g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 0x4e], this->sprites[this->cursor + 0x4e].baseSpriteIndex);
+                break;
+            }
+            this->unk_8 = 0;
+            this->stateFrames = 0;
+        }
+        if (this->unk_68 != 0)
+        {
+            this->SetState(11);
+            this->unk_68 = 0;
+            this->cursor = g_Unknown626270.stage - 1;
+            return 1;
+        }
+        if (this->unk_d0fc == 30)
+        {
+            this->unk_8 = 1;
+        }
+        break;
+    case 1:
+        if (this->MoveMenuCursor(2))
+        {
+            if (g_App.defaultDifficulty == 4)
+            {
+                while (!g_Unknown626270.Func42f7df(this->cursor + g_Unknown626270.character * 2))
+                {
+                    this->cursor++;
+                    if (this->cursor >= 2)
+                    {
+                        this->cursor -= 2;
+                    }
+                }
+            }
+            else if (g_App.defaultDifficulty == 5)
+            {
+                while (!g_Unknown626270.Func42f853(this->cursor + g_Unknown626270.character * 2))
+                {
+                    this->cursor++;
+                    if (this->cursor >= 2)
+                    {
+                        this->cursor -= 2;
+                    }
+                }
+            }
+            switch (g_Unknown626270.character)
+            {
+            case 0:
+                g_SpriteEngine->SetSprite(&this->sprites[0x49 - this->cursor], this->sprites[0x49 - this->cursor].baseSpriteIndex + 1);
+                g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 0x48], this->sprites[this->cursor + 0x48].baseSpriteIndex);
+                break;
+            case 1:
+                g_SpriteEngine->SetSprite(&this->sprites[0x4c - this->cursor], this->sprites[0x4c - this->cursor].baseSpriteIndex + 1);
+                g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 0x4b], this->sprites[this->cursor + 0x4b].baseSpriteIndex);
+                break;
+            case 2:
+                g_SpriteEngine->SetSprite(&this->sprites[0x4f - this->cursor], this->sprites[0x4f - this->cursor].baseSpriteIndex + 1);
+                g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 0x4e], this->sprites[this->cursor + 0x4e].baseSpriteIndex);
+                break;
+            }
+        }
+        if (WAS_PRESSED(0x1001))
+        {
+            g_Unknown626270.shotType = this->cursor;
+            g_SoundPlayer.QueueSound(10, 0);
+            g_SoundPlayer.PlayQueuedSounds();
+            if (!(g_Unknown626270.unk_93d8 & 1))
+            {
+                g_Unknown626270.difficulty = g_App.defaultDifficulty;
+                if (g_Unknown626270.difficulty < 4)
+                {
+                    g_Unknown626270.stage = 0;
+                }
+                else
+                {
+                    g_Unknown626270.stage = g_Unknown626270.difficulty + 2;
+                }
+                g_App.scene = 2;
+                g_Unknown626270.SetUnk93d8Bit3(0);
+                g_App.Func43a05f();
+                while (g_SoundPlayer.PlayQueuedSounds())
+                {
+                }
+                return 0;
+            }
+            this->cursor = 0;
+            this->SetState(11);
+            return 2;
+        }
+        if (WAS_PRESSED(0xa))
+        {
+            g_SoundPlayer.QueueSound(11, 0);
+            g_Unknown626270.shotType = this->cursor;
+            if (this->state != 14)
+            {
+                if (!(g_Unknown626270.unk_93d8 & 1))
+                {
+                    this->SetState(5);
+                }
+                else
+                {
+                    this->SetState(9);
+                }
+            }
+            else
+            {
+                this->SetState(13);
+            }
+            this->sprites[0x48].flags |= 2;
+            this->sprites[0x49].flags |= 2;
+            this->sprites[0x47].flags |= 2;
+            this->sprites[0x50].flags |= 2;
+            this->sprites[0x53].flags |= 2;
+            this->sprites[0x4b].flags |= 2;
+            this->sprites[0x4c].flags |= 2;
+            this->sprites[0x4a].flags |= 2;
+            this->sprites[0x51].flags |= 2;
+            this->sprites[0x54].flags |= 2;
+            this->sprites[0x4e].flags |= 2;
+            this->sprites[0x4f].flags |= 2;
+            this->sprites[0x4d].flags |= 2;
+            this->sprites[0x52].flags |= 2;
+            this->sprites[0x55].flags |= 2;
+            return 2;
         }
         break;
     }
