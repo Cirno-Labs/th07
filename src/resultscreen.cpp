@@ -206,6 +206,34 @@ DWORD LoadHighScores(void *scoreDat, ListNode *list, int shot, int difficulty, B
                : 100000;
 }
 
+int LoadSpellCards(void *scoreDat, Catk *catks)
+{
+    Catk *chunk;
+    int left;
+    ScoreDat *dat1 = (ScoreDat *)scoreDat;
+
+    if (catks == NULL)
+    {
+        return -1;
+    }
+    chunk = (Catk *)((BYTE *)dat1 + dat1->dataOffset);
+    left = dat1->fileSize - dat1->dataOffset;
+    while (left > 0)
+    {
+        if (chunk->magic == 0x4b544143 && chunk->version == 1)
+        {
+            if (chunk->index >= 0x8d)
+            {
+                break;
+            }
+            catks[chunk->index] = *chunk;
+        }
+        left -= chunk->size;
+        chunk = (Catk *)((BYTE *)chunk + chunk->size);
+    }
+    return 0;
+}
+
 int LoadPracticeScores(void *scoreDat, Pscr *pscrs)
 {
     Pscr *p;
@@ -2127,7 +2155,7 @@ int ResultScreen::AddedCallback(ResultScreen *screen)
     screen->unk_40 = Func445110(screen->scoreDat, &screen->lsnm);
     if (screen->state != 10 && screen->state != 0x12)
     {
-        Func445069(screen->scoreDat, g_Unknown626270.catks);
+        LoadSpellCards(screen->scoreDat, g_Unknown626270.catks);
         LoadClears(screen->scoreDat, g_Unknown626270.clrds);
         g_Unknown626270.Func42f94c();
         LoadPracticeScores(screen->scoreDat, &g_Unknown626270.pscrs[0][0][0]);

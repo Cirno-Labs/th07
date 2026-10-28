@@ -2155,7 +2155,7 @@ int MainMenu::InitTitleScene()
     dat = LoadScoreDat("score.dat");
     LoadClears(dat, g_Unknown626270.clrds);
     LoadPracticeScores(dat, &g_Unknown626270.pscrs[0][0][0]);
-    Func445069(dat, g_Unknown626270.catks);
+    LoadSpellCards(dat, g_Unknown626270.catks);
     ReleaseScoreDat(dat);
     if ((DWORD)g_Unknown626270.plst.playHours < 7)
     {

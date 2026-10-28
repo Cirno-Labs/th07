@@ -241,8 +241,10 @@ ScoreDat *LoadScoreDat(char *path);
 // Fills `clrds` with fresh chunks, then copies the score file's "CLRD"
 // chunks over them.
 int LoadClears(void *scoreDat, Clrd *clrds);
-// The same for the spell card chunks. Not named yet.
-int Func445069(void *scoreDat, Catk *catks);
+// Copies the score file's version 1 "CATK" chunks to `catks`, by card
+// number, stopping at one numbered 0x8d or more. Returns 0, or -1 if
+// `catks` is NULL.
+int LoadSpellCards(void *scoreDat, Catk *catks);
 // Copies the score file's last version 1 "PLST" chunk to `plst`.
 // Returns 0.
 int LoadPlstChunk(void *scoreDat, Plst *plst);

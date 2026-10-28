@@ -496,7 +496,7 @@ address,size,name,symbol
 0x00444bed,51,FreeListNodes,?FreeListNodes@@YIXPAUListNode@@@Z
 0x00444c20,749,LoadScoreDat,?LoadScoreDat@@YIPAUScoreDat@@PAD@Z
 0x00444f0d,348,LoadHighScores,?LoadHighScores@@YIKPAXPAUListNode@@HHPAE@Z
-0x00445069,167,Func445069,?Func445069@@YIHPAXPAUCatk@@@Z
+0x00445069,167,LoadSpellCards,?LoadSpellCards@@YIHPAXPAUCatk@@@Z
 0x00445110,130,Func445110,?Func445110@@YIHPAXPAULsnm@@@Z
 0x00445192,354,LoadClears,?LoadClears@@YIHPAXPAUClrd@@@Z
 0x004452f4,395,LoadPracticeScores,?LoadPracticeScores@@YIHPAXPAUPscr@@@Z
