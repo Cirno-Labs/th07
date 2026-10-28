@@ -419,7 +419,7 @@ address,size,name,symbol
 0x0043a760,161,MusicScreen::UpdateIntro,?UpdateIntro@MusicScreen@@QAEHXZ
 0x0043a801,863,MusicScreen::UpdateList,?UpdateList@MusicScreen@@QAEHXZ
 0x0043ab60,236,MusicScreen::OnUpdate,?OnUpdate@MusicScreen@@SIHPAV1@@Z
-0x0043ac4c,468,Func43ac4c,
+0x0043ac4c,468,MusicScreen::OnDraw,?OnDraw@MusicScreen@@SIHPAV1@@Z
 0x0043ae20,1624,Func43ae20,
 0x0043b478,99,Func43b478,
 0x0043b4db,223,Func43b4db,?Func43b4db@@YIHXZ

@@ -27,6 +27,9 @@ public:
     // handler and counts its frames, then steps the sprites. Returns 0
     // while a handler asks to stop, otherwise 1.
     static int OnUpdate(MusicScreen *screen);
+    // The draw chain element's callback: draws the list, with an arrow
+    // at the tune under the cursor, and the comment. Returns 1.
+    static int OnDraw(MusicScreen *screen);
     // State 0: on its first frame, sends interrupt 1 to the title under
     // the cursor and the comment lines and 2 to the other titles; after
     // 8 frames moves to state 1. Returns 0.

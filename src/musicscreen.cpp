@@ -3,6 +3,7 @@
 
 #include <string.h>
 
+#include "ascii.h"
 #include "musicscreen.h"
 #include "unsorted.h"
 
@@ -164,5 +165,45 @@ again:
     {
         g_SpriteEngine->Step(&screen->comment[i]);
     }
+    return 1;
+}
+
+int MusicScreen::OnDraw(MusicScreen *screen)
+{
+    char arrow[2] = {0x7f, 0};
+    D3DXVECTOR3 pos;
+    int i;
+
+    g_SpriteEngine->ClearTexture();
+    g_SpriteEngine->CopySurfaceToBackBuffer(0, 0, 0, 0, 0);
+    g_SpriteEngine->Func44f770(&screen->unk_0024[0]);
+    for (i = screen->listTop; i < screen->listTop + 10; i++)
+    {
+        if (i >= screen->tuneCount)
+        {
+            break;
+        }
+        g_AsciiText.SetColor(screen->titles[i].color);
+        screen->titles[i].pos.x = 93.0f;
+        screen->titles[i].pos.y = 104.0f + (i + 1 - screen->listTop) * 18 - 20.0f;
+        screen->titles[i].pos.z = 0.0f;
+        g_SpriteEngine->Func44f770(&screen->titles[i]);
+        // The number left of the title, and the arrow left of that.
+        pos = screen->titles[i].pos;
+        pos.x -= 60.0f;
+        if (screen->cursor == i)
+        {
+            g_AsciiText.AddString(&pos, arrow);
+        }
+        pos.x += 15.0f;
+        g_AsciiText.AddFormat(&pos, "%2d.", i + 1);
+    }
+    // Has no effect, but the original increments here.
+    i++;
+    for (i = 0; i < 8; i++)
+    {
+        g_SpriteEngine->Func44f770(&screen->comment[i]);
+    }
+    g_AsciiText.color = 0xffffffff;
     return 1;
 }
