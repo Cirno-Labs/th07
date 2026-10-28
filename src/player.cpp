@@ -81,3 +81,31 @@ int TryFireShot(Player *player, PlayerBullet *bullet, int frame, ShotData *sd)
     }
     return 0;
 }
+
+int FireLaser(Player *player, PlayerBullet *bullet, int frame, ShotData *sd)
+{
+    int laser = sd->phase;
+
+    if (player->lasers[laser].bullet != NULL)
+    {
+        if (player->laserShots[laser] != sd)
+        {
+            player->lasers[laser].bullet->sprite.pendingInterrupt = 1;
+            player->lasers[laser].bullet = NULL;
+        }
+        return 0;
+    }
+    if (player->unk_240a != 1)
+    {
+        return 0;
+    }
+    player->lasers[laser].timer.Set(sd->interval);
+    player->lasers[laser].bullet = bullet;
+    bullet->laserIndex = laser;
+    bullet->option = sd->option;
+    bullet->velocity.z = sd->offsetX;
+    bullet->laserOffsetY = sd->offsetY;
+    FireShot(player, bullet, sd);
+    player->laserShots[laser] = sd;
+    return 1;
+}

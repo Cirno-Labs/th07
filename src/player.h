@@ -16,8 +16,10 @@ struct PlayerBullet
     D3DXVECTOR3 pos;
     D3DXVECTOR3 unk_258[0x10];
     D3DXVECTOR3 size;
+    // A laser keeps its offset from its option in velocity.z and
+    // laserOffsetY.
     D3DXVECTOR3 velocity;
-    unsigned char unk_330[0x4];
+    float laserOffsetY;
     float speed;
     // The direction it flies in.
     float angle;
@@ -26,7 +28,10 @@ struct PlayerBullet
     unsigned char unk_34a[0x2];
     // ShotData::type.
     short type;
-    unsigned char unk_34e[0x16];
+    // A laser's: its entry in Player::lasers, and its option, from 1.
+    short laserIndex;
+    short option;
+    unsigned char unk_352[0x12];
 };
 ASSERT_SIZE(PlayerBullet, 0x364);
 
@@ -64,6 +69,10 @@ void FireShot(Player *player, PlayerBullet *bullet, ShotData *sd);
 // `bullet` if it fires on `frame`, returning 1 if it did, else 0.
 // Fires on frames where frame % interval is phase.
 int TryFireShot(Player *player, PlayerBullet *bullet, int frame, ShotData *sd);
+// A laser, while Player::unk_240a is 1: fires if laser sd->phase is
+// free, running its timer for sd->interval frames; while it flies from
+// another shot, sends its bullet interrupt 1 and frees it.
+int FireLaser(Player *player, PlayerBullet *bullet, int frame, ShotData *sd);
 
 // One of the 0x70 entries at Player+0x9dc, probably th06's bomb
 // hitboxes (bombHitPos, bombHitSize, ...) as one struct.
@@ -98,14 +107,14 @@ struct PlayerBomb
 };
 ASSERT_SIZE(PlayerBomb, 0xa142c);
 
-// One of the three entries at Player+0x169c4: a Timer and a dword.
-// Maybe th06's laserTimers, grown.
-struct PlayerUnk169c4
+// One of the player's lasers, th06's laserTimers grown: its clock and
+// its bullet, NULL when none flies.
+struct PlayerLaser
 {
     Timer timer;
-    int unk_c;
+    PlayerBullet *bullet;
 };
-ASSERT_SIZE(PlayerUnk169c4, 0x10);
+ASSERT_SIZE(PlayerLaser, 0x10);
 
 // The player, the global at 0x4bdad8.
 class Player
@@ -122,11 +131,18 @@ public:
     D3DXVECTOR3 optionPos[2];
     unsigned char unk_9cc[0x10];
     PlayerBombHit unk_9dc[0x70];
-    unsigned char unk_17dc[0xc34];
+    unsigned char unk_17dc[0xc04];
+    // The shot each laser was fired from, by ShotData::phase.
+    ShotData *laserShots[3];
+    unsigned char unk_23ec[0x1e];
+    // FireLaser fires its lasers while it is 1, Func43bf50 while it
+    // is 3.
+    char unk_240a;
+    unsigned char unk_240b[0x5];
     Timer unk_2410;
     unsigned char unk_241c[0x28];
     PlayerBullet bullets[0x60];
-    PlayerUnk169c4 unk_169c4[3];
+    PlayerLaser lasers[3];
     Timer unk_169f4;
     Timer unk_16a00;
     Timer unk_16a0c;
