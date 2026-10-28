@@ -15,6 +15,9 @@ union MidiShortMsg
     BYTE bytes[4];
 };
 
+// Swaps the bytes of a big-endian 16-bit value from a MIDI file.
+WORD SwapBytes16(WORD value);
+
 // Wraps a MIDI output device (midiOutOpen and friends).
 class MidiDevice
 {
