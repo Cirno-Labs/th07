@@ -59,7 +59,7 @@ public:
     // The state functions OnUpdate runs. Not in th06.
     int StartTitle();
     int UpdateOptions();
-    int Func456f6b();
+    int UpdateKeyConfig();
     int UpdateDifficultyMenu();
     int UpdateCharacterMenu();
     int UpdateShotTypeMenu();
@@ -151,6 +151,13 @@ int SetUpTitleScene(int unk);
 extern char *g_TitleHelpTexts[8];
 // The help line the options screen shows for each entry.
 extern char *g_OptionsHelpTexts[9];
+// The help line the key config shows for each entry.
+extern char *g_KeyConfigHelpTexts[12];
+// The button the key config saw pressed last frame, so that a held
+// button is assigned once.
+extern short g_LastPressedKey;
+// The button mapping the key config's reset entry restores.
+extern ControllerMapping g_DefaultControllerMapping;
 // The demo replays the title menu plays in turn.
 extern char *g_DemoReplayPaths[3];
 // The names the replay menu shows for stages (then Extra and Phantasm),

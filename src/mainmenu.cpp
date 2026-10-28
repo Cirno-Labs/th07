@@ -47,7 +47,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
         status = menu->UpdateOptions();
         break;
     case 3:
-        status = menu->Func456f6b();
+        status = menu->UpdateKeyConfig();
         break;
     case 4:
     case 8:
@@ -640,6 +640,202 @@ void MainMenu::ReassignButton(short button, short replacement, int unk)
     {
         this->controllerMapping.skipButton = replacement;
     }
+}
+
+int MainMenu::UpdateKeyConfig()
+{
+    Sprite *digit;
+    int i;
+    short key;
+    BYTE *pad;
+
+    switch (this->unk_8)
+    {
+    case 0:
+        if (this->unk_d0fc == 0)
+        {
+            g_SpriteEngine->Func455030(this->sprites, this->spriteCount, 4);
+            for (i = 0; i < 12; i++)
+            {
+                g_SpriteEngine->SetSprite(&this->sprites[i + 0x23], this->sprites[i + 0x23].baseSpriteIndex + 1);
+            }
+            g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 0x23],
+                                      this->sprites[this->cursor + 0x23].baseSpriteIndex);
+            this->unk_8 = 0;
+            this->stateFrames = 0;
+            this->controllerMapping = g_App.controllerMapping;
+            g_App.controllerMapping.upButton = -1;
+            g_App.controllerMapping.downButton = -1;
+            digit = &this->sprites[0x2f];
+            this->ShowButtonDigits(digit, this->controllerMapping.shootButton);
+            digit += 2;
+            this->ShowButtonDigits(digit, this->controllerMapping.bombButton);
+            digit += 2;
+            this->ShowButtonDigits(digit, this->controllerMapping.focusButton);
+            digit += 2;
+            this->ShowButtonDigits(digit, this->controllerMapping.skipButton);
+            digit += 2;
+            this->ShowButtonDigits(digit, this->controllerMapping.menuButton);
+            digit += 2;
+            this->ShowButtonDigits(digit, this->controllerMapping.upButton);
+            digit += 2;
+            this->ShowButtonDigits(digit, this->controllerMapping.downButton);
+            digit += 2;
+            this->ShowButtonDigits(digit, this->controllerMapping.leftButton);
+            digit += 2;
+            this->ShowButtonDigits(digit, this->controllerMapping.rightButton);
+            this->prevCursor = -1;
+        }
+        this->unk_8 = 1;
+        for (i = 0; i < ARRAY_SIZE(g_KeyConfigHelpTexts); i++)
+        {
+            g_SpriteEngine->RenderTextCentered(&this->unk_b0cc[i], 0xfff0e0, 0x300000, g_KeyConfigHelpTexts[i]);
+        }
+    case 1:
+        if (this->MoveMenuCursor(12))
+        {
+            for (i = 0; i < 12; i++)
+            {
+                g_SpriteEngine->SetSprite(&this->sprites[i + 0x23], this->sprites[i + 0x23].baseSpriteIndex + 1);
+            }
+            g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 0x23],
+                                      this->sprites[this->cursor + 0x23].baseSpriteIndex);
+        }
+        if (this->prevCursor != this->cursor)
+        {
+            this->unk_b0c8 = &this->unk_b0cc[this->cursor];
+            this->unk_b0c8->SetPendingInterrupt(1);
+        }
+        this->prevCursor = this->cursor;
+        digit = &this->sprites[0x2f];
+        this->ShowButtonDigits(digit, this->controllerMapping.shootButton);
+        digit += 2;
+        this->ShowButtonDigits(digit, this->controllerMapping.bombButton);
+        digit += 2;
+        this->ShowButtonDigits(digit, this->controllerMapping.focusButton);
+        digit += 2;
+        this->ShowButtonDigits(digit, this->controllerMapping.skipButton);
+        digit += 2;
+        this->ShowButtonDigits(digit, this->controllerMapping.menuButton);
+        digit += 2;
+        this->ShowButtonDigits(digit, this->controllerMapping.upButton);
+        digit += 2;
+        this->ShowButtonDigits(digit, this->controllerMapping.downButton);
+        digit += 2;
+        this->ShowButtonDigits(digit, this->controllerMapping.leftButton);
+        digit += 2;
+        this->ShowButtonDigits(digit, this->controllerMapping.rightButton);
+        for (i = 0x41; i <= 0x42; i++)
+        {
+            g_SpriteEngine->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex + 1);
+        }
+        i = g_App.shootFocuses + 0x41;
+        g_SpriteEngine->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex);
+        pad = GetPadButtons();
+        for (key = 0; key < 0x20; key++)
+        {
+            if (pad[key] & 0x80)
+            {
+                break;
+            }
+        }
+        if (key < 0x20 && g_LastPressedKey != key)
+        {
+            switch (this->cursor)
+            {
+            case 0:
+                this->ReassignButton(key, this->controllerMapping.shootButton, 1);
+                this->controllerMapping.shootButton = key;
+                break;
+            case 1:
+                this->ReassignButton(key, this->controllerMapping.bombButton, 0);
+                this->controllerMapping.bombButton = key;
+                break;
+            case 2:
+                this->ReassignButton(key, this->controllerMapping.focusButton, 1);
+                this->controllerMapping.focusButton = key;
+                break;
+            case 3:
+                this->ReassignButton(key, this->controllerMapping.menuButton, 0);
+                this->controllerMapping.menuButton = key;
+                break;
+            case 4:
+                this->ReassignButton(key, this->controllerMapping.upButton, 0);
+                this->controllerMapping.upButton = key;
+                break;
+            case 5:
+                this->ReassignButton(key, this->controllerMapping.downButton, 0);
+                this->controllerMapping.downButton = key;
+                break;
+            case 6:
+                this->ReassignButton(key, this->controllerMapping.leftButton, 0);
+                this->controllerMapping.leftButton = key;
+                break;
+            case 7:
+                this->ReassignButton(key, this->controllerMapping.rightButton, 0);
+                this->controllerMapping.rightButton = key;
+                break;
+            case 8:
+                this->ReassignButton(key, this->controllerMapping.skipButton, 0);
+                this->controllerMapping.skipButton = key;
+                break;
+            default:
+                goto assigned;
+            }
+            g_SoundPlayer.QueueSound(10, 0);
+            g_SoundPlayer.PlayQueuedSounds();
+        }
+    assigned:
+        g_LastPressedKey = key;
+        if (WAS_PRESSED(0x40))
+        {
+            switch (this->cursor)
+            {
+            case 9:
+                g_App.shootFocuses = 1 - g_App.shootFocuses;
+            }
+        }
+        if (WAS_PRESSED(0x80))
+        {
+            switch (this->cursor)
+            {
+            case 9:
+                g_App.shootFocuses = 1 - g_App.shootFocuses;
+            }
+        }
+        if (g_Buttons != 0)
+        {
+            this->unk_b0c0 = 0;
+        }
+        if (this->unk_b0c0 >= 3600)
+        {
+            goto leave;
+        }
+        if (WAS_PRESSED(0x1001))
+        {
+            switch (this->cursor)
+            {
+            case 10:
+                g_SoundPlayer.QueueSound(10, 0);
+                g_SoundPlayer.PlayQueuedSounds();
+                this->controllerMapping = g_DefaultControllerMapping;
+                g_App.shootFocuses = 1;
+                break;
+            case 11:
+            leave:
+                g_SoundPlayer.QueueSound(11, 0);
+                g_SoundPlayer.PlayQueuedSounds();
+                this->SetState(2);
+                g_App.controllerMapping = this->controllerMapping;
+                this->cursor = 7;
+                return 1;
+            }
+        }
+    }
+    this->unk_b0c0++;
+    this->stateFrames++;
+    this->unk_d0fc++;
+    return 1;
 }
 
 int MainMenu::ShowButtonDigits(Sprite *vm, short value)

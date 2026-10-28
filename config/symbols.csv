@@ -606,7 +606,7 @@ address,size,name,symbol
 0x004555dd,3152,MainMenu::StartTitle,?StartTitle@MainMenu@@QAEHXZ
 0x0045624d,3059,MainMenu::UpdateOptions,?UpdateOptions@MainMenu@@QAEHXZ
 0x00456e40,299,MainMenu::ReassignButton,?ReassignButton@MainMenu@@QAEXFFH@Z
-0x00456f6b,2365,MainMenu::Func456f6b,?Func456f6b@MainMenu@@QAEHXZ
+0x00456f6b,2365,MainMenu::UpdateKeyConfig,?UpdateKeyConfig@MainMenu@@QAEHXZ
 0x004578cc,191,MainMenu::ShowButtonDigits,?ShowButtonDigits@MainMenu@@QAEHPAVSprite@@F@Z
 0x0045798b,1626,MainMenu::UpdateDifficultyMenu,?UpdateDifficultyMenu@MainMenu@@QAEHXZ
 0x00457fe5,5427,MainMenu::UpdateCharacterMenu,?UpdateCharacterMenu@MainMenu@@QAEHXZ
@@ -1730,10 +1730,13 @@ address,size,name,symbol
 0x0049ec30,,g_NameAlphabet,?g_NameAlphabet@@3PADA
 0x0049ec34,,g_ShotNames,?g_ShotNames@@3PAPADA
 0x0049ed98,,g_FormatInfos,?g_FormatInfos@@3PAUFormatInfo@@A
+0x0049ee40,,g_DefaultControllerMapping,?g_DefaultControllerMapping@@3UControllerMapping@@A
 0x0049f40c,,g_PracticeStageNames,?g_PracticeStageNames@@3PAPADA
 0x0049f424,,g_MenuStageNames,?g_MenuStageNames@@3PAPADA
 0x0049f444,,g_MenuDifficultyNames,?g_MenuDifficultyNames@@3PAPADA
 0x0049f45c,,g_MenuShotTypeNames,?g_MenuShotTypeNames@@3PAPADA
+0x0049f474,,g_LastPressedKey,?g_LastPressedKey@@3FA
+0x0049f478,,g_KeyConfigHelpTexts,?g_KeyConfigHelpTexts@@3PAPADA
 0x0049f4a8,,g_OptionsHelpTexts,?g_OptionsHelpTexts@@3PAPADA
 0x0049f4cc,,g_TitleHelpTexts,?g_TitleHelpTexts@@3PAPADA
 0x0049f504,,g_SpellCardRatings,?g_SpellCardRatings@@3PAMA
