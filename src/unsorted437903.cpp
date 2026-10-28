@@ -247,3 +247,27 @@ int App::LoadMidi(int slot, char *path)
     }
     return 1;
 }
+
+int App::PlayMidi(int slot)
+{
+    if (g_App.musicMode == 2)
+    {
+        if (g_App.midi != NULL)
+        {
+            MidiPlayer *midi = g_App.midi;
+            midi->Stop();
+            midi->ParseFile(slot);
+            midi->Play();
+        }
+        return 0;
+    }
+    if (g_App.musicMode == 1)
+    {
+        if (g_App.flags.preloadBgm)
+        {
+            g_SoundPlayer.Func44d2f0(4, 0, "dummy");
+        }
+        g_SoundPlayer.Func44d2f0(2, slot, "dummy");
+    }
+    return 0;
+}

@@ -101,9 +101,10 @@ public:
     // command 1 for the .wav of the same name instead. Returns 1 outside
     // MIDI mode.
     int LoadMidi(int slot, char *path);
-    // Plays MIDI slot `slot`, or the BGM track, as musicMode says.
-    // Returns 0.
-    int Func439ec1(int slot);
+    // th06's PlayMidi: plays MIDI slot `slot` from the start in MIDI
+    // mode. In wave mode it queues sound command 2 for the slot, after
+    // command 4 with g_App.flags.preloadBgm. Returns 0.
+    int PlayMidi(int slot);
 
     BOOL UsesPresentImmediate()
     {
