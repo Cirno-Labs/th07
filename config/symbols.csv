@@ -628,7 +628,7 @@ address,size,name,symbol
 0x0045c740,142,CSoundManager::Initialize,?Initialize@CSoundManager@@QAEJPAUHWND__@@KKKK@Z
 0x0045c7d0,265,CSoundManager::SetPrimaryBufferFormat,?SetPrimaryBufferFormat@CSoundManager@@QAEJKKK@Z
 0x0045c8e0,844,CSoundManager::CreateStreaming,?CreateStreaming@CSoundManager@@QAEJPAPAVCStreamingSound@@PADKU_GUID@@KKPAXPAUBgmFormat@@@Z
-0x0045cc30,795,CSoundManager::Func45cc30,?Func45cc30@CSoundManager@@QAEJPAPAVCStreamingSound@@PAXKPAUBgmFormat@@KU_GUID@@KK1@Z
+0x0045cc30,795,CSoundManager::CreateStreamingFromMemory,?CreateStreamingFromMemory@CSoundManager@@QAEJPAPAVCStreamingSound@@PAXKPAUBgmFormat@@KU_GUID@@KK1@Z
 0x0045cf50,221,Func45cf50,
 0x0045d030,46,Func45d030,
 0x0045d060,599,CSound::Func45d060,?Func45d060@CSound@@QAEJXZ
@@ -652,7 +652,7 @@ address,size,name,symbol
 0x0045e060,19,CWaveFile::~CWaveFile,??1CWaveFile@@QAE@XZ
 0x0045e080,163,CWaveFile::Open,?Open@CWaveFile@@QAEJPADPAUBgmFormat@@K@Z
 0x0045e130,84,CWaveFile::Func45e130,?Func45e130@CWaveFile@@QAEJPAUBgmFormat@@@Z
-0x0045e190,92,Func45e190,
+0x0045e190,92,CWaveFile::OpenFromMemory,?OpenFromMemory@CWaveFile@@QAEJPAEKPAUBgmFormat@@K@Z
 0x0045e1f0,17,Unknown45e1f0::GetField2c,?GetField2c@Unknown45e1f0@@QAEHXZ
 0x0045e210,328,Func45e210,
 0x0045e360,328,Func45e360,

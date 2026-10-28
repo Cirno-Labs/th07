@@ -410,7 +410,7 @@ int SoundPlayer::PlayPreloadedBgm(int slot)
     notifySize -= notifySize % nBlockAlign;
     this->notifyEvent = CreateEventA(NULL, FALSE, FALSE, NULL);
     this->notifyThread = CreateThread(NULL, 0, BgmNotificationProc, g_App.hwnd, 0, &this->notifyThreadId);
-    hr = this->manager->Func45cc30(&this->bgm, this->bgmPreloadCursor[slot], this->bgmPreloadSize[slot],
+    hr = this->manager->CreateStreamingFromMemory(&this->bgm, this->bgmPreloadCursor[slot], this->bgmPreloadSize[slot],
                                    this->bgmEntries[slot], DSBCAPS_CTRLPOSITIONNOTIFY | DSBCAPS_GETCURRENTPOSITION2,
                                    GUID_NULL, 0x10, notifySize, this->notifyEvent);
     if (hr < 0)

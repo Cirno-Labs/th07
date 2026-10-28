@@ -23,6 +23,9 @@ public:
     // Opens `strFileName` (thbgm.dat) to stream the track `format`
     // describes, where th06 opened a wave file with mmio.
     HRESULT Open(LPTSTR strFileName, BgmFormat *format, DWORD dwFlags);
+    // As the SDK's, with a BgmFormat for the wave format. th06 dropped
+    // it.
+    HRESULT OpenFromMemory(BYTE *pbData, ULONG ulDataSize, BgmFormat *format, DWORD dwFlags);
     // Switches the stream to the track `format` describes. Returns
     // E_FAIL while (+0x7c) is set or without a file. Not in th06.
     HRESULT Func45e130(BgmFormat *format);
@@ -53,7 +56,7 @@ public:
                             BgmFormat *format);
     // CreateStreaming for a track read into memory: `size` bytes at
     // `data`, in the format `format` describes. Not in th06.
-    HRESULT Func45cc30(CStreamingSound **ppStreamingSound, void *data, DWORD size, BgmFormat *format,
+    HRESULT CreateStreamingFromMemory(CStreamingSound **ppStreamingSound, void *data, DWORD size, BgmFormat *format,
                        DWORD dwCreationFlags, GUID guid3DAlgorithm, DWORD dwNotifyCount, DWORD dwNotifySize,
                        HANDLE hNotifyEvent);
 
