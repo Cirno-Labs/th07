@@ -601,7 +601,7 @@ address,size,name,symbol
 0x004552d0,298,Func4552d0,
 0x004553fa,59,App::ResetClockDriftCounters,?ResetClockDriftCounters@App@@QAEXXZ
 0x00455435,72,MainMenu::SetState,?SetState@MainMenu@@QAEXH@Z
-0x0045547d,89,Func45547d,
+0x0045547d,89,MainMenu::MainMenu,??0MainMenu@@QAE@XZ
 0x004554d6,212,MainMenu::OnUpdate,?OnUpdate@MainMenu@@SIHPAV1@@Z
 0x004555dd,3152,MainMenu::Func4555dd,?Func4555dd@MainMenu@@QAEHXZ
 0x0045624d,3059,MainMenu::Func45624d,?Func45624d@MainMenu@@QAEHXZ
