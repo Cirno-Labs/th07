@@ -10,6 +10,7 @@
 #include <d3dx8math.h>
 
 #include "common.h"
+#include "resultscreen.h"
 
 // The application: window, Direct3D, configuration and the main loop.
 // Only the fields known so far. Its start matches th06's App: the same
@@ -60,6 +61,9 @@ public:
     // Adds the application's chain elements. Returns 0, -1 to quit, or
     // anything else to restart.
     static int RegisterChain();
+    // Adds the time since the last call to the play time in
+    // g_Unknown626270.plst. Not in th06.
+    void Func43a27f();
     // Saves the back buffer as a bitmap at `path`. Not in th06.
     int Func4395fb(char *path);
     // Flushes the sprites and turns fog off if unk_2bc is set; returns
@@ -132,6 +136,10 @@ public:
     unsigned char unk_26c[0x50];
     // Set to 0xff before each frame is drawn; Func43a207 clears it.
     DWORD unk_2bc;
+    // The sum of the executable's dwords and its size, as read at
+    // startup.
+    DWORD exeChecksum;
+    DWORD exeSize;
 };
 
 extern App g_App;
@@ -328,6 +336,10 @@ int FileExists(char *path);
 // the file cannot be created, -2 if writing fails.
 int WriteToFile(char *path, void *data, int size);
 
+// Compresses `size` bytes at `data` into a new GlobalAlloc block, which
+// it returns, and stores the compressed size in `outSize`.
+void *Func45ead0(BYTE *data, int size, int *outSize);
+
 // The game's random number generator: a 16-bit state stepped with a xor,
 // a subtraction and a rotation, as in th06.
 class Rng
@@ -337,6 +349,10 @@ public:
     WORD GetRandomU16();
     // 32 random bits, from two GetRandomU16 calls.
     DWORD GetRandomU32();
+    WORD GetRandomU16InRange(WORD range)
+    {
+        return range != 0 ? this->GetRandomU16() % range : 0;
+    }
     // A random float from 0 up to 1.
     float GetRandomF32ZeroToOne();
 
@@ -490,10 +506,18 @@ public:
 
     unsigned char unk_0[0x8];
     Unknown626270Stats *stats;
-    unsigned char unk_c[0x9264];
-    // When set on exit, WinMain calls Func44a302(2).
-    int unk_9270;
-    unsigned char unk_9274[0x380];
+    unsigned char unk_c[0xc];
+    // The spell card chunks of the score file, by card.
+    Catk catks[0x8d];
+    unsigned char unk_4230[0x4218];
+    // The clear chunks, by shot type.
+    Clrd clrds[6];
+    // The practice scores, by shot type, stage and difficulty.
+    Pscr pscrs[6][6][4];
+    // The "PLST" chunk. When its magic is set on exit, WinMain calls
+    // Func44a302(2).
+    Plst plst;
+    unsigned char unk_93d0[0x224];
     // The play area: x, y, width and height. Its neighbours (a 0x200
     // byte replay file name, the stage) are th06's GameManager's, so
     // this is probably th07's GameManager.
@@ -502,5 +526,5 @@ public:
 extern Unknown626270 g_Unknown626270;
 
 // Not identified yet; WinMain calls it with 2 on exit when
-// g_Unknown626270.unk_9270 is set.
+// g_Unknown626270.plst.magic is set.
 int Func44a302(int arg);

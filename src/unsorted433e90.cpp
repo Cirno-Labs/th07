@@ -129,7 +129,7 @@ restart:
         }
     }
 release:
-    if (g_Unknown626270.unk_9270 != 0)
+    if (g_Unknown626270.plst.magic != 0)
     {
         Func44a302(2);
     }

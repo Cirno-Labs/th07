@@ -412,7 +412,7 @@ address,size,name,symbol
 0x0043a1bd,74,Func43a1bd,
 0x0043a207,71,App::Func43a207,?Func43a207@App@@QAEHXZ
 0x0043a24e,49,Func43a24e,
-0x0043a27f,373,Func43a27f,
+0x0043a27f,373,App::Func43a27f,?Func43a27f@App@@QAEXXZ
 0x0043a3f4,373,Func43a3f4,
 0x0043a569,306,Func43a569,
 0x0043a69b,197,Func43a69b,
@@ -502,7 +502,7 @@ address,size,name,symbol
 0x004452f4,395,LoadPracticeScores,?LoadPracticeScores@@YIHPAXPAUPscr@@@Z
 0x0044547f,125,LoadPlstChunk,?LoadPlstChunk@@YIHPAXPAUPlst@@@Z
 0x004454fc,48,ReleaseScoreDat,?ReleaseScoreDat@@YIXPAUScoreDat@@@Z
-0x0044552c,1323,Func44552c,
+0x0044552c,1323,SaveScoreDat,?SaveScoreDat@@YIXPAVResultScreen@@@Z
 0x00445a57,255,Func445a57,
 0x00445b56,255,Func445b56,
 0x00445c55,267,Func445c55,
@@ -672,7 +672,7 @@ address,size,name,symbol
 0x0045e8b0,51,Func45e8b0,
 0x0045e8f0,210,Func45e8f0,
 0x0045e9d0,253,Func45e9d0,
-0x0045ead0,1065,Func45ead0,
+0x0045ead0,1065,Func45ead0,?Func45ead0@@YIPAXPAEHPAH@Z
 0x0045ef00,868,Func45ef00,
 0x0045f270,67,Func45f270,
 0x0045f2c0,124,Func45f2c0,
@@ -1128,7 +1128,7 @@ address,size,name,symbol
 0x0047dc7c,52,_sscanf,
 0x0047dcb0,57,_strncmp,
 0x0047dd00,195,_strchr,
-0x0047ddc0,7,Func47ddc0,
+0x0047ddc0,7,_strcpy,_strcpy
 0x0047ddd0,232,Func47ddd0,
 0x0047deb8,384,_localtime,
 0x0047e058,121,FID_conflict:__store_num,
