@@ -542,7 +542,7 @@ address,size,name,symbol
 0x0044bff0,48,SoundPlayer::LoadBgmFormat,?LoadBgmFormat@SoundPlayer@@QAEHPAD@Z
 0x0044c020,386,SoundPlayer::LoadBgm,?LoadBgm@SoundPlayer@@QAEHPAD@Z
 0x0044c1b0,105,SoundPlayer::SwitchBgmTrack,?SwitchBgmTrack@SoundPlayer@@QAEHPAD@Z
-0x0044c220,677,Func44c220,
+0x0044c220,677,SoundPlayer::PreloadBgm,?PreloadBgm@SoundPlayer@@QAEHHPAD@Z
 0x0044c4d0,472,Func44c4d0,
 0x0044c6b0,287,SoundPlayer::StopBgm,?StopBgm@SoundPlayer@@QAEXXZ
 0x0044c7d0,342,Func44c7d0,

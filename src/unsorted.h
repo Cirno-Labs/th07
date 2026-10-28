@@ -51,7 +51,11 @@ struct GameConfigFlags
     unsigned int referenceRasterizer : 1;
     unsigned int noFog : 1;
     unsigned int noDirectInput : 1;
-    unsigned int unk12 : 20;
+    unsigned int unk12 : 1;
+    // Each track of the wave music is read into memory before it plays,
+    // rather than streamed from thbgm.dat. Not in th06.
+    unsigned int preloadBgm : 1;
+    unsigned int unk14 : 18;
 };
 
 class App
@@ -309,6 +313,10 @@ public:
     // Switches the wave music to the track named as the file name of
     // `path`. Returns 0, or -1 when no music is loaded. Not in th06.
     int SwitchBgmTrack(char *path);
+    // Reads the track named as the file name of `path` out of bgmPath
+    // into preload slot `slot`, unless it is there already. Does nothing
+    // unless g_App.flags.preloadBgm is set. Returns 0 or -1. Not in th06.
+    int PreloadBgm(int slot, char *path);
     // Not in th06. WinMain calls it until it returns 0.
     int Func44c9c0();
     // Queues sound effect `idx` to start on the next update, unless
@@ -337,7 +345,7 @@ public:
     int queue[5];
     // The thbgm.fmt entries of the preloaded tracks, their data, and
     // its size.
-    void *bgmEntries[0x10];
+    BgmFormat *bgmEntries[0x10];
     void *bgmPreloadData[0x10];
     void *bgmPreloadCursor[0x10];
     DWORD bgmPreloadSize[0x10];
