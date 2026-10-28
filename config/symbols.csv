@@ -324,7 +324,7 @@ address,size,name,symbol
 0x00432164,247,GdiSurface::CopyToSurface,?CopyToSurface@GdiSurface@@QAE_NPAUIDirect3DSurface8@@@Z
 0x0043225b,35,CreateTextSurface,?CreateTextSurface@@YIXXZ
 0x0043227e,37,ReleaseTextSurface,?ReleaseTextSurface@@YIXXZ
-0x004322a3,796,Func4322a3,
+0x004322a3,796,RenderTextToTexture,?RenderTextToTexture@@YIXHHHHHHKKPADPAUIDirect3DTexture8@@@Z
 0x004325c0,32,Func4325c0,
 0x004325e0,71,Func4325e0,
 0x00432630,84,Func432630,
@@ -712,7 +712,7 @@ address,size,name,symbol
 0x00462962,40,Func462962,
 0x0046298a,102,Func46298a,
 0x004629f0,182,Func4629f0,
-0x00462aa6,285,Func462aa6,
+0x00462aa6,285,D3DXLoadSurfaceFromSurface,_D3DXLoadSurfaceFromSurface@32
 0x00462bc3,305,Func462bc3,
 0x00462cf4,1041,Func462cf4,
 0x00463105,10,Func463105,
@@ -1120,7 +1120,7 @@ address,size,name,symbol
 0x0047d4b0,45,_strrchr,_strrchr
 0x0047d4e0,672,_memcpy,_memcpy
 0x0047d820,672,_memmove,
-0x0047db60,139,_strlen,
+0x0047db60,139,_strlen,_strlen
 0x0047dbf0,96,_memset,_memset
 0x0047dc50,44,Func47dc50,
 0x0047dc7c,52,_sscanf,
@@ -1178,7 +1178,7 @@ address,size,name,symbol
 0x0047f7ea,35,__abnormal_termination,
 0x0047f80d,9,__NLG_Notify1,
 0x0047f816,24,Func47f816,
-0x0047f830,31,Func47f830,
+0x0047f830,31,__EH_prolog,__EH_prolog
 0x0047f84f,47,___crtExitProcess,
 0x0047f87f,9,Func47f87f,
 0x0047f888,9,Func47f888,
