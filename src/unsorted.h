@@ -142,7 +142,8 @@ struct GameWindow
     unsigned char unk_11[0x3];
     // QueryPerformanceFrequency's result.
     DWORD perfFrequency[2];
-    // Paces every frame by the clock, even ones that are early.
+    // Set when the game was started from a shortcut or another path;
+    // paces every frame by the clock, even ones that are early.
     BYTE unk_1c;
     unsigned char unk_1d[0x3];
     // The screen saver and power settings, put back on exit.
@@ -183,8 +184,15 @@ void SetDefaultRenderStates();
 // Set by SetDefaultRenderStates; th06 sets g_Stage.fogColorChanged
 // there.
 extern BYTE g_Unknown1348010;
-// Returns -1 if the game must not start. Not in th06.
-int Func435bd0(HINSTANCE instance);
+// Creates g_AppMutex and returns -1 if another instance holds it, as
+// th06's CheckSingleInstance. Also sets g_GameWindow.unk_1c when the
+// game was started through a shortcut or a path other than its own.
+int CheckSingleInstance(HINSTANCE instance);
+// The mutex that keeps a second instance from starting.
+extern HANDLE g_AppMutex;
+// Resolves the shortcut at `path` into `out`, `size` bytes long. Not in
+// th06.
+int Func435fc0(char *path, char *out, int size);
 // Sums the executable's dwords. Not in th06.
 int Func435ec0();
 

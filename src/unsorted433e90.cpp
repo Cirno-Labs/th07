@@ -52,7 +52,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     SystemParametersInfoA(SPI_SETSCREENSAVEACTIVE, 0, NULL, SPIF_SENDCHANGE);
     SystemParametersInfoA(SPI_SETLOWPOWERACTIVE, 0, NULL, SPIF_SENDCHANGE);
     SystemParametersInfoA(SPI_SETPOWEROFFACTIVE, 0, NULL, SPIF_SENDCHANGE);
-    if (Func435bd0(hInstance) == -1)
+    if (CheckSingleInstance(hInstance) == -1)
     {
         goto stop;
     }
@@ -554,6 +554,52 @@ void SetDefaultRenderStates()
         g_SpriteEngine->ClearUnk2e4d4();
     }
     g_Unknown1348010 = 1;
+}
+
+int CheckSingleInstance(HINSTANCE instance)
+{
+    char exePath[0x105];
+    char consoleTitle[0x105];
+    char *extension;
+
+    g_AppMutex = CreateMutexA(NULL, TRUE, "Touhou YouYouMu App");
+    if (GetLastError() == ERROR_ALREADY_EXISTS)
+    {
+        LogError(&g_Log, "二つは起動できません\r\n");
+        return -1;
+    }
+    STARTUPINFOA startup = {sizeof(STARTUPINFOA)};
+    GetModuleFileNameA(NULL, exePath, 0x105);
+    GetConsoleTitleA(consoleTitle, 0x105);
+    GetStartupInfoA(&startup);
+    if (startup.lpTitle != NULL)
+    {
+        extension = strrchr(startup.lpTitle, '.');
+        if (FileExists(startup.lpTitle) && extension != NULL)
+        {
+            if (_stricmp(extension, ".lnk") == 0)
+            {
+                do
+                {
+                    Func435fc0(startup.lpTitle, consoleTitle, 0x104);
+                    extension = strrchr(consoleTitle, '.');
+                } while (_stricmp(extension, ".lnk") == 0);
+            }
+            else
+            {
+                strcpy(consoleTitle, startup.lpTitle);
+            }
+            if (strcmp(exePath, consoleTitle) != 0)
+            {
+                g_GameWindow.unk_1c = 1;
+            }
+        }
+    }
+    if (g_AppMutex == NULL)
+    {
+        return -1;
+    }
+    return 0;
 }
 
 inline void SpriteEngine::ReleaseSurfaces()

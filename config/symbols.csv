@@ -348,10 +348,10 @@ address,size,name,symbol
 0x004351c0,107,AppendCapsFlagText,?AppendCapsFlagText@@YIPADPADKK0@Z
 0x00435230,1130,FormatCapsReport,?FormatCapsReport@@YIXPAU_D3DCAPS8@@PAD@Z
 0x004356a0,1313,SetDefaultRenderStates,?SetDefaultRenderStates@@YIXXZ
-0x00435bd0,595,Func435bd0,?Func435bd0@@YIHPAUHINSTANCE__@@@Z
+0x00435bd0,595,CheckSingleInstance,?CheckSingleInstance@@YIHPAUHINSTANCE__@@@Z
 0x00435e30,143,Func435e30,?Func435e30@@YIXPAUHWND__@@@Z
 0x00435ec0,255,Func435ec0,?Func435ec0@@YIHXZ
-0x00435fc0,322,Func435fc0,
+0x00435fc0,322,Func435fc0,?Func435fc0@@YIHPAD0H@Z
 0x00436110,33,MidiDevice::MidiDevice,??0MidiDevice@@QAE@XZ
 0x00436140,19,MidiDevice::~MidiDevice,??1MidiDevice@@QAE@XZ
 0x00436160,89,MidiDevice::Open,?Open@MidiDevice@@QAEHI@Z
@@ -1409,7 +1409,7 @@ address,size,name,symbol
 0x00489c24,9,__flushall,
 0x00489c2d,73,Func489c2d,
 0x00489c76,440,Func489c76,
-0x00489e45,105,__stricmp,
+0x00489e45,105,_stricmp,__stricmp
 0x00489eae,461,Func489eae,
 0x0048a07b,160,__read,
 0x0048a102,8,Func48a102,
@@ -1729,4 +1729,5 @@ address,size,name,symbol
 0x00626270,,g_Unknown626270,?g_Unknown626270@@3VUnknown626270@@A
 0x012fe250,,g_EffectManager,?g_EffectManager@@3VEffectManager@@A
 0x01348010,,g_Unknown1348010,?g_Unknown1348010@@3EA
+0x0135e1f4,,g_AppMutex,?g_AppMutex@@3PAXA
 0x0135e218,,g_PadButtons,?g_PadButtons@@3PAEA
