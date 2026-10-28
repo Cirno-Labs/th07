@@ -642,15 +642,15 @@ address,size,name,symbol
 0x0045d910,79,CSound::Func45d910,?Func45d910@CSound@@QAEJXZ
 0x0045d960,78,CSound::Func45d960,?Func45d960@CSound@@QAEJXZ
 0x0045d9b0,110,Func45d9b0,
-0x0045da20,96,Func45da20,
+0x0045da20,96,CStreamingSound::CStreamingSound,??0CStreamingSound@@QAE@PAUIDirectSoundBuffer@@KPAVCWaveFile@@K@Z
 0x0045da80,46,Func45da80,
 0x0045dab0,28,Func45dab0,
 0x0045dad0,143,Func45dad0,
 0x0045db60,1000,CStreamingSound::HandleWaveStreamNotification,?HandleWaveStreamNotification@CStreamingSound@@QAEJH@Z
 0x0045df50,194,CStreamingSound::Reset,?Reset@CStreamingSound@@QAEJXZ
-0x0045e020,56,Func45e020,
-0x0045e060,19,Func45e060,
-0x0045e080,163,Func45e080,
+0x0045e020,56,CWaveFile::CWaveFile,??0CWaveFile@@QAE@XZ
+0x0045e060,19,CWaveFile::~CWaveFile,??1CWaveFile@@QAE@XZ
+0x0045e080,163,CWaveFile::Open,?Open@CWaveFile@@QAEJPADPAUBgmFormat@@K@Z
 0x0045e130,84,CWaveFile::Func45e130,?Func45e130@CWaveFile@@QAEJPAUBgmFormat@@@Z
 0x0045e190,92,Func45e190,
 0x0045e1f0,17,Unknown45e1f0::GetField2c,?GetField2c@Unknown45e1f0@@QAEHXZ
@@ -1714,6 +1714,7 @@ address,size,name,symbol
 0x0048d264,4,CoUninitialize,__imp__CoUninitialize@0
 0x0048d268,4,CoCreateInstance,__imp__CoCreateInstance@20
 0x0048d26c,4,CoInitialize,__imp__CoInitialize@4
+0x004903f8,,IID_IDirectSoundNotify,_IID_IDirectSoundNotify
 0x004904e8,,GUID_NULL,_GUID_NULL
 0x004964f4,,g_DifficultyRatings,?g_DifficultyRatings@@3PAMA
 0x0049ea88,,g_SoundInfos,?g_SoundInfos@@3PAUSoundInfo@@A

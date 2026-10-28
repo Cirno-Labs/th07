@@ -9,12 +9,20 @@
 
 #include "common.h"
 
+#define WAVEFILE_READ 1
+
 struct BgmFormat;
 class CStreamingSound;
 
 class CWaveFile
 {
 public:
+    CWaveFile();
+    ~CWaveFile();
+
+    // Opens `strFileName` (thbgm.dat) to stream the track `format`
+    // describes, where th06 opened a wave file with mmio.
+    HRESULT Open(LPTSTR strFileName, BgmFormat *format, DWORD dwFlags);
     // Switches the stream to the track `format` describes. Returns
     // E_FAIL while (+0x7c) is set or without a file. Not in th06.
     HRESULT Func45e130(BgmFormat *format);
@@ -96,12 +104,23 @@ public:
 class CStreamingSound : public CSound
 {
 public:
+    CStreamingSound(LPDIRECTSOUNDBUFFER pDSBuffer, DWORD dwDSBufferSize, CWaveFile *pWaveFile, DWORD dwNotifySize);
     ~CStreamingSound();
 
     HRESULT HandleWaveStreamNotification(BOOL bLoopedPlay);
     HRESULT Reset();
 
-    unsigned char unk_34[0x40];
+    // Not in th06: the buffer's description, and the manager that
+    // created it, to create it again with.
+    DSBUFFERDESC dsbd;
+    CSoundManager *manager;
+    DWORD m_dwLastPlayPos;
+    DWORD m_dwPlayProgress;
+    DWORD m_dwNextWriteOffset;
+    BOOL m_bFillNextNotificationWithSilence;
+    DWORD m_dwNotifySize;
+    // Not in th06: the event the buffer signals.
+    HANDLE hNotifyEvent;
     // Set by BgmNotificationProc while it fills the buffer.
     int unk_74;
 };
