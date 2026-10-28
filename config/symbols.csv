@@ -409,7 +409,7 @@ address,size,name,symbol
 0x0043a05f,119,App::StopMusic,?StopMusic@App@@QAEHXZ
 0x0043a0d6,183,App::FadeOutMusic,?FadeOutMusic@App@@QAEHM@Z
 0x0043a18d,48,App::IsScoreDisabled,?IsScoreDisabled@App@@QAEHXZ
-0x0043a1bd,74,Func43a1bd,
+0x0043a1bd,74,App::EnableFog,?EnableFog@App@@QAEHXZ
 0x0043a207,71,App::Func43a207,?Func43a207@App@@QAEHXZ
 0x0043a24e,49,Func43a24e,
 0x0043a27f,373,App::Func43a27f,?Func43a27f@App@@QAEXXZ

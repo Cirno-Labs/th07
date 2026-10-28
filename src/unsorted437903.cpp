@@ -8,6 +8,7 @@
 
 #include "chain.h"
 #include "midi.h"
+#include "sprite.h"
 #include "unsorted.h"
 
 void DebugPrint2(const char *fmt, ...)
@@ -369,4 +370,15 @@ int App::FadeOutMusic(float seconds)
 int App::IsScoreDisabled()
 {
     return g_Unknown626270.unk_4 != NULL && g_Unknown626270.unk_4->unk_25 != 0;
+}
+
+int App::EnableFog()
+{
+    g_SpriteEngine->Func44f5c0();
+    if (this->unk_2bc != 1)
+    {
+        this->unk_2bc = 1;
+        return this->d3dDevice->SetRenderState(D3DRS_FOGENABLE, TRUE);
+    }
+    return 0;
 }

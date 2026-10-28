@@ -86,6 +86,9 @@ public:
     int Func4395fb(char *path);
     // Flushes the sprites and turns fog off if unk_2bc is set; returns
     // 0 when it was not. Not in th06.
+    // Flushes the sprites and turns fog on unless unk_2bc is 1 already;
+    // returns 0 when it was. Not in th06.
+    int EnableFog();
     int Func43a207();
     // Advances `frames` by one frame, or by a fraction of one into
     // `subFrame` while the game runs slow.
