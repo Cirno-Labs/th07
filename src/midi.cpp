@@ -646,3 +646,8 @@ void MidiPlayer::ProcessEvent(MidiTrack *track)
     deltaTime = ReadVarLen(&track->cursor);
     track->delta += deltaTime;
 }
+
+void Unknown4378b0::OnTimer()
+{
+    QueryPerformanceCounter(&g_Unknown135e210);
+}

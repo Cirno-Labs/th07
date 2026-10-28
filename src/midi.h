@@ -242,3 +242,14 @@ public:
     unsigned __int64 loopBaseTime;
 };
 ASSERT_SIZE(MidiPlayer, 0x300);
+
+// The performance counter at the last tick of Unknown4378b0's timer.
+extern LARGE_INTEGER g_Unknown135e210;
+
+// A 6 ms MmTimer that keeps the performance counter of its last tick in
+// g_Unknown135e210. Not in th06.
+class Unknown4378b0 : public MmTimer
+{
+public:
+    virtual void OnTimer();
+};
