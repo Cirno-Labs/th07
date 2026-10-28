@@ -398,8 +398,8 @@ address,size,name,symbol
 0x00438fef,17,Func438fef,
 0x00439000,165,App::RegisterChain,?RegisterChain@App@@SIHXZ
 0x004390a5,860,DrawFps,?DrawFps@@YIXH@Z
-0x00439401,198,Func439401,
-0x004394c7,198,Func4394c7,
+0x00439401,198,Timer::Add,?Add@Timer@@QAEXH@Z
+0x004394c7,198,Timer::Sub,?Sub@Timer@@QAEXH@Z
 0x0043958d,110,App::TickTimer,?TickTimer@App@@QAEXPAHPAM@Z
 0x004395fb,699,App::Func4395fb,?Func4395fb@App@@QAEHPAD@Z
 0x004398b6,1306,App::LoadConfig,?LoadConfig@App@@QAEHPAD@Z

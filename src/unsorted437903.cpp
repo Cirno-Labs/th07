@@ -146,3 +146,31 @@ int InitDirectInput(App *game)
     }
     return 0;
 }
+
+void Timer::Add(int frames)
+{
+    if (g_App.unk_18c >> 5 & 1)
+    {
+        this->current++;
+        this->subFrame = 0.0f;
+        this->previous = -999;
+    }
+    if (g_App.unk_178 > 0.99f)
+    {
+        this->current += frames;
+    }
+    else if (frames < 0)
+    {
+        this->Sub(-frames);
+    }
+    else
+    {
+        this->previous = this->current;
+        this->subFrame += g_App.unk_178 * frames;
+        while (this->subFrame >= 1.0f)
+        {
+            this->current++;
+            this->subFrame -= 1.0f;
+        }
+    }
+}

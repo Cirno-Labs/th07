@@ -30,6 +30,12 @@ struct Timer
         this->subFrame = 0.0f;
         this->previous = -999;
     }
+    // Advances by `frames`, in fractions of a frame while the game runs
+    // slow; first by one more frame, with no fraction or previous count,
+    // while bit 0x20 of g_App.unk_18c is set.
+    void Add(int frames);
+    // The same backwards.
+    void Sub(int frames);
     // Advances by one frame through App::TickTimer. Inline; defined in
     // unsorted.h.
     void Tick();
