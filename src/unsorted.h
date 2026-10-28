@@ -98,3 +98,8 @@ extern WORD g_ShotHeldFrames;
 // Adds the joystick's buttons and directions to `buttons` and returns
 // them: through DirectInput if there is a device, else joyGetPosEx.
 WORD ReadJoystick(WORD buttons);
+
+// The pad's buttons as GetPadButtons last read them: 0x80 when down.
+extern BYTE g_PadButtons[0x80];
+// Reads which pad buttons are down into g_PadButtons and returns it.
+BYTE *GetPadButtons();

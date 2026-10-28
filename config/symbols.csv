@@ -301,7 +301,7 @@ address,size,name,symbol
 0x004302f0,122,SetButtonFromDirectInput,?SetButtonFromDirectInput@@YIHPAGFGPAE@Z
 0x00430370,115,SetButtonFromJoystick,?SetButtonFromJoystick@@YIHPAGFGK@Z
 0x004303f0,1488,ReadJoystick,?ReadJoystick@@YIGG@Z
-0x004309c0,392,Func4309c0,
+0x004309c0,392,GetPadButtons,?GetPadButtons@@YIPAEXZ
 0x00430b50,1904,Func430b50,
 0x004312c0,110,Func4312c0,
 0x00431330,434,LoadFileData,?LoadFileData@@YIPAXPADH@Z
@@ -1714,3 +1714,4 @@ address,size,name,symbol
 0x00575950,,g_App,?g_App@@3VApp@@A
 0x00624210,,g_Log,?g_Log@@3VLog@@A
 0x00626218,,g_Chain,?g_Chain@@3VChain@@A
+0x0135e218,,g_PadButtons,?g_PadButtons@@3PAEA
