@@ -23,6 +23,10 @@ struct Timer
     {
         return (float)this->current + this->subFrame;
     }
+    BOOL operator<(int frames)
+    {
+        return this->current < frames;
+    }
     BOOL operator>=(int frames)
     {
         return this->current >= frames;

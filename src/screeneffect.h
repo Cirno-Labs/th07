@@ -26,6 +26,10 @@ public:
     // Type 2's draw callback: covers the play area in `color` at `alpha`.
     // Returns 1.
     static int OnDrawPlayArea(ScreenEffect *effect);
+    // Type 3's update callback: fades `alpha` from flashColor's alpha to
+    // 0 over `duration` frames, `flashes` times over. Returns 0 when
+    // done, else 1. Not in th06.
+    static int OnUpdateFlash(ScreenEffect *effect);
 
     int type;
     ChainElem *calcElem;
@@ -40,8 +44,16 @@ public:
         D3DCOLOR color;
         // Shakes: how far the play area shakes at the start.
         int shakeFrom;
+        // Type 3: how many more times the color flashes.
+        int flashes;
     };
-    int shakeTo;
+    union
+    {
+        // Shakes: how far the play area shakes at the end.
+        int shakeTo;
+        // Type 3: the color flashed, starting at its alpha.
+        D3DCOLOR flashColor;
+    };
     int unk_20;
     Timer timer;
 };
