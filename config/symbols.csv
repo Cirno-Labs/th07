@@ -364,7 +364,7 @@ address,size,name,symbol
 0x00436380,61,MmTimer::Stop,?Stop@MmTimer@@QAEHXZ
 0x004363c0,26,MmTimer::DefaultCallback,?DefaultCallback@MmTimer@@SGXIIKKK@Z
 0x004363e0,30,SwapBytes16,?SwapBytes16@@YIGG@Z
-0x00436400,78,Func436400,
+0x00436400,78,ReadVarLen,?ReadVarLen@@YIKPAPAE@Z
 0x00436450,351,Func436450,
 0x004365b0,147,Func4365b0,
 0x00436650,112,Func436650,

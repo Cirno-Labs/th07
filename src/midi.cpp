@@ -128,3 +128,17 @@ WORD SwapBytes16(WORD value)
     swapped.bytes[1] = ((BYTE *)&value)[0];
     return swapped.word;
 }
+
+DWORD ReadVarLen(BYTE **cursor)
+{
+    DWORD value = 0;
+    BYTE byte;
+
+    do
+    {
+        byte = **cursor;
+        (*cursor)++;
+        value = (value << 7) + (byte & 0x7f);
+    } while (byte & 0x80);
+    return value;
+}
