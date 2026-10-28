@@ -345,7 +345,7 @@ address,size,name,symbol
 0x00434a40,53,CreateD3d,?CreateD3d@@YIHXZ
 0x00434a80,326,CreateGameWindow,?CreateGameWindow@@YIHPAUHINSTANCE__@@@Z
 0x00434bd0,1506,InitD3dDevice,?InitD3dDevice@@YIHXZ
-0x004351c0,107,Func4351c0,
+0x004351c0,107,AppendCapsFlagText,?AppendCapsFlagText@@YIPADPADKK0@Z
 0x00435230,1130,Func435230,
 0x004356a0,1313,SetDefaultRenderStates,?SetDefaultRenderStates@@YIXXZ
 0x00435bd0,595,Func435bd0,?Func435bd0@@YIHPAUHINSTANCE__@@@Z

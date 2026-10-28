@@ -390,6 +390,20 @@ int CreateGameWindow(HINSTANCE instance)
     return 0;
 }
 
+char *AppendCapsFlagText(char *name, DWORD caps, DWORD flag, char *out)
+{
+    out += sprintf(out, name);
+    if ((caps & flag) == 0)
+    {
+        out += sprintf(out, "不可\r\n");
+    }
+    else
+    {
+        out += sprintf(out, "可\r\n");
+    }
+    return out;
+}
+
 inline void SpriteEngine::ReleaseSurfaces()
 {
     int i;

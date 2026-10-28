@@ -148,6 +148,9 @@ int CreateGameWindow(HINSTANCE instance);
 void Func435e30(HWND hwnd);
 // Creates the Direct3D device. Returns 0, or nonzero on failure.
 int InitD3dDevice();
+// Prints `name` and then 可 or 不可 (yes or no), by whether `caps` has
+// any of `flag`, at `out`; returns the end of the text. Not in th06.
+char *AppendCapsFlagText(char *name, DWORD caps, DWORD flag, char *out);
 // Sets the device's render and texture stage states.
 void SetDefaultRenderStates();
 // Returns -1 if the game must not start. Not in th06.
