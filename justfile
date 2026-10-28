@@ -49,7 +49,8 @@ decompile *addrs:
 progress: build _orig
     python3 tools/render_progress.py
 
-# Use tools/hooks/: each commit redraws and includes docs/progress.svg
+# Use tools/hooks/: each commit redraws and includes docs/progress.svg,
+# and its message must be 50/72
 hooks:
     git config core.hooksPath tools/hooks
 
