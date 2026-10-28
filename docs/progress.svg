@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">21.47% (149)</tspan> · <tspan class="decompiled">0.43% (3)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">78.10% (542)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">21.61% (150)</tspan> · <tspan class="decompiled">0.43% (3)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">77.95% (541)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="160.38" height="6" x="0" y="0" class="named"/>
-<rect width="3.23" height="6" x="160.38" y="0" class="decompiled"/>
-<rect width="583.39" height="6" x="163.61" y="0" class="todo"/>
+<rect width="161.46" height="6" x="0" y="0" class="named"/>
+<rect width="3.23" height="6" x="161.46" y="0" class="decompiled"/>
+<rect width="582.32" height="6" x="164.68" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (173 bytes)</title></rect>
@@ -704,7 +704,7 @@
 <rect width="12" height="12" x="495" y="180" class="named"><title>0x0045d2c0 CSound::~CSound (241 bytes)</title></rect>
 <rect width="12" height="12" x="510" y="180" class="named"><title>0x0045d3c0 CSound::FillBufferWithSound (484 bytes)</title></rect>
 <rect width="12" height="12" x="525" y="180" class="named"><title>0x0045d5b0 CSound::RestoreBuffer (163 bytes)</title></rect>
-<rect width="12" height="12" x="540" y="180" class="todo"><title>0x0045d660 Func45d660 (182 bytes)</title></rect>
+<rect width="12" height="12" x="540" y="180" class="named"><title>0x0045d660 CSound::GetFreeBuffer (182 bytes)</title></rect>
 <rect width="12" height="12" x="555" y="180" class="todo"><title>0x0045d720 CSound::GetBuffer (53 bytes)</title></rect>
 <rect width="12" height="12" x="570" y="180" class="todo"><title>0x0045d760 CSound::Play (250 bytes)</title></rect>
 <rect width="12" height="12" x="585" y="180" class="todo"><title>0x0045d860 CSound::Stop (171 bytes)</title></rect>
@@ -766,11 +766,11 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">14.94%</tspan> · <tspan class="decompiled">0.03%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">85.03%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">14.99%</tspan> · <tspan class="decompiled">0.03%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">84.98%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="111.62" height="6" x="0" y="0" class="named"/>
-<rect width="0.24" height="6" x="111.62" y="0" class="decompiled"/>
-<rect width="635.15" height="6" x="111.85" y="0" class="todo"/>
+<rect width="111.97" height="6" x="0" y="0" class="named"/>
+<rect width="0.24" height="6" x="111.97" y="0" class="decompiled"/>
+<rect width="634.79" height="6" x="112.21" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1173,7 +1173,7 @@
 <rect width="5.52" height="6.05" x="642.30" y="151.52" class="named"><title>0x0042fca0 Chain::AddToDrawChain (184 bytes)</title></rect>
 <rect width="5.52" height="6" x="642.30" y="160.57" class="todo"><title>0x0043a0d6 Func43a0d6 (183 bytes)</title></rect>
 <rect width="5.52" height="6" x="642.30" y="169.57" class="todo"><title>0x0045f580 Func45f580 (183 bytes)</title></rect>
-<rect width="5.52" height="5.95" x="642.30" y="178.57" class="todo"><title>0x0045d660 Func45d660 (182 bytes)</title></rect>
+<rect width="5.52" height="5.95" x="642.30" y="178.57" class="named"><title>0x0045d660 CSound::GetFreeBuffer (182 bytes)</title></rect>
 <rect width="5.52" height="5.51" x="642.30" y="187.52" class="todo"><title>0x00401000 Func401000 (173 bytes)</title></rect>
 <rect width="5.52" height="5.51" x="642.30" y="196.03" class="todo"><title>0x0041c100 Func41c100 (173 bytes)</title></rect>
 <rect width="5.52" height="5.46" x="642.30" y="204.54" class="named"><title>0x00431540 WriteToFile (172 bytes)</title></rect>

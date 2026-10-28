@@ -81,6 +81,7 @@ public:
 
     HRESULT FillBufferWithSound(LPDIRECTSOUNDBUFFER pDSB, BOOL bRepeatWavIfBufferLarger);
     HRESULT RestoreBuffer(LPDIRECTSOUNDBUFFER pDSB, BOOL *pbWasRestored);
+    LPDIRECTSOUNDBUFFER GetFreeBuffer();
     LPDIRECTSOUNDBUFFER GetBuffer(DWORD dwIndex);
     HRESULT Play(DWORD dwPriority, DWORD dwFlags);
     HRESULT Stop();
