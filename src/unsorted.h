@@ -296,6 +296,9 @@ public:
     // The index in bgmFormat of the track named as the file name of
     // `path`, or 0 if there is none. Not in th06.
     int FindTrackIndex(char *path);
+    // Loads the wave file at `path` into soundBuffers[`index`]. Returns
+    // 0, also when there is no sound, or -1 on failure.
+    int LoadSound(int index, char *path);
     // Not in th06. WinMain calls it until it returns 0.
     int Func44c9c0();
     // Queues sound effect `idx` to start on the next update, unless
