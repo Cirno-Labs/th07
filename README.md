@@ -31,6 +31,11 @@ D3DX8's tables follow it, then D3DX8 and the CRT.
 just analyze   # writes build/functions_100b.csv
 ```
 
+![Progress](docs/progress.svg)
+
+`just progress` renders it: every game function, by address and as a
+treemap by size, coloured by whether it is decompiled and matching.
+
 ## Target
 
 Retail 1.00b, released 2003-10-24, the last official update:
