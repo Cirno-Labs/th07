@@ -616,7 +616,7 @@ address,size,name,symbol
 0x0045b5ef,958,MainMenu::DrawReplayMenu,?DrawReplayMenu@MainMenu@@QAEHXZ
 0x0045b9ad,413,MainMenu::DrawPracticeScores,?DrawPracticeScores@MainMenu@@QAEHXZ
 0x0045bb4a,281,MainMenu::MoveMenuCursor,?MoveMenuCursor@MainMenu@@QAEHH@Z
-0x0045bc63,265,MainMenu::Func45bc63,?Func45bc63@MainMenu@@QAEHH@Z
+0x0045bc63,265,MainMenu::MoveMenuCursorLR,?MoveMenuCursorLR@MainMenu@@QAEHH@Z
 0x0045bd6c,425,Func45bd6c,
 0x0045bf15,1459,Func45bf15,
 0x0045c4c8,17,Func45c4c8,

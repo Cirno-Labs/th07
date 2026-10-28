@@ -52,8 +52,9 @@ public:
     // up or down is pressed or repeats. Returns -1 for up, 1 for down,
     // else 0.
     int MoveMenuCursor(int count);
-    // MoveMenuCursor with left and right. Not in th06.
-    int Func45bc63(int count);
+    // MoveMenuCursor with left and right (the sound after the wrap).
+    // Not in th06.
+    int MoveMenuCursorLR(int count);
 
     // The selected entry.
     int cursor;

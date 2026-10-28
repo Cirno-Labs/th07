@@ -454,7 +454,7 @@ int MainMenu::UpdateCharacterMenu()
         }
         break;
     case 1:
-        if (this->Func45bc63(3))
+        if (this->MoveMenuCursorLR(3))
         {
             if (g_App.defaultDifficulty == 4)
             {
@@ -1326,6 +1326,35 @@ int MainMenu::MoveMenuCursor(int count)
         {
             this->cursor = 0;
         }
+        return 1;
+    }
+    return 0;
+}
+
+int MainMenu::MoveMenuCursorLR(int count)
+{
+    if (count == 0)
+    {
+        return 0;
+    }
+    if (WAS_PRESSED_OR_HELD(0x40))
+    {
+        this->cursor--;
+        if (this->cursor < 0)
+        {
+            this->cursor += count;
+        }
+        g_SoundPlayer.QueueSound(12, 0);
+        return -1;
+    }
+    if (WAS_PRESSED_OR_HELD(0x80))
+    {
+        this->cursor++;
+        if (this->cursor >= count)
+        {
+            this->cursor -= count;
+        }
+        g_SoundPlayer.QueueSound(12, 0);
         return 1;
     }
     return 0;
