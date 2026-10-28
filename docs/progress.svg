@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">33.86% (235)</tspan> · <tspan class="decompiled">1.01% (7)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">64.99% (451)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">34.01% (236)</tspan> · <tspan class="decompiled">1.01% (7)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">64.84% (450)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="252.95" height="6" x="0" y="0" class="named"/>
-<rect width="7.53" height="6" x="252.95" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="260.48" y="0" class="nonmatching"/>
-<rect width="485.44" height="6" x="261.56" y="0" class="todo"/>
+<rect width="254.02" height="6" x="0" y="0" class="named"/>
+<rect width="7.53" height="6" x="254.02" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="261.56" y="0" class="nonmatching"/>
+<rect width="484.37" height="6" x="262.63" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (173 bytes)</title></rect>
@@ -453,7 +453,7 @@
 <rect width="12" height="12" x="465" y="105" class="decompiled"><title>0x004378b0 Unknown4378b0::OnTimer (22 bytes)</title></rect>
 <rect width="12" height="12" x="480" y="105" class="decompiled"><title>0x004378d0 Unknown4378b0::StartTimer (25 bytes)</title></rect>
 <rect width="12" height="12" x="495" y="105" class="decompiled"><title>0x004378f0 Unknown4378b0::StopTimer (19 bytes)</title></rect>
-<rect width="12" height="12" x="510" y="105" class="todo"><title>0x00437903 DebugPrint2 (5 bytes)</title></rect>
+<rect width="12" height="12" x="510" y="105" class="named"><title>0x00437903 DebugPrint2 (5 bytes)</title></rect>
 <rect width="12" height="12" x="525" y="105" class="todo"><title>0x00437908 Func437908 (817 bytes)</title></rect>
 <rect width="12" height="12" x="540" y="105" class="todo"><title>0x00437c39 Func437c39 (55 bytes)</title></rect>
 <rect width="12" height="12" x="555" y="105" class="todo"><title>0x00437c70 Func437c70 (1707 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">26.90%</tspan> · <tspan class="decompiled">0.06%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">72.95%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">26.90%</tspan> · <tspan class="decompiled">0.06%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">72.94%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="200.97" height="6" x="0" y="0" class="named"/>
-<rect width="0.46" height="6" x="200.97" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="201.43" y="0" class="nonmatching"/>
-<rect width="544.91" height="6" x="202.09" y="0" class="todo"/>
+<rect width="200.98" height="6" x="0" y="0" class="named"/>
+<rect width="0.46" height="6" x="200.98" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="201.44" y="0" class="nonmatching"/>
+<rect width="544.90" height="6" x="202.10" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1467,7 +1467,7 @@
 <rect width="0.10" height="0.10" x="745.16" y="208.41" class="todo"><title>0x00418110 Func418110 (16 bytes)</title></rect>
 <rect width="0.10" height="0.10" x="745.16" y="210.71" class="todo"><title>0x0041c1b0 Func41c1b0 (16 bytes)</title></rect>
 <rect width="0.10" height="0.10" x="748.08" y="208.41" class="named"><title>0x0044d620 MmTimer::OnTimer (11 bytes)</title></rect>
-<rect width="0.10" height="0.10" x="748.08" y="210.82" class="todo"><title>0x00437903 DebugPrint2 (5 bytes)</title></rect>
+<rect width="0.10" height="0.10" x="748.08" y="210.82" class="named"><title>0x00437903 DebugPrint2 (5 bytes)</title></rect>
 <rect width="0.10" height="0.10" x="748.08" y="211.91" class="named"><title>0x0045e4f0 DebugPrint (5 bytes)</title></rect>
 </g>
 </g>
