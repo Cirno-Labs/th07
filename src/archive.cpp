@@ -210,7 +210,7 @@ bool DatArchive::ReadTable(char *path)
     {
         goto fail;
     }
-    this->entries = this->Func45fde0(unpacked, this->numEntries, tableOffset);
+    this->entries = this->BuildEntryTable(unpacked, this->numEntries, tableOffset);
     if (this->entries == NULL)
     {
         goto fail;
@@ -248,4 +248,41 @@ fail:
     {
     }
     return false;
+}
+
+DatArchiveEntry *DatArchive::BuildEntryTable(BYTE *table, int count, DWORD tableOffset)
+{
+    DatArchiveEntry *entries;
+    int i;
+    BYTE *p;
+
+    entries = NULL;
+    entries = new DatArchiveEntry[count + 1];
+    if (entries == NULL)
+    {
+        goto fail;
+    }
+    p = table;
+    for (i = 0; i < count; i++)
+    {
+        entries[i].name = this->Func45ffc0((char *)p);
+        p += strlen((char *)p) + 1;
+        entries[i].offset = *(DWORD *)p;
+        p += 4;
+        entries[i].size = *(DWORD *)p;
+        p += 4;
+        entries[i].unk_0c = *(DWORD *)p;
+        p += 4;
+    }
+    entries[count].offset = tableOffset;
+    entries[count].size = 0;
+    return entries;
+
+fail:
+    if (entries != NULL)
+    {
+        delete[] entries;
+        entries = NULL;
+    }
+    return NULL;
 }

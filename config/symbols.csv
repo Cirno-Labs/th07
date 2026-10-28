@@ -623,7 +623,7 @@ address,size,name,symbol
 0x0045c4d9,109,Func45c4d9,
 0x0045c546,138,Func45c546,
 0x0045c5d0,273,Func45c5d0,
-0x0045c6f0,23,CSoundManager::CSoundManager,??0CSoundManager@@QAE@XZ
+0x0045c6f0,23,CSoundManager::CSoundManager,??0CSoundManager@@QAE@XZ ??0DatArchiveEntry@@QAE@XZ
 0x0045c710,44,CSoundManager::~CSoundManager,??1CSoundManager@@QAE@XZ
 0x0045c740,142,CSoundManager::Initialize,?Initialize@CSoundManager@@QAEJPAUHWND__@@KKKK@Z
 0x0045c7d0,265,CSoundManager::SetPrimaryBufferFormat,?SetPrimaryBufferFormat@CSoundManager@@QAEJKKK@Z
@@ -691,7 +691,7 @@ address,size,name,symbol
 0x0045fab0,46,DatArchive::GetEntrySize,?GetEntrySize@DatArchive@@QAEKPAD@Z
 0x0045fae0,101,DatArchive::FindEntry,?FindEntry@DatArchive@@QAEPAUDatArchiveEntry@@PAD@Z
 0x0045fb50,645,DatArchive::ReadTable,?ReadTable@DatArchive@@QAE_NPAD@Z
-0x0045fde0,471,DatArchive::Func45fde0,?Func45fde0@DatArchive@@QAEPAUDatArchiveEntry@@PAEHK@Z
+0x0045fde0,471,DatArchive::BuildEntryTable,?BuildEntryTable@DatArchive@@QAEPAUDatArchiveEntry@@PAEHK@Z
 0x0045ffc0,139,DatArchive::Func45ffc0,?Func45ffc0@DatArchive@@QAEPADPAD@Z
 0x00461a96,,DirectSoundCreate8,_DirectSoundCreate8@12
 0x00461a9c,,Direct3DCreate8,_Direct3DCreate8@4
@@ -1146,7 +1146,7 @@ address,size,name,symbol
 0x0047e914,47,__ArrayUnwind,
 0x0047e972,72,`eh_vector_destructor_iterator',??_M@YGXPAXIHP6EX0@Z@Z
 0x0047e9ba,24,Func47e9ba,
-0x0047e9d2,74,`eh_vector_constructor_iterator',
+0x0047e9d2,74,`eh_vector_constructor_iterator',??_L@YGXPAXIHP6EX0@Z1@Z
 0x0047ea1c,24,Func47ea1c,
 0x0047ea34,34,__amsg_exit,
 0x0047ea59,36,fast_error_exit,

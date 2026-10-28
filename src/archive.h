@@ -70,6 +70,10 @@ void MakeFullPath(char *dst, char *path);
 // An entry of an archive's table.
 struct DatArchiveEntry
 {
+    DatArchiveEntry()
+    {
+        this->name = NULL;
+    }
     ~DatArchiveEntry()
     {
         if (this->name != NULL)
@@ -119,7 +123,7 @@ public:
     // Builds the entry table from the `count` entries at `table` (each a
     // name, then offset, size and unk_0c), plus an end entry at
     // `tableOffset`. Returns a new[]'d array, or NULL.
-    DatArchiveEntry *Func45fde0(BYTE *table, int count, DWORD tableOffset);
+    DatArchiveEntry *BuildEntryTable(BYTE *table, int count, DWORD tableOffset);
     // A GlobalAlloc'd copy of `str`, or NULL.
     char *Func45ffc0(char *str);
 
