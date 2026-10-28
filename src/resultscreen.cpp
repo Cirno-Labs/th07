@@ -35,6 +35,19 @@ int InsertScore(ListNode *head, Hscr *entry)
     return index;
 }
 
+void FreeListNodes(ListNode *head)
+{
+    ListNode *next;
+
+    head = head->next;
+    while (head != NULL)
+    {
+        next = head->next;
+        free(head);
+        head = next;
+    }
+}
+
 int LoadPracticeScores(void *scoreDat, Pscr *pscrs)
 {
     Pscr *p;
