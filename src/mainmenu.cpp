@@ -426,7 +426,7 @@ int MainMenu::UpdateOptions()
                 {
                     g_SoundPlayer.LoadBgm("thbgm.dat");
                 }
-                g_App.Func439dd0(8, "bgm/th07_01.mid");
+                g_App.LoadMidi(8, "bgm/th07_01.mid");
                 g_App.Func439ec1(8);
                 break;
             case 3:
@@ -500,7 +500,7 @@ int MainMenu::UpdateOptions()
                 {
                     g_App.musicMode++;
                 }
-                g_App.Func439dd0(8, "bgm/th07_01.mid");
+                g_App.LoadMidi(8, "bgm/th07_01.mid");
                 g_App.Func439ec1(8);
                 break;
             case 3:
@@ -2267,7 +2267,7 @@ int MainMenu::InitTitleScene()
     {
         if (g_App.prevScene != 5)
         {
-            g_App.Func439dd0(8, "bgm/th07_01.mid");
+            g_App.LoadMidi(8, "bgm/th07_01.mid");
         }
         if (g_App.unk_190 == 0)
         {

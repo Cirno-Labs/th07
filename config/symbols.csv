@@ -403,7 +403,7 @@ address,size,name,symbol
 0x0043958d,110,App::TickTimer,?TickTimer@App@@QAEXPAHPAM@Z
 0x004395fb,699,App::Func4395fb,?Func4395fb@App@@QAEHPAD@Z
 0x004398b6,1306,App::LoadConfig,?LoadConfig@App@@QAEHPAD@Z
-0x00439dd0,241,App::Func439dd0,?Func439dd0@App@@QAEHHPAD@Z
+0x00439dd0,241,App::LoadMidi,?LoadMidi@App@@QAEHHPAD@Z
 0x00439ec1,140,App::Func439ec1,?Func439ec1@App@@QAEHH@Z
 0x00439f4d,274,Func439f4d,
 0x0043a05f,119,App::Func43a05f,?Func43a05f@App@@QAEHXZ
@@ -549,7 +549,7 @@ address,size,name,symbol
 0x0044c930,133,SoundPlayer::QueueSound,?QueueSound@SoundPlayer@@QAEXHH@Z
 0x0044c9c0,2073,SoundPlayer::PlayQueuedSounds,?PlayQueuedSounds@SoundPlayer@@QAEHXZ
 0x0044d200,226,BgmNotificationProc,?BgmNotificationProc@@YGKPAX@Z
-0x0044d2f0,225,Func44d2f0,
+0x0044d2f0,225,SoundPlayer::Func44d2f0,?Func44d2f0@SoundPlayer@@QAEXHHPAD@Z
 0x0044d3e0,573,SpriteEngine::SpriteEngine,??0SpriteEngine@@QAE@XZ
 0x0044d620,11,MmTimer::OnTimer,?OnTimer@MmTimer@@UAEXXZ ??1SpriteEngine@@QAE@XZ
 0x0044d630,700,Func44d630,

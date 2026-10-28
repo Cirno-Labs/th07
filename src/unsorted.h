@@ -96,8 +96,11 @@ public:
     // Stops the music. Returns 0, or -1 with no music mode. Not in
     // th06 as a function.
     int Func43a05f();
-    // Loads music `path` in slot `slot`. Not named yet.
-    int Func439dd0(int slot, char *path);
+    // th06's LoadMidi: loads the MIDI file `path` into slot `slot` of
+    // `midi` in MIDI mode, and returns 0. In wave mode it queues sound
+    // command 1 for the .wav of the same name instead. Returns 1 outside
+    // MIDI mode.
+    int LoadMidi(int slot, char *path);
     // Plays MIDI slot `slot`, or the BGM track, as musicMode says.
     // Returns 0.
     int Func439ec1(int slot);
@@ -419,6 +422,9 @@ public:
     // Queues sound effect `idx` to start on the next update, unless
     // it is already queued or five are.
     void QueueSound(int idx, int unk);
+    // Queues a command of `type` with `arg` and `path` in the first free
+    // entry of `commands`. Not in th06.
+    void Func44d2f0(int type, int arg, char *path);
 
     IDirectSound8 *dsound;
     DWORD unk_004;

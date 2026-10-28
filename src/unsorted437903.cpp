@@ -4,7 +4,10 @@
 // unsorted42333b.cpp. Built with /Os: its functions are laid out without
 // alignment.
 
+#include <string.h>
+
 #include "chain.h"
+#include "midi.h"
 #include "unsorted.h"
 
 void DebugPrint2(const char *fmt, ...)
@@ -218,4 +221,29 @@ void App::TickTimer(int *frames, float *subFrame)
     {
         (*frames)++;
     }
+}
+
+int App::LoadMidi(int slot, char *path)
+{
+    char *dot;
+    char wavFile[0x100];
+
+    if (g_App.musicMode == 2)
+    {
+        if (g_App.midi != NULL)
+        {
+            g_App.midi->LoadFile(slot, path);
+        }
+        return 0;
+    }
+    if (g_App.musicMode == 1)
+    {
+        strcpy(wavFile, path);
+        dot = strrchr(wavFile, '.');
+        dot[1] = 'w';
+        dot[2] = 'a';
+        dot[3] = 'v';
+        g_SoundPlayer.Func44d2f0(1, slot, wavFile);
+    }
+    return 1;
 }
