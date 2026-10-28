@@ -12,6 +12,14 @@
 struct BgmFormat;
 class CStreamingSound;
 
+class CWaveFile
+{
+public:
+    // Switches the stream to the track `format` describes. Returns
+    // E_FAIL while (+0x7c) is set or without a file. Not in th06.
+    HRESULT Func45e130(BgmFormat *format);
+};
+
 class CSoundManager
 {
 public:
@@ -38,6 +46,10 @@ class CSound
 {
 public:
     virtual ~CSound();
+
+    LPDIRECTSOUNDBUFFER *m_apDSBuffer;
+    DWORD m_dwDSBufferSize;
+    CWaveFile *m_pWaveFile;
 };
 
 class CStreamingSound : public CSound

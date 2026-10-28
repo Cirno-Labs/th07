@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">18.59% (129)</tspan> · <tspan class="decompiled">0.43% (3)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">80.98% (562)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">18.73% (130)</tspan> · <tspan class="decompiled">0.43% (3)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">80.84% (561)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="138.85" height="6" x="0" y="0" class="named"/>
-<rect width="3.23" height="6" x="138.85" y="0" class="decompiled"/>
-<rect width="604.92" height="6" x="142.08" y="0" class="todo"/>
+<rect width="139.93" height="6" x="0" y="0" class="named"/>
+<rect width="3.23" height="6" x="139.93" y="0" class="decompiled"/>
+<rect width="603.84" height="6" x="143.16" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (173 bytes)</title></rect>
@@ -610,7 +610,7 @@
 <rect width="12" height="12" x="585" y="150" class="named"><title>0x0044bd00 SoundPlayer::LoadSound (750 bytes)</title></rect>
 <rect width="12" height="12" x="600" y="150" class="named"><title>0x0044bff0 SoundPlayer::LoadBgmFormat (48 bytes)</title></rect>
 <rect width="12" height="12" x="615" y="150" class="named"><title>0x0044c020 SoundPlayer::LoadBgm (386 bytes)</title></rect>
-<rect width="12" height="12" x="630" y="150" class="todo"><title>0x0044c1b0 Func44c1b0 (105 bytes)</title></rect>
+<rect width="12" height="12" x="630" y="150" class="named"><title>0x0044c1b0 SoundPlayer::SwitchBgmTrack (105 bytes)</title></rect>
 <rect width="12" height="12" x="645" y="150" class="todo"><title>0x0044c220 Func44c220 (677 bytes)</title></rect>
 <rect width="12" height="12" x="660" y="150" class="todo"><title>0x0044c4d0 Func44c4d0 (472 bytes)</title></rect>
 <rect width="12" height="12" x="675" y="150" class="todo"><title>0x0044c6b0 SoundPlayer::StopBgm (287 bytes)</title></rect>
@@ -720,7 +720,7 @@
 <rect width="12" height="12" x="735" y="180" class="todo"><title>0x0045e020 Func45e020 (56 bytes)</title></rect>
 <rect width="12" height="12" x="0" y="195" class="todo"><title>0x0045e060 Func45e060 (19 bytes)</title></rect>
 <rect width="12" height="12" x="15" y="195" class="todo"><title>0x0045e080 Func45e080 (163 bytes)</title></rect>
-<rect width="12" height="12" x="30" y="195" class="todo"><title>0x0045e130 Func45e130 (84 bytes)</title></rect>
+<rect width="12" height="12" x="30" y="195" class="todo"><title>0x0045e130 CWaveFile::Func45e130 (84 bytes)</title></rect>
 <rect width="12" height="12" x="45" y="195" class="todo"><title>0x0045e190 Func45e190 (92 bytes)</title></rect>
 <rect width="12" height="12" x="60" y="195" class="decompiled"><title>0x0045e1f0 Unknown45e1f0::GetField2c (17 bytes)</title></rect>
 <rect width="12" height="12" x="75" y="195" class="todo"><title>0x0045e210 Func45e210 (328 bytes)</title></rect>
@@ -766,11 +766,11 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">12.80%</tspan> · <tspan class="decompiled">0.03%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">87.17%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">12.82%</tspan> · <tspan class="decompiled">0.03%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">87.15%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="95.58" height="6" x="0" y="0" class="named"/>
-<rect width="0.24" height="6" x="95.58" y="0" class="decompiled"/>
-<rect width="651.18" height="6" x="95.82" y="0" class="todo"/>
+<rect width="95.79" height="6" x="0" y="0" class="named"/>
+<rect width="0.24" height="6" x="95.79" y="0" class="decompiled"/>
+<rect width="650.98" height="6" x="96.02" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1287,7 +1287,7 @@
 <rect width="3.89" height="3.51" x="715.99" y="144.25" class="named"><title>0x004351c0 AppendCapsFlagText (107 bytes)</title></rect>
 <rect width="3.83" height="3.51" x="722.88" y="144.25" class="todo"><title>0x00418260 Func418260 (106 bytes)</title></rect>
 <rect width="3.83" height="3.51" x="729.71" y="144.25" class="todo"><title>0x0043836e Func43836e (106 bytes)</title></rect>
-<rect width="3.76" height="3.51" x="736.54" y="144.25" class="todo"><title>0x0044c1b0 Func44c1b0 (105 bytes)</title></rect>
+<rect width="3.76" height="3.51" x="736.54" y="144.25" class="named"><title>0x0044c1b0 SoundPlayer::SwitchBgmTrack (105 bytes)</title></rect>
 <rect width="3.70" height="3.51" x="743.30" y="144.25" class="todo"><title>0x00401d70 Func401d70 (104 bytes)</title></rect>
 <rect width="3.79" height="3.42" x="681.28" y="150.76" class="named"><title>0x00433f20 SpriteEngine::ReleaseSurfaces (104 bytes)</title></rect>
 <rect width="3.79" height="3.42" x="681.28" y="157.18" class="todo"><title>0x00442370 Func442370 (104 bytes)</title></rect>
@@ -1316,7 +1316,7 @@
 <rect width="2.76" height="3.18" x="688.06" y="182.37" class="named"><title>0x00430290 InitJoystick (85 bytes)</title></rect>
 <rect width="2.76" height="3.18" x="688.06" y="188.56" class="todo"><title>0x00442b10 Func442b10 (85 bytes)</title></rect>
 <rect width="2.76" height="3.11" x="688.06" y="194.74" class="todo"><title>0x00432630 Func432630 (84 bytes)</title></rect>
-<rect width="2.76" height="3.11" x="688.06" y="200.85" class="todo"><title>0x0045e130 Func45e130 (84 bytes)</title></rect>
+<rect width="2.76" height="3.11" x="688.06" y="200.85" class="todo"><title>0x0045e130 CWaveFile::Func45e130 (84 bytes)</title></rect>
 <rect width="2.76" height="3.04" x="688.06" y="206.96" class="todo"><title>0x0042f736 Func42f736 (83 bytes)</title></rect>
 <rect width="2.96" height="2.76" x="693.83" y="156.98" class="named"><title>0x0042fb20 ChainElem::~ChainElem (82 bytes)</title></rect>
 <rect width="2.96" height="2.76" x="693.83" y="162.75" class="todo"><title>0x0045e5c0 Func45e5c0 (82 bytes)</title></rect>

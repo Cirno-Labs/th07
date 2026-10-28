@@ -541,7 +541,7 @@ address,size,name,symbol
 0x0044bd00,750,SoundPlayer::LoadSound,?LoadSound@SoundPlayer@@QAEHHPAD@Z
 0x0044bff0,48,SoundPlayer::LoadBgmFormat,?LoadBgmFormat@SoundPlayer@@QAEHPAD@Z
 0x0044c020,386,SoundPlayer::LoadBgm,?LoadBgm@SoundPlayer@@QAEHPAD@Z
-0x0044c1b0,105,Func44c1b0,
+0x0044c1b0,105,SoundPlayer::SwitchBgmTrack,?SwitchBgmTrack@SoundPlayer@@QAEHPAD@Z
 0x0044c220,677,Func44c220,
 0x0044c4d0,472,Func44c4d0,
 0x0044c6b0,287,SoundPlayer::StopBgm,?StopBgm@SoundPlayer@@QAEXXZ
@@ -651,7 +651,7 @@ address,size,name,symbol
 0x0045e020,56,Func45e020,
 0x0045e060,19,Func45e060,
 0x0045e080,163,Func45e080,
-0x0045e130,84,Func45e130,
+0x0045e130,84,CWaveFile::Func45e130,?Func45e130@CWaveFile@@QAEJPAUBgmFormat@@@Z
 0x0045e190,92,Func45e190,
 0x0045e1f0,17,Unknown45e1f0::GetField2c,?GetField2c@Unknown45e1f0@@QAEHXZ
 0x0045e210,328,Func45e210,

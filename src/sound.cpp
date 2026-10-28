@@ -308,3 +308,19 @@ int SoundPlayer::LoadBgm(char *path)
     }
     return 0;
 }
+
+int SoundPlayer::SwitchBgmTrack(char *path)
+{
+    int i;
+    CWaveFile *waveFile;
+
+    if (this->bgm == NULL)
+    {
+        return -1;
+    }
+    i = this->FindTrackIndex(path);
+    waveFile = this->bgm->m_pWaveFile;
+    waveFile->Func45e130(&this->bgmFormat[i]);
+    DebugPrint("Streming BGM Reopen %d\r\n", i);
+    return 0;
+}

@@ -306,6 +306,9 @@ public:
     // (thbgm.dat), as bgmFormat's first track, after stopping what
     // plays, and starts the thread that streams it. Returns 0 or -1.
     int LoadBgm(char *path);
+    // Switches the wave music to the track named as the file name of
+    // `path`. Returns 0, or -1 when no music is loaded. Not in th06.
+    int SwitchBgmTrack(char *path);
     // Not in th06. WinMain calls it until it returns 0.
     int Func44c9c0();
     // Queues sound effect `idx` to start on the next update, unless
