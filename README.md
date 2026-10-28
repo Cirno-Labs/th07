@@ -35,6 +35,7 @@ just analyze   # writes build/functions_100b.csv
 
 `just progress` renders it: every game function, by address and as a
 treemap by size, coloured by whether it is decompiled and matching.
+`just hooks` makes every commit redraw it and include it.
 
 ## Target
 

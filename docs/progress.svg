@@ -61,10 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">0% (0)</tspan> · <tspan class="decompiled">0.14% (1)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">99.86% (693)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">0.58% (4)</tspan> · <tspan class="decompiled">0.14% (1)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">99.28% (689)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="1.08" height="6" x="0" y="0" class="decompiled"/>
-<rect width="745.92" height="6" x="1.08" y="0" class="todo"/>
+<rect width="4.31" height="6" x="0" y="0" class="named"/>
+<rect width="1.08" height="6" x="4.31" y="0" class="decompiled"/>
+<rect width="741.62" height="6" x="5.38" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (173 bytes)</title></rect>
@@ -420,10 +421,10 @@
 <rect width="12" height="12" x="0" y="105" class="todo"><title>0x00435e30 Func435e30 (143 bytes)</title></rect>
 <rect width="12" height="12" x="15" y="105" class="todo"><title>0x00435ec0 Func435ec0 (255 bytes)</title></rect>
 <rect width="12" height="12" x="30" y="105" class="todo"><title>0x00435fc0 Func435fc0 (322 bytes)</title></rect>
-<rect width="12" height="12" x="45" y="105" class="todo"><title>0x00436110 Func436110 (33 bytes)</title></rect>
-<rect width="12" height="12" x="60" y="105" class="todo"><title>0x00436140 Func436140 (19 bytes)</title></rect>
-<rect width="12" height="12" x="75" y="105" class="todo"><title>0x00436160 Func436160 (89 bytes)</title></rect>
-<rect width="12" height="12" x="90" y="105" class="todo"><title>0x004361c0 Func4361c0 (59 bytes)</title></rect>
+<rect width="12" height="12" x="45" y="105" class="named"><title>0x00436110 MidiDevice::MidiDevice (33 bytes)</title></rect>
+<rect width="12" height="12" x="60" y="105" class="named"><title>0x00436140 MidiDevice::~MidiDevice (19 bytes)</title></rect>
+<rect width="12" height="12" x="75" y="105" class="named"><title>0x00436160 MidiDevice::Open (89 bytes)</title></rect>
+<rect width="12" height="12" x="90" y="105" class="named"><title>0x004361c0 MidiDevice::Close (59 bytes)</title></rect>
 <rect width="12" height="12" x="105" y="105" class="todo"><title>0x00436200 Func436200 (78 bytes)</title></rect>
 <rect width="12" height="12" x="120" y="105" class="todo"><title>0x00436250 Func436250 (67 bytes)</title></rect>
 <rect width="12" height="12" x="135" y="105" class="todo"><title>0x004362a0 Func4362a0 (48 bytes)</title></rect>
@@ -765,10 +766,11 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">0%</tspan> · <tspan class="decompiled">0%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">100%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">0.05%</tspan> · <tspan class="decompiled">0%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">99.94%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="0.10" height="6" x="0" y="0" class="decompiled"/>
-<rect width="746.97" height="6" x="0.03" y="0" class="todo"/>
+<rect width="0.39" height="6" x="0" y="0" class="named"/>
+<rect width="0.10" height="6" x="0.39" y="0" class="decompiled"/>
+<rect width="746.57" height="6" x="0.43" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1306,7 +1308,7 @@
 <rect width="3.13" height="3.23" x="725.76" y="150.76" class="todo"><title>0x00432690 Func432690 (91 bytes)</title></rect>
 <rect width="3.13" height="3.23" x="731.89" y="150.76" class="todo"><title>0x00455110 Func455110 (91 bytes)</title></rect>
 <rect width="2.99" height="3.23" x="738.02" y="150.76" class="todo"><title>0x0040fb30 Func40fb30 (89 bytes)</title></rect>
-<rect width="2.99" height="3.23" x="744.01" y="150.76" class="todo"><title>0x00436160 Func436160 (89 bytes)</title></rect>
+<rect width="2.99" height="3.23" x="744.01" y="150.76" class="named"><title>0x00436160 MidiDevice::Open (89 bytes)</title></rect>
 <rect width="2.76" height="3.47" x="688.06" y="156.98" class="todo"><title>0x0045547d Func45547d (89 bytes)</title></rect>
 <rect width="2.76" height="3.40" x="688.06" y="163.46" class="todo"><title>0x00431870 Func431870 (88 bytes)</title></rect>
 <rect width="2.76" height="3.26" x="688.06" y="169.86" class="todo"><title>0x0041ae90 Func41ae90 (86 bytes)</title></rect>
@@ -1376,7 +1378,7 @@
 <rect width="1.88" height="2.15" x="730.55" y="173.46" class="todo"><title>0x00431a0f Func431a0f (60 bytes)</title></rect>
 <rect width="1.88" height="2.15" x="735.43" y="173.46" class="todo"><title>0x004366c0 Func4366c0 (60 bytes)</title></rect>
 <rect width="1.88" height="2.15" x="740.31" y="173.46" class="todo"><title>0x0044f580 Func44f580 (60 bytes)</title></rect>
-<rect width="1.80" height="2.15" x="745.20" y="173.46" class="todo"><title>0x004361c0 Func4361c0 (59 bytes)</title></rect>
+<rect width="1.80" height="2.15" x="745.20" y="173.46" class="named"><title>0x004361c0 MidiDevice::Close (59 bytes)</title></rect>
 <rect width="1.80" height="2.15" x="710.52" y="178.61" class="todo"><title>0x004553fa Func4553fa (59 bytes)</title></rect>
 <rect width="1.80" height="2.06" x="710.52" y="183.76" class="todo"><title>0x004369c0 Func4369c0 (58 bytes)</title></rect>
 <rect width="1.80" height="2.06" x="710.52" y="188.82" class="todo"><title>0x0044f960 Func44f960 (58 bytes)</title></rect>
@@ -1432,7 +1434,7 @@
 <rect width="0.52" height="1.17" x="739.64" y="192.08" class="todo"><title>0x0042e81b Func42e81b (35 bytes)</title></rect>
 <rect width="0.52" height="1.17" x="743.16" y="192.08" class="todo"><title>0x0043225b Func43225b (35 bytes)</title></rect>
 <rect width="0.32" height="1.17" x="746.68" y="192.08" class="todo"><title>0x00417af0 Func417af0 (33 bytes)</title></rect>
-<rect width="0.85" height="0.59" x="732.59" y="196.24" class="todo"><title>0x00436110 Func436110 (33 bytes)</title></rect>
+<rect width="0.85" height="0.59" x="732.59" y="196.24" class="named"><title>0x00436110 MidiDevice::MidiDevice (33 bytes)</title></rect>
 <rect width="0.85" height="0.48" x="732.59" y="199.83" class="todo"><title>0x004325c0 Func4325c0 (32 bytes)</title></rect>
 <rect width="0.85" height="0.37" x="732.59" y="203.32" class="todo"><title>0x00419d70 Func419d70 (31 bytes)</title></rect>
 <rect width="0.85" height="0.26" x="732.59" y="206.69" class="todo"><title>0x004363e0 Func4363e0 (30 bytes)</title></rect>
@@ -1451,7 +1453,7 @@
 <rect width="0.19" height="0.10" x="739.12" y="202.36" class="todo"><title>0x004378b0 Func4378b0 (22 bytes)</title></rect>
 <rect width="0.19" height="0.10" x="739.12" y="205.25" class="todo"><title>0x0043831b Func43831b (20 bytes)</title></rect>
 <rect width="0.19" height="0.10" x="739.12" y="207.88" class="todo"><title>0x0045e500 Func45e500 (20 bytes)</title></rect>
-<rect width="0.19" height="0.10" x="739.12" y="210.51" class="todo"><title>0x00436140 Func436140 (19 bytes)</title></rect>
+<rect width="0.19" height="0.10" x="739.12" y="210.51" class="named"><title>0x00436140 MidiDevice::~MidiDevice (19 bytes)</title></rect>
 <rect width="0.10" height="0.11" x="742.32" y="202.36" class="todo"><title>0x004378f0 Func4378f0 (19 bytes)</title></rect>
 <rect width="0.10" height="0.11" x="744.88" y="202.36" class="todo"><title>0x0045e060 Func45e060 (19 bytes)</title></rect>
 <rect width="0.10" height="0.11" x="747.44" y="202.36" class="todo"><title>0x0045f6f0 Func45f6f0 (19 bytes)</title></rect>

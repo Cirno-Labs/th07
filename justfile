@@ -49,6 +49,10 @@ decompile *addrs:
 progress: build _orig
     python3 tools/render_progress.py
 
+# Use tools/hooks/: each commit redraws and includes docs/progress.svg
+hooks:
+    git config core.hooksPath tools/hooks
+
 # Remove build outputs (keeps the Ghidra project)
 clean:
     rm -rf build/obj build/src build/game build/th07.* build/th07.*
