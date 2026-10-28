@@ -281,8 +281,8 @@ address,size,name,symbol
 0x0042f69f,151,Func42f69f,
 0x0042f736,83,Func42f736,
 0x0042f789,86,Func42f789,
-0x0042f7df,116,Func42f7df,
-0x0042f853,139,Func42f853,
+0x0042f7df,116,Unknown626270::Func42f7df,?Func42f7df@Unknown626270@@QAEHH@Z
+0x0042f853,139,Unknown626270::Func42f853,?Func42f853@Unknown626270@@QAEHH@Z
 0x0042f8de,110,Func42f8de,
 0x0042f94c,261,Unknown626270::Func42f94c,?Func42f94c@Unknown626270@@QAEHXZ
 0x0042fa60,75,Chain::~Chain,??1Chain@@QAE@XZ
@@ -609,14 +609,14 @@ address,size,name,symbol
 0x00456f6b,2365,MainMenu::Func456f6b,?Func456f6b@MainMenu@@QAEHXZ
 0x004578cc,191,MainMenu::ShowButtonDigits,?ShowButtonDigits@MainMenu@@QAEHPAVSprite@@F@Z
 0x0045798b,1626,MainMenu::UpdateDifficultyMenu,?UpdateDifficultyMenu@MainMenu@@QAEHXZ
-0x00457fe5,5427,MainMenu::Func457fe5,?Func457fe5@MainMenu@@QAEHXZ
+0x00457fe5,5427,MainMenu::UpdateCharacterMenu,?UpdateCharacterMenu@MainMenu@@QAEHXZ
 0x00459518,3269,MainMenu::Func459518,?Func459518@MainMenu@@QAEHXZ
 0x0045a1dd,1863,MainMenu::Func45a1dd,?Func45a1dd@MainMenu@@QAEHXZ
 0x0045a924,3275,MainMenu::Func45a924,?Func45a924@MainMenu@@QAEHXZ
 0x0045b5ef,958,Func45b5ef,
 0x0045b9ad,413,Func45b9ad,
 0x0045bb4a,281,MainMenu::MoveMenuCursor,?MoveMenuCursor@MainMenu@@QAEHH@Z
-0x0045bc63,265,Func45bc63,
+0x0045bc63,265,MainMenu::Func45bc63,?Func45bc63@MainMenu@@QAEHH@Z
 0x0045bd6c,425,Func45bd6c,
 0x0045bf15,1459,Func45bf15,
 0x0045c4c8,17,Func45c4c8,

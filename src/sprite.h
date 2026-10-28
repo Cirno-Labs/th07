@@ -10,6 +10,11 @@
 class Sprite
 {
 public:
+    void SetPendingInterrupt(short interrupt)
+    {
+        this->pendingInterrupt = interrupt;
+    }
+
     unsigned char unk_0[0x1b8];
     union
     {

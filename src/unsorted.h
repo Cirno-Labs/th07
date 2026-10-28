@@ -691,6 +691,12 @@ public:
     // Whether Phantasm is open: a shot type cleared Extra (or captured
     // 60 spell cards, which marks those that cleared Extra as such).
     int Func42f94c();
+    // Whether shot type `shot` (character * 2 + shot) cleared one of
+    // the four main difficulties, which opens Extra for it.
+    int Func42f7df(int shot);
+    // Whether shot type `shot` has Phantasm open (Func42f94c for one
+    // shot type).
+    int Func42f853(int shot);
     // Rerolls the checksum keys and recomputes the checksums.
     void Func4012b0();
     // Adds `power` to stats->power and recomputes the checksums; wipes

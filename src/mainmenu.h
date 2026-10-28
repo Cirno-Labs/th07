@@ -24,7 +24,7 @@ public:
     int Func45624d();
     int Func456f6b();
     int UpdateDifficultyMenu();
-    int Func457fe5();
+    int UpdateCharacterMenu();
     int Func459518();
     int Func45a1dd();
     int Func45a924();
@@ -38,6 +38,8 @@ public:
     // up or down is pressed or repeats. Returns -1 for up, 1 for down,
     // else 0.
     int MoveMenuCursor(int count);
+    // MoveMenuCursor with left and right. Not in th06.
+    int Func45bc63(int count);
 
     // The selected entry.
     int cursor;
