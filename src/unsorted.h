@@ -258,6 +258,8 @@ public:
 // Debug output, compiled out of the release build: an empty function
 // that the game still calls with messages.
 void DebugPrint(const char *fmt, ...);
+// Another such function.
+void DebugPrint2(const char *fmt, ...);
 
 // Loads a whole file into a malloc'd buffer; NULL on failure. As in
 // th06, where the second argument says whether the file is read from
@@ -556,13 +558,13 @@ public:
     // The practice scores, by shot type, stage and difficulty.
     Pscr pscrs[6][6][4];
     // The "PLST" chunk. When its magic is set on exit, WinMain calls
-    // Func44a302(2).
+    // ResultScreen::RegisterChain(2) to save the score file.
     Plst plst;
     unsigned char unk_93d0[0x5];
     BYTE character;
     BYTE shotType;
     unsigned char unk_93d7;
-    // Bit 0x10: the game was cleared.
+    // Bit 1: the game is a practice; 0x10: it was cleared.
     DWORD unk_93d8;
     unsigned char unk_93dc[0x210];
     int stage;
@@ -576,7 +578,3 @@ public:
     int progressFrames;
 };
 extern Unknown626270 g_Unknown626270;
-
-// Not identified yet; WinMain calls it with 2 on exit when
-// g_Unknown626270.plst.magic is set.
-int Func44a302(int arg);

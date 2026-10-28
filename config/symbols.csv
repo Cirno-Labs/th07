@@ -383,7 +383,7 @@ address,size,name,symbol
 0x004378b0,22,Func4378b0,
 0x004378d0,25,Func4378d0,
 0x004378f0,19,Func4378f0,
-0x00437903,5,Func437903,
+0x00437903,5,DebugPrint2,?DebugPrint2@@YAXPBDZZ
 0x00437908,817,Func437908,
 0x00437c39,55,Func437c39,
 0x00437c70,1707,Func437c70,
@@ -515,10 +515,10 @@ address,size,name,symbol
 0x00447fd0,200,ResultScreen::WaitAfterNameEntry,?WaitAfterNameEntry@ResultScreen@@QAEHXZ
 0x00448098,2065,ResultScreen::RunStatisticsMenu,?RunStatisticsMenu@ResultScreen@@QAEHXZ
 0x004488a9,1175,ResultScreen::DrawStatistics,?DrawStatistics@ResultScreen@@QAEHXZ
-0x00448d40,3525,Func448d40,
-0x00449b05,1780,Func449b05,
+0x00448d40,3525,ResultScreen::OnDraw,?OnDraw@ResultScreen@@SIHPAV1@@Z
+0x00449b05,1780,ResultScreen::AddedCallback,?AddedCallback@ResultScreen@@SIHPAV1@@Z
 0x0044a1f9,265,ResultScreen::DeletedCallback,?DeletedCallback@ResultScreen@@SIHPAV1@@Z
-0x0044a302,339,Func44a302,?Func44a302@@YIHH@Z
+0x0044a302,339,ResultScreen::RegisterChain,?RegisterChain@ResultScreen@@SIHH@Z
 0x0044a460,190,Func44a460,
 0x0044a520,124,ClearViewport,?ClearViewport@@YIXK@Z
 0x0044a5a0,165,Func44a5a0,

@@ -254,6 +254,15 @@ void FormatTodayDate(char *date);
 class ResultScreen
 {
 public:
+    // Zeroes the whole screen and sets the cursor to 1. Inline, but not
+    // expanded: RegisterChain's frame keeps slots for it. The original
+    // (0x444a5b) also constructs the Sprites and lists first, which this
+    // one cannot until Sprite has its constructor.
+    ResultScreen()
+    {
+        memset(this, 0, sizeof(ResultScreen));
+        this->cursor = 1;
+    }
     ~ResultScreen()
     {
         MemFree(this->scoreDat);
@@ -267,7 +276,19 @@ public:
     // (10), replay saving (11 to 15) and statistics (16, 17), and states
     // 0x14 to 0x16 (RunStatisticsMenu). Steps the sprites. Returns 1, or 0 once
     // it sets the scene back to the title.
+    // Allocates the screen and adds it to the chains (update priority
+    // 0xe, draw 0xd). With `unk` 1 it starts in state 10, or 0x12 in a
+    // practice; with 2 (on exit) in state 0x13, running only
+    // AddedCallback. Returns 0, or -1 if adding fails.
+    static int RegisterChain(int unk);
     static int OnUpdate(ResultScreen *screen);
+    // Draws the sprites, the score lists or the spell cards, the name
+    // entry's alphabet, the replay slots, then DrawStatistics. Returns 1.
+    static int OnDraw(ResultScreen *screen);
+    // Loads the images and starts the sprites, fills the lists with the
+    // default entries, then the score file's. Returns 0, or -1 if
+    // loading fails.
+    static int AddedCallback(ResultScreen *screen);
     // Saves and frees the score file, empties the lists, releases ANMs
     // 0x2a to 0x2d and surface 0, removes the draw element and deletes
     // the screen. Returns 0.
@@ -334,7 +355,9 @@ public:
     BYTE unk_6d[0x3];
     Sprite sprites[0x29];
     // Text drawn with RenderText; the first holds the shot's name.
-    Sprite textSprites[0x11];
+    Sprite textSprites[0xf];
+    Sprite unk_8110;
+    Sprite unk_835c;
     // The high score lists, by difficulty and shot.
     ListNode scores[6][6];
     BYTE unk_8758[0x3840];

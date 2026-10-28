@@ -1592,3 +1592,39 @@ int ResultScreen::DeletedCallback(ResultScreen *screen)
     screen = NULL;
     return 0;
 }
+
+int ResultScreen::RegisterChain(int unk)
+{
+    ResultScreen *screen = new ResultScreen;
+
+    DebugPrint2("Stg.PlayTimeAll = %d\r\n", g_Unknown626270.progressFrames);
+    if (unk == 1)
+    {
+        if (!(g_Unknown626270.unk_93d8 & 1))
+        {
+            screen->state = 10;
+        }
+        else
+        {
+            screen->state = 0x12;
+        }
+    }
+    else if (unk == 2)
+    {
+        screen->state = 0x13;
+        ResultScreen::AddedCallback(screen);
+        return 0;
+    }
+    screen->calcChain = g_Chain.CreateElem((ChainCallback)ResultScreen::OnUpdate);
+    screen->calcChain->addedCallback = (ChainCallback)ResultScreen::AddedCallback;
+    screen->calcChain->deletedCallback = (ChainCallback)ResultScreen::DeletedCallback;
+    screen->calcChain->arg = screen;
+    if (g_Chain.AddToCalcChain(screen->calcChain, 0xe) != 0)
+    {
+        return -1;
+    }
+    screen->drawChain = g_Chain.CreateElem((ChainCallback)ResultScreen::OnDraw);
+    screen->drawChain->arg = screen;
+    g_Chain.AddToDrawChain(screen->drawChain, 0xd);
+    return 0;
+}

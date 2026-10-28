@@ -131,7 +131,7 @@ restart:
 release:
     if (g_Unknown626270.plst.magic != 0)
     {
-        Func44a302(2);
+        ResultScreen::RegisterChain(2);
     }
     g_Chain.Release();
     while (g_SoundPlayer.Func44c9c0())
