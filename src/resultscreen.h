@@ -6,6 +6,7 @@
 #include <string.h>
 #include <windows.h>
 
+#include "chain.h"
 #include "common.h"
 #include "replay.h"
 #include "sprite.h"
@@ -253,6 +254,11 @@ void FormatTodayDate(char *date);
 class ResultScreen
 {
 public:
+    ~ResultScreen()
+    {
+        MemFree(this->scoreDat);
+    }
+
     // Inserts `entry` into the high score list for `difficulty` and
     // `shot`.
     int AddScore(Hscr *entry, int difficulty, int shot);
@@ -262,6 +268,10 @@ public:
     // 0x14 to 0x16 (RunStatisticsMenu). Steps the sprites. Returns 1, or 0 once
     // it sets the scene back to the title.
     static int OnUpdate(ResultScreen *screen);
+    // Saves and frees the score file, empties the lists, releases ANMs
+    // 0x2a to 0x2d and surface 0, removes the draw element and deletes
+    // the screen. Returns 0.
+    static int DeletedCallback(ResultScreen *screen);
 
     // Lets the player enter a name for the score just made. Returns 0.
     int HandleNameEntry();
@@ -333,7 +343,8 @@ public:
     // The "TH7K" chunk SaveScoreDat writes.
     Th7k th7k;
     Lsnm lsnm;
-    BYTE unk_bfe4[0x8];
+    ChainElem *calcChain;
+    ChainElem *drawChain;
     // The headers of "./replay/th7_01.rpy" to "th7_15.rpy", where they
     // are valid.
     ReplayHeader replays[0xf];

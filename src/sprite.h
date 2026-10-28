@@ -59,6 +59,10 @@ public:
     void RenderText(Sprite *sprite, D3DCOLOR textColor, D3DCOLOR shadowColor, char *fmt, ...);
     // RenderText, centered on the sprite.
     void RenderTextCentered(Sprite *vm, D3DCOLOR color, D3DCOLOR shadowColor, char *fmt, ...);
+    // Releases ANM slot `slot`.
+    void ReleaseAnm(int slot);
+    // Releases surface `surface`.
+    void ReleaseSurface(int surface);
     // Releases the loaded surfaces, before the device is reset.
     void ReleaseSurfaces();
     // Starts a new batch of quads. Not in th06.

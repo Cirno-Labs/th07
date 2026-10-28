@@ -517,7 +517,7 @@ address,size,name,symbol
 0x004488a9,1175,ResultScreen::DrawStatistics,?DrawStatistics@ResultScreen@@QAEHXZ
 0x00448d40,3525,Func448d40,
 0x00449b05,1780,Func449b05,
-0x0044a1f9,265,Func44a1f9,
+0x0044a1f9,265,ResultScreen::DeletedCallback,?DeletedCallback@ResultScreen@@SIHPAV1@@Z
 0x0044a302,339,Func44a302,?Func44a302@@YIHH@Z
 0x0044a460,190,Func44a460,
 0x0044a520,124,ClearViewport,?ClearViewport@@YIXK@Z
@@ -559,7 +559,7 @@ address,size,name,symbol
 0x0044df40,66,Func44df40,
 0x0044df90,223,Func44df90,
 0x0044e070,1122,Func44e070,
-0x0044e4e0,514,Func44e4e0,
+0x0044e4e0,514,SpriteEngine::ReleaseAnm,?ReleaseAnm@SpriteEngine@@QAEXH@Z
 0x0044e6f0,142,Func44e6f0,
 0x0044e780,347,Func44e780,
 0x0044e8e0,308,SpriteEngine::SetSprite,?SetSprite@SpriteEngine@@QAEHPAVSprite@@H@Z
@@ -589,7 +589,7 @@ address,size,name,symbol
 0x004543b0,505,Func4543b0,
 0x004545b0,511,SpriteEngine::RenderTextCentered,?RenderTextCentered@SpriteEngine@@QAAXPAVSprite@@KKPADZZ
 0x004547b0,599,Func4547b0,
-0x00454a10,143,Func454a10,
+0x00454a10,143,SpriteEngine::ReleaseSurface,?ReleaseSurface@SpriteEngine@@QAEXH@Z
 0x00454aa0,445,Func454aa0,
 0x00454c60,424,Func454c60,
 0x00454e10,280,SpriteEngine::CopyBackBufferToTexture,?CopyBackBufferToTexture@SpriteEngine@@QAEXHHHHHHHHH@Z

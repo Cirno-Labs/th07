@@ -1562,3 +1562,33 @@ int ResultScreen::DrawStatistics()
     }
     return 0;
 }
+
+int ResultScreen::DeletedCallback(ResultScreen *screen)
+{
+    int i;
+    int j;
+
+    if (screen->scoreDat != NULL)
+    {
+        SaveScoreDat(screen);
+        ReleaseScoreDat(screen->scoreDat);
+    }
+    screen->scoreDat = NULL;
+    for (i = 0; i < 6; i++)
+    {
+        for (j = 0; j < 6; j++)
+        {
+            screen->ReleaseScores(i, j);
+        }
+    }
+    g_SpriteEngine->ReleaseAnm(0x2a);
+    g_SpriteEngine->ReleaseAnm(0x2b);
+    g_SpriteEngine->ReleaseAnm(0x2c);
+    g_SpriteEngine->ReleaseAnm(0x2d);
+    g_SpriteEngine->ReleaseSurface(0);
+    g_Chain.Remove(screen->drawChain);
+    screen->drawChain = NULL;
+    delete screen;
+    screen = NULL;
+    return 0;
+}
