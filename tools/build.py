@@ -13,6 +13,7 @@ game's data and global objects, which the DLL takes from the original)
 against the real libraries, plus the original's resources.
 """
 import csv, glob, os, struct, subprocess, sys
+from concurrent.futures import ThreadPoolExecutor
 
 import coff
 
@@ -26,6 +27,9 @@ CFLAGS = ["/Od", "/Ob1", "/Gr", "/GX", "/Oi"]
 GLUE_PREFIX = "dll_"  # objects from src/dll/, the DLL's own code
 DLL_ONLY, EXE_ONLY = "dll", "exe"  # subdirectories of src/ only one target builds
 TIMEOUT = 60  # cl spins forever after a fatal error
+# Compiles run in parallel on half the cores by default, leaving the rest
+# free; JOBS overrides it.
+JOBS = int(os.environ.get("JOBS") or max(1, (os.cpu_count() or 2) // 2))
 
 ENV = dict(
     os.environ,
@@ -40,17 +44,24 @@ def win(path):
     return path.replace("/", "\\")
 
 
-def tool(name, *args):
+def run_tool(name, *args):
+    """Runs an MSVC tool; returns its exit code and its output, without the
+    lines that only name the file."""
     cmd = ["wine", rf"C:\msvc7\bin\{name}.exe", "/nologo", *args]
     try:
         r = subprocess.run(cmd, env=ENV, timeout=TIMEOUT, capture_output=True, text=True, errors="replace")
     except subprocess.TimeoutExpired:
-        sys.exit(f"{name} timed out (fatal error?): {' '.join(args)}")
+        return 1, f"{name} timed out (fatal error?): {' '.join(args)}"
     out = "\n".join(l for l in r.stdout.splitlines() if l.strip() and not l.endswith(".cpp"))
+    return r.returncode, out
+
+
+def tool(name, *args):
+    code, out = run_tool(name, *args)
     if out:
         print(out)
-    if r.returncode:
-        sys.exit(r.returncode)
+    if code:
+        sys.exit(code)
 
 
 def read_symbols():
@@ -90,15 +101,27 @@ def compile_all(target=DLL):
             with open(copy, "wb") as f:
                 f.write(to_sjis(text))
     headers = max((os.path.getmtime(h) for h in glob.glob("src/**/*.h", recursive=True)), default=0)
-    objs = []
+    objs, stale = [], []
     for src, obj in sources(target):
-        rel = os.path.relpath(src, "src")
         objs.append(obj)
-        if os.path.exists(obj) and os.path.getmtime(obj) > max(os.path.getmtime(src), headers):
-            continue
-        print("cl", src)
-        tool("cl", "/c", *file_flags(src), "/I" + win(SJIS), "/Fo" + win(obj),
-             win(os.path.join(SJIS, rel)))
+        if not (os.path.exists(obj) and os.path.getmtime(obj) > max(os.path.getmtime(src), headers)):
+            stale.append((src, obj))
+
+    def compile_one(job):
+        src, obj = job
+        return run_tool("cl", "/c", *file_flags(src), "/I" + win(SJIS), "/Fo" + win(obj),
+                        win(os.path.join(SJIS, os.path.relpath(src, "src"))))
+
+    failed = 0
+    with ThreadPoolExecutor(JOBS) as pool:
+        # Results come back in source order, so the output reads as before.
+        for (src, obj), (code, out) in zip(stale, pool.map(compile_one, stale)):
+            print("cl", src)
+            if out:
+                print(out)
+            failed = failed or code
+    if failed:
+        sys.exit(failed)
     return objs
 
 
