@@ -23,6 +23,9 @@ public:
     // Type 0's draw callback: covers the whole screen in `color` at
     // `alpha`. Returns 1.
     static int OnDrawScreen(ScreenEffect *effect);
+    // Type 2's draw callback: covers the play area in `color` at `alpha`.
+    // Returns 1.
+    static int OnDrawPlayArea(ScreenEffect *effect);
 
     int type;
     ChainElem *calcElem;

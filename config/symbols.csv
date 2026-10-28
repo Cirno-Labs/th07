@@ -526,7 +526,7 @@ address,size,name,symbol
 0x0044aa20,971,DrawGradientRect,?DrawGradientRect@@YIXPAMKKKK@Z
 0x0044adf0,145,ScreenEffect::OnDrawScreen,?OnDrawScreen@ScreenEffect@@SIHPAV1@@Z
 0x0044ae90,159,ScreenEffect::OnUpdateFadeOut,?OnUpdateFadeOut@ScreenEffect@@SIHPAV1@@Z
-0x0044af30,69,Func44af30,
+0x0044af30,69,ScreenEffect::OnDrawPlayArea,?OnDrawPlayArea@ScreenEffect@@SIHPAV1@@Z
 0x0044af80,267,Func44af80,
 0x0044b090,76,Func44b090,
 0x0044b0e0,409,Func44b0e0,

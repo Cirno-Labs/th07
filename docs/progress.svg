@@ -61,11 +61,11 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">16.43% (114)</tspan> · <tspan class="decompiled">0.43% (3)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">83.14% (577)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">16.57% (115)</tspan> · <tspan class="decompiled">0.43% (3)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">83% (576)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="122.71" height="6" x="0" y="0" class="named"/>
-<rect width="3.23" height="6" x="122.71" y="0" class="decompiled"/>
-<rect width="621.06" height="6" x="125.94" y="0" class="todo"/>
+<rect width="123.78" height="6" x="0" y="0" class="named"/>
+<rect width="3.23" height="6" x="123.78" y="0" class="decompiled"/>
+<rect width="619.99" height="6" x="127.01" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (173 bytes)</title></rect>
@@ -595,7 +595,7 @@
 <rect width="12" height="12" x="360" y="150" class="named"><title>0x0044aa20 DrawGradientRect (971 bytes)</title></rect>
 <rect width="12" height="12" x="375" y="150" class="named"><title>0x0044adf0 ScreenEffect::OnDrawScreen (145 bytes)</title></rect>
 <rect width="12" height="12" x="390" y="150" class="named"><title>0x0044ae90 ScreenEffect::OnUpdateFadeOut (159 bytes)</title></rect>
-<rect width="12" height="12" x="405" y="150" class="todo"><title>0x0044af30 Func44af30 (69 bytes)</title></rect>
+<rect width="12" height="12" x="405" y="150" class="named"><title>0x0044af30 ScreenEffect::OnDrawPlayArea (69 bytes)</title></rect>
 <rect width="12" height="12" x="420" y="150" class="todo"><title>0x0044af80 Func44af80 (267 bytes)</title></rect>
 <rect width="12" height="12" x="435" y="150" class="todo"><title>0x0044b090 Func44b090 (76 bytes)</title></rect>
 <rect width="12" height="12" x="450" y="150" class="todo"><title>0x0044b0e0 Func44b0e0 (409 bytes)</title></rect>
@@ -766,11 +766,11 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">11.58%</tspan> · <tspan class="decompiled">0.03%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">88.38%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">11.60%</tspan> · <tspan class="decompiled">0.03%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">88.37%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="86.53" height="6" x="0" y="0" class="named"/>
-<rect width="0.24" height="6" x="86.53" y="0" class="decompiled"/>
-<rect width="660.23" height="6" x="86.77" y="0" class="todo"/>
+<rect width="86.67" height="6" x="0" y="0" class="named"/>
+<rect width="0.24" height="6" x="86.67" y="0" class="decompiled"/>
+<rect width="660.10" height="6" x="86.90" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1352,7 +1352,7 @@
 <rect width="2.17" height="2.59" x="699.79" y="185.14" class="todo"><title>0x0042d5cd Func42d5cd (69 bytes)</title></rect>
 <rect width="2.17" height="2.59" x="699.79" y="190.73" class="todo"><title>0x0042d612 Func42d612 (69 bytes)</title></rect>
 <rect width="2.17" height="2.59" x="699.79" y="196.31" class="named"><title>0x004314f0 FileExists (69 bytes)</title></rect>
-<rect width="2.17" height="2.59" x="699.79" y="201.90" class="todo"><title>0x0044af30 Func44af30 (69 bytes)</title></rect>
+<rect width="2.17" height="2.59" x="699.79" y="201.90" class="named"><title>0x0044af30 ScreenEffect::OnDrawPlayArea (69 bytes)</title></rect>
 <rect width="2.17" height="2.51" x="699.79" y="207.49" class="todo"><title>0x00402060 AsciiText::AddFormat (68 bytes)</title></rect>
 <rect width="2.56" height="2.13" x="704.96" y="168.13" class="todo"><title>0x0045e7b0 Func45e7b0 (68 bytes)</title></rect>
 <rect width="2.56" height="2.05" x="704.96" y="173.26" class="todo"><title>0x004232e0 Func4232e0 (67 bytes)</title></rect>
