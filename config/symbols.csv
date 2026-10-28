@@ -319,7 +319,7 @@ address,size,name,symbol
 0x00431a5c,114,GdiSurface::Release,?Release@GdiSurface@@QAE_NXZ
 0x00431ace,95,GdiSurface::Create,?Create@GdiSurface@@QAE_NHHH@Z
 0x00431b2d,447,GdiSurface::CreateInFormat,?CreateInFormat@GdiSurface@@QAE_NHHH@Z
-0x00431cec,80,Func431cec,
+0x00431cec,80,GdiSurface::FindFormat,?FindFormat@GdiSurface@@QAEPAUFormatInfo@@H@Z
 0x00431d3c,1064,Func431d3c,
 0x00432164,247,Func432164,
 0x0043225b,35,Func43225b,
@@ -1121,7 +1121,7 @@ address,size,name,symbol
 0x0047d4e0,672,_memcpy,
 0x0047d820,672,_memmove,
 0x0047db60,139,_strlen,
-0x0047dbf0,96,_memset,
+0x0047dbf0,96,_memset,_memset
 0x0047dc50,44,Func47dc50,
 0x0047dc7c,52,_sscanf,
 0x0047dcb0,57,_strncmp,
