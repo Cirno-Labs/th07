@@ -56,7 +56,9 @@ struct GameConfigFlags
     // Each track of the wave music is read into memory before it plays,
     // rather than streamed from thbgm.dat. Not in th06.
     unsigned int preloadBgm : 1;
-    unsigned int unk14 : 18;
+    // Skips MeasureRefreshRate's refresh rate measurement. Not in th06.
+    unsigned int unk14 : 1;
+    unsigned int unk15 : 17;
 };
 
 class App
@@ -251,6 +253,14 @@ int InitDirectInput(App *game);
 // "th07_0100b.ver", into g_App.verFile. Returns 0, or -1 after logging
 // an error if either is missing. Not in th06.
 int OpenGameArchive();
+
+// Measures the refresh rate by presenting surface 0, up to 1800 times
+// or until it has eight rates of 57 Hz or more, each over half a second
+// or so. Unless g_App.flags.unk14 is set, it turns presentImmediate on
+// when their average is over 160 Hz (or there are fewer than two), and
+// also when it is 65 Hz or more, returning -2 then. Otherwise returns
+// 0. Not in th06.
+int MeasureRefreshRate();
 
 // IDirectInput8::EnumDevices's callback for joysticks, from the DirectX
 // 8 SDK's Joystick sample: creates a device for the first joystick that
