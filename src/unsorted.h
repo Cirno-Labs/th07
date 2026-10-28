@@ -276,6 +276,9 @@ public:
     int Initialize(HWND hwnd);
     // Releases the sounds and DirectSound.
     int Release();
+    // Stops the wave music: ends the notification thread and releases
+    // the stream.
+    void StopBgm();
     // Not in th06. WinMain calls it until it returns 0.
     int Func44c9c0();
     // Queues sound effect `idx` to start on the next update, unless

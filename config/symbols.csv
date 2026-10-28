@@ -544,7 +544,7 @@ address,size,name,symbol
 0x0044c1b0,105,Func44c1b0,
 0x0044c220,677,Func44c220,
 0x0044c4d0,472,Func44c4d0,
-0x0044c6b0,287,Func44c6b0,
+0x0044c6b0,287,SoundPlayer::StopBgm,?StopBgm@SoundPlayer@@QAEXXZ
 0x0044c7d0,342,Func44c7d0,
 0x0044c930,133,SoundPlayer::QueueSound,?QueueSound@SoundPlayer@@QAEXHH@Z
 0x0044c9c0,2073,SoundPlayer::Func44c9c0,?Func44c9c0@SoundPlayer@@QAEHXZ

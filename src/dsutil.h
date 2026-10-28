@@ -25,3 +25,15 @@ public:
 
     LPDIRECTSOUND8 m_pDS;
 };
+
+class CSound
+{
+public:
+    virtual ~CSound();
+};
+
+class CStreamingSound : public CSound
+{
+public:
+    ~CStreamingSound();
+};
