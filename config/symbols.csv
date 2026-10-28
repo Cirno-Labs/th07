@@ -670,7 +670,7 @@ address,size,name,symbol
 0x0045e850,43,File::Tell,?Tell@File@@UAEKXZ
 0x0045e880,39,File::GetSize,?GetSize@File@@UAEKXZ
 0x0045e8b0,51,File::Seek,?Seek@File@@UAE_NJK@Z
-0x0045e8f0,210,Func45e8f0,
+0x0045e8f0,210,File::ReadAll,?ReadAll@File@@UAEPAXK@Z
 0x0045e9d0,253,Func45e9d0,?Func45e9d0@@YIXPAD0@Z
 0x0045ead0,1065,Func45ead0,?Func45ead0@@YIPAXPAEHPAH@Z
 0x0045ef00,868,Func45ef00,
@@ -1717,7 +1717,8 @@ address,size,name,symbol
 0x0048d26c,4,CoInitialize,__imp__CoInitialize@4
 0x004903f8,,IID_IDirectSoundNotify,_IID_IDirectSoundNotify
 0x004904e8,,GUID_NULL,_GUID_NULL
-0x00495248,32,File::`vftable',??_7File@@6B@
+0x00495120,,g_SeekOrigins,?g_SeekOrigins@@3QBKB
+0x00495248,36,File::`vftable',??_7File@@6B@
 0x0049526c,32,Unknown45e500::`vftable',??_7Unknown45e500@@6B@
 0x0049528c,4,CStreamingSound::`vftable',??_7CStreamingSound@@6B@
 0x00495290,4,CSound::`vftable',??_7CSound@@6B@

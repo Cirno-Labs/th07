@@ -41,12 +41,18 @@ public:
     virtual DWORD Tell();
     virtual DWORD GetSize();
     virtual bool Seek(LONG offset, DWORD origin);
+    // Reads the whole file, if it is at most `maxSize` bytes, into a
+    // GlobalAlloc'd buffer, and seeks back to where it was.
+    virtual void *ReadAll(DWORD maxSize);
 
     HANDLE handle;
     // GENERIC_READ or GENERIC_WRITE.
     DWORD access;
 };
 ASSERT_SIZE(File, 0xc);
+
+// FILE_BEGIN, FILE_CURRENT and FILE_END, in .rdata. Only the first is used.
+extern const DWORD g_SeekOrigins[3];
 
 // Writes `path` to `dst` (MAX_PATH bytes) as a full path: in the game's
 // directory unless it has a drive. Not in th06.
