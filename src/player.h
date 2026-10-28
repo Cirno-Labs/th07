@@ -108,6 +108,9 @@ int UpdateLaserBullet(Player *player, PlayerBullet *bullet);
 // with the bullet's size. Unless Player::unk_2408 is 2 (returning 1),
 // the laser then runs from the player to the top. Returns 0 otherwise.
 int UpdateTrailLaserBullet(Player *player, PlayerBullet *bullet);
+// Draws a UpdateTrailLaserBullet laser's sprite at each set point of its trail,
+// fading towards the tail. Returns 0.
+int DrawTrailLaserBullet(Player *player, PlayerBullet *bullet);
 
 // One of the 0x70 entries at Player+0x9dc, probably th06's bomb
 // hitboxes (bombHitPos, bombHitSize, ...) as one struct.

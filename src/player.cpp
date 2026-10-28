@@ -362,3 +362,26 @@ int UpdateTrailLaserBullet(Player *player, PlayerBullet *bullet)
     bullet->pos.y = bullet->pos.y / 2.0f - 32.0f;
     return 0;
 }
+
+int DrawTrailLaserBullet(Player *player, PlayerBullet *bullet)
+{
+    int alpha = bullet->sprite.alpha;
+    int i;
+
+    for (i = 0; i < bullet->unk_352; i++)
+    {
+        if (bullet->unk_258[i].x == -999.0f)
+        {
+            break;
+        }
+        bullet->sprite.pos.x = bullet->unk_258[i].x;
+        bullet->sprite.pos.y = bullet->unk_258[i].y;
+        bullet->sprite.pos.z = bullet->unk_258[i].z;
+        bullet->sprite.alpha = alpha - alpha * i / bullet->unk_352;
+        bullet->sprite.pos[0] += g_Unknown626270.arena[0];
+        bullet->sprite.pos[1] += g_Unknown626270.arena[1];
+        g_SpriteEngine->Draw(&bullet->sprite);
+    }
+    bullet->sprite.alpha = alpha;
+    return 0;
+}

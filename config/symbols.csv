@@ -441,7 +441,7 @@ address,size,name,symbol
 0x0043c6b0,73,UpdateAcceleratingBullet,?UpdateAcceleratingBullet@@YIHPAVPlayer@@PAUPlayerBullet@@@Z
 0x0043c700,566,UpdateLaserBullet,?UpdateLaserBullet@@YIHPAVPlayer@@PAUPlayerBullet@@@Z
 0x0043c940,868,UpdateTrailLaserBullet,?UpdateTrailLaserBullet@@YIHPAVPlayer@@PAUPlayerBullet@@@Z
-0x0043ccb0,299,Func43ccb0,
+0x0043ccb0,299,DrawTrailLaserBullet,?DrawTrailLaserBullet@@YIHPAVPlayer@@PAUPlayerBullet@@@Z
 0x0043cde0,725,Func43cde0,
 0x0043d0e0,120,Func43d0e0,
 0x0043d160,386,Func43d160,
