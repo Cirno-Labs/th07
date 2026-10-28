@@ -368,7 +368,7 @@ address,size,name,symbol
 0x00436450,351,MidiPlayer::MidiPlayer,??0MidiPlayer@@QAE@XZ
 0x004365b0,147,Func4365b0,
 0x00436650,112,Func436650,
-0x004366c0,60,Func4366c0,
+0x004366c0,60,MidiPlayer::UnloadFile,?UnloadFile@MidiPlayer@@QAEXH@Z
 0x00436700,131,Func436700,
 0x00436790,547,Func436790,
 0x004369c0,58,Func4369c0,
@@ -1107,7 +1107,7 @@ address,size,name,symbol
 0x0047d23b,50,__onexit,
 0x0047d26d,6,Func47d26d,
 0x0047d273,18,_atexit,
-0x0047d285,104,_free,
+0x0047d285,104,_free,_free
 0x0047d2d8,9,Func47d2d8,
 0x0047d2f6,111,__heap_alloc,
 0x0047d368,9,Func47d368,

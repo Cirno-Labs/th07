@@ -171,3 +171,9 @@ MidiPlayer::MidiPlayer()
     this->playingSlot = -1;
     this->nextHeader = 0;
 }
+
+void MidiPlayer::UnloadFile(int slot)
+{
+    MemFree(this->fileData[slot]);
+    this->fileData[slot] = NULL;
+}
