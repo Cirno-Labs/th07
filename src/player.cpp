@@ -1567,7 +1567,7 @@ int UpdateDyingState(Player *player)
                 g_ItemManager.SpawnItem(&player->position, 0, 2);
                 g_ItemManager.SpawnItem(&player->position, 0, 2);
                 g_Unknown49fbf0.powerChanged = 2;
-                bonus = (g_Unknown626270.bonusPoints - g_Unknown626270.stats->unk_88) * g_Player.shotType->unk_1c;
+                bonus = (g_Unknown626270.bonusPoints - g_Unknown626270.stats->unk_88) * g_Player.shotType->deathScoreShare;
                 if (g_Unknown626270.character != 2)
                 {
                     if (bonus > 100000)

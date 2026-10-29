@@ -107,15 +107,15 @@ struct ShotTypeData
     float hitboxSize;
     float grazeSize;
     // The speed of the items drawn to the player.
-    float unk_14;
+    float itemPullSpeed;
     // The width and height of the box the player collects items in.
-    float unk_18;
+    float itemCatchSize;
     // The share of GameManager::unk_961c over stats->unk_88 a death
     // costs.
-    float unk_1c;
+    float deathScoreShare;
     // Above this line the player draws the items in, at full power or
     // from difficulty 4 up.
-    float unk_20;
+    float itemAutoCollectLine;
     // The movement speeds, straight and diagonal, unfocused and focused,
     // as th06's.
     float speed;

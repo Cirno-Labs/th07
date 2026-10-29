@@ -108,8 +108,8 @@ void ItemManager::UpdateItems()
     // Whether any item was collected this frame.
     BOOL any;
     Item *entry = this->items;
-    D3DXVECTOR3 catchSize(g_Player.shotType->unk_18,
-                          g_Player.shotType->unk_18, 16.0f);
+    D3DXVECTOR3 catchSize(g_Player.shotType->itemCatchSize,
+                          g_Player.shotType->itemCatchSize, 16.0f);
 
     any = FALSE;
     this->activeCount = 0;
@@ -142,14 +142,14 @@ void ItemManager::UpdateItems()
             if (entry->state == 1 ||
                 (((int)g_Unknown626270.stats->power >= 128.0 ||
                   g_Unknown626270.difficulty >= 4) &&
-                 g_Player.position.y < g_Player.shotType->unk_20) ||
+                 g_Player.position.y < g_Player.shotType->itemAutoCollectLine) ||
                 g_Player.bombState == 1)
             {
                 if (g_Player.playerState != 1)
                 {
                     angle = g_Player.AngleFrom(&entry->pos);
                     ((Vector2 *)&entry->velocity)
-                        ->SetPolar(angle, g_Player.shotType->unk_14);
+                        ->SetPolar(angle, g_Player.shotType->itemPullSpeed);
                     entry->state = 1;
                     if (g_Player.bombState == 1)
                     {
@@ -250,9 +250,9 @@ void ItemManager::UpdateItems()
                 g_Unknown626270.AddSubRank(1);
                 break;
             case 1:
-                amount = (entry->pos.y < g_Player.shotType->unk_20 ? 1 : 0)
+                amount = (entry->pos.y < g_Player.shotType->itemAutoCollectLine ? 1 : 0)
                              ? 50000
-                             : 50000 - (int)(entry->pos.y - g_Player.shotType->unk_20) * 100;
+                             : 50000 - (int)(entry->pos.y - g_Player.shotType->itemAutoCollectLine) * 100;
                 if (entry->countsFullValue == 1)
                 {
                     amount = 50000;
@@ -270,7 +270,7 @@ void ItemManager::UpdateItems()
                 }
                 amount -= amount % 10;
                 g_AsciiText.AddPopup(&entry->pos, amount,
-                                     entry->pos.y < g_Player.shotType->unk_20 || entry->countsFullValue == 1
+                                     entry->pos.y < g_Player.shotType->itemAutoCollectLine || entry->countsFullValue == 1
                                          ? 0xffffff00
                                          : 0xffffffff);
                 g_Unknown626270.AddScore(amount);
@@ -433,12 +433,12 @@ void ItemManager::UpdateItems()
             case 7:
                 if ((g_Unknown626270.bonusPoints >= g_Unknown626270.bonusPointsCap) != 0)
                 {
-                    amount = (entry->pos.y < g_Player.shotType->unk_20 || entry->countsFullValue ? 1 : 0)
+                    amount = (entry->pos.y < g_Player.shotType->itemAutoCollectLine || entry->countsFullValue ? 1 : 0)
                                  ? 50000
-                                 : 50000 - (int)(entry->pos.y - g_Player.shotType->unk_20) * 100;
+                                 : 50000 - (int)(entry->pos.y - g_Player.shotType->itemAutoCollectLine) * 100;
                     amount -= amount % 10;
                     g_AsciiText.AddPopup(&entry->pos, amount,
-                                         entry->pos.y < g_Player.shotType->unk_20 || entry->countsFullValue
+                                         entry->pos.y < g_Player.shotType->itemAutoCollectLine || entry->countsFullValue
                                              ? 0xffffff00
                                              : 0xffffffff);
                     g_Unknown626270.AddScore(amount);
