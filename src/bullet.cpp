@@ -475,3 +475,31 @@ void TurnAndAccelerate(Bullet *bullet)
     }
     bullet->ex[2].timer.Tick();
 }
+
+void StopTurnAndRestart(Bullet *bullet)
+{
+    float speed;
+
+    if (bullet->ex[3].timer >= bullet->ex[3].duration)
+    {
+        if (bullet->sound >= 0)
+        {
+            g_SoundPlayer.QueueSound(bullet->sound, 0);
+        }
+        bullet->ex[3].unk_28++;
+        if (bullet->ex[3].unk_28 >= bullet->ex[3].unk_24)
+        {
+            bullet->activeFlags &= ~0x40;
+        }
+        bullet->angle += bullet->ex[3].unk_10;
+        bullet->speed = bullet->ex[3].unk_c;
+        speed = bullet->speed;
+        bullet->ex[3].timer.Set(0);
+    }
+    else
+    {
+        speed = bullet->speed - bullet->ex[3].timer.AsFloat() * bullet->speed / bullet->ex[3].duration;
+    }
+    ((Unknown4325c0 *)&bullet->velocity)->SetPolar(bullet->angle, speed * g_App.unk_178);
+    bullet->ex[3].timer.Tick();
+}

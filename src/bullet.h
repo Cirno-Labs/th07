@@ -267,6 +267,11 @@ void AccelerateAlongVelocity(Bullet *bullet);
 // Flag 0x20, ex[2]: for its duration the bullet turns by unk_10 and
 // speeds up by unk_c a frame.
 void TurnAndAccelerate(Bullet *bullet);
+// Flags 0x40, 0x100 and 0x80, ex[3]: the bullet slows to a stop over
+// each `duration` frames, then plays its sound, turns (by unk_10, to
+// unk_10, or to the player plus unk_10) and runs at unk_c again, unk_24
+// times (counted in unk_28).
+void StopTurnAndRestart(Bullet *bullet);
 
 // The colors of effect 0xd by index, as th06's; RegisterChain points
 // g_EffectColors at them.
