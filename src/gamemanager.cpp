@@ -297,3 +297,17 @@ void Unknown626270::AddSubRank(int amount)
         this->unk_9634 = this->maxRank;
     }
 }
+
+void Unknown626270::SubSubRank(int amount)
+{
+    this->subRank -= amount;
+    while (this->subRank < 0)
+    {
+        this->unk_9634--;
+        this->subRank += 100;
+    }
+    if (this->unk_9634 < this->minRank)
+    {
+        this->unk_9634 = this->minRank;
+    }
+}
