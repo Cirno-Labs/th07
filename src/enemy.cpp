@@ -627,7 +627,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
 
         period = 2400;
         period -= (int)g_Unknown626270.stats->lives * 4 * 60;
-        if (mgr->unk_9546f4.HasTicked() && mgr->unk_9546f4.AsFrames() % period == 0)
+        if (mgr->frameTimer.HasTicked() && mgr->frameTimer.AsFrames() % period == 0)
         {
             g_Unknown626270.AddSubRank(100);
         }
@@ -635,15 +635,15 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
     }
     for (i = 0; i < 4; i++)
     {
-        mgr->unk_954700[i] = NULL;
+        mgr->drawListHeads[i] = NULL;
     }
     for (i = 0; i < g_Unknown1347938.file->unk_2; i++)
     {
-        if (mgr->unk_9545f4[i].pos == NULL)
+        if (mgr->timelines[i].pos == NULL)
         {
-            mgr->unk_9545f4[i].pos = g_Unknown1347938.GetTimeline(i);
+            mgr->timelines[i].pos = g_Unknown1347938.GetTimeline(i);
         }
-        mgr->unk_9545f4[i].RunTimeline();
+        mgr->timelines[i].RunTimeline();
     }
     enemy = mgr->enemies;
     mgr->enemyCount = 0;
@@ -827,7 +827,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                                     hurt = 1;
                                 }
                             }
-                            else if (mgr->unk_9545dc)
+                            else if (mgr->spellCardBombed)
                             {
                                 if (hurt > 2)
                                 {
@@ -1058,15 +1058,15 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
         }
         if (!enemy->flags.hideFollowEffects && enemy->flags.active)
         {
-            enemy->nextInDrawList = mgr->unk_954700[enemy->drawListIndex];
-            mgr->unk_954700[enemy->drawListIndex] = enemy;
+            enemy->nextInDrawList = mgr->drawListHeads[enemy->drawListIndex];
+            mgr->drawListHeads[enemy->drawListIndex] = enemy;
         }
     }
-    if (mgr->unk_9546f4.current % 200 == 0 && g_Unknown626270.ChecksumMismatch())
+    if (mgr->frameTimer.current % 200 == 0 && g_Unknown626270.ChecksumMismatch())
     {
         return 4;
     }
-    mgr->unk_9546f4.Tick();
+    mgr->frameTimer.Tick();
     return 1;
 }
 
@@ -1092,7 +1092,7 @@ int EnemyManager::DrawEnemies(EnemyManager *mgr, int from, int to)
 
     for (i = from; i < to; i++)
     {
-        enemy = mgr->unk_954700[i];
+        enemy = mgr->drawListHeads[i];
         while (enemy != NULL)
         {
             for (sprite = enemy->sprites, b = 0; b < 1; b++, sprite++)

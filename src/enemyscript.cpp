@@ -619,7 +619,7 @@ void StartSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
     g_Unknown12fe0cc = g_SpellCardBonuses[g_Unknown12fe0d8];
     g_Unknown12fe0d0 = 0;
     g_Unknown12fe0d4 = g_Unknown12fe0cc / (enemy->timerCallbackTime / 60 + 10);
-    g_Unknown9a9b00.unk_9545e0.Set(0);
+    g_Unknown9a9b00.spellCardBonusTimer.Set(0);
     enemy->rankSpeedLow = -0.5f;
     enemy->rankSpeedHigh = 0.5f;
     enemy->rankCount1Low = 0;
@@ -2082,10 +2082,10 @@ done:
         if (!enemy->flags.keepSpellCard)
         {
             g_Unknown12fe0cc = g_SpellCardBonuses[g_Unknown12fe0d8] -
-                               g_Unknown12fe0d4 * g_Unknown9a9b00.unk_9545e0.AsFloat() / 60.0f;
+                               g_Unknown12fe0d4 * g_Unknown9a9b00.spellCardBonusTimer.AsFloat() / 60.0f;
             g_Unknown12fe0cc -= g_Unknown12fe0cc % 10;
         }
-        g_Unknown9a9b00.unk_9545e0.Tick();
+        g_Unknown9a9b00.spellCardBonusTimer.Tick();
     }
     if (enemy->flags.isBoss && g_Unknown626270.stage >= 7)
     {

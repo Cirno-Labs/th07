@@ -431,14 +431,14 @@ public:
     unsigned char unk_9545cc[0x10];
     // While a spell card runs, a bomb's damage counts (divided by 2.5)
     // only while it is set, as th06's spellCardBombed.
-    int unk_9545dc;
-    Timer unk_9545e0;
+    int spellCardBombed;
+    Timer spellCardBonusTimer;
     int unk_9545ec;
     // Set by script opcode 147.
     int unk_9545f0;
-    EnemyTimeline unk_9545f4[16];
-    Timer unk_9546f4;
-    Enemy *unk_954700[4];
+    EnemyTimeline timelines[16];
+    Timer frameTimer;
+    Enemy *drawListHeads[4];
 };
 ASSERT_SIZE(EnemyManager, 0x954710);
 extern EnemyManager g_Unknown9a9b00;
