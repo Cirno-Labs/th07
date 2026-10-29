@@ -311,3 +311,86 @@ int EffectManager::OnDraw2()
     }
     return 1;
 }
+
+int EffectManager::AddedCallback(EffectManager *mgr)
+{
+    mgr->Reset();
+    g_Unknown1348024 = 0;
+    switch (g_Unknown626270.stage)
+    {
+    case 0:
+    case 1:
+        g_Unknown1348020 = 1;
+        if (g_SpriteEngine->LoadAnm(0x11, "data/eff01.anm", 0x2dc) != 0)
+        {
+            return -1;
+        }
+        break;
+    case 2:
+        g_Unknown1348020 = 1;
+        if (g_SpriteEngine->LoadAnm(0x11, "data/eff02.anm", 0x2dc) != 0)
+        {
+            return -1;
+        }
+        break;
+    case 3:
+        g_Unknown1348020 = 1;
+        if (g_SpriteEngine->LoadAnm(0x11, "data/eff03.anm", 0x2dc) != 0)
+        {
+            return -1;
+        }
+        break;
+    case 4:
+        g_Unknown1348020 = 2;
+        if (g_SpriteEngine->LoadAnm(0x11, "data/eff04.anm", 0x2dc) != 0)
+        {
+            return -1;
+        }
+        if (g_SpriteEngine->LoadAnm(0x12, "data/eff04b.anm", 0x2dd) != 0)
+        {
+            return -1;
+        }
+        break;
+    case 5:
+        g_Unknown1348020 = 2;
+        if (g_SpriteEngine->LoadAnm(0x11, "data/eff05.anm", 0x2dc) != 0)
+        {
+            return -1;
+        }
+        break;
+    case 6:
+        g_Unknown1348020 = 2;
+        if (g_SpriteEngine->LoadAnm(0x11, "data/eff05.anm", 0x2dc) != 0)
+        {
+            return -1;
+        }
+        if (g_SpriteEngine->LoadAnm(0x13, "data/eff06.anm", 0x2de) != 0)
+        {
+            return -1;
+        }
+        break;
+    case 7:
+        g_Unknown1348020 = 1;
+        if (g_SpriteEngine->LoadAnm(0x11, "data/eff02.anm", 0x2dc) != 0)
+        {
+            return -1;
+        }
+        if (g_SpriteEngine->LoadAnm(0x12, "data/eff07.anm", 0x2dd) != 0)
+        {
+            return -1;
+        }
+        break;
+    case 8:
+        g_Unknown1348020 = 2;
+        if (g_SpriteEngine->LoadAnm(0x11, "data/eff07.anm", 0x2dc) != 0)
+        {
+            return -1;
+        }
+        if (g_SpriteEngine->LoadAnm(0x13, "data/eff08.anm", 0x2de) != 0)
+        {
+            return -1;
+        }
+        break;
+    }
+    return 0;
+}

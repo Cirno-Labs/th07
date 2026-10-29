@@ -149,7 +149,7 @@ address,size,name,symbol
 0x0041c790,625,EffectManager::OnUpdate,?OnUpdate@EffectManager@@SIHPAV1@@Z
 0x0041ca10,354,EffectManager::OnDraw,?OnDraw@EffectManager@@SIHPAV1@@Z
 0x0041cb80,596,EffectManager::OnDraw2,?OnDraw2@EffectManager@@QAEHXZ
-0x0041cde0,581,Func41cde0,
+0x0041cde0,581,EffectManager::AddedCallback,?AddedCallback@EffectManager@@SIHPAV1@@Z
 0x0041d050,65,Func41d050,
 0x0041d0a0,165,Func41d0a0,
 0x0041d150,35,Func41d150,?Func41d150@@YIXXZ
@@ -1810,6 +1810,8 @@ address,size,name,symbol
 0x01347938,,g_Unknown1347938,?g_Unknown1347938@@3VUnknown1347938@@A
 0x01347b00,,g_Unknown1347b00,?g_Unknown1347b00@@3VUnknown1347b00@@A
 0x01348010,,g_Unknown1348010,?g_Unknown1348010@@3EA
+0x01348020,,g_Unknown1348020,?g_Unknown1348020@@3HA
+0x01348024,,g_Unknown1348024,?g_Unknown1348024@@3HA
 0x0134cd28,,g_Unknown134cd28,?g_Unknown134cd28@@3UD3DXVECTOR3@@A
 0x0134cdf4,,g_AsciiDrawChain,?g_AsciiDrawChain@@3UChainElem@@A
 0x0134ce18,,g_AsciiText,?g_AsciiText@@3VAsciiText@@A

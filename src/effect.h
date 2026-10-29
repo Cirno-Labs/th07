@@ -94,6 +94,10 @@ public:
     // returns at the first effect. Type 20 is drawn with its color
     // scaled by colorScale. Returns 1.
     int OnDraw2();
+    // Resets and loads the stage's effect sprites: data/eff01.anm to
+    // eff08.anm, from one to two files a stage. Returns 0, or -1 on
+    // failure.
+    static int AddedCallback(EffectManager *mgr);
 
     // Where SpawnEffect looks for a free effect next.
     int next;
@@ -114,3 +118,8 @@ public:
 };
 ASSERT_SIZE(EffectManager, 0x496a8);
 extern EffectManager g_EffectManager;
+
+// Set by EffectManager::AddedCallback to 1 or 2, by stage. Not in th06.
+extern int g_Unknown1348020;
+// Cleared by EffectManager::AddedCallback.
+extern int g_Unknown1348024;
