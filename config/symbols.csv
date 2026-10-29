@@ -564,7 +564,7 @@ address,size,name,symbol
 0x0044e780,347,Func44e780,
 0x0044e8e0,308,SpriteEngine::SetSprite,?SetSprite@SpriteEngine@@QAEHPAVSprite@@H@Z
 0x0044ea20,188,SpriteEngine::SetScript,?SetScript@SpriteEngine@@QAEXPAVSprite@@PAX@Z
-0x0044eae0,992,Func44eae0,
+0x0044eae0,992,SpriteEngine::SetRenderStateForSprite,?SetRenderStateForSprite@SpriteEngine@@QAEXPAVSprite@@@Z
 0x0044eec0,237,Func44eec0,
 0x0044efb0,1481,Func44efb0,
 0x0044f580,60,SpriteEngine::Func44f580,?Func44f580@SpriteEngine@@QAEXXZ
@@ -598,7 +598,7 @@ address,size,name,symbol
 0x004550c0,70,SpriteEngine::StepSprites,?StepSprites@SpriteEngine@@QAEXPAVSprite@@H@Z
 0x00455110,91,SpriteEngine::StartSpriteSeries,?StartSpriteSeries@SpriteEngine@@QAEXPAVSprite@@HH@Z
 0x00455170,352,SpriteEngine::FillSpriteStripVertices,?FillSpriteStripVertices@SpriteEngine@@QAEHPAVSprite@@PAUVertexTex1DiffuseXyzrwh@@H@Z
-0x004552d0,298,Func4552d0,
+0x004552d0,298,SpriteEngine::DrawVertexStrip,?DrawVertexStrip@SpriteEngine@@QAEHPAVSprite@@PAUVertexTex1DiffuseXyzrwh@@H@Z
 0x004553fa,59,App::ResetClockDriftCounters,?ResetClockDriftCounters@App@@QAEXXZ
 0x00455435,72,MainMenu::SetState,?SetState@MainMenu@@QAEXH@Z
 0x0045547d,89,MainMenu::MainMenu,??0MainMenu@@QAE@XZ

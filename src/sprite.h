@@ -218,6 +218,12 @@ public:
     // even ones along its top, odd ones along its bottom. Returns 0, or
     // -1 for fewer than 3. Not in th06.
     int FillSpriteStripVertices(Sprite *vm, VertexTex1DiffuseXyzrwh *vertices, int count);
+    // Draws the `count` vertices from `vertices` as a triangle strip with
+    // `vm`'s texture and render states, after the pending batch. Returns
+    // 0, or -1 when `vm` is hidden or transparent. Not in th06.
+    int DrawVertexStrip(Sprite *vm, VertexTex1DiffuseXyzrwh *vertices, int count);
+    // Sets the render states `vm` wants on the device, as in th06.
+    void SetRenderStateForSprite(Sprite *vm);
     // Releases ANM slot `slot`.
     void ReleaseAnm(int slot);
     // Releases surface `surface`.
@@ -346,7 +352,10 @@ public:
     // The sprite data Draw last used, NULL when unknown.
     void *currentSpriteData;
     IDirect3DVertexBuffer8 *vertexBuffer;
-    unsigned char unk_2e4e0[0x15005c];
+    unsigned char unk_2e4e0[0x50];
+    // The number of quads batched to draw with Func44f5c0.
+    int batchQuadCount;
+    unsigned char unk_2e534[0x150008];
     // A copy of the back buffer into a texture to do after the frame is
     // drawn: CopyBackBufferToTexture's arguments, the texture -1 when
     // there is none.
