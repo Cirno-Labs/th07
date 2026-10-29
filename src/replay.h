@@ -6,13 +6,6 @@
 
 #include "common.h"
 
-// A stage of a replay. Only the fields known so far.
-struct ReplayStage
-{
-    // The score the stage started with, divided by 10.
-    int score;
-};
-
 // One frame of a replay.
 struct ReplayFrame
 {
@@ -22,29 +15,74 @@ struct ReplayFrame
     WORD events;
 };
 
+// A stage of a replay: the game's state at its start, then its frames.
+// Only the fields known so far.
+struct ReplayStage
+{
+    // The score the stage started with, divided by 10.
+    int score;
+    // Unknown626270Stats::pointItemsTotal.
+    int pointItemsTotal;
+    // Unknown626270's unk_961c, unk_9618 and unk_9620, less
+    // Unknown626270Stats::unk_88.
+    int unk_08;
+    int unk_0c;
+    int unk_10;
+    // Unknown626270Stats::grazeTotal.
+    int grazeTotal;
+    // Unknown626270Stats::unk_2c and unk_30.
+    int unk_18;
+    int unk_1c;
+    // Unknown626270::unk_95e4.
+    WORD unk_20;
+    BYTE power;
+    BYTE lives;
+    BYTE bombs;
+    // Unknown626270::unk_9634 and unk_93d4.
+    BYTE unk_25;
+    BYTE unk_26;
+    // Unknown626270Stats::spellCardsCaptured.
+    BYTE spellCardsCaptured;
+    BYTE unk_28[0x4];
+    ReplayFrame frames[1];
+};
+
 // The start of a replay file. Only the fields known so far.
 struct ReplayHeader
 {
     // "T7RP".
     char magic[4];
-    // 0x100 in its low 12 bits.
+    // 0x1100, 0x100 in its low 12 bits.
     WORD version;
     BYTE unk_06[0x16];
     // Indexed by stage. In the file, the offsets of the stages' data.
     ReplayStage *stages[7];
-    BYTE unk_38[0x1e];
+    // The same for the frame rates kept every 30 frames.
+    BYTE *extras[7];
+    BYTE unk_54;
+    // 0x62.
+    BYTE unk_55;
     // character * 2 + shot type.
     BYTE shotType;
     BYTE difficulty;
     // The date it was saved, "%m/%d".
     char date[6];
     // The player's name.
-    char name[0xe];
+    char name[0xc];
+    // 0x100.
+    WORD unk_6a;
     DWORD score;
-    BYTE unk_70[0x5c];
+    // The config the game was played with, an Unknown626270Unk4.
+    BYTE config[0x38];
+    BYTE unk_a8[0x24];
     // How far the game ran below full speed, in percent.
     float slowdown;
-    BYTE unk_d0[0x18];
+    BYTE unk_d0[0x8];
+    // App::exeSize and exeChecksum, and "0100b".
+    DWORD exeSize;
+    DWORD exeChecksum;
+    char exeVersion[6];
+    BYTE unk_e6[0x2];
 };
 ASSERT_SIZE(ReplayHeader, 0xe8);
 
@@ -83,10 +121,21 @@ public:
     // back into App::unk_188 and unk_2a8, then counts the frame.
     // Returns 1.
     static int PlayOnUpdate(ReplayManager *replay);
+    // The update element's added callback when recording: starts the
+    // replay data the first time ("T7RP", the shot type, difficulty,
+    // config and executable), otherwise keeps the score in the stage
+    // before; then (re)allocates the stage's frames and frame rates and
+    // keeps the game's state in the stage. Returns 0.
+    static int RecordAddedCallback(ReplayManager *replay);
 
     // The current frame.
     int frame;
-    unsigned char unk_4[0x80];
+    // The replay data.
+    ReplayHeader *data;
+    unsigned char unk_8[0x38];
+    void *unk_40;
+    unsigned char unk_44[0x3e];
+    WORD unk_82;
     // The last frame recorded or played; [stage - 1] is where that
     // stage's frames end (stages past 7 share the last).
     ReplayFrame *cursor;

@@ -483,7 +483,7 @@ address,size,name,symbol
 0x00442cd0,378,ReplayManager::RecordOnUpdate,?RecordOnUpdate@ReplayManager@@SIHPAV1@@Z
 0x00442e50,142,ReplayManager::PlayOnUpdate2,?PlayOnUpdate2@ReplayManager@@SIHPAV1@@Z
 0x00442ee0,341,ReplayManager::PlayOnUpdate,?PlayOnUpdate@ReplayManager@@SIHPAV1@@Z
-0x00443040,870,Func443040,
+0x00443040,870,ReplayManager::RecordAddedCallback,?RecordAddedCallback@ReplayManager@@SIHPAV1@@Z
 0x004433b0,416,ValidateReplay,?ValidateReplay@@YIPAUReplayHeader@@PAXH@Z
 0x00443550,1111,Func443550,
 0x004439b0,232,Func4439b0,

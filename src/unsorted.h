@@ -862,7 +862,8 @@ struct Unknown626270Stats
     BYTE continuesUsed;
     unsigned char unk_21[0x7];
     int pointItemsTotal;
-    unsigned char unk_2c[0x8];
+    int unk_2c;
+    int unk_30;
     // Set to 6543 plus a random number under 100000 by
     // Unknown626270::RerollLifeChecksumKeys.
     DWORD unk_34[5];
@@ -1018,7 +1019,9 @@ public:
     DWORD unk_93e0;
     // The replay to play.
     char replayFile[0x200];
-    unsigned char unk_95e4[0x4];
+    // A replay stage keeps it.
+    WORD unk_95e4;
+    unsigned char unk_95e6[0x2];
     // The screen shake ends at once while this is 1 or less.
     int unk_95e8;
     int stage;
@@ -1027,7 +1030,8 @@ public:
     // byte replay file name, the stage) are th06's GameManager's, so
     // this is probably th07's GameManager.
     float arena[4];
-    unsigned char unk_9604[0x18];
+    unsigned char unk_9604[0x14];
+    int unk_9618;
     // Added to (up to unk_9618) by Func42f736.
     int unk_961c;
     // UpdateInvulnerability sets it while Player::playerState is 4.
@@ -1040,6 +1044,8 @@ public:
     // Set by the title menu from the play time: 3 under 7 hours, 4
     // under 14, else 5.
     int unk_9630;
+    // A replay stage keeps it.
+    BYTE unk_9634;
 };
 extern Unknown626270 g_Unknown626270;
 

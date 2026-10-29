@@ -1,5 +1,7 @@
 // The file with ReplayManager, around 0x442c60.
 
+#include <string.h>
+
 #include "replay.h"
 #include "unsorted.h"
 
@@ -118,4 +120,79 @@ int ReplayManager::PlayOnUpdate(ReplayManager *replay)
     }
     replay->frame++;
     return 1;
+}
+
+int ReplayManager::RecordAddedCallback(ReplayManager *replay)
+{
+    ReplayStage *earlier;
+    BYTE *extras;
+    int idx;
+    ReplayStage *cur;
+
+    replay->frame = 0;
+    replay->unk_40 = NULL;
+    if (replay->data == NULL)
+    {
+        replay->data = new ReplayHeader;
+        *(DWORD *)replay->data->magic = *(DWORD *)"T7RP";
+        replay->data->shotType = g_Unknown626270.unk_93d7;
+        replay->data->version = 0x1100;
+        replay->data->unk_6a = 0x100;
+        replay->data->unk_55 = 0x62;
+        strcpy(replay->data->exeVersion, "0100b");
+        replay->data->exeSize = g_App.exeSize;
+        replay->data->exeChecksum = g_App.exeChecksum;
+        replay->data->difficulty = g_Unknown626270.difficulty;
+        *(DWORD *)replay->data->name = *(DWORD *)"NO NAME";
+        *(Unknown626270Unk4 *)replay->data->config = *g_Unknown626270.unk_4;
+        for (idx = 0; idx < 7; idx++)
+        {
+            replay->data->stages[idx] = NULL;
+            replay->data->extras[idx] = NULL;
+        }
+    }
+    else if (g_Unknown626270.stage - 2 >= 0)
+    {
+        earlier = replay->data->stages[g_Unknown626270.stage - 2];
+        if (earlier != NULL)
+        {
+            earlier->score = g_Unknown626270.stats->score;
+        }
+    }
+    idx = g_Unknown626270.stage - 1;
+    if (idx >= 7)
+    {
+        idx = 6;
+    }
+    if (replay->data->stages[idx] != NULL)
+    {
+        MemFree(replay->data->stages[idx]);
+    }
+    if (replay->data->extras[idx] != NULL)
+    {
+        MemFree(replay->data->extras[idx]);
+    }
+    replay->data->stages[idx] = (ReplayStage *)MemAlloc(0x70800);
+    replay->data->extras[idx] = (BYTE *)MemAlloc(0x70800);
+    cur = replay->data->stages[idx];
+    extras = replay->data->extras[idx];
+    cur->grazeTotal = g_Unknown626270.stats->grazeTotal;
+    cur->bombs = g_Unknown626270.stats->bombs;
+    cur->lives = g_Unknown626270.stats->lives;
+    cur->power = g_Unknown626270.stats->power;
+    cur->unk_25 = g_Unknown626270.unk_9634;
+    cur->pointItemsTotal = g_Unknown626270.stats->pointItemsTotal;
+    cur->unk_20 = g_Unknown626270.unk_95e4;
+    cur->unk_26 = g_Unknown626270.unk_93d4;
+    cur->unk_08 = g_Unknown626270.unk_961c - g_Unknown626270.stats->unk_88;
+    cur->unk_0c = g_Unknown626270.unk_9618 - g_Unknown626270.stats->unk_88;
+    cur->unk_10 = g_Unknown626270.unk_9620 - g_Unknown626270.stats->unk_88;
+    cur->spellCardsCaptured = g_Unknown626270.stats->spellCardsCaptured;
+    cur->unk_18 = g_Unknown626270.stats->unk_2c;
+    cur->unk_1c = g_Unknown626270.stats->unk_30;
+    replay->cursor = cur->frames;
+    replay->extraCursor = extras;
+    replay->cursor->input = 0;
+    replay->unk_82 = 0;
+    return 0;
 }
