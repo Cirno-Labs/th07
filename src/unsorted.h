@@ -963,6 +963,10 @@ public:
     void AddLives(int lives);
     // Adds `bombs` to stats->bombs, checked like AddPower.
     void AddBombs(int bombs);
+    // Gives a life, or a bomb when the lives are full (8). Either one
+    // plays sound 0x1c, adds 200 to the subrank and marks the Gui's
+    // count changed. Called for the 1up items.
+    void AddLifeOrBomb();
     // Sets stats->bombs to `bombs` and updates the fields that follow
     // from it.
     void SetBombs(int bombs);

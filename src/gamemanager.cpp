@@ -83,3 +83,21 @@ int Unknown626270::ComputeChecksum()
     sum += ChecksumBytes((BYTE *)&g_App.controllerMapping, 0x38);
     return sum;
 }
+
+void Unknown626270::AddLifeOrBomb()
+{
+    if ((int)this->stats->lives < 8)
+    {
+        this->AddLives(1);
+        g_SoundPlayer.QueueSound(0x1c, 0);
+        this->AddSubRank(200);
+        g_Unknown49fbf0.livesChanged = 2;
+    }
+    else if ((int)this->stats->bombs < 8)
+    {
+        this->AddBombs(1);
+        g_SoundPlayer.QueueSound(0x1c, 0);
+        this->AddSubRank(200);
+        g_Unknown49fbf0.bombsChanged = 2;
+    }
+}
