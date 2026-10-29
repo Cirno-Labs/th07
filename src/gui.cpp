@@ -483,3 +483,9 @@ int Unknown49fbf0::RegisterChain()
     g_Chain.AddToDrawChain(&g_Unknown49fbf0DrawChain, 12);
     return 0;
 }
+
+void Unknown49fbf0::RemoveChain()
+{
+    g_Chain.Remove(&g_Unknown49fbf0CalcChain);
+    g_Chain.Remove(&g_Unknown49fbf0DrawChain);
+}

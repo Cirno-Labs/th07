@@ -274,7 +274,7 @@ int Unknown626270::DeletedCallback(Unknown626270 *mgr)
     Func423050();
     g_Unknown1347938.Func40e4f0();
     Func41d150();
-    Func42d53d();
+    Unknown49fbf0::RemoveChain();
     ReplayManager::EndStage();
     if (!g_Unknown626270.unk_93d8Bit3)
     {

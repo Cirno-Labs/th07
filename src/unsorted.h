@@ -309,12 +309,11 @@ void RemoveGameManagerChain();
 // Remove the chains of objects not named yet, in the order th06's
 // GameManager::DeletedCallback removes Stage, BulletManager, Player,
 // EnemyManager, EffectManager and Gui (Player::RemoveChain is the third
-// here).
+// here; Gui's is Unknown49fbf0::RemoveChain).
 void Func4075d0();
 void Func427760();
 void Func423050();
 void Func41d150();
-void Func42d53d();
 // th06's Ending::RegisterChain.
 int Func41e820();
 
@@ -1326,6 +1325,8 @@ public:
     // allocates impl; then adds the update element (priority 13) and the
     // draw element (priority 12). Returns 0, or -1 if adding fails.
     static int RegisterChain();
+    // Removes the update element and the draw element.
+    static void RemoveChain();
     // Sets bombName's pendingInterrupt to 1 and bombNameBar's to 2, as
     // the bomb ends. th06 interrupted bombName only.
     void EndBombName();
