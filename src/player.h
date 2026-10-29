@@ -277,6 +277,12 @@ public:
     // effects, sets playerState to 2 and stateTimer to 0, and plays
     // sound 4.
     void Die();
+    // Whether a `size` box at `pos` hits the player, as th06's: 2 if it
+    // meets one of unk_17dc's areas (CheckAreaHit, unk_2404 6 otherwise),
+    // else 1 if it meets the hitbox, else 0. A hit marks bit 2 of
+    // g_ReplayManager->unk_d6; it calls Func441bd0(0) while playerState
+    // is 4 and kills the player while it is 0.
+    int CheckHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size);
     // Removes the player's update and draw elements from the chain.
     // Takes the first free one of unk_17dc's first 0x5f entries, or the
     // last entry, and sets it to a `width` by `height` area at `pos`
@@ -288,6 +294,8 @@ public:
     // draw 6 and 8), keeping `unk` in unk_2409. Returns 0, or -1 if
     // adding fails.
     static int RegisterChain(int unk);
+    // CheckHit calls it with 0 on a hit while playerState is 4.
+    void Func441bd0(int unk);
     // The update callback: unless the game is frozen, runs the steps
     // (UpdateHitboxAreas on), steps the sprites (the options' while unk_240a
     // is set), the bullets (UpdateBullets) and the firing (UpdateFiring).
@@ -304,7 +312,11 @@ public:
     Sprite sprite;
     Sprite optionSprites[3];
     D3DXVECTOR3 position;
-    unsigned char unk_93c[0x78];
+    unsigned char unk_93c[0xc];
+    // The corners of the hitbox, as th06's.
+    D3DXVECTOR3 hitboxMin;
+    D3DXVECTOR3 hitboxMax;
+    unsigned char unk_960[0x54];
     // Where the two options are.
     D3DXVECTOR3 optionPos[2];
     unsigned char unk_9cc[0x10];

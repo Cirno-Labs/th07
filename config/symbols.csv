@@ -452,7 +452,7 @@ address,size,name,symbol
 0x0043d990,72,Player::StartFiring,?StartFiring@Player@@SIXPAV1@@Z
 0x0043d9e0,1724,Func43d9e0,
 0x0043e0a0,442,Player::CheckAreaHit,?CheckAreaHit@Player@@QAEHPAUD3DXVECTOR3@@0@Z
-0x0043e260,324,Func43e260,
+0x0043e260,324,Player::CheckHit,?CheckHit@Player@@QAEHPAUD3DXVECTOR3@@0@Z
 0x0043e3b0,293,Func43e3b0,
 0x0043e4e0,456,Func43e4e0,
 0x0043e6b0,1247,Func43e6b0,
@@ -468,7 +468,7 @@ address,size,name,symbol
 0x00441800,163,Player::AddHitboxArea,?AddHitboxArea@Player@@QAEPAUPlayerArea@@PAUD3DXVECTOR3@@MMH@Z
 0x004418b0,162,Player::AddHitboxAreaCircle,?AddHitboxAreaCircle@Player@@QAEPAUPlayerArea@@PAUD3DXVECTOR3@@MMHH@Z
 0x00441960,612,Func441960,
-0x00441bd0,680,Func441bd0,
+0x00441bd0,680,Player::Func441bd0,?Func441bd0@Player@@QAEXH@Z
 0x00441e80,290,ResetHomingAndText,?ResetHomingAndText@@YIXPAVPlayer@@@Z
 0x00441fb0,247,Player::OnUpdate,?OnUpdate@Player@@SIHPAV1@@Z
 0x004420b0,665,Player::OnDraw,?OnDraw@Player@@SIHPAV1@@Z
@@ -1759,6 +1759,7 @@ address,size,name,symbol
 0x0049fe30,,g_LzssTree,?g_LzssTree@@3PAULzssNode@@A
 0x004b7e40,,g_LzssWindow,?g_LzssWindow@@3PAEA
 0x004b9e44,,g_SpriteEngine,?g_SpriteEngine@@3PAVSpriteEngine@@A
+0x004b9e48,,g_ReplayManager,?g_ReplayManager@@3PAVReplayManager@@A
 0x004b9e4c,,g_Buttons,?g_Buttons@@3GA
 0x004b9e54,,g_PrevButtons,?g_PrevButtons@@3GA
 0x004b9e5c,,g_ButtonRepeat,?g_ButtonRepeat@@3GA

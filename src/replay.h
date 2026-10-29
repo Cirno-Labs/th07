@@ -44,3 +44,14 @@ ASSERT_SIZE(ReplayHeader, 0xe8);
 ReplayHeader *ValidateReplay(void *data, int size);
 // Saves the replay being recorded to `path`, under `name`.
 void SaveReplay(char *path, char *name);
+
+// Records and plays back replays, behind the pointer at 0x4b9e48. Only
+// the fields known so far.
+class ReplayManager
+{
+public:
+    unsigned char unk_0[0xd6];
+    // Bits set during a frame: 2 when the player is hit.
+    WORD unk_d6;
+};
+extern ReplayManager *g_ReplayManager;

@@ -6,6 +6,7 @@
 #include "ascii.h"
 #include "effect.h"
 #include "player.h"
+#include "replay.h"
 #include "unsorted.h"
 
 void Unknown626270::RerollLifeChecksumKeys()
@@ -727,6 +728,40 @@ int Player::CheckAreaHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size)
         }
     }
     return 0;
+}
+
+int Player::CheckHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size)
+{
+    D3DXVECTOR3 start;
+    D3DXVECTOR3 end;
+
+    this->unk_2404 = 6;
+    if (this->CheckAreaHit(pos, size))
+    {
+        return 2;
+    }
+    start.x = pos->x - size->x / 2.0f;
+    start.y = pos->y - size->y / 2.0f;
+    end.x = size->x / 2.0f + pos->x;
+    end.y = size->y / 2.0f + pos->y;
+    if (this->hitboxMin.x > end.x || this->hitboxMin.y > end.y || this->hitboxMax.x < start.x ||
+        this->hitboxMax.y < start.y)
+    {
+        return 0;
+    }
+    g_ReplayManager->unk_d6 |= 2;
+    if (this->playerState == 4)
+    {
+        g_Player.Func441bd0(0);
+        return 1;
+    }
+    if (this->playerState != 0)
+    {
+        return 1;
+    }
+    g_Unknown626270.RerollLifeChecksumKeys();
+    this->Die();
+    return 1;
 }
 
 void Player::Die()
