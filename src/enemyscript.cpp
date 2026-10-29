@@ -1,9 +1,17 @@
 // The file with Unknown1347938, th06's EnemyScripts, from 0x40e420, as
 // th06's enemyscript.cpp.
 
+#include <math.h>
+
 #include "enemy.h"
 #include "player.h"
 #include "unsorted.h"
+
+// Argument `n` of `instr`, or the value of the variable it names.
+#define INT_ARG(n) \
+    ((instr->paramMask & (1 << (n))) ? GetIntOperand(enemy, instr->args[n].i) : instr->args[n].i)
+#define FLOAT_ARG(n) \
+    ((instr->paramMask & (1 << (n))) ? GetFloatOperand(enemy, instr->args[n].f) : instr->args[n].f)
 
 int Unknown1347938::Load(char *path)
 {
@@ -140,11 +148,11 @@ int GetIntOperand(Enemy *enemy, int id)
     case 10023:
         return g_Player.position.z;
     case 10050:
-        return enemy->unk_2b8c.x;
+        return enemy->moveStart.x;
     case 10051:
-        return enemy->unk_2b8c.y;
+        return enemy->moveStart.y;
     case 10052:
-        return enemy->unk_2b8c.z;
+        return enemy->moveStart.z;
     case 10063:
         return enemy->posDelta.x;
     case 10064:
@@ -348,17 +356,17 @@ float GetFloatOperand(Enemy *enemy, float id)
     case 10073:
         return enemy->ctx.vars.floats2[1];
     case 10050:
-        return enemy->unk_2b8c.x;
+        return enemy->moveStart.x;
     case 10051:
-        return enemy->unk_2b8c.y;
+        return enemy->moveStart.y;
     case 10052:
-        return enemy->unk_2b8c.z;
+        return enemy->moveStart.z;
     case 10057:
-        return enemy->unk_2b80.x;
+        return enemy->moveDelta.x;
     case 10058:
-        return enemy->unk_2b80.y;
+        return enemy->moveDelta.y;
     case 10059:
-        return enemy->unk_2b80.z;
+        return enemy->moveDelta.z;
     case 10063:
         return enemy->posDelta.x;
     case 10064:
@@ -462,17 +470,17 @@ float *ResolveFloatOperand(Enemy *enemy, float *operand, WORD mask, int bit)
     case 10044:
         return &g_Unknown1347938.globalFloats[3];
     case 10050:
-        return &enemy->unk_2b8c.x;
+        return &enemy->moveStart.x;
     case 10051:
-        return &enemy->unk_2b8c.y;
+        return &enemy->moveStart.y;
     case 10052:
-        return &enemy->unk_2b8c.z;
+        return &enemy->moveStart.z;
     case 10057:
-        return &enemy->unk_2b80.x;
+        return &enemy->moveDelta.x;
     case 10058:
-        return &enemy->unk_2b80.y;
+        return &enemy->moveDelta.y;
     case 10059:
-        return &enemy->unk_2b80.z;
+        return &enemy->moveDelta.z;
     case 10045:
         return &enemy->angle;
     case 10046:
@@ -489,4 +497,32 @@ float *ResolveFloatOperand(Enemy *enemy, float *operand, WORD mask, int bit)
         return &enemy->unk_2b60;
     }
     return operand;
+}
+
+void ScriptMoveAngle(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    float angle;
+    int duration;
+
+    angle = AddNormalizeAngle(FLOAT_ARG(2), 0.0f);
+    enemy->moveDelta.x = cosf(angle) * FLOAT_ARG(3) * INT_ARG(0);
+    enemy->moveDelta.y = sinf(angle) * FLOAT_ARG(3) * INT_ARG(0);
+    enemy->moveDelta.z = 0.0f;
+    enemy->moveStart = enemy->pos;
+    if (instr->paramMask & 1)
+    {
+        duration = GetIntOperand(enemy, instr->args[0].i);
+    }
+    else
+    {
+        duration = instr->args[0].i;
+    }
+    enemy->moveDuration = duration;
+    enemy->moveTimer.Set(duration);
+    enemy->flags.moveEasing = INT_ARG(1);
+    enemy->flags.moveMode = 2;
+    if (enemy->flags.mirrored)
+    {
+        enemy->moveDelta.x = -enemy->moveDelta.x;
+    }
 }

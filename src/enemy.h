@@ -161,10 +161,12 @@ struct Enemy
     unsigned char unk_2b70[0x4];
     // Where shots start, from the position.
     D3DXVECTOR3 shootOffset;
-    D3DXVECTOR3 unk_2b80;
-    D3DXVECTOR3 unk_2b8c;
+    // A timed move, as th06's: the distance, where it starts, and its
+    // length in frames, counted down by moveTimer.
+    D3DXVECTOR3 moveDelta;
+    D3DXVECTOR3 moveStart;
     Timer moveTimer;
-    int unk_2ba4;
+    int moveDuration;
     // How the shots' speed and counts grow with the rank, as th06's.
     float rankSpeedLow;
     float rankSpeedHigh;

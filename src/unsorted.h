@@ -1432,6 +1432,29 @@ extern int g_Unknown12fe0dc;
 struct Enemy;
 struct EnemyScriptState;
 
+// One argument of a script instruction.
+union EnemyScriptArg
+{
+    int i;
+    float f;
+};
+
+// One instruction of an enemy script, th06's with a mask of the
+// arguments that are variables.
+struct EnemyScriptInstr
+{
+    // The frame it runs on.
+    int time;
+    short opcode;
+    // The size of the instruction, arguments included.
+    short size;
+    BYTE unk_8;
+    BYTE unk_9;
+    // Bit n: argument n names a variable.
+    WORD paramMask;
+    EnemyScriptArg args[1];
+};
+
 // The head of an enemy script file: the subroutine count, then the
 // offsets of sixteen timelines, then those of the subroutines.
 struct EnemyScriptHeader
@@ -1481,6 +1504,10 @@ int *ResolveOperand(Enemy *enemy, int *operand, WORD mask, int bit);
 float GetFloatOperand(Enemy *enemy, float id);
 // ResolveOperand for float variables.
 float *ResolveFloatOperand(Enemy *enemy, float *operand, WORD mask, int bit);
+// Starts a timed move at an angle (argument 2, normalized), as th06's
+// ScriptMoveAngle: moveDelta is argument 3 times argument 0, the
+// duration; argument 1 picks the easing. Mirrored with flags.mirrored.
+void ScriptMoveAngle(Enemy *enemy, EnemyScriptInstr *instr);
 
 // Set to 9 as the dialogue of stages 6 to 8 starts.
 extern int g_Unknown9a9ab8;
