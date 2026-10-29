@@ -253,7 +253,7 @@ int GameWindow::RunFrame()
         if (g_App.frameSkip <= this->curFrame)
         {
             g_App.d3dDevice->BeginScene();
-            g_SpriteEngine->Func44f580();
+            g_SpriteEngine->BeginQuadBatch();
             g_App.unk_2bc = 0xff;
             g_App.DisableFog();
             g_Chain.RunDrawChain();

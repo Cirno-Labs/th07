@@ -356,7 +356,7 @@ public:
     // Releases the vertex buffer, if there is one.
     void ReleaseVertexBuffer();
     // Starts a new batch of quads. Not in th06.
-    void Func44f580();
+    void BeginQuadBatch();
     // Draws the batched quads, if any. Not in th06.
     void Func44f5c0();
     // Copies the `srcWidth` by `srcHeight` rectangle at (`srcLeft`,
@@ -495,7 +495,11 @@ public:
     VertexTex1Xyz quad[4];
     // The number of quads batched to draw with Func44f5c0.
     int batchQuadCount;
-    unsigned char unk_2e534[0x150008];
+    // The batched quads, two triangles each.
+    VertexTex1DiffuseXyzrwh batchVertices[0xc000];
+    // Where the next quad goes, and the first one not drawn yet.
+    VertexTex1DiffuseXyzrwh *batchCursor;
+    VertexTex1DiffuseXyzrwh *batchStart;
     // A copy of the back buffer into a texture to do after the frame is
     // drawn: CopyBackBufferToTexture's arguments, the texture -1 when
     // there is none.

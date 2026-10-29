@@ -651,6 +651,13 @@ void SpriteEngine::SetBlendModeForSprite(Sprite *vm)
     this->unk_10++;
 }
 
+void SpriteEngine::BeginQuadBatch()
+{
+    this->batchQuadCount = 0;
+    this->batchCursor = this->batchVertices;
+    this->batchStart = this->batchCursor;
+}
+
 void SpriteEngine::RenderTextToTextureIndex(int textureIndex, int x, int y, int width, int unk4, int fontHeight,
                                             int unk6, D3DCOLOR textColor, D3DCOLOR shadowColor, char *text,
                                             float scaleX, float scaleY)
