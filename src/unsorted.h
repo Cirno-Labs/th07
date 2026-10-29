@@ -1050,6 +1050,8 @@ public:
     // Whether the pointer at +8 is set and the int at its +0x1fbac is
     // not negative, or is -2.
     int Func42ad66();
+    // The byte at +0x209b0 of what the pointer at +8 points at.
+    int Func427be2();
     // Player::EndBombState calls it with the points it scores and 4.
     void Func427c81(int points, int unk);
 
@@ -1073,6 +1075,15 @@ extern int g_Unknown12fe0cc;
 // starts.
 extern int g_Unknown12fe0c8;
 extern int g_Unknown12fe0dc;
+
+// The object at 0x9a9b00. Placeholder name; only what is known so far.
+class Unknown9a9b00
+{
+public:
+    // Whether one of the eight pointers at +0x954598 is set.
+    int Func4232a0();
+};
+extern Unknown9a9b00 g_Unknown9a9b00;
 
 // The object at 0x1347b00. Placeholder name; only what is known so far.
 class Unknown1347b00

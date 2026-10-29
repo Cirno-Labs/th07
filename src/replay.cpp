@@ -56,3 +56,20 @@ int ReplayManager::RecordOnUpdate(ReplayManager *replay)
     replay->frame++;
     return 1;
 }
+
+int ReplayManager::PlayOnUpdate2(ReplayManager *replay)
+{
+    if (!(g_Unknown626270.unk_93d8 >> 2 & 1))
+    {
+        return 1;
+    }
+    if (g_Unknown49fbf0.Func42ad66() && g_Unknown49fbf0.Func427be2() && replay->frame % 3 != 2)
+    {
+        return 6;
+    }
+    if (g_Unknown626270.unk_93df == 2 && !g_Unknown9a9b00.Func4232a0() && replay->frame % 5 != 4)
+    {
+        return 6;
+    }
+    return 1;
+}

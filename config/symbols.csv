@@ -188,7 +188,7 @@ address,size,name,symbol
 0x00422f40,267,Func422f40,
 0x00423050,50,Func423050,
 0x00423090,522,Func423090,
-0x004232a0,64,Func4232a0,
+0x004232a0,64,Unknown9a9b00::Func4232a0,?Func4232a0@Unknown9a9b00@@QAEHXZ
 0x004232e0,67,Func4232e0,
 0x00423330,236,Func423330,
 0x00423420,225,Func423420,
@@ -229,7 +229,7 @@ address,size,name,symbol
 0x00427b21,51,Func427b21,
 0x00427b54,78,Func427b54,
 0x00427ba2,64,Func427ba2,
-0x00427be2,22,Func427be2,
+0x00427be2,22,Unknown49fbf0::Func427be2,?Func427be2@Unknown49fbf0@@QAEHXZ
 0x00427bf8,137,Func427bf8,
 0x00427c81,136,Unknown49fbf0::Func427c81,?Func427c81@Unknown49fbf0@@QAEXHH@Z
 0x00427d09,137,Func427d09,
@@ -481,7 +481,7 @@ address,size,name,symbol
 0x00442b70,231,LoadShotTypeFile,?LoadShotTypeFile@@YIHPAPAUShotTypeData@@PAD@Z
 0x00442c60,100,ReplayManager::RecordOnUpdate2,?RecordOnUpdate2@ReplayManager@@SIHPAV1@@Z
 0x00442cd0,378,ReplayManager::RecordOnUpdate,?RecordOnUpdate@ReplayManager@@SIHPAV1@@Z
-0x00442e50,142,Func442e50,
+0x00442e50,142,ReplayManager::PlayOnUpdate2,?PlayOnUpdate2@ReplayManager@@SIHPAV1@@Z
 0x00442ee0,341,Func442ee0,
 0x00443040,870,Func443040,
 0x004433b0,416,ValidateReplay,?ValidateReplay@@YIPAUReplayHeader@@PAXH@Z
@@ -1781,6 +1781,7 @@ address,size,name,symbol
 0x00626258,,g_Archive,?g_Archive@@3VDatArchive@@A
 0x00626270,,g_Unknown626270,?g_Unknown626270@@3VUnknown626270@@A
 0x0062f958,,g_BulletManager,?g_BulletManager@@3VBulletManager@@A
+0x009a9b00,,g_Unknown9a9b00,?g_Unknown9a9b00@@3VUnknown9a9b00@@A
 0x012fe0c4,,g_Unknown12fe0c4,?g_Unknown12fe0c4@@3HA
 0x012fe0c8,,g_Unknown12fe0c8,?g_Unknown12fe0c8@@3HA
 0x012fe0cc,,g_Unknown12fe0cc,?g_Unknown12fe0cc@@3HA

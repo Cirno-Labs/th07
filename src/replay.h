@@ -70,6 +70,12 @@ public:
     // unk_d6, and every 30 frames the frame rate (0x80 set while
     // App::unk_2a4 is), then counts the frame. Returns 1.
     static int RecordOnUpdate(ReplayManager *replay);
+    // The second update callback while playing: while bit 2 of
+    // Unknown626270::unk_93d8 is set, returns 6 on two frames of every
+    // three while g_Unknown49fbf0's Func42ad66 and Func427be2 hold, and
+    // on four of every five while unk_93df is 2 and
+    // g_Unknown9a9b00.Func4232a0() does not; otherwise 1.
+    static int PlayOnUpdate2(ReplayManager *replay);
 
     // The current frame.
     int frame;
