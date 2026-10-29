@@ -280,3 +280,35 @@ void Unknown49fbf0::ShowBombName(int sprite, char *name)
     g_SoundPlayer.QueueSound(14, 0);
     g_App.redrawFrames = 2;
 }
+
+void Unknown49fbf0::ShowSpellCardName(int sprite, char *text)
+{
+    if (sprite >= 0)
+    {
+        g_SpriteEngine->StartScript(&this->impl->spellPortrait, 0x4a3);
+        g_SpriteEngine->SetSprite(&this->impl->spellPortrait, sprite + 0x4ad);
+        if (this->impl->spellPortrait.spriteData->width > 256.0f)
+        {
+            this->impl->spellPortrait.posOffset.x = -288.0f;
+        }
+        else if (this->impl->spellPortrait.spriteData->width > 128.0f)
+        {
+            this->impl->spellPortrait.posOffset.x = -112.0f;
+        }
+        else
+        {
+            this->impl->spellPortrait.posOffset.x = 0.0f;
+        }
+    }
+    g_SpriteEngine->StartScript(&this->impl->unk_5e30, 0x4a5);
+    g_SpriteEngine->SetSprite(&this->impl->unk_5e30, 0x4ac);
+    g_SpriteEngine->StartScript(&this->impl->unk_62c8, 0x4a7);
+    g_SpriteEngine->SetSprite(&this->impl->unk_62c8, 0x4ac);
+    g_SpriteEngine->StartScript(&this->impl->spellName, 0x705);
+    g_SpriteEngine->RenderTextRightAligned(&this->impl->spellName, 0xfff0f0, 0, text);
+    this->spellNameWidth = strlen(text) * 15 / 2.0f + 16.0f;
+    this->impl->spellNameBar.SetPendingInterrupt(1);
+    this->impl->unk_7774.SetPendingInterrupt(1);
+    g_SoundPlayer.QueueSound(14, 0);
+    g_App.redrawFrames = 2;
+}

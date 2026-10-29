@@ -1256,6 +1256,13 @@ public:
     // sprite 0x4ac, and bombName (script 0x704); sends bombNameBar
     // interrupt 1, plays sound 14 and sets g_App.redrawFrames to 2.
     void ShowBombName(int sprite, char *name);
+    // Shows a boss's spell card, `text`: unless `sprite` is negative,
+    // sprite `sprite` + 0x4ad in spellPortrait (script 0x4a3), moved left
+    // by 288 or 112 when it is wider than 256 or 128; scripts 0x4a5 and
+    // 0x4a7 with sprite 0x4ac, and spellName (script 0x705); sends
+    // spellNameBar and unk_7774 interrupt 1, plays sound 14 and sets
+    // g_App.redrawFrames to 2.
+    void ShowSpellCardName(int sprite, char *text);
     // As th06's DrawBanners and DrawHud.
     void DrawBanners();
     void DrawHud();
@@ -1299,6 +1306,8 @@ public:
     GuiImpl *impl;
     // The width of the text ShowBombName shows, from its length.
     float bombNameWidth;
+    // The same for ShowSpellCardName.
+    float spellNameWidth;
 };
 extern Unknown49fbf0 g_Unknown49fbf0;
 // Copies the rectangle of sprite `sprite` in texture 0x16 into sprite
