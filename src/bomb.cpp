@@ -1,5 +1,7 @@
 // The file with the player's bombs, from 0x4083f0, as th06's bomb.cpp.
 
+#include <math.h>
+
 #include "effect.h"
 #include "item.h"
 #include "player.h"
@@ -230,4 +232,142 @@ void DrawReimuABomb(Player *player)
         DRAW_BOMB_SPRITE();
         DRAW_BOMB_SPRITE();
     }
+}
+
+void UpdateReimuABombFocused(Player *player)
+{
+    PlayerBomb *bombs = &player->bomb;
+    float x;
+    float y;
+    PlayerBombPart *orb;
+    int i;
+    Sprite *spr;
+    float len;
+    D3DXVECTOR3 aim;
+    int k;
+
+    if (bombs->timer >= bombs->duration)
+    {
+        g_Unknown49fbf0.EndBombName();
+        bombs->running = 0;
+        player->moveScaleY = 1.0f;
+        player->moveScaleX = 1.0f;
+        return;
+    }
+    if (bombs->timer.HasTicked() && bombs->timer == 0)
+    {
+        g_Unknown49fbf0.ShowBombName(0x4a1, "霊符「夢想封印　集」");
+        bombs->duration = 300;
+        player->stateTimer.Set(360);
+        SpawnBombAura(player);
+        for (i = 0; i < 8; i++)
+        {
+            bombs->parts[i].state = 0;
+        }
+        g_ItemManager.CollectAll();
+        g_EffectManager.SpawnEffect(0xc, &player->position, 1, 0xff4040ff);
+        player->AddHitboxAreaCircle(&player->position, 32.0f, 8.0f, 0x10, 6);
+        SetBombDrain(player, 5000, 0.22f);
+        player->moveScaleY = 0.6f;
+        player->moveScaleX = 0.6f;
+    }
+    if (bombs->timer >= 60 && bombs->timer < 180)
+    {
+        if (bombs->timer.AsFrames() % 16 == 0)
+        {
+            i = (bombs->timer.AsFrames() - 60) / 16;
+            orb = &bombs->parts[i];
+            if (i != 0)
+            {
+                orb->state = 1;
+                orb->unk_4 = 0;
+                orb->homingSpeed = 8.0f;
+                orb->pos = player->position;
+                x = g_Rng.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
+                ((Vector2 *)&orb->velocity)->SetPolar(x, orb->homingSpeed);
+                player->unk_9dc[i].unk_1c = 0;
+                for (spr = orb->sprites, k = 0; k < 4; k++, spr++)
+                {
+                    g_SpriteEngine->StartScriptAtOrigin(spr, k + 0x485);
+                }
+                g_SoundPlayer.QueueSound(0xd, 0);
+            }
+        }
+    }
+    player->playerState = 3;
+    for (i = 0, orb = bombs->parts; i < 8; i++, orb++)
+    {
+        if (orb->state == 0)
+        {
+            continue;
+        }
+        if (orb->state == 1)
+        {
+            if (bombs->timer.HasTicked())
+            {
+                if (player->unk_2428.x > -100.0f)
+                {
+                    aim = player->unk_2428;
+                }
+                else
+                {
+                    aim = player->position;
+                }
+                x = aim.x - orb->pos.x;
+                y = aim.y - orb->pos.y;
+                len = sqrtf(x * x + y * y) / (orb->homingSpeed / 8.0f);
+                if (len < 1.0f)
+                {
+                    len = 1.0f;
+                }
+                x = x / len + orb->velocity.x;
+                y = y / len + orb->velocity.y;
+                len = sqrtf(x * x + y * y);
+                orb->homingSpeed = (len > 10.0f) ? 10.0f : len;
+                if (orb->homingSpeed < 1.0f)
+                {
+                    orb->homingSpeed = 1.0f;
+                }
+                orb->velocity.x = x * orb->homingSpeed / len;
+                orb->velocity.y = y * orb->homingSpeed / len;
+                player->unk_9dc[i].size.x = 48.0f;
+                player->unk_9dc[i].size.y = 48.0f;
+                player->unk_9dc[i].pos = orb->pos;
+                player->unk_9dc[i].unk_18 = 8;
+                player->AddHitboxAreaCircle(&orb->pos, 128.0f, 0.0f, 0, 6);
+                if (player->unk_9dc[i].unk_1c >= 100 || bombs->timer >= bombs->duration - 30)
+                {
+                    g_EffectManager.SpawnEffect(6, &orb->pos, 8, 0xffffffff);
+                    g_EffectManager.SpawnEffect(0xc, &orb->pos, 1, 0xff4040ff);
+                    orb->state = 2;
+                    orb->sprites[0].pendingInterrupt = 1;
+                    orb->sprites[1].pendingInterrupt = 1;
+                    orb->sprites[2].pendingInterrupt = 1;
+                    orb->sprites[3].pendingInterrupt = 1;
+                    player->unk_9dc[i].size.x = 256.0f;
+                    player->unk_9dc[i].size.y = 256.0f;
+                    player->unk_9dc[i].unk_18 = 400;
+                    player->AddHitboxAreaCircle(&orb->pos, 32.0f, 6.6666665f, 0xf, 6);
+                    D3DXVECTOR3 velocity = orb->velocity / 8.0f;
+                    g_SoundPlayer.QueueSound(0xf, 0);
+                    ScreenEffect::StartEffect(1, 0x10, 8, 0, 0);
+                }
+            }
+        }
+        else if (orb->state != 0 && bombs->timer.HasTicked())
+        {
+            orb->unk_4++;
+            if (orb->unk_4 >= 30)
+            {
+                orb->state = 0;
+            }
+        }
+        orb->pos.x += g_App.unk_178 * orb->velocity.x;
+        orb->pos.y += g_App.unk_178 * orb->velocity.y;
+        g_SpriteEngine->Step(&orb->sprites[0]);
+        g_SpriteEngine->Step(&orb->sprites[1]);
+        g_SpriteEngine->Step(&orb->sprites[2]);
+        g_SpriteEngine->Step(&orb->sprites[3]);
+    }
+    bombs->timer.Tick();
 }

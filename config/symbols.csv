@@ -55,7 +55,7 @@ address,size,name,symbol
 0x00408610,234,SetBombDrain,?SetBombDrain@@YIXPAVPlayer@@HM@Z
 0x00408710,1780,UpdateReimuABomb,?UpdateReimuABomb@@YIXPAVPlayer@@@Z
 0x00408e10,921,DrawReimuABomb,?DrawReimuABomb@@YIXPAVPlayer@@@Z
-0x004091b0,2013,Func4091b0,
+0x004091b0,2013,UpdateReimuABombFocused,?UpdateReimuABombFocused@@YIXPAVPlayer@@@Z
 0x00409990,1079,Func409990,
 0x00409dd0,1194,Func409dd0,
 0x0040a280,273,Func40a280,

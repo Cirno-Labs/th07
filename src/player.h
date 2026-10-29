@@ -317,7 +317,8 @@ struct PlayerBombPart
     // unk_4 counts to 30.
     int state;
     int unk_4;
-    unsigned char unk_8[0x4];
+    // Reimu A focused: the orb's speed, as th06's partSpeed.
+    float homingSpeed;
     float speed;
     float angle;
     D3DXVECTOR3 pos;
@@ -609,3 +610,11 @@ void UpdateReimuABomb(Player *player);
 // (DimPlayAreaForBomb), then each live orb's four sprites at its
 // position in the play area.
 void DrawReimuABomb(Player *player);
+
+// Reimu A's focused bomb, closest to th06's UpdateReimuABomb: 300
+// frames with stateTimer at 360 and the player slowed to 0.6; from
+// frame 60 an orb every 16 frames (7) in a random direction, homing
+// in on unk_2428 (else the player), until it has hit 100 times or 30
+// frames are left, then bursts as Reimu A's. Stops at the end,
+// restoring the player's speed.
+void UpdateReimuABombFocused(Player *player);
