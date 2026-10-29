@@ -227,7 +227,7 @@ def link_exe(objs):
     # lists DINPUT8, DSOUND and d3d8 first and ole32 last, D3DX8 follows
     # the game code and the CRT comes last.
     objs = link_order(objs, read_symbols())
-    tool("link", "/SUBSYSTEM:WINDOWS", "/FIXED", "/NODEFAULTLIB:libc.lib",
+    tool("link", "/SUBSYSTEM:WINDOWS", "/FIXED", "/OPT:NOWIN98", "/NODEFAULTLIB:libc.lib",
          "/MAP:" + win(EXE[:-4] + ".map"), "/OUT:" + win(EXE), *map(win, objs), win(res),
          "dinput8.lib", "dsound.lib", "d3d8.lib", "d3dx8.lib", "dxguid.lib", "winmm.lib",
          "kernel32.lib", "user32.lib", "gdi32.lib", "ole32.lib", "libcmt.lib")
