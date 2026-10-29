@@ -257,6 +257,14 @@ public:
     PlayerArea *AddHitboxArea(D3DXVECTOR3 *pos, float width, float height, int unk_1c);
     // The same, setting unk_10 to unk_1c instead of width and height.
     PlayerArea *AddHitboxAreaCircle(D3DXVECTOR3 *pos, float unk_10, float unk_14, int unk_18, int unk_1c);
+    // Clears the player and adds it to the chains (update priority 8,
+    // draw 6 and 8), keeping `unk` in unk_2409. Returns 0, or -1 if
+    // adding fails.
+    static int RegisterChain(int unk);
+    static int OnUpdate(Player *player);
+    static int OnDraw(Player *player);
+    static int AddedCallback(Player *player);
+    static int DeletedCallback(Player *player);
     static void RemoveChain();
 
     Sprite sprite;
@@ -275,7 +283,8 @@ public:
     // As th06's: 0 normally, 1 respawning, 2 dying, 3 invulnerable.
     // Firing stops at 1 and 2.
     char playerState;
-    unsigned char unk_2409[0x1];
+    // RegisterChain's argument, as th06's unk_09e1.
+    BYTE unk_2409;
     // FireLaser fires its lasers while it is 1, FireTrailLaser while it
     // is 3. Where th06 has optionState.
     char unk_240a;
@@ -298,7 +307,8 @@ public:
     // Runs while firing, as th06's: -1 when idle, stopped after 30
     // frames.
     Timer fireTimer;
-    Timer unk_16a00;
+    // Started from 0 by RegisterChain, as th06's.
+    Timer stateTimer;
     Timer unk_16a0c;
     unsigned char unk_16a18[0x8];
     PlayerBomb bomb;
