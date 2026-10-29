@@ -162,6 +162,11 @@ public:
     {
         this->pendingInterrupt = interrupt;
     }
+    // Clears flag bit 0, as th06's.
+    void ClearShown()
+    {
+        this->shown = 0;
+    }
     // Turns the sprite to `angle` about z and sets flag 0x4. Not in th06.
     void SetRotationZ(float angle)
     {
@@ -526,6 +531,27 @@ public:
     {
         vm->scriptIndex = script;
         this->SetScript(vm, this->scripts[script]);
+    }
+
+    // Has CopyBackBufferToTexture's copy done after the frame is drawn,
+    // as th06's, unless one is already pending: then returns -1, else 0.
+    int SetPendingCopy(int texture, int srcLeft, int srcTop, int srcWidth, int srcHeight, int dstLeft, int dstTop,
+                       int dstWidth, int dstHeight)
+    {
+        if (this->pendingCopyTexture >= 0)
+        {
+            return -1;
+        }
+        this->pendingCopyTexture = texture;
+        this->pendingCopySrcLeft = srcLeft;
+        this->pendingCopySrcTop = srcTop;
+        this->pendingCopySrcWidth = srcWidth;
+        this->pendingCopySrcHeight = srcHeight;
+        this->pendingCopyDstLeft = dstLeft;
+        this->pendingCopyDstTop = dstTop;
+        this->pendingCopyDstWidth = dstWidth;
+        this->pendingCopyDstHeight = dstHeight;
+        return 0;
     }
 
     // The color sprites are modulated by while unk_4 is set, 0x80 per

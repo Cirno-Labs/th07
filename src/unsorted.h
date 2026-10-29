@@ -878,7 +878,8 @@ struct Unknown626270Stats
     // The score shown, and the score.
     DWORD guiScore;
     DWORD score;
-    unsigned char unk_8[0x4];
+    // Cleared when a game continues.
+    DWORD unk_8;
     // The high score to beat, from the score file.
     DWORD highScore;
     // What LoadHighScores stores from the best entry; cleared in a
@@ -890,7 +891,9 @@ struct Unknown626270Stats
     int grazeTotal;
     int spellCardsCaptured;
     BYTE continuesUsed;
-    unsigned char unk_21[0x7];
+    unsigned char unk_21[0x3];
+    // Cleared when a game continues.
+    int unk_24;
     int pointItemsTotal;
     int unk_2c;
     int unk_30;

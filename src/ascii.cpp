@@ -461,6 +461,191 @@ void PauseMenu::DrawPauseMenu()
     }
 }
 
+int ContinueMenu::UpdateContinueMenu()
+{
+    int i;
+
+    if (g_Unknown626270.unk_93d8 & 1)
+    {
+        g_Unknown626270.isInContinueMenu = 0;
+        g_Unknown626270.stats->guiScore = g_Unknown626270.stats->score;
+        g_App.scene = 6;
+        return 1;
+    }
+    if ((g_Unknown626270.unk_93d8 >> 3) & 1)
+    {
+        g_Unknown626270.isInContinueMenu = 0;
+        g_App.scene = 7;
+        g_Unknown626270.stats->guiScore = g_Unknown626270.stats->score;
+        return 1;
+    }
+    if (g_Unknown626270.stats->continuesUsed >= g_Unknown626270.unk_9630 || g_Unknown626270.difficulty >= 4)
+    {
+        g_Unknown626270.isInContinueMenu = 0;
+        g_App.scene = 6;
+        g_Unknown626270.stats->guiScore = g_Unknown626270.stats->score;
+        return 1;
+    }
+    switch (this->state)
+    {
+    case 0:
+        if (this->stateFrames == 0)
+        {
+            g_SoundPlayer.QueueSoundCommand(6, 0, "Pause");
+            for (i = 0; i < 4; i++)
+            {
+                g_SpriteEngine->StartScript(&this->sprites[i], i + 0x108);
+                this->sprites[i].pendingInterrupt = 1;
+            }
+            g_SpriteEngine->StartScript(&this->sprites[4], 0x10c);
+            g_SpriteEngine->SetSprite(&this->sprites[4], g_Unknown626270.unk_9630 + 0x106 -
+                                                             g_Unknown626270.stats->continuesUsed);
+            this->sprites[4].pendingInterrupt = 1;
+            if ((g_App.unk_18c >> 1) & 1)
+            {
+                g_SpriteEngine->StartScript(&this->background, 0x724);
+                if (g_SpriteEngine->SetPendingCopy(4, 0x20, 0x10, 0x180, 0x1c0, this->background.spriteData->startX,
+                                                   this->background.spriteData->startY,
+                                                   this->background.spriteData->height,
+                                                   this->background.spriteData->width) != 0)
+                {
+                    this->state = 0;
+                    return 0;
+                }
+                this->background.pos.x = 32.0f;
+                this->background.pos.y = 16.0f;
+                this->background.pos.z = 0.0f;
+            }
+            g_App.AddTotalPlayTime();
+        }
+        if (this->stateFrames > 8)
+        {
+            break;
+        }
+        this->state += 2;
+        this->stateFrames = 0;
+    case 1:
+        this->sprites[2].color = 0xffff8080;
+        this->sprites[3].color = 0x80808080;
+        this->sprites[2].posOffset = D3DXVECTOR3(-4.0f, -4.0f, 0.0f);
+        this->sprites[3].posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+        if (this->stateFrames >= 4)
+        {
+            if (WAS_PRESSED(0x10) || WAS_PRESSED(0x20))
+            {
+                this->state = 2;
+                g_SoundPlayer.QueueSound(0, 0);
+            }
+            if (WAS_PRESSED(0x1001))
+            {
+                g_SoundPlayer.QueueSound(10, 0);
+                for (i = 0; i < 5; i++)
+                {
+                    this->sprites[i].pendingInterrupt = 2;
+                }
+                this->state = 3;
+                this->background.pendingInterrupt = 1;
+                this->stateFrames = 0;
+            }
+        }
+        break;
+    case 2:
+        this->sprites[3].color = 0xffff8080;
+        this->sprites[2].color = 0x80808080;
+        this->sprites[3].posOffset = D3DXVECTOR3(-4.0f, -4.0f, 0.0f);
+        this->sprites[2].posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+        if (this->stateFrames >= 30)
+        {
+            if (WAS_PRESSED(0x10) || WAS_PRESSED(0x20))
+            {
+                this->state = 1;
+                g_SoundPlayer.QueueSound(0, 0);
+            }
+            if (WAS_PRESSED(0x1001))
+            {
+                g_SoundPlayer.QueueSound(10, 0);
+                for (i = 0; i < 5; i++)
+                {
+                    this->sprites[i].pendingInterrupt = 2;
+                }
+                this->state = 4;
+                this->stateFrames = 0;
+            }
+        }
+        break;
+    case 4:
+        if (this->stateFrames >= 20)
+        {
+            this->state = 0;
+            this->stateFrames = 0;
+            g_Unknown626270.isInContinueMenu = 0;
+            g_App.scene = 6;
+            for (i = 0; i < 5; i++)
+            {
+                this->sprites[i].ClearShown();
+            }
+            g_Unknown626270.stats->guiScore = g_Unknown626270.stats->score;
+            g_App.unk_194 = timeGetTime();
+            return 0;
+        }
+        break;
+    case 3:
+        if (this->stateFrames >= 30)
+        {
+            this->state = 0;
+            this->stateFrames = 0;
+            g_Unknown626270.isInContinueMenu = 0;
+            for (i = 0; i < 5; i++)
+            {
+                this->sprites[i].ClearShown();
+            }
+            g_Unknown626270.stats->continuesUsed++;
+            g_Unknown626270.stats->guiScore = g_Unknown626270.stats->continuesUsed;
+            g_Unknown626270.stats->unk_8 = 0;
+            g_Unknown626270.stats->score = g_Unknown626270.stats->guiScore;
+            g_Unknown626270.SetLives(g_Unknown626270.unk_4->lifeCount);
+            g_Unknown626270.RerollChecksumKeys();
+            g_Unknown626270.SetBombs(g_Player.shotType->bombs);
+            g_Unknown626270.stats->graze = 0;
+            g_Unknown626270.stats->unk_24 = 0;
+            g_Unknown626270.stats->pointItemsTotal = 0;
+            g_Unknown626270.stats->power = 0.0f;
+            g_Unknown626270.RerollChecksumKeys();
+            g_Unknown626270.stats->unk_2c = 0;
+            g_Unknown626270.stats->unk_30 = 50;
+            g_Unknown626270.unk_961c = g_Unknown626270.stats->unk_88;
+            g_Unknown49fbf0.livesChanged = 2;
+            g_Unknown49fbf0.bombsChanged = 2;
+            g_Unknown49fbf0.grazeChanged = 2;
+            g_Unknown49fbf0.unk_4_8 = 2;
+            g_Unknown49fbf0.powerChanged = 2;
+            IncrementCounterCapped((DWORD *)&g_Unknown626270.plst.counts[g_Unknown626270.difficulty].plays[0], 999999);
+            IncrementCounterCapped((DWORD *)&g_Unknown626270.plst.counts[6].plays[0], 999999);
+            IncrementCounterCapped(
+                (DWORD *)&g_Unknown626270.plst.counts[g_Unknown626270.difficulty].plays[g_Unknown626270.unk_93d7 + 1],
+                999999);
+            IncrementCounterCapped((DWORD *)&g_Unknown626270.plst.counts[6].plays[g_Unknown626270.unk_93d7 + 1],
+                                   999999);
+            IncrementCounterCapped((DWORD *)&g_Unknown626270.plst.counts[g_Unknown626270.difficulty].continues,
+                                   999999);
+            IncrementCounterCapped((DWORD *)&g_Unknown626270.plst.counts[6].continues, 999999);
+            g_SoundPlayer.QueueSoundCommand(7, 0, "UnPause");
+            g_App.unk_194 = timeGetTime();
+            return 0;
+        }
+    }
+    for (i = 0; i < 5; i++)
+    {
+        g_SpriteEngine->Step(&this->sprites[i]);
+    }
+    if ((g_App.unk_18c >> 1) & 1)
+    {
+        g_SpriteEngine->Step(&this->background);
+    }
+    this->stateFrames++;
+    return 0;
+}
+
 void ContinueMenu::DrawContinueMenu()
 {
     int i;
