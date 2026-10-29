@@ -14,10 +14,21 @@ struct SpriteData
 {
     // The ANM slot the sprite comes from; negative when unused.
     int sourceFileIndex;
-    unsigned char unk_4[0x28];
+    // The sprite's rectangle in the texture, in pixels.
+    float startX;
+    float startY;
+    unsigned char unk_c[0x8];
+    // The texture's size.
+    float textureHeight;
+    float textureWidth;
+    unsigned char unk_1c[0x10];
     // Its size in pixels, as in th06.
     float height;
     float width;
+    // How much larger the texture is than the sprite's size: LoadAnm
+    // divides the rectangle's size by these. Not in th06.
+    float scaleX;
+    float scaleY;
 };
 
 // The part of Sprite up to pos. Its implicit constructor (0x4011b0)
