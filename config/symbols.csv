@@ -490,7 +490,7 @@ address,size,name,symbol
 0x00443aa0,655,ReplayManager::RegisterChain,?RegisterChain@ReplayManager@@SIHHPAD@Z
 0x00443d30,108,ReplayManager::EndStage,?EndStage@ReplayManager@@SIXXZ
 0x00443da0,1829,SaveReplay,?SaveReplay@@YIXPAD0@Z
-0x004444d0,1419,Func4444d0,
+0x004444d0,1419,ResaveReplay,?ResaveReplay@@YIXPAD@Z
 0x00444a5b,251,ResultScreen::ResultScreen,??0ResultScreen@@QAE@XZ
 0x00444b56,151,InsertScore,?InsertScore@@YIHPAUListNode@@PAUHscr@@@Z
 0x00444bed,51,FreeListNodes,?FreeListNodes@@YIXPAUListNode@@@Z

@@ -614,3 +614,122 @@ void SaveReplay(char *path, char *name)
         g_Chain.Remove(g_ReplayManager->calcChain);
     }
 }
+
+void ResaveReplay(char *path)
+{
+    BYTE *dp2;
+    BYTE kbVal;
+    BYTE *bpCur;
+    int checksum;
+    int offset;
+    HANDLE file;
+    ReplayHeader hX;
+    BYTE *rpyBytes;
+    int chunk;
+    int compSize;
+    BYTE *compressedData;
+    DWORD writtenSize;
+    ReplayManager *replayTmp;
+    int i;
+
+    if (g_ReplayManager != NULL)
+    {
+        replayTmp = g_ReplayManager;
+        if (!(g_Unknown626270.unk_93d8 & 1) && g_Unknown626270.difficulty < 4)
+        {
+            if (memcmp(&g_App.controllerMapping, replayTmp->data->config, sizeof(replayTmp->data->config)) != 0)
+            {
+                goto done;
+            }
+        }
+        if (replayTmp->data->config[0x25] != 0)
+        {
+            goto done;
+        }
+        if (path != NULL)
+        {
+            DebugPrint("info : Replay File rewrite %s\r\n", path);
+            rpyBytes = (BYTE *)MemAlloc(0x100000);
+            hX = *replayTmp->data;
+            i = g_Unknown626270.stage - 1;
+            if (i >= 7)
+            {
+                i = 6;
+            }
+            replayTmp->data->stages[i]->score = g_Unknown626270.stats->score;
+            offset = 0x54;
+            offset += 0x94;
+            for (i = 0; i < 7; i++)
+            {
+                if (replayTmp->data->stages[i] != NULL)
+                {
+                    chunk = replayTmp->stageSizes[i];
+                    memcpy(rpyBytes + offset - 0x54, replayTmp->data->stages[i], chunk);
+                    hX.stages[i] = (ReplayStage *)offset;
+                    offset += chunk;
+                }
+            }
+            for (i = 0; i < 7; i++)
+            {
+                if (replayTmp->data->extras[i] != NULL)
+                {
+                    chunk = replayTmp->extraSizes[i];
+                    memcpy(rpyBytes + offset - 0x54, replayTmp->data->extras[i], chunk);
+                    hX.extras[i] = (BYTE *)offset;
+                    offset += chunk;
+                }
+            }
+            hX.score = g_Unknown626270.stats->guiScore;
+            hX.size = offset;
+            hX.key = g_Rng.GetRandomU16InRange(128) + 64;
+            hX.unk_54 = g_Rng.GetRandomU16InRange(256);
+            hX.unk_0c = g_Rng.GetRandomU16InRange(256);
+            hX.slowdown2 = hX.slowdown + 1.12f;
+            hX.slowdown3 = hX.slowdown + 2.34f;
+            hX.unk_d4 = 30;
+            memcpy(rpyBytes, &hX.unk_54, sizeof(ReplayHeader) - 0x54);
+            DebugPrint("info : original size %d\r\n", offset);
+            hX.dataSize = offset - 0x54;
+            compressedData = (BYTE *)LzssCompress(rpyBytes, hX.dataSize, &hX.compressedSize);
+            free(rpyBytes);
+            compSize = hX.compressedSize;
+            bpCur = &hX.key;
+            checksum = 0x3f000318;
+            for (i = 0; i < 0x47U; i++, bpCur++)
+            {
+                checksum += *bpCur;
+            }
+            bpCur = compressedData;
+            for (i = 0; i < compSize; i++, bpCur++)
+            {
+                checksum += *bpCur;
+            }
+            hX.checksum = checksum;
+            dp2 = (BYTE *)&hX.size;
+            kbVal = hX.key;
+            for (i = 0; i < 0x44U; i++, dp2++)
+            {
+                *dp2 += kbVal;
+                kbVal += 7;
+            }
+            dp2 = compressedData;
+            for (i = 0; i < compSize; i++, dp2++)
+            {
+                *dp2 += kbVal;
+                kbVal += 7;
+            }
+            file = CreateFileA(path, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+            if (file == INVALID_HANDLE_VALUE)
+            {
+                goto done;
+            }
+            WriteFile(file, &hX, 0x54, &writtenSize, NULL);
+            WriteFile(file, compressedData, compSize, &writtenSize, NULL);
+            CloseHandle(file);
+            DebugPrint("info : Size %d -> %d\r\n", offset, compSize + 0x54);
+            GlobalFree(compressedData);
+        }
+    done:
+        g_Chain.Remove(g_ReplayManager->calcChain);
+    }
+}

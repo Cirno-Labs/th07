@@ -118,6 +118,10 @@ ReplayHeader *ValidateReplay(void *data, int size);
 // ValidateReplay decodes them. Then frees the stages and removes the
 // update element.
 void SaveReplay(char *path, char *name);
+// Writes the replay being played back to `path` again, as SaveReplay
+// does, with new keys and the current score, but its stages and name as
+// they are. Then removes the update element. Not in th06.
+void ResaveReplay(char *path);
 
 // Records and plays back replays, behind the pointer at 0x4b9e48. Only
 // the fields known so far.
