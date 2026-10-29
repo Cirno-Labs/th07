@@ -200,6 +200,15 @@ struct VertexTex1DiffuseXyzrwh
     D3DXVECTOR2 uv;
 };
 
+// A vertex with a transformed position and texture coordinates, as in
+// th06.
+struct VertexTex1Xyzrwh
+{
+    D3DXVECTOR3 pos;
+    float w;
+    D3DXVECTOR2 uv;
+};
+
 // A vertex with a position and texture coordinates, as in th06.
 struct VertexTex1Xyz
 {
@@ -511,7 +520,7 @@ public:
     // The world matrix ProjectSprite3D last projected with.
     D3DXMATRIX unk_20;
     SpriteData sprites[0xa00];
-    unsigned char unk_28060[0x24c];
+    Sprite unk_28060;
     // The textures of the loaded ANM files, by slot.
     IDirect3DTexture8 *textures[0x108];
     // The image files the textures were created from, kept loaded.
@@ -574,6 +583,8 @@ ASSERT_SIZE(SpriteEngine, 0x17e560);
 extern SpriteEngine *g_SpriteEngine;
 // The quad Draw draws with a color, without the vertex buffer.
 extern VertexTex1DiffuseXyzrwh g_DiffuseQuad[4];
+// A transformed quad without a color, as in th06.
+extern VertexTex1Xyzrwh g_Quad[4];
 // 0.5, for DrawQuad's rounding.
 extern float g_Half;
 // The offset from a sprite's position whose projection sets the size
