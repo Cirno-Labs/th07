@@ -24,7 +24,7 @@ struct PlayerBullet
 {
     Sprite sprite;
     D3DXVECTOR3 pos;
-    D3DXVECTOR3 unk_258[0x10];
+    D3DXVECTOR3 trail[0x10];
     D3DXVECTOR3 size;
     // A laser keeps its offset from its option in velocity.z and
     // laserOffsetY.
@@ -43,7 +43,7 @@ struct PlayerBullet
     short laserIndex;
     short option;
     // FireTrailLaser sets it to ShotData::interval.
-    short unk_352;
+    short trailLength;
     // The shot's callbacks, and the shot.
     ShotUpdateFunc update;
     ShotUpdateFunc draw;

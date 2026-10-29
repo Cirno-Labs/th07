@@ -139,11 +139,11 @@ int FireTrailLaser(Player *player, PlayerBullet *bullet, int frame, ShotData *sd
     bullet->option = sd->option;
     bullet->velocity.z = sd->offsetX;
     bullet->laserOffsetY = sd->offsetY;
-    bullet->unk_352 = sd->interval;
+    bullet->trailLength = sd->interval;
     FireShot(player, bullet, sd);
     for (j = 15; j >= 0; j--)
     {
-        bullet->unk_258[j].x = -999.0f;
+        bullet->trail[j].x = -999.0f;
     }
     bullet->pos.x = -999.0f;
     player->laserShots[laser] = sd;
@@ -341,20 +341,20 @@ int UpdateTrailLaserBullet(Player *player, PlayerBullet *bullet)
     {
         bullet->sprite.pendingInterrupt = 1;
     }
-    for (i = 0; i < bullet->unk_352; i++)
+    for (i = 0; i < bullet->trailLength; i++)
     {
-        if (bullet->unk_258[i].x >= -900.0f)
+        if (bullet->trail[i].x >= -900.0f)
         {
-            player->bombHitboxes[i + 0x60].pos = bullet->unk_258[i];
+            player->bombHitboxes[i + 0x60].pos = bullet->trail[i];
             player->bombHitboxes[i + 0x60].damage = 1;
             player->bombHitboxes[i + 0x60].size = bullet->size;
         }
     }
     for (i = 15; i > 0; i--)
     {
-        bullet->unk_258[i] = bullet->unk_258[i - 1];
+        bullet->trail[i] = bullet->trail[i - 1];
     }
-    bullet->unk_258[0] = bullet->pos;
+    bullet->trail[0] = bullet->pos;
     if (player->playerState == 2)
     {
         return 1;
@@ -373,16 +373,16 @@ int DrawTrailLaserBullet(Player *player, PlayerBullet *bullet)
     int alpha = bullet->sprite.alpha;
     int i;
 
-    for (i = 0; i < bullet->unk_352; i++)
+    for (i = 0; i < bullet->trailLength; i++)
     {
-        if (bullet->unk_258[i].x == -999.0f)
+        if (bullet->trail[i].x == -999.0f)
         {
             break;
         }
-        bullet->sprite.pos.x = bullet->unk_258[i].x;
-        bullet->sprite.pos.y = bullet->unk_258[i].y;
-        bullet->sprite.pos.z = bullet->unk_258[i].z;
-        bullet->sprite.alpha = alpha - alpha * i / bullet->unk_352;
+        bullet->sprite.pos.x = bullet->trail[i].x;
+        bullet->sprite.pos.y = bullet->trail[i].y;
+        bullet->sprite.pos.z = bullet->trail[i].z;
+        bullet->sprite.alpha = alpha - alpha * i / bullet->trailLength;
         bullet->sprite.pos[0] += g_Unknown626270.arena[0];
         bullet->sprite.pos[1] += g_Unknown626270.arena[1];
         g_SpriteEngine->Draw(&bullet->sprite);
