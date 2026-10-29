@@ -187,6 +187,11 @@ public:
     // `mode` items of type unk_37a160, with 3 to 8 into one item of
     // type 8. Then sets unk_37a12c to 10.
     void ClearAll(int mode);
+    // Like ClearAll(1), but each bullet scores a bonus, from 2000 up by
+    // 20 per bullet to `maxBonus`, shown as a popup; lasers turn into
+    // items only with `toItems`. Unlike th06's it adds nothing to the
+    // score and shows no total. Returns the total.
+    int ClearAllWithBonus(int maxBonus, int toItems);
     // Spawns bullet (`col`, `row`) of `shooter`'s pattern, aimed at
     // `aimAngle` by the aiming modes that use it. Returns 0, or 1 if no
     // bullet is free.
