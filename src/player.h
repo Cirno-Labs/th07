@@ -106,11 +106,17 @@ struct ShotTypeData
     // The hitbox and the graze box, both square.
     float hitboxSize;
     float grazeSize;
-    unsigned char unk_14[0x8];
+    // The speed of the items drawn to the player.
+    float unk_14;
+    // The width and height of the box the player collects items in.
+    float unk_18;
     // The share of GameManager::unk_961c over stats->unk_88 a death
     // costs.
     float unk_1c;
-    unsigned char unk_20[0x14];
+    // Above this line the player draws the items in, at full power or
+    // from difficulty 4 up.
+    float unk_20;
+    unsigned char unk_24[0x10];
     ShotTable tables[1];
 };
 

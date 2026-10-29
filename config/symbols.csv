@@ -1748,6 +1748,8 @@ address,size,name,symbol
 0x0049ecc8,,g_ShotUpdateFuncs,?g_ShotUpdateFuncs@@3PAP6IHPAVPlayer@@PAUPlayerBullet@@@ZA
 0x0049ece0,,g_ShotDrawFuncs,?g_ShotDrawFuncs@@3PAP6IHPAVPlayer@@PAUPlayerBullet@@@ZA
 0x0049ece8,,g_ShotHitFuncs,?g_ShotHitFuncs@@3PAP6IHPAVPlayer@@PAUPlayerBullet@@PAUD3DXVECTOR3@@@ZA
+0x0049ecf8,,g_PowerItemBonus,?g_PowerItemBonus@@3PAHA
+0x0049ed74,,g_PowerLevels,?g_PowerLevels@@3PAHA
 0x0049ed98,,g_FormatInfos,?g_FormatInfos@@3PAUFormatInfo@@A
 0x0049ee40,,g_DefaultControllerMapping,?g_DefaultControllerMapping@@3UControllerMapping@@A
 0x0049eec8,,g_EffectColorsFull,?g_EffectColorsFull@@3PAKA

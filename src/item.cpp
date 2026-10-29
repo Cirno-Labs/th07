@@ -1,7 +1,11 @@
 // The items, and the helpers out of line before them.
 
+#include "ascii.h"
+#include "bullet.h"
 #include "effect.h"
 #include "item.h"
+#include "player.h"
+#include "replay.h"
 #include "unsorted.h"
 
 void Vector2::SetPolar(float angle, float radius)
@@ -93,6 +97,396 @@ Item *ItemManager::SpawnItem(D3DXVECTOR3 *pos, int type, int state)
         break;
     }
     return i < 0x44c ? item : &this->items[0x44c];
+}
+
+void ItemManager::UpdateItems()
+{
+    int i;
+    float weight;
+    int amount;
+    float angle;
+    // Whether any item was collected this frame.
+    BOOL any;
+    Item *entry = this->items;
+    D3DXVECTOR3 catchSize(g_Player.shotType->unk_18,
+                          g_Player.shotType->unk_18, 16.0f);
+
+    any = FALSE;
+    this->activeCount = 0;
+    this->drawListTail = &this->drawList;
+    this->drawList.next = NULL;
+    for (i = 0; i < 0x44c; i++, entry++)
+    {
+        if (!entry->active)
+        {
+            continue;
+        }
+        this->activeCount++;
+        if (entry->state == 2)
+        {
+            if (entry->timer < 60)
+            {
+                weight = entry->timer.AsFloat() / 60.0f;
+                entry->pos = weight * entry->target + entry->velocity * (1.0f - weight);
+                goto touch;
+            }
+            if (entry->timer == 60)
+            {
+                entry->velocity = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+                entry->state = 0;
+            }
+            goto move;
+        }
+        else
+        {
+            if (entry->state == 1 ||
+                (((int)g_Unknown626270.stats->power >= 128.0 ||
+                  g_Unknown626270.difficulty >= 4) &&
+                 g_Player.position.y < g_Player.shotType->unk_20) ||
+                g_Player.unk_240d == 1)
+            {
+                if (g_Player.playerState != 1)
+                {
+                    angle = g_Player.AngleFrom(&entry->pos);
+                    ((Vector2 *)&entry->velocity)
+                        ->SetPolar(angle, g_Player.shotType->unk_14);
+                    entry->state = 1;
+                    if (g_Player.unk_240d == 1)
+                    {
+                        entry->unk_280 = 1;
+                    }
+                }
+                else
+                {
+                    entry->velocity.y = -0.5f;
+                    entry->state = 0;
+                }
+            }
+            else
+            {
+                entry->velocity.x = 0.0f;
+                entry->velocity.z = 0.0f;
+                if (entry->velocity.y < -2.2f)
+                {
+                    entry->velocity.y = -2.2f;
+                }
+            }
+        move:
+            entry->pos += entry->velocity * g_App.unk_178;
+            if (g_Unknown626270.arena[3] + 16.0f <= entry->pos.y)
+            {
+                entry->active = 0;
+                g_Unknown626270.SubSubRank(3);
+                continue;
+            }
+            if (entry->velocity.y < 3.0f)
+            {
+                entry->velocity.y += 0.03f * g_App.unk_178;
+            }
+            else
+            {
+                entry->velocity.y = 3.0f;
+            }
+        }
+    touch:
+        if (g_Player.TouchesGrazeBox(&entry->pos, &catchSize))
+        {
+            g_ReplayManager->unk_d6 |= 0x40;
+            switch (entry->type)
+            {
+            case 0:
+                if ((int)g_Unknown626270.stats->power >= 128)
+                {
+                    g_Unknown626270.unk_93d4++;
+                    if (g_Unknown626270.unk_93d4 >= ARRAY_SIZE(g_PowerItemBonus))
+                    {
+                        g_Unknown626270.unk_93d4 = ARRAY_SIZE(g_PowerItemBonus) - 1;
+                    }
+                    amount = g_PowerItemBonus[g_Unknown626270.unk_93d4];
+                    g_Unknown626270.AddScore(amount);
+                    g_AsciiText.AddPopup(&entry->pos, amount,
+                                         amount >= 12800 ? 0xffffff00 : 0xffffffff);
+                }
+                else
+                {
+                    int prevLevel;
+                    int level;
+
+                    level = 0;
+                    while ((int)g_Unknown626270.stats->power >= g_PowerLevels[level])
+                    {
+                        level++;
+                    }
+                    prevLevel = level;
+                    g_Unknown626270.unk_93d4 = 0;
+                    g_Unknown626270.AddPower(1);
+                    if ((int)g_Unknown626270.stats->power >= 128)
+                    {
+                        g_Unknown626270.stats->power = 128.0f;
+                        g_Unknown626270.RerollChecksumKeys();
+                        if (!g_Unknown12fe0c8)
+                        {
+                            g_BulletManager.ClearAll(1);
+                        }
+                        g_Unknown49fbf0.Func427c81(0, 1);
+                        this->ConvertPowerItems(i);
+                    }
+                    g_Unknown626270.AddScore(10);
+                    g_Unknown49fbf0.powerChanged = 2;
+                    while ((int)g_Unknown626270.stats->power >= g_PowerLevels[level])
+                    {
+                        level++;
+                    }
+                    if (level != prevLevel)
+                    {
+                        g_AsciiText.AddPopup(&entry->pos, -1, 0xffffc0a0);
+                        g_SoundPlayer.QueueSound(0x1f, 0);
+                    }
+                    else
+                    {
+                        g_AsciiText.AddPopup(&entry->pos, 10, 0xffffffff);
+                    }
+                }
+                g_Unknown626270.AddSubRank(1);
+                break;
+            case 1:
+                amount = (entry->pos.y < g_Player.shotType->unk_20 ? 1 : 0)
+                             ? 50000
+                             : 50000 - (int)(entry->pos.y - g_Player.shotType->unk_20) * 100;
+                if (entry->unk_280 == 1)
+                {
+                    amount = 50000;
+                }
+                if (amount >= 50000)
+                {
+                    if (g_Unknown626270.unk_961c - g_Unknown626270.stats->unk_88 > 50000)
+                    {
+                        amount = g_Unknown626270.unk_961c - g_Unknown626270.stats->unk_88;
+                    }
+                }
+                else if (g_Unknown626270.unk_961c - g_Unknown626270.stats->unk_88 > 50000)
+                {
+                    amount += (g_Unknown626270.unk_961c - g_Unknown626270.stats->unk_88 - 50000) / 5;
+                }
+                amount -= amount % 10;
+                g_AsciiText.AddPopup(&entry->pos, amount,
+                                     entry->pos.y < g_Player.shotType->unk_20 || entry->unk_280 == 1
+                                         ? 0xffffff00
+                                         : 0xffffffff);
+                g_Unknown626270.AddScore(amount);
+                g_Unknown626270.stats->unk_24++;
+                g_Unknown626270.stats->pointItemsTotal++;
+                g_Unknown49fbf0.unk_4_8 = 2;
+                if (entry->pos.y < 128.0f)
+                {
+                    g_Unknown626270.AddSubRank(10);
+                }
+                else
+                {
+                    g_Unknown626270.AddSubRank(3);
+                }
+                if (g_Unknown626270.stats->unk_2c >= 0)
+                {
+                    for (;;)
+                    {
+                        if (g_Unknown626270.difficulty < 4)
+                        {
+                            if (g_Unknown626270.stats->unk_2c < 3)
+                            {
+                                g_Unknown626270.stats->unk_30 = g_Unknown626270.stats->unk_2c * 75 + 50;
+                            }
+                            else if (g_Unknown626270.stats->unk_2c < 5)
+                            {
+                                g_Unknown626270.stats->unk_30 = (g_Unknown626270.stats->unk_2c - 3) * 150 + 300;
+                            }
+                            else
+                            {
+                                g_Unknown626270.stats->unk_30 = (g_Unknown626270.stats->unk_2c - 5) * 200 + 800;
+                            }
+                        }
+                        else if (g_Unknown626270.stats->unk_2c == 0)
+                        {
+                            g_Unknown626270.stats->unk_30 = 200;
+                        }
+                        else if (g_Unknown626270.stats->unk_2c == 1)
+                        {
+                            g_Unknown626270.stats->unk_30 = 500;
+                        }
+                        else
+                        {
+                            g_Unknown626270.stats->unk_30 = (g_Unknown626270.stats->unk_2c - 2) * 500 + 800;
+                        }
+                        if (g_Unknown626270.stats->pointItemsTotal >= g_Unknown626270.stats->unk_30)
+                        {
+                            g_Unknown626270.AddLifeOrBomb();
+                            g_Unknown626270.stats->unk_2c++;
+                            continue;
+                        }
+                        break;
+                    }
+                }
+                break;
+            case 2:
+                if ((int)g_Unknown626270.stats->power >= 128)
+                {
+                    g_AsciiText.AddPopup(&entry->pos, amount,
+                                         amount >= 1000 ? 0xffffff00 : 0xffffffff);
+                }
+                else
+                {
+                    int prevLevel;
+                    int level;
+
+                    level = 0;
+                    while ((int)g_Unknown626270.stats->power >= g_PowerLevels[level])
+                    {
+                        level++;
+                    }
+                    prevLevel = level;
+                    g_Unknown626270.AddPower(8);
+                    if ((int)g_Unknown626270.stats->power >= 128)
+                    {
+                        g_Unknown626270.stats->power = 128.0f;
+                        g_Unknown626270.RerollChecksumKeys();
+                        if (!g_Unknown12fe0c8)
+                        {
+                            g_BulletManager.ClearAll(1);
+                        }
+                        g_Unknown49fbf0.Func427c81(0, 1);
+                        this->ConvertPowerItems(i);
+                    }
+                    g_Unknown49fbf0.powerChanged = 2;
+                    g_Unknown626270.AddScore(10);
+                    while ((int)g_Unknown626270.stats->power >= g_PowerLevels[level])
+                    {
+                        level++;
+                    }
+                    if (level != prevLevel)
+                    {
+                        g_AsciiText.AddPopup(&entry->pos, -1, 0xffffc0a0);
+                        g_SoundPlayer.QueueSound(0x1f, 0);
+                    }
+                    else
+                    {
+                        g_AsciiText.AddPopup(&entry->pos, 10, 0xffffffff);
+                    }
+                }
+                break;
+            case 3:
+                if ((int)g_Unknown626270.stats->bombs < 8)
+                {
+                    g_Unknown626270.AddBombs(1);
+                    g_Unknown49fbf0.bombsChanged = 2;
+                }
+                g_Unknown626270.AddSubRank(5);
+                break;
+            case 5:
+                g_Unknown626270.AddLifeOrBomb();
+                break;
+            case 4:
+                if ((int)g_Unknown626270.stats->power < 128)
+                {
+                    g_BulletManager.ClearAll(1);
+                    g_Unknown49fbf0.Func427c81(0, 1);
+                    g_SoundPlayer.QueueSound(0x1f, 0);
+                    g_AsciiText.AddPopup(&entry->pos, -1, 0xffffc0a0);
+                    this->ConvertPowerItems(i);
+                }
+                g_Unknown626270.stats->power = 128.0f;
+                g_Unknown626270.RerollChecksumKeys();
+                g_Unknown626270.AddScore(1000);
+                g_AsciiText.AddPopup(&entry->pos, 1000, 0xffffffff);
+                g_Unknown49fbf0.powerChanged = 2;
+                break;
+            case 6:
+                if (!g_Player.unk_23dc)
+                {
+                    amount = g_Unknown626270.stats->grazeTotal / 40 * 10 + 300;
+                    if (amount <= 0)
+                    {
+                        amount = 10;
+                    }
+                }
+                else
+                {
+                    amount = 100;
+                }
+                g_AsciiText.AddPopup2(&entry->pos, amount, 0xffffffff);
+                g_Unknown626270.AddScore(amount);
+                if (!g_Player.bomb.running)
+                {
+                    g_Unknown626270.AddBonusPoints(20);
+                }
+                else if ((i & 1) == 0)
+                {
+                    g_Unknown626270.AddBonusPoints(10);
+                }
+                else
+                {
+                    g_Unknown626270.AddBonusPointsNoTrack(10);
+                }
+                break;
+            case 8:
+                g_Unknown626270.AddBonusPoints(30);
+                g_Unknown626270.AddBonusPointsNoTrack(70);
+                break;
+            case 7:
+                if ((g_Unknown626270.unk_961c >= g_Unknown626270.unk_9618) != 0)
+                {
+                    amount = (entry->pos.y < g_Player.shotType->unk_20 || entry->unk_280 ? 1 : 0)
+                                 ? 50000
+                                 : 50000 - (int)(entry->pos.y - g_Player.shotType->unk_20) * 100;
+                    amount -= amount % 10;
+                    g_AsciiText.AddPopup(&entry->pos, amount,
+                                         entry->pos.y < g_Player.shotType->unk_20 || entry->unk_280
+                                             ? 0xffffff00
+                                             : 0xffffffff);
+                    g_Unknown626270.AddScore(amount);
+                }
+                amount = 1000;
+                amount += g_Unknown626270.stats->spellCardsCaptured * 100;
+                if ((g_Unknown626270.unk_961c >= g_Unknown626270.unk_9618) == 0)
+                {
+                    g_AsciiText.AddPopup(&entry->pos, amount, 0xffff4040);
+                }
+                g_Unknown626270.AddBonusPoints(amount);
+                break;
+            case 9:
+                amount = g_Unknown626270.stats->grazeTotal / 40 * 10 + 300;
+                if (amount <= 0)
+                {
+                    amount = 10;
+                }
+                if ((g_Unknown626270.unk_961c >= g_Unknown626270.unk_9618) != 0)
+                {
+                    g_AsciiText.AddPopup(&entry->pos, amount, 0xffffffff);
+                }
+                g_Unknown626270.AddScore(amount);
+                amount = 100;
+                if ((g_Unknown626270.unk_961c >= g_Unknown626270.unk_9618) == 0)
+                {
+                    g_AsciiText.AddPopup(&entry->pos, amount, 0xffff4040);
+                }
+                g_Unknown626270.AddBonusPoints(amount);
+                break;
+            }
+            entry->active = 0;
+            any = TRUE;
+            continue;
+        }
+        entry->timer.Tick();
+        if (entry->sprite.scriptPos != NULL)
+        {
+            g_SpriteEngine->Step(&entry->sprite);
+        }
+        this->drawListTail->next = entry;
+        entry->next = NULL;
+        this->drawListTail = entry;
+    }
+    if (any)
+    {
+        g_SoundPlayer.QueueSound(0x15, 0);
+    }
 }
 
 void ItemManager::CollectAll()

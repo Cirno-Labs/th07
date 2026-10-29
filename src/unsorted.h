@@ -1082,8 +1082,10 @@ public:
     // ReplayManager::RecordOnUpdate2 marks 0x100 in the frame's replay bits
     // while it is set, and clears it.
     int unk_93d0;
-    // Cleared by Player's UpdateDyingState when the player dies.
-    BYTE unk_93d4;
+    // The power items collected in a row at full power, as th06's
+    // powerItemCombo: picks the points from g_PowerItemBonus. Cleared by
+    // Player's UpdateDyingState when the player dies.
+    char unk_93d4;
     BYTE character;
     BYTE shotType;
     // character * 2 + shotType, as a replay stores it.

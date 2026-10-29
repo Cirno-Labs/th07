@@ -19,6 +19,8 @@ struct Item
     char active;
     char onScreen;
     char state;
+    // Set when it is drawn to the player while Player::unk_240d is 1:
+    // a point item then scores in full.
     char unk_280;
     char unk_281[3];
     // The next item to draw; NULL after the last.
@@ -62,3 +64,9 @@ public:
     Item *drawListTail;
 };
 extern ItemManager g_ItemManager;
+
+// The points a power item scores at full power, by the power items in a
+// row, as th06's.
+extern int g_PowerItemBonus[31];
+// The power levels, which play a sound when crossed, as th06's.
+extern int g_PowerLevels[];
