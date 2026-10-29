@@ -722,3 +722,10 @@ void UpdateSakuyaABombFocused(Player *player);
 // Draws Sakuya A's focused bomb as DrawSakuyaABomb, but offset by the
 // play area.
 void DrawSakuyaABombFocused(Player *player);
+
+// Sakuya B's bomb: 160 frames with stateTimer at 260, an aura and the
+// player sped up to 2; stops all bullets (BulletManager::StopAllBullets)
+// at frames 0, 60 and 120; from frame 30 four sprites around the play
+// area's middle and, every fourth frame, a box of 3 damage over most
+// of it. Ends with an area (AddHitboxAreaCircle, 800) at the player.
+void UpdateSakuyaBBomb(Player *player);

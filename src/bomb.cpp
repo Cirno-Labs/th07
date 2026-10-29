@@ -2,6 +2,7 @@
 
 #include <math.h>
 
+#include "bullet.h"
 #include "effect.h"
 #include "item.h"
 #include "player.h"
@@ -1195,4 +1196,86 @@ void DrawSakuyaABombFocused(Player *player)
         knife->sprites[0].pos.z = 0.0f;
         g_SpriteEngine->Draw(knife->sprites);
     }
+}
+
+void UpdateSakuyaBBomb(Player *player)
+{
+    int i;
+    Sprite *spr;
+    PlayerBombPart *knife;
+    D3DXVECTOR3 tmp;
+
+    if (player->bomb.timer >= player->bomb.duration)
+    {
+        g_Unknown49fbf0.EndBombName();
+        player->bomb.running = 0;
+        player->moveScaleY = 1.0f;
+        player->moveScaleX = 1.0f;
+        player->AddHitboxAreaCircle(&player->position, 800.0f, 0.0f, 0, 6);
+        return;
+    }
+    if (player->bomb.timer.HasTickedTo(0))
+    {
+        g_ItemManager.CollectAll();
+        g_Unknown49fbf0.ShowBombName(0x4a3, "時符「パーフェクトスクウェア」");
+        player->bomb.duration = 160;
+        player->stateTimer.Set(260);
+        SpawnBombAura(player);
+        for (knife = player->bomb.parts, i = 0; i < 4; i++, knife++)
+        {
+            knife->state = 0;
+        }
+        g_SoundPlayer.QueueSound(0x13, 0);
+        SetBombDrain(player, 5500, 0.26f);
+        player->moveScaleY = 2.0f;
+        player->moveScaleX = 2.0f;
+        g_BulletManager.StopAllBullets();
+    }
+    if (player->bomb.timer.HasTickedTo(60))
+    {
+        g_BulletManager.StopAllBullets();
+    }
+    if (player->bomb.timer.HasTickedTo(120))
+    {
+        g_BulletManager.StopAllBullets();
+    }
+    if (player->bomb.timer.HasTickedTo(30))
+    {
+        for (knife = player->bomb.parts, i = 0; i < 4; i++, knife++)
+        {
+            knife->state = 1;
+            spr = knife->sprites;
+            g_SpriteEngine->StartScriptAtOrigin(spr, i + 0x409);
+            spr->pos.x = 192.0f + ((i & 1) ? 128.0f : -128.0f);
+            spr->pos.y = 224.0f + ((i / 2) ? 128.0f : -128.0f);
+            spr->pos.z = 0.49f;
+            knife->velocity.z = 0.0f;
+        }
+    }
+    if (player->bomb.timer >= 30 && player->bomb.timer.HasTicked() && player->bomb.timer.current % 4 == 0)
+    {
+        player->unk_9dc[0].pos.x = 192.0f;
+        player->unk_9dc[0].pos.y = 224.0f;
+        player->unk_9dc[0].size.x = 352.0f;
+        player->unk_9dc[0].size.y = 416.0f;
+        player->unk_9dc[0].unk_18 = 3;
+    }
+    if (player->bomb.timer.HasTickedTo(40))
+    {
+        ScreenEffect::StartEffect(1, 60, 1, 7, 0);
+    }
+    if (player->bomb.timer.HasTickedTo(100))
+    {
+        ScreenEffect::StartEffect(1, 70, 24, 0, 0);
+    }
+    for (knife = player->bomb.parts, i = 0; i < 4; i++, knife++)
+    {
+        if (knife->state == 0)
+        {
+            continue;
+        }
+        g_SpriteEngine->Step(knife->sprites);
+    }
+    player->playerState = 3;
+    player->bomb.timer.Tick();
 }
