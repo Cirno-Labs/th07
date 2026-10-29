@@ -311,8 +311,8 @@ struct PlayerBombHit
 {
     D3DXVECTOR3 pos;
     D3DXVECTOR3 size;
-    int unk_18;
-    int unk_1c;
+    int damage;
+    int damageDealt;
 };
 ASSERT_SIZE(PlayerBombHit, 0x20);
 

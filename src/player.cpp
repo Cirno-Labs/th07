@@ -346,7 +346,7 @@ int UpdateTrailLaserBullet(Player *player, PlayerBullet *bullet)
         if (bullet->unk_258[i].x >= -900.0f)
         {
             player->bombHitboxes[i + 0x60].pos = bullet->unk_258[i];
-            player->bombHitboxes[i + 0x60].unk_18 = 1;
+            player->bombHitboxes[i + 0x60].damage = 1;
             player->bombHitboxes[i + 0x60].size = bullet->size;
         }
     }
@@ -770,8 +770,8 @@ int Player::CalcDamage(D3DXVECTOR3 *pos, D3DXVECTOR3 *size, int *hitByBomb)
         {
             continue;
         }
-        damage += this->bombHitboxes[idx].unk_18;
-        this->bombHitboxes[idx].unk_1c += this->bombHitboxes[idx].unk_18;
+        damage += this->bombHitboxes[idx].damage;
+        this->bombHitboxes[idx].damageDealt += this->bombHitboxes[idx].damage;
         this->hitCounter++;
         if (this->hitCounter % 4 == 0)
         {
