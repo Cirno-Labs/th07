@@ -161,7 +161,7 @@ address,size,name,symbol
 0x0041d700,3268,Ending::RunScript,?RunScript@Ending@@QAEHXZ
 0x0041e4b0,216,Ending::Load,?Load@Ending@@QAEHPAD@Z
 0x0041e590,508,Ending::AddedCallback,?AddedCallback@Ending@@SIHPAV1@@Z
-0x0041e790,137,Func41e790,
+0x0041e790,137,Ending::DeletedCallback,?DeletedCallback@Ending@@SIHPAV1@@Z
 0x0041e820,245,Func41e820,?Func41e820@@YIHXZ
 0x0041e920,312,Func41e920,
 0x0041ea60,1037,Func41ea60,

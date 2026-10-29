@@ -36,6 +36,9 @@ public:
     // type's ending (a bad ending after a continue). Returns 0, or -1 on
     // failure.
     static int AddedCallback(Ending *ending);
+    // The update chain element's deleted callback: frees what the ending
+    // loaded, removes the draw chain element and frees the ending.
+    static int DeletedCallback(Ending *ending);
 
     ChainElem *calcChain;
     ChainElem *drawChain;
