@@ -907,6 +907,9 @@ class Unknown626270
 {
 public:
     Unknown626270();
+    // The draw chain callback, as th06's: moves unk_93dc on from 1 to
+    // 2. Returns 1.
+    static int OnDraw(Unknown626270 *mgr);
     // Whether the checksummed fields of `stats` no longer agree.
     int Func404fe0();
     // Whether Phantasm is open: a shot type cleared Extra (or captured
@@ -1033,7 +1036,8 @@ public:
             unsigned int unk_93d8Bit3 : 1;
         };
     };
-    // Cleared by SetUpTitleScene.
+    // Cleared by SetUpTitleScene. OnDraw moves it on to 2, as th06's
+    // isPaused.
     BYTE unk_93dc;
     // Set while the continue menu shows, as th06's.
     BYTE isInContinueMenu;

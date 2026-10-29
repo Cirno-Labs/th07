@@ -265,7 +265,7 @@ address,size,name,symbol
 0x0042d7be,124,Unknown626270::ComputeChecksum,?ComputeChecksum@Unknown626270@@QAEHXZ
 0x0042d83a,155,Unknown626270::AddLifeOrBomb,?AddLifeOrBomb@Unknown626270@@QAEXXZ
 0x0042d8d5,2303,Func42d8d5,
-0x0042e1d4,36,Func42e1d4,
+0x0042e1d4,36,Unknown626270::OnDraw,?OnDraw@Unknown626270@@SIHPAV1@@Z
 0x0042e1f8,404,Func42e1f8,?Func42e1f8@@YIXXZ
 0x0042e38c,78,Func42e38c,
 0x0042e3da,602,Func42e3da,

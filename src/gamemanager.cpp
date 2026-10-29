@@ -112,3 +112,12 @@ void Unknown626270::AddLifeOrBomb()
         g_Unknown49fbf0.bombsChanged = 2;
     }
 }
+
+int Unknown626270::OnDraw(Unknown626270 *mgr)
+{
+    if (mgr->unk_93dc)
+    {
+        mgr->unk_93dc = 2;
+    }
+    return 1;
+}
