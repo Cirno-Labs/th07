@@ -13,6 +13,10 @@
 class Ending
 {
 public:
+    // The update chain element's callback: runs the script and steps
+    // the sprites, up to 5 times a frame while skipping. Returns 0 at the
+    // script's end, otherwise 1.
+    static int OnUpdate(Ending *ending);
     // Reads a number at the cursor and moves the cursor past it and the
     // NULs after it.
     int ReadInt();
