@@ -201,7 +201,7 @@ address,size,name,symbol
 0x004249a0,600,Func4249a0,
 0x00424c00,275,Func424c00,
 0x00424d20,223,BulletManager::FirePattern,?FirePattern@BulletManager@@QAEHPAUBulletShooter@@@Z
-0x00424e00,712,Func424e00,
+0x00424e00,712,BulletManager::SpawnLaser,?SpawnLaser@BulletManager@@QAEPAULaser@@PAUBulletShooter@@@Z
 0x004250d0,195,Func4250d0,
 0x004251a0,356,Func4251a0,
 0x00425310,231,Func425310,

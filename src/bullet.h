@@ -191,6 +191,11 @@ public:
     // player, until no bullet is free, and plays its sound with flag
     // 0x200; nothing while 0x400 bullets are out. Returns 0.
     int FirePattern(BulletShooter *shooter);
+    // Starts a laser from `shooter` in a free slot: exFloats give its
+    // start and end offsets, length and width, exInts its timings.
+    // Returns it, or the first laser while unk_37a12c is set and flag 4
+    // is not, or past the last one if none is free.
+    Laser *SpawnLaser(BulletShooter *shooter);
     // Stops every bullet of g_BulletManager where it is and turns it to
     // color 0. Not in th06.
     void StopAllBullets();

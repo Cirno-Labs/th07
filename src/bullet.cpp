@@ -203,3 +203,57 @@ done:
     }
     return 0;
 }
+
+Laser *BulletManager::SpawnLaser(BulletShooter *shooter)
+{
+    int i;
+    Laser *laser;
+
+    laser = this->lasers;
+    if (this->unk_37a12c != 0 && !(shooter->flags & 4))
+    {
+        return laser;
+    }
+    for (i = 0; i < 0x40; i++, laser++)
+    {
+        if (laser->active != 0)
+        {
+            continue;
+        }
+        g_SpriteEngine->StartScript(&laser->sprite0, shooter->sprite + 0x20a);
+        g_SpriteEngine->SetSprite(&laser->sprite0, laser->sprite0.spriteIndex + shooter->color);
+        g_SpriteEngine->InitSprite(&laser->sprite1, g_BulletColorOffsets16[shooter->color] + 0x292);
+        laser->sprite1.flags |= 0x10;
+        laser->pos = shooter->pos;
+        laser->color = shooter->color;
+        laser->active = 1;
+        laser->angle = shooter->angle1;
+        if (shooter->aimMode == 0)
+        {
+            laser->angle += g_Player.AngleFrom(&shooter->pos);
+        }
+        laser->flags = shooter->flags;
+        laser->timer.Set(0);
+        laser->startOffset = shooter->exFloats[0];
+        laser->endOffset = shooter->exFloats[1];
+        laser->maxLength = shooter->exFloats[2];
+        laser->width = shooter->exFloats[3];
+        laser->speed = shooter->speed1;
+        laser->startFrames = shooter->exInts[0];
+        laser->durationFrames = shooter->exInts[1];
+        laser->endFrames = shooter->exInts[2];
+        laser->hitStartFrame = shooter->exInts[3];
+        laser->endHitFrames = shooter->laserEndHitFrames;
+        laser->unk_4e9 = 0;
+        if (laser->startFrames == 0)
+        {
+            laser->state = 1;
+        }
+        else
+        {
+            laser->state = 0;
+        }
+        break;
+    }
+    return laser;
+}
