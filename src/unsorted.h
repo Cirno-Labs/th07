@@ -1029,6 +1029,9 @@ extern Unknown49fbf0 g_Unknown49fbf0;
 // Grows by 2500 plus 20 for every 1500 of Unknown626270::unk_961c above
 // stats->unk_88 with each graze. Probably a field of a larger object.
 extern int g_Unknown12fe0d0;
+// Cleared by Player::StopBombState, next to g_Unknown12fe0d0.
+extern int g_Unknown12fe0c4;
+extern int g_Unknown12fe0cc;
 
 // The object at 0x1347b00. Placeholder name; only what is known so far.
 class Unknown1347b00

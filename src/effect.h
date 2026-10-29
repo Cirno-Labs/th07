@@ -13,7 +13,12 @@ struct Effect
 {
     Sprite sprite;
     D3DXVECTOR3 pos;
-    unsigned char unk_258[0x74];
+    unsigned char unk_258[0x3c];
+    // Player::StopBombState sets them to the cosine and sine of the
+    // direction its effects burst in.
+    float unk_294;
+    float unk_298;
+    unsigned char unk_29c[0x30];
     // Whether it runs, as th06's.
     char active;
     unsigned char unk_2cd[0xb];

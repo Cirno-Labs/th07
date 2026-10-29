@@ -861,7 +861,7 @@ int Player::CheckHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size)
     g_ReplayManager->unk_d6 |= 2;
     if (this->playerState == 4)
     {
-        g_Player.Func441bd0(0);
+        g_Player.StopBombState(0);
         return 1;
     }
     if (this->playerState != 0)
@@ -962,7 +962,7 @@ hit:
     g_ReplayManager->unk_d6 |= 2;
     if (this->playerState == 4)
     {
-        g_Player.Func441bd0(0);
+        g_Player.StopBombState(0);
         return 1;
     }
     if (this->playerState != 0)
@@ -1195,7 +1195,7 @@ void StartBombState(Player *player)
     case 2:
         if (player->deathbombFrames != 0)
         {
-            player->Func441bd0(0);
+            player->StopBombState(0);
             return;
         }
         player->unk_240d = 2;
@@ -1303,6 +1303,54 @@ PlayerArea *Player::AddHitboxAreaCircle(D3DXVECTOR3 *pos, float unk_10, float un
     area->unk_18 = unk_18;
     area->unk_1c = unk_1c;
     return area;
+}
+
+void Player::StopBombState(int unk)
+{
+    Effect *eff;
+    int i;
+    float angle;
+
+    if (this->unk_b7e6c != NULL)
+    {
+        this->unk_b7e6c->active = 0;
+        this->unk_b7e6c = NULL;
+    }
+    eff = g_EffectManager.Func41c610(0x1c, &this->position, 4, 1, 0xffffffff);
+    eff->sprite.unk_48[4].Set(0);
+    eff->sprite.unk_84[4].Set(30);
+    eff->sprite.unk_c4 = 0;
+    eff->sprite.unk_218.x = 0.0625f;
+    eff->sprite.unk_218.y = 0.0625f;
+    eff->sprite.unk_218.z = 1.3f;
+    eff->sprite.unk_224.x = 1.3f;
+    eff->sprite.unk_48[2].Set(0);
+    eff->sprite.unk_84[2].Set(30);
+    eff->sprite.unk_c2 = 1;
+    // Bytes 0x22b and 0x22f, probably the alphas of two colors over
+    // unk_224.y and .z (the vector type keeps Sprite's inline budget).
+    ((BYTE *)&eff->sprite.unk_224.y)[3] = eff->sprite.alpha;
+    ((BYTE *)&eff->sprite.unk_224.z)[3] = 0;
+    eff->sprite.unk_c8 = 30;
+    this->unk_b7e6c = eff;
+    g_Unknown12fe0cc = 0;
+    g_Unknown12fe0c4 = 0;
+    this->unk_240d = 0;
+    this->playerState = 3;
+    this->stateTimer.Set(40);
+    this->unk_23fc = 40;
+    g_Unknown626270.unk_9620 = g_Unknown626270.stats->unk_88;
+    this->AddHitboxAreaCircle(&this->position, 32.0f, 16.0f, 0x32, 8);
+    angle = -D3DX_PI;
+    for (i = 0; i < 0x20; i++, angle += D3DX_PI / 16.0f)
+    {
+        eff = g_EffectManager.SpawnEffect(0x1d, &this->position, 1, 0xffffffff);
+        eff->unk_294 = cosf(angle);
+        eff->unk_298 = sinf(angle);
+    }
+    g_SoundPlayer.QueueSound(7, 0);
+    g_SoundPlayer.QueueSound(0x21, 0);
+    g_ReplayManager->unk_d6 |= 0x10;
 }
 
 void ResetHomingAndText(Player *player)

@@ -195,7 +195,7 @@ int Func440cf0(Player *player);
 // 2): sets unk_240d to 2 during a bomb or while
 // g_Unknown49fbf0.Func42ad66(), or while playerState is 1 or 3, or
 // while dying without deathbombFrames; while dying with them calls
-// Func441bd0(0). Otherwise starts playerState 4 for 540 frames of
+// StopBombState(0). Otherwise starts playerState 4 for 540 frames of
 // stateTimer (kept in unk_16a0c), with unk_240d 1: ends unk_b7e68 (and
 // lets unk_b7e6c end), starts effect 0x1c in slot 4 to follow the
 // player in unk_b7e6c, calls Unknown49fbf0's Func427c81(0, 2), plays
@@ -326,7 +326,7 @@ public:
     // Whether a `size` box at `pos` hits the player, as th06's: 2 if it
     // meets one of unk_17dc's areas (CheckAreaHit, unk_2404 6 otherwise),
     // else 1 if it meets the hitbox, else 0. A hit marks bit 2 of
-    // g_ReplayManager->unk_d6; it calls Func441bd0(0) while playerState
+    // g_ReplayManager->unk_d6; it calls StopBombState(0) while playerState
     // is 4 and kills the player while it is 0.
     int CheckHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size);
     // Whether a `size` box at `pos`, grown by 20 on each side, grazes the
@@ -351,7 +351,7 @@ public:
     // Whether a laser hits or grazes the player, as th06's: `pos` and
     // `size` are its box in its own frame, into which the hitbox is
     // turned by `angle` around `origin`. On a hit, marks bit 2 of g_ReplayManager->unk_d6, then
-    // calls Func441bd0(0) while playerState is 4 and kills the player
+    // calls StopBombState(0) while playerState is 4 and kills the player
     // while it is 0, returning 1 in both cases, else 0. Otherwise, with
     // `canGraze`, grazes the player within 48 of the box unless it is
     // respawning or dying, returning 2; else returns 0.
@@ -363,8 +363,15 @@ public:
     // and while unk_240d is 1 calls Unknown626270's Func42f789 and
     // Func42f736 with 30 (focused) or 80.
     void Graze(D3DXVECTOR3 *pos);
-    // CheckHit calls it with 0 on a hit while playerState is 4.
-    void Func441bd0(int unk);
+    // Ends playerState 4 early (the hit checks call it on a hit,
+    // StartBombState while dying with deathbombFrames): ends unk_b7e6c and
+    // starts a new effect 0x1c in slot 4 there, makes the player
+    // invulnerable (playerState 3) for 40 frames with unk_23fc 40 and
+    // unk_240d 0, resets Unknown626270::unk_9620, adds an area at the
+    // player (AddHitboxAreaCircle with 32, 16, 0x32 and 8), bursts 32 effects
+    // 0x1d in a circle and plays sounds 7 and 0x21, marking bit 0x10 of
+    // g_ReplayManager->unk_d6. `unk` is unused.
+    void StopBombState(int unk);
     // Ends playerState 4 (UpdateInvulnerability calls it when it runs out): calls
     // Unknown626270's Func42f789 and Func42f736 with 10000, scores ten
     // times unk_961c over stats->unk_88 (shown through Unknown49fbf0's

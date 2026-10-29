@@ -38,7 +38,10 @@ struct SpriteBase
     Timer unk_3c;
     Timer unk_48[5];
     Timer unk_84[5];
-    unsigned char unk_c0[0x4];
+    unsigned char unk_c0[0x2];
+    // Player's StopBombState sets it on its effect.
+    BYTE unk_c2;
+    unsigned char unk_c3[0x1];
     // Player's StartBombState sets these on its effect.
     BYTE unk_c4;
     unsigned char unk_c5[0x3];

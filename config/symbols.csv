@@ -468,7 +468,7 @@ address,size,name,symbol
 0x00441800,163,Player::AddHitboxArea,?AddHitboxArea@Player@@QAEPAUPlayerArea@@PAUD3DXVECTOR3@@MMH@Z
 0x004418b0,162,Player::AddHitboxAreaCircle,?AddHitboxAreaCircle@Player@@QAEPAUPlayerArea@@PAUD3DXVECTOR3@@MMHH@Z
 0x00441960,612,StartBombState,?StartBombState@@YIXPAVPlayer@@@Z
-0x00441bd0,680,Player::Func441bd0,?Func441bd0@Player@@QAEXH@Z
+0x00441bd0,680,Player::StopBombState,?StopBombState@Player@@QAEXH@Z
 0x00441e80,290,ResetHomingAndText,?ResetHomingAndText@@YIXPAVPlayer@@@Z
 0x00441fb0,247,Player::OnUpdate,?OnUpdate@Player@@SIHPAV1@@Z
 0x004420b0,665,Player::OnDraw,?OnDraw@Player@@SIHPAV1@@Z
@@ -1774,6 +1774,8 @@ address,size,name,symbol
 0x00626258,,g_Archive,?g_Archive@@3VDatArchive@@A
 0x00626270,,g_Unknown626270,?g_Unknown626270@@3VUnknown626270@@A
 0x0062f958,,g_BulletManager,?g_BulletManager@@3VBulletManager@@A
+0x012fe0c4,,g_Unknown12fe0c4,?g_Unknown12fe0c4@@3HA
+0x012fe0cc,,g_Unknown12fe0cc,?g_Unknown12fe0cc@@3HA
 0x012fe0d0,,g_Unknown12fe0d0,?g_Unknown12fe0d0@@3HA
 0x012fe250,,g_EffectManager,?g_EffectManager@@3VEffectManager@@A
 0x01347b00,,g_Unknown1347b00,?g_Unknown1347b00@@3VUnknown1347b00@@A
