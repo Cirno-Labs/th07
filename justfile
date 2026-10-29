@@ -56,7 +56,7 @@ hooks:
 
 # Remove build outputs (keeps the Ghidra project)
 clean:
-    rm -rf build/obj build/src build/game build/th07.* build/th07.*
+    rm -rf build/obj build/src build/game build/th07.* build/th07_exe.*
 
 # Verify the original and copy it into build/
 _orig:

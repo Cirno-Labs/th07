@@ -22,6 +22,7 @@ OBJ = "build/obj"
 SJIS = "build/src"  # src/ converted to Shift-JIS
 DLL = "build/th07.dll"
 EXE = "build/th07.exe"
+EXE_MAP = "build/th07_exe.map"  # the DLL's map is build/th07.map
 ORIGINAL = "build/th07_100b.exe"
 CFLAGS = ["/Od", "/Ob1", "/Gr", "/GX", "/Oi", "/Gy", "/GF"]
 GLUE_PREFIX = "dll_"  # objects from src/dll/, the DLL's own code
@@ -228,7 +229,7 @@ def link_exe(objs):
     # the game code and the CRT comes last.
     objs = link_order(objs, read_symbols())
     tool("link", "/SUBSYSTEM:WINDOWS", "/FIXED", "/OPT:NOWIN98", "/NODEFAULTLIB:libc.lib",
-         "/MAP:" + win(EXE[:-4] + ".map"), "/OUT:" + win(EXE), *map(win, objs), win(res),
+         "/MAP:" + win(EXE_MAP), "/OUT:" + win(EXE), *map(win, objs), win(res),
          "dinput8.lib", "dsound.lib", "d3d8.lib", "d3dx8.lib", "dxguid.lib", "winmm.lib",
          "kernel32.lib", "user32.lib", "gdi32.lib", "ole32.lib", "libcmt.lib")
     copy_header_fields(ORIGINAL, EXE)

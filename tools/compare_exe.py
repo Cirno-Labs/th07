@@ -6,7 +6,7 @@ section, and the game's functions and globals by symbol.
 For the headers, the Rich header, each section and the imports it prints
 the share of identical bytes (at the same file offset or address), the
 size difference and the first divergence. Code is then aligned by
-symbol: the link map (build/th07.map) gives each function's address in
+symbol: the link map (build/th07_exe.map) gives each function's address in
 our exe, config/symbols.csv its address in the original. For each
 function it checks whether it sits at its original address and whether
 its bytes are identical, raw and with addresses masked (a dword that is
@@ -20,7 +20,7 @@ import bisect, collections, csv, os, re, struct, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OURS = "build/th07.exe"
 ORIGINAL = "build/th07_100b.exe"
-MAP = "build/th07.map"
+MAP = "build/th07_exe.map"
 SYMBOLS = "config/symbols.csv"
 
 OPT_FIELDS = [  # (offset in the optional header, format, name)
@@ -253,7 +253,7 @@ def read_map():
     """{symbol: (address, object)} from the link map."""
     text = open(MAP, encoding="latin-1").read()
     if "Preferred load address is 00400000" not in text:
-        sys.exit(f"{MAP} is not the exe's map (the DLL build writes it too): run `just exe`")
+        sys.exit(f"{MAP} is not the exe's map: run `just exe`")
     syms = {}
     line_re = re.compile(r"^\s*[0-9a-f]{4}:[0-9a-f]{8}\s+(\S+)\s+([0-9a-f]{8})\s+(?:f\s+)?(?:i\s+)?(\S+)\s*$")
     for line in text.splitlines():
