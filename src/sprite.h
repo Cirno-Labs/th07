@@ -295,6 +295,10 @@ public:
     void ProjectSprite3D(Sprite *vm);
     // Draws `vm` in 3D, projected by ProjectSprite3D. Not in th06.
     int DrawProjected3D(Sprite *vm);
+    // Draws `vm` in 3D with the vertex buffer's quad, as th06's Draw3D,
+    // after the pending batch. The world matrix is the one ProjectSprite3D
+    // makes, shaken.
+    int Draw3D(Sprite *vm);
     // Copies surface `surface` to the back buffer at (`left`, `top`),
     // as in th06.
     void CopySurfaceToBackBuffer(int surface, int left, int top, int x, int y);
