@@ -1098,7 +1098,8 @@ public:
     int unk_9634;
     int maxRank;
     int minRank;
-    unsigned char unk_9640[0x4];
+    // Hundredths of a rank, moved by AddSubRank and SubSubRank.
+    int subRank;
 };
 ASSERT_SIZE(Unknown626270, 0x9644);
 extern Unknown626270 g_Unknown626270;

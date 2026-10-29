@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">57.93% (402)</tspan> · <tspan class="decompiled">2.88% (20)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">39.05% (271)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">57.93% (402)</tspan> · <tspan class="decompiled">3.03% (21)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">38.90% (270)</tspan></tspan></text>
 <g transform="translate(0 20)">
 <rect width="432.70" height="6" x="0" y="0" class="named"/>
-<rect width="21.53" height="6" x="432.70" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="454.23" y="0" class="nonmatching"/>
-<rect width="291.70" height="6" x="455.30" y="0" class="todo"/>
+<rect width="22.60" height="6" x="432.70" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="455.30" y="0" class="nonmatching"/>
+<rect width="290.62" height="6" x="456.38" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (173 bytes)</title></rect>
@@ -345,7 +345,7 @@
 <rect width="12" height="12" x="345" y="75" class="todo"><title>0x0042f2e4 Unknown626270::DeletedCallback (225 bytes)</title></rect>
 <rect width="12" height="12" x="360" y="75" class="named"><title>0x0042f3c5 RegisterGameManagerChain (152 bytes)</title></rect>
 <rect width="12" height="12" x="375" y="75" class="named"><title>0x0042f45d RemoveGameManagerChain (77 bytes)</title></rect>
-<rect width="12" height="12" x="390" y="75" class="todo"><title>0x0042f4aa Unknown626270::AddSubRank (124 bytes)</title></rect>
+<rect width="12" height="12" x="390" y="75" class="decompiled"><title>0x0042f4aa Unknown626270::AddSubRank (124 bytes)</title></rect>
 <rect width="12" height="12" x="405" y="75" class="todo"><title>0x0042f526 Unknown626270::SubSubRank (124 bytes)</title></rect>
 <rect width="12" height="12" x="420" y="75" class="todo"><title>0x0042f5a2 Func42f5a2 (253 bytes)</title></rect>
 <rect width="12" height="12" x="435" y="75" class="todo"><title>0x0042f69f Func42f69f (151 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">44.90%</tspan> · <tspan class="decompiled">0.44%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">54.57%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">44.90%</tspan> · <tspan class="decompiled">0.48%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">54.54%</tspan></tspan></text>
 <g transform="translate(0 20)">
 <rect width="335.39" height="6" x="0" y="0" class="named"/>
-<rect width="3.31" height="6" x="335.39" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="338.70" y="0" class="nonmatching"/>
-<rect width="407.63" height="6" x="339.37" y="0" class="todo"/>
+<rect width="3.55" height="6" x="335.39" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="338.95" y="0" class="nonmatching"/>
+<rect width="407.39" height="6" x="339.61" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1257,7 +1257,7 @@
 <rect width="3.81" height="4.63" x="709.15" y="129.84" class="todo"><title>0x004010f0 Func4010f0 (124 bytes)</title></rect>
 <rect width="3.81" height="4.63" x="715.95" y="129.84" class="todo"><title>0x00404eb0 Func404eb0 (124 bytes)</title></rect>
 <rect width="3.81" height="4.63" x="722.76" y="129.84" class="decompiled"><title>0x0042d7be Unknown626270::ComputeChecksum (124 bytes)</title></rect>
-<rect width="3.81" height="4.63" x="729.57" y="129.84" class="todo"><title>0x0042f4aa Unknown626270::AddSubRank (124 bytes)</title></rect>
+<rect width="3.81" height="4.63" x="729.57" y="129.84" class="decompiled"><title>0x0042f4aa Unknown626270::AddSubRank (124 bytes)</title></rect>
 <rect width="3.81" height="4.63" x="736.38" y="129.84" class="todo"><title>0x0042f526 Unknown626270::SubSubRank (124 bytes)</title></rect>
 <rect width="3.81" height="4.63" x="743.19" y="129.84" class="named"><title>0x0044a520 ClearViewport (124 bytes)</title></rect>
 <rect width="4.22" height="4.20" x="674.06" y="137.48" class="named"><title>0x00450c10 Sprite::ResolveFloatArgumentPtr (124 bytes)</title></rect>

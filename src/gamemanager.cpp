@@ -283,3 +283,17 @@ void RemoveGameManagerChain()
     }
     g_Unknown626270.stats->guiScore = g_Unknown626270.stats->score;
 }
+
+void Unknown626270::AddSubRank(int amount)
+{
+    this->subRank += amount;
+    while (this->subRank >= 100)
+    {
+        this->unk_9634++;
+        this->subRank -= 100;
+    }
+    if (this->unk_9634 > this->maxRank)
+    {
+        this->unk_9634 = this->maxRank;
+    }
+}
