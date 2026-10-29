@@ -288,7 +288,9 @@ public:
     unsigned char unk_28ef4[0x5254];
     // Images loaded as surfaces to copy to the back buffer from.
     IDirect3DSurface8 *surfaces[0x20];
-    unsigned char unk_2e1c8[0x304];
+    // System memory copies of them, to recreate them from.
+    IDirect3DSurface8 *surfacesBackup[0x20];
+    unsigned char unk_2e248[0x284];
     // The texture last set on the device.
     IDirect3DTexture8 *currentTexture;
     // The states Draw last set, 0xff when unknown.
