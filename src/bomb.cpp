@@ -537,3 +537,20 @@ void UpdateReimuBBombFocused(Player *player)
     player->playerState = 3;
     player->bomb.timer.Tick();
 }
+
+void DrawReimuBBombFocused(Player *player)
+{
+    Sprite *curSprite;
+    int i;
+
+    DimPlayAreaForBomb(player);
+    for (i = 0; i < 3; i++)
+    {
+        curSprite = &player->bomb.parts[0].sprites[i];
+        curSprite->pos = player->bomb.startPos + curSprite->posOffset;
+        curSprite->pos.x = g_Unknown626270.arena[0] + curSprite->pos.x;
+        curSprite->pos.y = g_Unknown626270.arena[1] + curSprite->pos.y;
+        curSprite->pos.z = 0.0f;
+        g_SpriteEngine->Draw(curSprite);
+    }
+}

@@ -638,3 +638,7 @@ void DrawReimuBBomb(Player *player);
 // where the bomb started, a 256 box of 18 damage, and one area
 // (AddHitboxAreaCircle, 192) for the whole bomb.
 void UpdateReimuBBombFocused(Player *player);
+
+// Draws Reimu B's focused bomb: the stage tint, then the barrier's
+// three sprites around startPos in the play area.
+void DrawReimuBBombFocused(Player *player);

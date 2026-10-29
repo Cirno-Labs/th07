@@ -60,7 +60,7 @@ address,size,name,symbol
 0x00409dd0,1194,UpdateReimuBBomb,?UpdateReimuBBomb@@YIXPAVPlayer@@@Z
 0x0040a280,273,DrawReimuBBomb,?DrawReimuBBomb@@YIXPAVPlayer@@@Z
 0x0040a3a0,777,UpdateReimuBBombFocused,?UpdateReimuBBombFocused@@YIXPAVPlayer@@@Z
-0x0040a6b0,262,Func40a6b0,
+0x0040a6b0,262,DrawReimuBBombFocused,?DrawReimuBBombFocused@@YIXPAVPlayer@@@Z
 0x0040a7c0,979,Func40a7c0,
 0x0040aba0,870,Func40aba0,
 0x0040af10,1714,Func40af10,
