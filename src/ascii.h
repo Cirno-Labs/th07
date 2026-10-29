@@ -80,6 +80,11 @@ public:
     static int OnDraw(AsciiText *text);
     // Draws the queued strings, as th06's.
     void DrawStrings();
+    // The second draw element's callback: draws the popups. th06 picked
+    // DrawPopups or DrawPopups2 by g_App.hardwareTnL. Returns 1.
+    static int OnDraw2(AsciiText *text);
+    // Draws the active popups, as th06's.
+    void DrawPopups();
 
     // Queues `text` to be drawn at `pos`.
     void AddString(D3DXVECTOR3 *pos, char *text);

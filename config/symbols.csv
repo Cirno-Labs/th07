@@ -13,7 +13,7 @@ address,size,name,symbol
 0x004017b0,40,Func4017b0,
 0x004017e0,391,AsciiText::OnUpdate,?OnUpdate@AsciiText@@SIHPAV1@@Z
 0x00401970,99,AsciiText::OnDraw,?OnDraw@AsciiText@@SIHPAV1@@Z
-0x004019e0,24,Func4019e0,
+0x004019e0,24,AsciiText::OnDraw2,?OnDraw2@AsciiText@@SIHPAV1@@Z
 0x00401a00,407,AsciiText::Func401a00,?Func401a00@AsciiText@@QAEXXZ
 0x00401ba0,456,Func401ba0,
 0x00401d70,104,Func401d70,
@@ -29,7 +29,7 @@ address,size,name,symbol
 0x00403a20,310,PauseMenu::DrawPauseMenu,?DrawPauseMenu@PauseMenu@@QAEXXZ
 0x00403b60,2528,ContinueMenu::UpdateContinueMenu,?UpdateContinueMenu@ContinueMenu@@QAEHXZ
 0x00404560,298,ContinueMenu::DrawContinueMenu,?DrawContinueMenu@ContinueMenu@@QAEXXZ
-0x00404690,2010,Func404690,
+0x00404690,2010,AsciiText::DrawPopups,?DrawPopups@AsciiText@@QAEXXZ
 0x00404e70,62,Func404e70,
 0x00404eb0,124,Func404eb0,
 0x00404f30,169,SpriteEngine::StartScriptAtOrigin,?StartScriptAtOrigin@SpriteEngine@@QAEXPAVSprite@@H@Z
