@@ -1,6 +1,7 @@
 // The file with Unknown1347938, th06's EnemyScripts, from 0x40e420, as
 // th06's enemyscript.cpp.
 
+#include "enemy.h"
 #include "unsorted.h"
 
 int Unknown1347938::Load(char *path)
@@ -32,4 +33,13 @@ void Unknown1347938::Release()
         MemFree(this->file);
     }
     this->file = NULL;
+}
+
+int Unknown1347938::StartSub(EnemyScriptState *ctx, short sub)
+{
+    ctx->code = this->subs[sub];
+    ctx->timer.Set(0);
+    ctx->unk_80.Set(0);
+    ctx->sub = sub;
+    return 0;
 }
