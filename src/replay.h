@@ -155,6 +155,16 @@ public:
     // The draw callback; does nothing. Returns 1.
     static int OnDraw(ReplayManager *replay);
 
+    ReplayManager()
+    {
+    }
+
+    // Creates the ReplayManager, recording (`mode` 0) or playing (1) the
+    // replay at `path`, and adds its chain elements; if it exists, runs
+    // the mode's added callback again. Returns 0, or -1 if adding the
+    // update element fails.
+    static int RegisterChain(int mode, char *path);
+
     // The current frame.
     int frame;
     // The replay data.
@@ -163,8 +173,8 @@ public:
     int stageSizes[7];
     int extraSizes[7];
     void *unk_40;
-    unsigned char unk_44[0x4];
-    // The replay to play.
+    // RegisterChain's arguments.
+    int mode;
     char *path;
     unsigned char unk_4c[0x36];
     WORD unk_82;

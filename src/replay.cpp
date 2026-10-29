@@ -385,3 +385,67 @@ int ReplayManager::OnDraw(ReplayManager *replay)
 {
     return 1;
 }
+
+int ReplayManager::RegisterChain(int mode, char *path)
+{
+    ReplayManager *replay;
+
+    g_Unknown4b9e58 = 0;
+    g_Unknown4b9e50 = 0;
+    if (g_ReplayManager == NULL)
+    {
+        replay = new ReplayManager;
+        g_ReplayManager = replay;
+        replay->data = NULL;
+        replay->mode = mode;
+        replay->path = path;
+        switch (mode)
+        {
+        case 0:
+            replay->calcChain = g_Chain.CreateElem((ChainCallback)ReplayManager::RecordOnUpdate);
+            replay->calcChain->addedCallback = (ChainCallback)ReplayManager::RecordAddedCallback;
+            replay->calcChain->deletedCallback = (ChainCallback)ReplayManager::DeletedCallback;
+            replay->drawChain = g_Chain.CreateElem((ChainCallback)ReplayManager::OnDraw);
+            replay->calcChain->arg = replay;
+            if (g_Chain.AddToCalcChain(replay->calcChain, 0x10) != 0)
+            {
+                return -1;
+            }
+            replay->calcChain2 = NULL;
+            replay->calcChain3 = g_Chain.CreateElem((ChainCallback)ReplayManager::RecordOnUpdate2);
+            replay->calcChain3->arg = replay;
+            g_Chain.AddToCalcChain(replay->calcChain3, 6);
+            break;
+        case 1:
+            replay->calcChain = g_Chain.CreateElem((ChainCallback)ReplayManager::PlayOnUpdate);
+            replay->calcChain->addedCallback = (ChainCallback)ReplayManager::PlayAddedCallback;
+            replay->calcChain->deletedCallback = (ChainCallback)ReplayManager::DeletedCallback;
+            replay->drawChain = g_Chain.CreateElem((ChainCallback)ReplayManager::OnDraw);
+            replay->calcChain->arg = replay;
+            if (g_Chain.AddToCalcChain(replay->calcChain, 5) != 0)
+            {
+                return -1;
+            }
+            replay->calcChain2 = g_Chain.CreateElem((ChainCallback)ReplayManager::PlayOnUpdate2);
+            replay->calcChain2->arg = replay;
+            g_Chain.AddToCalcChain(replay->calcChain2, 0x11);
+            replay->calcChain3 = NULL;
+            break;
+        }
+        replay->drawChain->arg = replay;
+        g_Chain.AddToDrawChain(replay->drawChain, 0xe);
+    }
+    else
+    {
+        switch (mode)
+        {
+        case 0:
+            ReplayManager::RecordAddedCallback(g_ReplayManager);
+            break;
+        case 1:
+            ReplayManager::PlayAddedCallback(g_ReplayManager);
+            break;
+        }
+    }
+    return 0;
+}
