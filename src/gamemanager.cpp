@@ -275,7 +275,7 @@ int Unknown626270::DeletedCallback(Unknown626270 *mgr)
     BulletManager::RemoveChain();
     Player::RemoveChain();
     Unknown9a9b00::RemoveChain();
-    g_Unknown1347938.Func40e4f0();
+    g_Unknown1347938.Release();
     EffectManager::RemoveChain();
     Unknown49fbf0::RemoveChain();
     ReplayManager::EndStage();

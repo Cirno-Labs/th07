@@ -1450,8 +1450,8 @@ public:
     // Runs `enemy`'s script for a frame, as th06's RunEnemy: -1 once
     // it ends.
     int RunEnemy(Enemy *enemy);
-    // Called where th06 calls EnemyScripts::Release.
-    void Func40e4f0();
+    // Frees the script file, as th06's Release.
+    void Release();
 
     EnemyScriptHeader *file;
     void **subs;

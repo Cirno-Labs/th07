@@ -24,3 +24,12 @@ int Unknown1347938::Load(char *path)
     }
     return 0;
 }
+
+void Unknown1347938::Release()
+{
+    if (this->file != NULL)
+    {
+        MemFree(this->file);
+    }
+    this->file = NULL;
+}
