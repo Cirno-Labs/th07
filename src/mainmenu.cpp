@@ -26,8 +26,8 @@ inline void MainMenu::SetState(int state)
     this->prevState = this->state;
     this->state = state;
     this->stateFrames = 0;
-    this->unk_d0fc = 0;
-    this->unk_8 = 0;
+    this->inputLockout = 0;
+    this->subState = 0;
     this->unk_b0c0 = 0;
 }
 
@@ -69,9 +69,9 @@ int MainMenu::OnUpdate(MainMenu *menu)
         break;
     }
     g_SpriteEngine->StepSprites(menu->sprites, menu->spriteCount);
-    if (menu->unk_b0c8 != NULL)
+    if (menu->helpSprite != NULL)
     {
-        g_SpriteEngine->Step(menu->unk_b0c8);
+        g_SpriteEngine->Step(menu->helpSprite);
     }
     return status;
 }
@@ -80,7 +80,7 @@ int MainMenu::StartTitle()
 {
     int i;
 
-    switch (this->unk_8)
+    switch (this->subState)
     {
     case 0:
         if (this->prevState == 0 && g_App.prevScene != 5)
@@ -105,16 +105,16 @@ int MainMenu::StartTitle()
             g_SpriteEngine->SetSprite(&this->sprites[i + 1], this->sprites[i + 1].baseSpriteIndex + 1);
         }
         g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 1], this->sprites[this->cursor + 1].baseSpriteIndex);
-        this->unk_8 = 0;
+        this->subState = 0;
         this->stateFrames = 0;
         this->prevCursor = -1;
-        this->unk_8 = 1;
+        this->subState = 1;
         this->idleFrames = 0;
         if (g_Unknown626270.unk_93d8Bit3)
         {
             this->SetState(7);
             g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 13);
-            this->unk_b0c8->SetPendingInterrupt(2);
+            this->helpSprite->SetPendingInterrupt(2);
             g_Unknown626270.SetUnk93d8Bit3(0);
             return 1;
         }
@@ -122,12 +122,12 @@ int MainMenu::StartTitle()
         {
             this->SetState(8);
             g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 5);
-            this->unk_b0c8->SetPendingInterrupt(2);
+            this->helpSprite->SetPendingInterrupt(2);
             return 1;
         }
         for (i = 0; i < ARRAY_SIZE(g_TitleHelpTexts); i++)
         {
-            g_SpriteEngine->RenderTextCentered(&this->unk_b0cc[i], 0xfff0e0, 0x300000, g_TitleHelpTexts[i]);
+            g_SpriteEngine->RenderTextCentered(&this->helpSprites[i], 0xfff0e0, 0x300000, g_TitleHelpTexts[i]);
         }
     case 1:
         i = this->MoveMenuCursor(8);
@@ -185,11 +185,11 @@ int MainMenu::StartTitle()
         }
         if (this->prevCursor != this->cursor)
         {
-            this->unk_b0c8 = &this->unk_b0cc[this->cursor];
-            this->unk_b0c8->SetPendingInterrupt(1);
+            this->helpSprite = &this->helpSprites[this->cursor];
+            this->helpSprite->SetPendingInterrupt(1);
         }
         this->prevCursor = this->cursor;
-        if (this->unk_d0fc < 10)
+        if (this->inputLockout < 10)
         {
             break;
         }
@@ -208,7 +208,7 @@ int MainMenu::StartTitle()
                 }
                 this->SetState(4);
                 g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 5);
-                this->unk_b0c8->SetPendingInterrupt(2);
+                this->helpSprite->SetPendingInterrupt(2);
                 return 1;
             case 2:
                 g_Unknown626270.unk_93d8 |= 1;
@@ -219,7 +219,7 @@ int MainMenu::StartTitle()
                 }
                 this->SetState(8);
                 g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 5);
-                this->unk_b0c8->SetPendingInterrupt(2);
+                this->helpSprite->SetPendingInterrupt(2);
                 return 1;
             case 1:
                 if (g_Unknown626270.AnyShotHasExtraOpen())
@@ -228,35 +228,35 @@ int MainMenu::StartTitle()
                     this->cursor = g_App.defaultDifficulty == 5;
                     this->SetState(12);
                     g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 5);
-                    this->unk_b0c8->SetPendingInterrupt(2);
+                    this->helpSprite->SetPendingInterrupt(2);
                     return 1;
                 }
             case 3:
                 g_Unknown626270.unk_93d8 &= ~1;
                 this->SetState(7);
                 g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 13);
-                this->unk_b0c8->SetPendingInterrupt(2);
+                this->helpSprite->SetPendingInterrupt(2);
                 return 1;
             case 5:
                 g_App.scene = 8;
-                this->unk_b0c8->SetPendingInterrupt(2);
+                this->helpSprite->SetPendingInterrupt(2);
                 return 0;
             case 4:
                 g_App.scene = 5;
-                this->unk_b0c8->SetPendingInterrupt(2);
+                this->helpSprite->SetPendingInterrupt(2);
                 return 0;
             case 6:
-                this->unk_8 = 0;
+                this->subState = 0;
                 this->cursor = 0;
-                this->unk_d0fc = 0;
+                this->inputLockout = 0;
                 this->stateFrames = 0;
-                this->unk_8 = 3;
+                this->subState = 3;
                 this->stateFrames = 0;
                 this->UpdateOptions();
                 this->cursor = 0;
                 break;
             case 7:
-                this->unk_8 = 2;
+                this->subState = 2;
                 this->stateFrames = 0;
                 g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 1);
                 if (g_App.musicMode == 2)
@@ -283,7 +283,7 @@ int MainMenu::StartTitle()
             this->sprites = NULL;
             this->sprites = NULL;
             this->spriteCount = 0;
-            this->unk_d0fc = 0;
+            this->inputLockout = 0;
             g_App.scene = -1;
             return 0;
         }
@@ -299,7 +299,7 @@ int MainMenu::StartTitle()
     }
     this->unk_b0c0++;
     this->stateFrames++;
-    this->unk_d0fc++;
+    this->inputLockout++;
     return 1;
 }
 
@@ -307,10 +307,10 @@ int MainMenu::UpdateOptions()
 {
     int i;
 
-    switch (this->unk_8)
+    switch (this->subState)
     {
     case 0:
-        if (this->unk_d0fc == 0)
+        if (this->inputLockout == 0)
         {
             g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 3);
             for (i = 0; i < 9; i++)
@@ -319,14 +319,14 @@ int MainMenu::UpdateOptions()
             }
             g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 9],
                                       this->sprites[this->cursor + 9].baseSpriteIndex);
-            this->unk_8 = 0;
+            this->subState = 0;
             this->stateFrames = 0;
             this->prevCursor = -1;
         }
-        this->unk_8 = 1;
+        this->subState = 1;
         for (i = 0; i < ARRAY_SIZE(g_OptionsHelpTexts); i++)
         {
-            g_SpriteEngine->RenderTextCentered(&this->unk_b0cc[i], 0xfff0e0, 0x300000, g_OptionsHelpTexts[i]);
+            g_SpriteEngine->RenderTextCentered(&this->helpSprites[i], 0xfff0e0, 0x300000, g_OptionsHelpTexts[i]);
         }
     case 1:
         if (this->MoveMenuCursor(9))
@@ -340,8 +340,8 @@ int MainMenu::UpdateOptions()
         }
         if (this->prevCursor != this->cursor)
         {
-            this->unk_b0c8 = &this->unk_b0cc[this->cursor];
-            this->unk_b0c8->SetPendingInterrupt(1);
+            this->helpSprite = &this->helpSprites[this->cursor];
+            this->helpSprite->SetPendingInterrupt(1);
         }
         this->prevCursor = this->cursor;
         for (i = 0x12; i <= 0x16; i++)
@@ -380,7 +380,7 @@ int MainMenu::UpdateOptions()
         }
         i = g_App.optionsMenuCursor + 0x20;
         g_SpriteEngine->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex);
-        if (this->unk_d0fc < 4)
+        if (this->inputLockout < 4)
         {
             break;
         }
@@ -598,7 +598,7 @@ int MainMenu::UpdateOptions()
     }
     this->unk_b0c0++;
     this->stateFrames++;
-    this->unk_d0fc++;
+    this->inputLockout++;
     return 1;
 }
 
@@ -649,10 +649,10 @@ int MainMenu::UpdateKeyConfig()
     short key;
     BYTE *pad;
 
-    switch (this->unk_8)
+    switch (this->subState)
     {
     case 0:
-        if (this->unk_d0fc == 0)
+        if (this->inputLockout == 0)
         {
             g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 4);
             for (i = 0; i < 12; i++)
@@ -661,7 +661,7 @@ int MainMenu::UpdateKeyConfig()
             }
             g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 0x23],
                                       this->sprites[this->cursor + 0x23].baseSpriteIndex);
-            this->unk_8 = 0;
+            this->subState = 0;
             this->stateFrames = 0;
             this->controllerMapping = g_App.controllerMapping;
             g_App.controllerMapping.upButton = -1;
@@ -686,10 +686,10 @@ int MainMenu::UpdateKeyConfig()
             this->ShowButtonDigits(digit, this->controllerMapping.rightButton);
             this->prevCursor = -1;
         }
-        this->unk_8 = 1;
+        this->subState = 1;
         for (i = 0; i < ARRAY_SIZE(g_KeyConfigHelpTexts); i++)
         {
-            g_SpriteEngine->RenderTextCentered(&this->unk_b0cc[i], 0xfff0e0, 0x300000, g_KeyConfigHelpTexts[i]);
+            g_SpriteEngine->RenderTextCentered(&this->helpSprites[i], 0xfff0e0, 0x300000, g_KeyConfigHelpTexts[i]);
         }
     case 1:
         if (this->MoveMenuCursor(12))
@@ -703,8 +703,8 @@ int MainMenu::UpdateKeyConfig()
         }
         if (this->prevCursor != this->cursor)
         {
-            this->unk_b0c8 = &this->unk_b0cc[this->cursor];
-            this->unk_b0c8->SetPendingInterrupt(1);
+            this->helpSprite = &this->helpSprites[this->cursor];
+            this->helpSprite->SetPendingInterrupt(1);
         }
         this->prevCursor = this->cursor;
         digit = &this->sprites[0x2f];
@@ -834,7 +834,7 @@ int MainMenu::UpdateKeyConfig()
     }
     this->unk_b0c0++;
     this->stateFrames++;
-    this->unk_d0fc++;
+    this->inputLockout++;
     return 1;
 }
 
@@ -861,10 +861,10 @@ int MainMenu::UpdateDifficultyMenu()
     int i;
     int state;
 
-    switch (this->unk_8)
+    switch (this->subState)
     {
     case 0:
-        if (this->unk_d0fc == 0)
+        if (this->inputLockout == 0)
         {
             if (this->prevState != 5 && this->prevState != 9 && this->prevState != 13 &&
                 g_SpriteEngine->LoadSurface(0, "data/title/select00.jpg") != 0)
@@ -912,9 +912,9 @@ int MainMenu::UpdateDifficultyMenu()
                 g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 0xa2],
                                           this->sprites[this->cursor + 0xa2].baseSpriteIndex);
             }
-            this->unk_8 = 0;
+            this->subState = 0;
             this->stateFrames = 0;
-            this->unk_b0c8 = NULL;
+            this->helpSprite = NULL;
         }
         if (this->unk_68 != 0)
         {
@@ -922,9 +922,9 @@ int MainMenu::UpdateDifficultyMenu()
             this->cursor = 0;
             return 1;
         }
-        if (this->unk_d0fc == 30)
+        if (this->inputLockout == 30)
         {
-            this->unk_8 = 1;
+            this->subState = 1;
         }
         break;
     case 1:
@@ -992,7 +992,7 @@ int MainMenu::UpdateDifficultyMenu()
             }
             g_SoundPlayer.QueueSound(11, 0);
             g_SoundPlayer.PlayQueuedSounds();
-            this->unk_8 = 3;
+            this->subState = 3;
             this->stateFrames = 0;
             g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 6);
         }
@@ -1024,16 +1024,16 @@ int MainMenu::UpdateDifficultyMenu()
     }
     this->stateFrames++;
     this->unk_b0c0++;
-    this->unk_d0fc++;
+    this->inputLockout++;
     return 1;
 }
 
 int MainMenu::UpdateCharacterMenu()
 {
-    switch (this->unk_8)
+    switch (this->subState)
     {
     case 0:
-        if (this->unk_d0fc == 0)
+        if (this->inputLockout == 0)
         {
             g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 8);
             if (g_App.defaultDifficulty < 4)
@@ -1164,7 +1164,7 @@ int MainMenu::UpdateCharacterMenu()
                 this->sprites[0x54].alpha = 0;
                 break;
             }
-            this->unk_8 = 0;
+            this->subState = 0;
             this->stateFrames = 0;
         }
         if (this->unk_68 != 0)
@@ -1173,9 +1173,9 @@ int MainMenu::UpdateCharacterMenu()
             this->cursor = 0;
             return 1;
         }
-        if (this->unk_d0fc == 30)
+        if (this->inputLockout == 30)
         {
-            this->unk_8 = 1;
+            this->subState = 1;
         }
         break;
     case 1:
@@ -1305,16 +1305,16 @@ int MainMenu::UpdateCharacterMenu()
     }
     this->unk_b0c0++;
     this->stateFrames++;
-    this->unk_d0fc++;
+    this->inputLockout++;
     return 1;
 }
 
 int MainMenu::UpdateShotTypeMenu()
 {
-    switch (this->unk_8)
+    switch (this->subState)
     {
     case 0:
-        if (this->unk_d0fc == 0)
+        if (this->inputLockout == 0)
         {
             g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 10);
             if (g_App.defaultDifficulty < 4)
@@ -1391,7 +1391,7 @@ int MainMenu::UpdateShotTypeMenu()
                 g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 0x4e], this->sprites[this->cursor + 0x4e].baseSpriteIndex);
                 break;
             }
-            this->unk_8 = 0;
+            this->subState = 0;
             this->stateFrames = 0;
         }
         if (this->unk_68 != 0)
@@ -1401,9 +1401,9 @@ int MainMenu::UpdateShotTypeMenu()
             this->cursor = g_Unknown626270.stage - 1;
             return 1;
         }
-        if (this->unk_d0fc == 30)
+        if (this->inputLockout == 30)
         {
-            this->unk_8 = 1;
+            this->subState = 1;
         }
         break;
     case 1:
@@ -1515,7 +1515,7 @@ int MainMenu::UpdateShotTypeMenu()
     }
     this->unk_b0c0++;
     this->stateFrames++;
-    this->unk_d0fc++;
+    this->inputLockout++;
     return 1;
 }
 
@@ -1523,10 +1523,10 @@ int MainMenu::UpdateGameStartMenu()
 {
     int count;
 
-    switch (this->unk_8)
+    switch (this->subState)
     {
     case 0:
-        if (this->unk_d0fc == 0)
+        if (this->inputLockout == 0)
         {
             g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 18);
             this->sprites[0x48].flags &= ~2;
@@ -1562,13 +1562,13 @@ int MainMenu::UpdateGameStartMenu()
                 this->sprites[0x4d].flags |= 2;
                 break;
             }
-            this->unk_8 = 0;
+            this->subState = 0;
             this->stateFrames = 0;
             g_Unknown626270.unk_93d8 |= 1;
         }
-        if (this->unk_d0fc == 30)
+        if (this->inputLockout == 30)
         {
-            this->unk_8 = 1;
+            this->subState = 1;
         }
         break;
     case 1:
@@ -1626,7 +1626,7 @@ int MainMenu::UpdateGameStartMenu()
     }
     this->unk_b0c0++;
     this->stateFrames++;
-    this->unk_d0fc++;
+    this->inputLockout++;
     return 1;
 }
 
@@ -1639,10 +1639,10 @@ int MainMenu::UpdateReplayMenu()
     char path[0x40];
     WIN32_FIND_DATAA fd;
 
-    switch (this->unk_8)
+    switch (this->subState)
     {
     case 0:
-        if (this->unk_d0fc == 0)
+        if (this->inputLockout == 0)
         {
             if (this->prevState != 7 && g_SpriteEngine->LoadSurface(0, "data/title/select00.jpg") != 0)
             {
@@ -1650,9 +1650,9 @@ int MainMenu::UpdateReplayMenu()
             }
             g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 14);
             this->cursor = 0;
-            this->unk_8 = 0;
+            this->subState = 0;
             this->stateFrames = 0;
-            this->unk_b0c8 = NULL;
+            this->helpSprite = NULL;
             replayCount = 0;
             for (i = 0; i < 15; i++)
             {
@@ -1704,9 +1704,9 @@ int MainMenu::UpdateReplayMenu()
             this->replayCount = replayCount;
             this->unk_b0b0 = 0;
         }
-        if (this->unk_d0fc >= 30)
+        if (this->inputLockout >= 30)
         {
-            this->unk_8 = 1;
+            this->subState = 1;
             this->stateFrames = 0;
         }
         break;
@@ -1745,7 +1745,7 @@ int MainMenu::UpdateReplayMenu()
                 break;
             }
             g_SoundPlayer.QueueSound(10, 0);
-            this->unk_8 = 2;
+            this->subState = 2;
             g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 15);
             this->sprites[this->replayCursor % 15 + 0x87].SetPendingInterrupt(17);
             this->loadedReplay = (ReplayHeader *)LoadFileData(this->replayPaths[this->replayCursor], 1);
@@ -1773,7 +1773,7 @@ int MainMenu::UpdateReplayMenu()
         if (WAS_PRESSED(0xa))
         {
             g_SoundPlayer.QueueSound(11, 0);
-            this->unk_8 = 4;
+            this->subState = 4;
             this->stateFrames = 0;
             g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 16);
         }
@@ -1807,7 +1807,7 @@ int MainMenu::UpdateReplayMenu()
         {
             g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 19);
             this->sprites[this->replayCursor % 15 + 0x87].SetPendingInterrupt(17);
-            this->unk_8 = 3;
+            this->subState = 3;
             this->cursor = 0;
             this->sprites[0x9e].pendingInterrupt = 21;
             this->sprites[0x9f].pendingInterrupt = 21;
@@ -1819,8 +1819,8 @@ int MainMenu::UpdateReplayMenu()
         {
             MemFree(this->loadedReplay);
             this->loadedReplay = NULL;
-            this->unk_8 = 1;
-            this->unk_d0fc = 0;
+            this->subState = 1;
+            this->inputLockout = 0;
             g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 14);
             this->cursor = this->replayCursor;
             break;
@@ -1856,8 +1856,8 @@ int MainMenu::UpdateReplayMenu()
         }
         if (WAS_PRESSED(0xa))
         {
-            this->unk_8 = 2;
-            this->unk_d0fc = 0;
+            this->subState = 2;
+            this->inputLockout = 0;
             this->cursor = this->replayStage;
             g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 15);
             this->sprites[this->replayCursor % 15 + 0x87].SetPendingInterrupt(17);
@@ -1875,7 +1875,7 @@ int MainMenu::UpdateReplayMenu()
     }
     this->unk_b0c0++;
     this->stateFrames++;
-    this->unk_d0fc++;
+    this->inputLockout++;
     return 1;
 }
 
@@ -1908,7 +1908,7 @@ int MainMenu::DrawReplayMenu()
                               this->replays[j].date, g_MenuShotTypeNames[this->replays[j].shotType],
                               g_MenuDifficultyNames[this->replays[j].difficulty]);
     }
-    if ((this->unk_8 == 2 || this->unk_8 == 3) && this->loadedReplay != NULL)
+    if ((this->subState == 2 || this->subState == 3) && this->loadedReplay != NULL)
     {
         g_AsciiText.SetColor(0xffffffff);
         g_AsciiText.SetHighlight(0);
@@ -1920,7 +1920,7 @@ int MainMenu::DrawReplayMenu()
         for (top = 0; top < 7; top++, j++)
         {
             text++;
-            if (this->unk_8 != 3)
+            if (this->subState != 3)
             {
                 g_AsciiText.SetHighlight(top == this->replayStage);
                 if (top == this->replayStage)
@@ -2119,9 +2119,9 @@ int MainMenu::OnDraw(MainMenu *menu)
             vm->pos = savedPos;
         }
     }
-    if (menu->unk_b0c8 != NULL)
+    if (menu->helpSprite != NULL)
     {
-        g_SpriteEngine->DrawUnrotated(menu->unk_b0c8);
+        g_SpriteEngine->DrawUnrotated(menu->helpSprite);
     }
     return 1;
 }
@@ -2280,10 +2280,10 @@ int MainMenu::InitTitleScene()
     }
     for (int j = 0; j < 0xe; j++)
     {
-        g_SpriteEngine->StartScript(&this->unk_b0cc[j], 0x706);
-        g_SpriteEngine->SetSprite(&this->unk_b0cc[j], this->unk_b0cc[j].spriteIndex + j);
+        g_SpriteEngine->StartScript(&this->helpSprites[j], 0x706);
+        g_SpriteEngine->SetSprite(&this->helpSprites[j], this->helpSprites[j].spriteIndex + j);
     }
-    this->unk_b0c8 = this->unk_b0cc;
+    this->helpSprite = this->helpSprites;
     g_Unknown626270.unk_93d8 &= ~2;
     g_Unknown626270.demoFrames = 0;
     return 0;

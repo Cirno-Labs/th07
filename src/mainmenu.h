@@ -98,7 +98,7 @@ public:
     int cursor;
     // The cursor the title menu last highlighted.
     int prevCursor;
-    int unk_8;
+    int subState;
     // Counts the frames in the current state.
     int stateFrames;
     unsigned char unk_10[0x54];
@@ -121,12 +121,12 @@ public:
     int unk_b0c0;
     // The menu's sprites, spriteCount of them.
     Sprite *sprites;
-    Sprite *unk_b0c8;
-    Sprite unk_b0cc[0xe];
+    Sprite *helpSprite;
+    Sprite helpSprites[0xe];
     int spriteCount;
     // The menu's state.
     int state;
-    int unk_d0fc;
+    int inputLockout;
     // The frames the title menu has waited without input; the demo
     // starts after 900.
     int idleFrames;
