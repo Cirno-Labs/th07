@@ -1855,7 +1855,7 @@ struct StageData
     short quadCount;
     int instancesOffset;
     int scriptOffset;
-    DWORD unk_0c;
+    DWORD unusedDword0c;
     char name[0x80];
     char songNames[4][0x80];
     char songPaths[4][0x80];
