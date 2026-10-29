@@ -183,7 +183,7 @@ address,size,name,symbol
 0x00422170,2863,Unknown9a9b00::Func422170,?Func422170@Unknown9a9b00@@SIHPAV1@HH@Z
 0x00422ca0,23,Unknown9a9b00::OnDraw,?OnDraw@Unknown9a9b00@@SIHPAV1@@Z
 0x00422cc0,26,Unknown9a9b00::OnDraw2,?OnDraw2@Unknown9a9b00@@SIHPAV1@@Z
-0x00422ce0,394,Func422ce0,
+0x00422ce0,394,Unknown9a9b00::AddedCallback,?AddedCallback@Unknown9a9b00@@SIHPAV1@@Z
 0x00422e70,193,Func422e70,
 0x00422f40,267,Func422f40,
 0x00423050,50,Func423050,?Func423050@@YIXXZ

@@ -2,6 +2,7 @@
 
 #include <string.h>
 
+#include "ascii.h"
 #include "bullet.h"
 #include "enemy.h"
 #include "player.h"
@@ -443,4 +444,27 @@ int Unknown9a9b00::OnDraw(Unknown9a9b00 *mgr)
 int Unknown9a9b00::OnDraw2(Unknown9a9b00 *mgr)
 {
     return Unknown9a9b00::Func422170(mgr, 2, 4);
+}
+
+int Unknown9a9b00::AddedCallback(Unknown9a9b00 *mgr)
+{
+    Enemy *unused = mgr->enemies;
+
+    if (mgr->anmPath != NULL && g_SpriteEngine->LoadAnm(0xf, mgr->anmPath, 0x900) != 0)
+    {
+        return -1;
+    }
+    if (mgr->anmPath2 != NULL && g_SpriteEngine->LoadAnm(0x10, mgr->anmPath2, 0x900) != 0)
+    {
+        return -1;
+    }
+    mgr->dropCounter = g_Rng.GetRandomU16InRange(3);
+    mgr->dropIndex = g_Rng.GetRandomU16InRange(8);
+    mgr->spellCardActive = 0;
+    D3DXVECTOR3 nowhere(-999.0f, -999.0f, -999.0f);
+    g_AsciiText.SetUnkB7cPos(0, &nowhere);
+    g_AsciiText.SetUnkB7cPos(1, &nowhere);
+    g_AsciiText.SetUnkB7cPos(2, &nowhere);
+    g_AsciiText.SetUnkB7cPos(3, &nowhere);
+    return 0;
 }

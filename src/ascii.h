@@ -168,6 +168,11 @@ public:
     {
         this->unk_b7c[idx].pendingInterrupt = interrupt;
     }
+    // Moves unk_b7c[idx] to `pos`, the same way.
+    void SetUnkB7cPos(int idx, D3DXVECTOR3 *pos)
+    {
+        this->unk_b7c[idx].pos = *pos;
+    }
     // unk_74d4, and setting it while sending unk_498 the same
     // interrupt. Inlines: each read takes a temporary in ResetHomingAndText.
     int GetUnk74d4()

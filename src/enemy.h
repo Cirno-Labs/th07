@@ -248,6 +248,11 @@ public:
     static int OnDraw(Unknown9a9b00 *mgr);
     // The other draw callback: lists 2 and 3.
     static int OnDraw2(Unknown9a9b00 *mgr);
+    // Loads the enemy sprites into slots 0xf and 0x10 (either path may
+    // be NULL), picks dropCounter and dropIndex at random, ends the spell
+    // card and hides AsciiText's unk_b7c sprites at -999. Returns 0, or
+    // -1 if loading fails.
+    static int AddedCallback(Unknown9a9b00 *mgr);
 
     // The stage's two enemy sprite files.
     char *anmPath;
@@ -257,7 +262,14 @@ public:
     Enemy enemies[0x1e1];
     // The bosses, by Enemy::bossIndex.
     Enemy *bosses[8];
-    unsigned char unk_9545b8[0x158];
+    // Counts the enemies dropping one of th06's g_EnemyItemDrops, and
+    // the next of them, as th06's; start below 3 and below 8.
+    WORD dropCounter;
+    WORD dropIndex;
+    unsigned char unk_9545bc[0xc];
+    // th06's spellCardActive; other code reaches it as g_Unknown12fe0c8.
+    int spellCardActive;
+    unsigned char unk_9545cc[0x144];
 };
 ASSERT_SIZE(Unknown9a9b00, 0x954710);
 extern Unknown9a9b00 g_Unknown9a9b00;
