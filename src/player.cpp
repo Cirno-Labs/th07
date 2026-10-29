@@ -1009,7 +1009,7 @@ void Player::Graze(D3DXVECTOR3 *pos)
     g_Unknown626270.AddSubRank(6);
     g_Unknown49fbf0.grazeChanged = 2;
     g_SoundPlayer.QueueSound(0x1e, 0);
-    g_Unknown12fe0d0 += 2500 + (g_Unknown626270.unk_961c - g_Unknown626270.stats->unk_88) / 1500 * 20;
+    g_Unknown12fe0d0 += 2500 + (g_Unknown626270.bonusPoints - g_Unknown626270.stats->unk_88) / 1500 * 20;
     g_Unknown626270.AddScore(2000);
     if (this->unk_240d == 1)
     {
@@ -1179,21 +1179,21 @@ int HandleInput(Player *player)
     player->unk_9d0 = deltaY * player->moveScaleY * g_App.gameSpeed;
     player->position[0] += player->unk_9cc;
     player->position[1] += player->unk_9d0;
-    if (player->position.x < g_Unknown626270.unk_9604[0])
+    if (player->position.x < g_Unknown626270.arena2[0])
     {
-        player->position.x = g_Unknown626270.unk_9604[0];
+        player->position.x = g_Unknown626270.arena2[0];
     }
-    else if (g_Unknown626270.unk_9604[0] + g_Unknown626270.unk_9604[2] < player->position.x)
+    else if (g_Unknown626270.arena2[0] + g_Unknown626270.arena2[2] < player->position.x)
     {
-        player->position.x = g_Unknown626270.unk_9604[0] + g_Unknown626270.unk_9604[2];
+        player->position.x = g_Unknown626270.arena2[0] + g_Unknown626270.arena2[2];
     }
-    if (player->position.y < g_Unknown626270.unk_9604[1])
+    if (player->position.y < g_Unknown626270.arena2[1])
     {
-        player->position.y = g_Unknown626270.unk_9604[1];
+        player->position.y = g_Unknown626270.arena2[1];
     }
-    else if (g_Unknown626270.unk_9604[1] + g_Unknown626270.unk_9604[3] < player->position.y)
+    else if (g_Unknown626270.arena2[1] + g_Unknown626270.arena2[3] < player->position.y)
     {
-        player->position.y = g_Unknown626270.unk_9604[1] + g_Unknown626270.unk_9604[3];
+        player->position.y = g_Unknown626270.arena2[1] + g_Unknown626270.arena2[3];
     }
     player->hitboxMin = player->position - player->hitboxSize;
     player->hitboxMax = player->position + player->hitboxSize;
@@ -1545,7 +1545,7 @@ int UpdateDyingState(Player *player)
         if (player->deathbombFrames == 0)
         {
             g_ReplayManager->unk_d6 |= 4;
-            g_Unknown626270.unk_93d4 = 0;
+            g_Unknown626270.powerItemCombo = 0;
             g_Unknown12fe0cc = 0;
             g_Unknown12fe0c4 = 0;
             g_Unknown626270.AddDeaths(1);
@@ -1567,7 +1567,7 @@ int UpdateDyingState(Player *player)
                 g_ItemManager.SpawnItem(&player->position, 0, 2);
                 g_ItemManager.SpawnItem(&player->position, 0, 2);
                 g_Unknown49fbf0.powerChanged = 2;
-                bonus = (g_Unknown626270.unk_961c - g_Unknown626270.stats->unk_88) * g_Player.shotType->unk_1c;
+                bonus = (g_Unknown626270.bonusPoints - g_Unknown626270.stats->unk_88) * g_Player.shotType->unk_1c;
                 if (g_Unknown626270.character != 2)
                 {
                     if (bonus > 100000)
@@ -1580,7 +1580,7 @@ int UpdateDyingState(Player *player)
                     bonus = 60000;
                 }
                 bonus -= bonus % 10;
-                g_Unknown626270.unk_961c -= bonus;
+                g_Unknown626270.bonusPoints -= bonus;
                 g_Unknown49fbf0.unk_4_8 = 2;
                 g_ItemManager.RecycleCollectedItems();
             }
@@ -1701,12 +1701,12 @@ void UpdateInvulnerability(Player *player)
         {
             player->unk_b7e6c->pos = player->position;
         }
-        g_Unknown626270.unk_9620 = player->stateTimer.AsFrames() * 50000 / player->unk_16a0c.AsFrames();
-        if (g_Unknown626270.unk_9620 < 0)
+        g_Unknown626270.invulnerabilityBonus = player->stateTimer.AsFrames() * 50000 / player->unk_16a0c.AsFrames();
+        if (g_Unknown626270.invulnerabilityBonus < 0)
         {
-            g_Unknown626270.unk_9620 = 0;
+            g_Unknown626270.invulnerabilityBonus = 0;
         }
-        g_Unknown626270.unk_9620 += g_Unknown626270.stats->unk_88;
+        g_Unknown626270.invulnerabilityBonus += g_Unknown626270.stats->unk_88;
         player->stateTimer.Sub(1);
         if (player->stateTimer.AsFrames() <= 0)
         {
@@ -1811,11 +1811,11 @@ void Player::EndBombState()
 
     g_Unknown626270.IncreaseBonusCap(10000);
     g_Unknown626270.AddBonusPointsCapped(10000);
-    bonus = g_Unknown626270.unk_961c - g_Unknown626270.stats->unk_88;
+    bonus = g_Unknown626270.bonusPoints - g_Unknown626270.stats->unk_88;
     bonus *= 10;
     g_Unknown626270.AddScore(bonus);
     g_Unknown49fbf0.Func427c81(bonus, 4);
-    g_Unknown626270.unk_9620 = g_Unknown626270.stats->unk_88;
+    g_Unknown626270.invulnerabilityBonus = g_Unknown626270.stats->unk_88;
     g_SoundPlayer.QueueSound(0x21, 0);
     if (this->playerState == 1)
     {
@@ -1913,7 +1913,7 @@ void Player::StopBombState(int unk)
     this->playerState = 3;
     this->stateTimer.Set(40);
     this->unk_23fc = 40;
-    g_Unknown626270.unk_9620 = g_Unknown626270.stats->unk_88;
+    g_Unknown626270.invulnerabilityBonus = g_Unknown626270.stats->unk_88;
     this->AddHitboxAreaCircle(&this->position, 32.0f, 16.0f, 0x32, 8);
     angle = -D3DX_PI;
     for (i = 0; i < 0x20; i++, angle += D3DX_PI / 16.0f)
@@ -2103,11 +2103,11 @@ int Player::AddedCallback(Player *player)
     int i;
     PlayerBullet *bullet;
 
-    if (LoadShotTypeFile(&player->shotType, g_ShotFiles[g_Unknown626270.unk_93d7]) != 0)
+    if (LoadShotTypeFile(&player->shotType, g_ShotFiles[g_Unknown626270.shotIndex]) != 0)
     {
         return -1;
     }
-    if (LoadShotTypeFile(&player->shotTypeFocused, g_ShotFilesFocused[g_Unknown626270.unk_93d7]) != 0)
+    if (LoadShotTypeFile(&player->shotTypeFocused, g_ShotFilesFocused[g_Unknown626270.shotIndex]) != 0)
     {
         return -1;
     }
@@ -2167,10 +2167,10 @@ int Player::AddedCallback(Player *player)
         bullet->state = 0;
     }
     player->fireTimer.Set(-1);
-    player->bomb.update = g_Bombs[g_Unknown626270.unk_93d7].update;
-    player->bomb.draw = g_Bombs[g_Unknown626270.unk_93d7].draw;
-    player->bomb.updateFocused = g_Bombs[g_Unknown626270.unk_93d7].updateFocused;
-    player->bomb.drawFocused = g_Bombs[g_Unknown626270.unk_93d7].drawFocused;
+    player->bomb.update = g_Bombs[g_Unknown626270.shotIndex].update;
+    player->bomb.draw = g_Bombs[g_Unknown626270.shotIndex].draw;
+    player->bomb.updateFocused = g_Bombs[g_Unknown626270.shotIndex].updateFocused;
+    player->bomb.drawFocused = g_Bombs[g_Unknown626270.shotIndex].drawFocused;
     player->bomb.running = 0;
     player->unk_b7e58 = -(D3DX_PI / 2.0f);
     player->moveScaleY = 1.0f;
@@ -2184,9 +2184,9 @@ int Player::AddedCallback(Player *player)
     g_AsciiText.SetUnkB7cInterrupt(0, 2);
     g_AsciiText.SetUnkB7cInterrupt(1, 2);
     g_AsciiText.SetUnkB7cInterrupt(2, 2);
-    if (g_Unknown626270.unk_9620 >= g_Unknown626270.stats->unk_88 + 50000)
+    if (g_Unknown626270.invulnerabilityBonus >= g_Unknown626270.stats->unk_88 + 50000)
     {
-        g_Unknown626270.unk_9620 = g_Unknown626270.stats->unk_88 + 50000;
+        g_Unknown626270.invulnerabilityBonus = g_Unknown626270.stats->unk_88 + 50000;
         StartBombState(&g_Player);
     }
     return 0;

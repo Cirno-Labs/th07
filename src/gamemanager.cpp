@@ -23,7 +23,7 @@ GameManager::GameManager()
     this->arena[2] = 384.0f;
     this->arena[3] = 448.0f;
     this->demoIndex = 2;
-    this->unk_9624 = 1;
+    this->phantasmWasOpen = 1;
 }
 
 void GameManager::AddLives(int lives)
@@ -52,10 +52,10 @@ void GameManager::SetPlayArea()
     this->arena[1] = 16.0f;
     this->arena[2] = 384.0f;
     this->arena[3] = 448.0f;
-    this->unk_9604[0] = 8.0f;
-    this->unk_9604[1] = 16.0f;
-    this->unk_9604[2] = 368.0f;
-    this->unk_9604[3] = 416.0f;
+    this->arena2[0] = 8.0f;
+    this->arena2[1] = 16.0f;
+    this->arena2[2] = 368.0f;
+    this->arena2[3] = 416.0f;
 }
 
 BOOL GameManager::IsInPlayArea(float x, float y, float width, float height)
@@ -128,14 +128,14 @@ int GameManager::OnUpdate(GameManager *mgr)
     DWORD i;
     DWORD step;
 
-    if (!mgr->isInContinueMenu && !mgr->unk_93dc && !((mgr->unk_93d8 >> 1) & 1) && !mgr->unk_d && WAS_PRESSED(8))
+    if (!mgr->isInContinueMenu && !mgr->isPaused && !((mgr->unk_93d8 >> 1) & 1) && !mgr->skipFpsMeasure && WAS_PRESSED(8))
     {
-        mgr->unk_93dc = 1;
+        mgr->isPaused = 1;
         g_Unknown626270.arena[0] = 32.0f;
         g_Unknown626270.arena[1] = 16.0f;
         g_Unknown626270.arena[2] = 384.0f;
         g_Unknown626270.arena[3] = 448.0f;
-        mgr->unk_93d0 = 1;
+        mgr->pauseRequested = 1;
         if (g_Unknown626270.stage != 6 || g_Unknown49fbf0.unk_0 >= 300)
         {
             g_SoundPlayer.QueueSoundCommand(6, 0, "Pause");
@@ -150,13 +150,13 @@ int GameManager::OnUpdate(GameManager *mgr)
     g_App.viewport.MinZ = 0.0f;
     g_App.viewport.MaxZ = 1.0f;
     g_SpriteEngine->ClearUnk2e4d4();
-    if ((g_Unknown626270.unk_93d8 >> 3) & 1 && g_Unknown626270.unk_93df == 1 && !g_Unknown49fbf0.Func42ad66())
+    if ((g_Unknown626270.unk_93d8 >> 3) & 1 && g_Unknown626270.replayMenuChoice == 1 && !g_Unknown49fbf0.Func42ad66())
     {
-        mgr->unk_962c++;
-        if ((g_App.roundedFps < 20 && mgr->unk_962c % 3 != 0) ||
-            (g_App.roundedFps >= 20 && g_App.roundedFps < 30 && mgr->unk_962c % 2 != 0) ||
-            (g_App.roundedFps >= 30 && g_App.roundedFps < 40 && mgr->unk_962c % 3 == 0) ||
-            (g_App.roundedFps >= 40 && g_App.roundedFps < 50 && mgr->unk_962c % 6 == 0))
+        mgr->slowdownCounter++;
+        if ((g_App.roundedFps < 20 && mgr->slowdownCounter % 3 != 0) ||
+            (g_App.roundedFps >= 20 && g_App.roundedFps < 30 && mgr->slowdownCounter % 2 != 0) ||
+            (g_App.roundedFps >= 30 && g_App.roundedFps < 40 && mgr->slowdownCounter % 3 == 0) ||
+            (g_App.roundedFps >= 40 && g_App.roundedFps < 50 && mgr->slowdownCounter % 6 == 0))
         {
             return 3;
         }
@@ -167,15 +167,15 @@ int GameManager::OnUpdate(GameManager *mgr)
         {
             g_App.scene = 1;
         }
-        mgr->unk_93e0++;
-        if ((mgr->demoIndex == 0 && mgr->unk_93e0 == 8100) || (mgr->demoIndex == 1 && mgr->unk_93e0 == 7020) ||
-            (mgr->demoIndex == 2 && mgr->unk_93e0 == 4620))
+        mgr->demoFrames++;
+        if ((mgr->demoIndex == 0 && mgr->demoFrames == 8100) || (mgr->demoIndex == 1 && mgr->demoFrames == 7020) ||
+            (mgr->demoIndex == 2 && mgr->demoFrames == 4620))
         {
             ScreenEffect::StartEffect(2, 120, 0, 0, 0);
             g_App.FadeOutMusic(3.0f);
         }
-        if ((mgr->demoIndex == 0 && mgr->unk_93e0 >= 8220) || (mgr->demoIndex == 1 && mgr->unk_93e0 >= 7140) ||
-            (mgr->demoIndex == 2 && mgr->unk_93e0 >= 4740))
+        if ((mgr->demoIndex == 0 && mgr->demoFrames >= 8220) || (mgr->demoIndex == 1 && mgr->demoFrames >= 7140) ||
+            (mgr->demoIndex == 2 && mgr->demoFrames >= 4740))
         {
             g_App.scene = 1;
             return 3;
@@ -183,38 +183,38 @@ int GameManager::OnUpdate(GameManager *mgr)
     }
     g_Unknown626270.stats->unk_ac = g_Unknown626270.stats->unk_34[2];
     check = mgr->ComputeChecksum();
-    g_Unknown626270.unk_9614 = (float)check + g_Unknown626270.stats->unk_8c[3];
+    g_Unknown626270.checksumValue = (float)check + g_Unknown626270.stats->unk_8c[3];
     for (i = 0; i < 7; i++)
     {
         if ((int)mgr->stats->unk_34[i] < 6543 || (int)mgr->stats->unk_34[i] > 106543)
         {
-            g_Unknown626270.unk_9614 = -9999.0f;
+            g_Unknown626270.checksumValue = -9999.0f;
         }
     }
     for (i = 0; i < 2; i++)
     {
         if (mgr->stats->unk_60[i] < 6543.0f || mgr->stats->unk_60[i] > 106543.0f)
         {
-            g_Unknown626270.unk_9614 = -9999.0f;
+            g_Unknown626270.checksumValue = -9999.0f;
         }
     }
-    mgr->unk_93d8Bit2 = !mgr->isInContinueMenu && !mgr->unk_93dc ? 1 : 0;
+    mgr->isPlaying = !mgr->isInContinueMenu && !mgr->isPaused ? 1 : 0;
     for (i = 0; i < 2; i++)
     {
         if (mgr->stats->unk_54[i] < 6543.0f || mgr->stats->unk_54[i] > 106543.0f)
         {
-            g_Unknown626270.unk_9614 = -9999.0f;
+            g_Unknown626270.checksumValue = -9999.0f;
         }
     }
     for (i = 0; i < 8; i++)
     {
         if (mgr->stats->unk_8c[i] < 6543 || mgr->stats->unk_8c[i] > 106543)
         {
-            g_Unknown626270.unk_9614 = -9999.0f;
+            g_Unknown626270.checksumValue = -9999.0f;
         }
     }
     g_App.d3dDevice->Clear(0, NULL, D3DCLEAR_ZBUFFER, g_Unknown1347b00.fog.color, 1.0f, 0);
-    if (mgr->unk_93dc == 1 || mgr->unk_93dc == 2 || mgr->isInContinueMenu)
+    if (mgr->isPaused == 1 || mgr->isPaused == 2 || mgr->isInContinueMenu)
     {
         return 3;
     }
@@ -261,48 +261,48 @@ int GameManager::OnUpdate(GameManager *mgr)
     {
         if (mgr->stats->unk_70[i] < 6543.0f || mgr->stats->unk_70[i] > 106543.0f)
         {
-            g_Unknown626270.unk_9614 = -9999.0f;
+            g_Unknown626270.checksumValue = -9999.0f;
         }
     }
     for (i = 0; i < 2; i++)
     {
         if (mgr->stats->unk_80[i] < 6543.0f || mgr->stats->unk_80[i] > 106543.0f)
         {
-            g_Unknown626270.unk_9614 = -9999.0f;
+            g_Unknown626270.checksumValue = -9999.0f;
         }
     }
     for (i = 0; i < 5; i++)
     {
         if ((int)mgr->stats->unk_b4[i] < 6543 || (int)mgr->stats->unk_b4[i] > 106543)
         {
-            g_Unknown626270.unk_9614 = -9999.0f;
+            g_Unknown626270.checksumValue = -9999.0f;
         }
     }
     if (g_Unknown626270.unk_4->unk_25)
     {
-        g_Unknown626270.unk_d = 0;
-        mgr->unk_962c++;
-        if ((g_BulletManager.bulletCount >= 320 && mgr->unk_962c % 3 == 0) ||
-            (g_BulletManager.bulletCount < 320 && g_BulletManager.bulletCount >= 224 && mgr->unk_962c % 4 == 0) ||
-            (g_BulletManager.bulletCount < 224 && g_BulletManager.bulletCount >= 128 && mgr->unk_962c % 5 == 0))
+        g_Unknown626270.skipFpsMeasure = 0;
+        mgr->slowdownCounter++;
+        if ((g_BulletManager.bulletCount >= 320 && mgr->slowdownCounter % 3 == 0) ||
+            (g_BulletManager.bulletCount < 320 && g_BulletManager.bulletCount >= 224 && mgr->slowdownCounter % 4 == 0) ||
+            (g_BulletManager.bulletCount < 224 && g_BulletManager.bulletCount >= 128 && mgr->slowdownCounter % 5 == 0))
         {
-            g_Unknown626270.unk_d = 1;
+            g_Unknown626270.skipFpsMeasure = 1;
             return 3;
         }
         if (g_BulletManager.bulletCount < 128)
         {
-            mgr->unk_962c = 0;
+            mgr->slowdownCounter = 0;
         }
     }
-    mgr->unk_95e8++;
+    mgr->stageFrames++;
     return 1;
 }
 
 int GameManager::OnDraw(GameManager *mgr)
 {
-    if (mgr->unk_93dc)
+    if (mgr->isPaused)
     {
-        mgr->unk_93dc = 2;
+        mgr->isPaused = 2;
     }
     return 1;
 }
@@ -340,7 +340,7 @@ void DrawLoadingScreen()
 
 void GameManager::SetRankForDifficulty()
 {
-    this->unk_9634 = g_Ranks[g_Unknown626270.difficulty].rank;
+    this->rank = g_Ranks[g_Unknown626270.difficulty].rank;
     this->minRank = g_Ranks[g_Unknown626270.difficulty].minRank;
     this->maxRank = g_Ranks[g_Unknown626270.difficulty].maxRank;
 }
@@ -382,7 +382,7 @@ void RerollStatsChecksumKeys()
     g_Unknown626270.stats->unk_ac = g_Unknown626270.stats->unk_34[2];
     sum = g_Unknown626270.ComputeChecksum();
     g_Unknown626270.stats->unk_b0 = sum;
-    g_Unknown626270.unk_9614 = (float)sum + g_Unknown626270.stats->unk_8c[3];
+    g_Unknown626270.checksumValue = (float)sum + g_Unknown626270.stats->unk_8c[3];
 }
 
 int LoadScoreFile()
@@ -415,14 +415,14 @@ int LoadScoreFile()
         LogPrintf(&g_Log, "error : スコアファイルの読み取りに失敗しました\r\n");
         return -1;
     }
-    g_Unknown626270.stats->highScore = LoadHighScores(data, NULL, g_Unknown626270.unk_93d7, g_Unknown626270.difficulty, &g_Unknown626270.stats->unk_10);
+    g_Unknown626270.stats->highScore = LoadHighScores(data, NULL, g_Unknown626270.shotIndex, g_Unknown626270.difficulty, &g_Unknown626270.stats->unk_10);
     LoadSpellCards(data, g_Unknown626270.catks);
     LoadClears(data, g_Unknown626270.clrds);
     LoadPracticeScores(data, &g_Unknown626270.pscrs[0][0][0]);
     if (g_Unknown626270.unk_93d8 & 1)
     {
-        g_Unknown626270.stats->highScore = g_Unknown626270.pscrs[g_Unknown626270.unk_93d7][g_Unknown626270.stage][g_Unknown626270.difficulty].score;
-        g_Unknown626270.pscrs[g_Unknown626270.unk_93d7][g_Unknown626270.stage][g_Unknown626270.difficulty].unk_0c++;
+        g_Unknown626270.stats->highScore = g_Unknown626270.pscrs[g_Unknown626270.shotIndex][g_Unknown626270.stage][g_Unknown626270.difficulty].score;
+        g_Unknown626270.pscrs[g_Unknown626270.shotIndex][g_Unknown626270.stage][g_Unknown626270.difficulty].unk_0c++;
         g_Unknown626270.stats->unk_10 = 0;
     }
     ReleaseScoreDat(data);
@@ -445,8 +445,8 @@ int GameManager::AddedCallback(GameManager *mgr)
     WORD seed;
 
     g_App.clockMeasurementPending = 0;
-    mgr->unk_14 = 1 << mgr->difficulty;
-    mgr->unk_93d7 = mgr->character * 2 + mgr->shotType;
+    mgr->difficultyMask = 1 << mgr->difficulty;
+    mgr->shotIndex = mgr->character * 2 + mgr->shotType;
     g_App.lastTotalPlayTimeTick = timeGetTime();
     g_App.gameSpeed = 1.0f;
     if (g_App.scene != 3)
@@ -463,15 +463,15 @@ int GameManager::AddedCallback(GameManager *mgr)
             mgr->stats = NULL;
         }
         size = g_Rng.GetRandomU32InRange(0xffff) + 0x10;
-        mgr->unk_0 = malloc(size);
+        mgr->tempBuffer = malloc(size);
         mgr->unk_4 = new Unknown626270Unk4;
         mgr->stats = new Unknown626270Stats;
         RerollStatsChecksumKeys();
         *mgr->unk_4 = *(Unknown626270Unk4 *)&g_App.controllerMapping;
-        MemFree(mgr->unk_0);
-        mgr->unk_93d4 = 0;
-        mgr->unk_961c = mgr->stats->unk_88;
-        mgr->unk_9620 = mgr->stats->unk_88;
+        MemFree(mgr->tempBuffer);
+        mgr->powerItemCombo = 0;
+        mgr->bonusPoints = mgr->stats->unk_88;
+        mgr->invulnerabilityBonus = mgr->stats->unk_88;
         if (g_Unknown626270.difficulty >= 4)
         {
             mgr->unk_4->lifeCount = 2;
@@ -527,24 +527,24 @@ int GameManager::AddedCallback(GameManager *mgr)
             switch (mgr->difficulty)
             {
             case 0:
-                mgr->unk_9618 = mgr->stats->unk_88 + 200000;
+                mgr->bonusPointsCap = mgr->stats->unk_88 + 200000;
                 break;
             case 1:
-                mgr->unk_9618 = mgr->stats->unk_88 + 200000;
+                mgr->bonusPointsCap = mgr->stats->unk_88 + 200000;
                 break;
             case 2:
-                mgr->unk_9618 = mgr->stats->unk_88 + 250000;
+                mgr->bonusPointsCap = mgr->stats->unk_88 + 250000;
                 break;
             case 3:
-                mgr->unk_9618 = mgr->stats->unk_88 + 300000;
+                mgr->bonusPointsCap = mgr->stats->unk_88 + 300000;
                 break;
             case 4:
-                mgr->unk_9618 = mgr->stats->unk_88 + 400000;
-                mgr->unk_961c = mgr->stats->unk_88 + 200000;
+                mgr->bonusPointsCap = mgr->stats->unk_88 + 400000;
+                mgr->bonusPoints = mgr->stats->unk_88 + 200000;
                 break;
             case 5:
-                mgr->unk_9618 = mgr->stats->unk_88 + 400000;
-                mgr->unk_961c = mgr->stats->unk_88 + 300000;
+                mgr->bonusPointsCap = mgr->stats->unk_88 + 400000;
+                mgr->bonusPoints = mgr->stats->unk_88 + 300000;
                 break;
             }
         }
@@ -553,38 +553,38 @@ int GameManager::AddedCallback(GameManager *mgr)
             switch (mgr->difficulty)
             {
             case 0:
-                mgr->unk_9618 = mgr->stats->unk_88 + 200000;
+                mgr->bonusPointsCap = mgr->stats->unk_88 + 200000;
                 break;
             case 1:
-                mgr->unk_9618 = mgr->stats->unk_88 + 200000;
+                mgr->bonusPointsCap = mgr->stats->unk_88 + 200000;
                 break;
             case 2:
-                mgr->unk_9618 = mgr->stats->unk_88 + 250000;
+                mgr->bonusPointsCap = mgr->stats->unk_88 + 250000;
                 break;
             case 3:
-                mgr->unk_9618 = mgr->stats->unk_88 + 300000;
+                mgr->bonusPointsCap = mgr->stats->unk_88 + 300000;
                 break;
             }
             switch (mgr->stage + 1)
             {
             case 2:
-                mgr->unk_961c = mgr->unk_9618;
+                mgr->bonusPoints = mgr->bonusPointsCap;
                 break;
             case 3:
-                mgr->unk_9618 += 50000;
-                mgr->unk_961c = mgr->unk_9618;
+                mgr->bonusPointsCap += 50000;
+                mgr->bonusPoints = mgr->bonusPointsCap;
                 break;
             case 4:
-                mgr->unk_9618 += 100000;
-                mgr->unk_961c = mgr->unk_9618;
+                mgr->bonusPointsCap += 100000;
+                mgr->bonusPoints = mgr->bonusPointsCap;
                 break;
             case 5:
-                mgr->unk_9618 += 150000;
-                mgr->unk_961c = mgr->unk_9618;
+                mgr->bonusPointsCap += 150000;
+                mgr->bonusPoints = mgr->bonusPointsCap;
                 break;
             case 6:
-                mgr->unk_9618 += 200000;
-                mgr->unk_961c = mgr->unk_9618;
+                mgr->bonusPointsCap += 200000;
+                mgr->bonusPoints = mgr->bonusPointsCap;
                 break;
             }
         }
@@ -594,8 +594,8 @@ int GameManager::AddedCallback(GameManager *mgr)
             {
                 IncrementStatCounter((DWORD *)&g_Unknown626270.plst.counts[g_Unknown626270.difficulty].plays[0], 999999);
                 IncrementStatCounter((DWORD *)&g_Unknown626270.plst.counts[6].plays[0], 999999);
-                IncrementStatCounter((DWORD *)&g_Unknown626270.plst.counts[g_Unknown626270.difficulty].plays[mgr->unk_93d7 + 1], 999999);
-                IncrementStatCounter((DWORD *)&g_Unknown626270.plst.counts[6].plays[mgr->unk_93d7 + 1], 999999);
+                IncrementStatCounter((DWORD *)&g_Unknown626270.plst.counts[g_Unknown626270.difficulty].plays[mgr->shotIndex + 1], 999999);
+                IncrementStatCounter((DWORD *)&g_Unknown626270.plst.counts[6].plays[mgr->shotIndex + 1], 999999);
                 if (g_App.scene == 10)
                 {
                     IncrementStatCounter((DWORD *)&g_Unknown626270.plst.counts[g_Unknown626270.difficulty].retries, 999999);
@@ -626,11 +626,11 @@ int GameManager::AddedCallback(GameManager *mgr)
     mgr->subRank = 0;
     mgr->stats->unk_24 = 0;
     mgr->stats->graze = 0;
-    mgr->unk_93dc = 0;
+    mgr->isPaused = 0;
     mgr->stage++;
     if (!((g_Unknown626270.unk_93d8 >> 3) & 1))
     {
-        shot = g_Unknown626270.unk_93d7;
+        shot = g_Unknown626270.shotIndex;
         if (!mgr->stats->continuesUsed && mgr->clrds[shot].stagesClearedNoContinue[g_Unknown626270.difficulty] < mgr->stage - 1)
         {
             mgr->clrds[shot].stagesClearedNoContinue[g_Unknown626270.difficulty] = mgr->stage - 1;
@@ -660,7 +660,7 @@ int GameManager::AddedCallback(GameManager *mgr)
         mgr->RerollChecksumKeys();
         g_Rng.seed = seed;
     }
-    mgr->unk_95e4 = g_Rng.seed;
+    mgr->rngSeed = g_Rng.seed;
     if (Stage::RegisterChain(mgr->stage) != 0)
     {
         LogPrintf(&g_Log, "error : 背景データの初期化に失敗しました\r\n");
@@ -720,7 +720,7 @@ int GameManager::AddedCallback(GameManager *mgr)
     mgr->stats->score = 0;
     mgr->unk_93d8 &= ~0x10;
     g_AsciiText.Initialize();
-    g_Unknown626270.unk_d = 0;
+    g_Unknown626270.skipFpsMeasure = 0;
     DrawFps(0);
     DebugPrint2("random seed %d %d\r\n", g_Rng.seed, g_Rng.GetGenerated());
     return 0;
@@ -752,8 +752,8 @@ int GameManager::DeletedCallback(GameManager *mgr)
     g_App.AddPlayTime();
     mgr->unk_93d8 &= ~4;
     g_AsciiText.Initialize();
-    g_Unknown626270.unk_d = 0;
-    g_Unknown626270.unk_95e8 = 0;
+    g_Unknown626270.skipFpsMeasure = 0;
+    g_Unknown626270.stageFrames = 0;
     return 0;
 }
 
@@ -765,7 +765,7 @@ int RegisterGameManagerChain()
     g_Unknown626270CalcChain.addedCallback = (ChainCallback)GameManager::AddedCallback;
     g_Unknown626270CalcChain.deletedCallback = (ChainCallback)GameManager::DeletedCallback;
     g_Unknown626270CalcChain.arg = mgr;
-    mgr->unk_95e8 = 0;
+    mgr->stageFrames = 0;
     if (g_Chain.AddToCalcChain(&g_Unknown626270CalcChain, 2) != 0)
     {
         return -1;
@@ -792,12 +792,12 @@ void GameManager::AddSubRank(int amount)
     this->subRank += amount;
     while (this->subRank >= 100)
     {
-        this->unk_9634++;
+        this->rank++;
         this->subRank -= 100;
     }
-    if (this->unk_9634 > this->maxRank)
+    if (this->rank > this->maxRank)
     {
-        this->unk_9634 = this->maxRank;
+        this->rank = this->maxRank;
     }
 }
 
@@ -806,12 +806,12 @@ void GameManager::SubSubRank(int amount)
     this->subRank -= amount;
     while (this->subRank < 0)
     {
-        this->unk_9634--;
+        this->rank--;
         this->subRank += 100;
     }
-    if (this->unk_9634 < this->minRank)
+    if (this->rank < this->minRank)
     {
-        this->unk_9634 = this->minRank;
+        this->rank = this->minRank;
     }
 }
 
@@ -819,24 +819,24 @@ void GameManager::AddBonusPoints(int amount)
 {
     int prev;
 
-    prev = this->unk_961c;
-    this->unk_961c += amount;
-    if (this->unk_961c > this->unk_9618)
+    prev = this->bonusPoints;
+    this->bonusPoints += amount;
+    if (this->bonusPoints > this->bonusPointsCap)
     {
-        this->unk_961c = this->unk_9618;
+        this->bonusPoints = this->bonusPointsCap;
     }
     if (amount > 0 && !g_Player.unk_240d)
     {
-        this->unk_9620 += amount;
-        if (this->unk_9620 >= this->stats->unk_88 + 50000)
+        this->invulnerabilityBonus += amount;
+        if (this->invulnerabilityBonus >= this->stats->unk_88 + 50000)
         {
-            this->unk_9620 = this->stats->unk_88 + 50000;
+            this->invulnerabilityBonus = this->stats->unk_88 + 50000;
             StartBombState(&g_Player);
         }
     }
-    if (this->unk_961c >= this->unk_9618 && prev != this->unk_961c)
+    if (this->bonusPoints >= this->bonusPointsCap && prev != this->bonusPoints)
     {
-        g_Unknown49fbf0.Func427c81(this->unk_961c - this->stats->unk_88, 3);
+        g_Unknown49fbf0.Func427c81(this->bonusPoints - this->stats->unk_88, 3);
     }
 }
 
@@ -844,15 +844,15 @@ void GameManager::AddBonusPointsNoTrack(int amount)
 {
     int prev;
 
-    prev = this->unk_961c;
-    this->unk_961c += amount;
-    if (this->unk_961c > this->unk_9618)
+    prev = this->bonusPoints;
+    this->bonusPoints += amount;
+    if (this->bonusPoints > this->bonusPointsCap)
     {
-        this->unk_961c = this->unk_9618;
+        this->bonusPoints = this->bonusPointsCap;
     }
-    if (this->unk_961c >= this->unk_9618 && prev != this->unk_961c)
+    if (this->bonusPoints >= this->bonusPointsCap && prev != this->bonusPoints)
     {
-        g_Unknown49fbf0.Func427c81(this->unk_961c - this->stats->unk_88, 3);
+        g_Unknown49fbf0.Func427c81(this->bonusPoints - this->stats->unk_88, 3);
     }
 }
 
@@ -860,20 +860,20 @@ void GameManager::AddBonusPointsCapped(int amount)
 {
     int prev;
 
-    prev = this->unk_961c;
-    this->unk_961c += amount;
-    if (this->unk_961c > this->unk_9618)
+    prev = this->bonusPoints;
+    this->bonusPoints += amount;
+    if (this->bonusPoints > this->bonusPointsCap)
     {
-        this->unk_961c = this->unk_9618;
+        this->bonusPoints = this->bonusPointsCap;
     }
 }
 
 void GameManager::IncreaseBonusCap(int amount)
 {
-    this->unk_9618 += amount;
-    if (this->unk_9618 >= this->stats->unk_88 + 9999990)
+    this->bonusPointsCap += amount;
+    if (this->bonusPointsCap >= this->stats->unk_88 + 9999990)
     {
-        this->unk_9618 = this->stats->unk_88 + 9999990;
+        this->bonusPointsCap = this->stats->unk_88 + 9999990;
     }
 }
 

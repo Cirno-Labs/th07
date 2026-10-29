@@ -90,13 +90,13 @@ int GetIntOperand(Enemy *enemy, int id)
     case 10016:
         return g_Unknown626270.difficulty;
     case 10017:
-        return g_Unknown626270.unk_9634;
+        return g_Unknown626270.rank;
     case 10025:
         return enemy->callbackTimer.current;
     case 10027:
         return enemy->life;
     case 10028:
-        return g_Unknown626270.unk_93d7;
+        return g_Unknown626270.shotIndex;
     case 10072:
         return enemy->ctx.vars.floats2[0];
     case 10073:
@@ -242,7 +242,7 @@ int *ResolveOperand(Enemy *enemy, int *operand, WORD mask, int bit)
     case 10016:
         return &g_Unknown626270.difficulty;
     case 10017:
-        return &g_Unknown626270.unk_9634;
+        return &g_Unknown626270.rank;
     case 10025:
         return &enemy->callbackTimer.current;
     case 10027:
@@ -294,13 +294,13 @@ float GetFloatOperand(Enemy *enemy, float id)
     case 10016:
         return g_Unknown626270.difficulty;
     case 10017:
-        return g_Unknown626270.unk_9634;
+        return g_Unknown626270.rank;
     case 10025:
         return enemy->callbackTimer.current;
     case 10027:
         return enemy->life;
     case 10028:
-        return g_Unknown626270.unk_93d7;
+        return g_Unknown626270.shotIndex;
     case 10070:
         return enemy->item;
     case 10071:
@@ -662,9 +662,9 @@ void StartSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
                 rec->maxBonus[len] = 0;
             }
         }
-        if (rec->attempts[g_Unknown626270.unk_93d7] < 9999)
+        if (rec->attempts[g_Unknown626270.shotIndex] < 9999)
         {
-            rec->attempts[g_Unknown626270.unk_93d7]++;
+            rec->attempts[g_Unknown626270.shotIndex]++;
         }
         if (rec->attempts[6] < 9999)
         {
@@ -733,7 +733,7 @@ void EndSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
                             rec->maxBonus[len] = 0;
                         }
                     }
-                    shot = g_Unknown626270.unk_93d7;
+                    shot = g_Unknown626270.shotIndex;
                     if (rec->maxBonus[shot] < bonus)
                     {
                         rec->maxBonus[shot] = bonus;
@@ -779,12 +779,12 @@ void EndSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
 // th06's.
 inline int RankLerp(int lo, int hi)
 {
-    return g_Unknown626270.unk_9634 * (hi - lo) / 32 + lo;
+    return g_Unknown626270.rank * (hi - lo) / 32 + lo;
 }
 
 inline float RankLerpF(float lo, float hi)
 {
-    return g_Unknown626270.unk_9634 * (hi - lo) / 32.0f + lo;
+    return g_Unknown626270.rank * (hi - lo) / 32.0f + lo;
 }
 
 // The variable argument `n` of `instr` names, through ResolveOperand.
@@ -833,7 +833,7 @@ loop:
     }
     if (enemy->ctx.timer == instr->time)
     {
-        if ((instr->difficultyMask & g_Unknown626270.unk_14) == 0)
+        if ((instr->difficultyMask & g_Unknown626270.difficultyMask) == 0)
         {
             goto next;
         }

@@ -15,7 +15,7 @@
 int GameManager::ChecksumMismatch()
 {
     return this->stats->unk_ac == this->stats->unk_34[2] + this->stats->unk_b4[2] * ((BYTE *)&this->stats->unk_ac - (BYTE *)this->stats->unk_34 + 0x84) &&
-                   this->stats->unk_b0 + this->stats->unk_8c[3] == (int)this->unk_9614
+                   this->stats->unk_b0 + this->stats->unk_8c[3] == (int)this->checksumValue
                ? FALSE
                : TRUE;
 }

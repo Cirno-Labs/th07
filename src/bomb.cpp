@@ -65,7 +65,7 @@ void SetBombDrain(Player *player, int minimum, float share)
 {
     int drain;
 
-    drain = (g_Unknown626270.unk_961c - g_Unknown626270.stats->unk_88) * share;
+    drain = (g_Unknown626270.bonusPoints - g_Unknown626270.stats->unk_88) * share;
     switch (g_Unknown626270.difficulty)
     {
     case 2:

@@ -110,7 +110,7 @@ int App::OnUpdate(App *arg)
     {
         g_SoundPlayer.bgm->UpdateFade();
     }
-    if (g_Unknown626270.unk_d == 0)
+    if (g_Unknown626270.skipFpsMeasure == 0)
     {
         g_PrevButtons = g_Buttons;
         g_Buttons = ReadButtons();
@@ -770,7 +770,7 @@ void DrawFps(int draw)
     float fps;
     float duration;
 
-    if (g_Unknown626270.unk_d == 0)
+    if (g_Unknown626270.skipFpsMeasure == 0)
     {
         frames += 1 + g_App.frameSkip;
         if (g_App.perfFrequency[0] == 0)

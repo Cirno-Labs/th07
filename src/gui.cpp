@@ -799,7 +799,7 @@ int GuiImpl::RunMsg()
         case 9:
             this->stageClearPower = g_Unknown626270.stats->power;
             this->stageClearPoints = g_Unknown626270.stats->unk_24;
-            this->stageClearCherry = g_Unknown626270.unk_9618 - g_Unknown626270.stats->unk_88;
+            this->stageClearCherry = g_Unknown626270.bonusPointsCap - g_Unknown626270.stats->unk_88;
             this->stageClearGraze = g_Unknown626270.stats->graze;
             this->stageClearShown = 1;
             if (g_Unknown626270.stage < 6)
@@ -851,7 +851,7 @@ int GuiImpl::RunMsg()
                 {
                     if (g_Unknown626270.difficulty == 4)
                     {
-                        g_Unknown626270.clrds[g_Unknown626270.unk_93d7]
+                        g_Unknown626270.clrds[g_Unknown626270.shotIndex]
                             .stagesClearedNoContinue[g_Unknown626270.difficulty] = 99;
                     }
                     g_Unknown626270.plst.counts[g_Unknown626270.difficulty].clears++;
@@ -1557,7 +1557,7 @@ void Gui::DrawBanners()
             score %= div2;
             div2 /= 10;
         }
-        digit = catks->captures[g_Unknown626270.unk_93d7];
+        digit = catks->captures[g_Unknown626270.shotIndex];
         if (digit > 99)
         {
             digit = 99;
@@ -1571,7 +1571,7 @@ void Gui::DrawBanners()
         this->impl->unk_7528.pos.x += 7.0f;
         this->impl->unk_7528.spriteData = GetSpriteData(digit % 10 + 0x84);
         g_SpriteEngine->DrawUnrotated(&this->impl->unk_7528);
-        digit = catks->attempts[g_Unknown626270.unk_93d7];
+        digit = catks->attempts[g_Unknown626270.shotIndex];
         if (digit > 99)
         {
             digit = 99;

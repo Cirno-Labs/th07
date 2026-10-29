@@ -13,11 +13,11 @@ int ReplayManager::RecordOnUpdate2(ReplayManager *replay)
     replay->unk_d6 = 0;
     replay->unk_d4 = g_Rng.seed;
     g_Rng.generated = 0;
-    if (g_Unknown626270.unk_93d0)
+    if (g_Unknown626270.pauseRequested)
     {
         replay->unk_d6 |= 0x100;
     }
-    g_Unknown626270.unk_93d0 = 0;
+    g_Unknown626270.pauseRequested = 0;
     return 1;
 }
 
@@ -72,7 +72,7 @@ int ReplayManager::PlayOnUpdate2(ReplayManager *replay)
     {
         return 6;
     }
-    if (g_Unknown626270.unk_93df == 2 && !g_Unknown9a9b00.AnyBossActive() && replay->frame % 5 != 4)
+    if (g_Unknown626270.replayMenuChoice == 2 && !g_Unknown9a9b00.AnyBossActive() && replay->frame % 5 != 4)
     {
         return 6;
     }
@@ -138,7 +138,7 @@ int ReplayManager::RecordAddedCallback(ReplayManager *replay)
     {
         replay->data = new ReplayHeader;
         *(DWORD *)replay->data->magic = *(DWORD *)"T7RP";
-        replay->data->shotType = g_Unknown626270.unk_93d7;
+        replay->data->shotType = g_Unknown626270.shotIndex;
         replay->data->version = 0x1100;
         replay->data->unk_6a = 0x100;
         replay->data->unk_55 = 0x62;
@@ -183,13 +183,13 @@ int ReplayManager::RecordAddedCallback(ReplayManager *replay)
     cur->bombs = g_Unknown626270.stats->bombs;
     cur->lives = g_Unknown626270.stats->lives;
     cur->power = g_Unknown626270.stats->power;
-    cur->unk_25 = g_Unknown626270.unk_9634;
+    cur->unk_25 = g_Unknown626270.rank;
     cur->pointItemsTotal = g_Unknown626270.stats->pointItemsTotal;
-    cur->unk_20 = g_Unknown626270.unk_95e4;
-    cur->unk_26 = g_Unknown626270.unk_93d4;
-    cur->unk_08 = g_Unknown626270.unk_961c - g_Unknown626270.stats->unk_88;
-    cur->unk_0c = g_Unknown626270.unk_9618 - g_Unknown626270.stats->unk_88;
-    cur->unk_10 = g_Unknown626270.unk_9620 - g_Unknown626270.stats->unk_88;
+    cur->unk_20 = g_Unknown626270.rngSeed;
+    cur->unk_26 = g_Unknown626270.powerItemCombo;
+    cur->unk_08 = g_Unknown626270.bonusPoints - g_Unknown626270.stats->unk_88;
+    cur->unk_0c = g_Unknown626270.bonusPointsCap - g_Unknown626270.stats->unk_88;
+    cur->unk_10 = g_Unknown626270.invulnerabilityBonus - g_Unknown626270.stats->unk_88;
     cur->spellCardsCaptured = g_Unknown626270.stats->spellCardsCaptured;
     cur->unk_18 = g_Unknown626270.stats->unk_2c;
     cur->unk_1c = g_Unknown626270.stats->unk_30;
@@ -322,10 +322,10 @@ int ReplayManager::PlayAddedCallback(ReplayManager *replay)
     extras = replay->data->extras[idx];
     g_Unknown626270.character = replay->data->shotType / 2;
     g_Unknown626270.shotType = replay->data->shotType % 2;
-    g_Unknown626270.unk_93d7 = replay->data->shotType;
+    g_Unknown626270.shotIndex = replay->data->shotType;
     g_Unknown626270.difficulty = replay->data->difficulty;
     g_Unknown626270.stats->pointItemsTotal = cur->pointItemsTotal;
-    g_Unknown626270.unk_9634 = cur->unk_25;
+    g_Unknown626270.rank = cur->unk_25;
     g_Unknown626270.SetLives(cur->lives);
     g_Unknown626270.RerollChecksumKeys();
     g_Unknown626270.SetBombs(cur->bombs);
@@ -333,13 +333,13 @@ int ReplayManager::PlayAddedCallback(ReplayManager *replay)
     g_Unknown626270.RerollChecksumKeys();
     g_Unknown626270.stats->grazeTotal = cur->grazeTotal;
     replay->cursor = cur->frames;
-    g_Unknown626270.unk_93d4 = cur->unk_26;
-    g_Unknown626270.unk_961c = cur->unk_08 + g_Unknown626270.stats->unk_88;
-    g_Unknown626270.unk_9618 = cur->unk_0c + g_Unknown626270.stats->unk_88;
-    g_Unknown626270.unk_9620 = cur->unk_10 + g_Unknown626270.stats->unk_88;
-    if (g_Unknown626270.unk_9620 >= g_Unknown626270.stats->unk_88 + 50000)
+    g_Unknown626270.powerItemCombo = cur->unk_26;
+    g_Unknown626270.bonusPoints = cur->unk_08 + g_Unknown626270.stats->unk_88;
+    g_Unknown626270.bonusPointsCap = cur->unk_0c + g_Unknown626270.stats->unk_88;
+    g_Unknown626270.invulnerabilityBonus = cur->unk_10 + g_Unknown626270.stats->unk_88;
+    if (g_Unknown626270.invulnerabilityBonus >= g_Unknown626270.stats->unk_88 + 50000)
     {
-        g_Unknown626270.unk_9620 = g_Unknown626270.stats->unk_88 + 50000;
+        g_Unknown626270.invulnerabilityBonus = g_Unknown626270.stats->unk_88 + 50000;
         StartBombState(&g_Player);
     }
     *g_Unknown626270.unk_4 = *(Unknown626270Unk4 *)replay->data->config;

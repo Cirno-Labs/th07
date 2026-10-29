@@ -230,7 +230,7 @@ int ScreenEffect::OnUpdateShake(ScreenEffect *effect)
     {
         return 1;
     }
-    if (g_Unknown626270.unk_95e8 <= 1)
+    if (g_Unknown626270.stageFrames <= 1)
     {
         return 0;
     }

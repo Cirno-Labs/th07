@@ -225,8 +225,8 @@ int EffectInitPetal20(Effect *effect)
     effect->drawList = 1;
     effect->sprite.rotationZ = g_Rng.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
     effect->sprite.rotationX = g_Rng.GetRandomF32ZeroToOne() * 0.031415928f - 0.015707964f;
-    percent = g_Unknown626270.unk_961c - g_Unknown626270.stats->unk_88;
-    percent = percent * 100 / g_Unknown626270.unk_9618;
+    percent = g_Unknown626270.bonusPoints - g_Unknown626270.stats->unk_88;
+    percent = percent * 100 / g_Unknown626270.bonusPointsCap;
     if (percent >= g_Rng.GetRandomU32InRange(100))
     {
         g_SpriteEngine->SetSprite(&effect->sprite, 0x2d8);
@@ -252,8 +252,8 @@ int EffectInitPetal26(Effect *effect)
     effect->drawList = 1;
     effect->sprite.rotationZ = g_Rng.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
     effect->sprite.rotationX = g_Rng.GetRandomF32ZeroToOne() * 0.06283186f - 0.031415928f;
-    percent = g_Unknown626270.unk_961c - g_Unknown626270.stats->unk_88;
-    percent = percent * 100 / g_Unknown626270.unk_9618;
+    percent = g_Unknown626270.bonusPoints - g_Unknown626270.stats->unk_88;
+    percent = percent * 100 / g_Unknown626270.bonusPointsCap;
     if (percent >= g_Rng.GetRandomU32InRange(100))
     {
         g_SpriteEngine->SetSprite(&effect->sprite, 0x2d8);

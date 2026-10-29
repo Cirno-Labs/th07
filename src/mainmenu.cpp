@@ -165,11 +165,11 @@ int MainMenu::StartTitle()
             {
                 g_Unknown626270.SetUnk93d8Bit3(1);
                 g_Unknown626270.unk_93d8 |= 2;
-                g_Unknown626270.unk_93e0 = 0;
+                g_Unknown626270.demoFrames = 0;
                 g_Unknown626270.difficulty = this->loadedReplay->difficulty;
                 g_Unknown626270.character = this->loadedReplay->shotType / 2;
                 g_Unknown626270.shotType = this->loadedReplay->shotType % 2;
-                g_Unknown626270.unk_93d7 = this->loadedReplay->shotType;
+                g_Unknown626270.shotIndex = this->loadedReplay->shotType;
                 i = 0;
                 while (this->loadedReplay->stages[i] == NULL)
                 {
@@ -179,7 +179,7 @@ int MainMenu::StartTitle()
                 MemFree(this->loadedReplay);
                 this->loadedReplay = NULL;
                 g_App.scene = 2;
-                g_Unknown626270.unk_93df = 0;
+                g_Unknown626270.replayMenuChoice = 0;
                 return 0;
             }
         }
@@ -1842,12 +1842,12 @@ int MainMenu::UpdateReplayMenu()
             g_Unknown626270.difficulty = this->loadedReplay->difficulty;
             g_Unknown626270.character = this->loadedReplay->shotType / 2;
             g_Unknown626270.shotType = this->loadedReplay->shotType % 2;
-            g_Unknown626270.unk_93d7 = this->loadedReplay->shotType;
+            g_Unknown626270.shotIndex = this->loadedReplay->shotType;
             MemFree(this->loadedReplay);
             this->loadedReplay = NULL;
             g_Unknown626270.stage = g_Unknown626270.difficulty >= 5 ? 7 : this->replayStage;
             g_App.scene = 2;
-            g_Unknown626270.unk_93df = this->cursor;
+            g_Unknown626270.replayMenuChoice = this->cursor;
             g_App.StopMusic();
             while (g_SoundPlayer.PlayQueuedSounds())
             {
@@ -2146,7 +2146,7 @@ int MainMenu::InitTitleScene()
     g_App.gameSpeed = 1.0f;
     if (g_Unknown626270.unk_93d8 >> 3 & 1)
     {
-        g_Unknown626270.character = g_Unknown626270.unk_93d7 = 0;
+        g_Unknown626270.character = g_Unknown626270.shotIndex = 0;
     }
     if (g_Unknown626270.unk_93d8 >> 1 & 1)
     {
@@ -2159,17 +2159,17 @@ int MainMenu::InitTitleScene()
     ReleaseScoreDat(dat);
     if ((DWORD)g_Unknown626270.plst.playHours < 7)
     {
-        g_Unknown626270.unk_9630 = 3;
+        g_Unknown626270.maxContinues = 3;
     }
     else if ((DWORD)g_Unknown626270.plst.playHours < 14)
     {
-        g_Unknown626270.unk_9630 = 4;
+        g_Unknown626270.maxContinues = 4;
     }
     else
     {
-        g_Unknown626270.unk_9630 = 5;
+        g_Unknown626270.maxContinues = 5;
     }
-    if (!g_Unknown626270.unk_9624 && g_Unknown626270.IsPhantasmOpen())
+    if (!g_Unknown626270.phantasmWasOpen && g_Unknown626270.IsPhantasmOpen())
     {
         i = 0;
         g_SpriteEngine->LoadSurface(0, "data/title/phantasm.jpg");
@@ -2228,7 +2228,7 @@ int MainMenu::InitTitleScene()
         }
         g_SpriteEngine->ReleaseSurface(0);
     }
-    g_Unknown626270.unk_9624 = g_Unknown626270.IsPhantasmOpen();
+    g_Unknown626270.phantasmWasOpen = g_Unknown626270.IsPhantasmOpen();
     this->state = 0;
     g_App.ResetClockDriftCounters();
     switch (g_App.prevScene)
@@ -2285,7 +2285,7 @@ int MainMenu::InitTitleScene()
     }
     this->unk_b0c8 = this->unk_b0cc;
     g_Unknown626270.unk_93d8 &= ~2;
-    g_Unknown626270.unk_93e0 = 0;
+    g_Unknown626270.demoFrames = 0;
     return 0;
 }
 
@@ -2333,7 +2333,7 @@ int SetUpTitleScene(int unk)
     MainMenu *menu = new MainMenu;
 
     memset(menu, 0, sizeof(MainMenu));
-    g_Unknown626270.unk_93dc = 0;
+    g_Unknown626270.isPaused = 0;
     menu->calcChain = g_Chain.CreateElem((ChainCallback)MainMenu::OnUpdate);
     menu->calcChain->arg = menu;
     menu->calcChain->addedCallback = (ChainCallback)MainMenu::AddedCallback;

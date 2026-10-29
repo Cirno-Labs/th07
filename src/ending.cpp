@@ -371,7 +371,7 @@ int Ending::AddedCallback(Ending *ending)
     int j;
     int si;
     // Unused.
-    int unused = g_Unknown626270.unk_93d7;
+    int unused = g_Unknown626270.shotIndex;
 
     g_Unknown626270.unk_93d8 |= 0x10;
     g_App.hideFps = 1;
@@ -380,7 +380,7 @@ int Ending::AddedCallback(Ending *ending)
     g_SpriteEngine->ClearSpriteData();
     g_SpriteEngine->ClearBlendMode();
     g_SpriteEngine->ClearVertexFormat();
-    si = g_Unknown626270.unk_93d7;
+    si = g_Unknown626270.shotIndex;
     ending->canSkip = 0;
     if (g_Unknown626270.stats->continuesUsed == 0)
     {
@@ -406,7 +406,7 @@ int Ending::AddedCallback(Ending *ending)
     }
     else
     {
-        script = g_EndingFiles[g_Unknown626270.unk_93d7];
+        script = g_EndingFiles[g_Unknown626270.shotIndex];
     }
     if (ending->Load(script) != 0)
     {

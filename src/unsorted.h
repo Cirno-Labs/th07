@@ -996,13 +996,13 @@ public:
     // Takes `amount` from unk_961c, down to stats->unk_88.
     void SubUnk961c(int amount)
     {
-        if (this->unk_961c - this->stats->unk_88 >= amount)
+        if (this->bonusPoints - this->stats->unk_88 >= amount)
         {
-            this->unk_961c -= amount;
+            this->bonusPoints -= amount;
         }
         else
         {
-            this->unk_961c = this->stats->unk_88;
+            this->bonusPoints = this->stats->unk_88;
         }
     }
     // Adds `points` to stats->score, which counts in tens.
@@ -1056,18 +1056,18 @@ public:
 
     // A block of random size that AddedCallback allocates and frees
     // before it allocates unk_4 and stats.
-    void *unk_0;
+    void *tempBuffer;
     Unknown626270Unk4 *unk_4;
     Unknown626270Stats *stats;
     // Set while the game is paused: the screen shake holds still. As
     // th06's GameManager::isFrozen, probably.
     char isFrozen;
     // DrawFps measures nothing while it is set.
-    char unk_d;
+    char skipFpsMeasure;
     unsigned char unk_e[0x2];
     int difficulty;
     // 1 << difficulty, set by AddedCallback.
-    int unk_14;
+    int difficultyMask;
     // The spell card chunks of the score file, by card.
     Catk catks[0x8d];
     // A copy of catks, put back when no score is recorded.
@@ -1081,15 +1081,15 @@ public:
     Plst plst;
     // ReplayManager::RecordOnUpdate2 marks 0x100 in the frame's replay bits
     // while it is set, and clears it.
-    int unk_93d0;
+    int pauseRequested;
     // The power items collected in a row at full power, as th06's
     // powerItemCombo: picks the points from g_PowerItemBonus. Cleared by
     // Player's UpdateDyingState when the player dies.
-    char unk_93d4;
+    char powerItemCombo;
     BYTE character;
     BYTE shotType;
     // character * 2 + shotType, as a replay stores it.
-    BYTE unk_93d7;
+    BYTE shotIndex;
     // Bit 1: the game is a practice; 0x10: it was cleared.
     union
     {
@@ -1099,31 +1099,31 @@ public:
             unsigned int unk_93d8Bits0 : 2;
             // Set by OnUpdate while the game is neither paused nor in
             // the continue menu, as th06's isPlaying.
-            unsigned int unk_93d8Bit2 : 1;
+            unsigned int isPlaying : 1;
             unsigned int unk_93d8Bit3 : 1;
             unsigned int unk_93d8Bit4 : 1;
         };
     };
     // Cleared by SetUpTitleScene. OnDraw moves it on to 2, as th06's
     // isPaused.
-    BYTE unk_93dc;
+    BYTE isPaused;
     // Set while the continue menu shows, as th06's.
     BYTE isInContinueMenu;
     // The demo replay played last, 0 to 2.
     BYTE demoIndex;
     // Set from the replay menu's last choice when a replay starts.
-    BYTE unk_93df;
+    BYTE replayMenuChoice;
     // The frames a demo replay has played; OnUpdate fades out at 8100,
     // 7020 or 4620 by demoIndex and returns to the title soon after.
-    int unk_93e0;
+    int demoFrames;
     // The replay to play.
     char replayFile[0x200];
     // A replay stage keeps it.
-    WORD unk_95e4;
+    WORD rngSeed;
     unsigned char unk_95e6[0x2];
     // The screen shake ends at once while this is 1 or less. Cleared
     // by RegisterGameManagerChain, as th06's stageFrames.
-    int unk_95e8;
+    int stageFrames;
     int stage;
     unsigned char unk_95f0[0x4];
     // The play area: x, y, width and height. Its neighbours (a 0x200
@@ -1132,27 +1132,27 @@ public:
     float arena[4];
     // A second rectangle, set with arena by SetPlayArea: x, y, width
     // and height.
-    float unk_9604[4];
+    float arena2[4];
     // RerollStatsChecksumKeys sets it to the checksum plus stats->unk_8c[3].
-    float unk_9614;
-    int unk_9618;
+    float checksumValue;
+    int bonusPointsCap;
     // Added to (up to unk_9618) by AddBonusPointsCapped.
-    int unk_961c;
+    int bonusPoints;
     // UpdateInvulnerability sets it while Player::playerState is 4.
-    int unk_9620;
+    int invulnerabilityBonus;
     // Whether Phantasm was open when the title menu last came up.
-    int unk_9624;
+    int phantasmWasOpen;
     // The frames played, which the result screen shows as progress.
     int progressFrames;
     // Counts frames for OnUpdate's slowdowns: of a replay played slowly
     // (unk_93df 1) and, while unk_4->unk_25 is set, by bullet count.
-    DWORD unk_962c;
+    DWORD slowdownCounter;
     // Set by the title menu from the play time: 3 under 7 hours, 4
     // under 14, else 5.
-    int unk_9630;
+    int maxContinues;
     // A replay stage keeps it. The rank, as th06's: SetRankForDifficulty sets it
     // and its bounds from g_Ranks.
-    int unk_9634;
+    int rank;
     int maxRank;
     int minRank;
     // Hundredths of a rank, moved by AddSubRank and SubSubRank.

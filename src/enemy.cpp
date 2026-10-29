@@ -260,11 +260,11 @@ void EnemyTimeline::RunTimeline()
                     pos = args->pos;
                     if (args->pos.x <= -990.0f)
                     {
-                        pos.x = g_Rng.GetRandomF32InRange(g_Unknown626270.unk_9604[2]);
+                        pos.x = g_Rng.GetRandomF32InRange(g_Unknown626270.arena2[2]);
                     }
                     if (args->pos.y <= -990.0f)
                     {
-                        pos.y = g_Rng.GetRandomF32InRange(g_Unknown626270.unk_9604[3]);
+                        pos.y = g_Rng.GetRandomF32InRange(g_Unknown626270.arena2[3]);
                     }
                     if (args->pos.z <= -990.0f)
                     {
@@ -281,11 +281,11 @@ void EnemyTimeline::RunTimeline()
                     pos = this->pos->args.pos;
                     if (pos.x <= -990.0f)
                     {
-                        pos.x = g_Rng.GetRandomF32InRange(g_Unknown626270.unk_9604[2]);
+                        pos.x = g_Rng.GetRandomF32InRange(g_Unknown626270.arena2[2]);
                     }
                     if (pos.y <= -990.0f)
                     {
-                        pos.y = g_Rng.GetRandomF32InRange(g_Unknown626270.unk_9604[3]);
+                        pos.y = g_Rng.GetRandomF32InRange(g_Unknown626270.arena2[3]);
                     }
                     if (pos.z <= -990.0f)
                     {
@@ -303,11 +303,11 @@ void EnemyTimeline::RunTimeline()
                     pos = args->pos;
                     if (args->pos.x <= -990.0f)
                     {
-                        pos.x = g_Rng.GetRandomF32InRange(g_Unknown626270.unk_9604[2]);
+                        pos.x = g_Rng.GetRandomF32InRange(g_Unknown626270.arena2[2]);
                     }
                     if (args->pos.y <= -990.0f)
                     {
-                        pos.y = g_Rng.GetRandomF32InRange(g_Unknown626270.unk_9604[3]);
+                        pos.y = g_Rng.GetRandomF32InRange(g_Unknown626270.arena2[3]);
                     }
                     if (args->pos.z <= -990.0f)
                     {
@@ -325,11 +325,11 @@ void EnemyTimeline::RunTimeline()
                     pos = this->pos->args.pos;
                     if (pos.x <= -990.0f)
                     {
-                        pos.x = g_Rng.GetRandomF32InRange(g_Unknown626270.unk_9604[2]);
+                        pos.x = g_Rng.GetRandomF32InRange(g_Unknown626270.arena2[2]);
                     }
                     if (pos.y <= -990.0f)
                     {
-                        pos.y = g_Rng.GetRandomF32InRange(g_Unknown626270.unk_9604[3]);
+                        pos.y = g_Rng.GetRandomF32InRange(g_Unknown626270.arena2[3]);
                     }
                     if (pos.z <= -990.0f)
                     {
@@ -473,9 +473,9 @@ int Enemy::CheckTimerCallback()
                 g_Unknown12fe0c8++;
             }
             g_BulletManager.ClearAll(10);
-            lost = (g_Unknown626270.unk_961c - g_Unknown626270.stats->unk_88) * 0.25f;
+            lost = (g_Unknown626270.bonusPoints - g_Unknown626270.stats->unk_88) * 0.25f;
             lost -= lost % 10;
-            g_Unknown626270.unk_961c -= lost;
+            g_Unknown626270.bonusPoints -= lost;
         }
         for (enemy = g_Unknown9a9b00.enemies, j = 0; j < 0x1e0; j++, enemy++)
         {
@@ -785,7 +785,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                         {
                             points = 10;
                         }
-                        switch (g_Unknown626270.unk_93d7)
+                        switch (g_Unknown626270.shotIndex)
                         {
                         case 0:
                             if ((points == 20 || points == 30) && enemy->callbackTimer.AsFrames() & 1)

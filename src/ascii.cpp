@@ -19,7 +19,7 @@ void GameManager::RerollChecksumKeys()
     this->stats->unk_8c[3] = g_Rng.GetRandomU32InRange(100000) + 6543;
     this->stats->unk_ac = this->stats->unk_34[2];
     this->stats->unk_b0 = this->ComputeChecksum();
-    this->unk_9614 = this->stats->unk_b0 + this->stats->unk_8c[3];
+    this->checksumValue = this->stats->unk_b0 + this->stats->unk_8c[3];
 }
 
 // The same for Timer::NextTick, which only the Gui file calls.
@@ -36,7 +36,7 @@ void GameManager::SetBombs(int bombs)
     this->stats->bombs = bombs;
     this->stats->unk_ac = this->stats->unk_34[2];
     this->stats->unk_b0 = this->ComputeChecksum();
-    this->unk_9614 = this->stats->unk_b0 + this->stats->unk_8c[3];
+    this->checksumValue = this->stats->unk_b0 + this->stats->unk_8c[3];
 }
 
 AsciiText::AsciiText()
@@ -67,7 +67,7 @@ int AsciiText::OnUpdate(AsciiText *text)
     int i;
     AsciiPopup *entry;
 
-    if (!g_Unknown626270.unk_93dc && !g_Unknown626270.isInContinueMenu)
+    if (!g_Unknown626270.isPaused && !g_Unknown626270.isInContinueMenu)
     {
         for (entry = text->popups, i = 0; i < 0x2d3; i++, entry++)
         {
@@ -83,7 +83,7 @@ int AsciiText::OnUpdate(AsciiText *text)
             }
         }
     }
-    else if (g_Unknown626270.unk_93dc)
+    else if (g_Unknown626270.isPaused)
     {
         text->pauseMenu.UpdatePauseMenu();
     }
@@ -636,7 +636,7 @@ int PauseMenu::UpdatePauseMenu()
         if (this->stateFrames >= 20)
         {
             this->state = 0;
-            g_Unknown626270.unk_93dc = 0;
+            g_Unknown626270.isPaused = 0;
             for (i = 0; i < ARRAY_SIZE(this->sprites); i++)
             {
                 this->sprites[i].ClearShown();
@@ -734,7 +734,7 @@ int PauseMenu::UpdatePauseMenu()
         if (this->stateFrames >= 20)
         {
             this->state = 0;
-            g_Unknown626270.unk_93dc = 0;
+            g_Unknown626270.isPaused = 0;
             g_App.scene = 1;
             for (i = 0; i < ARRAY_SIZE(this->sprites); i++)
             {
@@ -747,7 +747,7 @@ int PauseMenu::UpdatePauseMenu()
         if (this->stateFrames >= 20)
         {
             this->state = 0;
-            g_Unknown626270.unk_93dc = 0;
+            g_Unknown626270.isPaused = 0;
             g_App.scene = 10;
             for (i = 0; i < ARRAY_SIZE(this->sprites); i++)
             {
@@ -772,7 +772,7 @@ void PauseMenu::DrawPauseMenu()
 {
     DWORD i;
 
-    if (g_Unknown626270.unk_93dc)
+    if (g_Unknown626270.isPaused)
     {
         g_SpriteEngine->FlushQuadBatch();
         g_App.viewport.X = g_Unknown626270.arena[0];
@@ -815,7 +815,7 @@ int ContinueMenu::UpdateContinueMenu()
         g_Unknown626270.stats->guiScore = g_Unknown626270.stats->score;
         return 1;
     }
-    if (g_Unknown626270.stats->continuesUsed >= g_Unknown626270.unk_9630 || g_Unknown626270.difficulty >= 4)
+    if (g_Unknown626270.stats->continuesUsed >= g_Unknown626270.maxContinues || g_Unknown626270.difficulty >= 4)
     {
         g_Unknown626270.isInContinueMenu = 0;
         g_App.scene = 6;
@@ -834,7 +834,7 @@ int ContinueMenu::UpdateContinueMenu()
                 this->sprites[i].pendingInterrupt = 1;
             }
             g_SpriteEngine->StartScript(&this->sprites[4], 0x10c);
-            g_SpriteEngine->SetSprite(&this->sprites[4], g_Unknown626270.unk_9630 + 0x106 -
+            g_SpriteEngine->SetSprite(&this->sprites[4], g_Unknown626270.maxContinues + 0x106 -
                                                              g_Unknown626270.stats->continuesUsed);
             this->sprites[4].pendingInterrupt = 1;
             if ((g_App.stateFlags >> 1) & 1)
@@ -949,7 +949,7 @@ int ContinueMenu::UpdateContinueMenu()
             g_Unknown626270.RerollChecksumKeys();
             g_Unknown626270.stats->unk_2c = 0;
             g_Unknown626270.stats->unk_30 = 50;
-            g_Unknown626270.unk_961c = g_Unknown626270.stats->unk_88;
+            g_Unknown626270.bonusPoints = g_Unknown626270.stats->unk_88;
             g_Unknown49fbf0.livesChanged = 2;
             g_Unknown49fbf0.bombsChanged = 2;
             g_Unknown49fbf0.grazeChanged = 2;
@@ -958,9 +958,9 @@ int ContinueMenu::UpdateContinueMenu()
             IncrementCounterCapped((DWORD *)&g_Unknown626270.plst.counts[g_Unknown626270.difficulty].plays[0], 999999);
             IncrementCounterCapped((DWORD *)&g_Unknown626270.plst.counts[6].plays[0], 999999);
             IncrementCounterCapped(
-                (DWORD *)&g_Unknown626270.plst.counts[g_Unknown626270.difficulty].plays[g_Unknown626270.unk_93d7 + 1],
+                (DWORD *)&g_Unknown626270.plst.counts[g_Unknown626270.difficulty].plays[g_Unknown626270.shotIndex + 1],
                 999999);
-            IncrementCounterCapped((DWORD *)&g_Unknown626270.plst.counts[6].plays[g_Unknown626270.unk_93d7 + 1],
+            IncrementCounterCapped((DWORD *)&g_Unknown626270.plst.counts[6].plays[g_Unknown626270.shotIndex + 1],
                                    999999);
             IncrementCounterCapped((DWORD *)&g_Unknown626270.plst.counts[g_Unknown626270.difficulty].continues,
                                    999999);
@@ -1083,13 +1083,13 @@ void AsciiText::DrawPopups()
     {
         div = 100000;
         nonzero = 0;
-        amount = g_Unknown626270.unk_961c - g_Unknown626270.stats->unk_88;
+        amount = g_Unknown626270.bonusPoints - g_Unknown626270.stats->unk_88;
         g_SpriteEngine->DrawUnrotated(&this->unk_498);
         this->unk_6e4.pos.x = this->unk_498.pos.x + 40.0f + 6.0f;
         this->unk_6e4.pos.y = this->unk_498.pos.y + 11.0f;
         this->unk_6e4.pos.z = this->unk_498.pos.z;
         this->unk_6e4.alpha = this->unk_498.alpha;
-        if ((g_Unknown626270.unk_961c >= g_Unknown626270.unk_9618) != 0)
+        if ((g_Unknown626270.bonusPoints >= g_Unknown626270.bonusPointsCap) != 0)
         {
             this->unk_6e4.unk_rgb[2] = 0xff;
             this->unk_6e4.unk_rgb[1] = 0xd0;
@@ -1123,7 +1123,7 @@ void AsciiText::DrawPopups()
             this->unk_6e4.pos.x += 7.0f;
         }
         nonzero = 0;
-        amount = g_Unknown626270.unk_9618 - g_Unknown626270.stats->unk_88;
+        amount = g_Unknown626270.bonusPointsCap - g_Unknown626270.stats->unk_88;
         this->unk_6e4.unk_rgb[2] = 0xf0;
         this->unk_6e4.unk_rgb[1] = 0xd0;
         this->unk_6e4.unk_rgb[0] = 0xe0;
@@ -1158,7 +1158,7 @@ void AsciiText::DrawPopups()
         nonzero = 0;
         this->unk_6e4.pos.x = this->unk_498.pos.x + 40.0f + 6.0f + 7.0f;
         this->unk_6e4.pos.y = this->unk_498.pos.y + 2.0f;
-        amount = g_Unknown626270.unk_9620 - g_Unknown626270.stats->unk_88;
+        amount = g_Unknown626270.invulnerabilityBonus - g_Unknown626270.stats->unk_88;
         if (g_Player.unk_240d)
         {
             this->unk_6e4.unk_rgb[2] = 0xff;

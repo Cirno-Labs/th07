@@ -197,12 +197,12 @@ void ItemManager::UpdateItems()
             case 0:
                 if ((int)g_Unknown626270.stats->power >= 128)
                 {
-                    g_Unknown626270.unk_93d4++;
-                    if (g_Unknown626270.unk_93d4 >= ARRAY_SIZE(g_PowerItemBonus))
+                    g_Unknown626270.powerItemCombo++;
+                    if (g_Unknown626270.powerItemCombo >= ARRAY_SIZE(g_PowerItemBonus))
                     {
-                        g_Unknown626270.unk_93d4 = ARRAY_SIZE(g_PowerItemBonus) - 1;
+                        g_Unknown626270.powerItemCombo = ARRAY_SIZE(g_PowerItemBonus) - 1;
                     }
-                    amount = g_PowerItemBonus[g_Unknown626270.unk_93d4];
+                    amount = g_PowerItemBonus[g_Unknown626270.powerItemCombo];
                     g_Unknown626270.AddScore(amount);
                     g_AsciiText.AddPopup(&entry->pos, amount,
                                          amount >= 12800 ? 0xffffff00 : 0xffffffff);
@@ -218,7 +218,7 @@ void ItemManager::UpdateItems()
                         level++;
                     }
                     prevLevel = level;
-                    g_Unknown626270.unk_93d4 = 0;
+                    g_Unknown626270.powerItemCombo = 0;
                     g_Unknown626270.AddPower(1);
                     if ((int)g_Unknown626270.stats->power >= 128)
                     {
@@ -259,14 +259,14 @@ void ItemManager::UpdateItems()
                 }
                 if (amount >= 50000)
                 {
-                    if (g_Unknown626270.unk_961c - g_Unknown626270.stats->unk_88 > 50000)
+                    if (g_Unknown626270.bonusPoints - g_Unknown626270.stats->unk_88 > 50000)
                     {
-                        amount = g_Unknown626270.unk_961c - g_Unknown626270.stats->unk_88;
+                        amount = g_Unknown626270.bonusPoints - g_Unknown626270.stats->unk_88;
                     }
                 }
-                else if (g_Unknown626270.unk_961c - g_Unknown626270.stats->unk_88 > 50000)
+                else if (g_Unknown626270.bonusPoints - g_Unknown626270.stats->unk_88 > 50000)
                 {
-                    amount += (g_Unknown626270.unk_961c - g_Unknown626270.stats->unk_88 - 50000) / 5;
+                    amount += (g_Unknown626270.bonusPoints - g_Unknown626270.stats->unk_88 - 50000) / 5;
                 }
                 amount -= amount % 10;
                 g_AsciiText.AddPopup(&entry->pos, amount,
@@ -431,7 +431,7 @@ void ItemManager::UpdateItems()
                 g_Unknown626270.AddBonusPointsNoTrack(70);
                 break;
             case 7:
-                if ((g_Unknown626270.unk_961c >= g_Unknown626270.unk_9618) != 0)
+                if ((g_Unknown626270.bonusPoints >= g_Unknown626270.bonusPointsCap) != 0)
                 {
                     amount = (entry->pos.y < g_Player.shotType->unk_20 || entry->unk_280 ? 1 : 0)
                                  ? 50000
@@ -445,7 +445,7 @@ void ItemManager::UpdateItems()
                 }
                 amount = 1000;
                 amount += g_Unknown626270.stats->spellCardsCaptured * 100;
-                if ((g_Unknown626270.unk_961c >= g_Unknown626270.unk_9618) == 0)
+                if ((g_Unknown626270.bonusPoints >= g_Unknown626270.bonusPointsCap) == 0)
                 {
                     g_AsciiText.AddPopup(&entry->pos, amount, 0xffff4040);
                 }
@@ -457,13 +457,13 @@ void ItemManager::UpdateItems()
                 {
                     amount = 10;
                 }
-                if ((g_Unknown626270.unk_961c >= g_Unknown626270.unk_9618) != 0)
+                if ((g_Unknown626270.bonusPoints >= g_Unknown626270.bonusPointsCap) != 0)
                 {
                     g_AsciiText.AddPopup(&entry->pos, amount, 0xffffffff);
                 }
                 g_Unknown626270.AddScore(amount);
                 amount = 100;
-                if ((g_Unknown626270.unk_961c >= g_Unknown626270.unk_9618) == 0)
+                if ((g_Unknown626270.bonusPoints >= g_Unknown626270.bonusPointsCap) == 0)
                 {
                     g_AsciiText.AddPopup(&entry->pos, amount, 0xffff4040);
                 }
