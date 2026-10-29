@@ -104,8 +104,8 @@ int Gui::OnUpdate(Gui *gui)
     }
     gui->UpdateInterface();
     gui->impl->RunMsg();
-    gui->unk_0++;
-    if (g_Unknown626270.stage == 6 && gui->unk_0 == 300)
+    gui->frameCounter++;
+    if (g_Unknown626270.stage == 6 && gui->frameCounter == 300)
     {
         g_App.PlayMidi(0);
     }
@@ -329,7 +329,7 @@ int Gui::LoadResources()
     int y;
     int i;
 
-    this->unk_0 = 0;
+    this->frameCounter = 0;
     if ((g_App.scene != 3 && g_App.scene != 0xb && g_App.scene != 0xc) != 0)
     {
         memset(this->impl, 0, sizeof(GuiImpl));
@@ -1618,25 +1618,25 @@ void Gui::DrawBanners()
         DrawGradientRect(r2, colorA2, colorA2, dark, dark);
         for (index2 = 0; index2 < 8; index2++)
         {
-            if (this->unk_34[index2] == 0.0f)
+            if (this->sectionStarts[index2] == 0.0f)
             {
                 continue;
             }
-            if (this->unk_54[index2] >= this->bossHealthShown)
+            if (this->sectionEnds[index2] >= this->bossHealthShown)
             {
                 continue;
             }
-            end = this->unk_34[index2];
+            end = this->sectionStarts[index2];
             if (this->bossHealthShown < end)
             {
                 end = this->bossHealthShown;
             }
-            r2[0] = this->unk_54[index2] * 320.0f + 64.0f;
+            r2[0] = this->sectionEnds[index2] * 320.0f + 64.0f;
             r2[1] = 19.0f;
             r2[2] = end * 320.0f + 64.0f;
             r2[3] = 23.0f;
-            colorA2 = this->bossBarAlpha << 24 | (this->unk_74[index2] & 0xffffff);
-            dark = this->bossBarAlpha << 24 | (this->unk_74[index2] >> 2 & 0x3f3f3f);
+            colorA2 = this->bossBarAlpha << 24 | (this->sectionColors[index2] & 0xffffff);
+            dark = this->bossBarAlpha << 24 | (this->sectionColors[index2] >> 2 & 0x3f3f3f);
             DrawGradientRect(r2, colorA2, colorA2, dark, dark);
         }
         g_SpriteEngine->DrawUnrotated(&this->impl->sprites[11]);
@@ -1644,8 +1644,8 @@ void Gui::DrawBanners()
         r2[1] = 19.0f;
         r2[2] = r2[0] + 3.0f;
         r2[3] = r2[1] + 4.0f;
-        total = this->unk_18;
-        shrink = this->unk_18 <= 5 ? 2 : 1;
+        total = this->bossLives;
+        shrink = this->bossLives <= 5 ? 2 : 1;
         for (index2 = 0; index2 < total; index2++)
         {
             r2[0] = index2 * 26.0f / total + 35.0f;
@@ -1673,12 +1673,12 @@ void Gui::DrawBanners()
         }
         g_AsciiText.SetColor(this->bossBarAlpha << 24 | timerColor);
         total = this->bossTimer > 99 ? 99 : this->bossTimer;
-        if (total < 10 && this->unk_20 != this->bossTimer)
+        if (total < 10 && this->lastDrawnBossTimer != this->bossTimer)
         {
             g_SoundPlayer.QueueSound(0x1d, 0);
         }
         g_AsciiText.AddFormat(&pos, "%.2d", total);
         g_AsciiText.color = 0xffffffff;
-        this->unk_20 = this->bossTimer;
+        this->lastDrawnBossTimer = this->bossTimer;
     }
 }

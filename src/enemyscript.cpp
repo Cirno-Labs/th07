@@ -1557,8 +1557,8 @@ loop:
             {
                 for (i = 0; i < 8; i++)
                 {
-                    g_Unknown49fbf0.unk_54[i] = 0.0f;
-                    g_Unknown49fbf0.unk_34[i] = 0.0f;
+                    g_Unknown49fbf0.sectionEnds[i] = 0.0f;
+                    g_Unknown49fbf0.sectionStarts[i] = 0.0f;
                 }
             }
             break;

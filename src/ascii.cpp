@@ -641,7 +641,7 @@ int PauseMenu::UpdatePauseMenu()
             {
                 this->sprites[i].ClearShown();
             }
-            if (g_Unknown626270.stage != 6 || g_Unknown49fbf0.unk_0 >= 300)
+            if (g_Unknown626270.stage != 6 || g_Unknown49fbf0.frameCounter >= 300)
             {
                 g_SoundPlayer.QueueSoundCommand(7, 0, "UnPause");
             }

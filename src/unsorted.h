@@ -1459,19 +1459,19 @@ public:
     // Sets boss bar section `idx` to end at `end` and start at `start`.
     void SetBossSection(int idx, float end, float start)
     {
-        this->unk_54[idx] = end;
-        this->unk_34[idx] = start;
+        this->sectionEnds[idx] = end;
+        this->sectionStarts[idx] = start;
     }
     // Sets the color of boss bar section `idx`.
     void SetBossSectionColor(int idx, int color)
     {
-        this->unk_74[idx] = color;
+        this->sectionColors[idx] = color;
     }
     // Sets unk_18, the boss lives marked beside the bar, as th06's
     // SetBossLives.
     void SetBossLives(int lives)
     {
-        this->unk_18 = lives;
+        this->bossLives = lives;
     }
     // Sets bossHealth, as th06's SetBossHealth.
     void SetBossHealth(float health)
@@ -1480,7 +1480,7 @@ public:
     }
 
     // Counts OnUpdate's frames.
-    int unk_0;
+    int frameCounter;
     // Set to 2 when they change, as th06's GuiFlags.
     unsigned int livesChanged : 2;
     unsigned int bombsChanged : 2;
@@ -1496,12 +1496,12 @@ public:
     // fight runs.
     DWORD bossBarAlpha;
     // How many boss lives DrawBanners marks beside the bar.
-    int unk_18;
+    int bossLives;
     // The seconds left on the boss's timer.
     int bossTimer;
     // bossTimer as DrawBanners last drew it: it plays sound 0x1d when
     // the timer changes under 10.
-    int unk_20;
+    int lastDrawnBossTimer;
     // Set while a boss fight runs.
     BYTE bossPresent;
     unsigned char unk_25[0x3];
@@ -1513,9 +1513,9 @@ public:
     // Eight sections DrawBanners draws over the boss bar: where each
     // ends and starts, as fractions of the bar (unused while the end
     // is 0), and its color.
-    float unk_34[8];
-    float unk_54[8];
-    int unk_74[8];
+    float sectionStarts[8];
+    float sectionEnds[8];
+    int sectionColors[8];
 };
 ASSERT_SIZE(Gui, 0x94);
 extern Gui g_Unknown49fbf0;

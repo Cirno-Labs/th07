@@ -136,7 +136,7 @@ int GameManager::OnUpdate(GameManager *mgr)
         g_Unknown626270.arena[2] = 384.0f;
         g_Unknown626270.arena[3] = 448.0f;
         mgr->pauseRequested = 1;
-        if (g_Unknown626270.stage != 6 || g_Unknown49fbf0.unk_0 >= 300)
+        if (g_Unknown626270.stage != 6 || g_Unknown49fbf0.frameCounter >= 300)
         {
             g_SoundPlayer.QueueSoundCommand(6, 0, "Pause");
         }
