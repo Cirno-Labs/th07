@@ -15,7 +15,7 @@ project = "th07_100b"
 functions = "build/functions_100b.csv"
 
 [build]
-cflags = ["/Od", "/Ob1", "/Gr", "/GX", "/Oi", "/Gy", "/GF"]
+cflags = ["/Od", "/Ob1", "/Gr", "/GX", "/Oi", "/Gy", "/GF", "/MT"]
 
 [exe]
 # Like the original, the exe's objects are compiled with /GL and linked
