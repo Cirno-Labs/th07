@@ -453,10 +453,10 @@ address,size,name,symbol
 0x0043d9e0,1724,Func43d9e0,
 0x0043e0a0,442,Player::CheckAreaHit,?CheckAreaHit@Player@@QAEHPAUD3DXVECTOR3@@0@Z
 0x0043e260,324,Player::CheckHit,?CheckHit@Player@@QAEHPAUD3DXVECTOR3@@0@Z
-0x0043e3b0,293,Func43e3b0,
+0x0043e3b0,293,Player::CheckGraze,?CheckGraze@Player@@QAEHPAUD3DXVECTOR3@@0@Z
 0x0043e4e0,456,Func43e4e0,
 0x0043e6b0,1247,Func43e6b0,
-0x0043eb90,549,Func43eb90,
+0x0043eb90,549,Player::Graze,?Graze@Player@@QAEXPAUD3DXVECTOR3@@@Z
 0x0043edc0,143,Player::Die,?Die@Player@@QAEXXZ
 0x0043ee50,6790,Func43ee50,?Func43ee50@@YIHPAVPlayer@@@Z
 0x00440940,169,UpdateHitboxAreas,?UpdateHitboxAreas@@YIXPAVPlayer@@@Z

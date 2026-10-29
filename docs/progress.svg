@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">45.82% (318)</tspan> · <tspan class="decompiled">1.59% (11)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">52.45% (364)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">45.97% (319)</tspan> · <tspan class="decompiled">1.59% (11)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">52.31% (363)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="342.29" height="6" x="0" y="0" class="named"/>
-<rect width="11.84" height="6" x="342.29" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="354.13" y="0" class="nonmatching"/>
-<rect width="391.80" height="6" x="355.20" y="0" class="todo"/>
+<rect width="343.36" height="6" x="0" y="0" class="named"/>
+<rect width="11.84" height="6" x="343.36" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="355.20" y="0" class="nonmatching"/>
+<rect width="390.72" height="6" x="356.28" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (173 bytes)</title></rect>
@@ -523,10 +523,10 @@
 <rect width="12" height="12" x="15" y="135" class="todo"><title>0x0043d9e0 Func43d9e0 (1724 bytes)</title></rect>
 <rect width="12" height="12" x="30" y="135" class="named"><title>0x0043e0a0 Player::CheckAreaHit (442 bytes)</title></rect>
 <rect width="12" height="12" x="45" y="135" class="named"><title>0x0043e260 Player::CheckHit (324 bytes)</title></rect>
-<rect width="12" height="12" x="60" y="135" class="todo"><title>0x0043e3b0 Func43e3b0 (293 bytes)</title></rect>
+<rect width="12" height="12" x="60" y="135" class="named"><title>0x0043e3b0 Player::CheckGraze (293 bytes)</title></rect>
 <rect width="12" height="12" x="75" y="135" class="todo"><title>0x0043e4e0 Func43e4e0 (456 bytes)</title></rect>
 <rect width="12" height="12" x="90" y="135" class="todo"><title>0x0043e6b0 Func43e6b0 (1247 bytes)</title></rect>
-<rect width="12" height="12" x="105" y="135" class="todo"><title>0x0043eb90 Func43eb90 (549 bytes)</title></rect>
+<rect width="12" height="12" x="105" y="135" class="todo"><title>0x0043eb90 Player::Graze (549 bytes)</title></rect>
 <rect width="12" height="12" x="120" y="135" class="named"><title>0x0043edc0 Player::Die (143 bytes)</title></rect>
 <rect width="12" height="12" x="135" y="135" class="todo"><title>0x0043ee50 Func43ee50 (6790 bytes)</title></rect>
 <rect width="12" height="12" x="150" y="135" class="named"><title>0x00440940 UpdateHitboxAreas (169 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">34.42%</tspan> · <tspan class="decompiled">0.21%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">65.29%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">34.50%</tspan> · <tspan class="decompiled">0.21%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">65.21%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="257.10" height="6" x="0" y="0" class="named"/>
-<rect width="1.55" height="6" x="257.10" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="258.65" y="0" class="nonmatching"/>
-<rect width="487.68" height="6" x="259.32" y="0" class="todo"/>
+<rect width="257.68" height="6" x="0" y="0" class="named"/>
+<rect width="1.55" height="6" x="257.68" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="259.23" y="0" class="nonmatching"/>
+<rect width="487.11" height="6" x="259.89" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -941,7 +941,7 @@
 <rect width="12.83" height="11.80" x="536.19" y="168.85" class="todo"><title>0x0041b9f0 Func41b9f0 (559 bytes)</title></rect>
 <rect width="12.83" height="11.67" x="536.19" y="183.66" class="named"><title>0x0043c250 UpdateHomingOrb (554 bytes)</title></rect>
 <rect width="12.83" height="11.67" x="536.19" y="198.33" class="named"><title>0x0043c480 UpdateHomingOrbFast (554 bytes)</title></rect>
-<rect width="12.65" height="11.70" x="552.02" y="0" class="todo"><title>0x0043eb90 Func43eb90 (549 bytes)</title></rect>
+<rect width="12.65" height="11.70" x="552.02" y="0" class="todo"><title>0x0043eb90 Player::Graze (549 bytes)</title></rect>
 <rect width="12.59" height="11.70" x="567.67" y="0" class="named"><title>0x00436790 MidiPlayer::ParseFile (547 bytes)</title></rect>
 <rect width="12.56" height="11.70" x="583.26" y="0" class="todo"><title>0x00419dc0 Func419dc0 (546 bytes)</title></rect>
 <rect width="12.45" height="11.70" x="598.82" y="0" class="todo"><title>0x00406de0 Func406de0 (542 bytes)</title></rect>
@@ -1058,7 +1058,7 @@
 <rect width="8.46" height="7.90" x="648.83" y="54.84" class="todo"><title>0x00404560 Func404560 (298 bytes)</title></rect>
 <rect width="8.46" height="7.90" x="660.28" y="54.84" class="todo"><title>0x00418fc0 Func418fc0 (298 bytes)</title></rect>
 <rect width="8.46" height="7.90" x="671.74" y="54.84" class="todo"><title>0x004552d0 Func4552d0 (298 bytes)</title></rect>
-<rect width="8.27" height="7.90" x="683.20" y="54.84" class="todo"><title>0x0043e3b0 Func43e3b0 (293 bytes)</title></rect>
+<rect width="8.27" height="7.90" x="683.20" y="54.84" class="named"><title>0x0043e3b0 Player::CheckGraze (293 bytes)</title></rect>
 <rect width="8.23" height="7.90" x="694.47" y="54.84" class="named"><title>0x00434490 WindowProc (292 bytes)</title></rect>
 <rect width="8.15" height="7.90" x="705.70" y="54.84" class="named"><title>0x00441e80 ResetHomingAndText (290 bytes)</title></rect>
 <rect width="8.11" height="7.90" x="716.85" y="54.84" class="todo"><title>0x00426b00 Func426b00 (289 bytes)</title></rect>

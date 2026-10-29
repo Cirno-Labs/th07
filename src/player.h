@@ -283,6 +283,11 @@ public:
     // g_ReplayManager->unk_d6; it calls Func441bd0(0) while playerState
     // is 4 and kills the player while it is 0.
     int CheckHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size);
+    // Whether a `size` box at `pos`, grown by 20 on each side, grazes the
+    // player, as th06's: 2 if the box itself meets one of unk_17dc's
+    // areas, else 0 while respawning or dying or off the graze box, else
+    // grazes `pos` (Graze) and returns 1.
+    int CheckGraze(D3DXVECTOR3 *pos, D3DXVECTOR3 *size);
     // Removes the player's update and draw elements from the chain.
     // Takes the first free one of unk_17dc's first 0x5f entries, or the
     // last entry, and sets it to a `width` by `height` area at `pos`
@@ -294,6 +299,8 @@ public:
     // draw 6 and 8), keeping `unk` in unk_2409. Returns 0, or -1 if
     // adding fails.
     static int RegisterChain(int unk);
+    // Scores a graze of the bullet at `pos`.
+    void Graze(D3DXVECTOR3 *pos);
     // CheckHit calls it with 0 on a hit while playerState is 4.
     void Func441bd0(int unk);
     // The update callback: unless the game is frozen, runs the steps
@@ -313,10 +320,12 @@ public:
     Sprite optionSprites[3];
     D3DXVECTOR3 position;
     unsigned char unk_93c[0xc];
-    // The corners of the hitbox, as th06's.
+    // The corners of the hitbox and of the graze box, as th06's.
     D3DXVECTOR3 hitboxMin;
     D3DXVECTOR3 hitboxMax;
-    unsigned char unk_960[0x54];
+    D3DXVECTOR3 grazeMin;
+    D3DXVECTOR3 grazeMax;
+    unsigned char unk_978[0x3c];
     // Where the two options are.
     D3DXVECTOR3 optionPos[2];
     unsigned char unk_9cc[0x10];

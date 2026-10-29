@@ -764,6 +764,33 @@ int Player::CheckHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size)
     return 1;
 }
 
+int Player::CheckGraze(D3DXVECTOR3 *pos, D3DXVECTOR3 *size)
+{
+    D3DXVECTOR3 start;
+    D3DXVECTOR3 end;
+
+    this->unk_2404 = 6;
+    if (this->CheckAreaHit(pos, size))
+    {
+        return 2;
+    }
+    start.x = pos->x - size->x / 2.0f - 20.0f;
+    start.y = pos->y - size->y / 2.0f - 20.0f;
+    end.x = size->x / 2.0f + pos->x + 20.0f;
+    end.y = size->y / 2.0f + pos->y + 20.0f;
+    if (this->playerState == 2 || this->playerState == 1)
+    {
+        return 0;
+    }
+    if (this->grazeMin.x > end.x || this->grazeMax.x < start.x || this->grazeMin.y > end.y ||
+        this->grazeMax.y < start.y)
+    {
+        return 0;
+    }
+    this->Graze(pos);
+    return 1;
+}
+
 void Player::Die()
 {
     g_Unknown626270.Func4012b0();
