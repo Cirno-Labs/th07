@@ -209,7 +209,7 @@ int BulletManager::SpawnBullet(BulletShooter *shooter, int col, int row, float a
     cur->activeFlags = 0;
     cur->commandIndex = 0;
     RunBulletCommands(cur);
-    if (this->unk_37a12c != 0 && !(cur->flags & 0x1000))
+    if (this->clearAllFrames != 0 && !(cur->flags & 0x1000))
     {
         cur->state = 5;
     }
@@ -230,7 +230,7 @@ void BulletManager::Reset()
     memset(this, 0, sizeof(BulletManager));
     this->nextBullet = this->bullets;
     this->bullets[0x400].state = 6;
-    this->unk_37a160 = 6;
+    this->clearItemType = 6;
 }
 
 int BulletManager::DeletedCallback(BulletManager *mgr)
@@ -405,7 +405,7 @@ Laser *BulletManager::SpawnLaser(BulletShooter *shooter)
     Laser *laser;
 
     laser = this->lasers;
-    if (this->unk_37a12c != 0 && !(shooter->flags & 4))
+    if (this->clearAllFrames != 0 && !(shooter->flags & 4))
     {
         return laser;
     }
@@ -474,7 +474,7 @@ void BulletManager::ClearAll(int mode)
         {
             if (mode < 3)
             {
-                g_ItemManager.SpawnItem(&curBullet->pos, this->unk_37a160, mode);
+                g_ItemManager.SpawnItem(&curBullet->pos, this->clearItemType, mode);
             }
             else
             {
@@ -514,7 +514,7 @@ void BulletManager::ClearAll(int mode)
                     p.z = 0.0f;
                     if (mode < 3)
                     {
-                        g_ItemManager.SpawnItem(&p, this->unk_37a160, mode);
+                        g_ItemManager.SpawnItem(&p, this->clearItemType, mode);
                     }
                     else
                     {
@@ -526,7 +526,7 @@ void BulletManager::ClearAll(int mode)
         }
         beam->endHitFrames = 0;
     }
-    this->unk_37a12c = 10;
+    this->clearAllFrames = 10;
 }
 
 int BulletManager::ClearAllWithBonus(int maxBonus, int toItems)
@@ -552,7 +552,7 @@ int BulletManager::ClearAllWithBonus(int maxBonus, int toItems)
         {
             continue;
         }
-        g_ItemManager.SpawnItem(&curBullet->pos, this->unk_37a160, 1);
+        g_ItemManager.SpawnItem(&curBullet->pos, this->clearItemType, 1);
         g_AsciiText.AddPopup(&curBullet->pos, score, score >= maxBonus ? 0xffffff00 : 0xffffffff);
         totalBonus += score;
         numCleared++;
@@ -577,7 +577,7 @@ int BulletManager::ClearAllWithBonus(int maxBonus, int toItems)
             beam->width = beam->unk_4b8;
             if (toItems)
             {
-                g_ItemManager.SpawnItem(&beam->pos, this->unk_37a160, 1);
+                g_ItemManager.SpawnItem(&beam->pos, this->clearItemType, 1);
                 t = beam->startOffset;
                 SinCos(&s, &c, beam->angle);
                 while (beam->endOffset > t)
@@ -585,14 +585,14 @@ int BulletManager::ClearAllWithBonus(int maxBonus, int toItems)
                     spot.x = c * t + beam->pos.x;
                     spot.y = s * t + beam->pos.y;
                     spot.z = 0.0f;
-                    g_ItemManager.SpawnItem(&spot, this->unk_37a160, 1);
+                    g_ItemManager.SpawnItem(&spot, this->clearItemType, 1);
                     t += 32.0f;
                 }
             }
         }
         beam->endHitFrames = 0;
     }
-    this->unk_37a12c = 10;
+    this->clearAllFrames = 10;
     return totalBonus;
 }
 
@@ -1159,9 +1159,9 @@ int BulletManager::OnUpdate(BulletManager *mgr)
         las->timer.Tick();
         g_SpriteEngine->Step(&las->sprite0);
     }
-    if (mgr->unk_37a12c != 0)
+    if (mgr->clearAllFrames != 0)
     {
-        mgr->unk_37a12c--;
+        mgr->clearAllFrames--;
     }
     mgr->unk_37a130.Tick();
     mgr->unk_37a13c++;

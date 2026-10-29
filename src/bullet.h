@@ -268,7 +268,7 @@ public:
     Bullet bullets[0x401];
     Laser lasers[0x40];
     int bulletCount;
-    int unk_37a12c;
+    int clearAllFrames;
     Timer unk_37a130;
     int unk_37a13c;
     // RegisterChain's argument.
@@ -279,7 +279,7 @@ public:
     // Where SpawnBullet looks for a free bullet first.
     Bullet *nextBullet;
     // The item type cleared bullets turn into (g_Unknown9a9ab8).
-    int unk_37a160;
+    int clearItemType;
 };
 ASSERT_SIZE(BulletManager, 0x37a164);
 extern BulletManager g_BulletManager;
