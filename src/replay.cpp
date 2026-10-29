@@ -185,7 +185,7 @@ int ReplayManager::RecordAddedCallback(ReplayManager *replay)
     cur->power = g_Unknown626270.stats->power;
     cur->unk_25 = g_Unknown626270.rank;
     cur->pointItemsTotal = g_Unknown626270.stats->pointItemsTotal;
-    cur->unk_20 = g_Unknown626270.rngSeed;
+    cur->rngSeed = g_Unknown626270.rngSeed;
     cur->unk_26 = g_Unknown626270.powerItemCombo;
     cur->unk_08 = g_Unknown626270.bonusPoints - g_Unknown626270.stats->unk_88;
     cur->unk_0c = g_Unknown626270.bonusPointsCap - g_Unknown626270.stats->unk_88;
@@ -343,7 +343,7 @@ int ReplayManager::PlayAddedCallback(ReplayManager *replay)
         StartBombState(&g_Player);
     }
     *g_Unknown626270.unk_4 = *(Unknown626270Unk4 *)replay->data->config;
-    g_Rng.SetSeed(cur->unk_20);
+    g_Rng.SetSeed(cur->rngSeed);
     g_Unknown626270.stats->spellCardsCaptured = cur->spellCardsCaptured;
     g_Unknown626270.stats->unk_2c = cur->unk_18;
     g_Unknown626270.stats->unk_30 = cur->unk_1c;

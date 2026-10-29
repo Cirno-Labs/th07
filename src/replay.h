@@ -35,7 +35,7 @@ struct ReplayStage
     int unk_18;
     int unk_1c;
     // GameManager::unk_95e4.
-    WORD unk_20;
+    WORD rngSeed;
     BYTE power;
     BYTE lives;
     BYTE bombs;
