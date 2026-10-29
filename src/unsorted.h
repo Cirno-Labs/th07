@@ -927,6 +927,8 @@ public:
     // stats->unk_b4, over what unk_4 points at and over g_App's config
     // (0x38 bytes each).
     int ComputeChecksum();
+    // Sets the rank and its bounds from g_Ranks for the difficulty.
+    void SetRankForDifficulty();
     // Rerolls the checksum keys and recomputes the checksums.
     void Func4012b0();
     // Adds `amount` hundredths to the rank, as th06's.
@@ -1076,12 +1078,25 @@ public:
     // Set by the title menu from the play time: 3 under 7 hours, 4
     // under 14, else 5.
     int unk_9630;
-    // A replay stage keeps it.
+    // A replay stage keeps it. The rank, as th06's: SetRankForDifficulty sets it
+    // and its bounds from g_Ranks.
     int unk_9634;
-    unsigned char unk_9638[0xc];
+    int maxRank;
+    int minRank;
+    unsigned char unk_9640[0x4];
 };
 ASSERT_SIZE(Unknown626270, 0x9644);
 extern Unknown626270 g_Unknown626270;
+
+// The rank a game starts at and its bounds, as th06's.
+struct RankSettings
+{
+    int rank;
+    int minRank;
+    int maxRank;
+};
+// By difficulty.
+extern RankSettings g_Ranks[6];
 
 // The sum of the `size` bytes at `data`. Adds
 // g_Unknown626270.stats->unk_b4[2] to its unk_ac for every byte.

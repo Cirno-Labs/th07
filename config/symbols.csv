@@ -267,7 +267,7 @@ address,size,name,symbol
 0x0042d8d5,2303,Func42d8d5,
 0x0042e1d4,36,Unknown626270::OnDraw,?OnDraw@Unknown626270@@SIHPAV1@@Z
 0x0042e1f8,404,DrawLoadingScreen,?DrawLoadingScreen@@YIXXZ
-0x0042e38c,78,Func42e38c,
+0x0042e38c,78,Unknown626270::SetRankForDifficulty,?SetRankForDifficulty@Unknown626270@@QAEXXZ
 0x0042e3da,602,Func42e3da,
 0x0042e634,487,Func42e634,
 0x0042e81b,35,Func42e81b,
@@ -1761,6 +1761,7 @@ address,size,name,symbol
 0x0049f518,,g_DifficultyNames,?g_DifficultyNames@@3PAPADA
 0x0049f530,,g_ShotFiles,?g_ShotFiles@@3PAPADA
 0x0049f548,,g_ShotFilesFocused,?g_ShotFilesFocused@@3PAPADA
+0x0049f5d0,,g_Ranks,?g_Ranks@@3PAURankSettings@@A
 0x0049fbf0,,g_Unknown49fbf0,?g_Unknown49fbf0@@3VUnknown49fbf0@@A
 0x0049fc88,,g_JoyCaps,?g_JoyCaps@@3UtagJOYCAPSA@@A
 0x0049fe1c,,g_ShotHeldFrames,?g_ShotHeldFrames@@3GA

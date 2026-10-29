@@ -153,3 +153,10 @@ void DrawLoadingScreen()
         g_App.d3dDevice->Reset(&g_App.presentParams);
     }
 }
+
+void Unknown626270::SetRankForDifficulty()
+{
+    this->unk_9634 = g_Ranks[g_Unknown626270.difficulty].rank;
+    this->minRank = g_Ranks[g_Unknown626270.difficulty].minRank;
+    this->maxRank = g_Ranks[g_Unknown626270.difficulty].maxRank;
+}
