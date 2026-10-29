@@ -556,7 +556,7 @@ address,size,name,symbol
 0x0044d8f0,234,SpriteEngine::LoadTexture,?LoadTexture@SpriteEngine@@QAEHHPADHK@Z
 0x0044d9e0,511,SpriteEngine::CreateTextureFromImage,?CreateTextureFromImage@SpriteEngine@@QAEHHPAUAnmImage@@H@Z
 0x0044dbe0,861,SpriteEngine::LoadTextureAlpha,?LoadTextureAlpha@SpriteEngine@@QAEHHPADHK@Z
-0x0044df40,66,Func44df40,
+0x0044df40,66,SpriteEngine::CreateTexture,?CreateTexture@SpriteEngine@@QAEHHHHH@Z
 0x0044df90,223,SpriteEngine::LoadAnm,?LoadAnm@SpriteEngine@@QAEHHPADH@Z
 0x0044e070,1122,Func44e070,
 0x0044e4e0,514,SpriteEngine::ReleaseAnm,?ReleaseAnm@SpriteEngine@@QAEXH@Z

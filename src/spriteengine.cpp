@@ -263,6 +263,13 @@ fail:
     return -1;
 }
 
+int SpriteEngine::CreateTexture(int index, int width, int height, int format)
+{
+    D3DXCreateTexture(g_App.d3dDevice, width, height, 1, 0, g_TextureFormats[format], D3DPOOL_MANAGED,
+                      &this->textures[index]);
+    return 0;
+}
+
 void SpriteEngine::RenderTextToTextureIndex(int textureIndex, int x, int y, int width, int unk4, int fontHeight,
                                             int unk6, D3DCOLOR textColor, D3DCOLOR shadowColor, char *text,
                                             float scaleX, float scaleY)

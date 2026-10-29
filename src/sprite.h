@@ -263,6 +263,9 @@ public:
     // Replaces the alpha of texture `index` with the blue of the image
     // file at `path`. Returns 0, or -1 on failure.
     int LoadTextureAlpha(int index, char *path, int format, D3DCOLOR colorKey);
+    // Creates texture `index` at `width` by `height` in the format
+    // g_TextureFormats[`format`]. Returns 0.
+    int CreateTexture(int index, int width, int height, int format);
     // Releases texture `index` and its file.
     void ReleaseTexture(int index);
     // Releases ANM slot `slot`.
