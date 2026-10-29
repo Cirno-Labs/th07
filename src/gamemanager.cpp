@@ -4,6 +4,7 @@
 
 #include <string.h>
 
+#include "player.h"
 #include "sprite.h"
 #include "unsorted.h"
 
@@ -309,5 +310,30 @@ void Unknown626270::SubSubRank(int amount)
     if (this->unk_9634 < this->minRank)
     {
         this->unk_9634 = this->minRank;
+    }
+}
+
+void Unknown626270::AddBonusPoints(int amount)
+{
+    int prev;
+
+    prev = this->unk_961c;
+    this->unk_961c += amount;
+    if (this->unk_961c > this->unk_9618)
+    {
+        this->unk_961c = this->unk_9618;
+    }
+    if (amount > 0 && !g_Player.unk_240d)
+    {
+        this->unk_9620 += amount;
+        if (this->unk_9620 >= this->stats->unk_88 + 50000)
+        {
+            this->unk_9620 = this->stats->unk_88 + 50000;
+            StartBombState(&g_Player);
+        }
+    }
+    if (this->unk_961c >= this->unk_9618 && prev != this->unk_961c)
+    {
+        g_Unknown49fbf0.Func427c81(this->unk_961c - this->stats->unk_88, 3);
     }
 }

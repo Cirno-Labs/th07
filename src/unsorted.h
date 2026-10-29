@@ -949,6 +949,12 @@ public:
     // Add `amount` to unk_9618 and to unk_961c, each up to a limit.
     void Func42f789(int amount);
     void Func42f736(int amount);
+    // Adds `amount` to unk_961c, up to unk_9618. A gain outside
+    // Player::unk_240d also adds to unk_9620 and, once that reaches
+    // stats->unk_88 + 50000, caps it there and calls StartBombState. When
+    // unk_961c reaches unk_9618 and changed, calls Unknown49fbf0's
+    // Func427c81 with unk_961c less stats->unk_88 and 3.
+    void AddBonusPoints(int amount);
     // Takes `amount` from unk_961c, down to stats->unk_88.
     void SubUnk961c(int amount)
     {
