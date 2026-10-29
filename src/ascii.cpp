@@ -59,3 +59,16 @@ int AsciiText::OnUpdate(AsciiText *text)
     }
     return 1;
 }
+
+int AsciiText::OnDraw(AsciiText *text)
+{
+    text->DrawStrings();
+    text->stringCount = 0;
+    text->pauseMenu.DrawPauseMenu();
+    text->continueMenu.DrawContinueMenu();
+    if (text->unk_9e50.scriptIndex)
+    {
+        g_SpriteEngine->DrawUnrotated(&text->unk_9e50);
+    }
+    return 1;
+}

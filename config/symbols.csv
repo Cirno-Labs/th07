@@ -12,7 +12,7 @@ address,size,name,symbol
 0x00401720,143,Func401720,
 0x004017b0,40,Func4017b0,
 0x004017e0,391,AsciiText::OnUpdate,?OnUpdate@AsciiText@@SIHPAV1@@Z
-0x00401970,99,Func401970,
+0x00401970,99,AsciiText::OnDraw,?OnDraw@AsciiText@@SIHPAV1@@Z
 0x004019e0,24,Func4019e0,
 0x00401a00,407,AsciiText::Func401a00,?Func401a00@AsciiText@@QAEXXZ
 0x00401ba0,456,Func401ba0,
@@ -22,13 +22,13 @@ address,size,name,symbol
 0x00401f10,35,AsciiText::RemoveChain,?RemoveChain@AsciiText@@SIXXZ
 0x00401f40,277,AsciiText::AddString,?AddString@AsciiText@@QAEXPAUD3DXVECTOR3@@PAD@Z
 0x00402060,68,AsciiText::AddFormat,?AddFormat@AsciiText@@QAAXPAUD3DXVECTOR3@@PADZZ
-0x004020b0,1082,Func4020b0,
+0x004020b0,1082,AsciiText::DrawStrings,?DrawStrings@AsciiText@@QAEXXZ
 0x004024f0,320,Func4024f0,
 0x00402630,322,Func402630,
 0x00402780,4709,PauseMenu::UpdatePauseMenu,?UpdatePauseMenu@PauseMenu@@QAEHXZ
-0x00403a20,310,Func403a20,
+0x00403a20,310,PauseMenu::DrawPauseMenu,?DrawPauseMenu@PauseMenu@@QAEXXZ
 0x00403b60,2528,ContinueMenu::UpdateContinueMenu,?UpdateContinueMenu@ContinueMenu@@QAEHXZ
-0x00404560,298,Func404560,
+0x00404560,298,ContinueMenu::DrawContinueMenu,?DrawContinueMenu@ContinueMenu@@QAEXXZ
 0x00404690,2010,Func404690,
 0x00404e70,62,Func404e70,
 0x00404eb0,124,Func404eb0,

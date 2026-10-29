@@ -14,6 +14,8 @@ class PauseMenu
 public:
     // While g_Unknown626270 is paused, as th06's. Returns 0.
     int UpdatePauseMenu();
+    // Draws it while paused, as th06's.
+    void DrawPauseMenu();
 
     int state;
     // Frames since the state changed.
@@ -30,6 +32,8 @@ class ContinueMenu
 public:
     // While g_Unknown626270.isInContinueMenu is set, as th06's.
     int UpdateContinueMenu();
+    // Draws it while in the continue menu, as th06's.
+    void DrawContinueMenu();
 
     int state;
     int stateFrames;
@@ -70,6 +74,12 @@ public:
     // runs the menus as th06's. Also shows unk_9e50 (script 7) while bit
     // 1 of g_Unknown626270.unk_93d8 is set. Returns 1.
     static int OnUpdate(AsciiText *text);
+    // The first draw element's callback: draws the queued strings and
+    // empties the queue, draws the menus, then unk_9e50 while it runs a
+    // script. Returns 1.
+    static int OnDraw(AsciiText *text);
+    // Draws the queued strings, as th06's.
+    void DrawStrings();
 
     // Queues `text` to be drawn at `pos`.
     void AddString(D3DXVECTOR3 *pos, char *text);
@@ -114,7 +124,9 @@ public:
     Sprite unk_6e4;
     Sprite unk_930;
     Sprite unk_b7c[4];
-    unsigned char unk_14ac[0x6014];
+    unsigned char unk_14ac[0x6010];
+    // How many strings are queued.
+    int stringCount;
     // The color text is queued with.
     D3DCOLOR color;
     // The scale of the characters added next.
