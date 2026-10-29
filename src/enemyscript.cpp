@@ -1235,6 +1235,36 @@ void TurnNearbyBullets(Enemy *enemy, EnemyScriptInstr *instr)
     }
 }
 
+void FireBackFromUnturned(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    Bullet *bullet = g_BulletManager.bullets;
+    BulletShooter pattern;
+    int i;
+
+    for (i = 0; i < 0x400; i++, bullet++)
+    {
+        if (bullet->state == 0)
+        {
+            continue;
+        }
+        if (bullet->unk_c08 == 0 && bullet->sprites.sprite0.spriteIndex >= 0x278 &&
+            bullet->sprites.sprite0.spriteIndex <= 0x27f)
+        {
+            pattern.pos = bullet->pos;
+            pattern.sprite = 0;
+            pattern.color = 6;
+            pattern.angle1 = AddNormalizeAngle(bullet->angle, 3.1415927f);
+            pattern.angle2 = 0.3926991f;
+            pattern.speed1 = enemy->ctx.vars.floats[1];
+            pattern.count1 = 5;
+            pattern.count2 = 1;
+            pattern.flags = 2;
+            pattern.aimMode = 1;
+            g_BulletManager.FirePattern(&pattern);
+        }
+    }
+}
+
 void CountUnturnedBullets(Enemy *enemy, EnemyScriptInstr *instr)
 {
     Bullet *bullet = g_BulletManager.bullets;

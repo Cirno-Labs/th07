@@ -1605,6 +1605,10 @@ void ScriptPlayMusic(Enemy *enemy, EnemyScriptInstr *instr);
 // (-pi / 60 for even indices) for 0xa0 frames, slowing by its speed /
 // 180, and is marked turned (1).
 void TurnNearbyBullets(Enemy *enemy, EnemyScriptInstr *instr);
+// Each bullet not yet turned (unk_c08 0) with a sprite from 0x278 to
+// 0x27f fires five color 6 bullets (aim mode 1, pi / 8 apart) back the
+// way it came, at speed floats[1].
+void FireBackFromUnturned(Enemy *enemy, EnemyScriptInstr *instr);
 // Counts in ints[0] the bullets with sprite 0x27c not yet turned
 // (unk_c08 0).
 void CountUnturnedBullets(Enemy *enemy, EnemyScriptInstr *instr);
