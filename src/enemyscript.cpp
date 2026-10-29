@@ -1365,7 +1365,7 @@ loop:
             }
             break;
         case 147:
-            g_EnemyManager.unk_9545f0 = INT_ARG(0);
+            g_EnemyManager.scriptArg147 = INT_ARG(0);
             break;
         case 99:
             if (INT_ARG(0) >= 0)

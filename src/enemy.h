@@ -433,9 +433,9 @@ public:
     // only while it is set, as th06's spellCardBombed.
     int spellCardBombed;
     Timer spellCardBonusTimer;
-    int unk_9545ec;
+    int unusedInt9545ec;
     // Set by script opcode 147.
-    int unk_9545f0;
+    int scriptArg147;
     EnemyTimeline timelines[16];
     Timer frameTimer;
     Enemy *drawListHeads[4];
