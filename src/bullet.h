@@ -183,6 +183,14 @@ public:
     void Reset();
     // Removes the bullets (Player's respawn step calls it with 0).
     void ClearAll(int unk);
+    // Spawns bullet (`col`, `row`) of `shooter`'s pattern, aimed at
+    // `aimAngle` by the aiming modes that use it. Returns 0, or 1 if no
+    // bullet is free.
+    int SpawnBullet(BulletShooter *shooter, int col, int row, float aimAngle);
+    // Fires `shooter`'s pattern with its type's sprites, aimed at the
+    // player, until no bullet is free, and plays its sound with flag
+    // 0x200; nothing while 0x400 bullets are out. Returns 0.
+    int FirePattern(BulletShooter *shooter);
     // Stops every bullet of g_BulletManager where it is and turns it to
     // color 0. Not in th06.
     void StopAllBullets();

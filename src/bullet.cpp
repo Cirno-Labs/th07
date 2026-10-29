@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "bullet.h"
+#include "player.h"
 #include "unsorted.h"
 
 BulletManager::BulletManager()
@@ -171,4 +172,34 @@ void BulletShooter::SetHiddenCommand(int idx, int unk_14, int unk_8)
     BulletCommand *cmd = this->StartCommand(idx, unk_14, 0x2000);
 
     cmd->unk_8 = unk_8;
+}
+
+int BulletManager::FirePattern(BulletShooter *shooter)
+{
+    int col;
+    float playerAngle;
+    int row;
+
+    if (g_BulletManager.bulletCount >= 0x400)
+    {
+        return 0;
+    }
+    shooter->typeSprites = &this->typeSprites[shooter->sprite];
+    playerAngle = g_Player.AngleFrom(&shooter->pos);
+    for (row = 0; row < shooter->count2; row++)
+    {
+        for (col = 0; col < shooter->count1; col++)
+        {
+            if (this->SpawnBullet(shooter, col, row, playerAngle))
+            {
+                goto done;
+            }
+        }
+    }
+done:
+    if (shooter->flags & 0x200)
+    {
+        g_SoundPlayer.QueueSound(shooter->sound, 0);
+    }
+    return 0;
 }

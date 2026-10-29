@@ -195,12 +195,12 @@ address,size,name,symbol
 0x00423510,186,Bullet::Bullet,??0Bullet@@QAE@XZ
 0x004235d0,134,Laser::Laser,??0Laser@@QAE@XZ
 0x00423660,204,ShowSpawnSprite,?ShowSpawnSprite@@YIXPAVSprite@@0PAUBullet@@H@Z
-0x00423730,2875,Func423730,
+0x00423730,2875,BulletManager::SpawnBullet,?SpawnBullet@BulletManager@@QAEHPAUBulletShooter@@HHM@Z
 0x00424290,1113,Func424290,
 0x00424740,600,BulletManager::ClearAll,?ClearAll@BulletManager@@QAEXH@Z
 0x004249a0,600,Func4249a0,
 0x00424c00,275,Func424c00,
-0x00424d20,223,Func424d20,
+0x00424d20,223,BulletManager::FirePattern,?FirePattern@BulletManager@@QAEHPAUBulletShooter@@@Z
 0x00424e00,712,Func424e00,
 0x004250d0,195,Func4250d0,
 0x004251a0,356,Func4251a0,
