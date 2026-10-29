@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">61.38% (426)</tspan> · <tspan class="decompiled">4.76% (33)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">33.72% (234)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">61.53% (427)</tspan> · <tspan class="decompiled">4.76% (33)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">33.57% (233)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="458.53" height="6" x="0" y="0" class="named"/>
-<rect width="35.52" height="6" x="458.53" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="494.05" y="0" class="nonmatching"/>
-<rect width="251.87" height="6" x="495.13" y="0" class="todo"/>
+<rect width="459.61" height="6" x="0" y="0" class="named"/>
+<rect width="35.52" height="6" x="459.61" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="495.13" y="0" class="nonmatching"/>
+<rect width="250.79" height="6" x="496.21" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="named"><title>0x00401000 D3DXMatrixIdentity (173 bytes)</title></rect>
@@ -98,7 +98,7 @@
 <rect width="12" height="12" x="390" y="0" class="todo"><title>0x00402780 PauseMenu::UpdatePauseMenu (4709 bytes)</title></rect>
 <rect width="12" height="12" x="405" y="0" class="named"><title>0x00403a20 PauseMenu::DrawPauseMenu (310 bytes)</title></rect>
 <rect width="12" height="12" x="420" y="0" class="todo"><title>0x00403b60 ContinueMenu::UpdateContinueMenu (2528 bytes)</title></rect>
-<rect width="12" height="12" x="435" y="0" class="todo"><title>0x00404560 ContinueMenu::DrawContinueMenu (298 bytes)</title></rect>
+<rect width="12" height="12" x="435" y="0" class="named"><title>0x00404560 ContinueMenu::DrawContinueMenu (298 bytes)</title></rect>
 <rect width="12" height="12" x="450" y="0" class="todo"><title>0x00404690 AsciiText::DrawPopups (2010 bytes)</title></rect>
 <rect width="12" height="12" x="465" y="0" class="todo"><title>0x00404e70 Func404e70 (62 bytes)</title></rect>
 <rect width="12" height="12" x="480" y="0" class="todo"><title>0x00404eb0 Func404eb0 (124 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">46.41%</tspan> · <tspan class="decompiled">0.97%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">52.54%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">46.48%</tspan> · <tspan class="decompiled">0.97%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">52.46%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="346.66" height="6" x="0" y="0" class="named"/>
-<rect width="7.21" height="6" x="346.66" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="353.87" y="0" class="nonmatching"/>
-<rect width="392.47" height="6" x="354.53" y="0" class="todo"/>
+<rect width="347.24" height="6" x="0" y="0" class="named"/>
+<rect width="7.21" height="6" x="347.24" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="354.45" y="0" class="nonmatching"/>
+<rect width="391.88" height="6" x="355.12" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1055,7 +1055,7 @@
 <rect width="8.57" height="7.90" x="614.25" y="54.84" class="todo"><title>0x0041bfd0 Func41bfd0 (301 bytes)</title></rect>
 <rect width="8.50" height="7.90" x="625.83" y="54.84" class="named"><title>0x0043ccb0 DrawTrailLaserBullet (299 bytes)</title></rect>
 <rect width="8.50" height="7.90" x="637.33" y="54.84" class="named"><title>0x00456e40 MainMenu::ReassignButton (299 bytes)</title></rect>
-<rect width="8.46" height="7.90" x="648.83" y="54.84" class="todo"><title>0x00404560 ContinueMenu::DrawContinueMenu (298 bytes)</title></rect>
+<rect width="8.46" height="7.90" x="648.83" y="54.84" class="named"><title>0x00404560 ContinueMenu::DrawContinueMenu (298 bytes)</title></rect>
 <rect width="8.46" height="7.90" x="660.28" y="54.84" class="todo"><title>0x00418fc0 Func418fc0 (298 bytes)</title></rect>
 <rect width="8.46" height="7.90" x="671.74" y="54.84" class="named"><title>0x004552d0 SpriteEngine::DrawVertexStrip (298 bytes)</title></rect>
 <rect width="8.27" height="7.90" x="683.20" y="54.84" class="named"><title>0x0043e3b0 Player::CheckGraze (293 bytes)</title></rect>

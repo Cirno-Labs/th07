@@ -452,3 +452,33 @@ void PauseMenu::DrawPauseMenu()
         }
     }
 }
+
+void ContinueMenu::DrawContinueMenu()
+{
+    int i;
+
+    if (g_Unknown626270.isInContinueMenu)
+    {
+        g_SpriteEngine->FlushQuadBatch();
+        g_App.viewport.X = g_Unknown626270.arena[0];
+        g_App.viewport.Y = g_Unknown626270.arena[1];
+        g_App.viewport.Width = g_Unknown626270.arena[2];
+        g_App.viewport.Height = g_Unknown626270.arena[3];
+        g_App.d3dDevice->SetViewport(&g_App.viewport);
+        if ((g_App.unk_18c >> 1) & 1 && (this->state != 0 || this->stateFrames > 2))
+        {
+            g_SpriteEngine->DrawUnrotated(&this->background);
+        }
+        if (this->state == 1 || this->state == 2)
+        {
+            g_SpriteEngine->DrawUnrotated(&this->sprites[4]);
+        }
+        for (i = 0; i < 5; i++)
+        {
+            if (this->sprites[i].flags & 1)
+            {
+                g_SpriteEngine->DrawUnrotated(&this->sprites[i]);
+            }
+        }
+    }
+}

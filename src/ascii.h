@@ -51,7 +51,11 @@ class ContinueMenu
 public:
     // While g_Unknown626270.isInContinueMenu is set, as th06's.
     int UpdateContinueMenu();
-    // Draws it while in the continue menu, as th06's.
+    // Draws it while in the continue menu, as th06's, flushing
+    // SpriteEngine's batch before setting the play area's viewport: the
+    // background if the back buffer is lockable and state is nonzero or
+    // stateFrames above 2, sprites[4] in states 1 and 2, then those of
+    // the first five sprites that are shown.
     void DrawContinueMenu();
 
     int state;
