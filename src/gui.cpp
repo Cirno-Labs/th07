@@ -9,7 +9,9 @@
 #include "bullet.h"
 #include "enemy.h"
 #include "item.h"
+#include "player.h"
 #include "replay.h"
+#include "screeneffect.h"
 #include "unsorted.h"
 
 BOOL Gui::IsLoadingShown()
@@ -669,6 +671,228 @@ void GuiImpl::StartMsgScript(int index)
             break;
         }
     }
+}
+
+int GuiImpl::RunMsg()
+{
+    MsgArgs *args;
+
+    if (this->msg.scriptIndex < 0)
+    {
+        return -1;
+    }
+    if (this->msg.timelineRelease > 0)
+    {
+        this->msg.timelineRelease--;
+    }
+    if (this->msg.skippable && (g_Unknown4b9e50 & 0x100))
+    {
+        this->msg.timer.Set(this->msg.instr->time);
+    }
+    if (g_Player.unk_240d)
+    {
+        g_Player.EndBombState();
+    }
+    if (g_Player.playerState != 2)
+    {
+        g_ItemManager.CollectAll();
+    }
+    while (this->msg.timer >= this->msg.instr->time)
+    {
+        switch (this->msg.instr->opcode)
+        {
+        case 0:
+            this->msg.scriptIndex = -1;
+            return -1;
+        case 1:
+            args = &this->msg.instr->args;
+            g_SpriteEngine->StartScript(&this->msg.portraits[args->who],
+                                        args->index + (args->who != 0 ? 0x4a2 : 0x4a0));
+            if (this->msg.portraits[args->who].spriteData->width > 128.0f)
+            {
+                this->msg.portraits[args->who].posOffset.x = -112.0f;
+            }
+            else
+            {
+                this->msg.portraits[args->who].posOffset.x = 0.0f;
+            }
+            break;
+        case 2:
+            args = &this->msg.instr->args;
+            g_SpriteEngine->SetSprite(&this->msg.portraits[args->who], args->index + (args->who != 0 ? 0x4ad : 0x4a0));
+            if (this->msg.portraits[args->who].spriteData->width > 256.0f)
+            {
+                this->msg.portraits[args->who].posOffset.x = -208.0f;
+                this->msg.portraits[args->who].posOffset.y = -50.0f;
+            }
+            else if (this->msg.portraits[args->who].spriteData->width > 128.0f)
+            {
+                this->msg.portraits[args->who].posOffset.x = -80.0f;
+            }
+            else
+            {
+                this->msg.portraits[args->who].posOffset.x = 0.0f;
+            }
+            break;
+        case 3:
+            args = &this->msg.instr->args;
+            if (args->index == 0 && this->msg.text[1].scriptIndex >= 0)
+            {
+                g_SpriteEngine->RenderText(&this->msg.text[1], this->msg.textColors[args->who],
+                                           this->msg.shadowColors[args->who], " ");
+            }
+            g_SpriteEngine->StartScript(&this->msg.text[args->index], args->index + 0x700);
+            this->msg.text[args->index].fontHeight = this->msg.fontSize;
+            this->msg.text[args->index].fontWidth = this->msg.text[args->index].fontHeight;
+            g_SpriteEngine->RenderText(&this->msg.text[args->index], this->msg.textColors[args->who],
+                                       this->msg.shadowColors[args->who], args->text);
+            this->msg.waitFrames = 0;
+            break;
+        case 4:
+            if ((!this->msg.skippable || !(g_Unknown4b9e50 & 0x100)) &&
+                (!(g_Unknown4b9e50 & 1) || (g_Unknown4b9e50 & 1) == (g_Unknown4b9e58 & 1) || this->msg.waitFrames < 12))
+            {
+                if (this->msg.waitFrames >= this->msg.instr->i)
+                {
+                    break;
+                }
+                this->msg.waitFrames++;
+                goto stepSprites;
+            }
+            break;
+        case 5:
+            args = &this->msg.instr->args;
+            if (args->who < 2)
+            {
+                this->msg.portraits[args->who].pendingInterrupt = args->value;
+            }
+            else
+            {
+                this->msg.text[args->who - 2].pendingInterrupt = args->value;
+            }
+            break;
+        case 6:
+            this->msg.timelineRelease++;
+            break;
+        case 7:
+            if (g_Unknown626270.stage != 6)
+            {
+                g_SpriteEngine->StartScript(&this->unk_4bd0[0], 0x804);
+            }
+            else
+            {
+                g_SpriteEngine->StartScript(&this->unk_4bd0[0], 0x805);
+            }
+            g_SpriteEngine->SetSprite(&this->unk_4bd0[0], this->msg.instr->i + 0x803);
+            if (g_App.PlayMidi(this->msg.instr->i) != 0)
+            {
+                g_App.PlayMusic(g_Unknown1347b00.data->songPaths[this->msg.instr->i]);
+            }
+            break;
+        case 8:
+            args = &this->msg.instr->args;
+            g_SpriteEngine->StartScript(&this->msg.unk_94c[args->index], args->index + 0x702);
+            g_SpriteEngine->RenderTextRightAligned(&this->msg.unk_94c[args->index], this->msg.textColors[args->who],
+                                                   this->msg.shadowColors[args->who], args->text);
+            this->msg.waitFrames = 0;
+            break;
+        case 9:
+            this->stageClearPower = g_Unknown626270.stats->power;
+            this->stageClearPoints = g_Unknown626270.stats->unk_24;
+            this->stageClearCherry = g_Unknown626270.unk_9618 - g_Unknown626270.stats->unk_88;
+            this->stageClearGraze = g_Unknown626270.stats->graze;
+            this->stageClearShown = 1;
+            if (g_Unknown626270.stage < 6)
+            {
+                g_SpriteEngine->StartScript(&this->unk_6e44, 0x61e);
+                g_SpriteEngine->StartScript(&this->unk_72dc, 0x725);
+                g_SpriteEngine->SetPendingCopy(4, 0x20, 0x10, 0x180, 0x1c0, this->unk_72dc.spriteData->startX,
+                                               this->unk_72dc.spriteData->startY,
+                                               this->unk_72dc.spriteData->width,
+                                               this->unk_72dc.spriteData->height);
+            }
+            else
+            {
+                g_Unknown626270.stats->unk_2c = -1;
+            }
+            break;
+        case 10:
+            goto stepSprites;
+        case 12:
+            g_App.FadeOutMusic(4.0f);
+            break;
+        case 14:
+            ScreenEffect::StartEffect(4, 0x192, 0xffffff, 0, 0);
+            g_App.redrawFrames = 0x192;
+            break;
+        case 11:
+            g_App.unk_2b8 = 0;
+            g_Unknown626270.stats->guiScore = g_Unknown626270.stats->score;
+            if (g_Unknown626270.unk_93d8 & 1)
+            {
+                g_Unknown626270.stats->guiScore = g_Unknown626270.stats->score;
+                g_App.scene = 6;
+                goto stepSprites;
+            }
+            if (g_Unknown626270.stage < 6)
+            {
+                if ((g_Unknown626270.unk_93d8 >> 3 & 1) && !g_ReplayManager->HasStage(g_Unknown626270.stage))
+                {
+                    g_App.scene = 7;
+                    goto stepSprites;
+                }
+                g_SpriteEngine->InitSprite(&this->unk_7090, 0x10c);
+                this->unk_209bc = 1;
+                this->msg.scriptIndex = -2;
+            }
+            else if (!(g_Unknown626270.unk_93d8 >> 3 & 1))
+            {
+                if (g_Unknown626270.difficulty >= 4)
+                {
+                    if (g_Unknown626270.difficulty == 4)
+                    {
+                        g_Unknown626270.clrds[g_Unknown626270.unk_93d7]
+                            .stagesClearedNoContinue[g_Unknown626270.difficulty] = 99;
+                    }
+                    g_Unknown626270.plst.counts[g_Unknown626270.difficulty].clears++;
+                    g_Unknown626270.unk_93d8Bit4 = 1;
+                    g_Unknown626270.stats->guiScore = g_Unknown626270.stats->score;
+                    g_App.scene = 6;
+                    goto stepSprites;
+                }
+                g_Unknown626270.unk_93d8Bit4 = 1;
+                g_Unknown626270.stats->guiScore = g_Unknown626270.stats->score;
+                g_App.scene = 9;
+                goto stepSprites;
+            }
+            else
+            {
+                if (g_Unknown626270.stage == 8 && g_Unknown626270.stats->score != g_ReplayManager->data->score)
+                {
+                    ResaveReplay(g_Unknown626270.replayFile);
+                }
+                g_App.scene = 7;
+            }
+            goto stepSprites;
+        case 13:
+            this->msg.skippable = this->msg.instr->b;
+            break;
+        }
+        this->msg.instr = (MsgInstr *)((BYTE *)this->msg.instr + 4 + this->msg.instr->argsSize);
+    }
+    this->msg.timer.NextTick();
+stepSprites:
+    g_SpriteEngine->Step(&this->msg.portraits[0]);
+    g_SpriteEngine->Step(&this->msg.portraits[1]);
+    g_SpriteEngine->Step(&this->msg.text[0]);
+    g_SpriteEngine->Step(&this->msg.text[1]);
+    g_SpriteEngine->Step(&this->msg.unk_94c[0]);
+    g_SpriteEngine->Step(&this->msg.unk_94c[1]);
+    if (this->msg.timer < 60 && this->msg.skippable && (g_Unknown4b9e50 & 0x100))
+    {
+        this->msg.timer.Set(60);
+    }
+    return 0;
 }
 
 BOOL Gui::MsgHoldsTimeline()

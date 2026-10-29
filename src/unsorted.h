@@ -1099,6 +1099,7 @@ public:
             // the continue menu, as th06's isPlaying.
             unsigned int unk_93d8Bit2 : 1;
             unsigned int unk_93d8Bit3 : 1;
+            unsigned int unk_93d8Bit4 : 1;
         };
     };
     // Cleared by SetUpTitleScene. OnDraw moves it on to 2, as th06's
@@ -1209,8 +1210,35 @@ struct MsgFile
     void *scripts[1];
 };
 
-// One instruction of a message script.
-struct MsgInstr;
+// The arguments of a message instruction, as th06's: who it is for (0
+// the player, 1 the boss; 2 and 3 select the text lines for opcode 5)
+// and a sprite, script or line number, then the text.
+struct MsgArgs
+{
+    short who;
+    union
+    {
+        short index;
+        BYTE value;
+    };
+    char text[1];
+};
+
+// One instruction of a message script, as th06's.
+struct MsgInstr
+{
+    // The frame it runs on.
+    WORD time;
+    BYTE opcode;
+    // The size of the arguments, in bytes.
+    BYTE argsSize;
+    union
+    {
+        MsgArgs args;
+        int i;
+        BYTE b;
+    };
+};
 
 // The dialogue (th06's GuiMsg), GuiImpl+0x1fba4, 0xe10 bytes. Only what
 // is known so far.
@@ -1223,7 +1251,8 @@ struct GuiMsg
     // The running script; negative when none runs.
     int scriptIndex;
     Timer timer;
-    int unk_18;
+    // How long the script has waited for the shot button (opcode 4).
+    int waitFrames;
     // The player's and the boss's portraits, and the two lines of text,
     // as th06's.
     Sprite portraits[2];
@@ -1283,7 +1312,12 @@ struct GuiImpl
     int unk_1fba0;
     // Starts script `index` of msg.msgFile, as th06's.
     void StartMsgScript(int index);
-    // Runs the dialogue for a frame, as th06's.
+    // Runs the dialogue for a frame, as th06's. New: each frame it calls
+    // g_Player.EndBombState while unk_240d is set and collects the items
+    // unless the player is dying;
+    // opcode 7 shows the song name in unk_4bd0[0], 9 records the stage
+    // clear bonus, 11 picks the next scene from the game mode, 14 fades
+    // the screen out.
     int RunMsg();
 
     // Draws the dialogue, as th06's.
@@ -1301,8 +1335,8 @@ struct GuiImpl
     GuiPopup bonusPopup;
     GuiPopup unk_209e0;
     GuiPopup spellBonusPopup;
-    unsigned char unk_20a20[0x4];
-    // The stage clear bonus's point items, cherry and grazes.
+    // The stage clear bonus's power, point items, cherry and grazes.
+    int stageClearPower;
     int stageClearPoints;
     int stageClearCherry;
     int stageClearGraze;

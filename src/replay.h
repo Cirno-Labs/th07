@@ -179,6 +179,11 @@ public:
     {
         return this->mode;
     }
+    // Whether the replay has stage `stage`.
+    BOOL HasStage(int stage)
+    {
+        return this->data->stages[stage] != NULL;
+    }
 
     // Creates the ReplayManager, recording (`mode` 0) or playing (1) the
     // replay at `path`, and adds its chain elements; if it exists, runs
