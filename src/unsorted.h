@@ -297,7 +297,7 @@ extern App g_App;
 // Scene set-up and tear-down functions App::OnUpdate calls, not named
 // yet. The set-up ones return nonzero on failure.
 // th06's GameManager::RegisterChain and RemoveChain.
-int Func42f3c5();
+int RegisterGameManagerChain();
 void Func42f45d();
 // th06's Ending::RegisterChain.
 int Func41e820();
@@ -915,6 +915,11 @@ class Unknown626270
 {
 public:
     Unknown626270();
+    // The update chain callback and its added and deleted callbacks,
+    // as th06's GameManager's.
+    static int OnUpdate(Unknown626270 *mgr);
+    static int AddedCallback(Unknown626270 *mgr);
+    static int DeletedCallback(Unknown626270 *mgr);
     // The draw chain callback, as th06's: moves unk_93dc on from 1 to
     // 2. Returns 1.
     static int OnDraw(Unknown626270 *mgr);
@@ -1061,7 +1066,8 @@ public:
     // A replay stage keeps it.
     WORD unk_95e4;
     unsigned char unk_95e6[0x2];
-    // The screen shake ends at once while this is 1 or less.
+    // The screen shake ends at once while this is 1 or less. Cleared
+    // by RegisterGameManagerChain, as th06's stageFrames.
     int unk_95e8;
     int stage;
     unsigned char unk_95f0[0x4];
@@ -1096,6 +1102,10 @@ public:
 };
 ASSERT_SIZE(Unknown626270, 0x9644);
 extern Unknown626270 g_Unknown626270;
+
+// The update and draw chain elements of g_Unknown626270, after it.
+extern ChainElem g_Unknown626270CalcChain;
+extern ChainElem g_Unknown626270DrawChain;
 
 // The rank a game starts at and its bounds, as th06's.
 struct RankSettings

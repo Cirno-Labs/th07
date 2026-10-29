@@ -159,7 +159,7 @@ int App::OnUpdate(App *arg)
             case -1:
                 return 4;
             case 2:
-                if (Func42f3c5() != 0)
+                if (RegisterGameManagerChain() != 0)
                 {
                     return 4;
                 }
@@ -225,7 +225,7 @@ int App::OnUpdate(App *arg)
                     g_Unknown626270.stage--;
                 }
                 SaveReplay(NULL, NULL);
-                if (Func42f3c5() != 0)
+                if (RegisterGameManagerChain() != 0)
                 {
                     return 4;
                 }
@@ -235,7 +235,7 @@ int App::OnUpdate(App *arg)
                 g_App.scene = 3;
                 Func42f45d();
                 g_Unknown626270.stage--;
-                if (Func42f3c5() != 0)
+                if (RegisterGameManagerChain() != 0)
                 {
                     return 4;
                 }
@@ -244,7 +244,7 @@ int App::OnUpdate(App *arg)
             case 12:
                 g_App.scene = 3;
                 Func42f45d();
-                if (Func42f3c5() != 0)
+                if (RegisterGameManagerChain() != 0)
                 {
                     return 4;
                 }
@@ -252,7 +252,7 @@ int App::OnUpdate(App *arg)
                 break;
             case 3:
                 Func42f45d();
-                if (Func42f3c5() != 0)
+                if (RegisterGameManagerChain() != 0)
                 {
                     return 4;
                 }

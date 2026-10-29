@@ -253,3 +253,22 @@ void IncrementStatCounter(DWORD *count, DWORD max)
         (*count)++;
     }
 }
+
+int RegisterGameManagerChain()
+{
+    Unknown626270 *mgr = &g_Unknown626270;
+
+    g_Unknown626270CalcChain.SetCallback((ChainCallback)Unknown626270::OnUpdate);
+    g_Unknown626270CalcChain.addedCallback = (ChainCallback)Unknown626270::AddedCallback;
+    g_Unknown626270CalcChain.deletedCallback = (ChainCallback)Unknown626270::DeletedCallback;
+    g_Unknown626270CalcChain.arg = mgr;
+    mgr->unk_95e8 = 0;
+    if (g_Chain.AddToCalcChain(&g_Unknown626270CalcChain, 2) != 0)
+    {
+        return -1;
+    }
+    g_Unknown626270DrawChain.SetCallback((ChainCallback)Unknown626270::OnDraw);
+    g_Unknown626270DrawChain.arg = mgr;
+    g_Chain.AddToDrawChain(&g_Unknown626270DrawChain, 2);
+    return 0;
+}
