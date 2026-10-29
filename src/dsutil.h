@@ -130,7 +130,7 @@ public:
     DWORD unk_2c;
     // Set while the first buffer plays: ResumeBuffer sets it, PauseBuffer
     // clears it. Not in th06.
-    BOOL unk_30;
+    BOOL isPlaying;
 };
 
 class CStreamingSound : public CSound
