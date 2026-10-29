@@ -53,3 +53,5 @@ ASSERT_SIZE(Enemy, 0x4f48);
 // to effectRadius and turning them, as th06's; they are shown unless
 // flags.unk_b is set.
 void MoveEnemyEffects(Enemy *enemy);
+// Lets go of the effects following `enemy`: each fades out, as th06's.
+void ReleaseEnemyEffects(Enemy *enemy);

@@ -25,6 +25,22 @@ void MoveEnemyEffects(Enemy *enemy)
     }
 }
 
+void ReleaseEnemyEffects(Enemy *enemy)
+{
+    int i;
+
+    for (i = 0; i < enemy->effectCount; i++)
+    {
+        if (enemy->effects[i] == NULL)
+        {
+            continue;
+        }
+        enemy->effects[i]->fadeOut = 1;
+        enemy->effects[i] = NULL;
+    }
+    enemy->effectCount = 0;
+}
+
 void Enemy::Move()
 {
     this->posDelta = this->pos - this->prevPos;
