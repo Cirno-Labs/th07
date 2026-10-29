@@ -840,3 +840,68 @@ void ShakeAndSpinBullets(Enemy *enemy, EnemyScriptInstr *instr)
         }
     }
 }
+
+void SpawnFansFromNearbyBullets(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    int variant;
+    Bullet *bullet = g_BulletManager.bullets;
+    float dist;
+    float range;
+    int i;
+    BulletShooter shooter;
+
+    variant = instr->args[1].i;
+    switch (variant)
+    {
+    case 0:
+        ScreenEffect::StartEffect(1, 0x20, 0xc, 0, 0);
+        ScreenEffect::StartEffect(3, 4, 1, 0x80cfcfff, 0);
+        range = 128.0f;
+        break;
+    case 1:
+        range = 192.0f;
+        break;
+    case 2:
+        range = 256.0f;
+        break;
+    case 3:
+        range = 999.0f;
+        break;
+    }
+    for (i = 0; i < 0x400; i++, bullet++)
+    {
+        if (bullet->state == 0 || bullet->state == 5)
+        {
+            continue;
+        }
+        if (bullet->sprites.sprite0.spriteData != NULL && bullet->color == 2)
+        {
+            dist = sqrtf((enemy->pos.x - bullet->pos.x) * (enemy->pos.x - bullet->pos.x) +
+                         (enemy->pos.y - bullet->pos.y) * (enemy->pos.y - bullet->pos.y));
+            if (dist < range)
+            {
+                shooter.pos = bullet->pos;
+                shooter.sprite = 0;
+                shooter.color = 6;
+                shooter.angle1 = 0.0f;
+                shooter.angle2 = -3.1415927f;
+                shooter.speed1 = 0.7f;
+                shooter.count1 = 2;
+                shooter.count2 = 1;
+                shooter.flags = 2;
+                shooter.aimMode = 6;
+                shooter.SetShooterAccelerateCommand(0, 0, 180, g_Rng.GetRandomF32InRange(0.005f) + 0.013f, 1.5707964f);
+                g_BulletManager.FirePattern(&shooter);
+                bullet->FreeBullet();
+            }
+        }
+    }
+}
+
+// As in bullet.cpp: defined after its callers, so they call the copy.
+inline void Bullet::FreeBullet()
+{
+    this->state = 0;
+    this->timer.Set(0);
+    this->unk_bd4.Set(0);
+}
