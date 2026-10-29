@@ -561,10 +561,10 @@ public:
     // Firing stops at 1 and 2.
     char playerState;
     // RegisterChain's argument, as th06's unk_09e1.
-    BYTE unk_2409;
+    BYTE registerChainArg;
     // FireLaser fires its lasers while it is 1, FireTrailLaser while it
     // is 3. Where th06 has optionState.
-    char unk_240a;
+    char optionState;
     // Picks shotTypeFocused over shotType, as th06's focused.
     char focused;
     // Counts hits on enemies, to burst an effect every few, as in th06.
@@ -593,7 +593,7 @@ public:
     Timer fireTimer;
     // Started from 0 by RegisterChain, as th06's.
     Timer stateTimer;
-    Timer unk_16a0c;
+    Timer bombStateTimerSnapshot;
     unsigned char pad_16a18[0x8];
     PlayerBomb bomb;
     // The angle FireAimedShot's shots fly at, turned by sd->angle + pi / 2.

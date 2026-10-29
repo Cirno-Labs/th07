@@ -100,7 +100,7 @@ int FireLaser(Player *player, PlayerBullet *bullet, int frame, ShotData *sd)
         }
         return 0;
     }
-    if (player->unk_240a != 1)
+    if (player->optionState != 1)
     {
         return 0;
     }
@@ -129,7 +129,7 @@ int FireTrailLaser(Player *player, PlayerBullet *bullet, int frame, ShotData *sd
         }
         return 0;
     }
-    if (player->unk_240a != 3)
+    if (player->optionState != 3)
     {
         return 0;
     }
@@ -533,12 +533,12 @@ void UpdateBullets(Player *player)
     int i;
     PlayerBullet *bullet;
 
-    if (player->unk_240a != 3 && player->lasers[2].bullet != NULL)
+    if (player->optionState != 3 && player->lasers[2].bullet != NULL)
     {
         player->lasers[2].bullet->state = 0;
         player->lasers[2].bullet = NULL;
     }
-    if (player->unk_240a != 1)
+    if (player->optionState != 1)
     {
         if (player->lasers[0].bullet != NULL)
         {
@@ -1206,7 +1206,7 @@ int HandleInput(Player *player)
     sideX = sideY = 0.0f;
     if (g_GameManager.character != 2 || g_GameManager.shotType != 1)
     {
-        switch (player->unk_240a)
+        switch (player->optionState)
         {
         case 0:
             player->optionTimer.Set(0);
@@ -1216,7 +1216,7 @@ int HandleInput(Player *player)
             player->optionTimer.Set(0);
             if (player->focused)
             {
-                player->unk_240a = 2;
+                player->optionState = 2;
                 player->optionEffect = g_EffectManager.SpawnReservedEffect(0x18, &player->position, 2, 1, 0xffffffff);
             }
             else
@@ -1232,11 +1232,11 @@ int HandleInput(Player *player)
             sideX = -16.0f * t + 24.0f;
             if (player->optionTimer >= 8)
             {
-                player->unk_240a = 3;
+                player->optionState = 3;
             }
             if (!player->focused)
             {
-                player->unk_240a = 4;
+                player->optionState = 4;
                 player->optionTimer.Set(8 - player->optionTimer.AsFrames());
                 if (player->optionEffect != NULL)
                 {
@@ -1251,7 +1251,7 @@ int HandleInput(Player *player)
             player->optionTimer.Set(0);
             if (!player->focused)
             {
-                player->unk_240a = 4;
+                player->optionState = 4;
                 if (player->optionEffect != NULL)
                 {
                     player->optionEffect->sprite.SetPendingInterrupt(1);
@@ -1271,11 +1271,11 @@ int HandleInput(Player *player)
             sideX = -16.0f * t + 24.0f;
             if (player->optionTimer >= 8)
             {
-                player->unk_240a = 1;
+                player->optionState = 1;
             }
             if (player->focused)
             {
-                player->unk_240a = 2;
+                player->optionState = 2;
                 player->optionTimer.Set(8 - player->optionTimer.AsFrames());
                 player->optionEffect = g_EffectManager.SpawnReservedEffect(0x18, &player->position, 2, 1, 0xffffffff);
                 goto slideIn;
@@ -1289,7 +1289,7 @@ int HandleInput(Player *player)
     }
     else
     {
-        switch (player->unk_240a)
+        switch (player->optionState)
         {
         case 0:
             player->optionTimer.Set(0);
@@ -1300,7 +1300,7 @@ int HandleInput(Player *player)
             player->optionTimer.Set(0);
             if (player->focused)
             {
-                player->unk_240a = 2;
+                player->optionState = 2;
                 player->optionEffect = g_EffectManager.SpawnReservedEffect(0x18, &player->position, 2, 1, 0xffffffff);
             }
             else
@@ -1315,7 +1315,7 @@ int HandleInput(Player *player)
         fanOut:
             if (!player->focused)
             {
-                player->unk_240a = 4;
+                player->optionState = 4;
                 player->optionTimer.Set(8 - player->optionTimer.AsFrames());
                 if (player->optionEffect != NULL)
                 {
@@ -1339,7 +1339,7 @@ int HandleInput(Player *player)
             spreadY = (spreadY + sideY) * t - sideY;
             if (player->optionTimer >= 8)
             {
-                player->unk_240a = 3;
+                player->optionState = 3;
             }
             player->optionPos[0].x += spreadX;
             player->optionPos[0].y += spreadY;
@@ -1348,7 +1348,7 @@ int HandleInput(Player *player)
             player->optionTimer.Set(0);
             if (!player->focused)
             {
-                player->unk_240a = 4;
+                player->optionState = 4;
                 if (player->optionEffect != NULL)
                 {
                     player->optionEffect->sprite.SetPendingInterrupt(1);
@@ -1370,7 +1370,7 @@ int HandleInput(Player *player)
         fanIn:
             if (player->focused)
             {
-                player->unk_240a = 2;
+                player->optionState = 2;
                 player->optionTimer.Set(8 - player->optionTimer.AsFrames());
                 player->optionEffect = g_EffectManager.SpawnReservedEffect(0x18, &player->position, 2, 1, 0xffffffff);
                 goto fanOut;
@@ -1391,7 +1391,7 @@ int HandleInput(Player *player)
             spreadY = (spreadY + sideY) * t - sideY;
             if (player->optionTimer >= 8)
             {
-                player->unk_240a = 1;
+                player->optionState = 1;
             }
             player->optionPos[0].x += spreadX;
             player->optionPos[0].y += spreadY;
@@ -1701,7 +1701,7 @@ void UpdateInvulnerability(Player *player)
         {
             player->bombInvulnerabilityEffect->pos = player->position;
         }
-        g_GameManager.invulnerabilityBonus = player->stateTimer.AsFrames() * 50000 / player->unk_16a0c.AsFrames();
+        g_GameManager.invulnerabilityBonus = player->stateTimer.AsFrames() * 50000 / player->bombStateTimerSnapshot.AsFrames();
         if (g_GameManager.invulnerabilityBonus < 0)
         {
             g_GameManager.invulnerabilityBonus = 0;
@@ -1776,7 +1776,7 @@ void StartBombState(Player *player)
         return;
     }
     player->stateTimer.Set(540);
-    player->unk_16a0c = player->stateTimer;
+    player->bombStateTimerSnapshot = player->stateTimer;
     player->bombState = 1;
     player->playerState = 4;
     if (player->bombInvulnerabilityEffect != NULL)
@@ -1975,7 +1975,7 @@ int Player::OnUpdate(Player *player)
         HandleInput(player);
     }
     g_SpriteEngine->Step(&player->sprite);
-    if (player->unk_240a)
+    if (player->optionState)
     {
         g_SpriteEngine->Step(&player->optionSprites[0]);
         g_SpriteEngine->Step(&player->optionSprites[1]);
@@ -2008,7 +2008,7 @@ int Player::OnDraw(Player *player)
         player->sprite.pos.y = g_GameManager.arena[1] + player->position.y;
         player->sprite.pos.z = 0.0f;
         g_SpriteEngine->DrawUnrotated(&player->sprite);
-        if (player->unk_240a && (player->playerState == 0 || player->playerState == 4 || player->playerState == 3))
+        if (player->optionState && (player->playerState == 0 || player->playerState == 4 || player->playerState == 3))
         {
             player->optionSprites[0].pos.x = g_GameManager.arena[0] + player->optionPos[0].x;
             player->optionSprites[0].pos.y = g_GameManager.arena[1] + player->optionPos[0].y;
@@ -2080,7 +2080,7 @@ int Player::RegisterChain(int unk)
 
     memset(player, 0, sizeof(Player));
     player->stateTimer.Set(0);
-    player->unk_2409 = unk;
+    player->registerChainArg = unk;
     player->calcChain = g_Chain.CreateElem((ChainCallback)Player::OnUpdate);
     player->drawChain = g_Chain.CreateElem((ChainCallback)Player::OnDraw);
     player->drawChain2 = g_Chain.CreateElem((ChainCallback)Player::OnDraw2);
@@ -2158,7 +2158,7 @@ int Player::AddedCallback(Player *player)
     player->direction = 0;
     player->playerState = 1;
     player->stateTimer.Set(120);
-    player->unk_240a = 1;
+    player->optionState = 1;
     g_SpriteEngine->StartScript(&player->optionSprites[0], 0x480);
     g_SpriteEngine->StartScript(&player->optionSprites[1], 0x481);
     bullet = player->bullets;
