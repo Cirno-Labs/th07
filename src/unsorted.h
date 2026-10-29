@@ -1227,6 +1227,8 @@ struct GuiImpl
     Sprite unk_7774;
     Sprite unk_79c0[0xa8];
     int unk_1fba0;
+    // Starts script `index` of msg.msgFile, as th06's.
+    void StartMsgScript(int index);
     // Runs the dialogue for a frame, as th06's.
     int RunMsg();
 
@@ -1286,6 +1288,9 @@ public:
     int LoadMsg(char *path);
     // Frees impl->msg.msgFile, if there is one.
     void FreeMsgFile();
+    // Runs impl->StartMsgScript(`index`). th06 also set
+    // g_App.redrawFrames.
+    void StartMsg(int index);
     // As th06's DrawBanners and DrawHud.
     void DrawBanners();
     void DrawHud();

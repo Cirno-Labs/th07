@@ -241,8 +241,8 @@ address,size,name,symbol
 0x00428b19,3580,Func428b19,
 0x00429935,195,Unknown49fbf0::LoadMsg,?LoadMsg@Unknown49fbf0@@QAEHPAD@Z
 0x004299f8,62,Unknown49fbf0::FreeMsgFile,?FreeMsgFile@Unknown49fbf0@@QAEXXZ
-0x00429a36,25,Func429a36,
-0x00429a4f,467,Func429a4f,
+0x00429a36,25,Unknown49fbf0::StartMsg,?StartMsg@Unknown49fbf0@@QAEXH@Z
+0x00429a4f,467,GuiImpl::StartMsgScript,?StartMsgScript@GuiImpl@@QAEXH@Z
 0x00429c42,3064,GuiImpl::RunMsg,?RunMsg@GuiImpl@@QAEHXZ
 0x0042a876,1203,GuiImpl::DrawMsg,?DrawMsg@GuiImpl@@QAEHXZ
 0x0042ad29,61,Func42ad29,

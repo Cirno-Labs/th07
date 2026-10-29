@@ -341,3 +341,8 @@ void Unknown49fbf0::FreeMsgFile()
         this->impl->msg.msgFile = NULL;
     }
 }
+
+void Unknown49fbf0::StartMsg(int index)
+{
+    this->impl->StartMsgScript(index);
+}
