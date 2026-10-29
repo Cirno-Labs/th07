@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">73.49% (510)</tspan> · <tspan class="decompiled">7.93% (55)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">18.44% (128)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">73.63% (511)</tspan> · <tspan class="decompiled">7.93% (55)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">18.30% (127)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="548.95" height="6" x="0" y="0" class="named"/>
-<rect width="59.20" height="6" x="548.95" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="608.15" y="0" class="nonmatching"/>
-<rect width="137.78" height="6" x="609.22" y="0" class="todo"/>
+<rect width="550.02" height="6" x="0" y="0" class="named"/>
+<rect width="59.20" height="6" x="550.02" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="609.22" y="0" class="nonmatching"/>
+<rect width="136.70" height="6" x="610.30" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="named"><title>0x00401000 D3DXMatrixIdentity (173 bytes)</title></rect>
@@ -289,7 +289,7 @@
 <rect width="12" height="12" x="255" y="60" class="named"><title>0x004277a0 BulletManager::StopAllBullets (266 bytes)</title></rect>
 <rect width="12" height="12" x="270" y="60" class="named"><title>0x004278b0 Bullet::RestartCommand (91 bytes)</title></rect>
 <rect width="12" height="12" x="285" y="60" class="named"><title>0x00427910 BulletShooter::StartCommand (73 bytes)</title></rect>
-<rect width="12" height="12" x="300" y="60" class="todo"><title>0x00427960 Func427960 (62 bytes)</title></rect>
+<rect width="12" height="12" x="300" y="60" class="named"><title>0x00427960 Bullet::SetTurnCommand (62 bytes)</title></rect>
 <rect width="12" height="12" x="315" y="60" class="todo"><title>0x004279a0 Func4279a0 (62 bytes)</title></rect>
 <rect width="12" height="12" x="330" y="60" class="todo"><title>0x004279e0 Func4279e0 (62 bytes)</title></rect>
 <rect width="12" height="12" x="345" y="60" class="todo"><title>0x00427a20 Func427a20 (74 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">56.34%</tspan> · <tspan class="decompiled">2.83%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">40.74%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">56.36%</tspan> · <tspan class="decompiled">2.83%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">40.72%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="420.89" height="6" x="0" y="0" class="named"/>
-<rect width="21.15" height="6" x="420.89" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="442.04" y="0" class="nonmatching"/>
-<rect width="304.30" height="6" x="442.70" y="0" class="todo"/>
+<rect width="421.01" height="6" x="0" y="0" class="named"/>
+<rect width="21.15" height="6" x="421.01" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="442.16" y="0" class="nonmatching"/>
+<rect width="304.17" height="6" x="442.83" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1370,7 +1370,7 @@
 <rect width="1.95" height="2.33" x="720.59" y="168.13" class="named"><title>0x0043832f EnumJoysticksCallback (63 bytes)</title></rect>
 <rect width="1.95" height="2.33" x="725.54" y="168.13" class="named"><title>0x0045f640 LzssPredecessor (63 bytes)</title></rect>
 <rect width="1.88" height="2.33" x="730.50" y="168.13" class="named"><title>0x00404e70 D3DXVec3Length (62 bytes)</title></rect>
-<rect width="1.88" height="2.33" x="735.37" y="168.13" class="todo"><title>0x00427960 Func427960 (62 bytes)</title></rect>
+<rect width="1.88" height="2.33" x="735.37" y="168.13" class="named"><title>0x00427960 Bullet::SetTurnCommand (62 bytes)</title></rect>
 <rect width="1.88" height="2.33" x="740.25" y="168.13" class="todo"><title>0x004279a0 Func4279a0 (62 bytes)</title></rect>
 <rect width="1.88" height="2.33" x="745.12" y="168.13" class="todo"><title>0x004279e0 Func4279e0 (62 bytes)</title></rect>
 <rect width="2.05" height="2.15" x="710.52" y="173.46" class="todo"><title>0x00427a70 Func427a70 (62 bytes)</title></rect>

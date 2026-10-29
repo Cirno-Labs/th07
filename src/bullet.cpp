@@ -100,3 +100,12 @@ BulletCommand *BulletShooter::StartCommand(int idx, int unk_14, DWORD flag)
     this->flags |= flag;
     return cmd;
 }
+
+void Bullet::SetTurnCommand(int idx, int unk_14, int unk_8, float unk_4, float unk_0)
+{
+    BulletCommand *cmd = this->RestartCommand(idx, unk_14, 0x20);
+
+    cmd->unk_8 = unk_8;
+    cmd->unk_0 = unk_0;
+    cmd->unk_4 = unk_4;
+}

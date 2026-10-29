@@ -62,6 +62,8 @@ struct Bullet
     // Sets command `idx` to run under `flag`, adds `flag` to flags and
     // starts over from the first command. Returns the command.
     BulletCommand *RestartCommand(int idx, int unk_14, DWORD flag);
+    // Sets command `idx` up for flag 0x20.
+    void SetTurnCommand(int idx, int unk_14, int unk_8, float unk_4, float unk_0);
 
     BulletTypeSprites sprites;
     D3DXVECTOR3 pos;
