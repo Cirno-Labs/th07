@@ -47,7 +47,7 @@ ENV = dict(
     WINEPREFIX=os.environ.get("WINEPREFIX", os.path.join(ROOT, ".wine")),
     WINEDEBUG=os.environ.get("WINEDEBUG", "-all"),
     INCLUDE=r"C:\dx8\include;C:\msvc7\include;C:\psdk\Include",
-    LIB=r"C:\dx8\lib;C:\msvc7\lib;C:\psdk\Lib",
+    LIB=r"C:\dx8\lib;C:\msvc7\lib;C:\msvc7\PlatformSDK\Lib;C:\psdk\Lib",
 )
 
 

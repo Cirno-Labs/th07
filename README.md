@@ -73,6 +73,15 @@ link-time code generation puts each object's inline functions first, so
 the standalone exe is built with `/GL` and `/LTCG`. `/GL` needs
 `msobj10.dll` from the Visual Studio CD in the compiler's directory.
 
+The import libraries for `user32`, `gdi32`, `winmm`, `ole32`, `kernel32`
+and `uuid` are Visual Studio .NET 2002's own (`Vc7\PlatformSDK\Lib`,
+import library build 9210 in the Rich header), not a later Platform
+SDK's: they decide the import hints and the Rich header. They are not
+loose files on the CDs but sit in a cabinet inside `vs_setup.msi` on
+disc 1. `just psdk-libs ZIP` extracts them from the install media (a zip
+holding `cd1/VSPROD1.iso`) into `C:\msvc7\PlatformSDK\Lib` in the Wine
+prefix, which the build searches before `C:\psdk\Lib`.
+
 ## Workflow
 
 Everything runs headless, so it works over SSH. `just` lists the recipes.
@@ -133,8 +142,8 @@ build/    outputs; build/game/ is a runnable copy of the patched game
 
 ## Requirements
 
-- Wine (32-bit), Python 3, [just](https://github.com/casey/just),
-  binutils (`objdump`), 7-Zip
+- Wine (32-bit, with its `msidb`), Python 3,
+  [just](https://github.com/casey/just), binutils (`objdump`), 7-Zip
 - For `just run`: Xvfb, xdotool, ImageMagick, 32-bit Mesa OpenGL
   (`libgl1-mesa-dri:i386`, `libglx-mesa0:i386`) and the `ja_JP.UTF-8`
   locale
