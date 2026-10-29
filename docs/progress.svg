@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">56.48% (392)</tspan> · <tspan class="decompiled">1.59% (11)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">41.79% (290)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">56.63% (393)</tspan> · <tspan class="decompiled">1.59% (11)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">41.64% (289)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="421.94" height="6" x="0" y="0" class="named"/>
-<rect width="11.84" height="6" x="421.94" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="433.78" y="0" class="nonmatching"/>
-<rect width="312.15" height="6" x="434.85" y="0" class="todo"/>
+<rect width="423.01" height="6" x="0" y="0" class="named"/>
+<rect width="11.84" height="6" x="423.01" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="434.85" y="0" class="nonmatching"/>
+<rect width="311.07" height="6" x="435.93" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (173 bytes)</title></rect>
@@ -652,7 +652,7 @@
 <rect width="12" height="12" x="450" y="165" class="named"><title>0x00450a50 Sprite::ResolveFloatArgument (166 bytes)</title></rect>
 <rect width="12" height="12" x="465" y="165" class="named"><title>0x00450b20 Sprite::ResolveIntArgument (186 bytes)</title></rect>
 <rect width="12" height="12" x="480" y="165" class="named"><title>0x00450c10 Sprite::ResolveFloatArgumentPtr (124 bytes)</title></rect>
-<rect width="12" height="12" x="495" y="165" class="todo"><title>0x00450ca0 Func450ca0 (139 bytes)</title></rect>
+<rect width="12" height="12" x="495" y="165" class="named"><title>0x00450ca0 Sprite::ResolveIntArgumentPtr (139 bytes)</title></rect>
 <rect width="12" height="12" x="510" y="165" class="todo"><title>0x00450d60 SpriteEngine::Step (13178 bytes)</title></rect>
 <rect width="12" height="12" x="525" y="165" class="named"><title>0x00454260 SpriteEngine::RenderTextToTextureIndex (108 bytes)</title></rect>
 <rect width="12" height="12" x="540" y="165" class="named"><title>0x004542d0 SpriteEngine::RenderText (222 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">44.17%</tspan> · <tspan class="decompiled">0.21%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">55.54%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">44.20%</tspan> · <tspan class="decompiled">0.21%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">55.50%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="329.92" height="6" x="0" y="0" class="named"/>
-<rect width="1.55" height="6" x="329.92" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="331.47" y="0" class="nonmatching"/>
-<rect width="414.87" height="6" x="332.13" y="0" class="todo"/>
+<rect width="330.19" height="6" x="0" y="0" class="named"/>
+<rect width="1.55" height="6" x="330.19" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="331.74" y="0" class="nonmatching"/>
+<rect width="414.60" height="6" x="332.40" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1229,7 +1229,7 @@
 <rect width="4.86" height="4.47" x="658.86" y="205.53" class="named"><title>0x00455030 SpriteEngine::SendInterruptToLoadedSprites (140 bytes)</title></rect>
 <rect width="4.66" height="4.60" x="666.71" y="122.24" class="todo"><title>0x0042f853 Unknown626270::Func42f853 (139 bytes)</title></rect>
 <rect width="4.66" height="4.60" x="674.38" y="122.24" class="named"><title>0x00438668 OpenGameArchive (139 bytes)</title></rect>
-<rect width="4.66" height="4.60" x="682.04" y="122.24" class="todo"><title>0x00450ca0 Func450ca0 (139 bytes)</title></rect>
+<rect width="4.66" height="4.60" x="682.04" y="122.24" class="named"><title>0x00450ca0 Sprite::ResolveIntArgumentPtr (139 bytes)</title></rect>
 <rect width="4.66" height="4.60" x="689.70" y="122.24" class="named"><title>0x0045ffc0 DatArchive::DuplicateString (139 bytes)</title></rect>
 <rect width="4.61" height="4.60" x="697.36" y="122.24" class="named"><title>0x0045c546 MainMenu::DeletedCallback (138 bytes)</title></rect>
 <rect width="4.55" height="4.60" x="704.97" y="122.24" class="todo"><title>0x0041e790 Func41e790 (137 bytes)</title></rect>

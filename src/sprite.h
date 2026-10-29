@@ -147,6 +147,8 @@ public:
     // `bit` of `mask` is set and `*value` is 10004 to 10007, the float
     // variable it stands for, else `value`.
     float *ResolveFloatArgumentPtr(float *value, WORD mask, int bit);
+    // The same for an int argument and the int variables.
+    int *ResolveIntArgumentPtr(int *value, WORD mask, int bit);
     void SetPendingInterrupt(short interrupt)
     {
         this->pendingInterrupt = interrupt;

@@ -1275,6 +1275,30 @@ float *Sprite::ResolveFloatArgumentPtr(float *value, WORD mask, int bit)
     return value;
 }
 
+int *Sprite::ResolveIntArgumentPtr(int *value, WORD mask, int bit)
+{
+    if ((mask & 1 << bit) == 0)
+    {
+        return value;
+    }
+    switch (*value)
+    {
+    case 10000:
+        return &this->unk_c8;
+    case 10001:
+        return &this->unk_cc;
+    case 10002:
+        return &this->unk_d0;
+    case 10003:
+        return &this->unk_d4;
+    case 10008:
+        return &this->unk_e8;
+    case 10009:
+        return &this->unk_ec;
+    }
+    return value;
+}
+
 void SpriteEngine::RenderTextToTextureIndex(int textureIndex, int x, int y, int width, int unk4, int fontHeight,
                                             int unk6, D3DCOLOR textColor, D3DCOLOR shadowColor, char *text,
                                             float scaleX, float scaleY)
