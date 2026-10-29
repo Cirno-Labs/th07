@@ -166,13 +166,6 @@ struct SpriteBase
 class Sprite : public SpriteBase
 {
 public:
-    // Inline, expanded in /Od files; /Os files call the copy at
-    // 0x401170.
-    Sprite()
-    {
-        memset(this, 0, sizeof(Sprite));
-        this->spriteIndex = -1;
-    }
     // Resets the sprite's state up to pos: a scale of 1, white, the
     // identity matrix, flags 7. Inline, but too large to expand: callers
     // call the copy at 0x4010f0 and keep a slot for it.
@@ -185,6 +178,13 @@ public:
         D3DXMatrixIdentity(&this->matrix);
         *(WORD *)&this->flags = 7;
         this->scriptTime.Initialize();
+    }
+    // Inline, expanded in /Od files; /Os files call the copy at
+    // 0x401170.
+    Sprite()
+    {
+        memset(this, 0, sizeof(Sprite));
+        this->spriteIndex = -1;
     }
     // Whether the sprite shows a sprite whose texture is loaded. Defined
     // after SpriteEngine.

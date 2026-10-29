@@ -22,7 +22,10 @@ void GameManager::RerollChecksumKeys()
     this->checksumValue = this->stats->computedChecksum + this->stats->checksumKeysD[3];
 }
 
-// The same for Timer::NextTick, which only the Gui file calls.
+// The same for Timer::NextTick, which only the Gui file calls. The
+// original places it at 0x4010b0, ahead of Sprite's inline functions,
+// so it was defined before them there; here App is only defined after
+// sprite.h, so it follows them.
 int Timer::NextTick()
 {
     this->previous = this->current;
@@ -39,6 +42,17 @@ void GameManager::SetBombs(int bombs)
     this->checksumValue = this->stats->computedChecksum + this->stats->checksumKeysD[3];
 }
 
+void AsciiText::RunScripts()
+{
+    g_SpriteEngine->Step(&this->summaryPopup);
+    g_SpriteEngine->Step(&this->summaryDigit);
+    g_SpriteEngine->Step(&this->nearbyLabels[0]);
+    g_SpriteEngine->Step(&this->nearbyLabels[1]);
+    g_SpriteEngine->Step(&this->nearbyLabels[2]);
+    g_SpriteEngine->Step(&this->nearbyLabels[3]);
+    g_SpriteEngine->Step(&this->summaryBombIcon);
+}
+
 AsciiText::AsciiText()
 {
 }
@@ -49,17 +63,6 @@ void IncrementCounterCapped(DWORD *count, DWORD max)
     {
         *count = *count + 1;
     }
-}
-
-void AsciiText::RunScripts()
-{
-    g_SpriteEngine->Step(&this->summaryPopup);
-    g_SpriteEngine->Step(&this->summaryDigit);
-    g_SpriteEngine->Step(&this->nearbyLabels[0]);
-    g_SpriteEngine->Step(&this->nearbyLabels[1]);
-    g_SpriteEngine->Step(&this->nearbyLabels[2]);
-    g_SpriteEngine->Step(&this->nearbyLabels[3]);
-    g_SpriteEngine->Step(&this->summaryBombIcon);
 }
 
 int AsciiText::OnUpdate(AsciiText *text)
