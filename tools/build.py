@@ -258,7 +258,8 @@ def link_exe(objs, gl_objs):
     rsrc.write_res(res, rsrc.resources(ORIGINAL))
     # Objects and libraries in the original's order: its import table
     # lists DINPUT8, DSOUND and d3d8 first and ole32 last, D3DX8 follows
-    # the game code and the CRT comes last.
+    # the game code and the CRT comes last. uuid's GUIDs come before the
+    # CRT's .rdata, and its objects before the CRT's in the Rich header.
     gl = dict(zip(objs, gl_objs))
     objs = [gl[o] for o in link_order(objs, read_symbols())]
     # /OPT:REF and /OPT:ICF as the IDE's release configuration sets them.
@@ -267,7 +268,7 @@ def link_exe(objs, gl_objs):
     tool("link", "/LTCG", "/SUBSYSTEM:WINDOWS", "/FIXED", "/OPT:REF", "/OPT:ICF", "/OPT:NOWIN98",
          "/NODEFAULTLIB:libc.lib", "/MAP:" + win(EXE_MAP), "/OUT:" + win(EXE), *map(win, objs), win(res),
          "dinput8.lib", "dsound.lib", "d3d8.lib", "d3dx8.lib", "dxguid.lib", "winmm.lib",
-         "kernel32.lib", "user32.lib", "gdi32.lib", "ole32.lib", "libcmt.lib")
+         "kernel32.lib", "user32.lib", "gdi32.lib", "ole32.lib", "uuid.lib", "libcmt.lib")
     copy_header_fields(ORIGINAL, EXE)
     print("linked", EXE)
 
