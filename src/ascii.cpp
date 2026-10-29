@@ -53,13 +53,13 @@ void IncrementCounterCapped(DWORD *count, DWORD max)
 
 void AsciiText::RunScripts()
 {
-    g_SpriteEngine->Step(&this->unk_498);
-    g_SpriteEngine->Step(&this->unk_6e4);
-    g_SpriteEngine->Step(&this->unk_b7c[0]);
-    g_SpriteEngine->Step(&this->unk_b7c[1]);
-    g_SpriteEngine->Step(&this->unk_b7c[2]);
-    g_SpriteEngine->Step(&this->unk_b7c[3]);
-    g_SpriteEngine->Step(&this->unk_930);
+    g_SpriteEngine->Step(&this->summaryPopup);
+    g_SpriteEngine->Step(&this->summaryDigit);
+    g_SpriteEngine->Step(&this->nearbyLabels[0]);
+    g_SpriteEngine->Step(&this->nearbyLabels[1]);
+    g_SpriteEngine->Step(&this->nearbyLabels[2]);
+    g_SpriteEngine->Step(&this->nearbyLabels[3]);
+    g_SpriteEngine->Step(&this->summaryBombIcon);
 }
 
 int AsciiText::OnUpdate(AsciiText *text)
@@ -94,15 +94,15 @@ int AsciiText::OnUpdate(AsciiText *text)
     text->RunScripts();
     if ((g_GameManager.unk_93d8 >> 1) & 1)
     {
-        if (text->unk_9e50.scriptIndex == 0)
+        if (text->demoIcon.scriptIndex == 0)
         {
-            g_SpriteEngine->StartScript(&text->unk_9e50, 7);
+            g_SpriteEngine->StartScript(&text->demoIcon, 7);
         }
-        g_SpriteEngine->Step(&text->unk_9e50);
+        g_SpriteEngine->Step(&text->demoIcon);
     }
     else
     {
-        text->unk_9e50.scriptIndex = 0;
+        text->demoIcon.scriptIndex = 0;
     }
     return 1;
 }
@@ -113,9 +113,9 @@ int AsciiText::OnDraw(AsciiText *text)
     text->stringCount = 0;
     text->pauseMenu.DrawPauseMenu();
     text->continueMenu.DrawContinueMenu();
-    if (text->unk_9e50.scriptIndex)
+    if (text->demoIcon.scriptIndex)
     {
-        g_SpriteEngine->DrawUnrotated(&text->unk_9e50);
+        g_SpriteEngine->DrawUnrotated(&text->demoIcon);
     }
     return 1;
 }
@@ -139,7 +139,7 @@ void AsciiText::Initialize()
     this->highlight = 0;
     this->nextPopup = 0;
     this->nextPopup2 = 0;
-    this->unk_74e4 = 0;
+    this->unusedAfterInit74e4 = 0;
     this->color = 0xffffffff;
     this->scaleX = 1.0f;
     this->scaleY = 1.0f;
@@ -149,18 +149,18 @@ void AsciiText::Initialize()
     this->digit.pos.z = 0.1f;
     this->highlight = 0;
     this->glyphWidth = 14;
-    this->SetUnk74d4(this->unk_74d4);
+    this->SetUnk74d4(this->summaryPendingInterrupt);
 }
 
 void AsciiText::StartScripts()
 {
-    g_SpriteEngine->StartScript(&this->unk_498, 4);
-    g_SpriteEngine->StartScript(&this->unk_6e4, 3);
-    g_SpriteEngine->StartScript(&this->unk_930, 5);
-    g_SpriteEngine->StartScript(&this->unk_b7c[0], 6);
-    g_SpriteEngine->StartScript(&this->unk_b7c[1], 6);
-    g_SpriteEngine->StartScript(&this->unk_b7c[2], 6);
-    g_SpriteEngine->StartScript(&this->unk_b7c[3], 6);
+    g_SpriteEngine->StartScript(&this->summaryPopup, 4);
+    g_SpriteEngine->StartScript(&this->summaryDigit, 3);
+    g_SpriteEngine->StartScript(&this->summaryBombIcon, 5);
+    g_SpriteEngine->StartScript(&this->nearbyLabels[0], 6);
+    g_SpriteEngine->StartScript(&this->nearbyLabels[1], 6);
+    g_SpriteEngine->StartScript(&this->nearbyLabels[2], 6);
+    g_SpriteEngine->StartScript(&this->nearbyLabels[3], 6);
 }
 
 int AsciiText::AddedCallback(AsciiText *text)
@@ -323,31 +323,31 @@ void AsciiText::DrawStrings()
     }
     for (idx = 0; idx < 4; idx++)
     {
-        if (this->unk_b7c[idx].pos.x >= 56.0f && this->unk_b7c[idx].pos.x <= 392.0f)
+        if (this->nearbyLabels[idx].pos.x >= 56.0f && this->nearbyLabels[idx].pos.x <= 392.0f)
         {
-            advance = fabsf(this->unk_b7c[idx].pos.x - 32.0f - g_Player.position.x);
+            advance = fabsf(this->nearbyLabels[idx].pos.x - 32.0f - g_Player.position.x);
             if (advance < 64.0f)
             {
-                this->unk_b7c[idx].alpha = advance * 128.0f / 64.0f + 48.0f;
+                this->nearbyLabels[idx].alpha = advance * 128.0f / 64.0f + 48.0f;
             }
             else
             {
-                this->unk_b7c[idx].alpha = 0xb0;
+                this->nearbyLabels[idx].alpha = 0xb0;
             }
-            if (this->unk_14ac[idx])
+            if (this->nearbyLabelDimmed[idx])
             {
-                this->unk_b7c[idx].alpha = 0x80;
-                this->unk_b7c[idx].unk_rgb[2] = 0x40;
-                this->unk_b7c[idx].unk_rgb[1] = 0x40;
-                this->unk_b7c[idx].unk_rgb[0] = 0xff;
+                this->nearbyLabels[idx].alpha = 0x80;
+                this->nearbyLabels[idx].unk_rgb[2] = 0x40;
+                this->nearbyLabels[idx].unk_rgb[1] = 0x40;
+                this->nearbyLabels[idx].unk_rgb[0] = 0xff;
             }
             else
             {
-                this->unk_b7c[idx].unk_rgb[2] = 0xff;
-                this->unk_b7c[idx].unk_rgb[1] = 0xff;
-                this->unk_b7c[idx].unk_rgb[0] = 0xff;
+                this->nearbyLabels[idx].unk_rgb[2] = 0xff;
+                this->nearbyLabels[idx].unk_rgb[1] = 0xff;
+                this->nearbyLabels[idx].unk_rgb[0] = 0xff;
             }
-            g_SpriteEngine->DrawUnrotated(&this->unk_b7c[idx]);
+            g_SpriteEngine->DrawUnrotated(&this->nearbyLabels[idx]);
         }
     }
 }
@@ -1079,33 +1079,33 @@ void AsciiText::DrawPopups()
             digitPtr--;
         }
     }
-    if (this->unk_498.flags & 1)
+    if (this->summaryPopup.flags & 1)
     {
         div = 100000;
         nonzero = 0;
         amount = g_GameManager.bonusPoints - g_GameManager.stats->grazeCount;
-        g_SpriteEngine->DrawUnrotated(&this->unk_498);
-        this->unk_6e4.pos.x = this->unk_498.pos.x + 40.0f + 6.0f;
-        this->unk_6e4.pos.y = this->unk_498.pos.y + 11.0f;
-        this->unk_6e4.pos.z = this->unk_498.pos.z;
-        this->unk_6e4.alpha = this->unk_498.alpha;
+        g_SpriteEngine->DrawUnrotated(&this->summaryPopup);
+        this->summaryDigit.pos.x = this->summaryPopup.pos.x + 40.0f + 6.0f;
+        this->summaryDigit.pos.y = this->summaryPopup.pos.y + 11.0f;
+        this->summaryDigit.pos.z = this->summaryPopup.pos.z;
+        this->summaryDigit.alpha = this->summaryPopup.alpha;
         if ((g_GameManager.bonusPoints >= g_GameManager.bonusPointsCap) != 0)
         {
-            this->unk_6e4.unk_rgb[2] = 0xff;
-            this->unk_6e4.unk_rgb[1] = 0xd0;
-            this->unk_6e4.unk_rgb[0] = 0x80;
+            this->summaryDigit.unk_rgb[2] = 0xff;
+            this->summaryDigit.unk_rgb[1] = 0xd0;
+            this->summaryDigit.unk_rgb[0] = 0x80;
         }
         else if (amount >= 50000)
         {
-            this->unk_6e4.unk_rgb[2] = 0xff;
-            this->unk_6e4.unk_rgb[1] = 0xff;
-            this->unk_6e4.unk_rgb[0] = 0x80;
+            this->summaryDigit.unk_rgb[2] = 0xff;
+            this->summaryDigit.unk_rgb[1] = 0xff;
+            this->summaryDigit.unk_rgb[0] = 0x80;
         }
         else
         {
-            this->unk_6e4.unk_rgb[2] = 0xff;
-            this->unk_6e4.unk_rgb[1] = 0xff;
-            this->unk_6e4.unk_rgb[0] = 0xff;
+            this->summaryDigit.unk_rgb[2] = 0xff;
+            this->summaryDigit.unk_rgb[1] = 0xff;
+            this->summaryDigit.unk_rgb[0] = 0xff;
         }
         for (i = 0; i < 6; i++, div /= 10)
         {
@@ -1117,17 +1117,17 @@ void AsciiText::DrawPopups()
             }
             if (nonzero != 0 || div == 1)
             {
-                g_SpriteEngine->SetSprite(&this->unk_6e4, count + 0x84);
-                g_SpriteEngine->DrawUnrotated(&this->unk_6e4);
+                g_SpriteEngine->SetSprite(&this->summaryDigit, count + 0x84);
+                g_SpriteEngine->DrawUnrotated(&this->summaryDigit);
             }
-            this->unk_6e4.pos.x += 7.0f;
+            this->summaryDigit.pos.x += 7.0f;
         }
         nonzero = 0;
         amount = g_GameManager.bonusPointsCap - g_GameManager.stats->grazeCount;
-        this->unk_6e4.unk_rgb[2] = 0xf0;
-        this->unk_6e4.unk_rgb[1] = 0xd0;
-        this->unk_6e4.unk_rgb[0] = 0xe0;
-        this->unk_6e4.pos.x += 9.0f;
+        this->summaryDigit.unk_rgb[2] = 0xf0;
+        this->summaryDigit.unk_rgb[1] = 0xd0;
+        this->summaryDigit.unk_rgb[0] = 0xe0;
+        this->summaryDigit.pos.x += 9.0f;
         if (amount < 1000000)
         {
             div = 100000;
@@ -1148,38 +1148,38 @@ void AsciiText::DrawPopups()
             }
             if (nonzero != 0 || div == 1)
             {
-                g_SpriteEngine->SetSprite(&this->unk_6e4, count + 0x84);
-                g_SpriteEngine->DrawUnrotated(&this->unk_6e4);
+                g_SpriteEngine->SetSprite(&this->summaryDigit, count + 0x84);
+                g_SpriteEngine->DrawUnrotated(&this->summaryDigit);
             }
-            this->unk_6e4.pos.x += 7.0f;
+            this->summaryDigit.pos.x += 7.0f;
         }
-        this->unk_6e4.scaleY = 1.0f;
-        this->unk_6e4.scaleX = 1.0f;
+        this->summaryDigit.scaleY = 1.0f;
+        this->summaryDigit.scaleX = 1.0f;
         nonzero = 0;
-        this->unk_6e4.pos.x = this->unk_498.pos.x + 40.0f + 6.0f + 7.0f;
-        this->unk_6e4.pos.y = this->unk_498.pos.y + 2.0f;
+        this->summaryDigit.pos.x = this->summaryPopup.pos.x + 40.0f + 6.0f + 7.0f;
+        this->summaryDigit.pos.y = this->summaryPopup.pos.y + 2.0f;
         amount = g_GameManager.invulnerabilityBonus - g_GameManager.stats->grazeCount;
         if (g_Player.bombState)
         {
-            this->unk_6e4.unk_rgb[2] = 0xff;
+            this->summaryDigit.unk_rgb[2] = 0xff;
             div = amount % 4000;
             if (div >= 2000)
             {
                 div = 4000 - div;
             }
-            this->unk_6e4.unk_rgb[1] = amount * 0xc0 / 50000 + div * 0x40 / 2000;
-            this->unk_6e4.unk_rgb[0] = amount * 0xc0 / 50000 + div * 0x40 / 2000;
-            this->unk_6e4.scaleY = 1.41f;
-            this->unk_6e4.scaleX = 1.41f;
+            this->summaryDigit.unk_rgb[1] = amount * 0xc0 / 50000 + div * 0x40 / 2000;
+            this->summaryDigit.unk_rgb[0] = amount * 0xc0 / 50000 + div * 0x40 / 2000;
+            this->summaryDigit.scaleY = 1.41f;
+            this->summaryDigit.scaleX = 1.41f;
             step = 10;
-            this->unk_6e4.pos.x += 2.0f;
-            this->unk_6e4.pos.y -= 2.0f;
+            this->summaryDigit.pos.x += 2.0f;
+            this->summaryDigit.pos.y -= 2.0f;
         }
         else
         {
-            this->unk_6e4.unk_rgb[2] = 0xc0;
-            this->unk_6e4.unk_rgb[1] = 0x80;
-            this->unk_6e4.unk_rgb[0] = 0xb0;
+            this->summaryDigit.unk_rgb[2] = 0xc0;
+            this->summaryDigit.unk_rgb[1] = 0x80;
+            this->summaryDigit.unk_rgb[0] = 0xb0;
             step = 7;
         }
         div = 10000;
@@ -1193,20 +1193,20 @@ void AsciiText::DrawPopups()
             }
             if (nonzero != 0 || div == 1)
             {
-                g_SpriteEngine->SetSprite(&this->unk_6e4, count + 0x84);
-                g_SpriteEngine->DrawUnrotated(&this->unk_6e4);
+                g_SpriteEngine->SetSprite(&this->summaryDigit, count + 0x84);
+                g_SpriteEngine->DrawUnrotated(&this->summaryDigit);
             }
-            this->unk_6e4.pos.x += step;
+            this->summaryDigit.pos.x += step;
         }
-        this->unk_6e4.scaleY = 1.0f;
-        this->unk_6e4.scaleX = 1.0f;
+        this->summaryDigit.scaleY = 1.0f;
+        this->summaryDigit.scaleX = 1.0f;
         if (g_Player.bombState == 1)
         {
-            this->unk_930.pos = this->unk_498.pos;
-            this->unk_930.pos.x += 24.0f;
-            this->unk_930.pos.y += 8.0f;
-            this->unk_930.color = this->unk_498.color;
-            g_SpriteEngine->DrawUnrotated(&this->unk_930);
+            this->summaryBombIcon.pos = this->summaryPopup.pos;
+            this->summaryBombIcon.pos.x += 24.0f;
+            this->summaryBombIcon.pos.y += 8.0f;
+            this->summaryBombIcon.color = this->summaryPopup.color;
+            g_SpriteEngine->DrawUnrotated(&this->summaryBombIcon);
         }
     }
 }

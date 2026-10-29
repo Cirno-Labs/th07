@@ -2178,8 +2178,8 @@ int Player::AddedCallback(Player *player)
     player->deathbombFrames = g_Player.shotType->deathbombFrames;
     if ((g_App.scene != 3 && g_App.scene != 0xb && g_App.scene != 0xc) != 0)
     {
-        g_AsciiText.unk_498.pendingInterrupt = 1;
-        g_AsciiText.unk_74d4 = 1;
+        g_AsciiText.summaryPopup.pendingInterrupt = 1;
+        g_AsciiText.summaryPendingInterrupt = 1;
     }
     g_AsciiText.SetUnkB7cInterrupt(0, 2);
     g_AsciiText.SetUnkB7cInterrupt(1, 2);
@@ -2197,8 +2197,8 @@ int Player::DeletedCallback(Player *player)
     if ((g_App.scene != 3 && g_App.scene != 0xb && g_App.scene != 0xc) != 0)
     {
         g_SpriteEngine->ReleaseAnm(10);
-        g_AsciiText.unk_498.pendingInterrupt = 99;
-        g_AsciiText.unk_74d4 = 99;
+        g_AsciiText.summaryPopup.pendingInterrupt = 99;
+        g_AsciiText.summaryPendingInterrupt = 99;
         g_AsciiText.InterruptUnkB7c(0);
         g_AsciiText.InterruptUnkB7c(1);
         g_AsciiText.InterruptUnkB7c(2);

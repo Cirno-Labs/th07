@@ -161,33 +161,33 @@ public:
     // run time, as Player::DeletedCallback does.
     void InterruptUnkB7c(int idx)
     {
-        this->unk_b7c[idx].pendingInterrupt = 99;
+        this->nearbyLabels[idx].pendingInterrupt = 99;
     }
     // Sends unk_b7c[idx] interrupt `interrupt`, the same way.
     void SetUnkB7cInterrupt(int idx, int interrupt)
     {
-        this->unk_b7c[idx].pendingInterrupt = interrupt;
+        this->nearbyLabels[idx].pendingInterrupt = interrupt;
     }
     // Moves unk_b7c[idx] to `pos`, the same way.
     void SetUnkB7cPos(int idx, D3DXVECTOR3 *pos)
     {
-        this->unk_b7c[idx].pos = *pos;
+        this->nearbyLabels[idx].pos = *pos;
     }
     // Sets unk_14ac[idx], the same way.
     void SetUnk14ac(int idx, int value)
     {
-        this->unk_14ac[idx] = value;
+        this->nearbyLabelDimmed[idx] = value;
     }
     // unk_74d4, and setting it while sending unk_498 the same
     // interrupt. Inlines: each read takes a temporary in ResetHomingAndText.
     int GetUnk74d4()
     {
-        return this->unk_74d4;
+        return this->summaryPendingInterrupt;
     }
     void SetUnk74d4(int value)
     {
-        this->unk_498.pendingInterrupt = value;
-        this->unk_74d4 = value;
+        this->summaryPopup.pendingInterrupt = value;
+        this->summaryPendingInterrupt = value;
     }
 
     // The glyph DrawStrings draws each character with.
@@ -195,12 +195,12 @@ public:
     // The digit the popups are drawn with.
     Sprite digit;
     // Player::DeletedCallback sends these interrupt 99.
-    Sprite unk_498;
-    Sprite unk_6e4;
-    Sprite unk_930;
-    Sprite unk_b7c[4];
+    Sprite summaryPopup;
+    Sprite summaryDigit;
+    Sprite summaryBombIcon;
+    Sprite nearbyLabels[4];
     // Whether unk_b7c[i] is drawn dimmed in blue by DrawStrings.
-    int unk_14ac[4];
+    int nearbyLabelDimmed[4];
     AsciiString strings[0x100];
     // How many strings are queued.
     int stringCount;
@@ -214,16 +214,16 @@ public:
     // Drawn with the second glyph set, as in th06.
     int highlight;
     // Player::DeletedCallback sets it to 99.
-    int unk_74d4;
+    int summaryPendingInterrupt;
     // The width DrawStrings gives each glyph: 14, as in th06.
     int glyphWidth;
     // As th06's nextPopup and nextPopup2.
     int nextPopup;
     int nextPopup2;
-    int unk_74e4;
+    int unusedAfterInit74e4;
     PauseMenu pauseMenu;
     ContinueMenu continueMenu;
-    Sprite unk_9e50;
+    Sprite demoIcon;
     AsciiPopup popups[0x2d3];
 };
 ASSERT_SIZE(AsciiText, 0x11194);
