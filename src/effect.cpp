@@ -4,6 +4,7 @@
 
 #include "effect.h"
 #include "player.h"
+#include "replay.h"
 #include "unsorted.h"
 
 EffectManager::EffectManager()
@@ -379,6 +380,15 @@ int EffectUpdateFixedPos(Effect *effect)
 }
 
 int EffectUpdateNone(Effect *effect)
+{
+    return 1;
+}
+
+// The replay's draw callback, defined here rather than in replay.cpp:
+// the original's linker folded it into EffectUpdateNone and kept this
+// file's copy, and which copy our linker keeps when they are in
+// different files changes with unrelated edits.
+int ReplayManager::OnDraw(ReplayManager *replay)
 {
     return 1;
 }

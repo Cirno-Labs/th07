@@ -382,11 +382,6 @@ int ReplayManager::DeletedCallback(ReplayManager *replay)
     return 0;
 }
 
-int ReplayManager::OnDraw(ReplayManager *replay)
-{
-    return 1;
-}
-
 int ReplayManager::RegisterChain(int mode, char *path)
 {
     ReplayManager *replay;
