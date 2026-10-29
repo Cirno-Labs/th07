@@ -372,7 +372,7 @@ struct PlayerBomb
     // Set to 999 when a bomb starts, as th06's.
     int duration;
     // What each frame of the bomb takes from GameManager::unk_961c.
-    int unk_c;
+    int drainPerFrame;
     Timer timer;
     // Run the bomb and draw it, unfocused and focused, as th06's update
     // and draw.

@@ -83,7 +83,7 @@ void SetBombDrain(Player *player, int minimum, float share)
     drain -= drain % 10;
     minimum /= player->bomb.duration;
     minimum -= minimum % 10;
-    player->bomb.unk_c = drain < minimum ? minimum : drain;
+    player->bomb.drainPerFrame = drain < minimum ? minimum : drain;
 }
 
 void UpdateReimuABomb(Player *player)

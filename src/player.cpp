@@ -1480,7 +1480,7 @@ void UpdateBombState(Player *player)
     {
         if (player->bomb.timer.HasTicked())
         {
-            g_Unknown626270.SubUnk961c(player->bomb.unk_c);
+            g_Unknown626270.SubUnk961c(player->bomb.drainPerFrame);
             g_Unknown49fbf0.unk_4_8 = 2;
         }
         if (!player->bomb.focused)
