@@ -833,7 +833,7 @@ loop:
     }
     if (enemy->ctx.timer == instr->time)
     {
-        if ((instr->unk_9 & g_Unknown626270.unk_14) == 0)
+        if ((instr->difficultyMask & g_Unknown626270.unk_14) == 0)
         {
             goto next;
         }
