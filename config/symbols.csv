@@ -256,7 +256,7 @@ address,size,name,symbol
 0x0042d24d,536,Func42d24d,
 0x0042d465,216,Func42d465,
 0x0042d53d,35,Func42d53d,
-0x0042d560,109,Func42d560,
+0x0042d560,109,Unknown626270::Unknown626270,??0Unknown626270@@QAE@XZ
 0x0042d5cd,69,Unknown626270::AddLives,?AddLives@Unknown626270@@QAEXH@Z
 0x0042d612,69,Unknown626270::AddBombs,?AddBombs@Unknown626270@@QAEXH@Z
 0x0042d657,129,Unknown626270::SetPlayArea,?SetPlayArea@Unknown626270@@QAEXXZ

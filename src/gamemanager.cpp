@@ -6,6 +6,17 @@
 
 #include "unsorted.h"
 
+Unknown626270::Unknown626270()
+{
+    memset(this, 0, sizeof(Unknown626270));
+    this->arena[0] = 32.0f;
+    this->arena[1] = 16.0f;
+    this->arena[2] = 384.0f;
+    this->arena[3] = 448.0f;
+    this->demoIndex = 2;
+    this->unk_9624 = 1;
+}
+
 void Unknown626270::AddLives(int lives)
 {
     if (this->Func404fe0())

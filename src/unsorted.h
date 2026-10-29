@@ -906,6 +906,7 @@ struct Unknown626270Unk4
 class Unknown626270
 {
 public:
+    Unknown626270();
     // Whether the checksummed fields of `stats` no longer agree.
     int Func404fe0();
     // Whether Phantasm is open: a shot type cleared Extra (or captured
@@ -1073,7 +1074,9 @@ public:
     int unk_9630;
     // A replay stage keeps it.
     int unk_9634;
+    unsigned char unk_9638[0xc];
 };
+ASSERT_SIZE(Unknown626270, 0x9644);
 extern Unknown626270 g_Unknown626270;
 
 // The sum of the `size` bytes at `data`. Adds
