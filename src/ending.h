@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <string.h>
 #include <windows.h>
 
 #include "chain.h"
@@ -13,6 +14,20 @@
 class Ending
 {
 public:
+    // Constructs the Sprites, then zeroes the whole ending and starts
+    // its timers. Inline, but too large to expand: RegisterChain calls
+    // the copy at 0x41d180.
+    Ending()
+    {
+        memset(this, 0, sizeof(Ending));
+        this->lineDelay = 8;
+        this->lineTimer.Set(0);
+        this->timer.Set(0);
+        this->scrollX = 0.0f;
+        this->scrollY = 0.0f;
+        this->scrollSpeed = 0.0f;
+    }
+
     // The update chain element's callback: runs the script and steps
     // the sprites, up to 5 times a frame while skipping. Returns 0 at the
     // script's end, otherwise 1.
@@ -39,6 +54,10 @@ public:
     // The update chain element's deleted callback: frees what the ending
     // loaded, removes the draw chain element and frees the ending.
     static int DeletedCallback(Ending *ending);
+    // Creates the ending's chain elements: OnUpdate at priority 4 with
+    // its added and deleted callbacks, OnDraw at 1. Returns 0, or -1 if
+    // adding fails.
+    static int RegisterChain();
 
     ChainElem *calcChain;
     ChainElem *drawChain;

@@ -428,3 +428,21 @@ int Ending::DeletedCallback(Ending *ending)
     g_App.hideFps = 0;
     return 0;
 }
+
+int Ending::RegisterChain()
+{
+    Ending *ending = new Ending();
+
+    ending->calcChain = g_Chain.CreateElem((ChainCallback)Ending::OnUpdate);
+    ending->calcChain->arg = ending;
+    ending->calcChain->addedCallback = (ChainCallback)Ending::AddedCallback;
+    ending->calcChain->deletedCallback = (ChainCallback)Ending::DeletedCallback;
+    if (g_Chain.AddToCalcChain(ending->calcChain, 4) != 0)
+    {
+        return -1;
+    }
+    ending->drawChain = g_Chain.CreateElem((ChainCallback)Ending::OnDraw);
+    ending->drawChain->arg = ending;
+    g_Chain.AddToDrawChain(ending->drawChain, 1);
+    return 0;
+}

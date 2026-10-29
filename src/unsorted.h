@@ -314,8 +314,6 @@ void Func4075d0();
 void Func427760();
 void Func423050();
 void Func41d150();
-// th06's Ending::RegisterChain.
-int Func41e820();
 
 // Measures the frame rate every half second, with the performance
 // counter when there is one (calling g_App.CheckClockDrift every eighth

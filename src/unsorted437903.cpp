@@ -11,6 +11,7 @@
 #include "ascii.h"
 #include "chain.h"
 #include "dsutil.h"
+#include "ending.h"
 #include "mainmenu.h"
 #include "midi.h"
 #include "musicscreen.h"
@@ -180,7 +181,7 @@ int App::OnUpdate(App *arg)
                 break;
             case 9:
                 RemoveGameManagerChain();
-                if (Func41e820() != 0)
+                if (Ending::RegisterChain() != 0)
                 {
                     return 4;
                 }
@@ -272,7 +273,7 @@ int App::OnUpdate(App *arg)
             case 9:
                 g_Unknown626270.plst.counts[g_Unknown626270.difficulty].clears++;
                 RemoveGameManagerChain();
-                if (Func41e820() != 0)
+                if (Ending::RegisterChain() != 0)
                 {
                     return 4;
                 }
