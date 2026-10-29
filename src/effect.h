@@ -65,6 +65,11 @@ struct EffectInfo
 };
 extern EffectInfo g_EffectInfos[];
 
+// An effect init, as the first frame of th06's EffectUpdateDrift: a
+// random step that slows to a stop over 19 frames, both scaled by
+// App::unk_178. Returns 0.
+int EffectInitDrift(Effect *effect);
+
 // The effects, at 0x12fe250: 400 started in turn, 8 reserved slots and
 // a spare.
 class EffectManager
