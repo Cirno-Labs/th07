@@ -410,3 +410,38 @@ int Unknown626270::AnyShotHasExtraOpen()
                ? TRUE
                : FALSE;
 }
+
+int Unknown626270::IsPhantasmOpen()
+{
+    int count;
+    int i;
+    int shot;
+
+    count = 0;
+    for (i = 0; i < 0x8d; i++)
+    {
+        if (this->catks[i].captures[6] > 0)
+        {
+            count++;
+        }
+    }
+    if (count >= 60)
+    {
+        for (shot = 0; shot < 6; shot++)
+        {
+            if (this->clrds[shot].stagesClearedNoContinue[4] == 99)
+            {
+                this->clrds[shot].stagesClearedNoContinue[5] = 99;
+            }
+        }
+    }
+    if (this->clrds[0].stagesClearedNoContinue[5] == 99)
+    {
+        count = 60;
+    }
+    return this->clrds[0].stagesClearedNoContinue[5] == 99 || this->clrds[1].stagesClearedNoContinue[5] == 99 ||
+                   this->clrds[2].stagesClearedNoContinue[5] == 99 || this->clrds[3].stagesClearedNoContinue[5] == 99 ||
+                   this->clrds[4].stagesClearedNoContinue[5] == 99 || this->clrds[5].stagesClearedNoContinue[5] == 99
+               ? TRUE
+               : FALSE;
+}

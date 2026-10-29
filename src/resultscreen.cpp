@@ -650,7 +650,7 @@ int ResultScreen::OnUpdate(ResultScreen *screen)
                     sprite->posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
                 }
             }
-            if (!g_Unknown626270.Func42f94c())
+            if (!g_Unknown626270.IsPhantasmOpen())
             {
                 screen->sprites[5].flags &= ~2;
                 screen->sprites[6].posOffset.y += -32.0f;
@@ -670,7 +670,7 @@ int ResultScreen::OnUpdate(ResultScreen *screen)
         screen->frame = 0;
     case 1:
         i = MoveCursorVertical(screen, 9);
-        if (screen->cursor == 5 && !g_Unknown626270.Func42f94c())
+        if (screen->cursor == 5 && !g_Unknown626270.IsPhantasmOpen())
         {
             screen->cursor += i;
         }
@@ -688,7 +688,7 @@ int ResultScreen::OnUpdate(ResultScreen *screen)
                 sprite->posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
             }
         }
-        if (!g_Unknown626270.Func42f94c())
+        if (!g_Unknown626270.IsPhantasmOpen())
         {
             screen->sprites[5].flags &= ~2;
             screen->sprites[6].posOffset.y += -32.0f;
@@ -1585,7 +1585,7 @@ int ResultScreen::RunStatisticsMenu()
             sprite0++;
             pos2.y += 17.0f;
             sprite0->pos = pos2;
-            if (g_Unknown626270.Func42f94c())
+            if (g_Unknown626270.IsPhantasmOpen())
             {
                 g_SpriteEngine->RenderText(sprite0, 0xffffff, 0,
                                            "プレイ回数　　　 　Easy 　Norm 　Hard 　Luna  Extra Phants  Total");
@@ -1599,7 +1599,7 @@ int ResultScreen::RunStatisticsMenu()
                 sprite0++;
                 pos2.y += 17.0f;
                 sprite0->pos = pos2;
-                if (g_Unknown626270.Func42f94c())
+                if (g_Unknown626270.IsPhantasmOpen())
                 {
                     g_SpriteEngine->RenderText(
                         sprite0, 0xffffff, 0, "%s %6d %6d %6d %6d %6d %6d %6d", g_ShotNames[i],
@@ -1620,7 +1620,7 @@ int ResultScreen::RunStatisticsMenu()
             sprite0++;
             pos2.y += 17.0f;
             sprite0->pos = pos2;
-            if (g_Unknown626270.Func42f94c())
+            if (g_Unknown626270.IsPhantasmOpen())
             {
                 g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "%s %6d %6d %6d %6d %6d %6d %6d", g_ShotNames[6],
                                            g_Unknown626270.plst.counts[0].plays[0], g_Unknown626270.plst.counts[1].plays[0],
@@ -1642,7 +1642,7 @@ int ResultScreen::RunStatisticsMenu()
                 g_Unknown626270.plst.counts[0].clears + g_Unknown626270.plst.counts[1].clears +
                 g_Unknown626270.plst.counts[2].clears + g_Unknown626270.plst.counts[3].clears +
                 g_Unknown626270.plst.counts[4].clears + g_Unknown626270.plst.counts[5].clears;
-            if (g_Unknown626270.Func42f94c())
+            if (g_Unknown626270.IsPhantasmOpen())
             {
                 g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "クリア回数  　　 %6d %6d %6d %6d %6d %6d %6d", g_Unknown626270.plst.counts[0].clears, g_Unknown626270.plst.counts[1].clears, g_Unknown626270.plst.counts[2].clears, g_Unknown626270.plst.counts[3].clears, g_Unknown626270.plst.counts[4].clears, g_Unknown626270.plst.counts[5].clears, g_Unknown626270.plst.counts[6].clears);
             }
@@ -1653,7 +1653,7 @@ int ResultScreen::RunStatisticsMenu()
             sprite0++;
             pos2.y += 17.0f;
             sprite0->pos = pos2;
-            if (g_Unknown626270.Func42f94c())
+            if (g_Unknown626270.IsPhantasmOpen())
             {
                 g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "コンティニュー   %6d %6d %6d %6d %6d %6d %6d", g_Unknown626270.plst.counts[0].continues, g_Unknown626270.plst.counts[1].continues, g_Unknown626270.plst.counts[2].continues, g_Unknown626270.plst.counts[3].continues, g_Unknown626270.plst.counts[4].continues, g_Unknown626270.plst.counts[5].continues, g_Unknown626270.plst.counts[6].continues);
             }
@@ -1664,7 +1664,7 @@ int ResultScreen::RunStatisticsMenu()
             sprite0++;
             pos2.y += 17.0f;
             sprite0->pos = pos2;
-            if (g_Unknown626270.Func42f94c())
+            if (g_Unknown626270.IsPhantasmOpen())
             {
                 g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "プラクティス　   %6d %6d %6d %6d %6d %6d %6d", g_Unknown626270.plst.counts[0].practices, g_Unknown626270.plst.counts[1].practices, g_Unknown626270.plst.counts[2].practices, g_Unknown626270.plst.counts[3].practices, g_Unknown626270.plst.counts[4].practices, g_Unknown626270.plst.counts[5].practices, g_Unknown626270.plst.counts[6].practices);
             }
@@ -1675,7 +1675,7 @@ int ResultScreen::RunStatisticsMenu()
             sprite0++;
             pos2.y += 17.0f;
             sprite0->pos = pos2;
-            if (g_Unknown626270.Func42f94c())
+            if (g_Unknown626270.IsPhantasmOpen())
             {
                 g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "リトライ回数  　 %6d %6d %6d %6d %6d %6d %6d", g_Unknown626270.plst.counts[0].retries, g_Unknown626270.plst.counts[1].retries, g_Unknown626270.plst.counts[2].retries, g_Unknown626270.plst.counts[3].retries, g_Unknown626270.plst.counts[4].retries, g_Unknown626270.plst.counts[5].retries, g_Unknown626270.plst.counts[6].retries);
             }
@@ -2152,7 +2152,7 @@ int ResultScreen::AddedCallback(ResultScreen *screen)
     Catk *card;
     int j;
 
-    g_Unknown626270.Func42f94c();
+    g_Unknown626270.IsPhantasmOpen();
     for (i = 0; i < 6; i++)
     {
         for (shot = 0; shot < 6; shot++)
@@ -2222,7 +2222,7 @@ int ResultScreen::AddedCallback(ResultScreen *screen)
     {
         LoadSpellCards(screen->scoreDat, g_Unknown626270.catks);
         LoadClears(screen->scoreDat, g_Unknown626270.clrds);
-        g_Unknown626270.Func42f94c();
+        g_Unknown626270.IsPhantasmOpen();
         LoadPracticeScores(screen->scoreDat, &g_Unknown626270.pscrs[0][0][0]);
     }
     if (screen->state == 0x12)

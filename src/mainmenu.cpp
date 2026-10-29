@@ -876,7 +876,7 @@ int MainMenu::UpdateDifficultyMenu()
             {
                 g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 7);
             }
-            else if (!g_Unknown626270.Func42f94c())
+            else if (!g_Unknown626270.IsPhantasmOpen())
             {
                 g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 12);
                 this->cursor = 4;
@@ -928,7 +928,7 @@ int MainMenu::UpdateDifficultyMenu()
         }
         break;
     case 1:
-        count = this->state != 12 ? 4 : (g_Unknown626270.Func42f94c() ? 2 : 1);
+        count = this->state != 12 ? 4 : (g_Unknown626270.IsPhantasmOpen() ? 2 : 1);
         if (this->MoveMenuCursor(count))
         {
             if (this->state != 12)
@@ -1040,7 +1040,7 @@ int MainMenu::UpdateCharacterMenu()
             {
                 this->sprites[g_App.defaultDifficulty + 0x43].SetPendingInterrupt(9);
             }
-            else if (!g_Unknown626270.Func42f94c())
+            else if (!g_Unknown626270.IsPhantasmOpen())
             {
                 this->sprites[0xa1].SetPendingInterrupt(9);
             }
@@ -1321,7 +1321,7 @@ int MainMenu::UpdateShotTypeMenu()
             {
                 this->sprites[g_App.defaultDifficulty + 0x43].SetPendingInterrupt(9);
             }
-            else if (!g_Unknown626270.Func42f94c())
+            else if (!g_Unknown626270.IsPhantasmOpen())
             {
                 this->sprites[0xa1].SetPendingInterrupt(9);
             }
@@ -2169,7 +2169,7 @@ int MainMenu::InitTitleScene()
     {
         g_Unknown626270.unk_9630 = 5;
     }
-    if (!g_Unknown626270.unk_9624 && g_Unknown626270.Func42f94c())
+    if (!g_Unknown626270.unk_9624 && g_Unknown626270.IsPhantasmOpen())
     {
         i = 0;
         g_SpriteEngine->LoadSurface(0, "data/title/phantasm.jpg");
@@ -2228,7 +2228,7 @@ int MainMenu::InitTitleScene()
         }
         g_SpriteEngine->ReleaseSurface(0);
     }
-    g_Unknown626270.unk_9624 = g_Unknown626270.Func42f94c();
+    g_Unknown626270.unk_9624 = g_Unknown626270.IsPhantasmOpen();
     this->state = 0;
     g_App.ResetClockDriftCounters();
     switch (g_App.prevScene)
