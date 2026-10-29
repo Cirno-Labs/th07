@@ -300,7 +300,7 @@ BulletCommand *Bullet::RestartCommand(int idx, int unk_14, DWORD flag)
     BulletCommand *cmd = &this->commands[idx];
 
     cmd->flag = flag;
-    cmd->unk_14 = unk_14;
+    cmd->concurrentFlag = unk_14;
     this->flags |= flag;
     this->commandIndex = 0;
     return cmd;
@@ -311,7 +311,7 @@ BulletCommand *BulletShooter::StartCommand(int idx, int unk_14, DWORD flag)
     BulletCommand *cmd = &this->commands[idx];
 
     cmd->flag = flag;
-    cmd->unk_14 = unk_14;
+    cmd->concurrentFlag = unk_14;
     this->flags |= flag;
     return cmd;
 }
@@ -321,8 +321,8 @@ void Bullet::SetTurnCommand(int idx, int unk_14, int unk_8, float unk_4, float u
     BulletCommand *cmd = this->RestartCommand(idx, unk_14, 0x20);
 
     cmd->frames = unk_8;
-    cmd->unk_0 = unk_0;
-    cmd->unk_4 = unk_4;
+    cmd->arg0 = unk_0;
+    cmd->arg1 = unk_4;
 }
 
 void Bullet::SetAccelerateCommand(int idx, int unk_14, int unk_8, float unk_0, float unk_4)
@@ -330,8 +330,8 @@ void Bullet::SetAccelerateCommand(int idx, int unk_14, int unk_8, float unk_0, f
     BulletCommand *cmd = this->RestartCommand(idx, unk_14, 0x10);
 
     cmd->frames = unk_8;
-    cmd->unk_0 = unk_0;
-    cmd->unk_4 = unk_4;
+    cmd->arg0 = unk_0;
+    cmd->arg1 = unk_4;
 }
 
 void BulletShooter::SetShooterTurnCommand(int idx, int unk_14, int unk_8, float unk_4, float unk_0)
@@ -339,8 +339,8 @@ void BulletShooter::SetShooterTurnCommand(int idx, int unk_14, int unk_8, float 
     BulletCommand *cmd = this->StartCommand(idx, unk_14, 0x20);
 
     cmd->frames = unk_8;
-    cmd->unk_0 = unk_0;
-    cmd->unk_4 = unk_4;
+    cmd->arg0 = unk_0;
+    cmd->arg1 = unk_4;
 }
 
 void BulletShooter::SetStopTurnCommand(int idx, int unk_14, int unk_8, int unk_c, float unk_0, float unk_4)
@@ -348,9 +348,9 @@ void BulletShooter::SetStopTurnCommand(int idx, int unk_14, int unk_8, int unk_c
     BulletCommand *cmd = this->StartCommand(idx, unk_14, 0x80);
 
     cmd->frames = unk_8;
-    cmd->unk_c = unk_c;
-    cmd->unk_0 = unk_0;
-    cmd->unk_4 = unk_4;
+    cmd->maxTurns = unk_c;
+    cmd->arg0 = unk_0;
+    cmd->arg1 = unk_4;
 }
 
 void BulletShooter::SetShooterAccelerateCommand(int idx, int unk_14, int unk_8, float unk_0, float unk_4)
@@ -358,8 +358,8 @@ void BulletShooter::SetShooterAccelerateCommand(int idx, int unk_14, int unk_8, 
     BulletCommand *cmd = this->StartCommand(idx, unk_14, 0x10);
 
     cmd->frames = unk_8;
-    cmd->unk_0 = unk_0;
-    cmd->unk_4 = unk_4;
+    cmd->arg0 = unk_0;
+    cmd->arg1 = unk_4;
 }
 
 void BulletShooter::SetHiddenCommand(int idx, int unk_14, int unk_8)
@@ -797,7 +797,7 @@ void RunBulletCommands(Bullet *bullet)
         {
             return;
         }
-        if (cmd->unk_14 == 0 && bullet->activeFlags != 0)
+        if (cmd->concurrentFlag == 0 && bullet->activeFlags != 0)
         {
             return;
         }
@@ -815,8 +815,8 @@ void RunBulletCommands(Bullet *bullet)
             break;
         case 0x10:
             bullet->activeFlags |= 0x10;
-            bullet->ex[1].unk_c = cmd->unk_0;
-            bullet->ex[1].unk_10 = cmd->unk_4 > -990.0f ? cmd->unk_4 : bullet->angle;
+            bullet->ex[1].unk_c = cmd->arg0;
+            bullet->ex[1].unk_10 = cmd->arg1 > -990.0f ? cmd->arg1 : bullet->angle;
             bullet->ex[1].timer.Set(0);
             bullet->ex[1].duration = cmd->frames;
             ((Vector2 *)&bullet->ex[1].accel)->SetPolar(bullet->ex[1].unk_10, g_App.gameSpeed * bullet->ex[1].unk_c);
@@ -827,8 +827,8 @@ void RunBulletCommands(Bullet *bullet)
             break;
         case 0x20:
             bullet->activeFlags |= 0x20;
-            bullet->ex[2].unk_c = cmd->unk_0;
-            bullet->ex[2].unk_10 = cmd->unk_4;
+            bullet->ex[2].unk_c = cmd->arg0;
+            bullet->ex[2].unk_10 = cmd->arg1;
             bullet->ex[2].timer.Set(0);
             bullet->ex[2].duration = cmd->frames;
             if (bullet->commandIndex != 0 && bullet->sound >= 0)
@@ -840,19 +840,19 @@ void RunBulletCommands(Bullet *bullet)
         case 0x80:
         case 0x100:
             bullet->activeFlags |= cmd->flag;
-            bullet->ex[3].unk_10 = cmd->unk_0;
-            bullet->ex[3].unk_c = cmd->unk_4 > -999.0f ? cmd->unk_4 : bullet->speed;
+            bullet->ex[3].unk_10 = cmd->arg0;
+            bullet->ex[3].unk_c = cmd->arg1 > -999.0f ? cmd->arg1 : bullet->speed;
             bullet->ex[3].timer.Set(0);
             bullet->ex[3].duration = cmd->frames;
-            bullet->ex[3].unk_24 = cmd->unk_c;
+            bullet->ex[3].unk_24 = cmd->maxTurns;
             bullet->ex[3].unk_28 = 0;
             break;
         case 0x400:
         case 0x800:
             bullet->activeFlags |= cmd->flag;
-            if (cmd->unk_0 >= 0.0f)
+            if (cmd->arg0 >= 0.0f)
             {
-                bullet->ex[4].unk_c = cmd->unk_0;
+                bullet->ex[4].unk_c = cmd->arg0;
             }
             else
             {

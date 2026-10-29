@@ -46,13 +46,13 @@ ASSERT_SIZE(BulletTypeSprites, 0xb8c);
 // exFloats and exInts: `flag` is the Bullet::flags bit it runs under.
 struct BulletCommand
 {
-    float unk_0;
-    float unk_4;
+    float arg0;
+    float arg1;
     // Frames, for most flags.
     int frames;
-    int unk_c;
+    int maxTurns;
     DWORD flag;
-    int unk_14;
+    int concurrentFlag;
 };
 ASSERT_SIZE(BulletCommand, 0x18);
 
