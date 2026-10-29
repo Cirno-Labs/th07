@@ -1571,6 +1571,11 @@ void CopyBossMoveStart(Enemy *enemy, EnemyScriptInstr *instr);
 // Each flying bullet with a sprite of color 6, 15 or 2 (argument 1 = 0,
 // 1 or 2) fires three fans back the way it came and is removed.
 void FireBackwardFans(Enemy *enemy, EnemyScriptInstr *instr);
+// Whether `point`, turned about `origin` by the angle with sine
+// `sinAngle` and cosine `cosAngle`, lies in the `size` box centred on
+// `center` (x and y only).
+int PointInRotatedBox(D3DXVECTOR3 *point, D3DXVECTOR3 *center, D3DXVECTOR3 *size, D3DXVECTOR3 *origin,
+               float sinAngle, float cosAngle);
 
 // Set to 9 as the dialogue of stages 6 to 8 starts.
 extern int g_Unknown9a9ab8;

@@ -1029,6 +1029,26 @@ void FireBackwardFans(Enemy *enemy, EnemyScriptInstr *instr)
     }
 }
 
+int PointInRotatedBox(D3DXVECTOR3 *point, D3DXVECTOR3 *center, D3DXVECTOR3 *size, D3DXVECTOR3 *origin,
+               float sinAngle, float cosAngle)
+{
+    D3DXVECTOR3 low;
+    D3DXVECTOR3 hi;
+    D3DXVECTOR3 rotated;
+
+    low = *point - *origin;
+    hi.x = low.x * cosAngle + low.y * sinAngle;
+    hi.y = low.y * cosAngle - low.x * sinAngle;
+    rotated = hi + *origin;
+    low = *center - *size / 2.0f;
+    hi = *size / 2.0f + *center;
+    if (rotated.x > hi.x || rotated.x < low.x || rotated.y > hi.y || rotated.y < low.y)
+    {
+        return 0;
+    }
+    return 1;
+}
+
 // As in bullet.cpp: defined after its callers, so they call the copy.
 inline void Bullet::FreeBullet()
 {

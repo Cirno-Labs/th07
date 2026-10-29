@@ -100,7 +100,7 @@ address,size,name,symbol
 0x00418120,311,ReplaceTallBulletWithEffect,?ReplaceTallBulletWithEffect@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x00418260,106,CopyBossMoveStart,?CopyBossMoveStart@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x004182d0,766,FireBackwardFans,?FireBackwardFans@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
-0x004185d0,679,Func4185d0,
+0x004185d0,679,PointInRotatedBox,?PointInRotatedBox@@YIHPAUD3DXVECTOR3@@000MM@Z
 0x00418880,703,Func418880,
 0x00418b40,820,Func418b40,
 0x00418e80,42,Func418e80,
