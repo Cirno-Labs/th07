@@ -1531,6 +1531,9 @@ public:
     // it to unk_50f8 and unk_5138.
     Unknown1347b00();
 
+    // Releases the background ANMs (slots 5 to 9) and frees the sprites
+    // and the data. Returns 0.
+    static int DeletedCallback(Unknown1347b00 *stage);
     // Sets the color at +0x52ac to `color`, or to the average of the two
     // while its alpha byte is set.
     void SetTintColor(D3DCOLOR color);

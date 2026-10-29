@@ -108,3 +108,23 @@ void Unknown1347b00::SetTintColor(D3DCOLOR color)
         this->unk_52ac.a = (DWORD)(c.a + this->unk_52ac.a) >> 1;
     }
 }
+
+int Unknown1347b00::DeletedCallback(Unknown1347b00 *stage)
+{
+    g_SpriteEngine->ReleaseAnm(5);
+    g_SpriteEngine->ReleaseAnm(6);
+    g_SpriteEngine->ReleaseAnm(7);
+    g_SpriteEngine->ReleaseAnm(8);
+    g_SpriteEngine->ReleaseAnm(9);
+    if (stage->sprites != NULL)
+    {
+        MemFree(stage->sprites);
+        stage->sprites = NULL;
+    }
+    if (stage->data != NULL)
+    {
+        MemFree(stage->data);
+        stage->data = NULL;
+    }
+    return 0;
+}
