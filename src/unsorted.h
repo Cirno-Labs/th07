@@ -1374,6 +1374,11 @@ public:
     // Shows `value` in spellBonusPopup, at (224, 16), and sets
     // g_App.redrawFrames to 2.
     void ShowSpellCardBonus(int value);
+    // Sets bossTimer, as th06's.
+    void SetBossTimer(int seconds)
+    {
+        this->bossTimer = seconds;
+    }
 
     // Counts OnUpdate's frames.
     int unk_0;
@@ -1391,7 +1396,10 @@ public:
     // The boss bar's alpha, raised by 4 a frame up to 0xff while a boss
     // fight runs.
     DWORD bossBarAlpha;
-    unsigned char unk_18[0xc];
+    unsigned char unk_18[0x4];
+    // The seconds left on the boss's timer.
+    int bossTimer;
+    unsigned char unk_20[0x4];
     // Set while a boss fight runs.
     BYTE bossPresent;
     unsigned char unk_25[0x3];

@@ -174,7 +174,7 @@ address,size,name,symbol
 0x0041f670,115,ReleaseEnemyEffects,?ReleaseEnemyEffects@@YIXPAUEnemy@@@Z
 0x0041f6f0,1599,Func41f6f0,
 0x0041fd70,516,Enemy::CheckLifeCallback,?CheckLifeCallback@Enemy@@QAEHXZ
-0x0041ff80,847,Func41ff80,
+0x0041ff80,847,Enemy::CheckTimerCallback,?CheckTimerCallback@Enemy@@QAEHXZ
 0x004202d0,210,Func4202d0,
 0x004203b0,213,Func4203b0,
 0x00420490,386,Func420490,

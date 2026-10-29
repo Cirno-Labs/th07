@@ -2,6 +2,7 @@
 
 #include <string.h>
 
+#include "bullet.h"
 #include "enemy.h"
 #include "unsorted.h"
 
@@ -254,4 +255,89 @@ int Enemy::CheckLifeCallback()
         }
     }
     return 0;
+}
+
+int Enemy::CheckTimerCallback()
+{
+    Enemy *enemy;
+    int i;
+    int j;
+    int idx;
+    int best;
+    int lost;
+
+    if (this->flags.isBoss && this->bossIndex == 0)
+    {
+        g_Unknown49fbf0.SetBossTimer((this->timerCallbackTime - this->callbackTimer.AsFrames()) / 60);
+    }
+    if (this->callbackTimer >= this->timerCallbackTime)
+    {
+        best = 0;
+        for (i = 0; i < 4; i++)
+        {
+            if (this->lifeCallbackLife[i] < 0)
+            {
+                continue;
+            }
+            if (best < this->lifeCallbackLife[i])
+            {
+                best = this->lifeCallbackLife[i];
+                idx = i;
+            }
+        }
+        if (best > 0)
+        {
+            this->life = this->lifeCallbackLife[idx];
+            this->lifeCallbackLife[idx] = -1;
+        }
+        g_Unknown1347938.StartSub(&this->ctx, this->timerCallbackSub);
+        this->timerCallbackTime = -1;
+        this->timerCallbackSub = this->deathSub;
+        this->callbackTimer.Set(0);
+        if (!this->flags.keepSpellCard)
+        {
+            g_Unknown12fe0cc = 0;
+            g_Unknown12fe0c4 = 0;
+            if (g_Unknown12fe0c8 != 0)
+            {
+                g_Unknown12fe0c8++;
+            }
+            g_BulletManager.ClearAll(10);
+            lost = (g_Unknown626270.unk_961c - g_Unknown626270.stats->unk_88) * 0.25f;
+            lost -= lost % 10;
+            g_Unknown626270.unk_961c -= lost;
+        }
+        for (enemy = g_Unknown9a9b00.enemies, j = 0; j < 0x1e0; j++, enemy++)
+        {
+            if (!enemy->flags.active)
+            {
+                continue;
+            }
+            if (enemy->flags.isBoss)
+            {
+                continue;
+            }
+            enemy->life = 0;
+            if (!enemy->flags.shootable && enemy->deathSub >= 0)
+            {
+                g_Unknown1347938.StartSub(&enemy->ctx, enemy->deathSub);
+                enemy->deathSub = -1;
+            }
+        }
+        this->unk_2ee4 = -1;
+        this->shooter = g_Unknown9a9b00.enemyTemplate.shooter;
+        this->shootInterval = 0;
+        this->rankSpeedLow = -0.5f;
+        this->rankSpeedHigh = 0.5f;
+        this->rankCount1Low = 0;
+        this->rankCount1High = 0;
+        this->rankCount2Low = 0;
+        this->rankCount2High = 0;
+        this->stackDepth = 0;
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
 }
