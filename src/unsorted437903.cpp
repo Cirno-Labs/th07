@@ -337,30 +337,6 @@ int App::OnDraw(App *arg)
     return 1;
 }
 
-int App::RegisterChain()
-{
-    App *game = &g_App;
-    ChainElem *elem;
-    int ret;
-
-    game->curScene = 0;
-    game->scene = -1;
-    game->frames = 0;
-    elem = g_Chain.CreateElem((ChainCallback)App::OnUpdate);
-    elem->arg = game;
-    elem->addedCallback = (ChainCallback)App::AddedCallback;
-    elem->deletedCallback = (ChainCallback)App::DeletedCallback;
-    ret = g_Chain.AddToCalcChain(elem, 0);
-    if (ret != 0)
-    {
-        return ret;
-    }
-    elem = g_Chain.CreateElem((ChainCallback)App::OnDraw);
-    elem->arg = game;
-    g_Chain.AddToDrawChain(elem, 0xf);
-    return 0;
-}
-
 BOOL CALLBACK EnumJoysticksCallback(const DIDEVICEINSTANCE *pdidInstance, VOID *pContext)
 {
     HRESULT hr;
@@ -757,6 +733,30 @@ int App::DeletedCallback(App *arg)
         delete g_App.timer;
         g_App.timer = NULL;
     }
+    return 0;
+}
+
+int App::RegisterChain()
+{
+    App *game = &g_App;
+    ChainElem *elem;
+    int ret;
+
+    game->curScene = 0;
+    game->scene = -1;
+    game->frames = 0;
+    elem = g_Chain.CreateElem((ChainCallback)App::OnUpdate);
+    elem->arg = game;
+    elem->addedCallback = (ChainCallback)App::AddedCallback;
+    elem->deletedCallback = (ChainCallback)App::DeletedCallback;
+    ret = g_Chain.AddToCalcChain(elem, 0);
+    if (ret != 0)
+    {
+        return ret;
+    }
+    elem = g_Chain.CreateElem((ChainCallback)App::OnDraw);
+    elem->arg = game;
+    g_Chain.AddToDrawChain(elem, 0xf);
     return 0;
 }
 
