@@ -919,7 +919,11 @@ ASSERT_SIZE(Unknown626270Stats, 0xc8);
 // What Unknown626270::unk_4 points at.
 struct Unknown626270Unk4
 {
-    unsigned char unk_0[0x25];
+    unsigned char unk_0[0x1c];
+    // The lives a game starts with, as App's lifeCount (+0x1c of the
+    // config).
+    BYTE lifeCount;
+    unsigned char unk_1d[0x8];
     // App::IsScoreDisabled tests it.
     BYTE unk_25;
     unsigned char unk_26[0x12];
@@ -1209,8 +1213,14 @@ struct GuiImpl
     // Runs the dialogue for a frame, as th06's.
     int RunMsg();
 
+    // Draws the dialogue, as th06's.
+    int DrawMsg();
+
     GuiMsg msg;
-    unsigned char unk_209b4[0x8];
+    // Set once the stage is cleared: OnDraw then shows the bonus,
+    // stageClearTotal (in tens).
+    int stageClearShown;
+    int stageClearTotal;
     // When set, OnUpdate clears it and sets g_App.scene to 3.
     int unk_209bc;
     // The bonus for bullets cleared (th06's bonusPopup), a popup that
@@ -1218,7 +1228,11 @@ struct GuiImpl
     GuiPopup bonusPopup;
     GuiPopup unk_209e0;
     GuiPopup spellBonusPopup;
-    unsigned char unk_20a20[0x10];
+    unsigned char unk_20a20[0x4];
+    // The stage clear bonus's point items, cherry and grazes.
+    int stageClearPoints;
+    int stageClearCherry;
+    int stageClearGraze;
 };
 ASSERT_SIZE(GuiImpl, 0x20a30);
 
@@ -1233,6 +1247,13 @@ public:
     // slot 0 on frame 300 of stage 6, and holds g_App.redrawFrames at 8
     // or more while button 0x100 is held. Returns 1.
     static int OnUpdate(Unknown49fbf0 *gui);
+    // The draw element's callback: stops the screen shake, then draws the
+    // stage clear bonus once impl->stageClearShown is set, the dialogue,
+    // DrawBanners, DrawHud and the popups. Returns 1.
+    static int OnDraw(Unknown49fbf0 *gui);
+    // As th06's DrawBanners and DrawHud.
+    void DrawBanners();
+    void DrawHud();
     // The update, as th06's UpdateInterface.
     void UpdateInterface();
     // Sets bombName's pendingInterrupt to 1 and bombNameBar's to 2, as
