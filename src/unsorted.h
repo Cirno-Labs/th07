@@ -1579,6 +1579,11 @@ void UpdateLaserEdgeBullets(Enemy *enemy, EnemyScriptInstr *instr);
 // Shakes the screen for 0x50 frames and starts the type 30 effects
 // falling (StartPetalsFalling).
 void ShakeAndStartFallingPetals(Enemy *enemy, EnemyScriptInstr *instr);
+// Slows the game to 1 / argument 1 (App::unk_178), sends interrupt 2 to
+// the stage's first two unk_528 sprites, and scales the velocity of
+// every bullet by it, keeping each sprite in baseSpriteIndex and
+// showing sprites 0x260 to 0x26f as 0x26f.
+void StartSlowdown(Enemy *enemy, EnemyScriptInstr *instr);
 // Whether `point`, turned about `origin` by the angle with sine
 // `sinAngle` and cosine `cosAngle`, lies in the `size` box centred on
 // `center` (x and y only).

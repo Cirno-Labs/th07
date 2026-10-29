@@ -1124,6 +1124,30 @@ void ShakeAndStartFallingPetals(Enemy *enemy, EnemyScriptInstr *instr)
     StartPetalsFalling();
 }
 
+void StartSlowdown(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    Bullet *bullet;
+    int i;
+
+    g_App.unk_178 = 1.0f / instr->args[1].i;
+    g_Unknown1347b00.unk_528[0].pendingInterrupt = 2;
+    g_Unknown1347b00.unk_528[1].pendingInterrupt = 2;
+    bullet = g_BulletManager.bullets;
+    for (i = 0; i < 0x400; i++, bullet++)
+    {
+        if (bullet->state == 0)
+        {
+            continue;
+        }
+        bullet->velocity *= g_App.unk_178;
+        bullet->sprites.sprite0.baseSpriteIndex = bullet->sprites.sprite0.spriteIndex;
+        if (bullet->sprites.sprite0.spriteIndex >= 0x260 && bullet->sprites.sprite0.spriteIndex <= 0x26f)
+        {
+            g_SpriteEngine->SetSprite(&bullet->sprites.sprite0, 0x26f);
+        }
+    }
+}
+
 // As in bullet.cpp: defined after its callers, so they call the copy.
 inline void Bullet::FreeBullet()
 {
