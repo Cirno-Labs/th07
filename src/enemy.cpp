@@ -125,3 +125,40 @@ void Unknown9a9b00::Initialize()
     enemy->shooter.sound = 7;
     enemy->shooter.unk_cc = 0x19;
 }
+
+Enemy *Unknown9a9b00::Spawn(short sub, D3DXVECTOR3 *pos, int life, char item, int score, BYTE mirrored)
+{
+    Enemy *enemy;
+    int i;
+
+    enemy = this->enemies;
+    for (i = 0; i < 0x1e0; i++, enemy++)
+    {
+        if (enemy->flags.active)
+        {
+            continue;
+        }
+        *enemy = this->enemyTemplate;
+        enemy->flags.mirrored = mirrored;
+        if (life >= 0)
+        {
+            enemy->life = life;
+        }
+        enemy->pos = *pos;
+        g_Unknown1347938.StartSub(&enemy->ctx, sub);
+        if (g_Unknown1347938.RunEnemy(enemy) == -1)
+        {
+            enemy->flags.active = 0;
+            break;
+        }
+        enemy->color = enemy->sprite.color;
+        enemy->item = item;
+        if (score >= 0)
+        {
+            enemy->score = score;
+        }
+        enemy->maxLife = enemy->life;
+        break;
+    }
+    return enemy;
+}

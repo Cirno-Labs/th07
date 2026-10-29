@@ -1420,11 +1420,20 @@ extern int g_Unknown12fe0cc;
 extern int g_Unknown12fe0c8;
 extern int g_Unknown12fe0dc;
 
+struct Enemy;
+struct EnemyScriptState;
+
 // The object at 0x1347938, where th06 has its EnemyScripts.
 // Placeholder name; only what is known so far.
 class Unknown1347938
 {
 public:
+    // Starts subroutine `sub` in `ctx`, from its first instruction with
+    // both timers at 0, as th06's StartSub. Returns 0.
+    int StartSub(EnemyScriptState *ctx, short sub);
+    // Runs `enemy`'s script for a frame, as th06's RunEnemy: -1 once
+    // it ends.
+    int RunEnemy(Enemy *enemy);
     // Called where th06 calls EnemyScripts::Release.
     void Func40e4f0();
 };

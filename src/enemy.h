@@ -180,6 +180,12 @@ class Unknown9a9b00
 public:
     // Zeroes everything and sets the template up, as th06's Initialize.
     void Initialize();
+    // Spawns an enemy from the template at `pos`, starting script
+    // subroutine `sub` and running its first frame, as th06's Spawn.
+    // `life` and `score` replace the script's when not negative. Frees
+    // the enemy again if its script ends at once. Returns the enemy,
+    // or the one past the last if all are in use.
+    Enemy *Spawn(short sub, D3DXVECTOR3 *pos, int life, char item, int score, BYTE mirrored);
     // GuiImpl::StartMsgScript calls it with (0, 0) as a dialogue starts.
     void Func423090(int unk0, int unk1);
     // Whether one of the eight pointers at +0x954598 is set.
