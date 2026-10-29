@@ -80,7 +80,8 @@ struct Bullet
     Timer timer;
     Timer unk_bd4;
     unsigned char unk_be0[0x10];
-    float unk_bf0;
+    // Set by a command with flag 0x2000.
+    int unk_bf0;
     // The behaviors running, by BulletCommand::flag.
     WORD activeFlags;
     // BulletShooter::flags.
@@ -255,6 +256,13 @@ extern int g_BulletColorOffsets32[16];
 // sprite, unless `dst` shows it already: th06's SET_BULLET_SPRITE macro
 // for the spawning sprites, out of line and without its 0x207 case.
 void ShowSpawnSprite(Sprite *dst, Sprite *src, Bullet *bullet, int color);
+
+// Starts the bullet's commands from commandIndex on: skips those whose
+// flag the bullet lacks, and stops at an empty one, at one whose unk_14
+// is 0 while a behavior is still running, or after starting one
+// behavior in its BulletEx (flag 0x2000 only sets unk_bf0 and goes on).
+// Behaviors started after the first play the bullet's sound.
+void RunBulletCommands(Bullet *bullet);
 
 // The bullet behaviors BulletManager::OnUpdate runs by activeFlags, th06's
 // sections of its OnUpdate as functions, each on its own BulletEx.

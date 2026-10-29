@@ -589,3 +589,92 @@ void BounceOffWalls(Bullet *bullet)
         }
     }
 }
+
+void RunBulletCommands(Bullet *bullet)
+{
+    BulletCommand *cmd;
+
+    for (;;)
+    {
+        if (bullet->commandIndex >= 5)
+        {
+            return;
+        }
+        cmd = &bullet->commands[bullet->commandIndex];
+        if (cmd->flag == 0)
+        {
+            return;
+        }
+        if (cmd->unk_14 == 0 && bullet->activeFlags != 0)
+        {
+            return;
+        }
+        if ((bullet->flags & cmd->flag) == 0)
+        {
+            bullet->commandIndex++;
+            continue;
+        }
+        switch (cmd->flag)
+        {
+        case 1:
+            bullet->activeFlags |= 1;
+            bullet->ex[0].timer.Set(0);
+            bullet->ex[0].accel.z = 0.0f;
+            break;
+        case 0x10:
+            bullet->activeFlags |= 0x10;
+            bullet->ex[1].unk_c = cmd->unk_0;
+            bullet->ex[1].unk_10 = cmd->unk_4 > -990.0f ? cmd->unk_4 : bullet->angle;
+            bullet->ex[1].timer.Set(0);
+            bullet->ex[1].duration = cmd->unk_8;
+            ((Unknown4325c0 *)&bullet->ex[1].accel)->SetPolar(bullet->ex[1].unk_10, g_App.unk_178 * bullet->ex[1].unk_c);
+            if (bullet->commandIndex != 0 && bullet->sound >= 0)
+            {
+                g_SoundPlayer.QueueSound(bullet->sound, 0);
+            }
+            break;
+        case 0x20:
+            bullet->activeFlags |= 0x20;
+            bullet->ex[2].unk_c = cmd->unk_0;
+            bullet->ex[2].unk_10 = cmd->unk_4;
+            bullet->ex[2].timer.Set(0);
+            bullet->ex[2].duration = cmd->unk_8;
+            if (bullet->commandIndex != 0 && bullet->sound >= 0)
+            {
+                g_SoundPlayer.QueueSound(bullet->sound, 0);
+            }
+            break;
+        case 0x40:
+        case 0x80:
+        case 0x100:
+            bullet->activeFlags |= cmd->flag;
+            bullet->ex[3].unk_10 = cmd->unk_0;
+            bullet->ex[3].unk_c = cmd->unk_4 > -999.0f ? cmd->unk_4 : bullet->speed;
+            bullet->ex[3].timer.Set(0);
+            bullet->ex[3].duration = cmd->unk_8;
+            bullet->ex[3].unk_24 = cmd->unk_c;
+            bullet->ex[3].unk_28 = 0;
+            break;
+        case 0x400:
+        case 0x800:
+            bullet->activeFlags |= cmd->flag;
+            if (cmd->unk_0 >= 0.0f)
+            {
+                bullet->ex[4].unk_c = cmd->unk_0;
+            }
+            else
+            {
+                bullet->ex[4].unk_c = bullet->speed;
+            }
+            bullet->ex[4].unk_24 = cmd->unk_8;
+            bullet->ex[4].duration = 0;
+            break;
+        case 0x2000:
+            bullet->unk_bf0 = cmd->unk_8;
+            bullet->commandIndex++;
+            continue;
+        }
+        bullet->commandIndex++;
+        return;
+    }
+}

@@ -196,7 +196,7 @@ address,size,name,symbol
 0x004235d0,134,Laser::Laser,??0Laser@@QAE@XZ
 0x00423660,204,ShowSpawnSprite,?ShowSpawnSprite@@YIXPAVSprite@@0PAUBullet@@H@Z
 0x00423730,2875,BulletManager::SpawnBullet,?SpawnBullet@BulletManager@@QAEHPAUBulletShooter@@HHM@Z
-0x00424290,1113,Func424290,
+0x00424290,1113,RunBulletCommands,?RunBulletCommands@@YIXPAUBullet@@@Z
 0x00424740,600,BulletManager::ClearAll,?ClearAll@BulletManager@@QAEXH@Z
 0x004249a0,600,BulletManager::ClearAllWithBonus,?ClearAllWithBonus@BulletManager@@QAEHHH@Z
 0x00424c00,275,BulletManager::ConvertBulletsToItems,?ConvertBulletsToItems@BulletManager@@QAEXPAUD3DXVECTOR3@@M@Z
