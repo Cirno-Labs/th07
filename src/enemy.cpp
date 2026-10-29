@@ -136,7 +136,7 @@ EnemyManager::EnemyManager()
     this->Initialize();
 }
 
-Enemy *EnemyManager::Spawn(short sub, D3DXVECTOR3 *pos, int life, char item, int score, BYTE mirrored)
+Enemy *EnemyManager::Spawn(int sub, D3DXVECTOR3 *pos, int life, int item, int score, BYTE mirrored)
 {
     Enemy *enemy;
     int i;
@@ -162,7 +162,7 @@ Enemy *EnemyManager::Spawn(short sub, D3DXVECTOR3 *pos, int life, char item, int
             break;
         }
         enemy->color = enemy->sprite.color;
-        enemy->item = item;
+        enemy->item = (char)item;
         if (score >= 0)
         {
             enemy->score = score;
@@ -213,6 +213,167 @@ Enemy *EnemyManager::SpawnWithVars(short sub, D3DXVECTOR3 *pos, int life, char i
         break;
     }
     return enemy;
+}
+
+void EnemyTimeline::RunTimeline()
+{
+    Enemy *enemy;
+
+    while (this->pos->time >= 0)
+    {
+        if (this->timer == this->pos->time)
+        {
+            switch (this->pos->opcode)
+            {
+            case 0:
+                if (!g_Unknown49fbf0.IsBossPresent())
+                {
+                    EnemyTimelineArgs *args = &this->pos->args;
+                    g_Unknown9a9b00.Spawn(this->pos->arg0, &args->pos, args->life, args->item, args->score, 0);
+                }
+                break;
+            case 1:
+                if (!g_Unknown49fbf0.IsBossPresent())
+                {
+                    g_Unknown9a9b00.Spawn(this->pos->arg0, &this->pos->args.pos, -1, -1, -1, 0);
+                }
+                break;
+            case 2:
+                if (!g_Unknown49fbf0.IsBossPresent())
+                {
+                    EnemyTimelineArgs *args = &this->pos->args;
+                    enemy = g_Unknown9a9b00.Spawn(this->pos->arg0, &args->pos, args->life, args->item, args->score, 1);
+                }
+                break;
+            case 3:
+                if (!g_Unknown49fbf0.IsBossPresent())
+                {
+                    enemy = g_Unknown9a9b00.Spawn(this->pos->arg0, &this->pos->args.pos, -1, -1, -1, 1);
+                }
+                break;
+            case 4:
+                if (!g_Unknown49fbf0.IsBossPresent())
+                {
+                    EnemyTimelineArgs *args = &this->pos->args;
+                    D3DXVECTOR3 pos;
+
+                    pos = args->pos;
+                    if (args->pos.x <= -990.0f)
+                    {
+                        pos.x = g_Rng.GetRandomF32InRange(g_Unknown626270.unk_9604[2]);
+                    }
+                    if (args->pos.y <= -990.0f)
+                    {
+                        pos.y = g_Rng.GetRandomF32InRange(g_Unknown626270.unk_9604[3]);
+                    }
+                    if (args->pos.z <= -990.0f)
+                    {
+                        pos.z = g_Rng.GetRandomF32InRange(800.0f);
+                    }
+                    g_Unknown9a9b00.Spawn(this->pos->arg0, &pos, args->life, args->item, args->score, 0);
+                }
+                break;
+            case 5:
+                if (!g_Unknown49fbf0.IsBossPresent())
+                {
+                    D3DXVECTOR3 pos;
+
+                    pos = this->pos->args.pos;
+                    if (pos.x <= -990.0f)
+                    {
+                        pos.x = g_Rng.GetRandomF32InRange(g_Unknown626270.unk_9604[2]);
+                    }
+                    if (pos.y <= -990.0f)
+                    {
+                        pos.y = g_Rng.GetRandomF32InRange(g_Unknown626270.unk_9604[3]);
+                    }
+                    if (pos.z <= -990.0f)
+                    {
+                        pos.z = g_Rng.GetRandomF32InRange(800.0f);
+                    }
+                    g_Unknown9a9b00.Spawn(this->pos->arg0, &pos, -1, -1, -1, 0);
+                }
+                break;
+            case 6:
+                if (!g_Unknown49fbf0.IsBossPresent())
+                {
+                    EnemyTimelineArgs *args = &this->pos->args;
+                    D3DXVECTOR3 pos;
+
+                    pos = args->pos;
+                    if (args->pos.x <= -990.0f)
+                    {
+                        pos.x = g_Rng.GetRandomF32InRange(g_Unknown626270.unk_9604[2]);
+                    }
+                    if (args->pos.y <= -990.0f)
+                    {
+                        pos.y = g_Rng.GetRandomF32InRange(g_Unknown626270.unk_9604[3]);
+                    }
+                    if (args->pos.z <= -990.0f)
+                    {
+                        pos.z = g_Rng.GetRandomF32InRange(800.0f);
+                    }
+                    enemy = g_Unknown9a9b00.Spawn(this->pos->arg0, &pos, args->life, args->item, args->score, 0);
+                    enemy->flags.mirrored = 1;
+                }
+                break;
+            case 7:
+                if (!g_Unknown49fbf0.IsBossPresent())
+                {
+                    D3DXVECTOR3 pos;
+
+                    pos = this->pos->args.pos;
+                    if (pos.x <= -990.0f)
+                    {
+                        pos.x = g_Rng.GetRandomF32InRange(g_Unknown626270.unk_9604[2]);
+                    }
+                    if (pos.y <= -990.0f)
+                    {
+                        pos.y = g_Rng.GetRandomF32InRange(g_Unknown626270.unk_9604[3]);
+                    }
+                    if (pos.z <= -990.0f)
+                    {
+                        pos.z = g_Rng.GetRandomF32InRange(800.0f);
+                    }
+                    enemy = g_Unknown9a9b00.Spawn(this->pos->arg0, &pos, -1, -1, -1, 0);
+                    enemy->flags.mirrored = 1;
+                }
+                break;
+            case 8:
+                g_Unknown49fbf0.StartMsg(this->pos->arg0 + g_Unknown626270.character * 10);
+                break;
+            case 9:
+                if (g_Unknown49fbf0.MsgHoldsTimeline())
+                {
+                    this->timer.Sub(1);
+                    goto tick;
+                }
+                break;
+            case 10:
+                g_Unknown9a9b00.bosses[((int *)&this->pos->args)[0]]->pendingInterrupt = ((int *)&this->pos->args)[1];
+                break;
+            case 11:
+                g_Unknown626270.SetPower(this->pos->arg0);
+                g_Unknown626270.RerollChecksumKeys();
+                break;
+            case 12:
+                if (g_Unknown9a9b00.bosses[this->pos->arg0] != NULL &&
+                    g_Unknown9a9b00.bosses[this->pos->arg0]->flags.active)
+                {
+                    this->timer.Sub(1);
+                    goto tick;
+                }
+                break;
+            }
+        }
+        else if (this->timer < this->pos->time)
+        {
+            break;
+        }
+        this->pos = (EnemyTimelineEntry *)((char *)this->pos + this->pos->size);
+    }
+tick:
+    this->timer.Tick();
 }
 
 int Enemy::CheckLifeCallback()

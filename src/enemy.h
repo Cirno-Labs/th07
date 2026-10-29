@@ -255,11 +255,41 @@ void ReleaseEnemyEffects(Enemy *enemy);
 // of their direct and wrapped-around (2 pi) distances. Not in th06.
 float LerpAngle(float a, float b, float t);
 
-// One of EnemyManager's sixteen unk_9545f4.
-struct Unknown9a9b00Timer
+// The arguments of an enemy timeline entry, as th06's.
+struct EnemyTimelineArgs
 {
+    D3DXVECTOR3 pos;
+    int life;
+    int item;
+    int score;
+};
+
+// One entry of an enemy timeline, ended by a negative time, as th06's.
+struct EnemyTimelineEntry
+{
+    // The frame it runs on.
+    short time;
+    short arg0;
+    short opcode;
+    // The size of the entry, arguments included.
+    short size;
+    EnemyTimelineArgs args;
+};
+
+// One of EnemyManager's sixteen unk_9545f4: th06's timelinePos and
+// timelineTime, one per timeline.
+struct EnemyTimeline
+{
+    // Runs the entries due this frame, then ticks the timer, as th06's
+    // EnemyManager::RunTimeline. Spawning entries only spawn while no
+    // boss fight runs. Opcode 9 waits while the dialogue holds the
+    // timeline and 12 while boss arg0 is active. Without th06's rank
+    // and progress counting.
+    void RunTimeline();
+
     Timer timer;
-    int unk_c;
+    // The next entry.
+    EnemyTimelineEntry *pos;
 };
 
 // The enemies, at 0x9a9b00, th06's EnemyManager. Placeholder name; only
@@ -277,7 +307,7 @@ public:
     // `life` and `score` replace the script's when not negative. Frees
     // the enemy again if its script ends at once. Returns the enemy,
     // or the one past the last if all are in use.
-    Enemy *Spawn(short sub, D3DXVECTOR3 *pos, int life, char item, int score, BYTE mirrored);
+    Enemy *Spawn(int sub, D3DXVECTOR3 *pos, int life, int item, int score, BYTE mirrored);
     // Spawn without the mirroring, with the script's variables from
     // `vars` once the subroutine starts.
     Enemy *SpawnWithVars(short sub, D3DXVECTOR3 *pos, int life, char item, int score,
@@ -334,7 +364,7 @@ public:
     unsigned char unk_9545cc[0x14];
     Timer unk_9545e0;
     unsigned char unk_9545ec[0x8];
-    Unknown9a9b00Timer unk_9545f4[16];
+    EnemyTimeline unk_9545f4[16];
     Timer unk_9546f4;
     unsigned char unk_954700[0x10];
 };

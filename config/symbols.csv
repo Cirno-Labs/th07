@@ -168,11 +168,11 @@ address,size,name,symbol
 0x0041ee70,256,EnemyManager::EnemyManager,??0EnemyManager@@QAE@XZ
 0x0041ef70,684,Enemy::Enemy,??0Enemy@@QAE@XZ
 0x0041f220,185,EnemyScriptState::EnemyScriptState,??0EnemyScriptState@@QAE@XZ
-0x0041f2e0,327,EnemyManager::Spawn,?Spawn@EnemyManager@@QAEPAUEnemy@@FPAUD3DXVECTOR3@@HDHE@Z
+0x0041f2e0,327,EnemyManager::Spawn,?Spawn@EnemyManager@@QAEPAUEnemy@@HPAUD3DXVECTOR3@@HHHE@Z
 0x0041f430,332,EnemyManager::SpawnWithVars,?SpawnWithVars@EnemyManager@@QAEPAUEnemy@@FPAUD3DXVECTOR3@@HDHPAUEnemyScriptVars@@@Z
 0x0041f580,240,MoveEnemyEffects,?MoveEnemyEffects@@YIXPAUEnemy@@@Z
 0x0041f670,115,ReleaseEnemyEffects,?ReleaseEnemyEffects@@YIXPAUEnemy@@@Z
-0x0041f6f0,1599,Func41f6f0,
+0x0041f6f0,1599,EnemyTimeline::RunTimeline,?RunTimeline@EnemyTimeline@@QAEXXZ
 0x0041fd70,516,Enemy::CheckLifeCallback,?CheckLifeCallback@Enemy@@QAEHXZ
 0x0041ff80,847,Enemy::CheckTimerCallback,?CheckTimerCallback@Enemy@@QAEHXZ
 0x004202d0,210,Enemy::Despawn,?Despawn@Enemy@@QAEXXZ

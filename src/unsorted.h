@@ -1382,6 +1382,11 @@ public:
     // Whether impl is set, a dialogue script runs and
     // impl->msg.timelineRelease is 0.
     BOOL MsgHoldsTimeline();
+    // Whether a boss fight runs, as th06's.
+    BYTE IsBossPresent()
+    {
+        return this->bossPresent;
+    }
     // As th06's DrawBanners and DrawHud.
     void DrawBanners();
     void DrawHud();
