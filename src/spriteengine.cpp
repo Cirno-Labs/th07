@@ -997,6 +997,27 @@ int SpriteEngine::ProjectSprite(Sprite *vm)
     return 0;
 }
 
+int SpriteEngine::DrawProjected(Sprite *vm)
+{
+    if ((vm->flags & 1) == 0)
+    {
+        return -1;
+    }
+    if ((vm->flags >> 1 & 1) == 0)
+    {
+        return -1;
+    }
+    if (vm->alpha == 0)
+    {
+        return -1;
+    }
+    if (this->ProjectSprite(vm) != 0)
+    {
+        return -1;
+    }
+    return this->DrawQuad(vm, 0);
+}
+
 void SpriteEngine::RenderTextToTextureIndex(int textureIndex, int x, int y, int width, int unk4, int fontHeight,
                                             int unk6, D3DCOLOR textColor, D3DCOLOR shadowColor, char *text,
                                             float scaleX, float scaleY)

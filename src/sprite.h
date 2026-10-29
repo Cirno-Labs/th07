@@ -284,6 +284,9 @@ public:
     // screen. Returns 0, or -1 when it is outside the depth range. Not in
     // th06.
     int ProjectSprite(Sprite *vm);
+    // Draws `vm` at its 3D position projected to the screen with
+    // ProjectSprite. Not in th06.
+    int DrawProjected(Sprite *vm);
     // Copies surface `surface` to the back buffer at (`left`, `top`),
     // as in th06.
     void CopySurfaceToBackBuffer(int surface, int left, int top, int x, int y);

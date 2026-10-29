@@ -575,7 +575,7 @@ address,size,name,symbol
 0x0044f9a0,616,SpriteEngine::Draw,?Draw@SpriteEngine@@QAEHPAVSprite@@@Z
 0x0044fc10,487,SpriteEngine::DrawNoRound,?DrawNoRound@SpriteEngine@@QAEHPAVSprite@@@Z
 0x0044fe00,805,SpriteEngine::ProjectSprite,?ProjectSprite@SpriteEngine@@QAEHPAVSprite@@@Z
-0x00450130,111,Func450130,
+0x00450130,111,SpriteEngine::DrawProjected,?DrawProjected@SpriteEngine@@QAEHPAVSprite@@@Z
 0x004501a0,782,Func4501a0,
 0x004504b0,102,Func4504b0,
 0x00450520,1316,Func450520,
