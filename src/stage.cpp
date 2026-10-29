@@ -1029,6 +1029,6 @@ void Stage::SetupCamera()
     D3DXMatrixPerspectiveFovLH(&g_App.projectionMatrix, this->camera.fov, (float)g_App.viewport.Width / (float)g_App.viewport.Height, 30.0f, 1800.0f);
     g_App.d3dDevice->SetTransform(D3DTS_VIEW, &g_App.viewMatrix);
     g_App.d3dDevice->SetTransform(D3DTS_PROJECTION, &g_App.projectionMatrix);
-    D3DXVec3Cross(&this->camera.unk_30, &this->camera.at, &this->camera.up);
-    D3DXVec3Normalize(&this->camera.unk_30, &this->camera.unk_30);
+    D3DXVec3Cross(&this->camera.cameraRight, &this->camera.at, &this->camera.up);
+    D3DXVec3Normalize(&this->camera.cameraRight, &this->camera.cameraRight);
 }

@@ -1871,7 +1871,7 @@ struct StageCamera
     D3DXVECTOR3 up;
     // `at`, normalized.
     D3DXVECTOR3 dir;
-    D3DXVECTOR3 unk_30;
+    D3DXVECTOR3 cameraRight;
     float fov;
 };
 
