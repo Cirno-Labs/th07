@@ -9,6 +9,14 @@
 #include "player.h"
 #include "unsorted.h"
 
+void BulletManager::Reset()
+{
+    memset(this, 0, sizeof(BulletManager));
+    this->nextBullet = this->bullets;
+    this->bullets[0x400].state = 6;
+    this->clearItemType = 6;
+}
+
 BulletManager::BulletManager()
 {
     this->Reset();
@@ -16,25 +24,6 @@ BulletManager::BulletManager()
 
 BulletTypeSprites::BulletTypeSprites()
 {
-}
-
-void ShowSpawnSprite(Sprite *dst, Sprite *src, Bullet *bullet, int color)
-{
-    if (dst->spriteIndex != src->spriteIndex + color)
-    {
-        if (bullet->sprites.sprite0.spriteData->height <= 16.0f)
-        {
-            g_SpriteEngine->SetSprite(dst, src->spriteIndex + g_BulletColorOffsets16[color]);
-        }
-        else if (bullet->sprites.sprite0.spriteData->height <= 32.0f)
-        {
-            g_SpriteEngine->SetSprite(dst, src->spriteIndex + g_BulletColorOffsets32[color]);
-        }
-        else
-        {
-            g_SpriteEngine->SetSprite(dst, src->spriteIndex + color);
-        }
-    }
 }
 
 // Copies `src` over `dst` unless `dst` already runs the same script and
@@ -57,6 +46,25 @@ inline float BulletShooter::RandomSpeed()
 {
     float range = this->speed1 - this->speed2;
     return g_Rng.GetRandomF32ZeroToOne() * range + this->speed2;
+}
+
+void ShowSpawnSprite(Sprite *dst, Sprite *src, Bullet *bullet, int color)
+{
+    if (dst->spriteIndex != src->spriteIndex + color)
+    {
+        if (bullet->sprites.sprite0.spriteData->height <= 16.0f)
+        {
+            g_SpriteEngine->SetSprite(dst, src->spriteIndex + g_BulletColorOffsets16[color]);
+        }
+        else if (bullet->sprites.sprite0.spriteData->height <= 32.0f)
+        {
+            g_SpriteEngine->SetSprite(dst, src->spriteIndex + g_BulletColorOffsets32[color]);
+        }
+        else
+        {
+            g_SpriteEngine->SetSprite(dst, src->spriteIndex + color);
+        }
+    }
 }
 
 int BulletManager::SpawnBullet(BulletShooter *shooter, int col, int row, float aimAngle)
@@ -225,232 +233,93 @@ int BulletManager::SpawnBullet(BulletShooter *shooter, int col, int row, float a
     return 0;
 }
 
-void BulletManager::Reset()
+void RunBulletCommands(Bullet *bullet)
 {
-    memset(this, 0, sizeof(BulletManager));
-    this->nextBullet = this->bullets;
-    this->bullets[0x400].state = 6;
-    this->clearItemType = 6;
-}
+    BulletCommand *cmd;
 
-int BulletManager::DeletedCallback(BulletManager *mgr)
-{
-    if ((g_App.scene != 3 && g_App.scene != 0xb && g_App.scene != 0xc) != 0)
+    for (;;)
     {
-        g_SpriteEngine->ReleaseAnm(0xb);
-        g_SpriteEngine->ReleaseAnm(0xc);
-        g_SpriteEngine->ReleaseAnm(0xd);
-        g_SpriteEngine->ReleaseAnm(0xe);
-    }
-    return 0;
-}
-
-int BulletManager::RegisterChain(char *anmPath)
-{
-    BulletManager *mgr = &g_BulletManager;
-
-    g_EffectColors = g_EffectColorsFull;
-    mgr->Reset();
-    mgr->anmPath = anmPath;
-    g_BulletCalcChain.SetCallback((ChainCallback)BulletManager::OnUpdate);
-    g_BulletCalcChain.addedCallback = (ChainCallback)BulletManager::AddedCallback;
-    g_BulletCalcChain.deletedCallback = (ChainCallback)BulletManager::DeletedCallback;
-    g_BulletCalcChain.arg = mgr;
-    if (g_Chain.AddToCalcChain(&g_BulletCalcChain, 0xc) != 0)
-    {
-        return -1;
-    }
-    g_BulletDrawChain.SetCallback((ChainCallback)BulletManager::OnDraw);
-    g_BulletDrawChain.arg = mgr;
-    g_Chain.AddToDrawChain(&g_BulletDrawChain, 10);
-    return 0;
-}
-
-void BulletManager::RemoveChain()
-{
-    g_Chain.Remove(&g_BulletCalcChain);
-    g_Chain.Remove(&g_BulletDrawChain);
-    memset(&g_BulletManager, 0, sizeof(BulletManager));
-}
-
-void BulletManager::StopAllBullets()
-{
-    Bullet *bullet;
-    int i;
-
-    bullet = g_BulletManager.bullets;
-    for (i = 0; i < 0x400; i++, bullet++)
-    {
-        if (bullet->state == 0)
+        if (bullet->commandIndex >= 5)
         {
+            return;
+        }
+        cmd = &bullet->commands[bullet->commandIndex];
+        if (cmd->flag == 0)
+        {
+            return;
+        }
+        if (cmd->concurrentFlag == 0 && bullet->activeFlags != 0)
+        {
+            return;
+        }
+        if ((bullet->flags & cmd->flag) == 0)
+        {
+            bullet->commandIndex++;
             continue;
         }
-        bullet->velocity = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-        bullet->accel = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-        bullet->turnSpeed = 0.0f;
-        bullet->accelSpeed = 0.0f;
-        bullet->speed = 0.0f;
-        bullet->color = 0;
-        g_SpriteEngine->SetSprite(&bullet->sprites.sprite0, bullet->sprites.sprite0.baseSpriteIndex + bullet->color);
-    }
-}
-
-BulletCommand *Bullet::RestartCommand(int idx, int concurrentFlag, DWORD flag)
-{
-    BulletCommand *cmd = &this->commands[idx];
-
-    cmd->flag = flag;
-    cmd->concurrentFlag = concurrentFlag;
-    this->flags |= flag;
-    this->commandIndex = 0;
-    return cmd;
-}
-
-BulletCommand *BulletShooter::StartCommand(int idx, int concurrentFlag, DWORD flag)
-{
-    BulletCommand *cmd = &this->commands[idx];
-
-    cmd->flag = flag;
-    cmd->concurrentFlag = concurrentFlag;
-    this->flags |= flag;
-    return cmd;
-}
-
-void Bullet::SetTurnCommand(int idx, int concurrentFlag, int frames, float arg1, float arg0)
-{
-    BulletCommand *cmd = this->RestartCommand(idx, concurrentFlag, 0x20);
-
-    cmd->frames = frames;
-    cmd->arg0 = arg0;
-    cmd->arg1 = arg1;
-}
-
-void Bullet::SetAccelerateCommand(int idx, int concurrentFlag, int frames, float arg0, float arg1)
-{
-    BulletCommand *cmd = this->RestartCommand(idx, concurrentFlag, 0x10);
-
-    cmd->frames = frames;
-    cmd->arg0 = arg0;
-    cmd->arg1 = arg1;
-}
-
-void BulletShooter::SetShooterTurnCommand(int idx, int concurrentFlag, int frames, float arg1, float arg0)
-{
-    BulletCommand *cmd = this->StartCommand(idx, concurrentFlag, 0x20);
-
-    cmd->frames = frames;
-    cmd->arg0 = arg0;
-    cmd->arg1 = arg1;
-}
-
-void BulletShooter::SetStopTurnCommand(int idx, int concurrentFlag, int frames, int maxTurns, float arg0, float arg1)
-{
-    BulletCommand *cmd = this->StartCommand(idx, concurrentFlag, 0x80);
-
-    cmd->frames = frames;
-    cmd->maxTurns = maxTurns;
-    cmd->arg0 = arg0;
-    cmd->arg1 = arg1;
-}
-
-void BulletShooter::SetShooterAccelerateCommand(int idx, int concurrentFlag, int frames, float arg0, float arg1)
-{
-    BulletCommand *cmd = this->StartCommand(idx, concurrentFlag, 0x10);
-
-    cmd->frames = frames;
-    cmd->arg0 = arg0;
-    cmd->arg1 = arg1;
-}
-
-void BulletShooter::SetHiddenCommand(int idx, int concurrentFlag, int frames)
-{
-    BulletCommand *cmd = this->StartCommand(idx, concurrentFlag, 0x2000);
-
-    cmd->frames = frames;
-}
-
-int BulletManager::FirePattern(BulletShooter *shooter)
-{
-    int col;
-    float playerAngle;
-    int row;
-
-    if (g_BulletManager.bulletCount >= 0x400)
-    {
-        return 0;
-    }
-    shooter->typeSprites = &this->typeSprites[shooter->sprite];
-    playerAngle = g_Player.AngleFrom(&shooter->pos);
-    for (row = 0; row < shooter->count2; row++)
-    {
-        for (col = 0; col < shooter->count1; col++)
+        switch (cmd->flag)
         {
-            if (this->SpawnBullet(shooter, col, row, playerAngle))
+        case 1:
+            bullet->activeFlags |= 1;
+            bullet->ex[0].timer.Set(0);
+            bullet->ex[0].accel.z = 0.0f;
+            break;
+        case 0x10:
+            bullet->activeFlags |= 0x10;
+            bullet->ex[1].turnSpeed = cmd->arg0;
+            bullet->ex[1].turnAngle = cmd->arg1 > -990.0f ? cmd->arg1 : bullet->angle;
+            bullet->ex[1].timer.Set(0);
+            bullet->ex[1].duration = cmd->frames;
+            ((Vector2 *)&bullet->ex[1].accel)->SetPolar(bullet->ex[1].turnAngle, g_App.gameSpeed * bullet->ex[1].turnSpeed);
+            if (bullet->commandIndex != 0 && bullet->sound >= 0)
             {
-                goto done;
+                g_SoundPlayer.QueueSound(bullet->sound, 0);
             }
-        }
-    }
-done:
-    if (shooter->flags & 0x200)
-    {
-        g_SoundPlayer.QueueSound(shooter->sound, 0);
-    }
-    return 0;
-}
-
-Laser *BulletManager::SpawnLaser(BulletShooter *shooter)
-{
-    int i;
-    Laser *laser;
-
-    laser = this->lasers;
-    if (this->clearAllFrames != 0 && !(shooter->flags & 4))
-    {
-        return laser;
-    }
-    for (i = 0; i < 0x40; i++, laser++)
-    {
-        if (laser->active != 0)
-        {
+            break;
+        case 0x20:
+            bullet->activeFlags |= 0x20;
+            bullet->ex[2].turnSpeed = cmd->arg0;
+            bullet->ex[2].turnAngle = cmd->arg1;
+            bullet->ex[2].timer.Set(0);
+            bullet->ex[2].duration = cmd->frames;
+            if (bullet->commandIndex != 0 && bullet->sound >= 0)
+            {
+                g_SoundPlayer.QueueSound(bullet->sound, 0);
+            }
+            break;
+        case 0x40:
+        case 0x80:
+        case 0x100:
+            bullet->activeFlags |= cmd->flag;
+            bullet->ex[3].turnAngle = cmd->arg0;
+            bullet->ex[3].turnSpeed = cmd->arg1 > -999.0f ? cmd->arg1 : bullet->speed;
+            bullet->ex[3].timer.Set(0);
+            bullet->ex[3].duration = cmd->frames;
+            bullet->ex[3].maxTurns = cmd->maxTurns;
+            bullet->ex[3].turnCount = 0;
+            break;
+        case 0x400:
+        case 0x800:
+            bullet->activeFlags |= cmd->flag;
+            if (cmd->arg0 >= 0.0f)
+            {
+                bullet->ex[4].turnSpeed = cmd->arg0;
+            }
+            else
+            {
+                bullet->ex[4].turnSpeed = bullet->speed;
+            }
+            bullet->ex[4].maxTurns = cmd->frames;
+            bullet->ex[4].duration = 0;
+            break;
+        case 0x2000:
+            bullet->boundsCheckDelay = cmd->frames;
+            bullet->commandIndex++;
             continue;
         }
-        g_SpriteEngine->StartScript(&laser->sprite0, shooter->sprite + 0x20a);
-        g_SpriteEngine->SetSprite(&laser->sprite0, laser->sprite0.spriteIndex + shooter->color);
-        g_SpriteEngine->InitSprite(&laser->sprite1, g_BulletColorOffsets16[shooter->color] + 0x292);
-        laser->sprite1.flags |= 0x10;
-        laser->pos = shooter->pos;
-        laser->color = shooter->color;
-        laser->active = 1;
-        laser->angle = shooter->angle1;
-        if (shooter->aimMode == 0)
-        {
-            laser->angle += g_Player.AngleFrom(&shooter->pos);
-        }
-        laser->flags = shooter->flags;
-        laser->timer.Set(0);
-        laser->startOffset = shooter->exFloats[0];
-        laser->endOffset = shooter->exFloats[1];
-        laser->maxLength = shooter->exFloats[2];
-        laser->width = shooter->exFloats[3];
-        laser->speed = shooter->speed1;
-        laser->startFrames = shooter->exInts[0];
-        laser->durationFrames = shooter->exInts[1];
-        laser->endFrames = shooter->exInts[2];
-        laser->hitStartFrame = shooter->exInts[3];
-        laser->endHitFrames = shooter->laserEndHitFrames;
-        laser->drawDelayFlag = 0;
-        if (laser->startFrames == 0)
-        {
-            laser->state = 1;
-        }
-        else
-        {
-            laser->state = 0;
-        }
-        break;
+        bullet->commandIndex++;
+        return;
     }
-    return laser;
 }
 
 void BulletManager::ClearAll(int mode)
@@ -620,6 +489,90 @@ void BulletManager::ConvertBulletsToItems(D3DXVECTOR3 *pos, float radius)
     }
 }
 
+int BulletManager::FirePattern(BulletShooter *shooter)
+{
+    int col;
+    float playerAngle;
+    int row;
+
+    if (g_BulletManager.bulletCount >= 0x400)
+    {
+        return 0;
+    }
+    shooter->typeSprites = &this->typeSprites[shooter->sprite];
+    playerAngle = g_Player.AngleFrom(&shooter->pos);
+    for (row = 0; row < shooter->count2; row++)
+    {
+        for (col = 0; col < shooter->count1; col++)
+        {
+            if (this->SpawnBullet(shooter, col, row, playerAngle))
+            {
+                goto done;
+            }
+        }
+    }
+done:
+    if (shooter->flags & 0x200)
+    {
+        g_SoundPlayer.QueueSound(shooter->sound, 0);
+    }
+    return 0;
+}
+
+Laser *BulletManager::SpawnLaser(BulletShooter *shooter)
+{
+    int i;
+    Laser *laser;
+
+    laser = this->lasers;
+    if (this->clearAllFrames != 0 && !(shooter->flags & 4))
+    {
+        return laser;
+    }
+    for (i = 0; i < 0x40; i++, laser++)
+    {
+        if (laser->active != 0)
+        {
+            continue;
+        }
+        g_SpriteEngine->StartScript(&laser->sprite0, shooter->sprite + 0x20a);
+        g_SpriteEngine->SetSprite(&laser->sprite0, laser->sprite0.spriteIndex + shooter->color);
+        g_SpriteEngine->InitSprite(&laser->sprite1, g_BulletColorOffsets16[shooter->color] + 0x292);
+        laser->sprite1.flags |= 0x10;
+        laser->pos = shooter->pos;
+        laser->color = shooter->color;
+        laser->active = 1;
+        laser->angle = shooter->angle1;
+        if (shooter->aimMode == 0)
+        {
+            laser->angle += g_Player.AngleFrom(&shooter->pos);
+        }
+        laser->flags = shooter->flags;
+        laser->timer.Set(0);
+        laser->startOffset = shooter->exFloats[0];
+        laser->endOffset = shooter->exFloats[1];
+        laser->maxLength = shooter->exFloats[2];
+        laser->width = shooter->exFloats[3];
+        laser->speed = shooter->speed1;
+        laser->startFrames = shooter->exInts[0];
+        laser->durationFrames = shooter->exInts[1];
+        laser->endFrames = shooter->exInts[2];
+        laser->hitStartFrame = shooter->exInts[3];
+        laser->endHitFrames = shooter->laserEndHitFrames;
+        laser->drawDelayFlag = 0;
+        if (laser->startFrames == 0)
+        {
+            laser->state = 1;
+        }
+        else
+        {
+            laser->state = 0;
+        }
+        break;
+    }
+    return laser;
+}
+
 void SlowBulletStart(Bullet *bullet)
 {
     float speed;
@@ -779,95 +732,6 @@ void BounceOffWalls(Bullet *bullet)
         {
             bullet->activeFlags &= ~0xc00;
         }
-    }
-}
-
-void RunBulletCommands(Bullet *bullet)
-{
-    BulletCommand *cmd;
-
-    for (;;)
-    {
-        if (bullet->commandIndex >= 5)
-        {
-            return;
-        }
-        cmd = &bullet->commands[bullet->commandIndex];
-        if (cmd->flag == 0)
-        {
-            return;
-        }
-        if (cmd->concurrentFlag == 0 && bullet->activeFlags != 0)
-        {
-            return;
-        }
-        if ((bullet->flags & cmd->flag) == 0)
-        {
-            bullet->commandIndex++;
-            continue;
-        }
-        switch (cmd->flag)
-        {
-        case 1:
-            bullet->activeFlags |= 1;
-            bullet->ex[0].timer.Set(0);
-            bullet->ex[0].accel.z = 0.0f;
-            break;
-        case 0x10:
-            bullet->activeFlags |= 0x10;
-            bullet->ex[1].turnSpeed = cmd->arg0;
-            bullet->ex[1].turnAngle = cmd->arg1 > -990.0f ? cmd->arg1 : bullet->angle;
-            bullet->ex[1].timer.Set(0);
-            bullet->ex[1].duration = cmd->frames;
-            ((Vector2 *)&bullet->ex[1].accel)->SetPolar(bullet->ex[1].turnAngle, g_App.gameSpeed * bullet->ex[1].turnSpeed);
-            if (bullet->commandIndex != 0 && bullet->sound >= 0)
-            {
-                g_SoundPlayer.QueueSound(bullet->sound, 0);
-            }
-            break;
-        case 0x20:
-            bullet->activeFlags |= 0x20;
-            bullet->ex[2].turnSpeed = cmd->arg0;
-            bullet->ex[2].turnAngle = cmd->arg1;
-            bullet->ex[2].timer.Set(0);
-            bullet->ex[2].duration = cmd->frames;
-            if (bullet->commandIndex != 0 && bullet->sound >= 0)
-            {
-                g_SoundPlayer.QueueSound(bullet->sound, 0);
-            }
-            break;
-        case 0x40:
-        case 0x80:
-        case 0x100:
-            bullet->activeFlags |= cmd->flag;
-            bullet->ex[3].turnAngle = cmd->arg0;
-            bullet->ex[3].turnSpeed = cmd->arg1 > -999.0f ? cmd->arg1 : bullet->speed;
-            bullet->ex[3].timer.Set(0);
-            bullet->ex[3].duration = cmd->frames;
-            bullet->ex[3].maxTurns = cmd->maxTurns;
-            bullet->ex[3].turnCount = 0;
-            break;
-        case 0x400:
-        case 0x800:
-            bullet->activeFlags |= cmd->flag;
-            if (cmd->arg0 >= 0.0f)
-            {
-                bullet->ex[4].turnSpeed = cmd->arg0;
-            }
-            else
-            {
-                bullet->ex[4].turnSpeed = bullet->speed;
-            }
-            bullet->ex[4].maxTurns = cmd->frames;
-            bullet->ex[4].duration = 0;
-            break;
-        case 0x2000:
-            bullet->boundsCheckDelay = cmd->frames;
-            bullet->commandIndex++;
-            continue;
-        }
-        bullet->commandIndex++;
-        return;
     }
 }
 
@@ -1168,13 +1032,6 @@ int BulletManager::OnUpdate(BulletManager *mgr)
     return 1;
 }
 
-inline void Bullet::FreeBullet()
-{
-    this->state = 0;
-    this->timer.Set(0);
-    this->grazeDelayTimer.Set(0);
-}
-
 void DrawBullet(Bullet *bullet)
 {
     Sprite *sprite;
@@ -1351,4 +1208,147 @@ int BulletManager::AddedCallback(BulletManager *mgr)
     }
     memset(&g_ItemManager, 0, sizeof(ItemManager));
     return 0;
+}
+
+int BulletManager::DeletedCallback(BulletManager *mgr)
+{
+    if ((g_App.scene != 3 && g_App.scene != 0xb && g_App.scene != 0xc) != 0)
+    {
+        g_SpriteEngine->ReleaseAnm(0xb);
+        g_SpriteEngine->ReleaseAnm(0xc);
+        g_SpriteEngine->ReleaseAnm(0xd);
+        g_SpriteEngine->ReleaseAnm(0xe);
+    }
+    return 0;
+}
+
+int BulletManager::RegisterChain(char *anmPath)
+{
+    BulletManager *mgr = &g_BulletManager;
+
+    g_EffectColors = g_EffectColorsFull;
+    mgr->Reset();
+    mgr->anmPath = anmPath;
+    g_BulletCalcChain.SetCallback((ChainCallback)BulletManager::OnUpdate);
+    g_BulletCalcChain.addedCallback = (ChainCallback)BulletManager::AddedCallback;
+    g_BulletCalcChain.deletedCallback = (ChainCallback)BulletManager::DeletedCallback;
+    g_BulletCalcChain.arg = mgr;
+    if (g_Chain.AddToCalcChain(&g_BulletCalcChain, 0xc) != 0)
+    {
+        return -1;
+    }
+    g_BulletDrawChain.SetCallback((ChainCallback)BulletManager::OnDraw);
+    g_BulletDrawChain.arg = mgr;
+    g_Chain.AddToDrawChain(&g_BulletDrawChain, 10);
+    return 0;
+}
+
+void BulletManager::RemoveChain()
+{
+    g_Chain.Remove(&g_BulletCalcChain);
+    g_Chain.Remove(&g_BulletDrawChain);
+    memset(&g_BulletManager, 0, sizeof(BulletManager));
+}
+
+void BulletManager::StopAllBullets()
+{
+    Bullet *bullet;
+    int i;
+
+    bullet = g_BulletManager.bullets;
+    for (i = 0; i < 0x400; i++, bullet++)
+    {
+        if (bullet->state == 0)
+        {
+            continue;
+        }
+        bullet->velocity = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+        bullet->accel = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+        bullet->turnSpeed = 0.0f;
+        bullet->accelSpeed = 0.0f;
+        bullet->speed = 0.0f;
+        bullet->color = 0;
+        g_SpriteEngine->SetSprite(&bullet->sprites.sprite0, bullet->sprites.sprite0.baseSpriteIndex + bullet->color);
+    }
+}
+
+BulletCommand *Bullet::RestartCommand(int idx, int concurrentFlag, DWORD flag)
+{
+    BulletCommand *cmd = &this->commands[idx];
+
+    cmd->flag = flag;
+    cmd->concurrentFlag = concurrentFlag;
+    this->flags |= flag;
+    this->commandIndex = 0;
+    return cmd;
+}
+
+BulletCommand *BulletShooter::StartCommand(int idx, int concurrentFlag, DWORD flag)
+{
+    BulletCommand *cmd = &this->commands[idx];
+
+    cmd->flag = flag;
+    cmd->concurrentFlag = concurrentFlag;
+    this->flags |= flag;
+    return cmd;
+}
+
+void Bullet::SetTurnCommand(int idx, int concurrentFlag, int frames, float arg1, float arg0)
+{
+    BulletCommand *cmd = this->RestartCommand(idx, concurrentFlag, 0x20);
+
+    cmd->frames = frames;
+    cmd->arg0 = arg0;
+    cmd->arg1 = arg1;
+}
+
+void Bullet::SetAccelerateCommand(int idx, int concurrentFlag, int frames, float arg0, float arg1)
+{
+    BulletCommand *cmd = this->RestartCommand(idx, concurrentFlag, 0x10);
+
+    cmd->frames = frames;
+    cmd->arg0 = arg0;
+    cmd->arg1 = arg1;
+}
+
+void BulletShooter::SetShooterTurnCommand(int idx, int concurrentFlag, int frames, float arg1, float arg0)
+{
+    BulletCommand *cmd = this->StartCommand(idx, concurrentFlag, 0x20);
+
+    cmd->frames = frames;
+    cmd->arg0 = arg0;
+    cmd->arg1 = arg1;
+}
+
+inline void Bullet::FreeBullet()
+{
+    this->state = 0;
+    this->timer.Set(0);
+    this->grazeDelayTimer.Set(0);
+}
+
+void BulletShooter::SetStopTurnCommand(int idx, int concurrentFlag, int frames, int maxTurns, float arg0, float arg1)
+{
+    BulletCommand *cmd = this->StartCommand(idx, concurrentFlag, 0x80);
+
+    cmd->frames = frames;
+    cmd->maxTurns = maxTurns;
+    cmd->arg0 = arg0;
+    cmd->arg1 = arg1;
+}
+
+void BulletShooter::SetShooterAccelerateCommand(int idx, int concurrentFlag, int frames, float arg0, float arg1)
+{
+    BulletCommand *cmd = this->StartCommand(idx, concurrentFlag, 0x10);
+
+    cmd->frames = frames;
+    cmd->arg0 = arg0;
+    cmd->arg1 = arg1;
+}
+
+void BulletShooter::SetHiddenCommand(int idx, int concurrentFlag, int frames)
+{
+    BulletCommand *cmd = this->StartCommand(idx, concurrentFlag, 0x2000);
+
+    cmd->frames = frames;
 }
