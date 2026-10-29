@@ -287,6 +287,11 @@ void StopTurnToPlayer(Bullet *bullet);
 // 0x400) at speed unk_c, up to unk_24 times (counted in duration).
 void BounceOffWalls(Bullet *bullet);
 
+// Draws a bullet with the sprite for its state (spawning effects, fading
+// out), placed in the play area and turned along its angle where the
+// sprite asks for it, as th06's.
+void DrawBullet(Bullet *bullet);
+
 // The colors of effect 0xd by index, as th06's; RegisterChain points
 // g_EffectColors at them.
 extern DWORD g_EffectColorsFull[0x1c];

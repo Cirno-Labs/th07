@@ -210,7 +210,7 @@ address,size,name,symbol
 0x00425700,403,StopTurnToPlayer,?StopTurnToPlayer@@YIXPAUBullet@@@Z
 0x004258a0,425,BounceOffWalls,?BounceOffWalls@@YIXPAUBullet@@@Z
 0x00425a50,4237,BulletManager::OnUpdate,?OnUpdate@BulletManager@@SIHPAV1@@Z
-0x00426b00,289,Func426b00,
+0x00426b00,289,DrawBullet,?DrawBullet@@YIXPAUBullet@@@Z
 0x00426c40,796,BulletManager::OnDraw,?OnDraw@BulletManager@@SIHPAV1@@Z
 0x00426f60,1703,BulletManager::AddedCallback,?AddedCallback@BulletManager@@SIHPAV1@@Z
 0x00427620,116,BulletManager::DeletedCallback,?DeletedCallback@BulletManager@@SIHPAV1@@Z
