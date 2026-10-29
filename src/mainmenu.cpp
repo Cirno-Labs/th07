@@ -1062,7 +1062,7 @@ int MainMenu::UpdateCharacterMenu()
             }
             else if (g_App.defaultDifficulty == 5)
             {
-                while (!g_Unknown626270.Func42f853(this->cursor * 2) && !g_Unknown626270.Func42f853(this->cursor * 2 + 1))
+                while (!g_Unknown626270.HasPhantasmOpen(this->cursor * 2) && !g_Unknown626270.HasPhantasmOpen(this->cursor * 2 + 1))
                 {
                     this->cursor++;
                     if (this->cursor >= 3)
@@ -1194,7 +1194,7 @@ int MainMenu::UpdateCharacterMenu()
             }
             else if (g_App.defaultDifficulty == 5)
             {
-                while (!g_Unknown626270.Func42f853(this->cursor * 2) && !g_Unknown626270.Func42f853(this->cursor * 2 + 1))
+                while (!g_Unknown626270.HasPhantasmOpen(this->cursor * 2) && !g_Unknown626270.HasPhantasmOpen(this->cursor * 2 + 1))
                 {
                     this->cursor++;
                     if (this->cursor >= 3)
@@ -1358,7 +1358,7 @@ int MainMenu::UpdateShotTypeMenu()
             }
             else if (g_App.defaultDifficulty == 5)
             {
-                while (!g_Unknown626270.Func42f853(this->cursor + g_Unknown626270.character * 2))
+                while (!g_Unknown626270.HasPhantasmOpen(this->cursor + g_Unknown626270.character * 2))
                 {
                     this->cursor++;
                     if (this->cursor >= 2)
@@ -1422,7 +1422,7 @@ int MainMenu::UpdateShotTypeMenu()
             }
             else if (g_App.defaultDifficulty == 5)
             {
-                while (!g_Unknown626270.Func42f853(this->cursor + g_Unknown626270.character * 2))
+                while (!g_Unknown626270.HasPhantasmOpen(this->cursor + g_Unknown626270.character * 2))
                 {
                     this->cursor++;
                     if (this->cursor >= 2)

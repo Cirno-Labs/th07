@@ -382,3 +382,23 @@ int Unknown626270::HasExtraOpen(int shot)
                ? TRUE
                : FALSE;
 }
+
+int Unknown626270::HasPhantasmOpen(int shot)
+{
+    int count;
+    int i;
+
+    count = 0;
+    for (i = 0; i < 0x8d; i++)
+    {
+        if (this->catks[i].captures[6] > 0)
+        {
+            count++;
+        }
+    }
+    if (count >= 60 && this->clrds[shot].stagesClearedNoContinue[4] == 99)
+    {
+        this->clrds[shot].stagesClearedNoContinue[5] = 99;
+    }
+    return this->clrds[shot].stagesClearedNoContinue[5] == 99;
+}
