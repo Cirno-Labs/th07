@@ -374,10 +374,10 @@ public:
     // The character of g_NameAlphabet selected.
     int charIndex;
     // A second cursor, moved by LoadScreenPlstChunk: the spell cards' shot type.
-    int unk_24;
+    int spellCursor;
     // The unk_24 that textSprites show; with spellPage.
-    int unk_28;
-    int unk_2c;
+    int shownShotType;
+    int spellInfoSliding;
     // The shot type whose name textSprites show; -1 to redraw.
     int character;
     // The spell card page (ten cards each) textSprites show; -1 to
@@ -390,13 +390,13 @@ public:
     // while 4 or 0x100 is held.
     int cheatProgress;
     // When set, the name entry starts on the end mark.
-    int unk_40;
+    int nameEntryAtEnd;
     // The name entered last.
     char name[0xc];
     // By shot type (and all of them): the spell cards captured.
-    int unk_50[7];
+    int capturedSpellCounts[7];
     // The runSeconds that textSprites[0] shows, in states 0x14 to 0x16.
-    BYTE unk_6c;
+    BYTE shownRunSeconds;
     BYTE unk_6d[0x3];
     Sprite sprites[0x29];
     // Text drawn with RenderText; the first holds the shot's name.

@@ -555,20 +555,20 @@ int LoadScreenPlstChunk(ResultScreen *screen, int count)
 {
     if (WAS_PRESSED_OR_HELD(0x10))
     {
-        screen->unk_24--;
-        if (screen->unk_24 < 0)
+        screen->spellCursor--;
+        if (screen->spellCursor < 0)
         {
-            screen->unk_24 += count;
+            screen->spellCursor += count;
         }
         g_SoundPlayer.QueueSound(0xc, 0);
         return -1;
     }
     if (WAS_PRESSED_OR_HELD(0x20))
     {
-        screen->unk_24++;
-        if (screen->unk_24 >= count)
+        screen->spellCursor++;
+        if (screen->spellCursor >= count)
         {
-            screen->unk_24 -= count;
+            screen->spellCursor -= count;
         }
         g_SoundPlayer.QueueSound(0xc, 0);
         return 1;
@@ -877,10 +877,10 @@ int ResultScreen::OnUpdate(ResultScreen *screen)
         }
         break;
     case 9:
-        if ((screen->spellPage != screen->cursor || screen->unk_28 != screen->unk_24) && screen->frame == 20)
+        if ((screen->spellPage != screen->cursor || screen->shownShotType != screen->spellCursor) && screen->frame == 20)
         {
             screen->spellPage = screen->cursor;
-            screen->unk_28 = screen->unk_24;
+            screen->shownShotType = screen->spellCursor;
             for (i = screen->spellPage * 10; i < screen->spellPage * 10 + 10; i++)
             {
                 if (i >= 0x8d)
@@ -899,8 +899,8 @@ int ResultScreen::OnUpdate(ResultScreen *screen)
                 screen->textSprites[i % 10].alpha = 0xff;
             }
             g_SpriteEngine->RenderText(&screen->textSprites[10], 0xffffff, 0,
-                                       "%s %3d枚中%3d枚取得（キャラ切り替え↓↑）", g_ShotNames[screen->unk_28], 0x8d,
-                                       screen->unk_50[screen->unk_24]);
+                                       "%s %3d枚中%3d枚取得（キャラ切り替え↓↑）", g_ShotNames[screen->shownShotType], 0x8d,
+                                       screen->capturedSpellCounts[screen->spellCursor]);
             screen->textSprites[10].alpha = 0xff;
         }
         if (screen->frame < 30)
@@ -919,7 +919,7 @@ int ResultScreen::OnUpdate(ResultScreen *screen)
         else if (LoadScreenPlstChunk(screen, 7))
         {
             screen->frame = 0;
-            screen->unk_2c = 1;
+            screen->spellInfoSliding = 1;
         }
         if (WAS_PRESSED(0xa))
         {
@@ -1024,7 +1024,7 @@ int ResultScreen::HandleNameEntry()
             goto done;
         }
         this->cursor = 0;
-        if (this->unk_40)
+        if (this->nameEntryAtEnd)
         {
             this->charIndex = 0x5f;
         }
@@ -1330,7 +1330,7 @@ int ResultScreen::HandleReplaySaving()
             }
             this->cursor = 0;
             this->charIndex = 0;
-            if (this->unk_40)
+            if (this->nameEntryAtEnd)
             {
                 this->charIndex = 0x5f;
             }
@@ -1576,7 +1576,7 @@ int ResultScreen::RunStatisticsMenu()
             g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "総起動時間   %.2d:%.2d:%.2d", g_Unknown626270.plst.runHours,
                                        g_Unknown626270.plst.runMinutes, g_Unknown626270.plst.runSeconds);
             g_App.AddPlayTime();
-            this->unk_6c = g_Unknown626270.plst.runSeconds;
+            this->shownRunSeconds = g_Unknown626270.plst.runSeconds;
             sprite0++;
             pos2.y += 17.0f;
             sprite0->pos = pos2;
@@ -1701,13 +1701,13 @@ int ResultScreen::RunStatisticsMenu()
         if (this->frame % 60 == 0)
         {
             g_App.AddPlayTime();
-            if (g_Unknown626270.plst.runSeconds != this->unk_6c)
+            if (g_Unknown626270.plst.runSeconds != this->shownRunSeconds)
             {
                 sprite0 = &this->textSprites[0];
                 g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "総起動時間   %.2d:%.2d:%.2d",
                                            g_Unknown626270.plst.runHours, g_Unknown626270.plst.runMinutes,
                                            g_Unknown626270.plst.runSeconds);
-                this->unk_6c = g_Unknown626270.plst.runSeconds;
+                this->shownRunSeconds = g_Unknown626270.plst.runSeconds;
             }
         }
         if (WAS_PRESSED(0x100b))
@@ -1968,11 +1968,11 @@ int ResultScreen::OnDraw(ResultScreen *screen)
                 pos3[1] -= 16.0f;
                 pos3.x = x0;
                 screen->textSprites[i].pos = pos3;
-                if (g_Unknown626270.catks[card].attempts[screen->unk_28] == 0)
+                if (g_Unknown626270.catks[card].attempts[screen->shownShotType] == 0)
                 {
                     g_AsciiText.color = 0xc0c0c0ff;
                 }
-                else if (g_Unknown626270.catks[card].captures[screen->unk_28] == 0)
+                else if (g_Unknown626270.catks[card].captures[screen->shownShotType] == 0)
                 {
                     g_AsciiText.color = 0xffc0a0a0;
                 }
@@ -1984,15 +1984,15 @@ int ResultScreen::OnDraw(ResultScreen *screen)
                 screen->textSprites[i].pos[0] += 96.0f;
                 g_SpriteEngine->DrawUnrotated(&screen->textSprites[i]);
                 pos3[0] += 496.0f;
-                if (g_Unknown626270.catks[card].attempts[screen->unk_28] == 0)
+                if (g_Unknown626270.catks[card].attempts[screen->shownShotType] == 0)
                 {
-                    g_AsciiText.AddFormat(&pos3, "---/---", g_Unknown626270.catks[card].captures[screen->unk_28],
-                                          g_Unknown626270.catks[card].attempts[screen->unk_28]);
+                    g_AsciiText.AddFormat(&pos3, "---/---", g_Unknown626270.catks[card].captures[screen->shownShotType],
+                                          g_Unknown626270.catks[card].attempts[screen->shownShotType]);
                 }
                 else
                 {
-                    g_AsciiText.AddFormat(&pos3, "%3d/%3d", g_Unknown626270.catks[card].captures[screen->unk_28],
-                                          g_Unknown626270.catks[card].attempts[screen->unk_28]);
+                    g_AsciiText.AddFormat(&pos3, "%3d/%3d", g_Unknown626270.catks[card].captures[screen->shownShotType],
+                                          g_Unknown626270.catks[card].attempts[screen->shownShotType]);
                 }
                 pos3[0] -= 496.0f;
                 pos3[0] += 424.0f;
@@ -2000,15 +2000,15 @@ int ResultScreen::OnDraw(ResultScreen *screen)
                 g_AsciiText.color = 0xffa08090;
                 g_AsciiText.scaleX = 0.8f;
                 g_AsciiText.scaleY = 0.8f;
-                if (g_Unknown626270.catks[card].attempts[screen->unk_28] != 0)
+                if (g_Unknown626270.catks[card].attempts[screen->shownShotType] != 0)
                 {
-                    g_AsciiText.AddFormat(&pos3, "MaxBonus %8d", g_Unknown626270.catks[card].maxBonus[screen->unk_28]);
+                    g_AsciiText.AddFormat(&pos3, "MaxBonus %8d", g_Unknown626270.catks[card].maxBonus[screen->shownShotType]);
                 }
                 pos3[0] -= 424.0f;
                 pos3[1] += 13.0f;
                 g_AsciiText.scaleX = 1.0f;
                 g_AsciiText.scaleY = 1.0f;
-                if (screen->unk_2c == 0)
+                if (screen->spellInfoSliding == 0)
                 {
                     pos3[1] += 33.0f;
                 }
@@ -2023,7 +2023,7 @@ int ResultScreen::OnDraw(ResultScreen *screen)
             }
             if (screen->frame >= 40)
             {
-                screen->unk_2c = 0;
+                screen->spellInfoSliding = 0;
             }
         }
     }
@@ -2217,7 +2217,7 @@ int ResultScreen::AddedCallback(ResultScreen *screen)
     screen->lsnm.size2 = 0x18;
     screen->lsnm.size = 0x18;
     strcpy(screen->lsnm.name, "        ");
-    screen->unk_40 = LoadLsnmChunk(screen->scoreDat, &screen->lsnm);
+    screen->nameEntryAtEnd = LoadLsnmChunk(screen->scoreDat, &screen->lsnm);
     if (screen->state != 10 && screen->state != 0x12)
     {
         LoadSpellCards(screen->scoreDat, g_Unknown626270.catks);
@@ -2243,7 +2243,7 @@ int ResultScreen::AddedCallback(ResultScreen *screen)
     for (i = 0; i < 7; i++)
     {
         card = g_Unknown626270.catks;
-        screen->unk_50[i] = 0;
+        screen->capturedSpellCounts[i] = 0;
         for (j = 0; j < 0x8d; j++, card++)
         {
             if (card->magic != 0x4b544143 || card->version != 1)
@@ -2252,13 +2252,13 @@ int ResultScreen::AddedCallback(ResultScreen *screen)
             }
             if (card->captures[i] != 0)
             {
-                screen->unk_50[i]++;
+                screen->capturedSpellCounts[i]++;
             }
         }
     }
-    screen->unk_24 = 6;
-    screen->unk_28 = 6;
-    screen->unk_2c = 0;
+    screen->spellCursor = 6;
+    screen->shownShotType = 6;
+    screen->spellInfoSliding = 0;
     screen->unk_8110.spriteIndex = -1;
     if (screen->state == 0x13)
     {
