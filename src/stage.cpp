@@ -112,6 +112,105 @@ void Unknown1347b00::SetTintColor(D3DCOLOR color)
     }
 }
 
+// Channel `c` scaled by `factor`, 0x80 for 1, up to 0xff.
+inline DWORD ModulateChannel(BYTE c, BYTE factor)
+{
+    DWORD channel = (DWORD)c * factor >> 7;
+    if (channel >= 0x100)
+    {
+        channel = 0xff;
+    }
+    return channel;
+}
+
+// Scales byte `i` of `color` by byte `i` of `factor`.
+#define MODULATE_CHANNEL(color, factor, i) \
+    ((BYTE *)&(color))[i] = ModulateChannel(((BYTE *)&(color))[i], ((BYTE *)&(factor))[i])
+
+int Unknown1347b00::OnDraw(Unknown1347b00 *stage)
+{
+    D3DVIEWPORT8 viewport;
+    D3DCOLOR fogColor;
+
+    g_SpriteEngine->BeginQuadBatch();
+    g_SpriteEngine->ClearVertexFormat();
+    g_SpriteEngine->ClearSpriteData();
+    g_SpriteEngine->ClearTexture();
+    g_SpriteEngine->ClearColorOp();
+    g_SpriteEngine->ClearBlendMode();
+    g_SpriteEngine->ClearZWrite();
+    g_SpriteEngine->ClearUnk8();
+    g_SpriteEngine->ClearUnk2e4d4();
+    if (!g_App.flags.noFog)
+    {
+        g_App.DisableFog();
+    }
+    g_SpriteEngine->FlushQuadBatch();
+    if (stage->unk_51c != 0)
+    {
+        viewport.X = 32;
+        viewport.Y = 16;
+        viewport.Width = 384;
+        viewport.Height = 448;
+        g_App.d3dDevice->SetViewport(&viewport);
+        g_App.d3dDevice->Clear(0, NULL, D3DCLEAR_TARGET, 0xff000000, 1.0f, 0);
+        stage->unk_51c = 0;
+    }
+    g_App.d3dDevice->SetViewport(&g_App.viewport);
+    if (stage->unk_52ac.a > 0)
+    {
+        g_SpriteEngine->SetUnk0(stage->unk_52ac.color);
+    }
+    stage->unk_52ac.a = 0;
+    stage->unk_52ac.r = 0x80;
+    stage->unk_52ac.g = 0x80;
+    stage->unk_52ac.b = 0x80;
+    if (stage->spellCardState <= 1 && !g_Unknown49fbf0.IsLoadingShown())
+    {
+        if (stage->unk_4.spriteIndex > 0)
+        {
+            g_SpriteEngine->DrawAndFlush(&stage->unk_4);
+        }
+        if (stage->unk_250.spriteIndex > 0)
+        {
+            g_SpriteEngine->DrawAndFlush(&stage->unk_250);
+        }
+    }
+    if (stage->unk_4d8 != 0)
+    {
+        g_App.d3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, stage->unk_4d8, 1.0f, 0);
+    }
+    else
+    {
+        g_App.d3dDevice->Clear(0, NULL, D3DCLEAR_ZBUFFER, stage->unk_4d8, 1.0f, 0);
+    }
+    g_App.SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
+    if (g_SpriteEngine->unk_4 == 0)
+    {
+        g_App.SetRenderState(D3DRS_FOGCOLOR, stage->fog.color);
+    }
+    else
+    {
+        fogColor = stage->fog.color;
+        MODULATE_CHANNEL(fogColor, g_SpriteEngine->unk_0, 2);
+        MODULATE_CHANNEL(fogColor, g_SpriteEngine->unk_0, 1);
+        MODULATE_CHANNEL(fogColor, g_SpriteEngine->unk_0, 0);
+        g_App.SetRenderState(D3DRS_FOGCOLOR, fogColor);
+    }
+    g_App.SetRenderState(D3DRS_FOGSTART, *(DWORD *)&stage->fog.nearPlane);
+    g_App.SetRenderState(D3DRS_FOGEND, *(DWORD *)&stage->fog.farPlane);
+    if (!g_App.flags.noFog)
+    {
+        g_App.EnableFog();
+    }
+    if (stage->spellCardState <= 1 && !g_Unknown49fbf0.IsLoadingShown())
+    {
+        stage->DrawLayer(0);
+        stage->DrawLayer(1);
+    }
+    return 1;
+}
+
 int Unknown1347b00::OnDraw2(Unknown1347b00 *stage)
 {
     float fog;

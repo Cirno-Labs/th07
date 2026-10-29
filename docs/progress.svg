@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">71.47% (496)</tspan> · <tspan class="decompiled">7.93% (55)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">20.46% (142)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">71.61% (497)</tspan> · <tspan class="decompiled">7.93% (55)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">20.32% (141)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="533.88" height="6" x="0" y="0" class="named"/>
-<rect width="59.20" height="6" x="533.88" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="593.08" y="0" class="nonmatching"/>
-<rect width="152.84" height="6" x="594.16" y="0" class="todo"/>
+<rect width="534.96" height="6" x="0" y="0" class="named"/>
+<rect width="59.20" height="6" x="534.96" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="594.16" y="0" class="nonmatching"/>
+<rect width="151.77" height="6" x="595.23" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="named"><title>0x00401000 D3DXMatrixIdentity (173 bytes)</title></rect>
@@ -109,7 +109,7 @@
 <rect width="12" height="12" x="555" y="0" class="named"><title>0x00405370 UpdateEasedVector (775 bytes)</title></rect>
 <rect width="12" height="12" x="570" y="0" class="todo"><title>0x00405690 Unknown1347b00::OnUpdate (4611 bytes)</title></rect>
 <rect width="12" height="12" x="585" y="0" class="named"><title>0x00406930 Unknown1347b00::SetTintColor (157 bytes)</title></rect>
-<rect width="12" height="12" x="600" y="0" class="todo"><title>0x004069d0 Unknown1347b00::OnDraw (1035 bytes)</title></rect>
+<rect width="12" height="12" x="600" y="0" class="named"><title>0x004069d0 Unknown1347b00::OnDraw (1035 bytes)</title></rect>
 <rect width="12" height="12" x="615" y="0" class="named"><title>0x00406de0 Unknown1347b00::OnDraw2 (542 bytes)</title></rect>
 <rect width="12" height="12" x="630" y="0" class="named"><title>0x00407000 Unknown1347b00::AddedCallback (1001 bytes)</title></rect>
 <rect width="12" height="12" x="645" y="0" class="named"><title>0x00407410 Unknown1347b00::DeletedCallback (166 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">53.86%</tspan> · <tspan class="decompiled">2.83%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">43.22%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">54.13%</tspan> · <tspan class="decompiled">2.83%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">42.95%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="402.33" height="6" x="0" y="0" class="named"/>
-<rect width="21.15" height="6" x="402.33" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="423.49" y="0" class="nonmatching"/>
-<rect width="322.85" height="6" x="424.15" y="0" class="todo"/>
+<rect width="404.36" height="6" x="0" y="0" class="named"/>
+<rect width="21.15" height="6" x="404.36" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="425.51" y="0" class="nonmatching"/>
+<rect width="320.82" height="6" x="426.18" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -857,7 +857,7 @@
 <rect width="18.67" height="17.60" x="405.51" y="171.82" class="named"><title>0x0045ead0 LzssCompress (1065 bytes)</title></rect>
 <rect width="18.67" height="17.58" x="405.51" y="192.42" class="named"><title>0x00431d3c GdiSurface::InvertAlpha (1064 bytes)</title></rect>
 <rect width="16.63" height="19.13" x="427.18" y="0" class="todo"><title>0x0041ea60 Func41ea60 (1037 bytes)</title></rect>
-<rect width="16.63" height="19.09" x="427.18" y="22.13" class="todo"><title>0x004069d0 Unknown1347b00::OnDraw (1035 bytes)</title></rect>
+<rect width="16.63" height="19.09" x="427.18" y="22.13" class="named"><title>0x004069d0 Unknown1347b00::OnDraw (1035 bytes)</title></rect>
 <rect width="16.63" height="18.37" x="427.18" y="44.23" class="named"><title>0x00407000 Unknown1347b00::AddedCallback (1001 bytes)</title></rect>
 <rect width="16.63" height="18.34" x="427.18" y="65.59" class="named"><title>0x0045db60 CStreamingSound::HandleWaveStreamNotification (1000 bytes)</title></rect>
 <rect width="16.63" height="18.30" x="427.18" y="86.94" class="todo"><title>0x004190f0 Func4190f0 (998 bytes)</title></rect>

@@ -1540,6 +1540,12 @@ public:
     // Removes the update element and the two draw elements.
     static void RemoveChain();
     static int OnUpdate(Unknown1347b00 *stage);
+    // Resets the SpriteEngine's render state, clears the play area to
+    // black once if unk_51c is set, makes the SpriteEngine modulate by
+    // unk_52ac if its alpha is set (and resets it to gray), draws unk_4
+    // and unk_250, clears the viewport to unk_4d8, sets the fog (its
+    // color modulated as the SpriteEngine's) and draws layers 0 and 1
+    // under the same conditions as OnDraw2. Returns 1.
     static int OnDraw(Unknown1347b00 *stage);
     // Draws layers 2 and 3 unless spellCardState is above 1 or the Gui's
     // loading sprite shows, with a rectangle fading in while

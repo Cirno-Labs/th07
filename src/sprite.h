@@ -484,6 +484,12 @@ public:
         this->unk_4 = 0;
         this->unk_0 = 0x80808080;
     }
+    // Modulates sprites by `color` (sets unk_4).
+    void SetUnk0(D3DCOLOR color)
+    {
+        this->unk_4 = 1;
+        this->unk_0 = color;
+    }
     void SetUnk2e4d4(int value)
     {
         this->unk_2e4d4 = value;
