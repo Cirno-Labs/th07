@@ -427,7 +427,7 @@ public:
     // while unk_240d is 1 and not focused), adds 6 hundredths to the
     // rank, plays sound 0x1e, adds to g_Unknown12fe0d0 and 2000 points,
     // and while unk_240d is 1 calls Unknown626270's Func42f789 and
-    // Func42f736 with 30 (focused) or 80.
+    // AddBonusPointsCapped with 30 (focused) or 80.
     void Graze(D3DXVECTOR3 *pos);
     // Ends playerState 4 early (the hit checks call it on a hit,
     // StartBombState while dying with deathbombFrames): ends unk_b7e6c and
@@ -439,7 +439,7 @@ public:
     // g_ReplayManager->unk_d6. `unk` is unused.
     void StopBombState(int unk);
     // Ends playerState 4 (UpdateInvulnerability calls it when it runs out): calls
-    // Unknown626270's Func42f789 and Func42f736 with 10000, scores ten
+    // Unknown626270's Func42f789 and AddBonusPointsCapped with 10000, scores ten
     // times unk_961c over stats->unk_88 (shown through Unknown49fbf0's
     // Func427c81), resets unk_9620, plays sound 0x21, finishes a respawn
     // if one runs, then makes the player invulnerable (playerState 3)

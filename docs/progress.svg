@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">57.93% (402)</tspan> · <tspan class="decompiled">3.46% (24)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">38.47% (267)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">57.93% (402)</tspan> · <tspan class="decompiled">3.60% (25)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">38.33% (266)</tspan></tspan></text>
 <g transform="translate(0 20)">
 <rect width="432.70" height="6" x="0" y="0" class="named"/>
-<rect width="25.83" height="6" x="432.70" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="458.53" y="0" class="nonmatching"/>
-<rect width="287.39" height="6" x="459.61" y="0" class="todo"/>
+<rect width="26.91" height="6" x="432.70" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="459.61" y="0" class="nonmatching"/>
+<rect width="286.31" height="6" x="460.69" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (173 bytes)</title></rect>
@@ -349,7 +349,7 @@
 <rect width="12" height="12" x="405" y="75" class="decompiled"><title>0x0042f526 Unknown626270::SubSubRank (124 bytes)</title></rect>
 <rect width="12" height="12" x="420" y="75" class="decompiled"><title>0x0042f5a2 Unknown626270::AddBonusPoints (253 bytes)</title></rect>
 <rect width="12" height="12" x="435" y="75" class="decompiled"><title>0x0042f69f Unknown626270::AddBonusPointsNoTrack (151 bytes)</title></rect>
-<rect width="12" height="12" x="450" y="75" class="todo"><title>0x0042f736 Unknown626270::Func42f736 (83 bytes)</title></rect>
+<rect width="12" height="12" x="450" y="75" class="decompiled"><title>0x0042f736 Unknown626270::AddBonusPointsCapped (83 bytes)</title></rect>
 <rect width="12" height="12" x="465" y="75" class="todo"><title>0x0042f789 Unknown626270::Func42f789 (86 bytes)</title></rect>
 <rect width="12" height="12" x="480" y="75" class="todo"><title>0x0042f7df Unknown626270::Func42f7df (116 bytes)</title></rect>
 <rect width="12" height="12" x="495" y="75" class="todo"><title>0x0042f853 Unknown626270::Func42f853 (139 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">44.90%</tspan> · <tspan class="decompiled">0.61%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">54.40%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">44.90%</tspan> · <tspan class="decompiled">0.64%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">54.38%</tspan></tspan></text>
 <g transform="translate(0 20)">
 <rect width="335.39" height="6" x="0" y="0" class="named"/>
-<rect width="4.59" height="6" x="335.39" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="339.98" y="0" class="nonmatching"/>
-<rect width="406.36" height="6" x="340.64" y="0" class="todo"/>
+<rect width="4.75" height="6" x="335.39" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="340.14" y="0" class="nonmatching"/>
+<rect width="406.19" height="6" x="340.81" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1319,7 +1319,7 @@
 <rect width="2.76" height="3.18" x="688.06" y="188.56" class="named"><title>0x00442b10 Player::RemoveChain (85 bytes)</title></rect>
 <rect width="2.76" height="3.11" x="688.06" y="194.74" class="named"><title>0x00432630 ItemManager::ItemManager (84 bytes)</title></rect>
 <rect width="2.76" height="3.11" x="688.06" y="200.85" class="named"><title>0x0045e130 CWaveFile::SwitchTrack (84 bytes)</title></rect>
-<rect width="2.76" height="3.04" x="688.06" y="206.96" class="todo"><title>0x0042f736 Unknown626270::Func42f736 (83 bytes)</title></rect>
+<rect width="2.76" height="3.04" x="688.06" y="206.96" class="decompiled"><title>0x0042f736 Unknown626270::AddBonusPointsCapped (83 bytes)</title></rect>
 <rect width="2.96" height="2.76" x="693.83" y="156.98" class="named"><title>0x0042fb20 ChainElem::~ChainElem (82 bytes)</title></rect>
 <rect width="2.96" height="2.76" x="693.83" y="162.75" class="named"><title>0x0045e5c0 File::~File (82 bytes)</title></rect>
 <rect width="2.96" height="2.69" x="693.83" y="168.51" class="named"><title>0x00436ad0 MidiPlayer::Play (81 bytes)</title></rect>

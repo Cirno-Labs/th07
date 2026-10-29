@@ -353,3 +353,15 @@ void Unknown626270::AddBonusPointsNoTrack(int amount)
         g_Unknown49fbf0.Func427c81(this->unk_961c - this->stats->unk_88, 3);
     }
 }
+
+void Unknown626270::AddBonusPointsCapped(int amount)
+{
+    int prev;
+
+    prev = this->unk_961c;
+    this->unk_961c += amount;
+    if (this->unk_961c > this->unk_9618)
+    {
+        this->unk_961c = this->unk_9618;
+    }
+}

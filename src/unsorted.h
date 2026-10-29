@@ -948,7 +948,7 @@ public:
     void AddSubRank(int amount);
     // Add `amount` to unk_9618 and to unk_961c, each up to a limit.
     void Func42f789(int amount);
-    void Func42f736(int amount);
+    void AddBonusPointsCapped(int amount);
     // Adds `amount` to unk_961c, up to unk_9618. A gain outside
     // Player::unk_240d also adds to unk_9620 and, once that reaches
     // stats->unk_88 + 50000, caps it there and calls StartBombState. When
@@ -1089,7 +1089,7 @@ public:
     // RerollStatsChecksumKeys sets it to the checksum plus stats->unk_8c[3].
     float unk_9614;
     int unk_9618;
-    // Added to (up to unk_9618) by Func42f736.
+    // Added to (up to unk_9618) by AddBonusPointsCapped.
     int unk_961c;
     // UpdateInvulnerability sets it while Player::playerState is 4.
     int unk_9620;
