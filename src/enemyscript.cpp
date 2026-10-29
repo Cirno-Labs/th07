@@ -1176,6 +1176,27 @@ void EndSlowdown(Enemy *enemy, EnemyScriptInstr *instr)
     g_Unknown1347b00.unk_528[1].pendingInterrupt = 1;
 }
 
+void AimTurnedBulletsAtPlayer(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    Bullet *bullet = g_BulletManager.bullets;
+    int i;
+
+    ScreenEffect::StartEffect(3, 0x10, 1, 0x50cfcfff, 0);
+    for (i = 0; i < 0x400; i++, bullet++)
+    {
+        if (bullet->state == 0)
+        {
+            continue;
+        }
+        if (bullet->unk_c08 == 1)
+        {
+            bullet->SetAccelerateCommand(0, 0, 0x5a, 0.026666667f, g_Player.AngleFrom(&bullet->pos));
+            bullet->ClearCommandFlag(1);
+            bullet->unk_c08 = 2;
+        }
+    }
+}
+
 void FlashScreen(Enemy *enemy, EnemyScriptInstr *instr)
 {
     ScreenEffect::StartEffect(3, instr->args[1].i, 1, 0xd0cfcfff, 0);

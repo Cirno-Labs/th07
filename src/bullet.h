@@ -72,6 +72,11 @@ struct Bullet
     void FreeBullet();
     // Sets command `idx` up for flag 0x20.
     void SetTurnCommand(int idx, int unk_14, int unk_8, float unk_4, float unk_0);
+    // Clears command `idx`'s flag, so the commands stop there.
+    void ClearCommandFlag(int idx)
+    {
+        this->commands[idx].flag = 0;
+    }
 
     BulletTypeSprites sprites;
     D3DXVECTOR3 pos;

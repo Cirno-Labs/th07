@@ -1589,6 +1589,10 @@ void StartSlowdown(Enemy *enemy, EnemyScriptInstr *instr);
 // App::unk_18c if 1 / argument 1 is below 1, and puts the game speed
 // and the stage sprites' interrupts back to 1.
 void EndSlowdown(Enemy *enemy, EnemyScriptInstr *instr);
+// Flashes the screen 0x50cfcfff for 0x10 frames; each bullet turned
+// once (unk_c08 1) gets a flag 0x10 command 0 for 0x5a frames with its
+// angle to the player, clears command 1's flag and is marked 2.
+void AimTurnedBulletsAtPlayer(Enemy *enemy, EnemyScriptInstr *instr);
 // Flashes the screen 0xd0cfcfff for argument 1 frames.
 void FlashScreen(Enemy *enemy, EnemyScriptInstr *instr);
 // Fades the music out over 3 seconds.
