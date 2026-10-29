@@ -72,7 +72,7 @@ address,size,name,symbol
 0x0040c2e0,1668,UpdateSakuyaABomb,?UpdateSakuyaABomb@@YIXPAVPlayer@@@Z
 0x0040c970,213,DrawSakuyaABomb,?DrawSakuyaABomb@@YIXPAVPlayer@@@Z
 0x0040ca50,2390,UpdateSakuyaABombFocused,?UpdateSakuyaABombFocused@@YIXPAVPlayer@@@Z
-0x0040d3b0,260,Func40d3b0,
+0x0040d3b0,260,DrawSakuyaABombFocused,?DrawSakuyaABombFocused@@YIXPAVPlayer@@@Z
 0x0040d4c0,1242,Func40d4c0,
 0x0040d9a0,216,Func40d9a0,
 0x0040da80,2048,Func40da80,

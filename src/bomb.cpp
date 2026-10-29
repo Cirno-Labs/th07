@@ -1175,3 +1175,24 @@ void UpdateSakuyaABombFocused(Player *player)
     player->playerState = 3;
     player->bomb.timer.Tick();
 }
+
+void DrawSakuyaABombFocused(Player *player)
+{
+    int i;
+    PlayerBombPart *knife;
+
+    DimPlayAreaForBomb(player);
+    for (knife = player->bomb.parts, i = 0; i < 0x60; i++, knife++)
+    {
+        if (knife->state == 0)
+        {
+            continue;
+        }
+        knife->sprites[0].SetRotationZ(AddNormalizeAngle(knife->angle, 1.5707964f));
+        knife->sprites[0].pos = knife->pos;
+        knife->sprites[0].pos.x = g_Unknown626270.arena[0] + knife->sprites[0].pos.x;
+        knife->sprites[0].pos.y = g_Unknown626270.arena[1] + knife->sprites[0].pos.y;
+        knife->sprites[0].pos.z = 0.0f;
+        g_SpriteEngine->Draw(knife->sprites);
+    }
+}

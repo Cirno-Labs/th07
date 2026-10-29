@@ -718,3 +718,7 @@ void DrawSakuyaABomb(Player *player);
 // until its first hit, then restarts its sprite at script 0x460 and
 // bursts effect 0.
 void UpdateSakuyaABombFocused(Player *player);
+
+// Draws Sakuya A's focused bomb as DrawSakuyaABomb, but offset by the
+// play area.
+void DrawSakuyaABombFocused(Player *player);
