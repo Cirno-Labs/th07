@@ -657,7 +657,3 @@ void MidiTimer::StopTimer()
 {
     this->Stop();
 }
-
-void MmTimer::OnTimer()
-{
-}

@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "midi.h"
 #include "sprite.h"
 #include "unsorted.h"
 
@@ -47,8 +48,16 @@ SpriteEngine::SpriteEngine()
 }
 
 // Empty. The linker folded it with MmTimer::OnTimer, which has the same
-// bytes.
+// bytes, keeping this copy.
 SpriteEngine::~SpriteEngine()
+{
+}
+
+// MmTimer's default timer callback, defined here rather than in midi.cpp:
+// which of two identical functions in different objects our linker
+// keeps changes with unrelated edits, so the pair lives in one object,
+// as with ReplayManager::OnDraw.
+void MmTimer::OnTimer()
 {
 }
 
