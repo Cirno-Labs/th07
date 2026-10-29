@@ -199,7 +199,7 @@ DWORD LoadHighScores(void *scoreDat, ListNode *list, int shot, int difficulty, B
     }
     if (unk != NULL)
     {
-        *unk = dat1->scores->next != NULL ? (char)dat1->scores->next->data->unk_26 : 0;
+        *unk = dat1->scores->next != NULL ? (char)dat1->scores->next->data->continuesUsed : 0;
     }
     return dat1->scores->next != NULL
                ? (dat1->scores->next->data->score > 100000 ? dat1->scores->next->data->score : 100000)
@@ -995,7 +995,7 @@ int ResultScreen::HandleNameEntry()
         this->entry.shot = this->character;
         this->entry.difficulty = this->difficulty;
         this->entry.score = g_Unknown626270.stats->score;
-        this->entry.unk_26 = g_Unknown626270.stats->continuesUsed;
+        this->entry.continuesUsed = g_Unknown626270.stats->continuesUsed;
         this->entry.version = 1;
         this->entry.magic = *(DWORD *)"HSCR";
         if ((g_Unknown626270.unk_93d8 >> 4 & 1) == 0)
@@ -1927,17 +1927,17 @@ int ResultScreen::OnDraw(ResultScreen *screen)
                 if (node3->data->stage <= 6)
                 {
                     g_AsciiText.AddFormat(&pos3, "%8s %9d%1d(%d)", node3->data->name, node3->data->score,
-                                          (char)node3->data->unk_26, node3->data->stage);
+                                          (char)node3->data->continuesUsed, node3->data->stage);
                 }
                 else if (node3->data->stage == 7 || node3->data->stage == 8)
                 {
                     g_AsciiText.AddFormat(&pos3, "%8s %9d%1d(1)", node3->data->name, node3->data->score,
-                                          (char)node3->data->unk_26);
+                                          (char)node3->data->continuesUsed);
                 }
                 else
                 {
                     g_AsciiText.AddFormat(&pos3, "%8s %9d%1d(C)", node3->data->name, node3->data->score,
-                                          (char)node3->data->unk_26);
+                                          (char)node3->data->continuesUsed);
                 }
                 pos3.x += 320.0f;
                 g_AsciiText.AddFormat(&pos3, " %5s   %3.2f", node3->data->date, node3->data->slowdown);
@@ -2168,7 +2168,7 @@ int ResultScreen::AddedCallback(ResultScreen *screen)
                 screen->defaultScores[i][shot][k].size = 0x28;
                 screen->defaultScores[i][shot][k].stage = 1;
                 screen->defaultScores[i][shot][k].isNew = 0;
-                screen->defaultScores[i][shot][k].unk_26 = 0;
+                screen->defaultScores[i][shot][k].continuesUsed = 0;
                 screen->AddScore(&screen->defaultScores[i][shot][k], i, shot);
                 strcpy(screen->defaultScores[i][shot][k].name, "--------");
                 strcpy(screen->defaultScores[i][shot][k].date, "--/--");
