@@ -30,6 +30,20 @@ void Log::Flush()
     }
 }
 
+inline void SpriteEngine::ReleaseSurfaces()
+{
+    int i;
+
+    for (i = 0; i < 0x20; i++)
+    {
+        if (this->surfaces[i] != NULL)
+        {
+            this->surfaces[i]->Release();
+            this->surfaces[i] = NULL;
+        }
+    }
+}
+
 void SpriteEngine::DoPendingCopy()
 {
     if (this->pendingCopyTexture >= 0)
@@ -194,6 +208,56 @@ stop:
     WINNLSEnableIME(NULL, TRUE);
     g_Log.Flush();
     return 0;
+}
+
+LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+    switch (msg)
+    {
+    case WM_ERASEBKGND:
+        return 1;
+    case MM_MOM_DONE:
+        if (g_App.midi != NULL)
+        {
+            g_App.midi->ReleaseHeader((LPMIDIHDR)lParam);
+        }
+        break;
+    case WM_ACTIVATEAPP:
+        g_GameWindow.isAppActive = wParam;
+        if (g_GameWindow.isAppActive != 0)
+        {
+            g_GameWindow.isAppInactive = 0;
+        }
+        else
+        {
+            g_GameWindow.isAppInactive = 1;
+        }
+        break;
+    case WM_SETCURSOR:
+        if (!g_App.windowed)
+        {
+            if (g_GameWindow.isAppInactive != 0)
+            {
+                SetCursor(LoadCursorA(NULL, IDC_ARROW));
+                ShowCursor(TRUE);
+            }
+            else
+            {
+                ShowCursor(FALSE);
+                SetCursor(NULL);
+            }
+        }
+        else
+        {
+            SetCursor(LoadCursorA(NULL, IDC_ARROW));
+            ShowCursor(TRUE);
+        }
+        return 1;
+    case WM_CLOSE:
+        g_GameWindow.isClosing = 1;
+        return 1;
+    }
+    return DefWindowProcA(hwnd, msg, wParam, lParam);
 }
 
 void PresentFrame()
@@ -793,70 +857,6 @@ int CheckSingleInstance(HINSTANCE instance)
         return -1;
     }
     return 0;
-}
-
-inline void SpriteEngine::ReleaseSurfaces()
-{
-    int i;
-
-    for (i = 0; i < 0x20; i++)
-    {
-        if (this->surfaces[i] != NULL)
-        {
-            this->surfaces[i]->Release();
-            this->surfaces[i] = NULL;
-        }
-    }
-}
-
-LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
-{
-    switch (msg)
-    {
-    case WM_ERASEBKGND:
-        return 1;
-    case MM_MOM_DONE:
-        if (g_App.midi != NULL)
-        {
-            g_App.midi->ReleaseHeader((LPMIDIHDR)lParam);
-        }
-        break;
-    case WM_ACTIVATEAPP:
-        g_GameWindow.isAppActive = wParam;
-        if (g_GameWindow.isAppActive != 0)
-        {
-            g_GameWindow.isAppInactive = 0;
-        }
-        else
-        {
-            g_GameWindow.isAppInactive = 1;
-        }
-        break;
-    case WM_SETCURSOR:
-        if (!g_App.windowed)
-        {
-            if (g_GameWindow.isAppInactive != 0)
-            {
-                SetCursor(LoadCursorA(NULL, IDC_ARROW));
-                ShowCursor(TRUE);
-            }
-            else
-            {
-                ShowCursor(FALSE);
-                SetCursor(NULL);
-            }
-        }
-        else
-        {
-            SetCursor(LoadCursorA(NULL, IDC_ARROW));
-            ShowCursor(TRUE);
-        }
-        return 1;
-    case WM_CLOSE:
-        g_GameWindow.isClosing = 1;
-        return 1;
-    }
-    return DefWindowProcA(hwnd, msg, wParam, lParam);
 }
 
 void ForceForegroundWindow(HWND hwnd)
