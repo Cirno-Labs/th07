@@ -35,6 +35,11 @@ public:
     {
         this->unk_b7c[idx].pendingInterrupt = 99;
     }
+    // Sends unk_b7c[idx] interrupt `interrupt`, the same way.
+    void SetUnkB7cInterrupt(int idx, int interrupt)
+    {
+        this->unk_b7c[idx].pendingInterrupt = interrupt;
+    }
     // unk_74d4, and setting it while sending unk_498 the same
     // interrupt. Inlines: each read takes a temporary in ResetHomingAndText.
     int GetUnk74d4()

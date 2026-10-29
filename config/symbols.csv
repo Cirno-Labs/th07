@@ -1738,6 +1738,7 @@ address,size,name,symbol
 0x0049ebb8,,g_SoundPaths,?g_SoundPaths@@3PAPADA
 0x0049ec30,,g_NameAlphabet,?g_NameAlphabet@@3PADA
 0x0049ec34,,g_ShotNames,?g_ShotNames@@3PAPADA
+0x0049ec50,,g_Bombs,?g_Bombs@@3PAUBombData@@A
 0x0049ecb0,,g_ShotFireFuncs,?g_ShotFireFuncs@@3PAP6IHPAVPlayer@@PAUPlayerBullet@@HPAUShotData@@@ZA
 0x0049ecc8,,g_ShotUpdateFuncs,?g_ShotUpdateFuncs@@3PAP6IHPAVPlayer@@PAUPlayerBullet@@@ZA
 0x0049ece0,,g_ShotDrawFuncs,?g_ShotDrawFuncs@@3PAP6IHPAVPlayer@@PAUPlayerBullet@@@ZA
@@ -1755,6 +1756,8 @@ address,size,name,symbol
 0x0049f4ec,,g_ShotTypeNames,?g_ShotTypeNames@@3PAPADA
 0x0049f504,,g_SpellCardRatings,?g_SpellCardRatings@@3PAMA
 0x0049f518,,g_DifficultyNames,?g_DifficultyNames@@3PAPADA
+0x0049f530,,g_ShotFiles,?g_ShotFiles@@3PAPADA
+0x0049f548,,g_ShotFilesFocused,?g_ShotFilesFocused@@3PAPADA
 0x0049fbf0,,g_Unknown49fbf0,?g_Unknown49fbf0@@3VUnknown49fbf0@@A
 0x0049fc88,,g_JoyCaps,?g_JoyCaps@@3UtagJOYCAPSA@@A
 0x0049fe1c,,g_ShotHeldFrames,?g_ShotHeldFrames@@3GA

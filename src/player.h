@@ -103,13 +103,32 @@ struct ShotTypeData
     float bombs;
     // Player::deathbombFrames once the player has respawned.
     int deathbombFrames;
-    unsigned char unk_c[0x10];
+    // The hitbox and the graze box, both square.
+    float hitboxSize;
+    float grazeSize;
+    unsigned char unk_14[0x8];
     // The share of Unknown626270::unk_961c over stats->unk_88 a death
     // costs.
     float unk_1c;
     unsigned char unk_20[0x14];
     ShotTable tables[1];
 };
+
+// A shot type's bomb callbacks, by character * 2 + shot type: those
+// PlayerBomb runs.
+struct BombData
+{
+    void (*update)(Player *player);
+    void (*draw)(Player *player);
+    void (*updateFocused)(Player *player);
+    void (*drawFocused)(Player *player);
+};
+extern BombData g_Bombs[];
+
+// The shot type files, unfocused and focused, by character * 2 + shot
+// type.
+extern char *g_ShotFiles[];
+extern char *g_ShotFilesFocused[];
 
 // The shot callbacks a shot file names by index, which LoadShotTypeFile turns
 // into pointers. Entry 0 is NULL.
@@ -440,6 +459,13 @@ public:
     // player red and sets Unknown1347b00's color, as UpdateInvulnerability.
     // Returns 1.
     static int OnDraw(Player *player);
+    // The update element's added callback, as th06's: loads the shot
+    // type files and, outside the replay and other scenes (3, 11 and
+    // 12), the character's ANM, then sets up the player, its boxes from
+    // the shot type, options, bullets, timers and bomb callbacks, and
+    // (outside those scenes) sends g_AsciiText's sprites interrupt 1,
+    // its unk_b7c interrupt 2. Caps Unknown626270::unk_9620 as
+    // PlayAddedCallback does. Returns 0, or -1 if a file fails to load.
     static int AddedCallback(Player *player);
     // Unless the scene is 3, 0xb or 0xc, releases ANM 10 and sets
     // AsciiText's sprite interrupts (99) and unk_74d4; frees the shot
@@ -461,7 +487,8 @@ public:
     D3DXVECTOR3 unk_984;
     // The hitbox's half size, as th06's.
     D3DXVECTOR3 hitboxSize;
-    unsigned char unk_99c[0x18];
+    D3DXVECTOR3 grazeSize;
+    D3DXVECTOR3 unk_9a8;
     // Where the two options are.
     D3DXVECTOR3 optionPos[2];
     unsigned char unk_9cc[0x10];
@@ -499,7 +526,8 @@ public:
     char unk_240d;
     unsigned char unk_240e[0x2];
     Timer unk_2410;
-    unsigned char unk_241c[0x4];
+    // Cleared by AddedCallback, as th06's direction.
+    int unk_241c;
     // The last frame's movement, as th06's.
     float velocityX;
     float velocityY;

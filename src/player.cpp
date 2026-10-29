@@ -1700,6 +1700,100 @@ int Player::RegisterChain(int unk)
     return 0;
 }
 
+int Player::AddedCallback(Player *player)
+{
+    int i;
+    PlayerBullet *bullet;
+
+    if (LoadShotTypeFile(&player->shotType, g_ShotFiles[g_Unknown626270.unk_93d7]) != 0)
+    {
+        return -1;
+    }
+    if (LoadShotTypeFile(&player->shotTypeFocused, g_ShotFilesFocused[g_Unknown626270.unk_93d7]) != 0)
+    {
+        return -1;
+    }
+    if ((g_App.scene != 3 && g_App.scene != 0xb && g_App.scene != 0xc) != 0)
+    {
+        switch (g_Unknown626270.character)
+        {
+        case 0:
+            if (g_SpriteEngine->LoadAnm(10, "data/player00.anm", 0x400) != 0)
+            {
+                return -1;
+            }
+            break;
+        case 1:
+            if (g_SpriteEngine->LoadAnm(10, "data/player01.anm", 0x400) != 0)
+            {
+                return -1;
+            }
+            break;
+        case 2:
+            if (g_SpriteEngine->LoadAnm(10, "data/player02.anm", 0x400) != 0)
+            {
+                return -1;
+            }
+            break;
+        }
+    }
+    g_SpriteEngine->StartScript(&player->sprite, 0x400);
+    player->position.x = g_Unknown626270.arena[2] / 2.0f;
+    player->position.y = g_Unknown626270.arena[3] - 64.0f;
+    player->position.z = 0.49f;
+    player->optionPos[0].z = 0.49f;
+    player->optionPos[1].z = 0.49f;
+    // 0x80 entries: past unk_9dc's 0x70, into unk_17dc.
+    for (i = 0; i < 0x80; i++)
+    {
+        player->unk_9dc[i].size.x = 0.0f;
+    }
+    player->hitboxSize.y = g_Player.shotType->hitboxSize / 2.0f;
+    player->hitboxSize.x = player->hitboxSize.y;
+    player->hitboxSize.z = 5.0f;
+    player->grazeSize.y = g_Player.shotType->grazeSize / 2.0f;
+    player->grazeSize.x = player->grazeSize.y;
+    player->grazeSize.z = 5.0f;
+    player->unk_9a8.x = 12.0f;
+    player->unk_9a8.y = 12.0f;
+    player->unk_9a8.z = 5.0f;
+    player->unk_241c = 0;
+    player->playerState = 1;
+    player->stateTimer.Set(120);
+    player->unk_240a = 1;
+    g_SpriteEngine->StartScript(&player->optionSprites[0], 0x480);
+    g_SpriteEngine->StartScript(&player->optionSprites[1], 0x481);
+    bullet = player->bullets;
+    for (i = 0; i < 0x60; i++, bullet++)
+    {
+        bullet->state = 0;
+    }
+    player->fireTimer.Set(-1);
+    player->bomb.update = g_Bombs[g_Unknown626270.unk_93d7].update;
+    player->bomb.draw = g_Bombs[g_Unknown626270.unk_93d7].draw;
+    player->bomb.updateFocused = g_Bombs[g_Unknown626270.unk_93d7].updateFocused;
+    player->bomb.drawFocused = g_Bombs[g_Unknown626270.unk_93d7].drawFocused;
+    player->bomb.running = 0;
+    player->unk_b7e58 = -(D3DX_PI / 2.0f);
+    player->moveScaleY = 1.0f;
+    player->moveScaleX = 1.0f;
+    player->deathbombFrames = g_Player.shotType->deathbombFrames;
+    if ((g_App.scene != 3 && g_App.scene != 0xb && g_App.scene != 0xc) != 0)
+    {
+        g_AsciiText.unk_498.pendingInterrupt = 1;
+        g_AsciiText.unk_74d4 = 1;
+    }
+    g_AsciiText.SetUnkB7cInterrupt(0, 2);
+    g_AsciiText.SetUnkB7cInterrupt(1, 2);
+    g_AsciiText.SetUnkB7cInterrupt(2, 2);
+    if (g_Unknown626270.unk_9620 >= g_Unknown626270.stats->unk_88 + 50000)
+    {
+        g_Unknown626270.unk_9620 = g_Unknown626270.stats->unk_88 + 50000;
+        StartBombState(&g_Player);
+    }
+    return 0;
+}
+
 int Player::DeletedCallback(Player *player)
 {
     if ((g_App.scene != 3 && g_App.scene != 0xb && g_App.scene != 0xc) != 0)
