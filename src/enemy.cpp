@@ -78,7 +78,7 @@ void EnemyManager::Initialize()
     }
     for (i = 0; i < 0x60; i++)
     {
-        enemy->unk_2f78[i].pos.x = -999.0f;
+        enemy->trailBoxes[i].pos.x = -999.0f;
     }
     enemy->flags.active = 1;
     enemy->callbackTimer.Set(0);
@@ -97,7 +97,7 @@ void EnemyManager::Initialize()
     enemy->life = 1;
     enemy->score = 100;
     enemy->deathEffect = 0;
-    enemy->unk_2e15 = 0;
+    enemy->deathEffectIndex = 0;
     enemy->unk_2e16 = 0;
     enemy->shootInterval = 0;
     enemy->shootTimer.Set(0);
@@ -121,7 +121,7 @@ void EnemyManager::Initialize()
         enemy->lifeCallbackLife[i] = -1;
     }
     enemy->timerCallbackTime = -1;
-    enemy->unk_2ee4 = -1;
+    enemy->periodicSubIndex = -1;
     enemy->laserIndex = 0;
     enemy->hitFlashTimer = 0;
     enemy->flags.rotateSprite = 0;
@@ -394,7 +394,7 @@ int Enemy::CheckLifeCallback()
             g_Unknown1347938.StartSub(&this->ctx, this->lifeCallbackSub[i]);
             this->lifeCallbackLife[i] = -1;
             this->timerCallbackTime = -1;
-            this->unk_2ee4 = -1;
+            this->periodicSubIndex = -1;
             this->rankSpeedLow = -0.5f;
             this->rankSpeedHigh = 0.5f;
             this->rankCount1Low = 0;
@@ -494,7 +494,7 @@ int Enemy::CheckTimerCallback()
                 enemy->deathSub = -1;
             }
         }
-        this->unk_2ee4 = -1;
+        this->periodicSubIndex = -1;
         this->shooter = g_Unknown9a9b00.enemyTemplate.shooter;
         this->shootInterval = 0;
         this->rankSpeedLow = -0.5f;
@@ -676,17 +676,17 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                 enemy->effects[24]->pos = (enemy->pos - enemy->effects[24]->pos) / 16.0f + enemy->effects[24]->pos;
             }
         }
-        if (enemy->unk_4f30)
+        if (enemy->trailFlags)
         {
-            for (seg = enemy->unk_4f32 - 1; seg > 0; seg--)
+            for (seg = enemy->trailSegmentCount - 1; seg > 0; seg--)
             {
-                enemy->unk_2f78[seg].pos = enemy->unk_2f78[seg - 1].pos;
-                enemy->unk_2f78[seg].unk_c = enemy->unk_2f78[seg - 1].unk_c;
-                enemy->unk_2f78[seg].angle = enemy->unk_2f78[seg - 1].angle;
+                enemy->trailBoxes[seg].pos = enemy->trailBoxes[seg - 1].pos;
+                enemy->trailBoxes[seg].unk_c = enemy->trailBoxes[seg - 1].unk_c;
+                enemy->trailBoxes[seg].angle = enemy->trailBoxes[seg - 1].angle;
             }
-            enemy->unk_2f78[0].pos = enemy->pos;
-            enemy->unk_2f78[0].unk_c = enemy->velocity;
-            enemy->unk_2f78[0].angle = enemy->angle;
+            enemy->trailBoxes[0].pos = enemy->pos;
+            enemy->trailBoxes[0].unk_c = enemy->velocity;
+            enemy->trailBoxes[0].angle = enemy->angle;
         }
         if (enemy->sprite.spriteData == NULL)
         {
@@ -699,14 +699,14 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
             enemy->flags.unk_13 = 1;
         }
         if (enemy->flags.unk_13 == 1 &&
-            ((!enemy->unk_4f30 &&
+            ((!enemy->trailFlags &&
               !g_Unknown626270.IsInPlayArea(enemy->pos.x, enemy->pos.y, enemy->sprite.spriteData->width,
                                             enemy->sprite.spriteData->height)) ||
-             (enemy->unk_4f30 &&
+             (enemy->trailFlags &&
               !g_Unknown626270.IsInPlayArea(enemy->pos.x, enemy->pos.y, enemy->sprite.spriteData->width,
                                             enemy->sprite.spriteData->height) &&
-              !g_Unknown626270.IsInPlayArea(enemy->unk_2f78[enemy->unk_4f32 - 1].pos.x,
-                                            enemy->unk_2f78[enemy->unk_4f32 - 1].pos.y,
+              !g_Unknown626270.IsInPlayArea(enemy->trailBoxes[enemy->trailSegmentCount - 1].pos.x,
+                                            enemy->trailBoxes[enemy->trailSegmentCount - 1].pos.y,
                                             enemy->sprite.spriteData->width,
                                             enemy->sprite.spriteData->height))) &&
             !enemy->flags.unk_17)
@@ -740,26 +740,26 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
             if (enemy->flags.shootable && enemy->flags.unk_9)
             {
                 enemy->CheckPlayerContact(&enemy->pos, &enemy->hitboxSize);
-                if (enemy->unk_4f30)
+                if (enemy->trailFlags)
                 {
                     boxSize = enemy->hitboxSize;
-                    for (seg = 1; seg < enemy->unk_4f34; seg += 6)
+                    for (seg = 1; seg < enemy->trailContactSegments; seg += 6)
                     {
-                        if (enemy->unk_4f30 & 2)
+                        if (enemy->trailFlags & 2)
                         {
-                            boxSize = enemy->hitboxSize - enemy->hitboxSize * (float)seg / (float)enemy->unk_4f34;
+                            boxSize = enemy->hitboxSize - enemy->hitboxSize * (float)seg / (float)enemy->trailContactSegments;
                         }
-                        enemy->CheckPlayerContact(&enemy->unk_2f78[seg].pos, &boxSize);
+                        enemy->CheckPlayerContact(&enemy->trailBoxes[seg].pos, &boxSize);
                     }
                 }
             }
-            enemy->unk_2e4c = 0;
+            enemy->lastDamage = 0;
             if (enemy->flags.shootable && enemy->flags.unk_c)
             {
                 hurt = g_Player.CalcDamage(&enemy->pos, &enemy->hitboxSize, &bomb);
-                if (enemy->unk_2b48.x > 0.0f)
+                if (enemy->extraHitboxSize.x > 0.0f)
                 {
-                    extraHurt = g_Player.CalcDamage(&enemy->pos, &enemy->unk_2b48, &bomb);
+                    extraHurt = g_Player.CalcDamage(&enemy->pos, &enemy->extraHitboxSize, &bomb);
                     if (bomb == 0)
                     {
                         hurt = hurt + extraHurt / 2.5f;
@@ -843,7 +843,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                                 hurt = 0;
                             }
                         }
-                        if (enemy->unk_4f38 > 0)
+                        if (enemy->invulnTimer > 0)
                         {
                             if (enemy->flags.isBoss)
                             {
@@ -855,7 +855,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                             }
                         }
                         enemy->life -= hurt;
-                        enemy->unk_2e4c = hurt;
+                        enemy->lastDamage = hurt;
                     }
                     hit = 1;
                 }
@@ -909,7 +909,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                 enemy->lifeCallbackLife[k] = -1;
             }
             enemy->timerCallbackTime = -1;
-            enemy->unk_2ee4 = -1;
+            enemy->periodicSubIndex = -1;
             switch (enemy->flags.deathMode)
             {
             case 3:
@@ -941,14 +941,14 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
             case 2:
                 if (enemy->item >= 0)
                 {
-                    g_EffectManager.SpawnEffect(enemy->unk_2e15 + 4, &enemy->pos, 3, 0xffffffff);
+                    g_EffectManager.SpawnEffect(enemy->deathEffectIndex + 4, &enemy->pos, 3, 0xffffffff);
                     g_ItemManager.SpawnItem(&enemy->pos, enemy->item, bomb);
                 }
                 else if (enemy->item == -1)
                 {
                     if (mgr->dropCounter % 3 == 0)
                     {
-                        g_EffectManager.SpawnEffect(enemy->unk_2e15 + 4, &enemy->pos, 6, 0xffffffff);
+                        g_EffectManager.SpawnEffect(enemy->deathEffectIndex + 4, &enemy->pos, 6, 0xffffffff);
                         g_ItemManager.SpawnItem(&enemy->pos, g_EnemyItemDrops[mgr->dropIndex], bomb);
                         mgr->dropIndex++;
                         if (mgr->dropIndex >= 0x20)
@@ -978,7 +978,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
             if (enemy->deathEffect >= 0)
             {
                 g_EffectManager.SpawnEffect(enemy->deathEffect, &enemy->pos, 1, 0xffffffff);
-                g_EffectManager.SpawnEffect(enemy->unk_2e15 + 4, &enemy->pos, 4, 0xffffffff);
+                g_EffectManager.SpawnEffect(enemy->deathEffectIndex + 4, &enemy->pos, 4, 0xffffffff);
             }
             if (enemy->deathSub >= 0)
             {
@@ -996,7 +996,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                     enemy->lifeCallbackLife[l] = -1;
                 }
                 enemy->timerCallbackTime = -1;
-                enemy->unk_2ee4 = -1;
+                enemy->periodicSubIndex = -1;
                 enemy->shooter = g_Unknown9a9b00.enemyTemplate.shooter;
                 enemy->shootInterval = 0;
                 g_Unknown1347938.StartSub(&enemy->ctx, enemy->deathSub);
@@ -1052,14 +1052,14 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
         {
             enemy->callbackTimer.Tick();
         }
-        if (enemy->unk_4f38 > 0)
+        if (enemy->invulnTimer > 0)
         {
-            enemy->unk_4f38.Sub(1);
+            enemy->invulnTimer.Sub(1);
         }
         if (!enemy->flags.unk_b && enemy->flags.active)
         {
-            enemy->unk_4f44 = mgr->unk_954700[enemy->unk_2e2f];
-            mgr->unk_954700[enemy->unk_2e2f] = enemy;
+            enemy->nextInDrawList = mgr->unk_954700[enemy->drawListIndex];
+            mgr->unk_954700[enemy->drawListIndex] = enemy;
         }
     }
     if (mgr->unk_9546f4.current % 200 == 0 && g_Unknown626270.ChecksumMismatch())
@@ -1116,7 +1116,7 @@ int EnemyManager::DrawEnemies(EnemyManager *mgr, int from, int to)
             }
             enemy->sprite.pos = enemy->pos + enemy->sprite.posOffset;
             enemy->sprite.pos.z = 0.29f;
-            if (!(enemy->unk_4f30 & 0x10) && !enemy->flags.unk_1a)
+            if (!(enemy->trailFlags & 0x10) && !enemy->flags.unk_1a)
             {
                 enemy->sprite.pos.x = g_Unknown626270.arena[0] + enemy->sprite.pos.x;
                 enemy->sprite.pos.y = g_Unknown626270.arena[1] + enemy->sprite.pos.y;
@@ -1137,32 +1137,32 @@ int EnemyManager::DrawEnemies(EnemyManager *mgr, int from, int to)
                     g_SpriteEngine->Draw(sprite);
                 }
             }
-            if (enemy->unk_4f30)
+            if (enemy->trailFlags)
             {
                 savedScale = *(D3DXVECTOR2 *)&enemy->sprite.scaleY;
                 savedColor = enemy->sprite.color;
-                if (!(enemy->unk_4f30 & 8))
+                if (!(enemy->trailFlags & 8))
                 {
-                    for (b = enemy->unk_4f36; b < enemy->unk_4f32; b += enemy->unk_4f36)
+                    for (b = enemy->trailSegmentStep; b < enemy->trailSegmentCount; b += enemy->trailSegmentStep)
                     {
-                        if (enemy->unk_2f78[b].pos.x < -990.0f)
+                        if (enemy->trailBoxes[b].pos.x < -990.0f)
                         {
                             continue;
                         }
                         if (enemy->flags.rotateSprite)
                         {
-                            enemy->sprite.SetRotationZ(enemy->unk_2f78[b].angle);
+                            enemy->sprite.SetRotationZ(enemy->trailBoxes[b].angle);
                         }
-                        if (enemy->unk_4f30 & 2)
+                        if (enemy->trailFlags & 2)
                         {
-                            enemy->sprite.scaleY = savedScale.x - b * savedScale.x / enemy->unk_4f32;
+                            enemy->sprite.scaleY = savedScale.x - b * savedScale.x / enemy->trailSegmentCount;
                         }
-                        if (enemy->unk_4f30 & 4)
+                        if (enemy->trailFlags & 4)
                         {
                             enemy->sprite.alpha =
-                                ((BYTE *)&savedColor)[3] - ((BYTE *)&savedColor)[3] * b / enemy->unk_4f32;
+                                ((BYTE *)&savedColor)[3] - ((BYTE *)&savedColor)[3] * b / enemy->trailSegmentCount;
                         }
-                        enemy->sprite.pos = enemy->unk_2f78[b].pos + enemy->sprite.posOffset;
+                        enemy->sprite.pos = enemy->trailBoxes[b].pos + enemy->sprite.posOffset;
                         enemy->sprite.pos.z = 0.3f;
                         enemy->sprite.pos.x = g_Unknown626270.arena[0] + enemy->sprite.pos.x;
                         enemy->sprite.pos.y = g_Unknown626270.arena[1] + enemy->sprite.pos.y;
@@ -1172,9 +1172,9 @@ int EnemyManager::DrawEnemies(EnemyManager *mgr, int from, int to)
                 else
                 {
                     vertices = 0;
-                    for (b = 0; b < enemy->unk_4f32; b += enemy->unk_4f36)
+                    for (b = 0; b < enemy->trailSegmentCount; b += enemy->trailSegmentStep)
                     {
-                        if (enemy->unk_2f78[b].pos.x < -990.0f)
+                        if (enemy->trailBoxes[b].pos.x < -990.0f)
                         {
                             break;
                         }
@@ -1185,25 +1185,25 @@ int EnemyManager::DrawEnemies(EnemyManager *mgr, int from, int to)
                         uSpan2 = enemy->sprite.spriteData->uvEndX - enemy->sprite.spriteData->uvStartX;
                         uDecr = uSpan2 / ((vertices + 1) / 2 - 1);
                         tu = enemy->sprite.spriteData->uvEndX + enemy->sprite.uvScrollX;
-                        out = (VertexTex1DiffuseXyzrwh *)enemy->unk_39f8;
-                        for (b = 0; b < enemy->unk_4f32; b += enemy->unk_4f36, tu -= uDecr)
+                        out = (VertexTex1DiffuseXyzrwh *)enemy->spriteStripVertices;
+                        for (b = 0; b < enemy->trailSegmentCount; b += enemy->trailSegmentStep, tu -= uDecr)
                         {
-                            if (enemy->unk_2f78[b].pos.x < -990.0f)
+                            if (enemy->trailBoxes[b].pos.x < -990.0f)
                             {
                                 break;
                             }
                             if (b == 0)
                             {
-                                theta = enemy->unk_2f78[0].angle;
+                                theta = enemy->trailBoxes[0].angle;
                             }
                             else
                             {
-                                theta = LerpAngle(enemy->unk_2f78[b - 1].angle, enemy->unk_2f78[b].angle, 0.5f);
+                                theta = LerpAngle(enemy->trailBoxes[b - 1].angle, enemy->trailBoxes[b].angle, 0.5f);
                             }
-                            if ((enemy->unk_4f30 & 2) && b > 0 && b + enemy->unk_4f36 < enemy->unk_4f32)
+                            if ((enemy->trailFlags & 2) && b > 0 && b + enemy->trailSegmentStep < enemy->trailSegmentCount)
                             {
-                                sinA = LerpAngle(enemy->unk_2f78[b + enemy->unk_4f36 - 1].angle,
-                                                 enemy->unk_2f78[enemy->unk_4f36].angle, 0.5f);
+                                sinA = LerpAngle(enemy->trailBoxes[b + enemy->trailSegmentStep - 1].angle,
+                                                 enemy->trailBoxes[enemy->trailSegmentStep].angle, 0.5f);
                                 if (fabsf(lastTheta - theta) < 0.00001f && fabsf(theta - sinA) < 0.00001f)
                                 {
                                     vertices -= 2;
@@ -1215,27 +1215,27 @@ int EnemyManager::DrawEnemies(EnemyManager *mgr, int from, int to)
                             cs2 = cosf(theta);
                             width = 0.0f;
                             height = savedScale.y * enemy->sprite.spriteData->height / 2.0f;
-                            if (enemy->unk_4f30 & 2)
+                            if (enemy->trailFlags & 2)
                             {
-                                theta = 1.0f - (float)b / enemy->unk_4f32;
+                                theta = 1.0f - (float)b / enemy->trailSegmentCount;
                                 width *= theta;
                                 height *= theta;
                             }
                             out[1].diffuse = enemy->sprite.color;
                             out[0].diffuse = out[1].diffuse;
-                            if (enemy->unk_4f30 & 4)
+                            if (enemy->trailFlags & 4)
                             {
                                 ((BYTE *)&out[1].diffuse)[3] =
-                                    ((BYTE *)&savedColor)[3] - ((BYTE *)&savedColor)[3] * b / enemy->unk_4f32;
+                                    ((BYTE *)&savedColor)[3] - ((BYTE *)&savedColor)[3] * b / enemy->trailSegmentCount;
                                 ((BYTE *)&out[0].diffuse)[3] = ((BYTE *)&out[1].diffuse)[3];
                             }
-                            out->pos = enemy->unk_2f78[b].pos;
+                            out->pos = enemy->trailBoxes[b].pos;
                             out->pos.x = cs2 * width - sinA * height + 32.0f + out->pos.x;
                             out->pos.y = sinA * width + cs2 * height + 16.0f + out->pos.y;
                             out->uv.x = tu;
                             out->uv.y = enemy->sprite.spriteData->uvStartY + enemy->sprite.uvScrollY;
                             out++;
-                            out->pos = enemy->unk_2f78[b].pos;
+                            out->pos = enemy->trailBoxes[b].pos;
                             out->pos.x = cs2 * width + sinA * height + 32.0f + out->pos.x;
                             out->pos.y = sinA * width - cs2 * height + 16.0f + out->pos.y;
                             out->uv.x = tu;
@@ -1245,14 +1245,14 @@ int EnemyManager::DrawEnemies(EnemyManager *mgr, int from, int to)
                         if (vertices > 2)
                         {
                             g_SpriteEngine->DrawVertexStrip(&enemy->sprite,
-                                                            (VertexTex1DiffuseXyzrwh *)enemy->unk_39f8, vertices);
+                                                            (VertexTex1DiffuseXyzrwh *)enemy->spriteStripVertices, vertices);
                         }
                     }
                 }
                 *(D3DXVECTOR2 *)&enemy->sprite.scaleY = savedScale;
                 enemy->sprite.color = savedColor;
             }
-            enemy = enemy->unk_4f44;
+            enemy = enemy->nextInDrawList;
         }
     }
     return 1;
@@ -1383,12 +1383,12 @@ int EnemyManager::ClearEnemiesForBonus(int maxBonus, int start)
             {
                 bonus = maxBonus;
             }
-            if (enemy->unk_4f30)
+            if (enemy->trailFlags)
             {
-                for (j = 0; j < enemy->unk_4f32; j += 6)
+                for (j = 0; j < enemy->trailSegmentCount; j += 6)
                 {
-                    g_ItemManager.SpawnItem(&enemy->unk_2f78[j].pos, 6, 1);
-                    g_AsciiText.AddPopup(&enemy->unk_2f78[j].pos, bonus,
+                    g_ItemManager.SpawnItem(&enemy->trailBoxes[j].pos, 6, 1);
+                    g_AsciiText.AddPopup(&enemy->trailBoxes[j].pos, bonus,
                                          bonus >= maxBonus ? 0xffffff00 : 0xffffffff);
                     total += bonus;
                     bonus += 30;

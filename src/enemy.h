@@ -196,15 +196,15 @@ struct Enemy
     // The size of the enemy's hitbox.
     D3DXVECTOR3 hitboxSize;
     // A second hitbox size, tested while its x is above 0.
-    D3DXVECTOR3 unk_2b48;
+    D3DXVECTOR3 extraHitboxSize;
     float angle;
     float angularVelocity;
-    float unk_2b5c;
-    float unk_2b60;
+    float orbitAngle;
+    float orbitAngularVelocity;
     float speed;
     float acceleration;
-    float unk_2b6c;
-    float unk_2b70;
+    float orbitRadius;
+    float orbitRadiusVelocity;
     // Where shots start, from the position.
     D3DXVECTOR3 shootOffset;
     // A timed move, as th06's: the distance, where it starts, and its
@@ -235,7 +235,7 @@ struct Enemy
     int laserIndex;
     int item;
     char deathEffect;
-    BYTE unk_2e15;
+    BYTE deathEffectIndex;
     BYTE unk_2e16;
     // The enemy's slot in EnemyManager::bosses, while it is one.
     BYTE bossIndex;
@@ -248,7 +248,7 @@ struct Enemy
     // flags.spriteDirection: 0 still, 1 left, 2 right, 0xff none yet.
     BYTE spriteDirection;
     // The draw list (EnemyManager::unk_954700) OnUpdate puts it in.
-    BYTE unk_2e2f;
+    BYTE drawListIndex;
     // The sprite scripts for turning, as th06's.
     short turnStill;
     short turnStillFromLeft;
@@ -259,7 +259,7 @@ struct Enemy
     // The bounds of the position, with flags.clampPos.
     float lowerBound[2];
     float upperBound[2];
-    int unk_2e4c;
+    int lastDamage;
     // Effects that follow the enemy, as th06's.
     Effect *effects[25];
     int effectCount;
@@ -273,23 +273,23 @@ struct Enemy
     // timerCallbackSub; -1 for none.
     int timerCallbackTime;
     int timerCallbackSub;
-    int unk_2ee4;
-    EnemyScriptVars unk_2ee8;
-    Timer unk_2f50;
-    Timer unk_2f5c;
+    int periodicSubIndex;
+    EnemyScriptVars periodicSubVars;
+    Timer periodicSubInterval;
+    Timer periodicSubTimer;
     int unk_2f68;
     Timer unk_2f6c;
-    EnemyBox unk_2f78[0x60];
-    EnemyBox unk_39f8[0xc2];
-    BYTE unk_4f30;
+    EnemyBox trailBoxes[0x60];
+    EnemyBox spriteStripVertices[0xc2];
+    BYTE trailFlags;
     unsigned char unk_4f31[0x1];
-    short unk_4f32;
+    short trailSegmentCount;
     // The trail boxes (unk_2f78) below it touch the player, every sixth
     // from 1.
-    short unk_4f34;
-    short unk_4f36;
-    Timer unk_4f38;
-    Enemy *unk_4f44;
+    short trailContactSegments;
+    short trailSegmentStep;
+    Timer invulnTimer;
+    Enemy *nextInDrawList;
 };
 ASSERT_SIZE(Enemy, 0x4f48);
 

@@ -182,17 +182,17 @@ int GetIntOperand(Enemy *enemy, int id)
     case 10048:
         return enemy->acceleration;
     case 10049:
-        return enemy->unk_2b6c;
+        return enemy->orbitRadius;
     case 10053:
-        return enemy->unk_2b5c;
+        return enemy->orbitAngle;
     case 10054:
-        return enemy->unk_2b60;
+        return enemy->orbitAngularVelocity;
     case 10055:
         return g_Rng.GetRandomU32();
     case 10056:
         return g_Rng.GetRandomU32InRange(enemy->ctx.vars.ints3[0]) + enemy->ctx.vars.ints3[1];
     case 10061:
-        return enemy->unk_2e4c;
+        return enemy->lastDamage;
     case 10062:
         return enemy->bossIndex;
     case 10070:
@@ -398,11 +398,11 @@ float GetFloatOperand(Enemy *enemy, float id)
     case 10048:
         return enemy->acceleration;
     case 10049:
-        return enemy->unk_2b6c;
+        return enemy->orbitRadius;
     case 10053:
-        return enemy->unk_2b5c;
+        return enemy->orbitAngle;
     case 10054:
-        return enemy->unk_2b60;
+        return enemy->orbitAngularVelocity;
     case 10055:
         return g_Rng.GetRandomF32ZeroToOne();
     case 10056:
@@ -412,7 +412,7 @@ float GetFloatOperand(Enemy *enemy, float id)
     case 10062:
         return enemy->bossIndex;
     case 10061:
-        return enemy->unk_2e4c;
+        return enemy->lastDamage;
     case 10026:
         return D3DXVec3Length(&(g_Player.position - enemy->pos));
     }
@@ -496,11 +496,11 @@ float *ResolveFloatOperand(Enemy *enemy, float *operand, WORD mask, int bit)
     case 10048:
         return &enemy->acceleration;
     case 10049:
-        return &enemy->unk_2b6c;
+        return &enemy->orbitRadius;
     case 10053:
-        return &enemy->unk_2b5c;
+        return &enemy->orbitAngle;
     case 10054:
-        return &enemy->unk_2b60;
+        return &enemy->orbitAngularVelocity;
     }
     return operand;
 }
@@ -807,15 +807,15 @@ restart:
     {
         goto interrupt;
     }
-    if (enemy->unk_2ee4 >= 0)
+    if (enemy->periodicSubIndex >= 0)
     {
-        enemy->unk_2f5c.Tick();
-        if (enemy->unk_2f5c.AsFrames() >= enemy->unk_2f50.AsFrames())
+        enemy->periodicSubTimer.Tick();
+        if (enemy->periodicSubTimer.AsFrames() >= enemy->periodicSubInterval.AsFrames())
         {
-            enemy->unk_2f5c.Set(0);
+            enemy->periodicSubTimer.Set(0);
             enemy->savedCtx[enemy->stackDepth] = enemy->ctx;
-            enemy->ctx.vars = enemy->unk_2ee8;
-            g_Unknown1347938.StartSub(&enemy->ctx, enemy->unk_2ee4);
+            enemy->ctx.vars = enemy->periodicSubVars;
+            g_Unknown1347938.StartSub(&enemy->ctx, enemy->periodicSubIndex);
             if (enemy->stackDepth < 15)
             {
                 enemy->stackDepth++;
@@ -1067,7 +1067,7 @@ loop:
             enemy->stackDepth--;
             if (enemy->ctx.unk_210)
             {
-                enemy->unk_2ee8 = enemy->ctx.vars;
+                enemy->periodicSubVars = enemy->ctx.vars;
                 enemy->ctx.unk_210 = 0;
             }
             enemy->ctx = enemy->savedCtx[enemy->stackDepth];
@@ -1211,7 +1211,7 @@ loop:
         }
         case 98:
             enemy->deathEffect = *(char *)instr->args;
-            enemy->unk_2e15 = ((BYTE *)instr->args)[1];
+            enemy->deathEffectIndex = ((BYTE *)instr->args)[1];
             enemy->unk_2e16 = ((BYTE *)instr->args)[2];
             break;
         case 73:
@@ -1422,19 +1422,19 @@ loop:
             enemy->moveStart.x = FLOAT_ARG(1);
             enemy->moveStart.y = FLOAT_ARG(2);
             enemy->moveStart.z = FLOAT_ARG(3);
-            enemy->unk_2b5c = FLOAT_ARG(4);
-            enemy->unk_2b60 = FLOAT_ARG(5);
-            enemy->unk_2b6c = FLOAT_ARG(6);
-            enemy->unk_2b70 = FLOAT_ARG(7);
+            enemy->orbitAngle = FLOAT_ARG(4);
+            enemy->orbitAngularVelocity = FLOAT_ARG(5);
+            enemy->orbitRadius = FLOAT_ARG(6);
+            enemy->orbitRadiusVelocity = FLOAT_ARG(7);
             enemy->flags.moveMode = 3;
             break;
         case 57:
-            enemy->unk_2b6c = FLOAT_ARG(0);
-            enemy->unk_2b70 = FLOAT_ARG(1);
+            enemy->orbitRadius = FLOAT_ARG(0);
+            enemy->orbitRadiusVelocity = FLOAT_ARG(1);
             break;
         case 58:
-            enemy->unk_2b5c = FLOAT_ARG(0);
-            enemy->unk_2b60 = FLOAT_ARG(1);
+            enemy->orbitAngle = FLOAT_ARG(0);
+            enemy->orbitAngularVelocity = FLOAT_ARG(1);
             break;
         case 62:
             enemy->lowerBound[0] = FLOAT_ARG(0);
@@ -1508,9 +1508,9 @@ loop:
             enemy->hitboxSize.z = FLOAT_ARG(2);
             break;
         case 153:
-            enemy->unk_2b48.x = FLOAT_ARG(0);
-            enemy->unk_2b48.y = FLOAT_ARG(1);
-            enemy->unk_2b48.z = FLOAT_ARG(2);
+            enemy->extraHitboxSize.x = FLOAT_ARG(0);
+            enemy->extraHitboxSize.y = FLOAT_ARG(1);
+            enemy->extraHitboxSize.z = FLOAT_ARG(2);
             break;
         case 102:
             enemy->flags.unk_9 = instr->args[0].i;
@@ -1600,10 +1600,10 @@ loop:
             enemy->timerCallbackSub = INT_ARG(0);
             break;
         case 144:
-            enemy->unk_2f50.Set(INT_ARG(0));
-            enemy->unk_2ee4 = INT_ARG(1);
-            enemy->unk_2f5c.Set(0);
-            enemy->unk_2ee8 = enemy->ctx.vars;
+            enemy->periodicSubInterval.Set(INT_ARG(0));
+            enemy->periodicSubIndex = INT_ARG(1);
+            enemy->periodicSubTimer.Set(0);
+            enemy->periodicSubVars = enemy->ctx.vars;
             break;
         case 116:
             enemy->flags.shootable = instr->args[0].i;
@@ -1772,20 +1772,20 @@ loop:
             break;
         case 136:
             enemy->flags.unk_d = instr->args[0].i;
-            enemy->unk_2e2f = 2;
+            enemy->drawListIndex = 2;
             break;
         case 137:
             enemy->flags.unk_17 = instr->args[0].i;
             break;
         case 138:
-            enemy->unk_4f30 = instr->args[0].i;
-            enemy->unk_4f32 = INT_ARG(1);
-            enemy->unk_4f34 = INT_ARG(2);
-            enemy->unk_4f36 = INT_ARG(3);
-            if (enemy->unk_4f30 & 8)
+            enemy->trailFlags = instr->args[0].i;
+            enemy->trailSegmentCount = INT_ARG(1);
+            enemy->trailContactSegments = INT_ARG(2);
+            enemy->trailSegmentStep = INT_ARG(3);
+            if (enemy->trailFlags & 8)
             {
-                g_SpriteEngine->FillSpriteStripVertices(&enemy->sprite, (VertexTex1DiffuseXyzrwh *)enemy->unk_39f8,
-                                                        enemy->unk_4f32 / enemy->unk_4f36 * 2);
+                g_SpriteEngine->FillSpriteStripVertices(&enemy->sprite, (VertexTex1DiffuseXyzrwh *)enemy->spriteStripVertices,
+                                                        enemy->trailSegmentCount / enemy->trailSegmentStep * 2);
             }
             break;
         case 140:
@@ -1795,7 +1795,7 @@ loop:
             g_EffectManager.colorScale[3] = FLOAT_ARG(3);
             break;
         case 142:
-            enemy->unk_4f38.Set(INT_ARG(0));
+            enemy->invulnTimer.Set(INT_ARG(0));
             break;
         case 143:
             g_BulletManager.ConvertBulletsToItems(&enemy->pos, FLOAT_ARG(0));
@@ -1855,9 +1855,9 @@ done:
         float radius;
         Vector2 polar;
 
-        enemy->unk_2b5c = AddNormalizeAngle(enemy->unk_2b5c, g_App.gameSpeed * enemy->unk_2b60);
-        enemy->unk_2b6c = g_App.gameSpeed * enemy->unk_2b70 + enemy->unk_2b6c;
-        polar.SetPolar(enemy->unk_2b5c, enemy->unk_2b6c);
+        enemy->orbitAngle = AddNormalizeAngle(enemy->orbitAngle, g_App.gameSpeed * enemy->orbitAngularVelocity);
+        enemy->orbitRadius = g_App.gameSpeed * enemy->orbitRadiusVelocity + enemy->orbitRadius;
+        polar.SetPolar(enemy->orbitAngle, enemy->orbitRadius);
         enemy->velocity.x = polar.x + enemy->moveStart.x - enemy->pos.x;
         enemy->velocity.y = polar.y + enemy->moveStart.y - enemy->pos.y;
         enemy->angle = atan2f(enemy->velocity.y, enemy->velocity.x);
@@ -2266,8 +2266,8 @@ void CopyBossMoveStart(Enemy *enemy, EnemyScriptInstr *instr)
 
     boss = g_Unknown9a9b00.bosses[0];
     enemy->moveStart = boss->pos;
-    enemy->unk_2b6c = boss->unk_2b6c;
-    enemy->unk_2b60 = boss->unk_2b60;
+    enemy->orbitRadius = boss->orbitRadius;
+    enemy->orbitAngularVelocity = boss->orbitAngularVelocity;
     switch (boss->ctx.vars.ints2[0])
     {
     }
