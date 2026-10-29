@@ -188,6 +188,21 @@ struct PlayerBombHit
 };
 ASSERT_SIZE(PlayerBombHit, 0x20);
 
+// One of the 0x60 entries at Player+0x17dc, maybe th06's
+// bulletClearAreas grown. Free while width and unk_10 are 0.
+struct PlayerArea
+{
+    float x;
+    float y;
+    float width;
+    float height;
+    float unk_10;
+    float unk_14;
+    int unk_18;
+    int unk_1c;
+};
+ASSERT_SIZE(PlayerArea, 0x20);
+
 // One of PlayerBomb's 0x80 parts. Its implicit constructor is 0x43bb10.
 struct PlayerBombPart
 {
@@ -236,6 +251,10 @@ public:
     // The angle from `pos` to the player, pi / 2 when they coincide.
     float AngleFrom(D3DXVECTOR3 *pos);
     // Removes the player's update and draw elements from the chain.
+    // Takes the first free one of unk_17dc's first 0x5f entries, or the
+    // last entry, and sets it to a `width` by `height` area at `pos`
+    // with unk_18 0. Returns it.
+    PlayerArea *AddHitboxArea(D3DXVECTOR3 *pos, float width, float height, int unk_1c);
     static void RemoveChain();
 
     Sprite sprite;
@@ -246,7 +265,8 @@ public:
     D3DXVECTOR3 optionPos[2];
     unsigned char unk_9cc[0x10];
     PlayerBombHit unk_9dc[0x70];
-    unsigned char unk_17dc[0xc04];
+    PlayerArea unk_17dc[0x60];
+    unsigned char unk_23dc[0x4];
     // The shot each laser was fired from, by ShotData::phase.
     ShotData *laserShots[3];
     unsigned char unk_23ec[0x1c];

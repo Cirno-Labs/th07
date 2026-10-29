@@ -680,6 +680,27 @@ void Player::StartFiring(Player *player)
     }
 }
 
+PlayerArea *Player::AddHitboxArea(D3DXVECTOR3 *pos, float width, float height, int unk_1c)
+{
+    PlayerArea *area = this->unk_17dc;
+    int i;
+
+    for (i = 0; i < 0x5f; i++, area++)
+    {
+        if (area->width == 0.0f && area->unk_10 == 0.0f)
+        {
+            break;
+        }
+    }
+    area->x = pos->x;
+    area->y = pos->y;
+    area->width = width;
+    area->height = height;
+    area->unk_18 = 0;
+    area->unk_1c = unk_1c;
+    return area;
+}
+
 int Player::OnDraw2(Player *player)
 {
     DrawHitBullets(player);
