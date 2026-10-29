@@ -1584,6 +1584,11 @@ void ShakeAndStartFallingPetals(Enemy *enemy, EnemyScriptInstr *instr);
 // every bullet by it, keeping each sprite in baseSpriteIndex and
 // showing sprites 0x260 to 0x26f as 0x26f.
 void StartSlowdown(Enemy *enemy, EnemyScriptInstr *instr);
+// Undoes StartSlowdown: scales the bullets' velocities back up, restores
+// sprites 0x260 to 0x26f from baseSpriteIndex, sets bit 5 of
+// App::unk_18c if 1 / argument 1 is below 1, and puts the game speed
+// and the stage sprites' interrupts back to 1.
+void EndSlowdown(Enemy *enemy, EnemyScriptInstr *instr);
 // Whether `point`, turned about `origin` by the angle with sine
 // `sinAngle` and cosine `cosAngle`, lies in the `size` box centred on
 // `center` (x and y only).

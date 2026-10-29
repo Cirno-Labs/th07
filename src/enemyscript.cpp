@@ -1148,6 +1148,34 @@ void StartSlowdown(Enemy *enemy, EnemyScriptInstr *instr)
     }
 }
 
+void EndSlowdown(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    Bullet *bullet = g_BulletManager.bullets;
+    float scale = 1.0f / g_App.unk_178;
+    int i;
+
+    for (i = 0; i < 0x400; i++, bullet++)
+    {
+        if (bullet->state == 0)
+        {
+            continue;
+        }
+        bullet->velocity *= scale;
+        if (bullet->sprites.sprite0.spriteIndex >= 0x260 && bullet->sprites.sprite0.spriteIndex <= 0x26f)
+        {
+            g_SpriteEngine->SetSprite(&bullet->sprites.sprite0, bullet->sprites.sprite0.baseSpriteIndex);
+        }
+    }
+    g_App.unk_178 = 1.0f / instr->args[1].i;
+    if (g_App.unk_178 < 1.0f)
+    {
+        g_App.unk_18c |= 0x20;
+    }
+    g_App.unk_178 = 1.0f;
+    g_Unknown1347b00.unk_528[0].pendingInterrupt = 1;
+    g_Unknown1347b00.unk_528[1].pendingInterrupt = 1;
+}
+
 // As in bullet.cpp: defined after its callers, so they call the copy.
 inline void Bullet::FreeBullet()
 {

@@ -105,7 +105,7 @@ address,size,name,symbol
 0x00418b40,820,Func418b40,
 0x00418e80,42,ShakeAndStartFallingPetals,?ShakeAndStartFallingPetals@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x00418eb0,262,StartSlowdown,?StartSlowdown@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
-0x00418fc0,298,Func418fc0,
+0x00418fc0,298,EndSlowdown,?EndSlowdown@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x004190f0,998,Func4190f0,
 0x004194e0,301,Func4194e0,
 0x00419610,197,Func419610,
