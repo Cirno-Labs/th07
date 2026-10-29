@@ -2132,7 +2132,7 @@ void ShakeAndSpinBullets(Enemy *enemy, EnemyScriptInstr *instr)
         {
             continue;
         }
-        if (curBullet->sprites.sprite0.spriteData != NULL && curBullet->unk_c08 == 0)
+        if (curBullet->sprites.sprite0.spriteData != NULL && curBullet->deflectState == 0)
         {
             if (instr->args[1].i == 1 && curBullet->color != 8)
             {
@@ -2168,7 +2168,7 @@ void ShakeAndSpinBullets(Enemy *enemy, EnemyScriptInstr *instr)
             {
                 curBullet->SetTurnCommand(0, 0, 240, angle, 1.0f / 190.0f);
             }
-            curBullet->unk_c08 = 1;
+            curBullet->deflectState = 1;
         }
     }
 }
@@ -2420,11 +2420,11 @@ void UpdateLaserEdgeBullets(Enemy *enemy, EnemyScriptInstr *instr)
                 }
                 if (blt->sprites.sprite0.spriteData != NULL && PointInRotatedBox(&blt->pos, &middle, &size, &l->pos, s, c))
                 {
-                    if (blt->unk_c08 > 0)
+                    if (blt->deflectState > 0)
                     {
-                        blt->unk_c08--;
+                        blt->deflectState--;
                     }
-                    if (blt->unk_c08 == 0)
+                    if (blt->deflectState == 0)
                     {
                         if (blt->speed > 0.5f)
                         {
@@ -2440,7 +2440,7 @@ void UpdateLaserEdgeBullets(Enemy *enemy, EnemyScriptInstr *instr)
                             blt->angle = AddNormalizeAngle(l->angle, -1.5707964f);
                         }
                         ((Vector2 *)&blt->velocity)->SetPolar(blt->angle, g_App.gameSpeed * blt->speed);
-                        blt->unk_c08 = 10;
+                        blt->deflectState = 10;
                         blt->sprites = g_BulletManager.typeSprites[5];
                         g_SpriteEngine->SetSprite(&blt->sprites.sprite0, blt->sprites.sprite0.spriteIndex + blt->color);
                     }
@@ -2491,7 +2491,7 @@ void DeflectBulletsOffLasers(Enemy *enemy, EnemyScriptInstr *instr)
                 {
                     continue;
                 }
-                if (blt->sprites.sprite0.spriteData != NULL && blt->unk_c08 != li + 1 && blt->unk_c08 >= 0 &&
+                if (blt->sprites.sprite0.spriteData != NULL && blt->deflectState != li + 1 && blt->deflectState >= 0 &&
                     PointInRotatedBox(&blt->pos, &middle, &size, &l->pos, s, c))
                 {
                     if (g_GameManager.difficulty < 2)
@@ -2519,11 +2519,11 @@ void DeflectBulletsOffLasers(Enemy *enemy, EnemyScriptInstr *instr)
                     ((Vector2 *)&blt->velocity)->SetPolar(blt->angle, blt->speed);
                     if (g_GameManager.difficulty < 2)
                     {
-                        blt->unk_c08 = -1;
+                        blt->deflectState = -1;
                     }
                     else
                     {
-                        blt->unk_c08 = li + 1;
+                        blt->deflectState = li + 1;
                     }
                 }
             }
@@ -2666,11 +2666,11 @@ void AimTurnedBulletsAtPlayer(Enemy *enemy, EnemyScriptInstr *instr)
         {
             continue;
         }
-        if (bullet->unk_c08 == 1)
+        if (bullet->deflectState == 1)
         {
             bullet->SetAccelerateCommand(0, 0, 0x5a, 0.026666667f, g_Player.AngleFrom(&bullet->pos));
             bullet->ClearCommandFlag(1);
-            bullet->unk_c08 = 2;
+            bullet->deflectState = 2;
         }
     }
 }
@@ -2764,11 +2764,11 @@ void TurnNearbyBullets(Enemy *enemy, EnemyScriptInstr *instr)
         {
             continue;
         }
-        if (bullet->unk_c08 == 0 && bullet->pos.y > enemy->pos.y && bullet->pos.y < 352.0f &&
+        if (bullet->deflectState == 0 && bullet->pos.y > enemy->pos.y && bullet->pos.y < 352.0f &&
             enemy->pos.x - 16.0f < bullet->pos.x && enemy->pos.x + 16.0f > bullet->pos.x)
         {
             bullet->SetTurnCommand(0, 0, 0xa0, (i & 1) ? 0.05235988f : -0.05235988f, -bullet->speed / 180.0f);
-            bullet->unk_c08 = 1;
+            bullet->deflectState = 1;
         }
     }
 }
@@ -2785,7 +2785,7 @@ void FireBackFromUnturned(Enemy *enemy, EnemyScriptInstr *instr)
         {
             continue;
         }
-        if (bullet->unk_c08 == 0 && bullet->sprites.sprite0.spriteIndex >= 0x278 &&
+        if (bullet->deflectState == 0 && bullet->sprites.sprite0.spriteIndex >= 0x278 &&
             bullet->sprites.sprite0.spriteIndex <= 0x27f)
         {
             pattern.pos = bullet->pos;
@@ -2820,7 +2820,7 @@ void ReplaceBulletsWithEnemies(Enemy *enemy, EnemyScriptInstr *instr)
         {
             continue;
         }
-        if (blt->unk_c08 == 0 && blt->sprites.sprite0.spriteIndex == 0x27c)
+        if (blt->deflectState == 0 && blt->sprites.sprite0.spriteIndex == 0x27c)
         {
             childVars.floats[0] = blt->angle;
             childVars.floats[7] = theta;
@@ -2847,7 +2847,7 @@ void CountUnturnedBullets(Enemy *enemy, EnemyScriptInstr *instr)
         {
             continue;
         }
-        if (bullet->unk_c08 == 0 && bullet->sprites.sprite0.spriteIndex == 0x27c)
+        if (bullet->deflectState == 0 && bullet->sprites.sprite0.spriteIndex == 0x27c)
         {
             enemy->ctx.vars.ints[0]++;
         }

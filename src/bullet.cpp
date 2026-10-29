@@ -143,7 +143,7 @@ int BulletManager::SpawnBullet(BulletShooter *shooter, int col, int row, float a
         break;
     }
     cur->state = 1;
-    cur->unk_c00 = 1;
+    cur->spawnedFlag = 1;
     cur->grazed = 0;
     cur->timer.Set(0);
     cur->grazeDelayTimer.Set(0);
@@ -154,7 +154,7 @@ int BulletManager::SpawnBullet(BulletShooter *shooter, int col, int row, float a
     ((Vector2 *)&cur->velocity)->SetPolar(angle, v * g_App.gameSpeed);
     cur->activeFlags = shooter->flags;
     cur->color = shooter->color;
-    cur->unk_c08 = 0;
+    cur->deflectState = 0;
     CopyBulletSprite(&cur->sprites.sprite0, &shooter->typeSprites->sprite0);
     CopyBulletSprite(&cur->sprites.sprite4, &shooter->typeSprites->sprite4);
     cur->sprites.hitboxSize = shooter->typeSprites->hitboxSize;
@@ -286,9 +286,9 @@ void BulletManager::StopAllBullets()
             continue;
         }
         bullet->velocity = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-        bullet->unk_ba4 = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-        bullet->unk_bb8 = 0.0f;
-        bullet->unk_bb4 = 0.0f;
+        bullet->accel = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+        bullet->turnSpeed = 0.0f;
+        bullet->accelSpeed = 0.0f;
         bullet->speed = 0.0f;
         bullet->color = 0;
         g_SpriteEngine->SetSprite(&bullet->sprites.sprite0, bullet->sprites.sprite0.baseSpriteIndex + bullet->color);

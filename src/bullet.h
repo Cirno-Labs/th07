@@ -93,13 +93,13 @@ struct Bullet
     BulletTypeSprites sprites;
     D3DXVECTOR3 pos;
     D3DXVECTOR3 velocity;
-    D3DXVECTOR3 unk_ba4;
+    D3DXVECTOR3 accel;
     float speed;
-    float unk_bb4;
-    float unk_bb8;
+    float accelSpeed;
+    float turnSpeed;
     float angle;
-    float unk_bc0;
-    float unk_bc4;
+    float angularVelocity;
+    float turnAngle;
     Timer timer;
     Timer grazeDelayTimer;
     unsigned char pad_be0[0x10];
@@ -110,16 +110,16 @@ struct Bullet
     // BulletShooter::flags.
     WORD flags;
     short color;
-    WORD unk_bfa;
+    WORD unusedWordBfa;
     // 0 unused; 6 marks the spare bullet after the last.
     WORD state;
     WORD outOfBoundsFrames;
-    BYTE unk_c00;
+    BYTE spawnedFlag;
     BYTE grazed;
     unsigned char pad_c02[0x2];
     // The next bullet in the same BulletManager draw list.
     Bullet *next;
-    int unk_c08;
+    int deflectState;
     // The sound the bullet's behaviors play as they start.
     int sound;
     // The command to start next.
