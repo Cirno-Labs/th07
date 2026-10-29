@@ -100,6 +100,10 @@ int EffectUpdateConverge(Effect *effect);
 // 1, or 0 once the script has ended.
 int EffectUpdateFollowPlayer(Effect *effect);
 
+// Like EffectUpdateConverge, over 240 frames and keeping origin's z, as
+// th06's.
+int EffectUpdateConvergeSlow(Effect *effect);
+
 // The effects, at 0x12fe250: 400 started in turn, 8 reserved slots and
 // a spare.
 class EffectManager
