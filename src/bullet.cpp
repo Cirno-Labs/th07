@@ -147,7 +147,7 @@ int BulletManager::SpawnBullet(BulletShooter *shooter, int col, int row, float a
     cur->angle = AddNormalizeAngle(angle, 0.0f);
     cur->pos = shooter->pos;
     cur->pos.z = 0.1f;
-    ((Unknown4325c0 *)&cur->velocity)->SetPolar(angle, v * g_App.unk_178);
+    ((Vector2 *)&cur->velocity)->SetPolar(angle, v * g_App.unk_178);
     cur->activeFlags = shooter->flags;
     cur->color = shooter->color;
     cur->unk_c08 = 0;
@@ -623,7 +623,7 @@ void SlowBulletStart(Bullet *bullet)
     if (bullet->ex[0].timer <= 16)
     {
         speed = 5.0f - bullet->ex[0].timer.AsFloat() * 5.0f / 16.0f;
-        ((Unknown4325c0 *)&bullet->velocity)->SetPolar(bullet->angle, (speed + bullet->speed) * g_App.unk_178);
+        ((Vector2 *)&bullet->velocity)->SetPolar(bullet->angle, (speed + bullet->speed) * g_App.unk_178);
     }
     else
     {
@@ -659,7 +659,7 @@ void TurnAndAccelerate(Bullet *bullet)
     {
         bullet->angle = AddNormalizeAngle(bullet->angle, g_App.unk_178 * bullet->ex[2].unk_10);
         bullet->speed = g_App.unk_178 * bullet->ex[2].unk_c + bullet->speed;
-        ((Unknown4325c0 *)&bullet->velocity)->SetPolar(bullet->angle, g_App.unk_178 * bullet->speed);
+        ((Vector2 *)&bullet->velocity)->SetPolar(bullet->angle, g_App.unk_178 * bullet->speed);
     }
     bullet->ex[2].timer.Tick();
 }
@@ -688,7 +688,7 @@ void StopTurnAndRestart(Bullet *bullet)
     {
         speed = bullet->speed - bullet->ex[3].timer.AsFloat() * bullet->speed / bullet->ex[3].duration;
     }
-    ((Unknown4325c0 *)&bullet->velocity)->SetPolar(bullet->angle, speed * g_App.unk_178);
+    ((Vector2 *)&bullet->velocity)->SetPolar(bullet->angle, speed * g_App.unk_178);
     bullet->ex[3].timer.Tick();
 }
 
@@ -716,7 +716,7 @@ void StopTurnToAngle(Bullet *bullet)
     {
         speed = bullet->speed - bullet->ex[3].timer.AsFloat() * bullet->speed / bullet->ex[3].duration;
     }
-    ((Unknown4325c0 *)&bullet->velocity)->SetPolar(bullet->angle, speed * g_App.unk_178);
+    ((Vector2 *)&bullet->velocity)->SetPolar(bullet->angle, speed * g_App.unk_178);
     bullet->ex[3].timer.Tick();
 }
 
@@ -744,7 +744,7 @@ void StopTurnToPlayer(Bullet *bullet)
     {
         speed = bullet->speed - bullet->ex[3].timer.AsFloat() * bullet->speed / bullet->ex[3].duration;
     }
-    ((Unknown4325c0 *)&bullet->velocity)->SetPolar(bullet->angle, speed * g_App.unk_178);
+    ((Vector2 *)&bullet->velocity)->SetPolar(bullet->angle, speed * g_App.unk_178);
     bullet->ex[3].timer.Tick();
 }
 
@@ -769,7 +769,7 @@ void BounceOffWalls(Bullet *bullet)
         }
         bullet->speed = bullet->ex[4].unk_c;
         speed = bullet->speed;
-        ((Unknown4325c0 *)&bullet->velocity)->SetPolar(bullet->angle, speed * g_App.unk_178);
+        ((Vector2 *)&bullet->velocity)->SetPolar(bullet->angle, speed * g_App.unk_178);
         bullet->ex[4].duration++;
         if (bullet->ex[4].duration >= bullet->ex[4].unk_24)
         {
@@ -815,7 +815,7 @@ void RunBulletCommands(Bullet *bullet)
             bullet->ex[1].unk_10 = cmd->unk_4 > -990.0f ? cmd->unk_4 : bullet->angle;
             bullet->ex[1].timer.Set(0);
             bullet->ex[1].duration = cmd->unk_8;
-            ((Unknown4325c0 *)&bullet->ex[1].accel)->SetPolar(bullet->ex[1].unk_10, g_App.unk_178 * bullet->ex[1].unk_c);
+            ((Vector2 *)&bullet->ex[1].accel)->SetPolar(bullet->ex[1].unk_10, g_App.unk_178 * bullet->ex[1].unk_c);
             if (bullet->commandIndex != 0 && bullet->sound >= 0)
             {
                 g_SoundPlayer.QueueSound(bullet->sound, 0);

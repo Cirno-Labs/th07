@@ -166,7 +166,7 @@ int FireHomingShot(Player *player, PlayerBullet *bullet, int frame, ShotData *sd
             diffY = player->homingTarget.y - bullet->pos.y;
             angle = AddNormalizeAngle(atan2f(diffY, diffX), sd->angle + 1.5707964f);
             speed = sd->speed * 1.5f;
-            ((Unknown4325c0 *)&bullet->velocity)->SetPolar(angle, speed);
+            ((Vector2 *)&bullet->velocity)->SetPolar(angle, speed);
             bullet->angle = angle;
         }
         return 1;
@@ -184,7 +184,7 @@ int FireAimedShot(Player *player, PlayerBullet *bullet, int frame, ShotData *sd)
         FireShot(player, bullet, sd);
         angle = AddNormalizeAngle(player->unk_b7e58, sd->angle + 1.5707964f);
         speed = sd->speed;
-        ((Unknown4325c0 *)&bullet->velocity)->SetPolar(angle, speed);
+        ((Vector2 *)&bullet->velocity)->SetPolar(angle, speed);
         bullet->angle = angle;
         return 1;
     }
@@ -417,42 +417,42 @@ int UpdateBombShot(Player *player, PlayerBullet *bullet, D3DXVECTOR3 *pos)
         case 0x441:
             bullet->size.x = 32.0f;
             bullet->size.y = 32.0f;
-            ((Unknown4325c0 *)&bullet->velocity)->SetPolar(angle, 4.0f);
+            ((Vector2 *)&bullet->velocity)->SetPolar(angle, 4.0f);
             break;
         case 0x442:
             bullet->size.x = 42.0f;
             bullet->size.y = 42.0f;
-            ((Unknown4325c0 *)&bullet->velocity)->SetPolar(angle, 4.0f);
+            ((Vector2 *)&bullet->velocity)->SetPolar(angle, 4.0f);
             break;
         case 0x443:
             bullet->size.x = 48.0f;
             bullet->size.y = 48.0f;
-            ((Unknown4325c0 *)&bullet->velocity)->SetPolar(angle, 4.0f);
+            ((Vector2 *)&bullet->velocity)->SetPolar(angle, 4.0f);
             break;
         case 0x444:
             bullet->size.x = 56.0f;
             bullet->size.y = 56.0f;
-            ((Unknown4325c0 *)&bullet->velocity)->SetPolar(angle, 4.0f);
+            ((Vector2 *)&bullet->velocity)->SetPolar(angle, 4.0f);
             break;
         case 0x445:
             bullet->size.x = 48.0f;
             bullet->size.y = 48.0f;
-            ((Unknown4325c0 *)&bullet->velocity)->SetPolar(angle, 6.0f);
+            ((Vector2 *)&bullet->velocity)->SetPolar(angle, 6.0f);
             break;
         case 0x446:
             bullet->size.x = 64.0f;
             bullet->size.y = 64.0f;
-            ((Unknown4325c0 *)&bullet->velocity)->SetPolar(angle, 6.0f);
+            ((Vector2 *)&bullet->velocity)->SetPolar(angle, 6.0f);
             break;
         case 0x447:
             bullet->size.x = 80.0f;
             bullet->size.y = 80.0f;
-            ((Unknown4325c0 *)&bullet->velocity)->SetPolar(angle, 6.0f);
+            ((Vector2 *)&bullet->velocity)->SetPolar(angle, 6.0f);
             break;
         case 0x448:
             bullet->size.x = 96.0f;
             bullet->size.y = 96.0f;
-            ((Unknown4325c0 *)&bullet->velocity)->SetPolar(angle, 6.0f);
+            ((Vector2 *)&bullet->velocity)->SetPolar(angle, 6.0f);
             break;
         }
     }

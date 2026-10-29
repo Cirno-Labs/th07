@@ -4,7 +4,7 @@
 #include "item.h"
 #include "unsorted.h"
 
-void Unknown4325c0::SetPolar(float angle, float radius)
+void Vector2::SetPolar(float angle, float radius)
 {
     __asm
     {

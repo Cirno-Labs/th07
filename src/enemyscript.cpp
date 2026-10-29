@@ -1107,7 +1107,7 @@ void UpdateLaserEdgeBullets(Enemy *enemy, EnemyScriptInstr *instr)
                         {
                             blt->angle = AddNormalizeAngle(l->angle, -1.5707964f);
                         }
-                        ((Unknown4325c0 *)&blt->velocity)->SetPolar(blt->angle, g_App.unk_178 * blt->speed);
+                        ((Vector2 *)&blt->velocity)->SetPolar(blt->angle, g_App.unk_178 * blt->speed);
                         blt->unk_c08 = 10;
                         blt->sprites = g_BulletManager.typeSprites[5];
                         g_SpriteEngine->SetSprite(&blt->sprites.sprite0, blt->sprites.sprite0.spriteIndex + blt->color);

@@ -862,7 +862,7 @@ void RenderTextToTexture(int x, int y, int width, int unk4, int fontHeight, int 
 
 // A 2D vector with a polar setter, out of line in the item file. Its
 // callers use it on fields of several objects. Placeholder name.
-struct Unknown4325c0
+struct Vector2
 {
     // Sets x and y to `radius` along `angle`, with one fsincos.
     void SetPolar(float angle, float radius);

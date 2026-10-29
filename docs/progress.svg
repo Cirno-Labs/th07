@@ -61,10 +61,10 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">93.08% (646)</tspan> · <tspan class="decompiled">0.58% (4)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">6.20% (43)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">93.23% (647)</tspan> · <tspan class="decompiled">0.43% (3)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">6.20% (43)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="695.33" height="6" x="0" y="0" class="named"/>
-<rect width="4.31" height="6" x="695.33" y="0" class="decompiled"/>
+<rect width="696.41" height="6" x="0" y="0" class="named"/>
+<rect width="3.23" height="6" x="696.41" y="0" class="decompiled"/>
 <rect width="1.08" height="6" x="699.64" y="0" class="nonmatching"/>
 <rect width="46.28" height="6" x="700.72" y="0" class="todo"/>
 </g>
@@ -395,7 +395,7 @@
 <rect width="12" height="12" x="345" y="90" class="named"><title>0x0043225b CreateTextSurface (35 bytes)</title></rect>
 <rect width="12" height="12" x="360" y="90" class="named"><title>0x0043227e ReleaseTextSurface (37 bytes)</title></rect>
 <rect width="12" height="12" x="375" y="90" class="named"><title>0x004322a3 RenderTextToTexture (796 bytes)</title></rect>
-<rect width="12" height="12" x="390" y="90" class="decompiled"><title>0x004325c0 Unknown4325c0::SetPolar (32 bytes)</title></rect>
+<rect width="12" height="12" x="390" y="90" class="named"><title>0x004325c0 Vector2::SetPolar (32 bytes)</title></rect>
 <rect width="12" height="12" x="405" y="90" class="named"><title>0x004325e0 GameManager::AddPower (71 bytes)</title></rect>
 <rect width="12" height="12" x="420" y="90" class="named"><title>0x00432630 ItemManager::ItemManager (84 bytes)</title></rect>
 <rect width="12" height="12" x="435" y="90" class="named"><title>0x00432690 Item::Item (91 bytes)</title></rect>
@@ -767,10 +767,10 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">69.46%</tspan> · <tspan class="decompiled">0.07%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">30.39%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">69.46%</tspan> · <tspan class="decompiled">0.06%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">30.39%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="518.83" height="6" x="0" y="0" class="named"/>
-<rect width="0.51" height="6" x="518.83" y="0" class="decompiled"/>
+<rect width="518.90" height="6" x="0" y="0" class="named"/>
+<rect width="0.44" height="6" x="518.90" y="0" class="decompiled"/>
 <rect width="0.66" height="6" x="519.34" y="0" class="nonmatching"/>
 <rect width="226.99" height="6" x="520.01" y="0" class="todo"/>
 </g>
@@ -1437,7 +1437,7 @@
 <rect width="0.52" height="1.17" x="743.16" y="192.08" class="named"><title>0x0043225b CreateTextSurface (35 bytes)</title></rect>
 <rect width="0.32" height="1.17" x="746.68" y="192.08" class="named"><title>0x00417af0 SinCos (33 bytes)</title></rect>
 <rect width="0.85" height="0.59" x="732.59" y="196.24" class="named"><title>0x00436110 MidiDevice::MidiDevice (33 bytes)</title></rect>
-<rect width="0.85" height="0.48" x="732.59" y="199.83" class="decompiled"><title>0x004325c0 Unknown4325c0::SetPolar (32 bytes)</title></rect>
+<rect width="0.85" height="0.48" x="732.59" y="199.83" class="named"><title>0x004325c0 Vector2::SetPolar (32 bytes)</title></rect>
 <rect width="0.85" height="0.37" x="732.59" y="203.32" class="named"><title>0x00419d70 ScriptFadeOutMusic (31 bytes)</title></rect>
 <rect width="0.85" height="0.26" x="732.59" y="206.69" class="named"><title>0x004363e0 SwapBytes16 (30 bytes)</title></rect>
 <rect width="0.85" height="0.10" x="732.59" y="209.95" class="named"><title>0x0045dab0 CStreamingSound::~CStreamingSound (28 bytes)</title></rect>
