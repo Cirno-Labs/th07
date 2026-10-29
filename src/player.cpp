@@ -1521,8 +1521,8 @@ void Player::StopBombState(int unk)
     for (i = 0; i < 0x20; i++, angle += D3DX_PI / 16.0f)
     {
         eff = g_EffectManager.SpawnEffect(0x1d, &this->position, 1, 0xffffffff);
-        eff->unk_294 = cosf(angle);
-        eff->unk_298 = sinf(angle);
+        eff->axis.x = cosf(angle);
+        eff->axis.y = sinf(angle);
     }
     g_SoundPlayer.QueueSound(7, 0);
     g_SoundPlayer.QueueSound(0x21, 0);

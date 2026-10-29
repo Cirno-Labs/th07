@@ -16,19 +16,23 @@ struct Effect
 {
     Sprite sprite;
     D3DXVECTOR3 pos;
+    // Set by the spawn functions: zero, or the velocity
+    // EffectManager::SpawnEffectWithVelocity is given.
     D3DXVECTOR3 velocity;
-    // Three vectors, as th06's acceleration, origin and axis maybe; the
-    // type is load-bearing: with fewer, EffectManager's constructor does
-    // not expand Effect's.
-    D3DXVECTOR3 unk_264;
-    D3DXVECTOR3 unk_270;
+    // Added to the position each frame by the moving types, as th06's
+    // velocity, and changed by acceleration.
+    D3DXVECTOR3 step;
+    D3DXVECTOR3 acceleration;
     D3DXVECTOR3 unk_27c;
-    unsigned char unk_288[0xc];
-    // Player::StopBombState sets them to the cosine and sine of the
-    // direction its effects burst in.
-    float unk_294;
-    float unk_298;
-    unsigned char unk_29c[0x1c];
+    // The point an effect circles or comes in to, and its axis or
+    // direction, as th06's. The vector and quaternion types are
+    // load-bearing: with fewer, the Effect constructor copy (0x41a2f0)
+    // takes a larger frame.
+    D3DXVECTOR3 origin;
+    D3DXVECTOR3 axis;
+    D3DXQUATERNION rotation;
+    float radius;
+    float angle;
     Timer timer;
     unsigned char unk_2c4[0x4];
     // From g_EffectInfos. Called every frame while set; the effect ends
