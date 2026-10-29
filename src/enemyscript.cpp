@@ -1194,6 +1194,26 @@ void ScriptPlayMusic(Enemy *enemy, EnemyScriptInstr *instr)
     }
 }
 
+void TurnNearbyBullets(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    Bullet *bullet = g_BulletManager.bullets;
+    int i;
+
+    for (i = 0; i < 0x400; i++, bullet++)
+    {
+        if (bullet->state == 0)
+        {
+            continue;
+        }
+        if (bullet->unk_c08 == 0 && bullet->pos.y > enemy->pos.y && bullet->pos.y < 352.0f &&
+            enemy->pos.x - 16.0f < bullet->pos.x && enemy->pos.x + 16.0f > bullet->pos.x)
+        {
+            bullet->SetTurnCommand(0, 0, 0xa0, (i & 1) ? 0.05235988f : -0.05235988f, -bullet->speed / 180.0f);
+            bullet->unk_c08 = 1;
+        }
+    }
+}
+
 // As in bullet.cpp: defined after its callers, so they call the copy.
 inline void Bullet::FreeBullet()
 {

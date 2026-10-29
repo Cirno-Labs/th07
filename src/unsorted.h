@@ -1596,6 +1596,11 @@ void ScriptFadeOutMusic(Enemy *enemy, EnemyScriptInstr *instr);
 // Plays music slot 2 (App::PlayMidi) and, if that returns nonzero,
 // bgm/th07_13b.mid.
 void ScriptPlayMusic(Enemy *enemy, EnemyScriptInstr *instr);
+// Each bullet not yet turned (unk_c08 0) with y between the enemy's
+// and 352 and x within 16 of it starts turning by pi / 60 a frame
+// (-pi / 60 for even indices) for 0xa0 frames, slowing by its speed /
+// 180, and is marked turned (1).
+void TurnNearbyBullets(Enemy *enemy, EnemyScriptInstr *instr);
 // Whether `point`, turned about `origin` by the angle with sine
 // `sinAngle` and cosine `cosAngle`, lies in the `size` box centred on
 // `center` (x and y only).
