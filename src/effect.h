@@ -164,6 +164,10 @@ int EffectInitDiverge(Effect *effect);
 // axis, easing out to 128 axis lengths at frame 90, at z 0. Returns 1.
 int EffectUpdateDivergeEased(Effect *effect);
 
+// An effect update for type 23: keeps the effect at g_Unknown134ccf8
+// plus g_Unknown134cd04 (at z 0), in the second draw list. Returns 1.
+int EffectUpdateFixedPos(Effect *effect);
+
 // The effects, at 0x12fe250: 400 started in turn, 8 reserved slots and
 // a spare.
 class EffectManager

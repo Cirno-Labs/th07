@@ -368,6 +368,16 @@ int EffectUpdateDivergeEased(Effect *effect)
     return 1;
 }
 
+int EffectUpdateFixedPos(Effect *effect)
+{
+    effect->drawList = 1;
+    effect->unk_27c = g_Unknown134cd04 + g_Unknown134ccf8;
+    effect->pos = effect->unk_27c;
+    effect->pos.z = 0.0f;
+    effect->drawList = 3;
+    return 1;
+}
+
 Effect *EffectManager::SpawnEffect(int type, D3DXVECTOR3 *pos, int count, D3DCOLOR color)
 {
     Effect *effect;
