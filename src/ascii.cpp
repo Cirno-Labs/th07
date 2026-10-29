@@ -161,3 +161,9 @@ int AsciiText::RegisterChain()
     g_Chain.AddToDrawChain(&g_AsciiDrawChain2, 0xb);
     return 0;
 }
+
+void AsciiText::RemoveChain()
+{
+    g_Chain.Remove(&g_AsciiCalcChain);
+    g_Chain.Remove(&g_AsciiDrawChain);
+}

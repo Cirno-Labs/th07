@@ -80,7 +80,8 @@ public:
     // elements (0x10 and 0xb), as th06's. Returns 0, or -1 if adding
     // the update element fails.
     static int RegisterChain();
-    // Removes them.
+    // Removes the update element and the first draw element; the
+    // second draw element stays, as in th06.
     static void RemoveChain();
     // Initializes everything, where th06 calls AsciiText::Initialize:
     // zeroes the sprites, strings, menus and popups, sets the color to
