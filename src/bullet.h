@@ -74,6 +74,10 @@ ASSERT_SIZE(BulletEx, 0x2c);
 // One enemy bullet. Its implicit constructor is 0x423510.
 struct Bullet
 {
+    // Empty. Inline, defined in bullet.cpp after BulletTypeSprites's
+    // constructor, where the original's copy is (0x423510); an implicit
+    // one would come out right after BulletManager's constructor.
+    Bullet();
     // Sets command `idx` to run under `flag`, adds `flag` to flags and
     // starts over from the first command. Returns the command.
     BulletCommand *RestartCommand(int idx, int concurrentFlag, DWORD flag);
@@ -183,6 +187,9 @@ struct BulletShooter
 // One enemy laser, as th06's. Its implicit constructor is 0x4235d0.
 struct Laser
 {
+    // Empty. Inline, defined in bullet.cpp after Bullet's, for the
+    // same reason.
+    Laser();
     Sprite sprite0;
     Sprite sprite1;
     D3DXVECTOR3 pos;

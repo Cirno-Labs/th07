@@ -26,6 +26,14 @@ BulletTypeSprites::BulletTypeSprites()
 {
 }
 
+inline Bullet::Bullet()
+{
+}
+
+inline Laser::Laser()
+{
+}
+
 // Copies `src` over `dst` unless `dst` already runs the same script and
 // `src` has not started one.
 inline void CopyBulletSprite(Sprite *dst, Sprite *src)
