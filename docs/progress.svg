@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">61.82% (429)</tspan> · <tspan class="decompiled">4.76% (33)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">33.29% (231)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">61.82% (429)</tspan> · <tspan class="decompiled">4.90% (34)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">33.14% (230)</tspan></tspan></text>
 <g transform="translate(0 20)">
 <rect width="461.76" height="6" x="0" y="0" class="named"/>
-<rect width="35.52" height="6" x="461.76" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="497.28" y="0" class="nonmatching"/>
-<rect width="248.64" height="6" x="498.36" y="0" class="todo"/>
+<rect width="36.60" height="6" x="461.76" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="498.36" y="0" class="nonmatching"/>
+<rect width="247.56" height="6" x="499.44" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="named"><title>0x00401000 D3DXMatrixIdentity (173 bytes)</title></rect>
@@ -296,7 +296,7 @@
 <rect width="12" height="12" x="360" y="60" class="todo"><title>0x00427a70 Func427a70 (62 bytes)</title></rect>
 <rect width="12" height="12" x="375" y="60" class="todo"><title>0x00427ab0 Func427ab0 (48 bytes)</title></rect>
 <rect width="12" height="12" x="390" y="60" class="todo"><title>0x00427ae0 Func427ae0 (65 bytes)</title></rect>
-<rect width="12" height="12" x="405" y="60" class="todo"><title>0x00427b21 Func427b21 (51 bytes)</title></rect>
+<rect width="12" height="12" x="405" y="60" class="decompiled"><title>0x00427b21 Unknown49fbf0::EndBombName (51 bytes)</title></rect>
 <rect width="12" height="12" x="420" y="60" class="todo"><title>0x00427b54 Func427b54 (78 bytes)</title></rect>
 <rect width="12" height="12" x="435" y="60" class="todo"><title>0x00427ba2 Func427ba2 (64 bytes)</title></rect>
 <rect width="12" height="12" x="450" y="60" class="todo"><title>0x00427be2 Unknown49fbf0::Func427be2 (22 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">47.03%</tspan> · <tspan class="decompiled">0.97%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">51.92%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">47.03%</tspan> · <tspan class="decompiled">0.98%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">51.90%</tspan></tspan></text>
 <g transform="translate(0 20)">
 <rect width="351.30" height="6" x="0" y="0" class="named"/>
-<rect width="7.21" height="6" x="351.30" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="358.51" y="0" class="nonmatching"/>
-<rect width="387.82" height="6" x="359.18" y="0" class="todo"/>
+<rect width="7.31" height="6" x="351.30" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="358.61" y="0" class="nonmatching"/>
+<rect width="387.72" height="6" x="359.28" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1395,7 +1395,7 @@
 <rect width="1.47" height="1.87" x="715.32" y="198.47" class="todo"><title>0x004010b0 Func4010b0 (52 bytes)</title></rect>
 <rect width="1.47" height="1.87" x="715.32" y="203.35" class="named"><title>0x0045e550 File::File (52 bytes)</title></rect>
 <rect width="1.47" height="1.78" x="715.32" y="208.22" class="todo"><title>0x00427760 Func427760 (51 bytes)</title></rect>
-<rect width="1.35" height="1.91" x="719.79" y="178.61" class="todo"><title>0x00427b21 Func427b21 (51 bytes)</title></rect>
+<rect width="1.35" height="1.91" x="719.79" y="178.61" class="decompiled"><title>0x00427b21 Unknown49fbf0::EndBombName (51 bytes)</title></rect>
 <rect width="1.35" height="1.91" x="724.15" y="178.61" class="named"><title>0x00444bed FreeListNodes (51 bytes)</title></rect>
 <rect width="1.35" height="1.91" x="728.50" y="178.61" class="named"><title>0x0045e4b0 CWaveFile::Close (51 bytes)</title></rect>
 <rect width="1.35" height="1.91" x="732.85" y="178.61" class="named"><title>0x0045e8b0 File::Seek (51 bytes)</title></rect>

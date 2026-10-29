@@ -1160,10 +1160,42 @@ int LoadScoreFile();
 // 999999 as `max`, which it ignores.
 void IncrementStatCounter(DWORD *count, DWORD max);
 
-// The object at 0x49fbf0. Placeholder name; only what is known so far.
+// The bulk of Unknown49fbf0 (th06's GuiImpl), 0x20a30 bytes. Only what
+// is known so far.
+struct GuiImpl
+{
+    Sprite sprites[0x21];
+    unsigned char unk_4bcc[0x4];
+    Sprite unk_4bd0[5];
+    Sprite bombPortrait;
+    Sprite spellPortrait;
+    Sprite unk_5be4;
+    Sprite unk_5e30;
+    Sprite unk_607c;
+    Sprite unk_62c8;
+    Sprite bombName;
+    Sprite spellName;
+    Sprite bombNameBar;
+    Sprite spellNameBar;
+    Sprite unk_6e44;
+    Sprite unk_7090;
+    Sprite unk_72dc;
+    Sprite unk_7528;
+    Sprite unk_7774;
+    Sprite unk_79c0[0xa8];
+    unsigned char unk_1fba0[0xe90];
+};
+ASSERT_SIZE(GuiImpl, 0x20a30);
+
+// The object at 0x49fbf0, th06's Gui. Placeholder name; only what is
+// known so far.
 class Unknown49fbf0
 {
 public:
+    // Sets bombName's pendingInterrupt to 1 and bombNameBar's to 2, as
+    // the bomb ends. th06 interrupted bombName only.
+    void EndBombName();
+
     // Whether the pointer at +8 is set and the int at its +0x1fbac is
     // not negative, or is -2.
     int Func42ad66();
@@ -1179,6 +1211,7 @@ public:
     unsigned int powerChanged : 2;
     unsigned int grazeChanged : 2;
     unsigned int unk_4_8 : 2;
+    GuiImpl *impl;
 };
 extern Unknown49fbf0 g_Unknown49fbf0;
 
