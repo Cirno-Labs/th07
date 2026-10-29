@@ -372,7 +372,7 @@ void GuiImpl::StartMsgScript(int index)
     this->msg.shadowColors[1] = 0;
     this->msg.skippable = 1;
     g_BulletManager.ClearAll(1);
-    g_Unknown9a9b00.Func423090(0, 0);
+    g_Unknown9a9b00.ClearEnemiesForBonus(0, 0);
     g_ItemManager.CollectAll();
     if (index % 10 == 0)
     {

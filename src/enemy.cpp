@@ -5,6 +5,7 @@
 #include "ascii.h"
 #include "bullet.h"
 #include "enemy.h"
+#include "item.h"
 #include "player.h"
 #include "replay.h"
 #include "unsorted.h"
@@ -530,4 +531,58 @@ int Unknown9a9b00::AnyBossActive()
         }
     }
     return 0;
+}
+
+int Unknown9a9b00::ClearEnemiesForBonus(int maxBonus, int start)
+{
+    Enemy *enemy = this->enemies;
+    int total = start;
+    int bonus = 2000;
+    int k;
+    int j;
+
+    for (k = 0; k < 0x1e0; k++, enemy++)
+    {
+        if (!enemy->flags.active)
+        {
+            continue;
+        }
+        if (enemy->flags.isBoss)
+        {
+            continue;
+        }
+        enemy->life = 0;
+        if (enemy->flags.unk_d)
+        {
+            g_ItemManager.SpawnItem(&enemy->pos, 6, 1);
+            g_AsciiText.AddPopup(&enemy->pos, bonus, bonus >= maxBonus ? 0xffffff00 : 0xffffffff);
+            total += bonus;
+            bonus += 30;
+            if (bonus > maxBonus)
+            {
+                bonus = maxBonus;
+            }
+            if (enemy->unk_4f30)
+            {
+                for (j = 0; j < enemy->unk_4f32; j += 6)
+                {
+                    g_ItemManager.SpawnItem(&enemy->unk_2f78[j].pos, 6, 1);
+                    g_AsciiText.AddPopup(&enemy->unk_2f78[j].pos, bonus,
+                                         bonus >= maxBonus ? 0xffffff00 : 0xffffffff);
+                    total += bonus;
+                    bonus += 30;
+                    if (bonus > maxBonus)
+                    {
+                        bonus = maxBonus;
+                    }
+                }
+            }
+        }
+        if (!enemy->flags.shootable && enemy->deathSub >= 0)
+        {
+            g_Unknown1347938.StartSub(&enemy->ctx, enemy->deathSub);
+            enemy->deathSub = -1;
+        }
+    }
+    return total;
 }

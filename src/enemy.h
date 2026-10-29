@@ -203,7 +203,10 @@ struct Enemy
     Timer unk_2f6c;
     EnemyBox unk_2f78[0x60];
     EnemyBox unk_39f8[0xc2];
-    unsigned char unk_4f30[0x8];
+    BYTE unk_4f30;
+    unsigned char unk_4f31[0x1];
+    short unk_4f32;
+    unsigned char unk_4f34[0x4];
     Timer unk_4f38;
     unsigned char unk_4f44[0x4];
 };
@@ -237,8 +240,13 @@ public:
     // `vars` once the subroutine starts.
     Enemy *SpawnWithVars(short sub, D3DXVECTOR3 *pos, int life, char item, int score,
                       EnemyScriptVars *vars);
+    // Kills every enemy but the bosses, as th06's spell card ends do.
+    // Those with flags.unk_d, and their first unk_4f32 boxes (every
+    // sixth, while unk_4f30 is set), each drop item 6 and show a bonus
+    // that starts at 2000 and grows by 30 up to `maxBonus` (white
+    // below it, yellow from it). Returns `start` plus the bonuses.
     // GuiImpl::StartMsgScript calls it with (0, 0) as a dialogue starts.
-    void Func423090(int unk0, int unk1);
+    int ClearEnemiesForBonus(int maxBonus, int start);
     // Whether any of bosses is set.
     int AnyBossActive();
 
