@@ -61,10 +61,10 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">92.22% (640)</tspan> · <tspan class="decompiled">1.44% (10)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">6.20% (43)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">92.80% (644)</tspan> · <tspan class="decompiled">0.86% (6)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">6.20% (43)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="688.88" height="6" x="0" y="0" class="named"/>
-<rect width="10.76" height="6" x="688.88" y="0" class="decompiled"/>
+<rect width="693.18" height="6" x="0" y="0" class="named"/>
+<rect width="6.46" height="6" x="693.18" y="0" class="decompiled"/>
 <rect width="1.08" height="6" x="699.64" y="0" class="nonmatching"/>
 <rect width="46.28" height="6" x="700.72" y="0" class="todo"/>
 </g>
@@ -450,9 +450,9 @@
 <rect width="12" height="12" x="420" y="105" class="named"><title>0x00436ce0 MidiPlayer::OnTimer (619 bytes)</title></rect>
 <rect width="12" height="12" x="435" y="105" class="named"><title>0x00436f50 MidiPlayer::ProcessEvent (1868 bytes)</title></rect>
 <rect width="12" height="12" x="450" y="105" class="named"><title>0x004377f0 MidiPlayer::SendVolume (187 bytes)</title></rect>
-<rect width="12" height="12" x="465" y="105" class="decompiled"><title>0x004378b0 Unknown4378b0::OnTimer (22 bytes)</title></rect>
-<rect width="12" height="12" x="480" y="105" class="decompiled"><title>0x004378d0 Unknown4378b0::StartTimer (25 bytes)</title></rect>
-<rect width="12" height="12" x="495" y="105" class="decompiled"><title>0x004378f0 Unknown4378b0::StopTimer (19 bytes)</title></rect>
+<rect width="12" height="12" x="465" y="105" class="named"><title>0x004378b0 MidiTimer::OnTimer (22 bytes)</title></rect>
+<rect width="12" height="12" x="480" y="105" class="named"><title>0x004378d0 MidiTimer::StartTimer (25 bytes)</title></rect>
+<rect width="12" height="12" x="495" y="105" class="named"><title>0x004378f0 MidiTimer::StopTimer (19 bytes)</title></rect>
 <rect width="12" height="12" x="510" y="105" class="named"><title>0x00437903 DebugPrint2 (5 bytes)</title></rect>
 <rect width="12" height="12" x="525" y="105" class="named"><title>0x00437908 App::CheckClockDrift (817 bytes)</title></rect>
 <rect width="12" height="12" x="540" y="105" class="named"><title>0x00437c39 SpriteEngine::ReleaseVertexBuffer (55 bytes)</title></rect>
@@ -465,7 +465,7 @@
 <rect width="12" height="12" x="645" y="105" class="named"><title>0x004386f3 MeasureRefreshRate (659 bytes)</title></rect>
 <rect width="12" height="12" x="660" y="105" class="named"><title>0x00438986 App::AddedCallback (1116 bytes)</title></rect>
 <rect width="12" height="12" x="675" y="105" class="named"><title>0x00438de2 App::DeletedCallback (525 bytes)</title></rect>
-<rect width="12" height="12" x="690" y="105" class="decompiled"><title>0x00438fef Unknown4378b0::~Unknown4378b0 (17 bytes)</title></rect>
+<rect width="12" height="12" x="690" y="105" class="named"><title>0x00438fef MidiTimer::~MidiTimer (17 bytes)</title></rect>
 <rect width="12" height="12" x="705" y="105" class="named"><title>0x00439000 App::RegisterChain (165 bytes)</title></rect>
 <rect width="12" height="12" x="720" y="105" class="named"><title>0x004390a5 DrawFps (860 bytes)</title></rect>
 <rect width="12" height="12" x="735" y="105" class="named"><title>0x00439401 Timer::Add (198 bytes)</title></rect>
@@ -767,10 +767,10 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">69.42%</tspan> · <tspan class="decompiled">0.11%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">30.39%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">69.44%</tspan> · <tspan class="decompiled">0.09%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">30.39%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="518.54" height="6" x="0" y="0" class="named"/>
-<rect width="0.80" height="6" x="518.54" y="0" class="decompiled"/>
+<rect width="518.70" height="6" x="0" y="0" class="named"/>
+<rect width="0.64" height="6" x="518.70" y="0" class="decompiled"/>
 <rect width="0.66" height="6" x="519.34" y="0" class="nonmatching"/>
 <rect width="226.99" height="6" x="520.01" y="0" class="todo"/>
 </g>
@@ -1445,23 +1445,23 @@
 <rect width="0.46" height="0.15" x="739.90" y="196.24" class="named"><title>0x004363c0 MmTimer::DefaultCallback (26 bytes)</title></rect>
 <rect width="0.32" height="0.15" x="743.36" y="196.24" class="named"><title>0x0041a350 EffectManager::Reset (25 bytes)</title></rect>
 <rect width="0.32" height="0.15" x="746.68" y="196.24" class="named"><title>0x00429a36 Gui::StartMsg (25 bytes)</title></rect>
-<rect width="0.53" height="0.10" x="736.45" y="199.40" class="decompiled"><title>0x004378d0 Unknown4378b0::StartTimer (25 bytes)</title></rect>
+<rect width="0.53" height="0.10" x="736.45" y="199.40" class="named"><title>0x004378d0 MidiTimer::StartTimer (25 bytes)</title></rect>
 <rect width="0.39" height="0.10" x="739.98" y="199.40" class="named"><title>0x004019e0 AsciiText::OnDraw2 (24 bytes)</title></rect>
 <rect width="0.39" height="0.10" x="743.36" y="199.40" class="named"><title>0x00442350 Player::OnDraw2 (24 bytes)</title></rect>
 <rect width="0.25" height="0.10" x="746.75" y="199.40" class="named"><title>0x0041a730 EffectInitForeground (23 bytes)</title></rect>
 <rect width="0.10" height="0.60" x="736.45" y="202.36" class="named"><title>0x00422ca0 EnemyManager::OnDraw (23 bytes)</title></rect>
 <rect width="0.10" height="0.60" x="736.45" y="205.96" class="named"><title>0x0045c6f0 CSoundManager::CSoundManager (23 bytes)</title></rect>
 <rect width="0.10" height="0.44" x="736.45" y="209.56" class="decompiled"><title>0x00427be2 Gui::Func427be2 (22 bytes)</title></rect>
-<rect width="0.19" height="0.10" x="739.12" y="202.36" class="decompiled"><title>0x004378b0 Unknown4378b0::OnTimer (22 bytes)</title></rect>
+<rect width="0.19" height="0.10" x="739.12" y="202.36" class="named"><title>0x004378b0 MidiTimer::OnTimer (22 bytes)</title></rect>
 <rect width="0.19" height="0.10" x="739.12" y="205.25" class="named"><title>0x0043831b App::OnDraw (20 bytes)</title></rect>
 <rect width="0.19" height="0.10" x="739.12" y="207.88" class="decompiled"><title>0x0045e500 Unknown45e500::~Unknown45e500 (20 bytes)</title></rect>
 <rect width="0.19" height="0.10" x="739.12" y="210.51" class="named"><title>0x00436140 MidiDevice::~MidiDevice (19 bytes)</title></rect>
-<rect width="0.10" height="0.11" x="742.32" y="202.36" class="decompiled"><title>0x004378f0 Unknown4378b0::StopTimer (19 bytes)</title></rect>
+<rect width="0.10" height="0.11" x="742.32" y="202.36" class="named"><title>0x004378f0 MidiTimer::StopTimer (19 bytes)</title></rect>
 <rect width="0.10" height="0.11" x="744.88" y="202.36" class="named"><title>0x0045e060 CWaveFile::~CWaveFile (19 bytes)</title></rect>
 <rect width="0.10" height="0.11" x="747.44" y="202.36" class="named"><title>0x0045f6f0 DatArchive::~DatArchive (19 bytes)</title></rect>
 <rect width="0.10" height="0.10" x="742.32" y="205.47" class="named"><title>0x0042d03a Gui::AddedCallback (17 bytes)</title></rect>
 <rect width="0.10" height="0.10" x="742.32" y="207.98" class="named"><title>0x00431a4b GdiSurface::~GdiSurface (17 bytes)</title></rect>
-<rect width="0.10" height="0.10" x="742.32" y="210.49" class="decompiled"><title>0x00438fef Unknown4378b0::~Unknown4378b0 (17 bytes)</title></rect>
+<rect width="0.10" height="0.10" x="742.32" y="210.49" class="named"><title>0x00438fef MidiTimer::~MidiTimer (17 bytes)</title></rect>
 <rect width="0.10" height="0.10" x="745.16" y="205.47" class="named"><title>0x0045c4c8 MainMenu::AddedCallback (17 bytes)</title></rect>
 <rect width="0.10" height="0.10" x="747.58" y="205.47" class="named"><title>0x0045e1f0 CWaveFile::GetSize (17 bytes)</title></rect>
 <rect width="0.10" height="0.10" x="745.16" y="208.41" class="named"><title>0x00418110 NoOp (16 bytes)</title></rect>

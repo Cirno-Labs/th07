@@ -647,17 +647,17 @@ void MidiPlayer::ProcessEvent(MidiTrack *track)
     track->delta += deltaTime;
 }
 
-void Unknown4378b0::OnTimer()
+void MidiTimer::OnTimer()
 {
     QueryPerformanceCounter(&g_Unknown135e210);
 }
 
-void Unknown4378b0::StartTimer()
+void MidiTimer::StartTimer()
 {
     this->Start(6, NULL, 0);
 }
 
-void Unknown4378b0::StopTimer()
+void MidiTimer::StopTimer()
 {
     this->Stop();
 }

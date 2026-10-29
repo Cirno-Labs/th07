@@ -35,7 +35,7 @@ struct ControllerMapping
 ASSERT_SIZE(ControllerMapping, 0x12);
 
 class MidiPlayer;
-class Unknown4378b0;
+class MidiTimer;
 
 // The config's option bits, in th06's order; the ones used so far test
 // the same bits as th06's.
@@ -186,7 +186,7 @@ public:
     D3DVIEWPORT8 viewport;
     D3DPRESENT_PARAMETERS presentParams;
     // Started by AddedCallback, stopped by DeletedCallback.
-    Unknown4378b0 *timer;
+    MidiTimer *timer;
     // The start of the config, which is 0x38 bytes long, as in th06.
     ControllerMapping controllerMapping;
     // 0x70002; LoadConfig resets a config with any other.

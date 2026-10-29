@@ -688,7 +688,7 @@ int App::AddedCallback(App *arg)
     g_Unknown626270.plst.version = 1;
     LoadPlstChunk(scoreDat, &g_Unknown626270.plst);
     ReleaseScoreDat(scoreDat);
-    g_App.timer = new Unknown4378b0();
+    g_App.timer = new MidiTimer();
     if (g_App.timer != NULL)
     {
         g_App.timer->StartTimer();
