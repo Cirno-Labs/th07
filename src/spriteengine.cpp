@@ -18,7 +18,10 @@ const D3DFORMAT g_TextureFormats[6] = {
 const int g_TextureFormatSizes[7] = {
     4, 4, 2, 2, 3, 2, 0,
 };
-const float g_Half = 0.5f;
+// The original's DrawQuad reads the compiler's own 0.5f constant
+// (__real@3f000000), which inline asm can't name. As a selectany
+// constant, /OPT:ICF folds g_Half into it.
+__declspec(selectany) extern const float g_Half = 0.5f;
 VertexTex1Xyzrwh g_Quad[4];
 VertexTex1DiffuseXyzrwh g_DiffuseQuad[4];
 VertexTex1DiffuseXyz g_DiffuseQuadXyz[4];
