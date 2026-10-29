@@ -663,7 +663,7 @@ BYTE *GetPadButtons();
 WORD ReadButtons();
 // Not named yet; the title menu calls it when it comes back from
 // another scene.
-void Func42e1f8();
+void DrawLoadingScreen();
 
 // The buttons held this frame and the frame before, as bits.
 extern WORD g_Buttons;

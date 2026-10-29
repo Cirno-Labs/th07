@@ -4,6 +4,7 @@
 
 #include <string.h>
 
+#include "sprite.h"
 #include "unsorted.h"
 
 Unknown626270::Unknown626270()
@@ -120,4 +121,35 @@ int Unknown626270::OnDraw(Unknown626270 *mgr)
         mgr->unk_93dc = 2;
     }
     return 1;
+}
+
+void DrawLoadingScreen()
+{
+    Sprite sprite;
+    float rect[4];
+
+    rect[0] = 0.0f;
+    rect[1] = 0.0f;
+    rect[2] = 640.0f;
+    rect[3] = 480.0f;
+    g_SpriteEngine->InitSprite(&sprite, 0x10c);
+    sprite.pos = D3DXVECTOR3(528.0f, 448.0f, 0.0f);
+    g_App.d3dDevice->BeginScene();
+    DrawColorRect(rect, 0xa0000000);
+    g_SpriteEngine->DrawUnrotated(&sprite);
+    g_SpriteEngine->FlushQuadBatch();
+    g_App.d3dDevice->EndScene();
+    if (FAILED(g_App.d3dDevice->Present(NULL, NULL, NULL, NULL)))
+    {
+        g_App.d3dDevice->Reset(&g_App.presentParams);
+    }
+    g_App.d3dDevice->BeginScene();
+    DrawColorRect(rect, 0xa0000000);
+    g_SpriteEngine->DrawUnrotated(&sprite);
+    g_SpriteEngine->FlushQuadBatch();
+    g_App.d3dDevice->EndScene();
+    if (FAILED(g_App.d3dDevice->Present(NULL, NULL, NULL, NULL)))
+    {
+        g_App.d3dDevice->Reset(&g_App.presentParams);
+    }
 }

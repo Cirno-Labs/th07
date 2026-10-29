@@ -2257,7 +2257,7 @@ int MainMenu::InitTitleScene()
     g_Unknown626270.unk_93d8 &= ~1;
     if (g_App.prevScene != 0)
     {
-        Func42e1f8();
+        DrawLoadingScreen();
     }
     if (g_SpriteEngine->LoadAnm(0x20, "data/title01.anm", 0x900) != 0)
     {
