@@ -732,3 +732,42 @@ void UpdateMarisaABombFocused(Player *player)
     player->playerState = 3;
     player->bomb.timer.Tick();
 }
+
+void DrawMarisaABombFocused(Player *player)
+{
+    Sprite *curSprite;
+    PlayerBombPart *orb;
+    int i;
+
+    DimPlayAreaForBomb(player);
+    for (orb = player->bomb.parts, i = 0; i < 24; i++, orb++)
+    {
+        if (player->bomb.parts[i].state == 0)
+        {
+            continue;
+        }
+        curSprite = orb->sprites;
+        curSprite->pos = orb->pos;
+        curSprite->pos.x = g_Unknown626270.arena[0] + curSprite->pos.x;
+        curSprite->pos.y = g_Unknown626270.arena[1] + curSprite->pos.y;
+        curSprite->pos.z = 0.3f;
+        curSprite->scaleY = 3.2f;
+        curSprite->scaleX = 3.2f;
+        g_SpriteEngine->Draw(curSprite);
+        curSprite->pos = orb->trail[3];
+        curSprite->pos.x = g_Unknown626270.arena[0] + curSprite->pos.x;
+        curSprite->pos.y = g_Unknown626270.arena[1] + curSprite->pos.y;
+        curSprite->pos.z = 0.32f;
+        curSprite->scaleY = 2.2f;
+        curSprite->scaleX = 2.2f;
+        g_SpriteEngine->Draw(curSprite);
+        curSprite->pos = orb->trail[7];
+        curSprite->pos.x = g_Unknown626270.arena[0] + curSprite->pos.x;
+        curSprite->pos.y = g_Unknown626270.arena[1] + curSprite->pos.y;
+        curSprite->pos.z = 0.34f;
+        curSprite->scaleY = 1.3f;
+        curSprite->scaleX = 1.3f;
+        g_SpriteEngine->Draw(curSprite);
+        curSprite++;
+    }
+}

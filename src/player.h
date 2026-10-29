@@ -661,3 +661,7 @@ void DrawMarisaABomb(Player *player);
 // (AddHitboxAreaCircle, 96) and, until it has hit 80 times, a 128 box
 // of 12 damage. A star ends once its y is below -256.
 void UpdateMarisaABombFocused(Player *player);
+
+// Draws Marisa A's focused bomb: the stage tint, then each star at
+// its position and at trail[3] and trail[7], shrinking.
+void DrawMarisaABombFocused(Player *player);
