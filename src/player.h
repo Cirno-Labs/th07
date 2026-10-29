@@ -733,3 +733,12 @@ void UpdateSakuyaBBomb(Player *player);
 // Draws Sakuya B's bomb: the stage tint, then each of the four sprites,
 // moved into the play area for the draw and back.
 void DrawSakuyaBBomb(Player *player);
+
+// Sakuya B's focused bomb: 300 frames with stateTimer at 420, an aura
+// and the player sped up to 1.5; two sprites start at the player and
+// are pulled towards it, keeping a trail of 32 positions; the first is
+// an area (AddHitboxAreaCircle, 96) and a 160 box of 1 damage. Stops
+// all bullets at frames 40 and 100; ends with an area at the player
+// (800) and sets unk_17dc[0] to a 448 by 512 box at the play area's
+// middle.
+void UpdateSakuyaBBombFocused(Player *player);

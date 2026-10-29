@@ -1300,3 +1300,90 @@ void DrawSakuyaBBomb(Player *player)
         knife->sprites[0].pos.y -= g_Unknown626270.arena[1];
     }
 }
+
+void UpdateSakuyaBBombFocused(Player *player)
+{
+    int i;
+    Sprite *spr;
+    PlayerBombPart *knife;
+    D3DXVECTOR3 tmp;
+    int k;
+
+    if (player->bomb.timer >= player->bomb.duration)
+    {
+        g_Unknown49fbf0.EndBombName();
+        player->bomb.running = 0;
+        player->moveScaleY = 1.0f;
+        player->moveScaleX = 1.0f;
+        player->AddHitboxAreaCircle(&player->position, 800.0f, 0.0f, 0, 6);
+        player->unk_17dc[0].x = 192.0f;
+        player->unk_17dc[0].y = 224.0f;
+        player->unk_17dc[0].width = 448.0f;
+        player->unk_17dc[0].height = 512.0f;
+        return;
+    }
+    if (player->bomb.timer.HasTickedTo(0))
+    {
+        g_ItemManager.CollectAll();
+        g_Unknown49fbf0.ShowBombName(0x4a3, "時符「プライベートスクウェア」");
+        player->bomb.duration = 300;
+        player->stateTimer.Set(420);
+        SpawnBombAura(player);
+        player->unk_23dc = 0;
+        for (knife = player->bomb.parts, i = 0; i < 2; i++, knife++)
+        {
+            knife->state = 1;
+            spr = knife->sprites;
+            g_SpriteEngine->StartScriptAtOrigin(spr, i + 0x40d);
+            knife->pos = player->position;
+            for (k = 31; k >= 0; k--)
+            {
+                knife->trail[k] = knife->pos;
+            }
+            knife->velocity.x = 0.0f;
+            knife->velocity.y = 0.0f;
+            knife->velocity.z = 0.0f;
+            knife->acceleration.x = 0.0f;
+            knife->acceleration.y = -0.008f;
+            knife->acceleration.z = 0.0f;
+        }
+        player->moveScaleY = 1.5f;
+        player->moveScaleX = 1.5f;
+        g_SoundPlayer.QueueSound(0x13, 0);
+        SetBombDrain(player, 6000, 0.29f);
+    }
+    player->AddHitboxAreaCircle(&player->bomb.parts[0].pos, 96.0f, 0.0f, 0, 6);
+    player->unk_9dc[0].pos.x = player->bomb.parts[0].pos.x;
+    player->unk_9dc[0].pos.y = player->bomb.parts[0].pos.y;
+    player->unk_9dc[0].size.x = 160.0f;
+    player->unk_9dc[0].size.y = 160.0f;
+    player->unk_9dc[0].unk_18 = 1;
+    if (player->bomb.timer.HasTickedTo(40))
+    {
+        ScreenEffect::StartEffect(1, 60, 1, 7, 0);
+        g_BulletManager.StopAllBullets();
+    }
+    if (player->bomb.timer.HasTickedTo(100))
+    {
+        g_BulletManager.StopAllBullets();
+        ScreenEffect::StartEffect(1, 70, 24, 0, 0);
+    }
+    for (knife = player->bomb.parts, i = 0; i < 2; i++, knife++)
+    {
+        if (knife->state == 0)
+        {
+            continue;
+        }
+        knife->acceleration = (player->position - knife->pos) / 1700.0f * g_App.unk_178;
+        knife->velocity += knife->acceleration * g_App.unk_178;
+        for (k = 31; k > 0; k--)
+        {
+            knife->trail[k] = knife->trail[k - 1];
+        }
+        knife->trail[0] = knife->pos;
+        knife->pos += knife->velocity * g_App.unk_178;
+        g_SpriteEngine->Step(knife->sprites);
+    }
+    player->playerState = 3;
+    player->bomb.timer.Tick();
+}
