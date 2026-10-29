@@ -1,5 +1,6 @@
 // The file with BulletManager, from 0x4232e0, as th06's bullet.cpp.
 
+#include <math.h>
 #include <string.h>
 
 #include "ascii.h"
@@ -441,4 +442,21 @@ void SlowBulletStart(Bullet *bullet)
         bullet->activeFlags ^= 1;
     }
     bullet->ex[0].timer.Tick();
+}
+
+void AccelerateAlongVelocity(Bullet *bullet)
+{
+    if (bullet->ex[1].timer >= bullet->ex[1].duration)
+    {
+        bullet->activeFlags &= ~0x10;
+    }
+    else
+    {
+        bullet->velocity += bullet->ex[1].accel * g_App.unk_178;
+        if (fabsf(bullet->velocity.x) > 0.0001f || fabsf(bullet->velocity.y) > 0.0001f)
+        {
+            bullet->angle = atan2f(bullet->velocity.y, bullet->velocity.x);
+        }
+    }
+    bullet->ex[1].timer.Tick();
 }

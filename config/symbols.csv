@@ -203,7 +203,7 @@ address,size,name,symbol
 0x00424d20,223,BulletManager::FirePattern,?FirePattern@BulletManager@@QAEHPAUBulletShooter@@@Z
 0x00424e00,712,BulletManager::SpawnLaser,?SpawnLaser@BulletManager@@QAEPAULaser@@PAUBulletShooter@@@Z
 0x004250d0,195,SlowBulletStart,?SlowBulletStart@@YIXPAUBullet@@@Z
-0x004251a0,356,Func4251a0,
+0x004251a0,356,AccelerateAlongVelocity,?AccelerateAlongVelocity@@YIXPAUBullet@@@Z
 0x00425310,231,Func425310,
 0x00425400,378,Func425400,
 0x00425580,372,Func425580,

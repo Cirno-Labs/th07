@@ -47,11 +47,11 @@ struct BulletEx
     Timer timer;
     float unk_c;
     float unk_10;
-    float unk_14;
-    float unk_18;
-    int unk_1c;
-    float unk_20;
-    float unk_24;
+    // Added to the velocity (flag 0x10).
+    D3DXVECTOR3 accel;
+    // How long the behavior runs, in frames.
+    int duration;
+    int unk_24;
     int unk_28;
 };
 ASSERT_SIZE(BulletEx, 0x2c);
@@ -261,6 +261,9 @@ void ShowSpawnSprite(Sprite *dst, Sprite *src, Bullet *bullet, int color);
 // Flag 1, ex[0]: for 16 frames the bullet runs 5 to 0 faster than its
 // speed.
 void SlowBulletStart(Bullet *bullet);
+// Flag 0x10, ex[1]: for its duration the bullet speeds up by accel,
+// turned along its velocity.
+void AccelerateAlongVelocity(Bullet *bullet);
 
 // The colors of effect 0xd by index, as th06's; RegisterChain points
 // g_EffectColors at them.
