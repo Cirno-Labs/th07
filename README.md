@@ -61,7 +61,9 @@ Read from the Rich header (`tools/peinfo.py`):
 | MASM 7.00 | 9466 | 47 | MSVC CRT |
 | C++ compiler 13.00 | 8830 | 58 | Static libraries, probably D3DX8 |
 | Older linker objects | 8755 | 10 | Static libraries |
-| Import library 7.00 | 9210 | 10 | DirectX SDK import libraries |
+| Import library 7.00 | 9210 | 10 | VS.NET 2002 Platform SDK import libraries |
+| C compiler 13.00 | 9178 | 3 | `uuid.lib`'s GUIDs |
+| Alias objects 7.00 | 9162 | 3 | `libcmt.lib`'s name aliases (`_mbscpy` and so on) |
 | Linker 7.00 | 9466 | | |
 
 This is the th06 toolchain: Visual C++ .NET 2002 (MSVC 7.0, `cl`
