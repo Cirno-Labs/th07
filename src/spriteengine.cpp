@@ -46,6 +46,12 @@ SpriteEngine::SpriteEngine()
     this->pendingCopyTexture = -1;
 }
 
+// Empty. The linker folded it with MmTimer::OnTimer, which has the same
+// bytes.
+SpriteEngine::~SpriteEngine()
+{
+}
+
 void SpriteEngine::CreateQuad()
 {
     VertexTex1Xyz *data;
