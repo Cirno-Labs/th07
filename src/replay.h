@@ -24,7 +24,7 @@ struct ReplayStage
     int score;
     // Unknown626270Stats::pointItemsTotal.
     int pointItemsTotal;
-    // Unknown626270's unk_961c, unk_9618 and unk_9620, less
+    // GameManager's unk_961c, unk_9618 and unk_9620, less
     // Unknown626270Stats::unk_88.
     int unk_08;
     int unk_0c;
@@ -34,12 +34,12 @@ struct ReplayStage
     // Unknown626270Stats::unk_2c and unk_30.
     int unk_18;
     int unk_1c;
-    // Unknown626270::unk_95e4.
+    // GameManager::unk_95e4.
     WORD unk_20;
     BYTE power;
     BYTE lives;
     BYTE bombs;
-    // Unknown626270::unk_9634 and unk_93d4.
+    // GameManager::unk_9634 and unk_93d4.
     BYTE unk_25;
     BYTE unk_26;
     // Unknown626270Stats::spellCardsCaptured.
@@ -129,24 +129,24 @@ class ReplayManager
 {
 public:
     // The second update callback while recording, run before the game's
-    // own: clears unk_d6 (marking 0x100 when Unknown626270::unk_93d0 is
+    // own: clears unk_d6 (marking 0x100 when GameManager::unk_93d0 is
     // set, which it clears), keeps the random seed in unk_d4 and clears
     // the count of random numbers. Returns 1. Not in th06.
     static int RecordOnUpdate2(ReplayManager *replay);
     // The update callback while recording: while bit 2 of
-    // Unknown626270::unk_93d8 is set, plays by g_Buttons and, unless the
+    // GameManager::unk_93d8 is set, plays by g_Buttons and, unless the
     // config's unk_25 or bit 3 of App::unk_18c is set, records them with
     // unk_d6, and every 30 frames the frame rate (0x80 set while
     // App::unk_2a4 is), then counts the frame. Returns 1.
     static int RecordOnUpdate(ReplayManager *replay);
     // The second update callback while playing: while bit 2 of
-    // Unknown626270::unk_93d8 is set, returns 6 on two frames of every
+    // GameManager::unk_93d8 is set, returns 6 on two frames of every
     // three while g_Unknown49fbf0's Func42ad66 and Func427be2 hold, and
     // on four of every five while unk_93df is 2 and
     // g_Unknown9a9b00.AnyBossActive() does not; otherwise 1.
     static int PlayOnUpdate2(ReplayManager *replay);
     // The update callback while playing: while bit 2 of
-    // Unknown626270::unk_93d8 is set and the config's unk_25 is not,
+    // GameManager::unk_93d8 is set and the config's unk_25 is not,
     // plays the recorded buttons for the frame, with key repeat as in
     // App::OnUpdate, and every 30 frames puts the recorded frame rate
     // back into App::unk_188 and unk_2a8, then counts the frame.

@@ -107,7 +107,7 @@ struct ShotTypeData
     float hitboxSize;
     float grazeSize;
     unsigned char unk_14[0x8];
-    // The share of Unknown626270::unk_961c over stats->unk_88 a death
+    // The share of GameManager::unk_961c over stats->unk_88 a death
     // costs.
     float unk_1c;
     unsigned char unk_20[0x14];
@@ -232,7 +232,7 @@ void UpdateHitboxAreas(Player *player);
 // button 2 held outside a bomb, ends playerState 4 (StopBombState(1)) and
 // collects all items instead. Otherwise tries StartBombState while
 // unk_240d is 2 and runs down unk_23fc. A running bomb takes its unk_c
-// from Unknown626270::unk_961c on each new frame (down to stats->
+// from GameManager::unk_961c on each new frame (down to stats->
 // unk_88) and runs. Else, with button 2 held, deathbombFrames left,
 // bombs left, unk_23fc at 0, intact checksums and no
 // g_Unknown49fbf0.Func42ad66(), starts a bomb: marks bit 1 of
@@ -245,7 +245,7 @@ void UpdateBombState(Player *player);
 // unk_240d is 1, else counts them down and at 0 loses a life: marks bit
 // 4 of g_ReplayManager->unk_d6, counts the death, and with lives left
 // drops 16 power and spawns six power items and takes a share of
-// Unknown626270::unk_961c (at most 100000, or 60000 for character 2);
+// GameManager::unk_961c (at most 100000, or 60000 for character 2);
 // without, drops all power and spawns five type 4 items; then takes 16
 // from the rank. Afterwards it fades and stretches the player out over
 // 30 frames, then puts it back at the bottom of the play area,
@@ -273,7 +273,7 @@ void UpdateRespawningState(Player *player);
 // meanwhile. While invulnerable (playerState 3) keeps unk_b7e68 on the
 // player and counts stateTimer down, blinking the player, and at 0 ends
 // unk_b7e68 and returns to playerState 0. While playerState is 4 keeps
-// unk_b7e6c on the player, sets Unknown626270::unk_9620 from the time
+// unk_b7e6c on the player, sets GameManager::unk_9620 from the time
 // left, and counts stateTimer down, blinking the player red and setting
 // Unknown1347b00's color, then calls EndBombState at 0. Otherwise ticks
 // stateTimer.
@@ -332,7 +332,7 @@ struct PlayerBomb
     int focused;
     // Set to 999 when a bomb starts, as th06's.
     int duration;
-    // What each frame of the bomb takes from Unknown626270::unk_961c.
+    // What each frame of the bomb takes from GameManager::unk_961c.
     int unk_c;
     Timer timer;
     // Run the bomb and draw it, unfocused and focused, as th06's update
@@ -426,20 +426,20 @@ public:
     // unless a bomb runs, bursts effect 8 halfway to it (three red ones
     // while unk_240d is 1 and not focused), adds 6 hundredths to the
     // rank, plays sound 0x1e, adds to g_Unknown12fe0d0 and 2000 points,
-    // and while unk_240d is 1 calls Unknown626270's IncreaseBonusCap and
+    // and while unk_240d is 1 calls GameManager's IncreaseBonusCap and
     // AddBonusPointsCapped with 30 (focused) or 80.
     void Graze(D3DXVECTOR3 *pos);
     // Ends playerState 4 early (the hit checks call it on a hit,
     // StartBombState while dying with deathbombFrames): ends unk_b7e6c and
     // starts a new effect 0x1c in slot 4 there, makes the player
     // invulnerable (playerState 3) for 40 frames with unk_23fc 40 and
-    // unk_240d 0, resets Unknown626270::unk_9620, adds an area at the
+    // unk_240d 0, resets GameManager::unk_9620, adds an area at the
     // player (AddHitboxAreaCircle with 32, 16, 0x32 and 8), bursts 32 effects
     // 0x1d in a circle and plays sounds 7 and 0x21, marking bit 0x10 of
     // g_ReplayManager->unk_d6. `unk` is unused.
     void StopBombState(int unk);
     // Ends playerState 4 (UpdateInvulnerability calls it when it runs out): calls
-    // Unknown626270's IncreaseBonusCap and AddBonusPointsCapped with 10000, scores ten
+    // GameManager's IncreaseBonusCap and AddBonusPointsCapped with 10000, scores ten
     // times unk_961c over stats->unk_88 (shown through Unknown49fbf0's
     // Func427c81), resets unk_9620, plays sound 0x21, finishes a respawn
     // if one runs, then makes the player invulnerable (playerState 3)
@@ -464,7 +464,7 @@ public:
     // 12), the character's ANM, then sets up the player, its boxes from
     // the shot type, options, bullets, timers and bomb callbacks, and
     // (outside those scenes) sends g_AsciiText's sprites interrupt 1,
-    // its unk_b7c interrupt 2. Caps Unknown626270::unk_9620 as
+    // its unk_b7c interrupt 2. Caps GameManager::unk_9620 as
     // PlayAddedCallback does. Returns 0, or -1 if a file fails to load.
     static int AddedCallback(Player *player);
     // Unless the scene is 3, 0xb or 0xc, releases ANM 10 and sets

@@ -11,7 +11,7 @@
 #include "replay.h"
 #include "unsorted.h"
 
-void Unknown626270::RerollLifeChecksumKeys()
+void GameManager::RerollLifeChecksumKeys()
 {
     this->stats->unk_34[0] = g_Rng.GetRandomU32InRange(100000) + 6543;
     this->stats->unk_34[1] = g_Rng.GetRandomU32InRange(100000) + 6543;
@@ -23,7 +23,7 @@ void Unknown626270::RerollLifeChecksumKeys()
     this->stats->unk_70[2] = g_Rng.GetRandomF32ZeroToOne() * 100000.0f + 6543.0f;
 }
 
-void Unknown626270::AddDeaths(int deaths)
+void GameManager::AddDeaths(int deaths)
 {
     if (this->ChecksumMismatch())
     {
@@ -33,7 +33,7 @@ void Unknown626270::AddDeaths(int deaths)
     this->RerollChecksumKeys();
 }
 
-void Unknown626270::AddBombsUsed(int bombs)
+void GameManager::AddBombsUsed(int bombs)
 {
     if (this->ChecksumMismatch())
     {

@@ -113,7 +113,7 @@ struct Enemy
     // Once callbackTimer reaches timerCallbackTime: restores the life
     // from the highest lifeCallbackLife, starts timerCallbackSub, makes
     // the death subroutine the next, ends the spell card (taking a
-    // quarter of Unknown626270::unk_961c above stats->unk_88, in tens)
+    // quarter of GameManager::unk_961c above stats->unk_88, in tens)
     // and clears the bullets unless flags.keepSpellCard, clears the
     // other enemies and resets as CheckLifeCallback, as th06's. While
     // it is boss 0, shows the seconds left first. Returns 1 then, else

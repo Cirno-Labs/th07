@@ -13,7 +13,7 @@
 // Probably an inline of unsorted.h whose out-of-line copy the original
 // keeps with this file's (0x401000-0x4013f0); defined here, not inline,
 // so that the other files' calls stay calls.
-void Unknown626270::RerollChecksumKeys()
+void GameManager::RerollChecksumKeys()
 {
     this->stats->unk_34[2] = g_Rng.GetRandomU32InRange(100000) + 6543;
     this->stats->unk_8c[3] = g_Rng.GetRandomU32InRange(100000) + 6543;
@@ -31,7 +31,7 @@ int Timer::NextTick()
 }
 
 // Like RerollChecksumKeys, without rerolling the keys.
-void Unknown626270::SetBombs(int bombs)
+void GameManager::SetBombs(int bombs)
 {
     this->stats->bombs = bombs;
     this->stats->unk_ac = this->stats->unk_34[2];

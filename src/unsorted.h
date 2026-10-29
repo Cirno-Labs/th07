@@ -263,7 +263,7 @@ public:
     // timeGetTime() when AddPlayTime last added to the run time.
     DWORD unk_190;
     // timeGetTime() when AddTotalPlayTime last added to the play time.
-    // Unknown626270::DeletedCallback clears it.
+    // GameManager::DeletedCallback clears it.
     DWORD unk_194;
     D3DCAPS8 caps;
     // QueryPerformanceFrequency's result, as AddedCallback read it. Only
@@ -871,7 +871,7 @@ struct Unknown4325c0
     float y;
 };
 
-// The player's numbers, behind Unknown626270::stats. Only the fields
+// The player's numbers, behind GameManager::stats. Only the fields
 // known so far.
 struct Unknown626270Stats
 {
@@ -895,7 +895,7 @@ struct Unknown626270Stats
     int unk_2c;
     int unk_30;
     // Set to 6543 plus a random number under 100000 by
-    // Unknown626270::RerollLifeChecksumKeys.
+    // GameManager::RerollLifeChecksumKeys.
     DWORD unk_34[7];
     float deaths;
     // Set to random floats from 6543 up by RerollStatsChecksumKeys, as unk_60,
@@ -908,12 +908,12 @@ struct Unknown626270Stats
     float bombs;
     float bombsUsed;
     // Set to 6543 plus a random float under 100000 by
-    // Unknown626270::RerollLifeChecksumKeys.
+    // GameManager::RerollLifeChecksumKeys.
     float unk_70[3];
     // The shot power, up to 128.
     float power;
     float unk_80[2];
-    // Player::Graze subtracts it from Unknown626270::unk_961c.
+    // Player::Graze subtracts it from GameManager::unk_961c.
     int unk_88;
     int unk_8c[8];
     // ChecksumBytes adds unk_b4[2] to it for every byte it sums.
@@ -924,7 +924,7 @@ struct Unknown626270Stats
 };
 ASSERT_SIZE(Unknown626270Stats, 0xc8);
 
-// What Unknown626270::unk_4 points at.
+// What GameManager::unk_4 points at.
 struct Unknown626270Unk4
 {
     unsigned char unk_0[0x1c];
@@ -939,18 +939,18 @@ struct Unknown626270Unk4
 
 // Holds the player's numbers (at 0x626270), with checksums against
 // tampering. Placeholder name.
-class Unknown626270
+class GameManager
 {
 public:
-    Unknown626270();
+    GameManager();
     // The update chain callback and its added and deleted callbacks,
     // as th06's GameManager's.
-    static int OnUpdate(Unknown626270 *mgr);
-    static int AddedCallback(Unknown626270 *mgr);
-    static int DeletedCallback(Unknown626270 *mgr);
+    static int OnUpdate(GameManager *mgr);
+    static int AddedCallback(GameManager *mgr);
+    static int DeletedCallback(GameManager *mgr);
     // The draw chain callback, as th06's: moves unk_93dc on from 1 to
     // 2. Returns 1.
-    static int OnDraw(Unknown626270 *mgr);
+    static int OnDraw(GameManager *mgr);
     // Whether the checksummed fields of `stats` no longer agree.
     int ChecksumMismatch();
     // Whether Phantasm is open: a shot type cleared Extra (or captured
@@ -1137,8 +1137,8 @@ public:
     // Hundredths of a rank, moved by AddSubRank and SubSubRank.
     int subRank;
 };
-ASSERT_SIZE(Unknown626270, 0x9644);
-extern Unknown626270 g_Unknown626270;
+ASSERT_SIZE(GameManager, 0x9644);
+extern GameManager g_Unknown626270;
 
 // The update and draw chain elements of g_Unknown626270, after it.
 extern ChainElem g_Unknown626270CalcChain;
@@ -1418,7 +1418,7 @@ extern ChainElem g_Unknown49fbf0DrawChain;
 // 0x609's in texture 0x15 (SpriteEngine::CopyTextureRect). Not in th06.
 void CopySpriteToTexture(int sprite);
 
-// Grows by 2500 plus 20 for every 1500 of Unknown626270::unk_961c above
+// Grows by 2500 plus 20 for every 1500 of GameManager::unk_961c above
 // stats->unk_88 with each graze. Probably a field of a larger object.
 extern int g_Unknown12fe0d0;
 // Cleared by Player::StopBombState, next to g_Unknown12fe0d0.

@@ -1,6 +1,6 @@
 // cflags: /Os
 // The /Os file with Unknown49fbf0, th06's Gui, from 0x427b21 to
-// Unknown626270 at 0x42d560.
+// GameManager at 0x42d560.
 
 #include <stdio.h>
 #include <string.h>

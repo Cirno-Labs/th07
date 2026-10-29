@@ -1,5 +1,5 @@
 // cflags: /Os
-// The /Os file with Unknown626270, probably th07's GameManager, from
+// The /Os file with GameManager, probably th07's GameManager, from
 // 0x42d560 to the Chain code at 0x42fa60.
 
 #include <string.h>
@@ -14,9 +14,9 @@
 #include "sprite.h"
 #include "unsorted.h"
 
-Unknown626270::Unknown626270()
+GameManager::GameManager()
 {
-    memset(this, 0, sizeof(Unknown626270));
+    memset(this, 0, sizeof(GameManager));
     this->arena[0] = 32.0f;
     this->arena[1] = 16.0f;
     this->arena[2] = 384.0f;
@@ -25,7 +25,7 @@ Unknown626270::Unknown626270()
     this->unk_9624 = 1;
 }
 
-void Unknown626270::AddLives(int lives)
+void GameManager::AddLives(int lives)
 {
     if (this->ChecksumMismatch())
     {
@@ -35,7 +35,7 @@ void Unknown626270::AddLives(int lives)
     this->RerollChecksumKeys();
 }
 
-void Unknown626270::AddBombs(int bombs)
+void GameManager::AddBombs(int bombs)
 {
     if (this->ChecksumMismatch())
     {
@@ -45,7 +45,7 @@ void Unknown626270::AddBombs(int bombs)
     this->RerollChecksumKeys();
 }
 
-void Unknown626270::SetPlayArea()
+void GameManager::SetPlayArea()
 {
     this->arena[0] = 32.0f;
     this->arena[1] = 16.0f;
@@ -57,7 +57,7 @@ void Unknown626270::SetPlayArea()
     this->unk_9604[3] = 416.0f;
 }
 
-BOOL Unknown626270::IsInPlayArea(float x, float y, float width, float height)
+BOOL GameManager::IsInPlayArea(float x, float y, float width, float height)
 {
     if (x + width / 2.0f < 0.0f)
     {
@@ -92,7 +92,7 @@ int ChecksumBytes(BYTE *data, int size)
     return sum;
 }
 
-int Unknown626270::ComputeChecksum()
+int GameManager::ComputeChecksum()
 {
     int sum;
 
@@ -103,7 +103,7 @@ int Unknown626270::ComputeChecksum()
     return sum;
 }
 
-void Unknown626270::AddLifeOrBomb()
+void GameManager::AddLifeOrBomb()
 {
     if ((int)this->stats->lives < 8)
     {
@@ -121,7 +121,7 @@ void Unknown626270::AddLifeOrBomb()
     }
 }
 
-int Unknown626270::OnDraw(Unknown626270 *mgr)
+int GameManager::OnDraw(GameManager *mgr)
 {
     if (mgr->unk_93dc)
     {
@@ -161,7 +161,7 @@ void DrawLoadingScreen()
     }
 }
 
-void Unknown626270::SetRankForDifficulty()
+void GameManager::SetRankForDifficulty()
 {
     this->unk_9634 = g_Ranks[g_Unknown626270.difficulty].rank;
     this->minRank = g_Ranks[g_Unknown626270.difficulty].minRank;
@@ -261,7 +261,7 @@ void IncrementStatCounter(DWORD *count, DWORD max)
     }
 }
 
-int Unknown626270::DeletedCallback(Unknown626270 *mgr)
+int GameManager::DeletedCallback(GameManager *mgr)
 {
     g_App.StopMusic();
     if (g_App.musicMode == 2 && g_App.midi != NULL)
@@ -294,18 +294,18 @@ int Unknown626270::DeletedCallback(Unknown626270 *mgr)
 
 int RegisterGameManagerChain()
 {
-    Unknown626270 *mgr = &g_Unknown626270;
+    GameManager *mgr = &g_Unknown626270;
 
-    g_Unknown626270CalcChain.SetCallback((ChainCallback)Unknown626270::OnUpdate);
-    g_Unknown626270CalcChain.addedCallback = (ChainCallback)Unknown626270::AddedCallback;
-    g_Unknown626270CalcChain.deletedCallback = (ChainCallback)Unknown626270::DeletedCallback;
+    g_Unknown626270CalcChain.SetCallback((ChainCallback)GameManager::OnUpdate);
+    g_Unknown626270CalcChain.addedCallback = (ChainCallback)GameManager::AddedCallback;
+    g_Unknown626270CalcChain.deletedCallback = (ChainCallback)GameManager::DeletedCallback;
     g_Unknown626270CalcChain.arg = mgr;
     mgr->unk_95e8 = 0;
     if (g_Chain.AddToCalcChain(&g_Unknown626270CalcChain, 2) != 0)
     {
         return -1;
     }
-    g_Unknown626270DrawChain.SetCallback((ChainCallback)Unknown626270::OnDraw);
+    g_Unknown626270DrawChain.SetCallback((ChainCallback)GameManager::OnDraw);
     g_Unknown626270DrawChain.arg = mgr;
     g_Chain.AddToDrawChain(&g_Unknown626270DrawChain, 2);
     return 0;
@@ -322,7 +322,7 @@ void RemoveGameManagerChain()
     g_Unknown626270.stats->guiScore = g_Unknown626270.stats->score;
 }
 
-void Unknown626270::AddSubRank(int amount)
+void GameManager::AddSubRank(int amount)
 {
     this->subRank += amount;
     while (this->subRank >= 100)
@@ -336,7 +336,7 @@ void Unknown626270::AddSubRank(int amount)
     }
 }
 
-void Unknown626270::SubSubRank(int amount)
+void GameManager::SubSubRank(int amount)
 {
     this->subRank -= amount;
     while (this->subRank < 0)
@@ -350,7 +350,7 @@ void Unknown626270::SubSubRank(int amount)
     }
 }
 
-void Unknown626270::AddBonusPoints(int amount)
+void GameManager::AddBonusPoints(int amount)
 {
     int prev;
 
@@ -375,7 +375,7 @@ void Unknown626270::AddBonusPoints(int amount)
     }
 }
 
-void Unknown626270::AddBonusPointsNoTrack(int amount)
+void GameManager::AddBonusPointsNoTrack(int amount)
 {
     int prev;
 
@@ -391,7 +391,7 @@ void Unknown626270::AddBonusPointsNoTrack(int amount)
     }
 }
 
-void Unknown626270::AddBonusPointsCapped(int amount)
+void GameManager::AddBonusPointsCapped(int amount)
 {
     int prev;
 
@@ -403,7 +403,7 @@ void Unknown626270::AddBonusPointsCapped(int amount)
     }
 }
 
-void Unknown626270::IncreaseBonusCap(int amount)
+void GameManager::IncreaseBonusCap(int amount)
 {
     this->unk_9618 += amount;
     if (this->unk_9618 >= this->stats->unk_88 + 9999990)
@@ -412,7 +412,7 @@ void Unknown626270::IncreaseBonusCap(int amount)
     }
 }
 
-int Unknown626270::HasExtraOpen(int shot)
+int GameManager::HasExtraOpen(int shot)
 {
     return this->clrds[shot].stagesClearedNoContinue[0] == 99 || this->clrds[shot].stagesClearedNoContinue[1] == 99 ||
                    this->clrds[shot].stagesClearedNoContinue[2] == 99 || this->clrds[shot].stagesClearedNoContinue[3] == 99
@@ -420,7 +420,7 @@ int Unknown626270::HasExtraOpen(int shot)
                : FALSE;
 }
 
-int Unknown626270::HasPhantasmOpen(int shot)
+int GameManager::HasPhantasmOpen(int shot)
 {
     int count;
     int i;
@@ -440,7 +440,7 @@ int Unknown626270::HasPhantasmOpen(int shot)
     return this->clrds[shot].stagesClearedNoContinue[5] == 99;
 }
 
-int Unknown626270::AnyShotHasExtraOpen()
+int GameManager::AnyShotHasExtraOpen()
 {
     return this->HasExtraOpen(0) || this->HasExtraOpen(1) || this->HasExtraOpen(2) || this->HasExtraOpen(3) || this->HasExtraOpen(4) ||
                    this->HasExtraOpen(5)
@@ -448,7 +448,7 @@ int Unknown626270::AnyShotHasExtraOpen()
                : FALSE;
 }
 
-int Unknown626270::IsPhantasmOpen()
+int GameManager::IsPhantasmOpen()
 {
     int count;
     int i;

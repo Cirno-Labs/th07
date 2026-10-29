@@ -18,7 +18,7 @@ void Unknown4325c0::SetPolar(float angle, float radius)
     }
 }
 
-void Unknown626270::AddPower(int power)
+void GameManager::AddPower(int power)
 {
     if (this->ChecksumMismatch())
     {
