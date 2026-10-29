@@ -155,7 +155,7 @@ address,size,name,symbol
 0x0041d150,35,Func41d150,?Func41d150@@YIXXZ
 0x0041d180,357,Func41d180,
 0x0041d2f0,141,Ending::OnUpdate,?OnUpdate@Ending@@SIHPAV1@@Z
-0x0041d380,131,Func41d380,
+0x0041d380,131,Ending::OnDraw,?OnDraw@Ending@@SIHPAV1@@Z
 0x0041d410,115,Ending::ReadInt,?ReadInt@Ending@@QAEHXZ
 0x0041d490,591,Ending::DrawFade,?DrawFade@Ending@@QAEXXZ
 0x0041d700,3268,Ending::RunScript,?RunScript@Ending@@QAEHXZ
