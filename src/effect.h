@@ -148,6 +148,13 @@ int EffectInitPetal27(Effect *effect);
 // in white. Returns 0.
 int EffectInitPetal30(Effect *effect);
 
+// An effect init for petal type 31: starts unk_27c at random around
+// g_Unknown134ccf8 plus half of g_Unknown134cd04, with a random step
+// on top of velocity, scaled by App::unk_178, and a z acceleration of
+// -0.015; a random spin, the second draw list and sprite 0x2d8 in
+// white, its unk_14 doubled. Returns 0.
+int EffectInitPetal31(Effect *effect);
+
 // The effects, at 0x12fe250: 400 started in turn, 8 reserved slots and
 // a spare.
 class EffectManager
