@@ -37,7 +37,7 @@ struct BulletTypeSprites
     BYTE height;
     // A size class: 5 up to 8 high, 4 or 3 up to 16, 2 or 1 up to 32,
     // 0 above.
-    BYTE unk_b8a;
+    BYTE sizeClass;
     BYTE unk_b8b;
 };
 ASSERT_SIZE(BulletTypeSprites, 0xb8c);

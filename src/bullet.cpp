@@ -160,7 +160,7 @@ int BulletManager::SpawnBullet(BulletShooter *shooter, int col, int row, float a
     cur->sprites.hitboxSize = shooter->typeSprites->hitboxSize;
     cur->sprites.unk_b88 = shooter->typeSprites->unk_b88;
     cur->sprites.height = shooter->typeSprites->height;
-    cur->sprites.unk_b8a = shooter->typeSprites->unk_b8a;
+    cur->sprites.sizeClass = shooter->typeSprites->sizeClass;
     cur->sound = shooter->unk_cc;
     cur->boundsCheckDelay = 0;
     if (cur->sprites.sprite0.spriteIndex != shooter->typeSprites->sprite0.spriteIndex + shooter->color)
@@ -1040,8 +1040,8 @@ int BulletManager::OnUpdate(BulletManager *mgr)
         }
         bullet->timer.Tick();
         bullet->grazeDelayTimer.Tick();
-        bullet->next = mgr->drawLists[bullet->sprites.unk_b8a];
-        mgr->drawLists[bullet->sprites.unk_b8a] = bullet;
+        bullet->next = mgr->drawLists[bullet->sprites.sizeClass];
+        mgr->drawLists[bullet->sprites.sizeClass] = bullet;
     next:
         order--;
         if (order < 0)
@@ -1294,7 +1294,7 @@ int BulletManager::AddedCallback(BulletManager *mgr)
         {
             mgr->typeSprites[i].hitboxSize.x = 4.0f;
             mgr->typeSprites[i].hitboxSize.y = 4.0f;
-            mgr->typeSprites[i].unk_b8a = 5;
+            mgr->typeSprites[i].sizeClass = 5;
         }
         else if (mgr->typeSprites[i].sprite0.spriteData->height <= 16.0f)
         {
@@ -1303,23 +1303,23 @@ int BulletManager::AddedCallback(BulletManager *mgr)
             case 0x202:
                 mgr->typeSprites[i].hitboxSize.x = 4.0f;
                 mgr->typeSprites[i].hitboxSize.y = 4.0f;
-                mgr->typeSprites[i].unk_b8a = 4;
+                mgr->typeSprites[i].sizeClass = 4;
                 break;
             case 0x204:
             case 0x206:
                 mgr->typeSprites[i].hitboxSize.x = 4.0f;
                 mgr->typeSprites[i].hitboxSize.y = 4.0f;
-                mgr->typeSprites[i].unk_b8a = 4;
+                mgr->typeSprites[i].sizeClass = 4;
                 break;
             case 0x205:
                 mgr->typeSprites[i].hitboxSize.x = 4.0f;
                 mgr->typeSprites[i].hitboxSize.y = 4.0f;
-                mgr->typeSprites[i].unk_b8a = 4;
+                mgr->typeSprites[i].sizeClass = 4;
                 break;
             default:
                 mgr->typeSprites[i].hitboxSize.x = 6.0f;
                 mgr->typeSprites[i].hitboxSize.y = 6.0f;
-                mgr->typeSprites[i].unk_b8a = 3;
+                mgr->typeSprites[i].sizeClass = 3;
             }
         }
         else if (mgr->typeSprites[i].sprite0.spriteData->height <= 32.0f)
@@ -1329,22 +1329,22 @@ int BulletManager::AddedCallback(BulletManager *mgr)
             case 0x208:
                 mgr->typeSprites[i].hitboxSize.x = 5.0f;
                 mgr->typeSprites[i].hitboxSize.y = 5.0f;
-                mgr->typeSprites[i].unk_b8a = 1;
+                mgr->typeSprites[i].sizeClass = 1;
                 break;
             case 0x209:
                 mgr->typeSprites[i].hitboxSize.x = 8.0f;
                 mgr->typeSprites[i].hitboxSize.y = 8.0f;
-                mgr->typeSprites[i].unk_b8a = 2;
+                mgr->typeSprites[i].sizeClass = 2;
                 break;
             default:
                 mgr->typeSprites[i].hitboxSize.x = 10.0f;
                 mgr->typeSprites[i].hitboxSize.y = 10.0f;
-                mgr->typeSprites[i].unk_b8a = 2;
+                mgr->typeSprites[i].sizeClass = 2;
             }
         }
         else
         {
-            mgr->typeSprites[i].unk_b8a = 0;
+            mgr->typeSprites[i].sizeClass = 0;
             mgr->typeSprites[i].hitboxSize.x = 24.0f;
             mgr->typeSprites[i].hitboxSize.y = 24.0f;
         }
