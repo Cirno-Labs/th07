@@ -73,7 +73,8 @@ public:
         // Type 3: the color flashed, starting at its alpha.
         D3DCOLOR flashColor;
     };
-    int flashCount;
+    // StartEffect's `c`, which every caller passes as 0.
+    int unusedInt20;
     Timer timer;
 };
 ASSERT_SIZE(ScreenEffect, 0x30);
