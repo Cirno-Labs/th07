@@ -299,6 +299,9 @@ public:
     // draw 6 and 8), keeping `unk` in unk_2409. Returns 0, or -1 if
     // adding fails.
     static int RegisterChain(int unk);
+    // Whether a `size` box at `pos` meets the unk_978 box while
+    // playerState is 0, 3 or 4, as th06's (which tested the graze box).
+    int TouchesGrazeBox(D3DXVECTOR3 *pos, D3DXVECTOR3 *size);
     // Scores a graze of the bullet at `pos`.
     void Graze(D3DXVECTOR3 *pos);
     // CheckHit calls it with 0 on a hit while playerState is 4.
@@ -325,7 +328,10 @@ public:
     D3DXVECTOR3 hitboxMax;
     D3DXVECTOR3 grazeMin;
     D3DXVECTOR3 grazeMax;
-    unsigned char unk_978[0x3c];
+    // The corners of the box TouchesGrazeBox tests.
+    D3DXVECTOR3 unk_978;
+    D3DXVECTOR3 unk_984;
+    unsigned char unk_990[0x24];
     // Where the two options are.
     D3DXVECTOR3 optionPos[2];
     unsigned char unk_9cc[0x10];
