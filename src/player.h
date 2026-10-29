@@ -177,6 +177,17 @@ void DrawHitBullets(Player *player);
 // after 30 frames or while respawning or dying. Returns 0.
 int UpdateFiring(Player *player);
 
+// OnUpdate's steps, not decompiled yet. Func43ee50 runs unless the
+// player is respawning or dying, Func440cf0 while dying, and Func4411c0
+// while respawning or when Func440cf0 returns nonzero.
+int Func43ee50(Player *player);
+void Func440940(Player *player);
+void Func4409f0(Player *player);
+int Func440cf0(Player *player);
+void Func4411c0(Player *player);
+void Func441330(Player *player);
+void Func441e80(Player *player);
+
 // One of the 0x70 entries at Player+0x9dc, probably th06's bomb
 // hitboxes (bombHitPos, bombHitSize, ...) as one struct.
 struct PlayerBombHit
@@ -261,6 +272,10 @@ public:
     // draw 6 and 8), keeping `unk` in unk_2409. Returns 0, or -1 if
     // adding fails.
     static int RegisterChain(int unk);
+    // The update callback: unless the game is frozen, runs the steps
+    // (Func440940 on), steps the sprites (the options' while unk_240a
+    // is set), the bullets (UpdateBullets) and the firing (UpdateFiring).
+    // Returns 1.
     static int OnUpdate(Player *player);
     static int OnDraw(Player *player);
     static int AddedCallback(Player *player);

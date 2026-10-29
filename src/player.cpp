@@ -722,6 +722,43 @@ PlayerArea *Player::AddHitboxAreaCircle(D3DXVECTOR3 *pos, float unk_10, float un
     return area;
 }
 
+int Player::OnUpdate(Player *player)
+{
+    if (g_Unknown626270.isFrozen)
+    {
+        return 1;
+    }
+    Func440940(player);
+    Func4409f0(player);
+    if (player->playerState == 2)
+    {
+        if (Func440cf0(player))
+        {
+            goto respawn;
+        }
+    }
+    else if (player->playerState == 1)
+    {
+    respawn:
+        Func4411c0(player);
+    }
+    Func441330(player);
+    if (player->playerState != 2 && player->playerState != 1)
+    {
+        Func43ee50(player);
+    }
+    g_SpriteEngine->Step(&player->sprite);
+    if (player->unk_240a)
+    {
+        g_SpriteEngine->Step(&player->optionSprites[0]);
+        g_SpriteEngine->Step(&player->optionSprites[1]);
+    }
+    UpdateBullets(player);
+    UpdateFiring(player);
+    Func441e80(player);
+    return 1;
+}
+
 int Player::OnDraw2(Player *player)
 {
     DrawHitBullets(player);
