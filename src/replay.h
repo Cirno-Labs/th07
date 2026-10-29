@@ -58,7 +58,7 @@ struct ReplayHeader
     BYTE pad_06[0x2];
     // 0x3f000318 plus the bytes from `key` on.
     int checksum;
-    BYTE unk_0c;
+    BYTE secondaryKey;
     // The bytes from `size` on are stored plus key, key + 7, key + 14,
     // ...
     BYTE key;
@@ -75,7 +75,7 @@ struct ReplayHeader
     BYTE *extras[7];
     BYTE unk_54;
     // 0x62.
-    BYTE unk_55;
+    BYTE versionByte55;
     // character * 2 + shot type.
     BYTE shotType;
     BYTE difficulty;
@@ -84,7 +84,7 @@ struct ReplayHeader
     // The player's name.
     char name[0xc];
     // 0x100.
-    WORD unk_6a;
+    WORD subVersion;
     DWORD score;
     // The config the game was played with, an GameConfig.
     BYTE config[0x38];
@@ -95,7 +95,7 @@ struct ReplayHeader
     float slowdown;
     float slowdown3;
     // 30.
-    int unk_d4;
+    int replayFormatVersion;
     // App::exeSize and exeChecksum, and "0100b".
     DWORD exeSize;
     DWORD exeChecksum;

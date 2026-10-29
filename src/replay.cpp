@@ -140,8 +140,8 @@ int ReplayManager::RecordAddedCallback(ReplayManager *replay)
         *(DWORD *)replay->data->magic = *(DWORD *)"T7RP";
         replay->data->shotType = g_GameManager.shotIndex;
         replay->data->version = 0x1100;
-        replay->data->unk_6a = 0x100;
-        replay->data->unk_55 = 0x62;
+        replay->data->subVersion = 0x100;
+        replay->data->versionByte55 = 0x62;
         strcpy(replay->data->exeVersion, "0100b");
         replay->data->exeSize = g_App.exeSize;
         replay->data->exeChecksum = g_App.exeChecksum;
@@ -553,10 +553,10 @@ void SaveReplay(char *path, char *name)
                 FormatTodayDate(hX.date);
                 hX.key = g_Rng.GetRandomU16InRange(128) + 64;
                 hX.unk_54 = g_Rng.GetRandomU16InRange(256);
-                hX.unk_0c = g_Rng.GetRandomU16InRange(256);
+                hX.secondaryKey = g_Rng.GetRandomU16InRange(256);
                 hX.slowdown2 = hX.slowdown + 1.12f;
                 hX.slowdown3 = hX.slowdown + 2.34f;
-                hX.unk_d4 = 30;
+                hX.replayFormatVersion = 30;
                 memcpy(rpyBytes, &hX.unk_54, sizeof(ReplayHeader) - 0x54);
                 DebugPrint("info : original size %d\r\n", offset);
                 hX.dataSize = offset - 0x54;
@@ -684,10 +684,10 @@ void ResaveReplay(char *path)
             hX.size = offset;
             hX.key = g_Rng.GetRandomU16InRange(128) + 64;
             hX.unk_54 = g_Rng.GetRandomU16InRange(256);
-            hX.unk_0c = g_Rng.GetRandomU16InRange(256);
+            hX.secondaryKey = g_Rng.GetRandomU16InRange(256);
             hX.slowdown2 = hX.slowdown + 1.12f;
             hX.slowdown3 = hX.slowdown + 2.34f;
-            hX.unk_d4 = 30;
+            hX.replayFormatVersion = 30;
             memcpy(rpyBytes, &hX.unk_54, sizeof(ReplayHeader) - 0x54);
             DebugPrint("info : original size %d\r\n", offset);
             hX.dataSize = offset - 0x54;
