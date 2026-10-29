@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "effect.h"
+#include "player.h"
 #include "unsorted.h"
 
 EffectManager::EffectManager()
@@ -122,6 +123,16 @@ int EffectUpdateConverge(Effect *effect)
     f = 256.0f - effect->timer.AsFloat() * 256.0f / 60.0f;
     effect->pos = f * effect->axis + effect->origin;
     effect->pos.z = 0.0f;
+    return 1;
+}
+
+int EffectUpdateFollowPlayer(Effect *effect)
+{
+    if ((effect->sprite.scriptPos == NULL) != 0)
+    {
+        return 0;
+    }
+    effect->pos = g_Player.position;
     return 1;
 }
 

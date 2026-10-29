@@ -96,6 +96,10 @@ int EffectInitConverge(Effect *effect);
 // Returns 1.
 int EffectUpdateConverge(Effect *effect);
 
+// An effect update: follows the player while its script runs. Returns
+// 1, or 0 once the script has ended.
+int EffectUpdateFollowPlayer(Effect *effect);
+
 // The effects, at 0x12fe250: 400 started in turn, 8 reserved slots and
 // a spare.
 class EffectManager

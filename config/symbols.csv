@@ -128,7 +128,7 @@ address,size,name,symbol
 0x0041a750,773,EffectUpdateOrbit,?EffectUpdateOrbit@@YIHPAUEffect@@@Z
 0x0041aa60,136,EffectInitConverge,?EffectInitConverge@@YIHPAUEffect@@@Z
 0x0041aaf0,230,EffectUpdateConverge,?EffectUpdateConverge@@YIHPAUEffect@@@Z
-0x0041abe0,72,Func41abe0,
+0x0041abe0,72,EffectUpdateFollowPlayer,?EffectUpdateFollowPlayer@@YIHPAUEffect@@@Z
 0x0041ac30,217,Func41ac30,
 0x0041ad10,211,Func41ad10,
 0x0041adf0,153,Func41adf0,
