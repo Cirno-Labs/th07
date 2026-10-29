@@ -559,3 +559,33 @@ void StopTurnToPlayer(Bullet *bullet)
     ((Unknown4325c0 *)&bullet->velocity)->SetPolar(bullet->angle, speed * g_App.unk_178);
     bullet->ex[3].timer.Tick();
 }
+
+void BounceOffWalls(Bullet *bullet)
+{
+    float speed;
+
+    if (!g_Unknown626270.IsInPlayArea(bullet->pos.x, bullet->pos.y, bullet->sprites.sprite0.spriteData->width, bullet->sprites.sprite0.spriteData->height))
+    {
+        if (bullet->sound >= 0)
+        {
+            g_SoundPlayer.QueueSound(bullet->sound, 0);
+        }
+        if (bullet->pos.x < 0.0f || bullet->pos.x >= 384.0f)
+        {
+            bullet->angle = -bullet->angle - 3.1415927f;
+            bullet->angle = AddNormalizeAngle(bullet->angle, 0.0f);
+        }
+        if (bullet->pos.y < 0.0f || (bullet->pos.y >= 448.0f && (bullet->activeFlags & 0x400)))
+        {
+            bullet->angle = -bullet->angle;
+        }
+        bullet->speed = bullet->ex[4].unk_c;
+        speed = bullet->speed;
+        ((Unknown4325c0 *)&bullet->velocity)->SetPolar(bullet->angle, speed * g_App.unk_178);
+        bullet->ex[4].duration++;
+        if (bullet->ex[4].duration >= bullet->ex[4].unk_24)
+        {
+            bullet->activeFlags &= ~0xc00;
+        }
+    }
+}

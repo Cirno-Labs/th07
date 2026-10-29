@@ -274,6 +274,10 @@ void TurnAndAccelerate(Bullet *bullet);
 void StopTurnAndRestart(Bullet *bullet);
 void StopTurnToAngle(Bullet *bullet);
 void StopTurnToPlayer(Bullet *bullet);
+// Flags 0x400 and 0x800, ex[4]: a bullet leaving the play area plays
+// its sound and bounces off the sides and the top (and the bottom with
+// 0x400) at speed unk_c, up to unk_24 times (counted in duration).
+void BounceOffWalls(Bullet *bullet);
 
 // The colors of effect 0xd by index, as th06's; RegisterChain points
 // g_EffectColors at them.
