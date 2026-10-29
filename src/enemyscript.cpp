@@ -1186,6 +1186,14 @@ void ScriptFadeOutMusic(Enemy *enemy, EnemyScriptInstr *instr)
     g_App.FadeOutMusic(3.0f);
 }
 
+void ScriptPlayMusic(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    if (g_App.PlayMidi(2))
+    {
+        g_App.PlayMusic("bgm/th07_13b.mid");
+    }
+}
+
 // As in bullet.cpp: defined after its callers, so they call the copy.
 inline void Bullet::FreeBullet()
 {

@@ -1593,6 +1593,9 @@ void EndSlowdown(Enemy *enemy, EnemyScriptInstr *instr);
 void FlashScreen(Enemy *enemy, EnemyScriptInstr *instr);
 // Fades the music out over 3 seconds.
 void ScriptFadeOutMusic(Enemy *enemy, EnemyScriptInstr *instr);
+// Plays music slot 2 (App::PlayMidi) and, if that returns nonzero,
+// bgm/th07_13b.mid.
+void ScriptPlayMusic(Enemy *enemy, EnemyScriptInstr *instr);
 // Whether `point`, turned about `origin` by the angle with sine
 // `sinAngle` and cosine `cosAngle`, lies in the `size` box centred on
 // `center` (x and y only).
