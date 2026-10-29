@@ -627,3 +627,7 @@ void DrawReimuABombFocused(Player *player);
 // area each way through the player, each an area (AddHitboxArea) and
 // a box of 16 damage that follow its sprite on odd frames.
 void UpdateReimuBBomb(Player *player);
+
+// Draws Reimu B's bomb, as th06's DrawReimuBBomb: the stage tint, then
+// each barrier's sprite at its position in the play area.
+void DrawReimuBBomb(Player *player);

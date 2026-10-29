@@ -469,3 +469,20 @@ void UpdateReimuBBomb(Player *player)
     player->playerState = 3;
     player->bomb.timer.Tick();
 }
+
+void DrawReimuBBomb(Player *player)
+{
+    Sprite *curSprite;
+    int i;
+
+    DimPlayAreaForBomb(player);
+    for (i = 0; i < 4; i++)
+    {
+        curSprite = player->bomb.parts[i].sprites;
+        curSprite->pos = player->bomb.parts[i].pos + curSprite->posOffset;
+        curSprite->pos.x = g_Unknown626270.arena[0] + curSprite->pos.x;
+        curSprite->pos.y = g_Unknown626270.arena[1] + curSprite->pos.y;
+        curSprite->pos.z = 0.0f;
+        g_SpriteEngine->Draw(curSprite);
+    }
+}
