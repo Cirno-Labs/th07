@@ -439,3 +439,8 @@ int Unknown9a9b00::OnDraw(Unknown9a9b00 *mgr)
 {
     return Unknown9a9b00::Func422170(mgr, 0, 2);
 }
+
+int Unknown9a9b00::OnDraw2(Unknown9a9b00 *mgr)
+{
+    return Unknown9a9b00::Func422170(mgr, 2, 4);
+}

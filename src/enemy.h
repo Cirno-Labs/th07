@@ -246,6 +246,8 @@ public:
     static int Func422170(Unknown9a9b00 *mgr, int from, int to);
     // A draw callback: Func422170 for lists 0 and 1.
     static int OnDraw(Unknown9a9b00 *mgr);
+    // The other draw callback: lists 2 and 3.
+    static int OnDraw2(Unknown9a9b00 *mgr);
 
     // The stage's two enemy sprite files.
     char *anmPath;
