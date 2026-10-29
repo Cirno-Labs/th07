@@ -221,7 +221,7 @@ address,size,name,symbol
 0x00427910,73,BulletShooter::StartCommand,?StartCommand@BulletShooter@@QAEPAUBulletCommand@@HHK@Z
 0x00427960,62,Bullet::SetTurnCommand,?SetTurnCommand@Bullet@@QAEXHHHMM@Z
 0x004279a0,62,Bullet::SetAccelerateCommand,?SetAccelerateCommand@Bullet@@QAEXHHHMM@Z
-0x004279e0,62,Func4279e0,
+0x004279e0,62,BulletShooter::SetShooterTurnCommand,?SetShooterTurnCommand@BulletShooter@@QAEXHHHMM@Z
 0x00427a20,74,Func427a20,
 0x00427a70,62,Func427a70,
 0x00427ab0,48,Func427ab0,
