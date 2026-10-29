@@ -1195,6 +1195,9 @@ public:
     // Sets bombName's pendingInterrupt to 1 and bombNameBar's to 2, as
     // the bomb ends. th06 interrupted bombName only.
     void EndBombName();
+    // Sets spellName's pendingInterrupt to 1 and spellNameBar's and
+    // unk_7774's to 2, as the spell card ends.
+    void EndSpellCardName();
 
     // Whether the pointer at +8 is set and the int at its +0x1fbac is
     // not negative, or is -2.
