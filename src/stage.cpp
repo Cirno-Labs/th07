@@ -1,6 +1,8 @@
 // The file with Unknown1347b00, th06's Stage, from 0x404fe0, as th06's
 // stage.cpp.
 
+#include <string.h>
+
 #include "unsorted.h"
 
 // An inline of unsorted.h, probably, whose out-of-line copy the original
@@ -13,6 +15,17 @@ int Unknown626270::ChecksumMismatch()
                    this->stats->unk_b0 + this->stats->unk_8c[3] == (int)this->unk_9614
                ? FALSE
                : TRUE;
+}
+
+Unknown1347b00::Unknown1347b00()
+{
+    memset(this, 0, sizeof(Unknown1347b00));
+    this->camera.eye = D3DXVECTOR3(0.0f, 0.0f, 1000.0f);
+    this->camera.at = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+    this->camera.up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+    this->camera.fov = 0.5235988f;
+    this->unk_50f8 = this->camera;
+    this->unk_5138 = this->camera;
 }
 
 void Unknown1347b00::SetTintColor(D3DCOLOR color)

@@ -1515,6 +1515,11 @@ struct StageCamera
 class Unknown1347b00
 {
 public:
+    // Zeroes the object, then puts the camera at (0, 0, 1000) looking
+    // nowhere, with up along y and a field of view of pi / 6, and copies
+    // it to unk_50f8 and unk_5138.
+    Unknown1347b00();
+
     // Sets the color at +0x52ac to `color`, or to the average of the two
     // while its alpha byte is set.
     void SetTintColor(D3DCOLOR color);
