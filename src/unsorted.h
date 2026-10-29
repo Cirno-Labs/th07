@@ -1221,7 +1221,10 @@ struct GuiPopup
 struct GuiImpl
 {
     Sprite sprites[0x21];
-    unsigned char unk_4bcc[0x4];
+    // The boss's bar (sprites[11]): 0 hidden, 1 appearing, 2 shown, 3
+    // leaving, as th06's.
+    BYTE bossBarState;
+    unsigned char unk_4bcd[0x3];
     Sprite unk_4bd0[5];
     Sprite bombPortrait;
     Sprite spellPortrait;
@@ -1310,7 +1313,14 @@ public:
     // As th06's DrawBanners and DrawHud.
     void DrawBanners();
     void DrawHud();
-    // The update, as th06's UpdateInterface.
+    // The update: while no dialogue runs, the boss bar (sprites[11],
+    // interrupt 1 to show it, 2 to hide it, its flag 13 when done) and
+    // its life; then the interface's sprites, unk_6e44 and unk_72dc
+    // (hidden when done), the unk_79c0 sprites while impl->unk_1fba0
+    // is set (counting those still running into it), the popups, and
+    // once the stage is cleared, the bonus (stage, grazes, point items,
+    // cherry and, on the last stages, lives and bombs, by difficulty
+    // and starting lives), added to the score in ten parts.
     void UpdateInterface();
     // Loads the interface's sprites and the stage's portraits and
     // messages, as th06's.
@@ -1367,7 +1377,18 @@ public:
     float bombNameWidth;
     // The same for ShowSpellCardName.
     float spellNameWidth;
-    unsigned char unk_14[0x80];
+    // The boss bar's alpha, raised by 4 a frame up to 0xff while a boss
+    // fight runs.
+    DWORD bossBarAlpha;
+    unsigned char unk_18[0xc];
+    // Set while a boss fight runs.
+    BYTE bossPresent;
+    unsigned char unk_25[0x3];
+    // The boss's life as a fraction of its maximum, and what the bar
+    // shows, following it.
+    float bossHealth;
+    float bossHealthShown;
+    unsigned char unk_30[0x64];
 };
 ASSERT_SIZE(Unknown49fbf0, 0x94);
 extern Unknown49fbf0 g_Unknown49fbf0;

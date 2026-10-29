@@ -42,6 +42,10 @@ struct Timer
     // Tick, returning the new count. Out of line in ascii.cpp, as th06's
     // in its Gui file.
     int NextTick();
+    void operator++()
+    {
+        this->NextTick();
+    }
 
     // The count with its fraction.
     float AsFloat()

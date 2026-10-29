@@ -555,3 +555,209 @@ int GuiImpl::DrawMsg()
     g_SpriteEngine->DrawUnrotated(&this->msg.unk_94c[1]);
     return 0;
 }
+
+void Unknown49fbf0::UpdateInterface()
+{
+    int i;
+    int count;
+    int bonus;
+
+    if (this->impl->msg.scriptIndex < 0)
+    {
+        if (this->bossPresent)
+        {
+            if (this->impl->bossBarState == 0)
+            {
+                this->impl->sprites[11].SetPendingInterrupt(1);
+                this->impl->bossBarState = 1;
+                this->bossBarAlpha = 0;
+            }
+            else
+            {
+                if ((this->impl->sprites[11].flags >> 13) & 1)
+                {
+                    this->impl->bossBarState = 2;
+                }
+                if (this->bossBarAlpha < 0xfc)
+                {
+                    this->bossBarAlpha += 4;
+                }
+                else
+                {
+                    this->bossBarAlpha = 0xff;
+                }
+            }
+        }
+        else if (this->impl->bossBarState != 0)
+        {
+            if (this->impl->bossBarState <= 2)
+            {
+                this->impl->sprites[11].SetPendingInterrupt(2);
+                this->impl->bossBarState = 3;
+            }
+            if (this->bossBarAlpha > 0)
+            {
+                this->bossBarAlpha -= 4;
+            }
+            else
+            {
+                this->bossBarAlpha = 0;
+            }
+            if ((this->impl->sprites[11].flags >> 13) & 1)
+            {
+                this->impl->bossBarState = 0;
+                this->bossHealthShown = 0.0f;
+                this->bossBarAlpha = 0;
+            }
+        }
+        if (this->impl->bossBarState >= 2)
+        {
+            if (this->bossHealth > this->bossHealthShown)
+            {
+                this->bossHealthShown += 0.01f;
+                if (this->bossHealth < this->bossHealthShown)
+                {
+                    this->bossHealthShown = this->bossHealth;
+                }
+            }
+            else if (this->bossHealth < this->bossHealthShown)
+            {
+                this->bossHealthShown -= 0.02f;
+                if (this->bossHealth > this->bossHealthShown)
+                {
+                    this->bossHealthShown = this->bossHealth;
+                }
+            }
+        }
+    }
+    g_SpriteEngine->StepSprites(this->impl->sprites, 0x21);
+    g_SpriteEngine->StepSprites(this->impl->unk_4bd0, 5);
+    g_SpriteEngine->Step(&this->impl->bombPortrait);
+    g_SpriteEngine->Step(&this->impl->unk_5be4);
+    g_SpriteEngine->Step(&this->impl->unk_607c);
+    g_SpriteEngine->Step(&this->impl->bombName);
+    g_SpriteEngine->Step(&this->impl->spellPortrait);
+    g_SpriteEngine->Step(&this->impl->unk_5e30);
+    g_SpriteEngine->Step(&this->impl->unk_62c8);
+    g_SpriteEngine->Step(&this->impl->spellName);
+    g_SpriteEngine->Step(&this->impl->bombNameBar);
+    g_SpriteEngine->Step(&this->impl->spellNameBar);
+    g_SpriteEngine->Step(&this->impl->unk_7774);
+    if (this->impl->unk_6e44.spriteIndex >= 0)
+    {
+        if (g_SpriteEngine->Step(&this->impl->unk_6e44) != 0)
+        {
+            this->impl->unk_6e44.spriteIndex = -1;
+        }
+        if (g_SpriteEngine->Step(&this->impl->unk_72dc) != 0)
+        {
+            this->impl->unk_72dc.spriteIndex = -1;
+        }
+    }
+    if (this->impl->unk_1fba0 != 0)
+    {
+        count = 0xa8;
+        for (i = 0; i < 0xa8; i++)
+        {
+            if (g_SpriteEngine->Step(&this->impl->unk_79c0[i]) != 0)
+            {
+                count--;
+            }
+        }
+        this->impl->unk_1fba0 = count;
+    }
+    if (this->impl->bonusPopup.shown)
+    {
+        if (this->impl->bonusPopup.timer < 30)
+        {
+            this->impl->bonusPopup.pos.x = this->impl->bonusPopup.timer.AsFloat() * -312.0f / 30.0f + 416.0f;
+        }
+        else
+        {
+            this->impl->bonusPopup.pos.x = 104.0f;
+        }
+        if (this->impl->bonusPopup.timer >= 250)
+        {
+            this->impl->bonusPopup.shown = 0;
+        }
+        ++this->impl->bonusPopup.timer;
+    }
+    if (this->impl->unk_209e0.shown)
+    {
+        if (this->impl->unk_209e0.timer < 30)
+        {
+            this->impl->unk_209e0.pos.x = this->impl->unk_209e0.timer.AsFloat() * -312.0f / 30.0f + 416.0f;
+        }
+        else
+        {
+            this->impl->unk_209e0.pos.x = 104.0f;
+        }
+        if (this->impl->unk_209e0.timer >= 180)
+        {
+            this->impl->unk_209e0.shown = 0;
+        }
+        ++this->impl->unk_209e0.timer;
+    }
+    if (this->impl->spellBonusPopup.shown)
+    {
+        if (this->impl->spellBonusPopup.timer >= 280)
+        {
+            this->impl->spellBonusPopup.shown = 0;
+        }
+        ++this->impl->spellBonusPopup.timer;
+    }
+    if (this->impl->stageClearShown == 1)
+    {
+        bonus = 0;
+        bonus += g_Unknown626270.stage * 100000;
+        bonus += this->impl->stageClearGraze * 50;
+        bonus += this->impl->stageClearPoints * 5000;
+        bonus += this->impl->stageClearCherry;
+        if (g_Unknown626270.stage >= 7 ||
+            (g_Unknown626270.stage == 6 && !(g_Unknown626270.unk_93d8 & 1) &&
+             (!g_Unknown626270.unk_93d8Bit3 || g_ReplayManager->data->stages[4] != NULL)))
+        {
+            bonus += (int)g_Unknown626270.stats->lives * 2000000;
+            bonus += (int)g_Unknown626270.stats->bombs * 400000;
+        }
+        switch (g_Unknown626270.difficulty)
+        {
+        case 0:
+            bonus /= 2;
+            break;
+        case 2:
+            bonus = bonus * 12 / 10;
+            break;
+        case 3:
+            bonus = bonus * 15 / 10;
+            break;
+        case 4:
+            bonus *= 2;
+            break;
+        case 5:
+            bonus *= 2;
+            break;
+        }
+        switch (g_Unknown626270.unk_4->lifeCount)
+        {
+        case 3:
+            bonus = bonus * 5 / 10;
+            break;
+        case 4:
+            bonus = bonus * 2 / 10;
+            break;
+        }
+        this->impl->stageClearTotal = bonus;
+        g_Unknown626270.AddScore(bonus);
+        g_Unknown626270.AddScore(bonus);
+        g_Unknown626270.AddScore(bonus);
+        g_Unknown626270.AddScore(bonus);
+        g_Unknown626270.AddScore(bonus);
+        g_Unknown626270.AddScore(bonus);
+        g_Unknown626270.AddScore(bonus);
+        g_Unknown626270.AddScore(bonus);
+        g_Unknown626270.AddScore(bonus);
+        g_Unknown626270.AddScore(bonus);
+        this->impl->stageClearShown++;
+    }
+}
