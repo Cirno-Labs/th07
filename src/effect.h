@@ -86,6 +86,10 @@ public:
     // frames checks the player's numbers. Returns 4 if they were
     // tampered with, otherwise 1.
     static int OnUpdate(EffectManager *mgr);
+    // The draw chain element's callback: draws the first, third and
+    // fourth draw lists, the first and fourth moved into the play area.
+    // Returns 1.
+    static int OnDraw(EffectManager *mgr);
 
     // Where SpawnEffect looks for a free effect next.
     int next;

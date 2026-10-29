@@ -147,7 +147,7 @@ address,size,name,symbol
 0x0041c400,521,EffectManager::SpawnEffectWithVelocity,?SpawnEffectWithVelocity@EffectManager@@QAEPAUEffect@@HPAUD3DXVECTOR3@@0HK@Z
 0x0041c610,374,EffectManager::SpawnReservedEffect,?SpawnReservedEffect@EffectManager@@QAEPAUEffect@@HPAUD3DXVECTOR3@@HHK@Z
 0x0041c790,625,EffectManager::OnUpdate,?OnUpdate@EffectManager@@SIHPAV1@@Z
-0x0041ca10,354,Func41ca10,
+0x0041ca10,354,EffectManager::OnDraw,?OnDraw@EffectManager@@SIHPAV1@@Z
 0x0041cb80,596,Func41cb80,
 0x0041cde0,581,Func41cde0,
 0x0041d050,65,Func41d050,

@@ -222,3 +222,35 @@ int EffectManager::OnUpdate(EffectManager *mgr)
     }
     return 1;
 }
+
+int EffectManager::OnDraw(EffectManager *mgr)
+{
+    Effect *eff;
+
+    eff = mgr->drawList0.next;
+    while (eff != NULL)
+    {
+        eff->sprite.pos = eff->pos;
+        eff->sprite.pos.x = g_Unknown626270.arena[0] + eff->sprite.pos.x;
+        eff->sprite.pos.y = g_Unknown626270.arena[1] + eff->sprite.pos.y;
+        g_SpriteEngine->Draw(&eff->sprite);
+        eff = eff->next;
+    }
+    eff = mgr->drawList2.next;
+    while (eff != NULL)
+    {
+        eff->sprite.pos = eff->pos;
+        g_SpriteEngine->DrawProjected(&eff->sprite);
+        eff = eff->next;
+    }
+    eff = mgr->drawList3.next;
+    while (eff != NULL)
+    {
+        eff->sprite.pos = eff->pos;
+        eff->sprite.pos.x = g_Unknown626270.arena[0] + eff->sprite.pos.x;
+        eff->sprite.pos.y = g_Unknown626270.arena[1] + eff->sprite.pos.y;
+        g_SpriteEngine->Draw(&eff->sprite);
+        eff = eff->next;
+    }
+    return 1;
+}
