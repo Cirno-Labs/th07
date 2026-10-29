@@ -581,7 +581,7 @@ address,size,name,symbol
 0x00450520,1316,SpriteEngine::Draw3D,?Draw3D@SpriteEngine@@QAEHPAVSprite@@@Z
 0x00450a50,166,Sprite::ResolveFloatArgument,?ResolveFloatArgument@Sprite@@QAEMM@Z
 0x00450b20,186,Sprite::ResolveIntArgument,?ResolveIntArgument@Sprite@@QAEHH@Z
-0x00450c10,124,Func450c10,
+0x00450c10,124,Sprite::ResolveFloatArgumentPtr,?ResolveFloatArgumentPtr@Sprite@@QAEPAMPAMGH@Z
 0x00450ca0,139,Func450ca0,
 0x00450d60,13178,SpriteEngine::Step,?Step@SpriteEngine@@QAEHPAVSprite@@@Z
 0x00454260,108,SpriteEngine::RenderTextToTextureIndex,?RenderTextToTextureIndex@SpriteEngine@@QAEXHHHHHHHKKPADMM@Z

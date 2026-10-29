@@ -143,6 +143,10 @@ public:
     float ResolveFloatArgument(float value);
     // The same for an int argument; float variables are truncated.
     int ResolveIntArgument(int value);
+    // Where a float script argument is read from or written to: when bit
+    // `bit` of `mask` is set and `*value` is 10004 to 10007, the float
+    // variable it stands for, else `value`.
+    float *ResolveFloatArgumentPtr(float *value, WORD mask, int bit);
     void SetPendingInterrupt(short interrupt)
     {
         this->pendingInterrupt = interrupt;
