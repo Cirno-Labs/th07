@@ -859,7 +859,7 @@ int Player::CheckHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size)
     {
         return 0;
     }
-    g_ReplayManager->unk_d6 |= 2;
+    g_ReplayManager->frameEvents |= 2;
     if (this->playerState == 4)
     {
         g_Player.StopBombState(0);
@@ -960,7 +960,7 @@ int Player::CheckLaserHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size, D3DXVECTOR3 *orig
     return 2;
 
 hit:
-    g_ReplayManager->unk_d6 |= 2;
+    g_ReplayManager->frameEvents |= 2;
     if (this->playerState == 4)
     {
         g_Player.StopBombState(0);
@@ -1496,7 +1496,7 @@ void UpdateBombState(Player *player)
     if (!g_Unknown626270.ChecksumMismatch() && !g_Unknown49fbf0.Func42ad66() && player->deathbombFrames != 0 &&
         (int)g_Unknown626270.stats->bombs > 0 && player->bombCooldown == 0 && (g_Unknown4b9e50 & 2))
     {
-        g_ReplayManager->unk_d6 |= 1;
+        g_ReplayManager->frameEvents |= 1;
         g_Unknown626270.AddBombsUsed(1);
         g_Unknown626270.AddBombs(-1);
         g_Unknown49fbf0.bombsChanged = 2;
@@ -1544,7 +1544,7 @@ int UpdateDyingState(Player *player)
         player->deathbombFrames--;
         if (player->deathbombFrames == 0)
         {
-            g_ReplayManager->unk_d6 |= 4;
+            g_ReplayManager->frameEvents |= 4;
             g_Unknown626270.powerItemCombo = 0;
             g_Unknown12fe0cc = 0;
             g_Unknown12fe0c4 = 0;
@@ -1802,7 +1802,7 @@ void StartBombState(Player *player)
     g_Unknown49fbf0.Func427c81(0, 2);
     g_SoundPlayer.QueueSound(0x20, 0);
     g_SoundPlayer.QueueSound(0x24, 0);
-    g_ReplayManager->unk_d6 |= 8;
+    g_ReplayManager->frameEvents |= 8;
 }
 
 void Player::EndBombState()
@@ -1924,7 +1924,7 @@ void Player::StopBombState(int unk)
     }
     g_SoundPlayer.QueueSound(7, 0);
     g_SoundPlayer.QueueSound(0x21, 0);
-    g_ReplayManager->unk_d6 |= 0x10;
+    g_ReplayManager->frameEvents |= 0x10;
 }
 
 void ResetHomingAndText(Player *player)

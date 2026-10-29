@@ -10,12 +10,12 @@
 
 int ReplayManager::RecordOnUpdate2(ReplayManager *replay)
 {
-    replay->unk_d6 = 0;
-    replay->unk_d4 = g_Rng.seed;
+    replay->frameEvents = 0;
+    replay->frameSeed = g_Rng.seed;
     g_Rng.generated = 0;
     if (g_Unknown626270.pauseRequested)
     {
-        replay->unk_d6 |= 0x100;
+        replay->frameEvents |= 0x100;
     }
     g_Unknown626270.pauseRequested = 0;
     return 1;
@@ -50,7 +50,7 @@ int ReplayManager::RecordOnUpdate(ReplayManager *replay)
     replay->cursor++;
     replay->stageEnds[idx] = replay->cursor + 1;
     replay->cursor->input = buttons;
-    replay->cursor->events = replay->unk_d6;
+    replay->cursor->events = replay->frameEvents;
     if (replay->frame % 30 == 0)
     {
         *replay->extraCursor = (BYTE)g_App.roundedFps | (g_App.fastClockStreak != 0 ? 0x80 : 0);

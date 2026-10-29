@@ -191,7 +191,7 @@ void ItemManager::UpdateItems()
     touch:
         if (g_Player.TouchesGrazeBox(&entry->pos, &catchSize))
         {
-            g_ReplayManager->unk_d6 |= 0x40;
+            g_ReplayManager->frameEvents |= 0x40;
             switch (entry->type)
             {
             case 0:

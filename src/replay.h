@@ -221,8 +221,8 @@ public:
     ChainElem *calcChain2;
     ChainElem *calcChain3;
     // The random seed at the start of the frame.
-    WORD unk_d4;
+    WORD frameSeed;
     // Bits set during a frame: 2 when the player is hit.
-    WORD unk_d6;
+    WORD frameEvents;
 };
 extern ReplayManager *g_ReplayManager;

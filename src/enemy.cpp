@@ -534,7 +534,7 @@ void Enemy::Despawn()
     {
         g_Unknown9a9b00.bosses[this->bossIndex] = NULL;
     }
-    g_ReplayManager->unk_d6 |= 0x20;
+    g_ReplayManager->frameEvents |= 0x20;
 }
 
 void Enemy::ClampPos()
@@ -917,7 +917,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                 enemy->flags.unk_a = 0;
                 enemy->flags.deathMode = 0;
                 g_Unknown49fbf0.bossPresent = 0;
-                g_ReplayManager->unk_d6 |= 0x20;
+                g_ReplayManager->frameEvents |= 0x20;
                 if (enemy->deathEffect >= 0)
                 {
                     g_EffectManager.SpawnEffect(enemy->deathEffect, &enemy->pos, 1, 0xffffffff);
@@ -971,7 +971,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                     }
                 }
                 enemy->life = 0;
-                g_ReplayManager->unk_d6 |= 0x20;
+                g_ReplayManager->frameEvents |= 0x20;
                 break;
             }
             g_SoundPlayer.QueueSound(i % 2 + 2, 0);
