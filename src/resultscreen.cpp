@@ -1868,7 +1868,7 @@ int ResultScreen::OnDraw(ResultScreen *screen)
     D3DXVECTOR3 charPos;
 
     sprite = screen->sprites;
-    g_SpriteEngine->Func44f5c0();
+    g_SpriteEngine->FlushQuadBatch();
     g_App.viewport.X = 0;
     g_App.viewport.Y = 0;
     g_App.viewport.Width = 640;

@@ -358,7 +358,7 @@ public:
     // Starts a new batch of quads. Not in th06.
     void BeginQuadBatch();
     // Draws the batched quads, if any. Not in th06.
-    void Func44f5c0();
+    void FlushQuadBatch();
     // Copies the `srcWidth` by `srcHeight` rectangle at (`srcLeft`,
     // `srcTop`) of the back buffer into the `dstWidth` by `dstHeight`
     // rectangle at (`dstLeft`, `dstTop`) of texture `texture`.
@@ -448,6 +448,7 @@ public:
     DWORD unk_c;
     // Counts SetRenderStateForSprite's calls.
     DWORD unk_10;
+    // Counts the batches FlushQuadBatch drew.
     DWORD unk_14;
     // How far the screen is shaken, set by ScreenEffect's shake.
     float shakeX;
@@ -493,7 +494,7 @@ public:
     IDirect3DVertexBuffer8 *vertexBuffer;
     // The quad the vertex buffer holds, 256 pixels across.
     VertexTex1Xyz quad[4];
-    // The number of quads batched to draw with Func44f5c0.
+    // The number of quads batched to draw with FlushQuadBatch.
     int batchQuadCount;
     // The batched quads, two triangles each.
     VertexTex1DiffuseXyzrwh batchVertices[0xc000];

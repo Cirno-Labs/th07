@@ -257,11 +257,11 @@ int GameWindow::RunFrame()
             g_App.unk_2bc = 0xff;
             g_App.DisableFog();
             g_Chain.RunDrawChain();
-            g_SpriteEngine->Func44f5c0();
+            g_SpriteEngine->FlushQuadBatch();
             g_App.d3dDevice->SetTexture(0, NULL);
             g_App.d3dDevice->EndScene();
         }
-        g_SpriteEngine->Func44f5c0();
+        g_SpriteEngine->FlushQuadBatch();
         g_App.viewport.X = 0;
         g_App.viewport.Y = 0;
         g_App.viewport.Width = 640;

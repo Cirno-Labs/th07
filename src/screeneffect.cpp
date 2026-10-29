@@ -24,7 +24,7 @@ void ClearViewport(D3DCOLOR color)
 {
     if (g_SpriteEngine != NULL)
     {
-        g_SpriteEngine->Func44f5c0();
+        g_SpriteEngine->FlushQuadBatch();
     }
     g_App.viewport.X = 0;
     g_App.viewport.Y = 0;
@@ -56,7 +56,7 @@ int ScreenEffect::OnUpdateFadeIn(ScreenEffect *effect)
 
 void DrawColorRect(float *rect, D3DCOLOR color)
 {
-    g_SpriteEngine->Func44f5c0();
+    g_SpriteEngine->FlushQuadBatch();
     VertexDiffuseXyzrwh vertices[4];
 
     vertices[0].pos = D3DXVECTOR3(rect[0], rect[1], 0.0f);
@@ -96,7 +96,7 @@ void DrawColorRect(float *rect, D3DCOLOR color)
 
 void DrawGradientRect(float *rect, D3DCOLOR topLeft, D3DCOLOR topRight, D3DCOLOR bottomLeft, D3DCOLOR bottomRight)
 {
-    g_SpriteEngine->Func44f5c0();
+    g_SpriteEngine->FlushQuadBatch();
     VertexDiffuseXyzrwh vertices[4];
 
     vertices[0].pos = D3DXVECTOR3(rect[0], rect[1], 0.0f);
@@ -145,7 +145,7 @@ int ScreenEffect::OnDrawScreen(ScreenEffect *effect)
     area[1] = 0.0f;
     area[2] = 640.0f;
     area[3] = 480.0f;
-    g_SpriteEngine->Func44f5c0();
+    g_SpriteEngine->FlushQuadBatch();
     g_App.viewport.X = 0;
     g_App.viewport.Y = 0;
     g_App.viewport.Width = 640;

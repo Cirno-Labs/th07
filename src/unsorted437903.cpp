@@ -1367,7 +1367,7 @@ int App::IsScoreDisabled()
 
 int App::EnableFog()
 {
-    g_SpriteEngine->Func44f5c0();
+    g_SpriteEngine->FlushQuadBatch();
     if (this->unk_2bc != 1)
     {
         this->unk_2bc = 1;
@@ -1378,7 +1378,7 @@ int App::EnableFog()
 
 int App::DisableFog()
 {
-    g_SpriteEngine->Func44f5c0();
+    g_SpriteEngine->FlushQuadBatch();
     if (this->unk_2bc != 0)
     {
         this->unk_2bc = 0;
@@ -1389,7 +1389,7 @@ int App::DisableFog()
 
 int App::SetRenderState(D3DRENDERSTATETYPE state, DWORD value)
 {
-    g_SpriteEngine->Func44f5c0();
+    g_SpriteEngine->FlushQuadBatch();
     return this->d3dDevice->SetRenderState(state, value);
 }
 

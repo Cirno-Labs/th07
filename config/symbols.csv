@@ -568,7 +568,7 @@ address,size,name,symbol
 0x0044eec0,237,SpriteEngine::SetBlendModeForSprite,?SetBlendModeForSprite@SpriteEngine@@QAEXPAVSprite@@@Z
 0x0044efb0,1481,Func44efb0,
 0x0044f580,60,SpriteEngine::BeginQuadBatch,?BeginQuadBatch@SpriteEngine@@QAEXXZ
-0x0044f5c0,198,SpriteEngine::Func44f5c0,?Func44f5c0@SpriteEngine@@QAEXXZ
+0x0044f5c0,198,SpriteEngine::FlushQuadBatch,?FlushQuadBatch@SpriteEngine@@QAEXXZ
 0x0044f690,211,Func44f690,
 0x0044f770,487,SpriteEngine::Func44f770,?Func44f770@SpriteEngine@@QAEHPAVSprite@@@Z
 0x0044f960,58,Func44f960,

@@ -606,7 +606,7 @@ void SpriteEngine::SetRenderStateForSprite(Sprite *vm)
     }
     if (this->unk_2e4d4 != (vm->flags >> 14 & 1))
     {
-        g_SpriteEngine->Func44f5c0();
+        g_SpriteEngine->FlushQuadBatch();
         this->unk_2e4d4 = vm->flags >> 14 & 1;
         if (this->unk_2e4d4 == 0)
         {
@@ -656,6 +656,22 @@ void SpriteEngine::BeginQuadBatch()
     this->batchQuadCount = 0;
     this->batchCursor = this->batchVertices;
     this->batchStart = this->batchCursor;
+}
+
+void SpriteEngine::FlushQuadBatch()
+{
+    if (this->batchQuadCount == 0)
+    {
+        return;
+    }
+    g_App.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_DIFFUSE);
+    g_App.d3dDevice->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);
+    g_App.d3dDevice->SetVertexShader(D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1);
+    g_App.d3dDevice->DrawPrimitiveUP(D3DPT_TRIANGLELIST, this->batchQuadCount * 2, this->batchStart,
+                                     sizeof(VertexTex1DiffuseXyzrwh));
+    this->batchStart = this->batchCursor;
+    this->batchQuadCount = 0;
+    this->unk_14++;
 }
 
 void SpriteEngine::RenderTextToTextureIndex(int textureIndex, int x, int y, int width, int unk4, int fontHeight,
@@ -919,7 +935,7 @@ void SpriteEngine::CopyBackBufferToTexture(int texture, int srcLeft, int srcTop,
     {
         return;
     }
-    this->Func44f5c0();
+    this->FlushQuadBatch();
     if (g_App.d3dDevice->GetBackBuffer(0, D3DBACKBUFFER_TYPE_MONO, &backBuffer) != D3D_OK)
     {
         return;
@@ -960,7 +976,7 @@ void SpriteEngine::CopyTextureRect(int dstTexture, int srcTexture, RECT *dstRect
     {
         return;
     }
-    this->Func44f5c0();
+    this->FlushQuadBatch();
     if (this->textures[dstTexture]->GetSurfaceLevel(0, &dest) != D3D_OK)
     {
         return;
@@ -1072,7 +1088,7 @@ int SpriteEngine::DrawVertexStrip(Sprite *vm, VertexTex1DiffuseXyzrwh *vertices,
     }
     if (this->batchQuadCount != 0)
     {
-        this->Func44f5c0();
+        this->FlushQuadBatch();
     }
     if (this->currentTexture != this->textures[vm->spriteData->sourceFileIndex])
     {
