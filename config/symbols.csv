@@ -134,7 +134,7 @@ address,size,name,symbol
 0x0041adf0,153,OffsetPetalEffects,?OffsetPetalEffects@@YIXPAUD3DXVECTOR3@@@Z
 0x0041ae90,86,StartPetalsFalling,?StartPetalsFalling@@YIXXZ
 0x0041aef0,436,EffectUpdatePetal,?EffectUpdatePetal@@YIHPAUEffect@@@Z
-0x0041b0b0,997,Func41b0b0,
+0x0041b0b0,997,EffectInitPetal20,?EffectInitPetal20@@YIHPAUEffect@@@Z
 0x0041b4a0,710,Func41b4a0,
 0x0041b770,628,Func41b770,
 0x0041b9f0,559,Func41b9f0,
@@ -1815,6 +1815,7 @@ address,size,name,symbol
 0x01348020,,g_Unknown1348020,?g_Unknown1348020@@3HA
 0x01348024,,g_Unknown1348024,?g_Unknown1348024@@3HA
 0x0134ccf8,,g_Unknown134ccf8,?g_Unknown134ccf8@@3UD3DXVECTOR3@@A
+0x0134cd04,,g_Unknown134cd04,?g_Unknown134cd04@@3UD3DXVECTOR3@@A
 0x0134cd1c,,g_Unknown134cd1c,?g_Unknown134cd1c@@3UD3DXVECTOR3@@A
 0x0134cd28,,g_Unknown134cd28,?g_Unknown134cd28@@3UD3DXVECTOR3@@A
 0x0134cdf4,,g_AsciiDrawChain,?g_AsciiDrawChain@@3UChainElem@@A

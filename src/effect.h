@@ -121,6 +121,14 @@ void StartPetalsFalling();
 // g_Unknown134ccf8, or at z 0 and above; otherwise returns 1.
 int EffectUpdatePetal(Effect *effect);
 
+// An effect init for petal type 20: starts unk_27c at g_Unknown134ccf8
+// plus half of g_Unknown134cd04, scattered at random, with a random
+// step on top of velocity and a little acceleration, both scaled by
+// App::unk_178, and a random spin; puts it in the second draw list. The
+// fuller unk_961c is (above stats->unk_88, out of unk_9618), the
+// likelier it is shown as sprite 0x2d8 in white. Returns 0.
+int EffectInitPetal20(Effect *effect);
+
 // The effects, at 0x12fe250: 400 started in turn, 8 reserved slots and
 // a spare.
 class EffectManager
@@ -198,4 +206,6 @@ extern int g_Unknown1348024;
 // Probably the 3D camera: where it is, and the direction it looks in
 // (normalized). Not declared as part of a struct yet.
 extern D3DXVECTOR3 g_Unknown134ccf8;
+// The offset from g_Unknown134ccf8 that the petals start around.
+extern D3DXVECTOR3 g_Unknown134cd04;
 extern D3DXVECTOR3 g_Unknown134cd1c;

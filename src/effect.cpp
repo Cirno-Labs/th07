@@ -205,6 +205,38 @@ int EffectUpdatePetal(Effect *effect)
     return 1;
 }
 
+int EffectInitPetal20(Effect *effect)
+{
+    D3DXVECTOR3 back;
+    int percent;
+
+    back = -g_Unknown134cd04;
+    effect->unk_27c = g_Unknown134cd04 + g_Unknown134ccf8;
+    effect->unk_27c.x += g_Rng.GetRandomF32ZeroToOne() * 120.0f - 60.0f + back.x / 2.0f;
+    effect->unk_27c.y += g_Rng.GetRandomF32ZeroToOne() * 200.0f - 100.0f + back.y / 2.0f;
+    effect->unk_27c.z += g_Rng.GetRandomF32ZeroToOne() * 100.0f - 100.0f + back.z / 2.0f;
+    effect->step.x = g_Rng.GetRandomF32ZeroToOne() * 0.06f - 0.03f + effect->velocity.x;
+    effect->step.y = g_Rng.GetRandomF32ZeroToOne() * 0.06f - 0.03f + effect->velocity.y;
+    effect->step.z = g_Rng.GetRandomF32ZeroToOne() * 0.1f + 0.03f + effect->velocity.z;
+    effect->acceleration.x = g_Rng.GetRandomF32ZeroToOne() * 0.0002f - 0.0001f;
+    effect->acceleration.y = g_Rng.GetRandomF32ZeroToOne() * 0.0002f - 0.0001f;
+    effect->step = effect->step * g_App.unk_178;
+    effect->acceleration = effect->acceleration * g_App.unk_178;
+    effect->drawList = 1;
+    effect->sprite.rotationZ = g_Rng.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
+    effect->sprite.rotationX = g_Rng.GetRandomF32ZeroToOne() * 0.031415928f - 0.015707964f;
+    percent = g_Unknown626270.unk_961c - g_Unknown626270.stats->unk_88;
+    percent = percent * 100 / g_Unknown626270.unk_9618;
+    if (percent >= g_Rng.GetRandomU32InRange(100))
+    {
+        g_SpriteEngine->SetSprite(&effect->sprite, 0x2d8);
+        effect->sprite.unk_rgb[2] = 0xff;
+        effect->sprite.unk_rgb[1] = 0xff;
+        effect->sprite.unk_rgb[0] = 0xff;
+    }
+    return 0;
+}
+
 Effect *EffectManager::SpawnEffect(int type, D3DXVECTOR3 *pos, int count, D3DCOLOR color)
 {
     Effect *effect;
