@@ -58,3 +58,17 @@ BOOL Unknown626270::IsInPlayArea(float x, float y, float width, float height)
     }
     return TRUE;
 }
+
+int ChecksumBytes(BYTE *data, int size)
+{
+    int i;
+    int sum;
+
+    sum = 0;
+    for (i = 0; i < size; i++, data++)
+    {
+        sum += *data;
+        g_Unknown626270.stats->unk_ac += g_Unknown626270.stats->unk_b4[2];
+    }
+    return sum;
+}

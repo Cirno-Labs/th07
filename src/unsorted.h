@@ -884,7 +884,11 @@ struct Unknown626270Stats
     unsigned char unk_80[0x8];
     // Player::Graze subtracts it from Unknown626270::unk_961c.
     int unk_88;
-    unsigned char unk_8c[0x3c];
+    unsigned char unk_8c[0x20];
+    // ChecksumBytes adds unk_b4[2] to it for every byte it sums.
+    int unk_ac;
+    unsigned char unk_b0[0x4];
+    DWORD unk_b4[5];
 };
 ASSERT_SIZE(Unknown626270Stats, 0xc8);
 
@@ -1063,6 +1067,10 @@ public:
     int unk_9634;
 };
 extern Unknown626270 g_Unknown626270;
+
+// The sum of the `size` bytes at `data`. Adds
+// g_Unknown626270.stats->unk_b4[2] to its unk_ac for every byte.
+int ChecksumBytes(BYTE *data, int size);
 
 // The object at 0x49fbf0. Placeholder name; only what is known so far.
 class Unknown49fbf0
