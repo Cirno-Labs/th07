@@ -99,6 +99,11 @@ public:
     // empties the queue, draws the menus, then unk_9e50 while it runs a
     // script. Returns 1.
     static int OnDraw(AsciiText *text);
+    // The update element's added callback: zeroes the object, loads
+    // ascii.anm (slot 1) and capture.anm (slot 4, from sprite 0x724),
+    // then initializes and starts the sprites' scripts. Returns 0, or -1
+    // if loading fails.
+    static int AddedCallback(AsciiText *text);
     // Draws the queued strings, as th06's.
     void DrawStrings();
     // The second draw element's callback: draws the popups. th06 picked

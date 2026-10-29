@@ -115,3 +115,19 @@ void AsciiText::StartScripts()
     g_SpriteEngine->StartScript(&this->unk_b7c[2], 6);
     g_SpriteEngine->StartScript(&this->unk_b7c[3], 6);
 }
+
+int AsciiText::AddedCallback(AsciiText *text)
+{
+    memset(text, 0, sizeof(AsciiText));
+    if (g_SpriteEngine->LoadAnm(1, "data/ascii.anm", 0) != 0)
+    {
+        return -1;
+    }
+    if (g_SpriteEngine->LoadAnm(4, "data/capture.anm", 0x724) != 0)
+    {
+        return -1;
+    }
+    text->Initialize();
+    text->StartScripts();
+    return 0;
+}
