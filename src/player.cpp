@@ -685,3 +685,17 @@ int Player::OnDraw2(Player *player)
     DrawHitBullets(player);
     return 1;
 }
+
+float Player::AngleFrom(D3DXVECTOR3 *pos)
+{
+    float x;
+    float y;
+
+    x = this->position.x - pos->x;
+    y = this->position.y - pos->y;
+    if (y == 0.0f && x == 0.0f)
+    {
+        return 1.5707964f;
+    }
+    return atan2f(y, x);
+}

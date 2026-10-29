@@ -233,6 +233,8 @@ public:
     // A draw callback, as th06's: draws the bullets that hit
     // (DrawHitBullets). Returns 1.
     static int OnDraw2(Player *player);
+    // The angle from `pos` to the player, pi / 2 when they coincide.
+    float AngleFrom(D3DXVECTOR3 *pos);
 
     Sprite sprite;
     Sprite optionSprites[3];
