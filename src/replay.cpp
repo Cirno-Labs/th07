@@ -449,3 +449,21 @@ int ReplayManager::RegisterChain(int mode, char *path)
     }
     return 0;
 }
+
+void ReplayManager::EndStage()
+{
+    int stageIdx;
+    ReplayManager *replay = g_ReplayManager;
+
+    if (replay != NULL)
+    {
+        replay->cursor++;
+        replay->cursor->input = 0;
+        stageIdx = g_Unknown626270.stage - 1;
+        if (stageIdx >= 7)
+        {
+            stageIdx = 6;
+        }
+        replay->stageEnds[stageIdx] = replay->cursor + 1;
+    }
+}

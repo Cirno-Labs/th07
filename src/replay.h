@@ -164,6 +164,9 @@ public:
     // the mode's added callback again. Returns 0, or -1 if adding the
     // update element fails.
     static int RegisterChain(int mode, char *path);
+    // Ends the current stage's record with an empty frame and keeps
+    // where it ends.
+    static void EndStage();
 
     // The current frame.
     int frame;

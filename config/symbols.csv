@@ -488,7 +488,7 @@ address,size,name,symbol
 0x00443550,1111,ReplayManager::PlayAddedCallback,?PlayAddedCallback@ReplayManager@@SIHPAV1@@Z
 0x004439b0,232,ReplayManager::DeletedCallback,?DeletedCallback@ReplayManager@@SIHPAV1@@Z
 0x00443aa0,655,ReplayManager::RegisterChain,?RegisterChain@ReplayManager@@SIHHPAD@Z
-0x00443d30,108,Func443d30,
+0x00443d30,108,ReplayManager::EndStage,?EndStage@ReplayManager@@SIXXZ
 0x00443da0,1829,SaveReplay,?SaveReplay@@YIXPAD0@Z
 0x004444d0,1419,Func4444d0,
 0x00444a5b,251,ResultScreen::ResultScreen,??0ResultScreen@@QAE@XZ
