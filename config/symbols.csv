@@ -83,7 +83,7 @@ address,size,name,symbol
 0x0040e5b0,1310,GetIntOperand,?GetIntOperand@@YIHPAUEnemy@@H@Z
 0x0040ec00,325,ResolveOperand,?ResolveOperand@@YIPAHPAUEnemy@@PAHGH@Z
 0x0040edf0,1178,GetFloatOperand,?GetFloatOperand@@YIMPAUEnemy@@M@Z
-0x0040f3c0,528,Func40f3c0,
+0x0040f3c0,528,ResolveFloatOperand,?ResolveFloatOperand@@YIPAMPAUEnemy@@PAMGH@Z
 0x0040f6b0,575,Func40f6b0,
 0x0040f8f0,566,Func40f8f0,
 0x0040fb30,89,Func40fb30,

@@ -404,3 +404,89 @@ float GetFloatOperand(Enemy *enemy, float id)
     }
     return id;
 }
+
+float *ResolveFloatOperand(Enemy *enemy, float *operand, WORD mask, int bit)
+{
+    if (bit >= 0 && (mask & (1 << bit)) == 0)
+    {
+        return operand;
+    }
+    switch ((int)*operand)
+    {
+    case 10004:
+        return &enemy->ctx.vars.floats[0];
+    case 10005:
+        return &enemy->ctx.vars.floats[1];
+    case 10006:
+        return &enemy->ctx.vars.floats[2];
+    case 10007:
+        return &enemy->ctx.vars.floats[3];
+    case 10008:
+        return &enemy->ctx.vars.floats[4];
+    case 10009:
+        return &enemy->ctx.vars.floats[5];
+    case 10010:
+        return &enemy->ctx.vars.floats[6];
+    case 10011:
+        return &enemy->ctx.vars.floats[7];
+    case 10033:
+        return &enemy->ctx.vars.floats3[0];
+    case 10034:
+        return &enemy->ctx.vars.floats3[1];
+    case 10035:
+        return &enemy->ctx.vars.floats3[2];
+    case 10036:
+        return &enemy->ctx.vars.floats3[3];
+    case 10018:
+        return &enemy->pos.x;
+    case 10019:
+        return &enemy->pos.y;
+    case 10020:
+        return &enemy->pos.z;
+    case 10021:
+        return &g_Player.position.x;
+    case 10022:
+        return &g_Player.position.y;
+    case 10023:
+        return &g_Player.position.z;
+    case 10072:
+        return &enemy->ctx.vars.floats2[0];
+    case 10073:
+        return &enemy->ctx.vars.floats2[1];
+    case 10041:
+        return &g_Unknown1347938.globalFloats[0];
+    case 10042:
+        return &g_Unknown1347938.globalFloats[1];
+    case 10043:
+        return &g_Unknown1347938.globalFloats[2];
+    case 10044:
+        return &g_Unknown1347938.globalFloats[3];
+    case 10050:
+        return &enemy->unk_2b8c.x;
+    case 10051:
+        return &enemy->unk_2b8c.y;
+    case 10052:
+        return &enemy->unk_2b8c.z;
+    case 10057:
+        return &enemy->unk_2b80.x;
+    case 10058:
+        return &enemy->unk_2b80.y;
+    case 10059:
+        return &enemy->unk_2b80.z;
+    case 10045:
+        return &enemy->angle;
+    case 10046:
+        return &enemy->angularVelocity;
+    case 10047:
+        return &enemy->speed;
+    case 10048:
+        return &enemy->acceleration;
+    case 10049:
+        return &enemy->unk_2b6c;
+    case 10053:
+        return &enemy->unk_2b5c;
+    case 10054:
+        return &enemy->unk_2b60;
+    }
+    return operand;
+}

@@ -1479,6 +1479,8 @@ int *ResolveOperand(Enemy *enemy, int *operand, WORD mask, int bit);
 // for `enemy` as a float, with random floats for 10055, 10056 and
 // 10060.
 float GetFloatOperand(Enemy *enemy, float id);
+// ResolveOperand for float variables.
+float *ResolveFloatOperand(Enemy *enemy, float *operand, WORD mask, int bit);
 
 // Set to 9 as the dialogue of stages 6 to 8 starts.
 extern int g_Unknown9a9ab8;
