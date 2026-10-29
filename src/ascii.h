@@ -111,7 +111,11 @@ public:
     // The update element's deleted callback: frees the ANM files of
     // slots 1 to 4. Returns 0.
     static int DeletedCallback(AsciiText *text);
-    // Draws the queued strings, as th06's.
+    // Draws the queued strings, as th06's, unk_74d8 pixels a glyph and
+    // flushing SpriteEngine's batch before each viewport change. Then
+    // draws those of unk_b7c[] whose x is 56 to 392, fading them in
+    // from alpha 48 as they get within 64 pixels of the player, and in
+    // blue while unk_14ac[i] is set.
     void DrawStrings();
     // The second draw element's callback: draws the popups. th06 picked
     // DrawPopups or DrawPopups2 by g_App.hardwareTnL. Returns 1.
@@ -165,7 +169,8 @@ public:
     Sprite unk_6e4;
     Sprite unk_930;
     Sprite unk_b7c[4];
-    unsigned char unk_14ac[0x10];
+    // Whether unk_b7c[i] is drawn dimmed in blue by DrawStrings.
+    int unk_14ac[4];
     AsciiString strings[0x100];
     // How many strings are queued.
     int stringCount;

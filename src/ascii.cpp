@@ -1,11 +1,13 @@
 // The file starting at 0x401000: text in the ASCII font, as th06's
 // ascii.cpp.
 
+#include <math.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
 
 #include "ascii.h"
+#include "player.h"
 #include "unsorted.h"
 
 void AsciiText::RunScripts()
@@ -207,4 +209,104 @@ void AsciiText::AddFormat(D3DXVECTOR3 *pos, char *fmt, ...)
     vsprintf(buf, fmt, args);
     this->AddString(pos, buf);
     va_end(args);
+}
+
+void AsciiText::DrawStrings()
+{
+    float advance;
+    int idx;
+    AsciiString *string;
+    BYTE *c;
+    int clipped = 1;
+    D3DXVECTOR3 pos;
+
+    string = this->strings;
+    this->glyph.flags |= 1;
+    this->glyph.flags |= 0xc00;
+    for (idx = 0; idx < this->stringCount; idx++, string++)
+    {
+        this->glyph.pos = string->pos;
+        c = (BYTE *)string->text;
+        this->glyph.scaleY = string->scaleX;
+        this->glyph.scaleX = string->scaleY;
+        advance = this->unk_74d8 * string->scaleX;
+        if (clipped != string->inArena)
+        {
+            clipped = string->inArena;
+            g_SpriteEngine->FlushQuadBatch();
+            if (clipped != 0)
+            {
+                g_App.viewport.X = g_Unknown626270.arena[0];
+                g_App.viewport.Y = g_Unknown626270.arena[1];
+                g_App.viewport.Width = g_Unknown626270.arena[2];
+                g_App.viewport.Height = g_Unknown626270.arena[3];
+                g_App.d3dDevice->SetViewport(&g_App.viewport);
+            }
+            else
+            {
+                g_App.viewport.X = 0;
+                g_App.viewport.Y = 0;
+                g_App.viewport.Width = 640;
+                g_App.viewport.Height = 480;
+                g_App.d3dDevice->SetViewport(&g_App.viewport);
+            }
+        }
+        while (*c != 0)
+        {
+            if (*c == '\n')
+            {
+                this->glyph.pos.y += 16.0f * string->scaleY;
+                this->glyph.pos.x = string->pos.x;
+            }
+            else if (*c == ' ')
+            {
+                this->glyph.pos.x += advance;
+            }
+            else
+            {
+                if (string->highlight == 0)
+                {
+                    this->glyph.spriteData = &g_SpriteEngine->sprites[*c - 1];
+                    this->glyph.color = string->color;
+                }
+                else
+                {
+                    this->glyph.spriteData = &g_SpriteEngine->sprites[*c + 0x7c];
+                    this->glyph.color = 0xffffffff;
+                }
+                g_SpriteEngine->DrawUnrotated(&this->glyph);
+                this->glyph.pos.x += advance;
+            }
+            c++;
+        }
+    }
+    for (idx = 0; idx < 4; idx++)
+    {
+        if (this->unk_b7c[idx].pos.x >= 56.0f && this->unk_b7c[idx].pos.x <= 392.0f)
+        {
+            advance = fabsf(this->unk_b7c[idx].pos.x - 32.0f - g_Player.position.x);
+            if (advance < 64.0f)
+            {
+                this->unk_b7c[idx].alpha = advance * 128.0f / 64.0f + 48.0f;
+            }
+            else
+            {
+                this->unk_b7c[idx].alpha = 0xb0;
+            }
+            if (this->unk_14ac[idx])
+            {
+                this->unk_b7c[idx].alpha = 0x80;
+                this->unk_b7c[idx].unk_rgb[2] = 0x40;
+                this->unk_b7c[idx].unk_rgb[1] = 0x40;
+                this->unk_b7c[idx].unk_rgb[0] = 0xff;
+            }
+            else
+            {
+                this->unk_b7c[idx].unk_rgb[2] = 0xff;
+                this->unk_b7c[idx].unk_rgb[1] = 0xff;
+                this->unk_b7c[idx].unk_rgb[0] = 0xff;
+            }
+            g_SpriteEngine->DrawUnrotated(&this->unk_b7c[idx]);
+        }
+    }
 }
