@@ -114,6 +114,13 @@ void OffsetPetalEffects(D3DXVECTOR3 *offset);
 // Sets the z acceleration of every started effect of type 30 to -0.01.
 void StartPetalsFalling();
 
+// An effect update for the falling petals (types 20, 26, 27, 30 and
+// 31): moves unk_27c by step, which changes by acceleration, and draws
+// the effect there, turning it by its x rotation. Ends it (returns 0)
+// once it is out of the view along g_Unknown134cd1c from
+// g_Unknown134ccf8, or at z 0 and above; otherwise returns 1.
+int EffectUpdatePetal(Effect *effect);
+
 // The effects, at 0x12fe250: 400 started in turn, 8 reserved slots and
 // a spare.
 class EffectManager
@@ -187,3 +194,8 @@ extern ChainElem g_EffectDrawChain;
 extern int g_Unknown1348020;
 // Cleared by EffectManager::AddedCallback.
 extern int g_Unknown1348024;
+
+// Probably the 3D camera: where it is, and the direction it looks in
+// (normalized). Not declared as part of a struct yet.
+extern D3DXVECTOR3 g_Unknown134ccf8;
+extern D3DXVECTOR3 g_Unknown134cd1c;

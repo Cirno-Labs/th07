@@ -182,6 +182,29 @@ void StartPetalsFalling()
     }
 }
 
+int EffectUpdatePetal(Effect *effect)
+{
+    D3DXVECTOR3 v;
+    float cosine;
+
+    effect->step += effect->acceleration;
+    effect->unk_27c += effect->step;
+    effect->pos = effect->unk_27c;
+    v = effect->pos - g_Unknown134ccf8;
+    D3DXVec3Normalize(&v, &v);
+    cosine = D3DXVec3Dot(&g_Unknown134cd1c, &v);
+    if (cosine < 0.94f)
+    {
+        return 0;
+    }
+    effect->sprite.SetRotationZ(AddNormalizeAngle(effect->sprite.rotationZ, effect->sprite.rotationX));
+    if (effect->pos.z >= 0.0f)
+    {
+        return 0;
+    }
+    return 1;
+}
+
 Effect *EffectManager::SpawnEffect(int type, D3DXVECTOR3 *pos, int count, D3DCOLOR color)
 {
     Effect *effect;
