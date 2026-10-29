@@ -566,3 +566,12 @@ public:
 };
 ASSERT_SIZE(Player, 0xb7e78);
 extern Player g_Player;
+
+// Bomb helpers, in bomb.cpp.
+
+// Probably th06's DimPlayAreaForBomb, turned into a stage tint: over
+// the bomb's first and last 60 frames the stage fades between gray
+// (0x80) and 0x30, through Unknown1347b00::SetTintColor, after resetting the
+// SpriteEngine's color; sets the stage's unk_52b0, which keeps OnDraw2
+// from resetting that color.
+void DimPlayAreaForBomb(Player *player);
