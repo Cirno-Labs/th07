@@ -156,7 +156,7 @@ address,size,name,symbol
 0x0041d180,357,Func41d180,
 0x0041d2f0,141,Func41d2f0,
 0x0041d380,131,Func41d380,
-0x0041d410,115,Func41d410,
+0x0041d410,115,Ending::ReadInt,?ReadInt@Ending@@QAEHXZ
 0x0041d490,591,Func41d490,
 0x0041d700,3268,Func41d700,
 0x0041e4b0,216,Func41e4b0,
@@ -1119,6 +1119,7 @@ address,size,name,symbol
 0x0047d371,44,__nh_malloc,
 0x0047d39d,18,_malloc,_malloc
 0x0047d3af,136,_atol,
+0x0047d437,,atoi,_atoi
 0x0047d43c,,operator delete,??3@YAXPAX@Z
 0x0047d441,14,operator new,??2@YAPAXI@Z
 0x0047d44f,88,_sprintf,_sprintf
