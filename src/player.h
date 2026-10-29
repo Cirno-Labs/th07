@@ -575,3 +575,7 @@ extern Player g_Player;
 // SpriteEngine's color; sets the stage's unk_52b0, which keeps OnDraw2
 // from resetting that color.
 void DimPlayAreaForBomb(Player *player);
+
+// Ends the effect at unk_b7e68 and starts a red effect 0x19 at the
+// player in slot 0 that runs as long as stateTimer, keeping it there.
+void SpawnBombAura(Player *player);

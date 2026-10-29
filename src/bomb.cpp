@@ -1,5 +1,6 @@
 // The file with the player's bombs, from 0x4083f0, as th06's bomb.cpp.
 
+#include "effect.h"
 #include "player.h"
 #include "sprite.h"
 #include "unsorted.h"
@@ -30,4 +31,27 @@ void DimPlayAreaForBomb(Player *player)
     g_SpriteEngine->ResetUnk0();
     g_Unknown1347b00.SetTintColor(color.color);
     g_Unknown1347b00.unk_52b0 = 1;
+}
+
+void SpawnBombAura(Player *player)
+{
+    Effect *effect;
+
+    if (player->unk_b7e68 != NULL)
+    {
+        player->unk_b7e68->active = 0;
+    }
+    effect = g_EffectManager.SpawnReservedEffect(0x19, &player->position, 0, 1, 0xffffffff);
+    effect->sprite.unk_48[4].Set(0);
+    effect->sprite.unk_84[4] = player->stateTimer;
+    effect->sprite.unk_c4 = 0;
+    *(D3DXVECTOR2 *)&effect->sprite.unk_218 = *(D3DXVECTOR2 *)&effect->sprite.scaleY;
+    effect->sprite.unk_218.z = 0.0625f;
+    effect->sprite.unk_224.x = 0.0625f;
+    effect->sprite.unk_c8 = player->stateTimer.AsFrames();
+    effect->sprite.unk_14 *= -1.0f;
+    effect->sprite.unk_rgb[2] = 0xff;
+    effect->sprite.unk_rgb[1] = 0x40;
+    effect->sprite.unk_rgb[0] = 0x40;
+    player->unk_b7e68 = effect;
 }

@@ -51,7 +51,7 @@ address,size,name,symbol
 0x00408180,304,Stage::SetupFixedCamera,?SetupFixedCamera@Stage@@QAEXXZ
 0x004082b0,315,Stage::SetupCamera,?SetupCamera@Stage@@QAEXXZ
 0x004083f0,243,DimPlayAreaForBomb,?DimPlayAreaForBomb@@YIXPAVPlayer@@@Z
-0x004084f0,286,Func4084f0,
+0x004084f0,286,SpawnBombAura,?SpawnBombAura@@YIXPAVPlayer@@@Z
 0x00408610,234,Func408610,
 0x00408710,1780,Func408710,
 0x00408e10,921,Func408e10,
