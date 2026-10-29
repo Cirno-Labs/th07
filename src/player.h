@@ -191,6 +191,16 @@ int Func43ee50(Player *player);
 void UpdateHitboxAreas(Player *player);
 void Func4409f0(Player *player);
 int Func440cf0(Player *player);
+// Tries to start playerState 4 (Func4409f0 calls it while unk_240d is
+// 2): sets unk_240d to 2 during a bomb or while
+// g_Unknown49fbf0.Func42ad66(), or while playerState is 1 or 3, or
+// while dying without deathbombFrames; while dying with them calls
+// Func441bd0(0). Otherwise starts playerState 4 for 540 frames of
+// stateTimer (kept in unk_16a0c), with unk_240d 1: ends unk_b7e68 (and
+// lets unk_b7e6c end), starts effect 0x1c in slot 4 to follow the
+// player in unk_b7e6c, calls Unknown49fbf0's Func427c81(0, 2), plays
+// sounds 0x20 and 0x24 and marks bit 8 of g_ReplayManager->unk_d6.
+void StartBombState(Player *player);
 // OnUpdate's respawning step, as th06's: for 60 frames clears bullets
 // (respawnClearFrames), fades the player in over 30 frames of
 // stateTimer, scaling it from 3 by 0 to 1 by 1, then makes it

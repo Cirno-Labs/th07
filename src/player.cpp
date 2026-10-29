@@ -1177,6 +1177,60 @@ void UpdateInvulnerability(Player *player)
     }
 }
 
+void StartBombState(Player *player)
+{
+    Effect *effect;
+
+    if (player->bomb.running || g_Unknown49fbf0.Func42ad66())
+    {
+        player->unk_240d = 2;
+        return;
+    }
+    switch (player->playerState)
+    {
+    case 1:
+    case 3:
+        player->unk_240d = 2;
+        return;
+    case 2:
+        if (player->deathbombFrames != 0)
+        {
+            player->Func441bd0(0);
+            return;
+        }
+        player->unk_240d = 2;
+        return;
+    }
+    player->stateTimer.Set(540);
+    player->unk_16a0c = player->stateTimer;
+    player->unk_240d = 1;
+    player->playerState = 4;
+    if (player->unk_b7e6c != NULL)
+    {
+        player->unk_b7e6c->active = 0;
+    }
+    if (player->unk_b7e68 != NULL)
+    {
+        player->unk_b7e68->active = 0;
+        player->unk_b7e68 = NULL;
+    }
+    effect = g_EffectManager.Func41c610(0x1c, &player->position, 4, 1, 0xffffffff);
+    effect->sprite.unk_48[4].Set(0);
+    effect->sprite.unk_84[4].Set(player->stateTimer.AsFrames());
+    effect->sprite.unk_c4 = 0;
+    effect->sprite.unk_218.y = 1.0f;
+    effect->sprite.unk_218.x = 1.0f;
+    effect->sprite.unk_218.z = 0.25f;
+    effect->sprite.unk_224.x = 0.25f;
+    effect->sprite.unk_c8 = player->stateTimer.AsFrames();
+    effect->sprite.unk_14 *= -1.0f;
+    player->unk_b7e6c = effect;
+    g_Unknown49fbf0.Func427c81(0, 2);
+    g_SoundPlayer.QueueSound(0x20, 0);
+    g_SoundPlayer.QueueSound(0x24, 0);
+    g_ReplayManager->unk_d6 |= 8;
+}
+
 void Player::EndBombState()
 {
     int bonus;

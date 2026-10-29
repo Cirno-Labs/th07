@@ -27,7 +27,9 @@ struct SpriteBase
     unsigned char unk_0[0x8];
     // The sprite's rotation about z.
     float rotationZ;
-    unsigned char unk_c[0xc];
+    unsigned char unk_c[0x8];
+    // Player's StartBombState negates it on its effect.
+    float unk_14;
     // SpriteEngine::Draw scales the sprite's height and width by these.
     float scaleY;
     float scaleX;
@@ -36,7 +38,12 @@ struct SpriteBase
     Timer unk_3c;
     Timer unk_48[5];
     Timer unk_84[5];
-    unsigned char unk_c0[0x38];
+    unsigned char unk_c0[0x4];
+    // Player's StartBombState sets these on its effect.
+    BYTE unk_c4;
+    unsigned char unk_c5[0x3];
+    int unk_c8;
+    unsigned char unk_cc[0x2c];
     D3DXMATRIX matrix;
     D3DXVECTOR3 unk_138;
     D3DXVECTOR3 unk_144;
