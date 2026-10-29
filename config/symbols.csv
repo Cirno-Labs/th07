@@ -217,7 +217,7 @@ address,size,name,symbol
 0x004276a0,192,BulletManager::RegisterChain,?RegisterChain@BulletManager@@SIHPAD@Z
 0x00427760,51,BulletManager::RemoveChain,?RemoveChain@BulletManager@@SIXXZ
 0x004277a0,266,BulletManager::StopAllBullets,?StopAllBullets@BulletManager@@QAEXXZ
-0x004278b0,91,Func4278b0,
+0x004278b0,91,Bullet::RestartCommand,?RestartCommand@Bullet@@QAEPAUBulletCommand@@HHK@Z
 0x00427910,73,Func427910,
 0x00427960,62,Func427960,
 0x004279a0,62,Func4279a0,

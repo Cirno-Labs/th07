@@ -79,3 +79,14 @@ void BulletManager::StopAllBullets()
         g_SpriteEngine->SetSprite(&bullet->sprites.sprite0, bullet->sprites.sprite0.baseSpriteIndex + bullet->color);
     }
 }
+
+BulletCommand *Bullet::RestartCommand(int idx, int unk_14, DWORD flag)
+{
+    BulletCommand *cmd = &this->commands[idx];
+
+    cmd->flag = flag;
+    cmd->unk_14 = unk_14;
+    this->flags |= flag;
+    this->commandIndex = 0;
+    return cmd;
+}

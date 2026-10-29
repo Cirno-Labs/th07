@@ -33,8 +33,9 @@ struct BulletCommand
 {
     float unk_0;
     float unk_4;
-    float unk_8;
-    float unk_c;
+    // Frames, for most flags.
+    int unk_8;
+    int unk_c;
     DWORD flag;
     int unk_14;
 };
@@ -58,6 +59,10 @@ ASSERT_SIZE(BulletEx, 0x2c);
 // One enemy bullet. Its implicit constructor is 0x423510.
 struct Bullet
 {
+    // Sets command `idx` to run under `flag`, adds `flag` to flags and
+    // starts over from the first command. Returns the command.
+    BulletCommand *RestartCommand(int idx, int unk_14, DWORD flag);
+
     BulletTypeSprites sprites;
     D3DXVECTOR3 pos;
     D3DXVECTOR3 velocity;
