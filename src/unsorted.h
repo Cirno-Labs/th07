@@ -1575,7 +1575,7 @@ struct EnemyScriptInstr
 struct EnemyScriptHeader
 {
     short subCount;
-    short unk_2;
+    short timelineCount;
     void *timelines[16];
 };
 

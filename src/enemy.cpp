@@ -637,7 +637,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
     {
         mgr->drawListHeads[i] = NULL;
     }
-    for (i = 0; i < g_Unknown1347938.file->unk_2; i++)
+    for (i = 0; i < g_Unknown1347938.file->timelineCount; i++)
     {
         if (mgr->timelines[i].pos == NULL)
         {
