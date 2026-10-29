@@ -544,7 +544,7 @@ public:
     // Each sound effect's own buffer.
     IDirectSoundBuffer *sounds[0x80];
     // Set when a sound is queued; -1 at first.
-    int unk_408[0x80];
+    int queuedSound[0x80];
     // A silent buffer, looping from start-up.
     IDirectSoundBuffer *silence;
     // The window the sound timer posts to.
@@ -579,7 +579,7 @@ public:
     HANDLE notifyEvent;
     DWORD unk_39c4;
     // Added to every BgmFormat offset by CWaveFile::ResetFile.
-    DWORD unk_39c8;
+    DWORD bgmFileOffset;
 };
 ASSERT_SIZE(SoundPlayer, 0x39cc);
 extern SoundPlayer g_SoundPlayer;

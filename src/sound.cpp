@@ -13,7 +13,7 @@ SoundPlayer::SoundPlayer()
     memset(this, 0, sizeof(*this));
     for (i = 0; i < 0x80; i++)
     {
-        this->unk_408[i] = -1;
+        this->queuedSound[i] = -1;
     }
 }
 
@@ -30,7 +30,7 @@ int SoundPlayer::Initialize(HWND hwnd)
     memset(this, 0, sizeof(*this));
     for (j = 0; j < 0x80; j++)
     {
-        this->unk_408[j] = -1;
+        this->queuedSound[j] = -1;
     }
     this->manager = new CSoundManager();
     if (this->manager->Initialize(hwnd, DSSCL_PRIORITY, 2, 44100, 16) < 0)
@@ -505,7 +505,7 @@ void SoundPlayer::QueueSound(int idx, int unused)
         return;
     }
     this->queue[i] = idx;
-    this->unk_408[idx] = unk;
+    this->queuedSound[idx] = unk;
 }
 
 inline void SoundPlayer::FadeOutBgm(float seconds)

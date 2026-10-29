@@ -658,7 +658,7 @@ int App::AddedCallback(App *arg)
         LogPrintf(&g_Log, "error : BGM の初期化に失敗しました\r\n");
         return -1;
     }
-    if (g_SoundPlayer.unk_39c8 == 0)
+    if (g_SoundPlayer.bgmFileOffset == 0)
     {
         if (!g_App.flags.preloadBgm)
         {
