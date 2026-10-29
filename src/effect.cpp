@@ -115,6 +115,16 @@ int EffectInitConverge(Effect *effect)
     return 0;
 }
 
+int EffectUpdateConverge(Effect *effect)
+{
+    float f;
+
+    f = 256.0f - effect->timer.AsFloat() * 256.0f / 60.0f;
+    effect->pos = f * effect->axis + effect->origin;
+    effect->pos.z = 0.0f;
+    return 1;
+}
+
 Effect *EffectManager::SpawnEffect(int type, D3DXVECTOR3 *pos, int count, D3DCOLOR color)
 {
     Effect *effect;

@@ -91,6 +91,11 @@ int EffectUpdateOrbit(Effect *effect);
 // Returns 0.
 int EffectInitConverge(Effect *effect);
 
+// An effect update, as th06's EffectUpdateConverge without its first
+// frame: comes in from 256 along axis to origin over 60 frames, at z 0.
+// Returns 1.
+int EffectUpdateConverge(Effect *effect);
+
 // The effects, at 0x12fe250: 400 started in turn, 8 reserved slots and
 // a spare.
 class EffectManager
