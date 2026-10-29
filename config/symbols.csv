@@ -573,7 +573,7 @@ address,size,name,symbol
 0x0044f770,487,SpriteEngine::DrawUnrotated,?DrawUnrotated@SpriteEngine@@QAEHPAVSprite@@@Z
 0x0044f960,58,SpriteEngine::RotatePoint,?RotatePoint@SpriteEngine@@QAEXPAMMMMMMM@Z
 0x0044f9a0,616,SpriteEngine::Draw,?Draw@SpriteEngine@@QAEHPAVSprite@@@Z
-0x0044fc10,487,Func44fc10,
+0x0044fc10,487,SpriteEngine::DrawNoRound,?DrawNoRound@SpriteEngine@@QAEHPAVSprite@@@Z
 0x0044fe00,805,Func44fe00,
 0x00450130,111,Func450130,
 0x004501a0,782,Func4501a0,

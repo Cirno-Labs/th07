@@ -277,6 +277,8 @@ public:
     void RotatePoint(float *out, float x, float y, float sine, float cosine, float cx, float cy);
     // Draws `vm` when it is not rotated. Not in th06 as such.
     int DrawUnrotated(Sprite *vm);
+    // DrawUnrotated without rounding to pixels, as th06's DrawNoRound.
+    int DrawNoRound(Sprite *vm);
     // Copies surface `surface` to the back buffer at (`left`, `top`),
     // as in th06.
     void CopySurfaceToBackBuffer(int surface, int left, int top, int x, int y);
