@@ -3,6 +3,7 @@
 #include "ascii.h"
 #include "bullet.h"
 #include "effect.h"
+#include "enemy.h"
 #include "item.h"
 #include "player.h"
 #include "replay.h"
@@ -243,7 +244,7 @@ void ItemManager::UpdateItems()
                     {
                         g_GameManager.stats->power = 128.0f;
                         g_GameManager.RerollChecksumKeys();
-                        if (!g_SpellCardActive)
+                        if (!g_EnemyManager.spellCardActive)
                         {
                             g_BulletManager.ClearAll(1);
                         }
@@ -367,7 +368,7 @@ void ItemManager::UpdateItems()
                     {
                         g_GameManager.stats->power = 128.0f;
                         g_GameManager.RerollChecksumKeys();
-                        if (!g_SpellCardActive)
+                        if (!g_EnemyManager.spellCardActive)
                         {
                             g_BulletManager.ClearAll(1);
                         }

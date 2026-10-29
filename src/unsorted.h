@@ -1261,20 +1261,6 @@ extern D3DCOLOR g_BossTimerColors[4];
 // 0x609's in texture 0x15 (SpriteEngine::CopyTextureRect). Not in th06.
 void CopySpriteToTexture(int sprite);
 
-// Grows by 2500 plus 20 for every 1500 of GameManager::bonusPoints above
-// stats->grazeCount with each graze. Probably a field of a larger object.
-extern int g_SpellCardGrazeBonus;
-// Cleared by Player::StopBombState, next to g_SpellCardGrazeBonus.
-extern int g_SpellCardCapture;
-extern int g_SpellCardBonus;
-// Player's UpdateBombState copies the first into the second when a bomb
-// starts.
-extern int g_SpellCardActive;
-extern int g_SpellCardActiveAtBomb;
-// Set as a spell card starts: the card's number, and its bonus over
-// ten plus its seconds.
-extern int g_SpellCardNumber;
-extern int g_SpellCardBonusStep;
 // The bonus of each spell card, by number.
 extern int g_SpellCardBonuses[];
 

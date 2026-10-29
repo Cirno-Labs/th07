@@ -21,15 +21,6 @@ ChainElem g_EnemyManagerCalcChain;
 ChainElem g_EnemyManagerDrawChain;
 ChainElem g_EnemyManagerDrawChain2;
 EnemyManager g_EnemyManager;
-// Inside g_EnemyManager in the original (from + 0x9545c4), where these
-// are fields.
-int g_SpellCardCapture;
-int g_SpellCardActive;
-int g_SpellCardBonus;
-int g_SpellCardGrazeBonus;
-int g_SpellCardBonusStep;
-int g_SpellCardNumber;
-int g_SpellCardActiveAtBomb;
 #endif // TH07_EXE
 
 inline void Enemy::Move()
@@ -488,11 +479,11 @@ int Enemy::CheckTimerCallback()
         this->callbackTimer.Set(0);
         if (!this->flags.keepSpellCard)
         {
-            g_SpellCardBonus = 0;
-            g_SpellCardCapture = 0;
-            if (g_SpellCardActive != 0)
+            g_EnemyManager.spellCardBonus = 0;
+            g_EnemyManager.spellCardCapture = 0;
+            if (g_EnemyManager.spellCardActive != 0)
             {
-                g_SpellCardActive++;
+                g_EnemyManager.spellCardActive++;
             }
             g_BulletManager.ClearAll(10);
             lost = (g_GameManager.bonusPoints - g_GameManager.stats->grazeCount) * 0.25f;
@@ -954,7 +945,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                     }
                     mgr->dropCounter++;
                 }
-                if (enemy->flags.isBoss && !g_SpellCardActive)
+                if (enemy->flags.isBoss && !g_EnemyManager.spellCardActive)
                 {
                     int bonus;
 

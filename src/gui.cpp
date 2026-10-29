@@ -1488,11 +1488,11 @@ void Gui::DrawBanners()
         g_SpriteEngine->DrawUnrotated(&this->impl->spellNameBar);
         g_SpriteEngine->Draw(&this->impl->spellName);
         g_SpriteEngine->DrawUnrotated(&this->impl->spellScoreBar);
-        score = g_SpellCardBonus + g_SpellCardGrazeBonus;
+        score = g_EnemyManager.spellCardBonus + g_EnemyManager.spellCardGrazeBonus;
         div2 = 10000000;
         shown = 0;
-        catks = &g_GameManager.catks[g_SpellCardNumber];
-        if (g_SpellCardCapture == 0)
+        catks = &g_GameManager.catks[g_EnemyManager.spellCardIndex];
+        if (g_EnemyManager.spellCardCapture == 0)
         {
             score = 0;
         }

@@ -1819,13 +1819,6 @@ address,size,name,symbol
 0x009a9abc,,g_BulletCalcChain,?g_BulletCalcChain@@3UChainElem@@A
 0x009a9adc,,g_EnemyManagerDrawChain,?g_EnemyManagerDrawChain@@3UChainElem@@A
 0x009a9b00,,g_EnemyManager,?g_EnemyManager@@3VEnemyManager@@A
-0x012fe0c4,,g_SpellCardCapture,?g_SpellCardCapture@@3HA
-0x012fe0c8,,g_SpellCardActive,?g_SpellCardActive@@3HA
-0x012fe0cc,,g_SpellCardBonus,?g_SpellCardBonus@@3HA
-0x012fe0d0,,g_SpellCardGrazeBonus,?g_SpellCardGrazeBonus@@3HA
-0x012fe0d4,,g_SpellCardBonusStep,?g_SpellCardBonusStep@@3HA
-0x012fe0d8,,g_SpellCardNumber,?g_SpellCardNumber@@3HA
-0x012fe0dc,,g_SpellCardActiveAtBomb,?g_SpellCardActiveAtBomb@@3HA
 0x012fe210,,g_EnemyManagerCalcChain,?g_EnemyManagerCalcChain@@3UChainElem@@A
 0x012fe230,,g_EnemyManagerDrawChain2,?g_EnemyManagerDrawChain2@@3UChainElem@@A
 0x012fe250,,g_EffectManager,?g_EffectManager@@3VEffectManager@@A

@@ -6,6 +6,7 @@
 #include "ascii.h"
 #include "bullet.h"
 #include "effect.h"
+#include "enemy.h"
 #include "item.h"
 #include "player.h"
 #include "replay.h"
@@ -1049,7 +1050,7 @@ void Player::Graze(D3DXVECTOR3 *pos)
     g_GameManager.AddSubRank(6);
     g_Gui.grazeChanged = 2;
     g_SoundPlayer.QueueSound(0x1e, 0);
-    g_SpellCardGrazeBonus += 2500 + (g_GameManager.bonusPoints - g_GameManager.stats->grazeCount) / 1500 * 20;
+    g_EnemyManager.spellCardGrazeBonus += 2500 + (g_GameManager.bonusPoints - g_GameManager.stats->grazeCount) / 1500 * 20;
     g_GameManager.AddScore(2000);
     if (this->bombState == 1)
     {
@@ -1553,10 +1554,10 @@ void UpdateBombState(Player *player)
         {
             player->bomb.updateFocused(player);
         }
-        g_SpellCardBonus = 0;
-        g_SpellCardCapture = 0;
+        g_EnemyManager.spellCardBonus = 0;
+        g_EnemyManager.spellCardCapture = 0;
         g_GameManager.SubSubRank(200);
-        g_SpellCardActiveAtBomb = g_SpellCardActive;
+        g_EnemyManager.spellCardBombed = g_EnemyManager.spellCardActive;
         player->deathbombFrames += 6;
         if (player->deathbombFrames > g_Player.shotType->deathbombFrames)
         {
@@ -1586,8 +1587,8 @@ int UpdateDyingState(Player *player)
         {
             g_ReplayManager->frameEvents |= 4;
             g_GameManager.powerItemCombo = 0;
-            g_SpellCardBonus = 0;
-            g_SpellCardCapture = 0;
+            g_EnemyManager.spellCardBonus = 0;
+            g_EnemyManager.spellCardCapture = 0;
             g_GameManager.AddDeaths(1);
             if ((int)g_GameManager.stats->lives > 0)
             {
@@ -1947,8 +1948,8 @@ void Player::StopBombState(int unused)
     ((BYTE *)&eff->sprite.colorTween.z)[3] = 0;
     eff->sprite.scriptVar0 = 30;
     this->bombInvulnerabilityEffect = eff;
-    g_SpellCardBonus = 0;
-    g_SpellCardCapture = 0;
+    g_EnemyManager.spellCardBonus = 0;
+    g_EnemyManager.spellCardCapture = 0;
     this->bombState = 0;
     this->playerState = 3;
     this->stateTimer.Set(40);

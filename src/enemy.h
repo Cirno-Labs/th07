@@ -425,12 +425,23 @@ public:
     WORD dropIndex;
     // The active enemies, counted by OnUpdate.
     int enemyCount;
-    unsigned char pad_9545c0[0x8];
-    // th06's spellCardActive; other code reaches it as g_SpellCardActive.
+    unsigned char pad_9545c0[0x4];
+    // Set while the spell card running can still be captured; cleared by
+    // Player::StopBombState.
+    int spellCardCapture;
+    // 1 while a spell card runs, as th06's.
     int spellCardActive;
-    unsigned char pad_9545cc[0x10];
+    int spellCardBonus;
+    // Grows by 2500 plus 20 for every 1500 of GameManager::bonusPoints
+    // above stats->grazeCount with each graze.
+    int spellCardGrazeBonus;
+    // Set as a spell card starts: its bonus over ten plus its seconds,
+    // and the card's number.
+    int spellCardBonusStep;
+    int spellCardIndex;
     // While a spell card runs, a bomb's damage counts (divided by 2.5)
-    // only while it is set, as th06's spellCardBombed.
+    // only while it is set, as th06's spellCardBombed. Player's
+    // UpdateBombState copies spellCardActive into it when a bomb starts.
     int spellCardBombed;
     Timer spellCardBonusTimer;
     int unusedInt9545ec;

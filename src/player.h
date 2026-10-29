@@ -467,8 +467,9 @@ public:
     // Scores a graze of the bullet at `pos`, as th06's: counts it
     // unless a bomb runs, bursts effect 8 halfway to it (three red ones
     // while bombState is 1 and not focused), adds 6 hundredths to the
-    // rank, plays sound 0x1e, adds to g_SpellCardGrazeBonus and 2000 points,
-    // and while bombState is 1 calls GameManager's IncreaseBonusCap and
+    // rank, plays sound 0x1e, adds to
+    // g_EnemyManager.spellCardGrazeBonus and 2000 points, and while
+    // bombState is 1 calls GameManager's IncreaseBonusCap and
     // AddBonusPointsCapped with 30 (focused) or 80.
     void Graze(D3DXVECTOR3 *pos);
     // Ends playerState 4 early (the hit checks call it on a hit,
