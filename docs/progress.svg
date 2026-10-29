@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">92.07% (639)</tspan> · <tspan class="decompiled">1.44% (10)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">6.34% (44)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">92.22% (640)</tspan> · <tspan class="decompiled">1.44% (10)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">6.20% (43)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="687.80" height="6" x="0" y="0" class="named"/>
-<rect width="10.76" height="6" x="687.80" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="698.56" y="0" class="nonmatching"/>
-<rect width="47.36" height="6" x="699.64" y="0" class="todo"/>
+<rect width="688.88" height="6" x="0" y="0" class="named"/>
+<rect width="10.76" height="6" x="688.88" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="699.64" y="0" class="nonmatching"/>
+<rect width="46.28" height="6" x="700.72" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="named"><title>0x00401000 D3DXMatrixIdentity (173 bytes)</title></rect>
@@ -295,7 +295,7 @@
 <rect width="12" height="12" x="345" y="60" class="named"><title>0x00427a20 BulletShooter::SetStopTurnCommand (74 bytes)</title></rect>
 <rect width="12" height="12" x="360" y="60" class="named"><title>0x00427a70 BulletShooter::SetShooterAccelerateCommand (62 bytes)</title></rect>
 <rect width="12" height="12" x="375" y="60" class="named"><title>0x00427ab0 BulletShooter::SetHiddenCommand (48 bytes)</title></rect>
-<rect width="12" height="12" x="390" y="60" class="todo"><title>0x00427ae0 Gui::IsLoadingShown (65 bytes)</title></rect>
+<rect width="12" height="12" x="390" y="60" class="named"><title>0x00427ae0 Gui::IsLoadingShown (65 bytes)</title></rect>
 <rect width="12" height="12" x="405" y="60" class="named"><title>0x00427b21 Gui::EndBombName (51 bytes)</title></rect>
 <rect width="12" height="12" x="420" y="60" class="named"><title>0x00427b54 Gui::EndSpellCardName (78 bytes)</title></rect>
 <rect width="12" height="12" x="435" y="60" class="named"><title>0x00427ba2 Gui::HideInterface (64 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">69.40%</tspan> · <tspan class="decompiled">0.11%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">30.40%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">69.42%</tspan> · <tspan class="decompiled">0.11%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">30.39%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="518.41" height="6" x="0" y="0" class="named"/>
-<rect width="0.80" height="6" x="518.41" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="519.21" y="0" class="nonmatching"/>
-<rect width="227.12" height="6" x="519.88" y="0" class="todo"/>
+<rect width="518.54" height="6" x="0" y="0" class="named"/>
+<rect width="0.80" height="6" x="518.54" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="519.34" y="0" class="nonmatching"/>
+<rect width="226.99" height="6" x="520.01" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 EnemyScripts::RunEnemy (29464 bytes)</title></rect>
@@ -1363,7 +1363,7 @@
 <rect width="2.56" height="1.98" x="704.96" y="188.41" class="named"><title>0x0044df40 SpriteEngine::CreateTexture (66 bytes)</title></rect>
 <rect width="2.56" height="1.90" x="704.96" y="193.39" class="named"><title>0x00401de0 AsciiText::DeletedCallback (65 bytes)</title></rect>
 <rect width="2.56" height="1.90" x="704.96" y="198.29" class="named"><title>0x0041d050 EffectManager::DeletedCallback (65 bytes)</title></rect>
-<rect width="2.56" height="1.90" x="704.96" y="203.20" class="todo"><title>0x00427ae0 Gui::IsLoadingShown (65 bytes)</title></rect>
+<rect width="2.56" height="1.90" x="704.96" y="203.20" class="named"><title>0x00427ae0 Gui::IsLoadingShown (65 bytes)</title></rect>
 <rect width="2.56" height="1.90" x="704.96" y="208.10" class="named"><title>0x0043bdc0 TryFireShot (65 bytes)</title></rect>
 <rect width="2.03" height="2.33" x="710.52" y="168.13" class="named"><title>0x004232a0 EnemyManager::AnyBossActive (64 bytes)</title></rect>
 <rect width="2.03" height="2.33" x="715.55" y="168.13" class="named"><title>0x00427ba2 Gui::HideInterface (64 bytes)</title></rect>

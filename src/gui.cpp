@@ -1,5 +1,5 @@
 // cflags: /Os
-// The /Os file with Gui, th06's Gui, from 0x427b21 to
+// The /Os file with Gui, th06's Gui, from 0x427ae0 to
 // GameManager at 0x42d560.
 
 #include <stdio.h>
@@ -11,6 +11,11 @@
 #include "item.h"
 #include "replay.h"
 #include "unsorted.h"
+
+BOOL Gui::IsLoadingShown()
+{
+    return this->impl->unk_6e44.spriteIndex >= 0 && (this->impl->unk_6e44.flags >> 13 & 1);
+}
 
 void Gui::EndBombName()
 {
