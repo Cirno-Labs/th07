@@ -325,7 +325,7 @@ ScreenEffect *ScreenEffect::StartEffect(int type, int duration, int a, int b, in
     effect->duration = duration;
     effect->shakeFrom = a;
     effect->shakeTo = b;
-    effect->unk_20 = c;
+    effect->flashCount = c;
     if (g_Chain.AddToCalcChain(calc, 0xf) != 0)
     {
         return NULL;

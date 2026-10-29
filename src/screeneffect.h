@@ -53,7 +53,7 @@ public:
     int type;
     ChainElem *calcElem;
     ChainElem *drawElem;
-    DWORD unk_0c;
+    DWORD unusedDword0c;
     int alpha;
     // How many frames the effect lasts.
     int duration;
@@ -73,7 +73,7 @@ public:
         // Type 3: the color flashed, starting at its alpha.
         D3DCOLOR flashColor;
     };
-    int unk_20;
+    int flashCount;
     Timer timer;
 };
 ASSERT_SIZE(ScreenEffect, 0x30);
