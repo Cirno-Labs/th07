@@ -1609,6 +1609,13 @@ void TurnNearbyBullets(Enemy *enemy, EnemyScriptInstr *instr);
 // 0x27f fires five color 6 bullets (aim mode 1, pi / 8 apart) back the
 // way it came, at speed floats[1].
 void FireBackFromUnturned(Enemy *enemy, EnemyScriptInstr *instr);
+// Flashes the screen 0x80cfcfff for 0xc frames. Each bullet not yet
+// turned (unk_c08 0) with sprite 0x27c is replaced by an enemy running
+// the next sub (life 1, item -2, score 10) with a copy of this enemy's
+// variables, floats[0] the bullet's angle and floats[7] an angle from
+// -pi up in steps of pi / 4; bullets with sprites 0x278 to 0x27f are
+// removed.
+void ReplaceBulletsWithEnemies(Enemy *enemy, EnemyScriptInstr *instr);
 // Counts in ints[0] the bullets with sprite 0x27c not yet turned
 // (unk_c08 0).
 void CountUnturnedBullets(Enemy *enemy, EnemyScriptInstr *instr);

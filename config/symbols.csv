@@ -111,7 +111,7 @@ address,size,name,symbol
 0x00419610,197,AimTurnedBulletsAtPlayer,?AimTurnedBulletsAtPlayer@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x004196e0,41,FlashScreen,?FlashScreen@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x00419710,354,FireBackFromUnturned,?FireBackFromUnturned@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
-0x00419880,312,Func419880,
+0x00419880,312,ReplaceBulletsWithEnemies,?ReplaceBulletsWithEnemies@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x004199c0,144,CountUnturnedBullets,?CountUnturnedBullets@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x00419a50,800,Func419a50,
 0x00419d70,31,ScriptFadeOutMusic,?ScriptFadeOutMusic@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z

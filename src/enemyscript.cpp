@@ -1265,6 +1265,38 @@ void FireBackFromUnturned(Enemy *enemy, EnemyScriptInstr *instr)
     }
 }
 
+void ReplaceBulletsWithEnemies(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    EnemyScriptVars childVars;
+    Bullet *blt = g_BulletManager.bullets;
+    int i;
+    float theta;
+
+    childVars = enemy->ctx.vars;
+    theta = -3.1415927f;
+
+    ScreenEffect::StartEffect(3, 0xc, 1, 0x80cfcfff, 0);
+    for (i = 0; i < 0x400; i++, blt++)
+    {
+        if (blt->state == 0)
+        {
+            continue;
+        }
+        if (blt->unk_c08 == 0 && blt->sprites.sprite0.spriteIndex == 0x27c)
+        {
+            childVars.floats[0] = blt->angle;
+            childVars.floats[7] = theta;
+            theta += 0.7853982f;
+            g_Unknown9a9b00.SpawnWithVars(enemy->ctx.sub + 1, &blt->pos, 1, -2, 10, &childVars);
+            blt->FreeBullet();
+        }
+        else if (blt->sprites.sprite0.spriteIndex >= 0x278 && blt->sprites.sprite0.spriteIndex <= 0x27f)
+        {
+            blt->FreeBullet();
+        }
+    }
+}
+
 void CountUnturnedBullets(Enemy *enemy, EnemyScriptInstr *instr)
 {
     Bullet *bullet = g_BulletManager.bullets;
