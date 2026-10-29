@@ -611,7 +611,7 @@ again:
             }
             else if (command->stage == 1)
             {
-                if (this->bgm->unk_74 != 0)
+                if (this->bgm->isBuffering != 0)
                 {
                     goto done;
                 }
@@ -721,7 +721,7 @@ again:
     case 6:
         if (g_App.musicMode == 1)
         {
-            if (this->bgm->unk_74 != 0)
+            if (this->bgm->isBuffering != 0)
             {
                 DebugPrint("locked\n");
                 goto done;
@@ -735,7 +735,7 @@ again:
     case 7:
         if (g_App.musicMode == 1)
         {
-            if (this->bgm->unk_74 != 0)
+            if (this->bgm->isBuffering != 0)
             {
                 goto done;
             }
@@ -805,9 +805,9 @@ DWORD WINAPI BgmNotificationProc(LPVOID lpParameter)
         case WAIT_OBJECT_0 + 0:
             if (g_SoundPlayer.bgm != NULL && g_SoundPlayer.bgm->isPlaying)
             {
-                g_SoundPlayer.bgm->unk_74 = 1;
+                g_SoundPlayer.bgm->isBuffering = 1;
                 hr = g_SoundPlayer.bgm->HandleWaveStreamNotification(bLooped);
-                g_SoundPlayer.bgm->unk_74 = 0;
+                g_SoundPlayer.bgm->isBuffering = 0;
             }
             break;
         case WAIT_OBJECT_0 + 1:
