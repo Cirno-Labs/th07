@@ -117,7 +117,7 @@ address,size,name,symbol
 0x00419d70,31,ScriptFadeOutMusic,?ScriptFadeOutMusic@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x00419d90,47,ScriptPlayMusic,?ScriptPlayMusic@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x00419dc0,546,Func419dc0,
-0x00419ff0,542,Func419ff0,
+0x00419ff0,542,FireAimedBulletPattern2,?FireAimedBulletPattern2@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x0041a210,218,EffectManager::EffectManager,??0EffectManager@@QAE@XZ
 0x0041a2f0,91,Effect::Effect,??0Effect@@QAE@XZ
 0x0041a350,25,EffectManager::Reset,?Reset@EffectManager@@QAEXXZ
