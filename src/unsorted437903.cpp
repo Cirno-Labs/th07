@@ -217,7 +217,7 @@ int App::OnUpdate(App *arg)
                 break;
             case 10:
                 RemoveGameManagerChain();
-                if (!(g_GameManager.unk_93d8 & 1) && g_GameManager.difficulty < 4)
+                if (!(g_GameManager.stateFlags & 1) && g_GameManager.difficulty < 4)
                 {
                     g_GameManager.stage = 0;
                 }
@@ -745,10 +745,10 @@ int App::DeletedCallback(App *arg)
         delete g_GameManager.stats;
         g_GameManager.stats = NULL;
     }
-    if (g_GameManager.unk_4 != NULL)
+    if (g_GameManager.savedConfig != NULL)
     {
-        delete g_GameManager.unk_4;
-        g_GameManager.unk_4 = NULL;
+        delete g_GameManager.savedConfig;
+        g_GameManager.savedConfig = NULL;
     }
     g_Archive.Release();
     if (g_App.timer != NULL)
@@ -791,7 +791,7 @@ void DrawFps(int draw)
                 fps = frames / duration;
                 frames = 0;
                 sprintf(fpsText, "%.02ffps", fps);
-                if ((g_GameManager.unk_93d8 >> 2 & 1) && draw)
+                if ((g_GameManager.stateFlags >> 2 & 1) && draw)
                 {
                     float target = 60.0f;
 
@@ -812,7 +812,7 @@ void DrawFps(int draw)
                     {
                         g_App.achievedFrames += target * 0.5f;
                     }
-                    if (!(g_GameManager.unk_93d8 >> 3 & 1))
+                    if (!(g_GameManager.stateFlags >> 3 & 1))
                     {
                         g_App.roundedFps = fps + 0.5f;
                     }
@@ -858,7 +858,7 @@ void DrawFps(int draw)
         pos.y = 464.0f;
         pos.z = 0.0f;
         g_AsciiText.AddString(&pos, fpsText);
-        if ((g_GameManager.unk_93d8 >> 3 & 1) && (g_GameManager.unk_93d8 >> 2 & 1))
+        if ((g_GameManager.stateFlags >> 3 & 1) && (g_GameManager.stateFlags >> 2 & 1))
         {
             D3DXVECTOR3 speedPos;
 
@@ -1363,7 +1363,7 @@ int App::FadeOutMusic(float seconds)
 
 int App::IsScoreDisabled()
 {
-    return g_GameManager.unk_4 != NULL && g_GameManager.unk_4->scoreDisabled != 0;
+    return g_GameManager.savedConfig != NULL && g_GameManager.savedConfig->scoreDisabled != 0;
 }
 
 int App::EnableFog()

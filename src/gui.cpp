@@ -150,8 +150,8 @@ int Gui::OnDraw(Gui *gui)
         g_AsciiText.color = 0xffd0d0ff;
         g_AsciiText.AddFormat(&cursor, "Cherry = %8d", gui->impl->stageClearCherry * 10);
         if (g_GameManager.stage >= 7 ||
-            (g_GameManager.stage == 6 && !(g_GameManager.unk_93d8 & 1) &&
-             (!g_GameManager.unk_93d8Bit3 || g_ReplayManager->data->stages[4] != NULL)))
+            (g_GameManager.stage == 6 && !(g_GameManager.stateFlags & 1) &&
+             (!g_GameManager.isInReplay || g_ReplayManager->data->stages[4] != NULL)))
         {
             cursor.y += 16.0f;
             g_AsciiText.color = 0xffffff80;
@@ -189,9 +189,9 @@ int Gui::OnDraw(Gui *gui)
             break;
         }
         cursor.y += 16.0f;
-        if (g_GameManager.difficulty < 4 && !(g_GameManager.unk_93d8 & 1))
+        if (g_GameManager.difficulty < 4 && !(g_GameManager.stateFlags & 1))
         {
-            switch (g_GameManager.unk_4->lifeCount)
+            switch (g_GameManager.savedConfig->lifeCount)
             {
             case 3:
                 g_AsciiText.color = 0xffff8080;
@@ -828,7 +828,7 @@ int GuiImpl::RunMsg()
         case 11:
             g_App.clockMeasurementPending = 0;
             g_GameManager.stats->guiScore = g_GameManager.stats->score;
-            if (g_GameManager.unk_93d8 & 1)
+            if (g_GameManager.stateFlags & 1)
             {
                 g_GameManager.stats->guiScore = g_GameManager.stats->score;
                 g_App.scene = 6;
@@ -836,7 +836,7 @@ int GuiImpl::RunMsg()
             }
             if (g_GameManager.stage < 6)
             {
-                if ((g_GameManager.unk_93d8 >> 3 & 1) && !g_ReplayManager->HasStage(g_GameManager.stage))
+                if ((g_GameManager.stateFlags >> 3 & 1) && !g_ReplayManager->HasStage(g_GameManager.stage))
                 {
                     g_App.scene = 7;
                     goto stepSprites;
@@ -845,7 +845,7 @@ int GuiImpl::RunMsg()
                 this->returnToTitleRequested = 1;
                 this->msg.scriptIndex = -2;
             }
-            else if (!(g_GameManager.unk_93d8 >> 3 & 1))
+            else if (!(g_GameManager.stateFlags >> 3 & 1))
             {
                 if (g_GameManager.difficulty >= 4)
                 {
@@ -855,12 +855,12 @@ int GuiImpl::RunMsg()
                             .stagesClearedNoContinue[g_GameManager.difficulty] = 99;
                     }
                     g_GameManager.plst.counts[g_GameManager.difficulty].clears++;
-                    g_GameManager.unk_93d8Bit4 = 1;
+                    g_GameManager.isGameCleared = 1;
                     g_GameManager.stats->guiScore = g_GameManager.stats->score;
                     g_App.scene = 6;
                     goto stepSprites;
                 }
-                g_GameManager.unk_93d8Bit4 = 1;
+                g_GameManager.isGameCleared = 1;
                 g_GameManager.stats->guiScore = g_GameManager.stats->score;
                 g_App.scene = 9;
                 goto stepSprites;
@@ -1197,8 +1197,8 @@ void Gui::UpdateInterface()
         bonus += this->impl->stageClearPoints * 5000;
         bonus += this->impl->stageClearCherry;
         if (g_GameManager.stage >= 7 ||
-            (g_GameManager.stage == 6 && !(g_GameManager.unk_93d8 & 1) &&
-             (!g_GameManager.unk_93d8Bit3 || g_ReplayManager->data->stages[4] != NULL)))
+            (g_GameManager.stage == 6 && !(g_GameManager.stateFlags & 1) &&
+             (!g_GameManager.isInReplay || g_ReplayManager->data->stages[4] != NULL)))
         {
             bonus += (int)g_GameManager.stats->lives * 2000000;
             bonus += (int)g_GameManager.stats->bombs * 400000;
@@ -1221,7 +1221,7 @@ void Gui::UpdateInterface()
             bonus *= 2;
             break;
         }
-        switch (g_GameManager.unk_4->lifeCount)
+        switch (g_GameManager.savedConfig->lifeCount)
         {
         case 3:
             bonus = bonus * 5 / 10;

@@ -635,7 +635,7 @@ void StartSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
     enemy->effects[24]->sprite.colorTween.x = 0.125f;
     enemy->effects[24]->pos = enemy->pos;
     enemy->flags.hidden = 0;
-    if (!g_GameManager.unk_93d8Bit3)
+    if (!g_GameManager.isInReplay)
     {
         rec = &g_GameManager.catks[g_SpellCardNumber];
         sum = 0;
@@ -708,7 +708,7 @@ void EndSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
                 bonus = g_SpellCardBonus + g_SpellCardGrazeBonus;
                 g_Gui.ShowSpellCardBonus(bonus);
                 g_GameManager.AddScore(bonus);
-                if (!g_GameManager.unk_93d8Bit3)
+                if (!g_GameManager.isInReplay)
                 {
                     sum = 0;
                     len = strlen(rec->name);

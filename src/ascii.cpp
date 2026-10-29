@@ -92,7 +92,7 @@ int AsciiText::OnUpdate(AsciiText *text)
         text->continueMenu.UpdateContinueMenu();
     }
     text->RunScripts();
-    if ((g_GameManager.unk_93d8 >> 1) & 1)
+    if ((g_GameManager.stateFlags >> 1) & 1)
     {
         if (text->demoIcon.scriptIndex == 0)
         {
@@ -463,7 +463,7 @@ int PauseMenu::UpdatePauseMenu()
         }
         this->stateFrames = 0;
     }
-    if (!((g_GameManager.unk_93d8 >> 3) & 1) && WAS_PRESSED(0x4000) && this->state != 9)
+    if (!((g_GameManager.stateFlags >> 3) & 1) && WAS_PRESSED(0x4000) && this->state != 9)
     {
         g_SoundPlayer.QueueSound(10, 0);
         this->state = 10;
@@ -488,15 +488,15 @@ int PauseMenu::UpdatePauseMenu()
             this->sprites[i].pendingInterrupt = 1;
         }
         g_SpriteEngine->SetSprite(&this->sprites[7], g_GameManager.difficulty + 0x10d);
-        if (!(g_GameManager.unk_93d8 & 1))
+        if (!(g_GameManager.stateFlags & 1))
         {
             this->sprites[8].ClearShown();
         }
-        if (!g_GameManager.unk_4->scoreDisabled)
+        if (!g_GameManager.savedConfig->scoreDisabled)
         {
             this->sprites[9].ClearShown();
         }
-        if ((g_GameManager.unk_93d8 >> 3) & 1)
+        if ((g_GameManager.stateFlags >> 3) & 1)
         {
             this->sprites[3].scriptPos = NULL;
         }
@@ -525,7 +525,7 @@ int PauseMenu::UpdatePauseMenu()
         this->sprites[2].posOffset = this->sprites[3].posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
         if (this->stateFrames >= 4)
         {
-            if (!((g_GameManager.unk_93d8 >> 3) & 1))
+            if (!((g_GameManager.stateFlags >> 3) & 1))
             {
                 if (WAS_PRESSED(0x10))
                 {
@@ -569,7 +569,7 @@ int PauseMenu::UpdatePauseMenu()
                 this->state = 1;
                 g_SoundPlayer.QueueSound(0, 0);
             }
-            if ((g_GameManager.unk_93d8 >> 3) & 1)
+            if ((g_GameManager.stateFlags >> 3) & 1)
             {
                 if (WAS_PRESSED(0x20))
                 {
@@ -801,14 +801,14 @@ int ContinueMenu::UpdateContinueMenu()
 {
     int i;
 
-    if (g_GameManager.unk_93d8 & 1)
+    if (g_GameManager.stateFlags & 1)
     {
         g_GameManager.isInContinueMenu = 0;
         g_GameManager.stats->guiScore = g_GameManager.stats->score;
         g_App.scene = 6;
         return 1;
     }
-    if ((g_GameManager.unk_93d8 >> 3) & 1)
+    if ((g_GameManager.stateFlags >> 3) & 1)
     {
         g_GameManager.isInContinueMenu = 0;
         g_App.scene = 7;
@@ -939,7 +939,7 @@ int ContinueMenu::UpdateContinueMenu()
             g_GameManager.stats->guiScore = g_GameManager.stats->continuesUsed;
             g_GameManager.stats->unk_8 = 0;
             g_GameManager.stats->score = g_GameManager.stats->guiScore;
-            g_GameManager.SetLives(g_GameManager.unk_4->lifeCount);
+            g_GameManager.SetLives(g_GameManager.savedConfig->lifeCount);
             g_GameManager.RerollChecksumKeys();
             g_GameManager.SetBombs(g_Player.shotType->bombs);
             g_GameManager.stats->graze = 0;

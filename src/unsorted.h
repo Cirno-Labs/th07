@@ -1051,13 +1051,13 @@ public:
     // Sets bit 3 (0x8) of unk_93d8 to `value`.
     void SetUnk93d8Bit3(int value)
     {
-        this->unk_93d8Bit3 = value;
+        this->isInReplay = value;
     }
 
     // A block of random size that AddedCallback allocates and frees
     // before it allocates unk_4 and stats.
     void *tempBuffer;
-    GameConfig *unk_4;
+    GameConfig *savedConfig;
     GameStats *stats;
     // Set while the game is paused: the screen shake holds still. As
     // th06's GameManager::isFrozen, probably.
@@ -1093,15 +1093,15 @@ public:
     // Bit 1: the game is a practice; 0x10: it was cleared.
     union
     {
-        DWORD unk_93d8;
+        DWORD stateFlags;
         struct
         {
-            unsigned int unk_93d8Bits0 : 2;
+            unsigned int unusedBits93d80 : 2;
             // Set by OnUpdate while the game is neither paused nor in
             // the continue menu, as th06's isPlaying.
             unsigned int isPlaying : 1;
-            unsigned int unk_93d8Bit3 : 1;
-            unsigned int unk_93d8Bit4 : 1;
+            unsigned int isInReplay : 1;
+            unsigned int isGameCleared : 1;
         };
     };
     // Cleared by SetUpTitleScene. OnDraw moves it on to 2, as th06's

@@ -373,7 +373,7 @@ int Ending::AddedCallback(Ending *ending)
     // Unused.
     int unused = g_GameManager.shotIndex;
 
-    g_GameManager.unk_93d8 |= 0x10;
+    g_GameManager.stateFlags |= 0x10;
     g_App.hideFps = 1;
     g_SpriteEngine->LoadAnm(0x31, "data/staff01.anm", 0x600);
     g_SpriteEngine->ClearTexture();

@@ -99,7 +99,7 @@ int GameManager::ComputeChecksum()
 
     sum = ChecksumBytes((BYTE *)g_GameManager.stats->lifeChecksumKeys, (BYTE *)&this->stats->checksum - (BYTE *)this->stats->lifeChecksumKeys);
     sum += ChecksumBytes((BYTE *)g_GameManager.stats->checksumKeysE, sizeof(g_GameManager.stats->checksumKeysE));
-    sum += ChecksumBytes((BYTE *)g_GameManager.unk_4, 0x38);
+    sum += ChecksumBytes((BYTE *)g_GameManager.savedConfig, 0x38);
     sum += ChecksumBytes((BYTE *)&g_App.controllerMapping, 0x38);
     return sum;
 }
@@ -128,7 +128,7 @@ int GameManager::OnUpdate(GameManager *mgr)
     DWORD i;
     DWORD step;
 
-    if (!mgr->isInContinueMenu && !mgr->isPaused && !((mgr->unk_93d8 >> 1) & 1) && !mgr->skipFpsMeasure && WAS_PRESSED(8))
+    if (!mgr->isInContinueMenu && !mgr->isPaused && !((mgr->stateFlags >> 1) & 1) && !mgr->skipFpsMeasure && WAS_PRESSED(8))
     {
         mgr->isPaused = 1;
         g_GameManager.arena[0] = 32.0f;
@@ -150,7 +150,7 @@ int GameManager::OnUpdate(GameManager *mgr)
     g_App.viewport.MinZ = 0.0f;
     g_App.viewport.MaxZ = 1.0f;
     g_SpriteEngine->ClearUnk2e4d4();
-    if ((g_GameManager.unk_93d8 >> 3) & 1 && g_GameManager.replayMenuChoice == 1 && !g_Gui.IsMsgRunning())
+    if ((g_GameManager.stateFlags >> 3) & 1 && g_GameManager.replayMenuChoice == 1 && !g_Gui.IsMsgRunning())
     {
         mgr->slowdownCounter++;
         if ((g_App.roundedFps < 20 && mgr->slowdownCounter % 3 != 0) ||
@@ -161,7 +161,7 @@ int GameManager::OnUpdate(GameManager *mgr)
             return 3;
         }
     }
-    if ((mgr->unk_93d8 >> 1) & 1)
+    if ((mgr->stateFlags >> 1) & 1)
     {
         if (WAS_PRESSED(0xffff))
         {
@@ -278,7 +278,7 @@ int GameManager::OnUpdate(GameManager *mgr)
             g_GameManager.checksumValue = -9999.0f;
         }
     }
-    if (g_GameManager.unk_4->scoreDisabled)
+    if (g_GameManager.savedConfig->scoreDisabled)
     {
         g_GameManager.skipFpsMeasure = 0;
         mgr->slowdownCounter++;
@@ -419,7 +419,7 @@ int LoadScoreFile()
     LoadSpellCards(data, g_GameManager.catks);
     LoadClears(data, g_GameManager.clrds);
     LoadPracticeScores(data, &g_GameManager.pscrs[0][0][0]);
-    if (g_GameManager.unk_93d8 & 1)
+    if (g_GameManager.stateFlags & 1)
     {
         g_GameManager.stats->highScore = g_GameManager.pscrs[g_GameManager.shotIndex][g_GameManager.stage][g_GameManager.difficulty].score;
         g_GameManager.pscrs[g_GameManager.shotIndex][g_GameManager.stage][g_GameManager.difficulty].playCount++;
@@ -452,10 +452,10 @@ int GameManager::AddedCallback(GameManager *mgr)
     if (g_App.scene != 3)
     {
         DrawLoadingScreen();
-        if (mgr->unk_4 != NULL)
+        if (mgr->savedConfig != NULL)
         {
-            delete mgr->unk_4;
-            mgr->unk_4 = NULL;
+            delete mgr->savedConfig;
+            mgr->savedConfig = NULL;
         }
         if (mgr->stats != NULL)
         {
@@ -464,30 +464,30 @@ int GameManager::AddedCallback(GameManager *mgr)
         }
         size = g_Rng.GetRandomU32InRange(0xffff) + 0x10;
         mgr->tempBuffer = malloc(size);
-        mgr->unk_4 = new GameConfig;
+        mgr->savedConfig = new GameConfig;
         mgr->stats = new GameStats;
         RerollStatsChecksumKeys();
-        *mgr->unk_4 = *(GameConfig *)&g_App.controllerMapping;
+        *mgr->savedConfig = *(GameConfig *)&g_App.controllerMapping;
         MemFree(mgr->tempBuffer);
         mgr->powerItemCombo = 0;
         mgr->bonusPoints = mgr->stats->grazeCount;
         mgr->invulnerabilityBonus = mgr->stats->grazeCount;
         if (g_GameManager.difficulty >= 4)
         {
-            mgr->unk_4->lifeCount = 2;
+            mgr->savedConfig->lifeCount = 2;
         }
-        if (g_GameManager.unk_93d8 & 1)
+        if (g_GameManager.stateFlags & 1)
         {
-            mgr->unk_4->lifeCount = 8;
+            mgr->savedConfig->lifeCount = 8;
         }
         if (Player::RegisterChain(0) != 0)
         {
             LogPrintf(&g_Log, "error : プレイヤーの初期化に失敗しました\r\n");
             return -1;
         }
-        if (!((g_GameManager.unk_93d8 >> 3) & 1))
+        if (!((g_GameManager.stateFlags >> 3) & 1))
         {
-            g_GameManager.SetLives(mgr->unk_4->lifeCount);
+            g_GameManager.SetLives(mgr->savedConfig->lifeCount);
             g_GameManager.RerollChecksumKeys();
             g_GameManager.SetBombs(g_Player.shotType->bombs);
         }
@@ -509,7 +509,7 @@ int GameManager::AddedCallback(GameManager *mgr)
         else
         {
             mgr->stats->checksumKeyPoints = 200;
-            mgr->unk_4->scoreDisabled = 0;
+            mgr->savedConfig->scoreDisabled = 0;
         }
         mgr->stats->checksumKeyStage = 0;
         if (LoadScoreFile() != 0)
@@ -522,7 +522,7 @@ int GameManager::AddedCallback(GameManager *mgr)
         mgr->stats->bombsUsed = 0.0f;
         mgr->RerollChecksumKeys();
         mgr->stats->spellCardsCaptured = 0;
-        if (!(g_GameManager.unk_93d8 & 1))
+        if (!(g_GameManager.stateFlags & 1))
         {
             switch (mgr->difficulty)
             {
@@ -588,9 +588,9 @@ int GameManager::AddedCallback(GameManager *mgr)
                 break;
             }
         }
-        if (!((g_GameManager.unk_93d8 >> 3) & 1))
+        if (!((g_GameManager.stateFlags >> 3) & 1))
         {
-            if (!mgr->unk_4->scoreDisabled)
+            if (!mgr->savedConfig->scoreDisabled)
             {
                 IncrementStatCounter((DWORD *)&g_GameManager.plst.counts[g_GameManager.difficulty].plays[0], 999999);
                 IncrementStatCounter((DWORD *)&g_GameManager.plst.counts[6].plays[0], 999999);
@@ -601,7 +601,7 @@ int GameManager::AddedCallback(GameManager *mgr)
                     IncrementStatCounter((DWORD *)&g_GameManager.plst.counts[g_GameManager.difficulty].retries, 999999);
                     IncrementStatCounter((DWORD *)&g_GameManager.plst.counts[6].retries, 999999);
                 }
-                if (g_GameManager.unk_93d8 & 1)
+                if (g_GameManager.stateFlags & 1)
                 {
                     IncrementStatCounter((DWORD *)&g_GameManager.plst.counts[g_GameManager.difficulty].practices, 999999);
                     IncrementStatCounter((DWORD *)&g_GameManager.plst.counts[6].practices, 999999);
@@ -610,7 +610,7 @@ int GameManager::AddedCallback(GameManager *mgr)
         }
         else
         {
-            mgr->unk_4->scoreDisabled = 0;
+            mgr->savedConfig->scoreDisabled = 0;
         }
     }
     else
@@ -628,7 +628,7 @@ int GameManager::AddedCallback(GameManager *mgr)
     mgr->stats->graze = 0;
     mgr->isPaused = 0;
     mgr->stage++;
-    if (!((g_GameManager.unk_93d8 >> 3) & 1))
+    if (!((g_GameManager.stateFlags >> 3) & 1))
     {
         shot = g_GameManager.shotIndex;
         if (!mgr->stats->continuesUsed && mgr->clrds[shot].stagesClearedNoContinue[g_GameManager.difficulty] < mgr->stage - 1)
@@ -640,7 +640,7 @@ int GameManager::AddedCallback(GameManager *mgr)
             mgr->clrds[shot].stagesCleared[g_GameManager.difficulty] = mgr->stage - 1;
         }
     }
-    if (mgr->unk_93d8 & 1)
+    if (mgr->stateFlags & 1)
     {
         switch (mgr->stage)
         {
@@ -652,7 +652,7 @@ int GameManager::AddedCallback(GameManager *mgr)
             break;
         }
     }
-    if ((g_GameManager.unk_93d8 >> 3) & 1)
+    if ((g_GameManager.stateFlags >> 3) & 1)
     {
         mgr->SetRankForDifficulty();
         ReplayManager::RegisterChain(1, g_GameManager.replayFile);
@@ -691,7 +691,7 @@ int GameManager::AddedCallback(GameManager *mgr)
         LogPrintf(&g_Log, "error : 2D表示の初期化に失敗しました\r\n");
         return -1;
     }
-    if (!((g_GameManager.unk_93d8 >> 3) & 1))
+    if (!((g_GameManager.stateFlags >> 3) & 1))
     {
         ReplayManager::RegisterChain(0, "replay/th7_00.rpy");
     }
@@ -710,7 +710,7 @@ int GameManager::AddedCallback(GameManager *mgr)
     {
     }
     mgr->isInContinueMenu = 0;
-    mgr->unk_93d8 |= 4;
+    mgr->stateFlags |= 4;
     if (g_App.scene != 3)
     {
         g_App.achievedFrames = 0.0f;
@@ -718,7 +718,7 @@ int GameManager::AddedCallback(GameManager *mgr)
     }
     mgr->isFrozen = 0;
     mgr->stats->score = 0;
-    mgr->unk_93d8 &= ~0x10;
+    mgr->stateFlags &= ~0x10;
     g_AsciiText.Initialize();
     g_GameManager.skipFpsMeasure = 0;
     DrawFps(0);
@@ -744,13 +744,13 @@ int GameManager::DeletedCallback(GameManager *mgr)
     EffectManager::RemoveChain();
     Gui::RemoveChain();
     ReplayManager::EndStage();
-    if (!g_GameManager.unk_93d8Bit3)
+    if (!g_GameManager.isInReplay)
     {
         g_App.AddTotalPlayTime();
     }
     g_App.lastTotalPlayTimeTick = 0;
     g_App.AddPlayTime();
-    mgr->unk_93d8 &= ~4;
+    mgr->stateFlags &= ~4;
     g_AsciiText.Initialize();
     g_GameManager.skipFpsMeasure = 0;
     g_GameManager.stageFrames = 0;

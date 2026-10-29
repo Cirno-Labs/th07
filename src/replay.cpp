@@ -26,13 +26,13 @@ int ReplayManager::RecordOnUpdate(ReplayManager *replay)
     int idx;
     WORD buttons;
 
-    if (!(g_GameManager.unk_93d8 >> 2 & 1))
+    if (!(g_GameManager.stateFlags >> 2 & 1))
     {
         return 1;
     }
     g_PrevGameButtons = g_GameButtons;
     g_GameButtons = g_Buttons;
-    if (g_GameManager.unk_4->scoreDisabled != 0)
+    if (g_GameManager.savedConfig->scoreDisabled != 0)
     {
         return 1;
     }
@@ -64,7 +64,7 @@ int ReplayManager::RecordOnUpdate(ReplayManager *replay)
 
 int ReplayManager::PlayOnUpdate2(ReplayManager *replay)
 {
-    if (!(g_GameManager.unk_93d8 >> 2 & 1))
+    if (!(g_GameManager.stateFlags >> 2 & 1))
     {
         return 1;
     }
@@ -83,11 +83,11 @@ int ReplayManager::PlayOnUpdate(ReplayManager *replay)
 {
     int unused;
 
-    if (!(g_GameManager.unk_93d8 >> 2 & 1))
+    if (!(g_GameManager.stateFlags >> 2 & 1))
     {
         return 1;
     }
-    if (g_GameManager.unk_4->scoreDisabled != 0)
+    if (g_GameManager.savedConfig->scoreDisabled != 0)
     {
         return 1;
     }
@@ -147,7 +147,7 @@ int ReplayManager::RecordAddedCallback(ReplayManager *replay)
         replay->data->exeChecksum = g_App.exeChecksum;
         replay->data->difficulty = g_GameManager.difficulty;
         *(DWORD *)replay->data->name = *(DWORD *)"NO NAME";
-        *(GameConfig *)replay->data->config = *g_GameManager.unk_4;
+        *(GameConfig *)replay->data->config = *g_GameManager.savedConfig;
         for (idx = 0; idx < 7; idx++)
         {
             replay->data->stages[idx] = NULL;
@@ -269,7 +269,7 @@ int ReplayManager::PlayAddedCallback(ReplayManager *replay)
     replay->frame = 0;
     if (replay->data == NULL)
     {
-        replay->data = (ReplayHeader *)LoadFileData(replay->path, !(g_GameManager.unk_93d8 >> 1 & 1));
+        replay->data = (ReplayHeader *)LoadFileData(replay->path, !(g_GameManager.stateFlags >> 1 & 1));
         replay->data = ValidateReplay(replay->data, g_FileSize);
         if (replay->data == NULL)
         {
@@ -342,7 +342,7 @@ int ReplayManager::PlayAddedCallback(ReplayManager *replay)
         g_GameManager.invulnerabilityBonus = g_GameManager.stats->grazeCount + 50000;
         StartBombState(&g_Player);
     }
-    *g_GameManager.unk_4 = *(GameConfig *)replay->data->config;
+    *g_GameManager.savedConfig = *(GameConfig *)replay->data->config;
     g_Rng.SetSeed(cur->rngSeed);
     g_GameManager.stats->spellCardsCaptured = cur->spellCardsCaptured;
     g_GameManager.stats->checksumKeyStage = cur->unk_18;
@@ -492,7 +492,7 @@ void SaveReplay(char *path, char *name)
         replayTmp = g_ReplayManager;
         if (replayTmp->GetMode() == 0)
         {
-            if (!(g_GameManager.unk_93d8 & 1) && g_GameManager.difficulty < 4)
+            if (!(g_GameManager.stateFlags & 1) && g_GameManager.difficulty < 4)
             {
                 if (memcmp(&g_App.controllerMapping, replayTmp->data->config, sizeof(replayTmp->data->config)) != 0)
                 {
@@ -636,7 +636,7 @@ void ResaveReplay(char *path)
     if (g_ReplayManager != NULL)
     {
         replayTmp = g_ReplayManager;
-        if (!(g_GameManager.unk_93d8 & 1) && g_GameManager.difficulty < 4)
+        if (!(g_GameManager.stateFlags & 1) && g_GameManager.difficulty < 4)
         {
             if (memcmp(&g_App.controllerMapping, replayTmp->data->config, sizeof(replayTmp->data->config)) != 0)
             {

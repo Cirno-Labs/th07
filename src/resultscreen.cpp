@@ -998,7 +998,7 @@ int ResultScreen::HandleNameEntry()
         this->entry.continuesUsed = g_GameManager.stats->continuesUsed;
         this->entry.version = 1;
         this->entry.magic = *(DWORD *)"HSCR";
-        if ((g_GameManager.unk_93d8 >> 4 & 1) == 0)
+        if ((g_GameManager.stateFlags >> 4 & 1) == 0)
         {
             this->entry.stage = g_GameManager.stage;
         }
@@ -1783,7 +1783,7 @@ int ResultScreen::DrawStatistics()
         rating += g_DifficultyRatings[g_GameManager.difficulty];
         cursorPos.x += 14.0f;
         cursorPos.y += 22.0f;
-        if ((g_GameManager.unk_93d8 >> 4 & 1) == 0)
+        if ((g_GameManager.stateFlags >> 4 & 1) == 0)
         {
             if (progress >= 1.0f)
             {
@@ -2305,7 +2305,7 @@ int ResultScreen::RegisterChain(int unk)
     DebugPrint2("Stg.PlayTimeAll = %d\r\n", g_GameManager.progressFrames);
     if (unk == 1)
     {
-        if (!(g_GameManager.unk_93d8 & 1))
+        if (!(g_GameManager.stateFlags & 1))
         {
             screen->SetState(10);
         }
