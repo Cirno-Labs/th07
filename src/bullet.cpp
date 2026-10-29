@@ -57,3 +57,25 @@ void BulletManager::RemoveChain()
     g_Chain.Remove(&g_BulletDrawChain);
     memset(&g_BulletManager, 0, sizeof(BulletManager));
 }
+
+void BulletManager::StopAllBullets()
+{
+    Bullet *bullet;
+    int i;
+
+    bullet = g_BulletManager.bullets;
+    for (i = 0; i < 0x400; i++, bullet++)
+    {
+        if (bullet->state == 0)
+        {
+            continue;
+        }
+        bullet->velocity = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+        bullet->unk_ba4 = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+        bullet->unk_bb8 = 0.0f;
+        bullet->unk_bb4 = 0.0f;
+        bullet->speed = 0.0f;
+        bullet->color = 0;
+        g_SpriteEngine->SetSprite(&bullet->sprites.sprite0, bullet->sprites.sprite0.baseSpriteIndex + bullet->color);
+    }
+}

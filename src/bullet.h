@@ -162,6 +162,9 @@ public:
     void Reset();
     // Removes the bullets (Player's respawn step calls it with 0).
     void ClearAll(int unk);
+    // Stops every bullet of g_BulletManager where it is and turns it to
+    // color 0. Not in th06.
+    void StopAllBullets();
 
     // Resets, remembers `anmPath`, points g_EffectColors at
     // g_EffectColorsFull (th06 picked by an option), and adds the update
