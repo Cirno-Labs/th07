@@ -230,16 +230,16 @@ public:
     AnmInstr *scriptPos;
     // The entry SetSprite chose.
     SpriteData *spriteData;
-    D3DXVECTOR3 unk_1e8;
-    D3DXVECTOR3 unk_1f4;
-    D3DXVECTOR3 unk_200;
-    D3DXVECTOR3 unk_20c;
-    D3DXVECTOR3 unk_218;
-    D3DXVECTOR3 unk_224;
+    D3DXVECTOR3 moveStart;
+    D3DXVECTOR3 moveEnd;
+    D3DXVECTOR3 rotateStart;
+    D3DXVECTOR3 rotateEnd;
+    D3DXVECTOR3 scaleTween;
+    D3DXVECTOR3 colorTween;
     // Added to pos when it is drawn.
     D3DXVECTOR3 posOffset;
     // The script frame of the last sprite change, as th06's spriteTime.
-    int unk_23c;
+    int spriteTime;
     // The size of the characters RenderText draws.
     BYTE fontWidth;
     BYTE fontHeight;

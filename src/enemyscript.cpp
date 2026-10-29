@@ -630,9 +630,9 @@ void StartSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
     enemy->effects[24]->sprite.unk_48[4].Set(0);
     enemy->effects[24]->sprite.unk_84[4].Set(enemy->timerCallbackTime);
     enemy->effects[24]->sprite.unk_c4 = 0;
-    *(D3DXVECTOR2 *)&enemy->effects[24]->sprite.unk_218 = *(D3DXVECTOR2 *)&enemy->effects[24]->sprite.scaleY;
-    enemy->effects[24]->sprite.unk_218.z = 0.125f;
-    enemy->effects[24]->sprite.unk_224.x = 0.125f;
+    *(D3DXVECTOR2 *)&enemy->effects[24]->sprite.scaleTween = *(D3DXVECTOR2 *)&enemy->effects[24]->sprite.scaleY;
+    enemy->effects[24]->sprite.scaleTween.z = 0.125f;
+    enemy->effects[24]->sprite.colorTween.x = 0.125f;
     enemy->effects[24]->pos = enemy->pos;
     enemy->flags.unk_19 = 0;
     if (!g_Unknown626270.unk_93d8Bit3)

@@ -1373,7 +1373,7 @@ int SpriteEngine::Step(Sprite *vm)
         case 3:
             vm->shown = 1;
             this->SetSprite(vm, ANM_INT_ARG(0) + this->scriptSpriteOffsets[vm->scriptIndex]);
-            vm->unk_23c = vm->unk_30.AsFrames();
+            vm->spriteTime = vm->unk_30.AsFrames();
             break;
         case 7:
             vm->scaleY = ANM_FLOAT_ARG(0);
@@ -1432,13 +1432,13 @@ int SpriteEngine::Step(Sprite *vm)
             vm->unk_48[4].Set(0);
             vm->unk_84[4].Set(ANM_INT_ARG(2));
             vm->unk_c4 = 0;
-            *(D3DXVECTOR2 *)&vm->unk_218 = *(D3DXVECTOR2 *)&vm->scaleY;
-            vm->unk_218.z = ANM_FLOAT_ARG(0);
-            vm->unk_224.x = ANM_FLOAT_ARG(1);
+            *(D3DXVECTOR2 *)&vm->scaleTween = *(D3DXVECTOR2 *)&vm->scaleY;
+            vm->scaleTween.z = ANM_FLOAT_ARG(0);
+            vm->colorTween.x = ANM_FLOAT_ARG(1);
             break;
         case 15:
-            ((BYTE *)&vm->unk_224.y)[3] = vm->alpha;
-            ((BYTE *)&vm->unk_224.z)[3] = curInstr->args[0].i;
+            ((BYTE *)&vm->colorTween.y)[3] = vm->alpha;
+            ((BYTE *)&vm->colorTween.z)[3] = curInstr->args[0].i;
             vm->unk_48[2].Set(0);
             vm->unk_84[2].Set(ANM_INT_ARG(1));
             vm->unk_c2 = 0;
@@ -1467,13 +1467,13 @@ int SpriteEngine::Step(Sprite *vm)
         posInterp:
             if (!vm->usePosOffset)
             {
-                vm->unk_1e8 = vm->pos;
+                vm->moveStart = vm->pos;
             }
             else
             {
-                vm->unk_1e8 = vm->posOffset;
+                vm->moveStart = vm->posOffset;
             }
-            vm->unk_1f4 = D3DXVECTOR3(ANM_FLOAT_ARG(0), ANM_FLOAT_ARG(1), ANM_FLOAT_ARG(2));
+            vm->moveEnd = D3DXVECTOR3(ANM_FLOAT_ARG(0), ANM_FLOAT_ARG(1), ANM_FLOAT_ARG(2));
             vm->unk_84[0].Set(ANM_INT_ARG(3));
             vm->unk_48[0].Set(0);
             break;
@@ -1579,51 +1579,51 @@ int SpriteEngine::Step(Sprite *vm)
             vm->unk_c0 = curInstr->args[1].i;
             if (!vm->usePosOffset)
             {
-                vm->unk_1e8 = vm->pos;
+                vm->moveStart = vm->pos;
             }
             else
             {
-                vm->unk_1e8 = vm->posOffset;
+                vm->moveStart = vm->posOffset;
             }
-            vm->unk_1f4.x = ANM_FLOAT_ARG(2);
-            vm->unk_1f4.y = ANM_FLOAT_ARG(3);
-            vm->unk_1f4.z = ANM_FLOAT_ARG(4);
+            vm->moveEnd.x = ANM_FLOAT_ARG(2);
+            vm->moveEnd.y = ANM_FLOAT_ARG(3);
+            vm->moveEnd.z = ANM_FLOAT_ARG(4);
             break;
         case 33:
             vm->unk_48[1].Set(0);
             vm->unk_84[1].Set(ANM_INT_ARG(0));
             vm->unk_c1 = curInstr->args[1].i;
-            ((BYTE *)&vm->unk_224.y)[2] = vm->unk_rgb[2];
-            ((BYTE *)&vm->unk_224.y)[1] = vm->unk_rgb[1];
-            ((BYTE *)&vm->unk_224.y)[0] = vm->unk_rgb[0];
-            ((BYTE *)&vm->unk_224.z)[2] = curInstr->args[2].b[0];
-            ((BYTE *)&vm->unk_224.z)[1] = curInstr->args[2].b[1];
-            ((BYTE *)&vm->unk_224.z)[0] = curInstr->args[2].b[2];
+            ((BYTE *)&vm->colorTween.y)[2] = vm->unk_rgb[2];
+            ((BYTE *)&vm->colorTween.y)[1] = vm->unk_rgb[1];
+            ((BYTE *)&vm->colorTween.y)[0] = vm->unk_rgb[0];
+            ((BYTE *)&vm->colorTween.z)[2] = curInstr->args[2].b[0];
+            ((BYTE *)&vm->colorTween.z)[1] = curInstr->args[2].b[1];
+            ((BYTE *)&vm->colorTween.z)[0] = curInstr->args[2].b[2];
             break;
         case 34:
             vm->unk_48[2].Set(0);
             vm->unk_84[2].Set(ANM_INT_ARG(0));
             vm->unk_c2 = curInstr->args[1].i;
-            ((BYTE *)&vm->unk_224.y)[3] = vm->alpha;
-            ((BYTE *)&vm->unk_224.z)[3] = curInstr->args[2].i;
+            ((BYTE *)&vm->colorTween.y)[3] = vm->alpha;
+            ((BYTE *)&vm->colorTween.z)[3] = curInstr->args[2].i;
             break;
         case 35:
             vm->unk_48[3].Set(0);
             vm->unk_84[3].Set(ANM_INT_ARG(0));
             vm->unk_c3 = curInstr->args[1].i;
-            vm->unk_200 = *(D3DXVECTOR3 *)&vm->rotationX;
-            vm->unk_20c.x = ANM_FLOAT_ARG(2);
-            vm->unk_20c.y = ANM_FLOAT_ARG(3);
-            vm->unk_20c.z = ANM_FLOAT_ARG(4);
+            vm->rotateStart = *(D3DXVECTOR3 *)&vm->rotationX;
+            vm->rotateEnd.x = ANM_FLOAT_ARG(2);
+            vm->rotateEnd.y = ANM_FLOAT_ARG(3);
+            vm->rotateEnd.z = ANM_FLOAT_ARG(4);
             vm->flags |= 4;
             break;
         case 36:
             vm->unk_48[4].Set(0);
             vm->unk_84[4].Set(ANM_INT_ARG(0));
             vm->unk_c4 = curInstr->args[1].i;
-            *(D3DXVECTOR2 *)&vm->unk_218 = *(D3DXVECTOR2 *)&vm->scaleY;
-            vm->unk_218.z = ANM_FLOAT_ARG(2);
-            vm->unk_224.x = ANM_FLOAT_ARG(3);
+            *(D3DXVECTOR2 *)&vm->scaleTween = *(D3DXVECTOR2 *)&vm->scaleY;
+            vm->scaleTween.z = ANM_FLOAT_ARG(2);
+            vm->colorTween.x = ANM_FLOAT_ARG(3);
             vm->flags |= 8;
             break;
         case 37:
@@ -1855,38 +1855,38 @@ done:
             case 0:
                 if (!vm->usePosOffset)
                 {
-                    vm->pos.x = (vm->unk_1f4.x - vm->unk_1e8.x) * t + vm->unk_1e8.x;
-                    vm->pos.y = (vm->unk_1f4.y - vm->unk_1e8.y) * t + vm->unk_1e8.y;
-                    vm->pos.z = (vm->unk_1f4.z - vm->unk_1e8.z) * t + vm->unk_1e8.z;
+                    vm->pos.x = (vm->moveEnd.x - vm->moveStart.x) * t + vm->moveStart.x;
+                    vm->pos.y = (vm->moveEnd.y - vm->moveStart.y) * t + vm->moveStart.y;
+                    vm->pos.z = (vm->moveEnd.z - vm->moveStart.z) * t + vm->moveStart.z;
                 }
                 else
                 {
-                    vm->posOffset.x = (vm->unk_1f4.x - vm->unk_1e8.x) * t + vm->unk_1e8.x;
-                    vm->posOffset.y = (vm->unk_1f4.y - vm->unk_1e8.y) * t + vm->unk_1e8.y;
-                    vm->posOffset.z = (vm->unk_1f4.z - vm->unk_1e8.z) * t + vm->unk_1e8.z;
+                    vm->posOffset.x = (vm->moveEnd.x - vm->moveStart.x) * t + vm->moveStart.x;
+                    vm->posOffset.y = (vm->moveEnd.y - vm->moveStart.y) * t + vm->moveStart.y;
+                    vm->posOffset.z = (vm->moveEnd.z - vm->moveStart.z) * t + vm->moveStart.z;
                 }
                 break;
             case 1:
-                vm->unk_rgb[2] = (((BYTE *)&vm->unk_224.z)[2] - ((BYTE *)&vm->unk_224.y)[2]) * t +
-                                 ((BYTE *)&vm->unk_224.y)[2];
-                vm->unk_rgb[1] = (((BYTE *)&vm->unk_224.z)[1] - ((BYTE *)&vm->unk_224.y)[1]) * t +
-                                 ((BYTE *)&vm->unk_224.y)[1];
-                vm->unk_rgb[0] = (((BYTE *)&vm->unk_224.z)[0] - ((BYTE *)&vm->unk_224.y)[0]) * t +
-                                 ((BYTE *)&vm->unk_224.y)[0];
+                vm->unk_rgb[2] = (((BYTE *)&vm->colorTween.z)[2] - ((BYTE *)&vm->colorTween.y)[2]) * t +
+                                 ((BYTE *)&vm->colorTween.y)[2];
+                vm->unk_rgb[1] = (((BYTE *)&vm->colorTween.z)[1] - ((BYTE *)&vm->colorTween.y)[1]) * t +
+                                 ((BYTE *)&vm->colorTween.y)[1];
+                vm->unk_rgb[0] = (((BYTE *)&vm->colorTween.z)[0] - ((BYTE *)&vm->colorTween.y)[0]) * t +
+                                 ((BYTE *)&vm->colorTween.y)[0];
                 break;
             case 2:
-                vm->alpha = (((BYTE *)&vm->unk_224.z)[3] - ((BYTE *)&vm->unk_224.y)[3]) * t +
-                            ((BYTE *)&vm->unk_224.y)[3];
+                vm->alpha = (((BYTE *)&vm->colorTween.z)[3] - ((BYTE *)&vm->colorTween.y)[3]) * t +
+                            ((BYTE *)&vm->colorTween.y)[3];
                 break;
             case 3:
-                vm->rotationX = AddNormalizeAngle((vm->unk_20c.x - vm->unk_200.x) * t, vm->unk_200.x);
-                vm->rotationY = AddNormalizeAngle((vm->unk_20c.y - vm->unk_200.y) * t, vm->unk_200.y);
-                vm->rotationZ = AddNormalizeAngle((vm->unk_20c.z - vm->unk_200.z) * t, vm->unk_200.z);
+                vm->rotationX = AddNormalizeAngle((vm->rotateEnd.x - vm->rotateStart.x) * t, vm->rotateStart.x);
+                vm->rotationY = AddNormalizeAngle((vm->rotateEnd.y - vm->rotateStart.y) * t, vm->rotateStart.y);
+                vm->rotationZ = AddNormalizeAngle((vm->rotateEnd.z - vm->rotateStart.z) * t, vm->rotateStart.z);
                 vm->flags |= 4;
                 break;
             case 4:
-                vm->scaleY = (vm->unk_218.z - vm->unk_218.x) * t + vm->unk_218.x;
-                vm->scaleX = (vm->unk_224.x - vm->unk_218.y) * t + vm->unk_218.y;
+                vm->scaleY = (vm->scaleTween.z - vm->scaleTween.x) * t + vm->scaleTween.x;
+                vm->scaleX = (vm->colorTween.x - vm->scaleTween.y) * t + vm->scaleTween.y;
                 vm->flags |= 8;
                 break;
             }

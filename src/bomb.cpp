@@ -50,9 +50,9 @@ void SpawnBombAura(Player *player)
     effect->sprite.unk_48[4].Set(0);
     effect->sprite.unk_84[4] = player->stateTimer;
     effect->sprite.unk_c4 = 0;
-    *(D3DXVECTOR2 *)&effect->sprite.unk_218 = *(D3DXVECTOR2 *)&effect->sprite.scaleY;
-    effect->sprite.unk_218.z = 0.0625f;
-    effect->sprite.unk_224.x = 0.0625f;
+    *(D3DXVECTOR2 *)&effect->sprite.scaleTween = *(D3DXVECTOR2 *)&effect->sprite.scaleY;
+    effect->sprite.scaleTween.z = 0.0625f;
+    effect->sprite.colorTween.x = 0.0625f;
     effect->sprite.unk_c8 = player->stateTimer.AsFrames();
     effect->sprite.unk_14 *= -1.0f;
     effect->sprite.unk_rgb[2] = 0xff;

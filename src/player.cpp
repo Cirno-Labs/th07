@@ -1792,10 +1792,10 @@ void StartBombState(Player *player)
     effect->sprite.unk_48[4].Set(0);
     effect->sprite.unk_84[4].Set(player->stateTimer.AsFrames());
     effect->sprite.unk_c4 = 0;
-    effect->sprite.unk_218.y = 1.0f;
-    effect->sprite.unk_218.x = 1.0f;
-    effect->sprite.unk_218.z = 0.25f;
-    effect->sprite.unk_224.x = 0.25f;
+    effect->sprite.scaleTween.y = 1.0f;
+    effect->sprite.scaleTween.x = 1.0f;
+    effect->sprite.scaleTween.z = 0.25f;
+    effect->sprite.colorTween.x = 0.25f;
     effect->sprite.unk_c8 = player->stateTimer.AsFrames();
     effect->sprite.unk_14 *= -1.0f;
     player->bombInvulnerabilityEffect = effect;
@@ -1894,17 +1894,17 @@ void Player::StopBombState(int unk)
     eff->sprite.unk_48[4].Set(0);
     eff->sprite.unk_84[4].Set(30);
     eff->sprite.unk_c4 = 0;
-    eff->sprite.unk_218.x = 0.0625f;
-    eff->sprite.unk_218.y = 0.0625f;
-    eff->sprite.unk_218.z = 1.3f;
-    eff->sprite.unk_224.x = 1.3f;
+    eff->sprite.scaleTween.x = 0.0625f;
+    eff->sprite.scaleTween.y = 0.0625f;
+    eff->sprite.scaleTween.z = 1.3f;
+    eff->sprite.colorTween.x = 1.3f;
     eff->sprite.unk_48[2].Set(0);
     eff->sprite.unk_84[2].Set(30);
     eff->sprite.unk_c2 = 1;
     // Bytes 0x22b and 0x22f, probably the alphas of two colors over
     // unk_224.y and .z (the vector type keeps Sprite's inline budget).
-    ((BYTE *)&eff->sprite.unk_224.y)[3] = eff->sprite.alpha;
-    ((BYTE *)&eff->sprite.unk_224.z)[3] = 0;
+    ((BYTE *)&eff->sprite.colorTween.y)[3] = eff->sprite.alpha;
+    ((BYTE *)&eff->sprite.colorTween.z)[3] = 0;
     eff->sprite.unk_c8 = 30;
     this->bombInvulnerabilityEffect = eff;
     g_Unknown12fe0cc = 0;
