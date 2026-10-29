@@ -21,7 +21,11 @@ struct SpriteData
     // The texture's size.
     float textureHeight;
     float textureWidth;
-    unsigned char unk_1c[0x10];
+    // The rectangle in texture coordinates.
+    float uvStartX;
+    float uvStartY;
+    float uvEndX;
+    float uvEndY;
     // Its size in pixels, as in th06.
     float height;
     float width;
@@ -44,7 +48,10 @@ struct SpriteBase
     // SpriteEngine::Draw scales the sprite's height and width by these.
     float scaleY;
     float scaleX;
-    unsigned char unk_20[0x10];
+    unsigned char unk_20[0x8];
+    // Added to the sprite's texture coordinates, as in th06.
+    float uvScrollX;
+    float uvScrollY;
     Timer unk_30;
     Timer unk_3c;
     Timer unk_48[5];
@@ -147,6 +154,16 @@ public:
 };
 ASSERT_SIZE(Sprite, 0x24c);
 
+// A vertex with a transformed position, a color and texture
+// coordinates, as in th06.
+struct VertexTex1DiffuseXyzrwh
+{
+    D3DXVECTOR3 pos;
+    float w;
+    D3DCOLOR diffuse;
+    D3DXVECTOR2 uv;
+};
+
 // Runs the sprites' ANM scripts. Only the fields known so far.
 class SpriteEngine
 {
@@ -196,6 +213,11 @@ public:
     void RenderTextRightAligned(Sprite *vm, D3DCOLOR color, D3DCOLOR shadowColor, char *fmt, ...);
     // RenderText, centered on the sprite.
     void RenderTextCentered(Sprite *vm, D3DCOLOR color, D3DCOLOR shadowColor, char *fmt, ...);
+    // Sets the texture coordinates, color and w of the `count` vertices
+    // from `vertices`, a strip across `vm`'s sprite from right to left:
+    // even ones along its top, odd ones along its bottom. Returns 0, or
+    // -1 for fewer than 3. Not in th06.
+    int FillSpriteStripVertices(Sprite *vm, VertexTex1DiffuseXyzrwh *vertices, int count);
     // Releases ANM slot `slot`.
     void ReleaseAnm(int slot);
     // Releases surface `surface`.

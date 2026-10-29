@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">51.87% (360)</tspan> · <tspan class="decompiled">1.59% (11)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">46.40% (322)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">52.02% (361)</tspan> · <tspan class="decompiled">1.59% (11)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">46.25% (321)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="387.49" height="6" x="0" y="0" class="named"/>
-<rect width="11.84" height="6" x="387.49" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="399.33" y="0" class="nonmatching"/>
-<rect width="346.59" height="6" x="400.41" y="0" class="todo"/>
+<rect width="388.57" height="6" x="0" y="0" class="named"/>
+<rect width="11.84" height="6" x="388.57" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="400.41" y="0" class="nonmatching"/>
+<rect width="345.51" height="6" x="401.49" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (173 bytes)</title></rect>
@@ -667,7 +667,7 @@
 <rect width="12" height="12" x="675" y="165" class="named"><title>0x00455030 SpriteEngine::SendInterruptToLoadedSprites (140 bytes)</title></rect>
 <rect width="12" height="12" x="690" y="165" class="named"><title>0x004550c0 SpriteEngine::StepSprites (70 bytes)</title></rect>
 <rect width="12" height="12" x="705" y="165" class="named"><title>0x00455110 SpriteEngine::StartSpriteSeries (91 bytes)</title></rect>
-<rect width="12" height="12" x="720" y="165" class="todo"><title>0x00455170 Func455170 (352 bytes)</title></rect>
+<rect width="12" height="12" x="720" y="165" class="named"><title>0x00455170 SpriteEngine::FillSpriteStripVertices (352 bytes)</title></rect>
 <rect width="12" height="12" x="735" y="165" class="todo"><title>0x004552d0 Func4552d0 (298 bytes)</title></rect>
 <rect width="12" height="12" x="0" y="180" class="named"><title>0x004553fa App::ResetClockDriftCounters (59 bytes)</title></rect>
 <rect width="12" height="12" x="15" y="180" class="named"><title>0x00455435 MainMenu::SetState (72 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">40.42%</tspan> · <tspan class="decompiled">0.21%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">59.29%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">40.51%</tspan> · <tspan class="decompiled">0.21%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">59.19%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="301.92" height="6" x="0" y="0" class="named"/>
-<rect width="1.55" height="6" x="301.92" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="303.47" y="0" class="nonmatching"/>
-<rect width="442.87" height="6" x="304.13" y="0" class="todo"/>
+<rect width="302.61" height="6" x="0" y="0" class="named"/>
+<rect width="1.55" height="6" x="302.61" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="304.16" y="0" class="nonmatching"/>
+<rect width="442.18" height="6" x="304.82" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1019,7 +1019,7 @@
 <rect width="9.33" height="9.03" x="578.75" y="129.43" class="todo"><title>0x0041ca10 Func41ca10 (354 bytes)</title></rect>
 <rect width="9.33" height="9.03" x="578.75" y="141.46" class="named"><title>0x00445192 LoadClears (354 bytes)</title></rect>
 <rect width="9.33" height="9" x="578.75" y="153.49" class="named"><title>0x004411c0 UpdateRespawningState (353 bytes)</title></rect>
-<rect width="9.33" height="8.96" x="578.75" y="165.49" class="todo"><title>0x00455170 Func455170 (352 bytes)</title></rect>
+<rect width="9.33" height="8.96" x="578.75" y="165.49" class="named"><title>0x00455170 SpriteEngine::FillSpriteStripVertices (352 bytes)</title></rect>
 <rect width="9.33" height="8.93" x="578.75" y="177.45" class="named"><title>0x00436450 MidiPlayer::MidiPlayer (351 bytes)</title></rect>
 <rect width="9.33" height="8.83" x="578.75" y="189.38" class="named"><title>0x00444f0d LoadHighScores (348 bytes)</title></rect>
 <rect width="9.33" height="8.79" x="578.75" y="201.21" class="todo"><title>0x0044e780 Func44e780 (347 bytes)</title></rect>

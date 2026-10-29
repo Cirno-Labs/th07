@@ -597,7 +597,7 @@ address,size,name,symbol
 0x00455030,140,SpriteEngine::SendInterruptToLoadedSprites,?SendInterruptToLoadedSprites@SpriteEngine@@QAEXPAVSprite@@HF@Z
 0x004550c0,70,SpriteEngine::StepSprites,?StepSprites@SpriteEngine@@QAEXPAVSprite@@H@Z
 0x00455110,91,SpriteEngine::StartSpriteSeries,?StartSpriteSeries@SpriteEngine@@QAEXPAVSprite@@HH@Z
-0x00455170,352,Func455170,
+0x00455170,352,SpriteEngine::FillSpriteStripVertices,?FillSpriteStripVertices@SpriteEngine@@QAEHPAVSprite@@PAUVertexTex1DiffuseXyzrwh@@H@Z
 0x004552d0,298,Func4552d0,
 0x004553fa,59,App::ResetClockDriftCounters,?ResetClockDriftCounters@App@@QAEXXZ
 0x00455435,72,MainMenu::SetState,?SetState@MainMenu@@QAEXH@Z
