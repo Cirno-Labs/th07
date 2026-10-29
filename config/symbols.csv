@@ -477,7 +477,7 @@ address,size,name,symbol
 0x004423e0,1273,Func4423e0,
 0x004428e0,232,Func4428e0,
 0x004429d0,312,Func4429d0,
-0x00442b10,85,Func442b10,
+0x00442b10,85,Player::RemoveChain,?RemoveChain@Player@@SIXXZ
 0x00442b70,231,Func442b70,
 0x00442c60,100,Func442c60,
 0x00442cd0,378,Func442cd0,

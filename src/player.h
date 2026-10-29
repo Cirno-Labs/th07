@@ -235,6 +235,8 @@ public:
     static int OnDraw2(Player *player);
     // The angle from `pos` to the player, pi / 2 when they coincide.
     float AngleFrom(D3DXVECTOR3 *pos);
+    // Removes the player's update and draw elements from the chain.
+    static void RemoveChain();
 
     Sprite sprite;
     Sprite optionSprites[3];
@@ -282,7 +284,7 @@ public:
     // The angle FireAimedShot's shots fly at, turned by sd->angle + pi / 2.
     float unk_b7e58;
     // The update element and the two draw elements, as in th06
-    // (removed together by 0x442b13's function).
+    // (removed together by RemoveChain).
     ChainElem *calcChain;
     ChainElem *drawChain;
     ChainElem *drawChain2;

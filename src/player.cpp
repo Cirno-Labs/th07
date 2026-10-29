@@ -699,3 +699,13 @@ float Player::AngleFrom(D3DXVECTOR3 *pos)
     }
     return atan2f(y, x);
 }
+
+void Player::RemoveChain()
+{
+    g_Chain.Remove(g_Player.calcChain);
+    g_Player.calcChain = NULL;
+    g_Chain.Remove(g_Player.drawChain);
+    g_Player.drawChain = NULL;
+    g_Chain.Remove(g_Player.drawChain2);
+    g_Player.drawChain2 = NULL;
+}
