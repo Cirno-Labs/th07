@@ -332,3 +332,12 @@ int Unknown49fbf0::LoadMsg(char *path)
     }
     return 0;
 }
+
+void Unknown49fbf0::FreeMsgFile()
+{
+    if (this->impl->msg.msgFile != NULL)
+    {
+        MemFree(this->impl->msg.msgFile);
+        this->impl->msg.msgFile = NULL;
+    }
+}
