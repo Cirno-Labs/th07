@@ -133,7 +133,7 @@ int ReplayManager::RecordAddedCallback(ReplayManager *replay)
     ReplayStage *cur;
 
     replay->frame = 0;
-    replay->unk_40 = NULL;
+    replay->frameRateBuffer = NULL;
     if (replay->data == NULL)
     {
         replay->data = new ReplayHeader;
@@ -196,7 +196,7 @@ int ReplayManager::RecordAddedCallback(ReplayManager *replay)
     replay->cursor = cur->frames;
     replay->extraCursor = extras;
     replay->cursor->input = 0;
-    replay->unk_82 = 0;
+    replay->clearedAtRecordStart = 0;
     return 0;
 }
 
@@ -275,7 +275,7 @@ int ReplayManager::PlayAddedCallback(ReplayManager *replay)
         {
             return -1;
         }
-        replay->unk_40 = NULL;
+        replay->frameRateBuffer = NULL;
         for (idx = 0; idx < 7; idx++)
         {
             replay->stageSizes[idx] = 0;
@@ -372,9 +372,9 @@ int ReplayManager::DeletedCallback(ReplayManager *replay)
         replay->calcChain3 = NULL;
     }
     MemFree(g_ReplayManager->data);
-    if (replay->unk_40 != NULL)
+    if (replay->frameRateBuffer != NULL)
     {
-        MemFree(replay->unk_40);
+        MemFree(replay->frameRateBuffer);
     }
     delete g_ReplayManager;
     g_ReplayManager = NULL;

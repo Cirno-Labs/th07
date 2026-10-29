@@ -201,12 +201,12 @@ public:
     // Each stage's size in bytes, and its frame rates', when playing.
     int stageSizes[7];
     int extraSizes[7];
-    void *unk_40;
+    void *frameRateBuffer;
     // RegisterChain's arguments.
     int mode;
     char *path;
     unsigned char pad_4c[0x36];
-    WORD unk_82;
+    WORD clearedAtRecordStart;
     // The last frame recorded or played; [stage - 1] is where that
     // stage's frames end (stages past 7 share the last).
     ReplayFrame *cursor;
