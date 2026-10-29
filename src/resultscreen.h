@@ -200,15 +200,15 @@ int InsertScore(ListNode *head, Hscr *entry);
 // a key that runs over the bytes before it.
 struct ScoreDat
 {
-    BYTE unk_00;
+    BYTE unusedByte00;
     // Where the key starts; random.
     BYTE key;
     // The sum of the bytes from the fifth on.
     WORD checksum;
     // 0xb.
     WORD version;
-    BYTE unk_06;
-    BYTE unk_07;
+    BYTE secondaryKey;
+    BYTE unusedByte07;
     // Where the chunks start.
     int dataOffset;
     // The list of the score entries read from the chunks.
