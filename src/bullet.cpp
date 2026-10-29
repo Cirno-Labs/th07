@@ -146,7 +146,7 @@ int BulletManager::SpawnBullet(BulletShooter *shooter, int col, int row, float a
     cur->unk_c00 = 1;
     cur->grazed = 0;
     cur->timer.Set(0);
-    cur->unk_bd4.Set(0);
+    cur->grazeDelayTimer.Set(0);
     cur->speed = v;
     cur->angle = AddNormalizeAngle(angle, 0.0f);
     cur->pos = shooter->pos;
@@ -162,7 +162,7 @@ int BulletManager::SpawnBullet(BulletShooter *shooter, int col, int row, float a
     cur->sprites.height = shooter->typeSprites->height;
     cur->sprites.unk_b8a = shooter->typeSprites->unk_b8a;
     cur->sound = shooter->unk_cc;
-    cur->unk_bf0 = 0;
+    cur->boundsCheckDelay = 0;
     if (cur->sprites.sprite0.spriteIndex != shooter->typeSprites->sprite0.spriteIndex + shooter->color)
     {
         g_SpriteEngine->SetSprite(&cur->sprites.sprite0, shooter->typeSprites->sprite0.spriteIndex + shooter->color);
@@ -862,7 +862,7 @@ void RunBulletCommands(Bullet *bullet)
             bullet->ex[4].duration = 0;
             break;
         case 0x2000:
-            bullet->unk_bf0 = cmd->unk_8;
+            bullet->boundsCheckDelay = cmd->unk_8;
             bullet->commandIndex++;
             continue;
         }
@@ -940,20 +940,20 @@ int BulletManager::OnUpdate(BulletManager *mgr)
                     BounceOffWalls(bullet);
                 }
             }
-            if (bullet->unk_bf0 != 0)
+            if (bullet->boundsCheckDelay != 0)
             {
-                bullet->unk_bf0--;
+                bullet->boundsCheckDelay--;
             }
             bullet->pos += bullet->velocity;
-            if (bullet->unk_bf0 == 0)
+            if (bullet->boundsCheckDelay == 0)
             {
                 if (!g_Unknown626270.IsInPlayArea(bullet->pos.x, bullet->pos.y, bullet->sprites.sprite0.spriteData->width,
                                                   bullet->sprites.sprite0.spriteData->height))
                 {
                     if (bullet->activeFlags & 0xdc0)
                     {
-                        bullet->unk_bfe++;
-                        if (bullet->unk_bfe >= 0x80)
+                        bullet->outOfBoundsFrames++;
+                        if (bullet->outOfBoundsFrames >= 0x80)
                         {
                             bullet->FreeBullet();
                             goto next;
@@ -961,20 +961,20 @@ int BulletManager::OnUpdate(BulletManager *mgr)
                     }
                     else
                     {
-                        if (bullet->unk_bfe == 0)
+                        if (bullet->outOfBoundsFrames == 0)
                         {
                             bullet->FreeBullet();
                             goto next;
                         }
-                        bullet->unk_bfe--;
+                        bullet->outOfBoundsFrames--;
                     }
                 }
                 else
                 {
-                    bullet->unk_bfe = 0;
+                    bullet->outOfBoundsFrames = 0;
                 }
             }
-            if (bullet->grazed == 0 && bullet->unk_bd4.AsFrames() >= 0x10)
+            if (bullet->grazed == 0 && bullet->grazeDelayTimer.AsFrames() >= 0x10)
             {
                 result = g_Player.CheckGraze(&bullet->pos, &bullet->sprites.hitboxSize);
                 if (result == 1)
@@ -1007,7 +1007,7 @@ int BulletManager::OnUpdate(BulletManager *mgr)
             }
             break;
         case 2:
-            bullet->unk_bd4.Sub(1);
+            bullet->grazeDelayTimer.Sub(1);
             bullet->pos += bullet->velocity / 2.0f;
             if (g_SpriteEngine->Step(&bullet->sprites.sprite1) == 0)
             {
@@ -1015,7 +1015,7 @@ int BulletManager::OnUpdate(BulletManager *mgr)
             }
             goto spawned;
         case 3:
-            bullet->unk_bd4.Sub(1);
+            bullet->grazeDelayTimer.Sub(1);
             bullet->pos += bullet->velocity / 2.5f;
             if (g_SpriteEngine->Step(&bullet->sprites.sprite2) == 0)
             {
@@ -1023,7 +1023,7 @@ int BulletManager::OnUpdate(BulletManager *mgr)
             }
             goto spawned;
         case 4:
-            bullet->unk_bd4.Sub(1);
+            bullet->grazeDelayTimer.Sub(1);
             bullet->pos += bullet->velocity / 3.0f;
             if (g_SpriteEngine->Step(&bullet->sprites.sprite3) == 0)
             {
@@ -1039,7 +1039,7 @@ int BulletManager::OnUpdate(BulletManager *mgr)
             }
         }
         bullet->timer.Tick();
-        bullet->unk_bd4.Tick();
+        bullet->grazeDelayTimer.Tick();
         bullet->next = mgr->drawLists[bullet->sprites.unk_b8a];
         mgr->drawLists[bullet->sprites.unk_b8a] = bullet;
     next:
@@ -1172,7 +1172,7 @@ inline void Bullet::FreeBullet()
 {
     this->state = 0;
     this->timer.Set(0);
-    this->unk_bd4.Set(0);
+    this->grazeDelayTimer.Set(0);
 }
 
 void DrawBullet(Bullet *bullet)

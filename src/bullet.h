@@ -101,10 +101,10 @@ struct Bullet
     float unk_bc0;
     float unk_bc4;
     Timer timer;
-    Timer unk_bd4;
+    Timer grazeDelayTimer;
     unsigned char unk_be0[0x10];
     // Set by a command with flag 0x2000.
-    int unk_bf0;
+    int boundsCheckDelay;
     // The behaviors running, by BulletCommand::flag.
     WORD activeFlags;
     // BulletShooter::flags.
@@ -113,7 +113,7 @@ struct Bullet
     WORD unk_bfa;
     // 0 unused; 6 marks the spare bullet after the last.
     WORD state;
-    WORD unk_bfe;
+    WORD outOfBoundsFrames;
     BYTE unk_c00;
     BYTE grazed;
     unsigned char unk_c02[0x2];

@@ -2983,5 +2983,5 @@ inline void Bullet::FreeBullet()
 {
     this->state = 0;
     this->timer.Set(0);
-    this->unk_bd4.Set(0);
+    this->grazeDelayTimer.Set(0);
 }
