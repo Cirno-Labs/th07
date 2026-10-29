@@ -146,7 +146,7 @@ DatArchiveEntry *DatArchive::FindEntry(char *name)
     }
     for (cur = this->entries, left = this->numEntries; left > 0; left--, cur++)
     {
-        if (_stricmp(name, cur->name) == 0)
+        if (strcmpi(name, cur->name) == 0)
         {
             return cur;
         }
