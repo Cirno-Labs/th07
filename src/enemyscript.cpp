@@ -772,3 +772,14 @@ void EndSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
     }
     g_Unknown1347b00.spellCardState = 0;
 }
+
+void WarpToBoss(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    int boss;
+
+    boss = instr->args[1].i;
+    enemy->pos = g_Unknown9a9b00.bosses[boss]->pos;
+    enemy->velocity = g_Unknown9a9b00.bosses[boss]->velocity;
+    enemy->angle = g_Unknown9a9b00.bosses[boss]->angle;
+    enemy->flags.unk_18 = 1;
+}

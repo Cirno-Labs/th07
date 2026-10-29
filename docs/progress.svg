@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">80.40% (558)</tspan> · <tspan class="decompiled">9.65% (67)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">9.80% (68)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">80.55% (559)</tspan> · <tspan class="decompiled">9.65% (67)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">9.65% (67)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="600.61" height="6" x="0" y="0" class="named"/>
-<rect width="72.12" height="6" x="600.61" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="672.73" y="0" class="nonmatching"/>
-<rect width="73.19" height="6" x="673.81" y="0" class="todo"/>
+<rect width="601.69" height="6" x="0" y="0" class="named"/>
+<rect width="72.12" height="6" x="601.69" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="673.81" y="0" class="nonmatching"/>
+<rect width="72.12" height="6" x="674.88" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="named"><title>0x00401000 D3DXMatrixIdentity (173 bytes)</title></rect>
@@ -163,7 +163,7 @@
 <rect width="12" height="12" x="615" y="15" class="todo"><title>0x00410520 Unknown1347938::RunEnemy (29464 bytes)</title></rect>
 <rect width="12" height="12" x="630" y="15" class="named"><title>0x00417af0 SinCos (33 bytes)</title></rect>
 <rect width="12" height="12" x="645" y="15" class="named"><title>0x00417b20 Bullet::FreeBullet (107 bytes)</title></rect>
-<rect width="12" height="12" x="660" y="15" class="todo"><title>0x00417b90 Func417b90 (151 bytes)</title></rect>
+<rect width="12" height="12" x="660" y="15" class="named"><title>0x00417b90 WarpToBoss (151 bytes)</title></rect>
 <rect width="12" height="12" x="675" y="15" class="todo"><title>0x00417c30 Func417c30 (533 bytes)</title></rect>
 <rect width="12" height="12" x="690" y="15" class="todo"><title>0x00417e50 Func417e50 (680 bytes)</title></rect>
 <rect width="12" height="12" x="705" y="15" class="todo"><title>0x00418110 Func418110 (16 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">63.43%</tspan> · <tspan class="decompiled">3.75%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">32.73%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">63.47%</tspan> · <tspan class="decompiled">3.75%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">32.69%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="473.86" height="6" x="0" y="0" class="named"/>
-<rect width="28" height="6" x="473.86" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="501.85" y="0" class="nonmatching"/>
-<rect width="244.49" height="6" x="502.51" y="0" class="todo"/>
+<rect width="474.15" height="6" x="0" y="0" class="named"/>
+<rect width="28" height="6" x="474.15" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="502.15" y="0" class="nonmatching"/>
+<rect width="244.19" height="6" x="502.81" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Unknown1347938::RunEnemy (29464 bytes)</title></rect>
@@ -1205,7 +1205,7 @@
 <rect width="5.04" height="4.98" x="650.82" y="205.02" class="named"><title>0x0042fd60 Chain::RunCalcChain (153 bytes)</title></rect>
 <rect width="4.84" height="5.13" x="658.86" y="114.12" class="named"><title>0x004052d0 HermiteInterpolate (152 bytes)</title></rect>
 <rect width="4.84" height="5.13" x="666.70" y="114.12" class="named"><title>0x0042f3c5 RegisterGameManagerChain (152 bytes)</title></rect>
-<rect width="4.79" height="5.13" x="674.54" y="114.12" class="todo"><title>0x00417b90 Func417b90 (151 bytes)</title></rect>
+<rect width="4.79" height="5.13" x="674.54" y="114.12" class="named"><title>0x00417b90 WarpToBoss (151 bytes)</title></rect>
 <rect width="4.79" height="5.13" x="682.32" y="114.12" class="decompiled"><title>0x0042f69f Unknown626270::AddBonusPointsNoTrack (151 bytes)</title></rect>
 <rect width="4.79" height="5.13" x="690.11" y="114.12" class="named"><title>0x00444b56 InsertScore (151 bytes)</title></rect>
 <rect width="4.58" height="5.13" x="697.90" y="114.12" class="named"><title>0x004365b0 MidiPlayer::~MidiPlayer (147 bytes)</title></rect>

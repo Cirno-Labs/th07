@@ -43,6 +43,7 @@ struct EnemyFlags
     // th06's.
     unsigned char keepSpellCard : 1;
     unsigned char unk_17 : 1;
+    // Set by WarpToBoss.
     unsigned char unk_18 : 1;
     // Cleared as a spell card starts.
     unsigned char unk_19 : 1;

@@ -1544,6 +1544,13 @@ void StartSpellCard(Enemy *enemy, EnemyScriptInstr *instr);
 // stage's spellCardState.
 void EndSpellCard(Enemy *enemy, EnemyScriptInstr *instr);
 
+// The functions of the table at 0x49f158, th06's g_EnemyScriptFuncs,
+// in its order.
+
+// Puts `enemy` where boss argument 1 is, with its velocity and angle,
+// and sets flags.unk_18.
+void WarpToBoss(Enemy *enemy, EnemyScriptInstr *instr);
+
 // Set to 9 as the dialogue of stages 6 to 8 starts.
 extern int g_Unknown9a9ab8;
 
