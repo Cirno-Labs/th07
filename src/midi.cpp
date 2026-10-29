@@ -12,18 +12,6 @@ MidiDevice::~MidiDevice()
     this->Close();
 }
 
-int MidiDevice::Close()
-{
-    if (this->handle == 0)
-    {
-        return -1;
-    }
-    midiOutReset(this->handle);
-    midiOutClose(this->handle);
-    this->handle = 0;
-    return 0;
-}
-
 int MidiDevice::Open(UINT deviceId)
 {
     if (this->handle != 0)
@@ -39,6 +27,18 @@ int MidiDevice::Open(UINT deviceId)
     }
     this->deviceId = deviceId;
     return midiOutOpen(&this->handle, deviceId, (DWORD_PTR)g_App.hwnd, 0, CALLBACK_WINDOW) != MMSYSERR_NOERROR;
+}
+
+int MidiDevice::Close()
+{
+    if (this->handle == 0)
+    {
+        return -1;
+    }
+    midiOutReset(this->handle);
+    midiOutClose(this->handle);
+    this->handle = 0;
+    return 0;
 }
 
 int MidiDevice::SendLongMsg(LPMIDIHDR header)
@@ -78,10 +78,6 @@ MmTimer::~MmTimer()
 {
     this->Stop();
     timeEndPeriod(this->caps.wPeriodMin);
-}
-
-void MmTimer::OnTimer()
-{
 }
 
 UINT MmTimer::Start(UINT delay, LPTIMECALLBACK callback, DWORD_PTR user)
@@ -172,121 +168,16 @@ MidiPlayer::MidiPlayer()
     this->nextHeader = 0;
 }
 
-void MidiPlayer::UnloadFile(int slot)
-{
-    MemFree(this->fileData[slot]);
-    this->fileData[slot] = NULL;
-}
-
-void MidiPlayer::FreeTracks()
+MidiPlayer::~MidiPlayer()
 {
     int i;
 
-    for (i = 0; i < this->trackCount; i++)
-    {
-        MemFree(this->tracks[i].data);
-    }
-    MemFree(this->tracks);
-    this->tracks = NULL;
-    this->trackCount = 0;
-}
-
-int MidiPlayer::FadeOut(int duration)
-{
-    this->volumeScale = 0.0f;
-    this->fadeDuration = duration;
-    this->fadeElapsed = 0;
-    this->framesSinceRewind = 0;
-    this->fading = 1;
-    return 0;
-}
-
-void MidiPlayer::Rewind()
-{
-    int i;
-    MidiTrack *track;
-
-    track = this->tracks;
-    this->volumeScale = 1.0f;
-    this->framesSinceRewind = 0;
-    this->fading = 0;
-    this->ticks = 0;
-    this->baseTime = 0;
-    for (i = 0; i < this->trackCount; i++, track++)
-    {
-        track->cursor = track->data;
-        track->loopCursor = track->cursor;
-        track->active = 1;
-        track->delta = ReadVarLen(&track->cursor);
-    }
-}
-
-int MidiPlayer::Play()
-{
-    if (this->tracks == NULL)
-    {
-        return -1;
-    }
-    this->Rewind();
-    this->device.Open(MIDI_MAPPER);
-    this->Start(1, NULL, 0);
-    DebugPrint(" midi play\n");
-    return 0;
-}
-
-int MidiPlayer::ReleaseHeader(LPMIDIHDR header)
-{
-    MMRESULT result;
-
-    if (header == NULL)
-    {
-        DebugPrint("error :\r\n");
-    }
-    if (this->device.handle == 0)
-    {
-        DebugPrint("error :\r\n");
-    }
-    for (int i = 0; i < 0x20; i++)
-    {
-        if (this->headers[i] == header)
-        {
-            this->headers[i] = NULL;
-            goto found;
-        }
-    }
-    return -1;
-
-found:
-    result = midiOutUnprepareHeader(this->device.handle, header, sizeof(MIDIHDR));
-    if (result != MMSYSERR_NOERROR)
-    {
-        DebugPrint("error :\r\n");
-    }
-    MemFree(header->lpData);
-    MemFree(header);
-    return 0;
-}
-
-int MidiPlayer::Stop()
-{
-    int i;
-
-    if (this->tracks == NULL)
-    {
-        return -1;
-    }
+    this->Stop();
+    this->FreeTracks();
     for (i = 0; i < 0x20; i++)
     {
-        // Indexes with nextHeader, not i, in the original.
-        if (this->headers[this->nextHeader] != NULL)
-        {
-            this->ReleaseHeader(this->headers[this->nextHeader]);
-        }
+        this->UnloadFile(i);
     }
-    MmTimer::Stop();
-    this->device.Close();
-    this->playingSlot = -1;
-    return 0;
 }
 
 int MidiPlayer::LoadFile(int slot, char *path)
@@ -306,46 +197,23 @@ int MidiPlayer::LoadFile(int slot, char *path)
     return 0;
 }
 
-MidiPlayer::~MidiPlayer()
+void MidiPlayer::UnloadFile(int slot)
 {
-    int i;
-
-    this->Stop();
-    this->FreeTracks();
-    for (i = 0; i < 0x20; i++)
-    {
-        this->UnloadFile(i);
-    }
+    MemFree(this->fileData[slot]);
+    this->fileData[slot] = NULL;
 }
 
-void MidiPlayer::SendVolume(int offset)
+void MidiPlayer::FreeTracks()
 {
-    int cc;
     int i;
-    int chStatus;
-    int data2;
-    int volume;
 
-    if (this->suppressVolume != 0)
+    for (i = 0; i < this->trackCount; i++)
     {
-        return;
+        MemFree(this->tracks[i].data);
     }
-    cc = 7;
-    for (i = 0; i < 0x10; i++)
-    {
-        chStatus = (BYTE)(i + 0xb0);
-        volume = (int)(this->channels[i].volume * this->volumeScale) + offset;
-        if (volume < 0)
-        {
-            volume = 0;
-        }
-        else if (volume > 0x7f)
-        {
-            volume = 0x7f;
-        }
-        data2 = (BYTE)volume;
-        this->device.SendShortMsg(chStatus, cc, data2);
-    }
+    MemFree(this->tracks);
+    this->tracks = NULL;
+    this->trackCount = 0;
 }
 
 int MidiPlayer::ParseFile(int slot)
@@ -402,6 +270,104 @@ int MidiPlayer::Load(char *path)
     }
     this->ParseFile(0x1f);
     this->UnloadFile(0x1f);
+    return 0;
+}
+
+void MidiPlayer::Rewind()
+{
+    int i;
+    MidiTrack *track;
+
+    track = this->tracks;
+    this->volumeScale = 1.0f;
+    this->framesSinceRewind = 0;
+    this->fading = 0;
+    this->ticks = 0;
+    this->baseTime = 0;
+    for (i = 0; i < this->trackCount; i++, track++)
+    {
+        track->cursor = track->data;
+        track->loopCursor = track->cursor;
+        track->active = 1;
+        track->delta = ReadVarLen(&track->cursor);
+    }
+}
+
+int MidiPlayer::Play()
+{
+    if (this->tracks == NULL)
+    {
+        return -1;
+    }
+    this->Rewind();
+    this->device.Open(MIDI_MAPPER);
+    this->Start(1, NULL, 0);
+    DebugPrint(" midi play\n");
+    return 0;
+}
+
+int MidiPlayer::Stop()
+{
+    int i;
+
+    if (this->tracks == NULL)
+    {
+        return -1;
+    }
+    for (i = 0; i < 0x20; i++)
+    {
+        // Indexes with nextHeader, not i, in the original.
+        if (this->headers[this->nextHeader] != NULL)
+        {
+            this->ReleaseHeader(this->headers[this->nextHeader]);
+        }
+    }
+    MmTimer::Stop();
+    this->device.Close();
+    this->playingSlot = -1;
+    return 0;
+}
+
+int MidiPlayer::ReleaseHeader(LPMIDIHDR header)
+{
+    MMRESULT result;
+
+    if (header == NULL)
+    {
+        DebugPrint("error :\r\n");
+    }
+    if (this->device.handle == 0)
+    {
+        DebugPrint("error :\r\n");
+    }
+    for (int i = 0; i < 0x20; i++)
+    {
+        if (this->headers[i] == header)
+        {
+            this->headers[i] = NULL;
+            goto found;
+        }
+    }
+    return -1;
+
+found:
+    result = midiOutUnprepareHeader(this->device.handle, header, sizeof(MIDIHDR));
+    if (result != MMSYSERR_NOERROR)
+    {
+        DebugPrint("error :\r\n");
+    }
+    MemFree(header->lpData);
+    MemFree(header);
+    return 0;
+}
+
+int MidiPlayer::FadeOut(int duration)
+{
+    this->volumeScale = 0.0f;
+    this->fadeDuration = duration;
+    this->fadeElapsed = 0;
+    this->framesSinceRewind = 0;
+    this->fading = 1;
     return 0;
 }
 
@@ -647,6 +613,36 @@ void MidiPlayer::ProcessEvent(MidiTrack *track)
     track->delta += deltaTime;
 }
 
+void MidiPlayer::SendVolume(int offset)
+{
+    int cc;
+    int i;
+    int chStatus;
+    int data2;
+    int volume;
+
+    if (this->suppressVolume != 0)
+    {
+        return;
+    }
+    cc = 7;
+    for (i = 0; i < 0x10; i++)
+    {
+        chStatus = (BYTE)(i + 0xb0);
+        volume = (int)(this->channels[i].volume * this->volumeScale) + offset;
+        if (volume < 0)
+        {
+            volume = 0;
+        }
+        else if (volume > 0x7f)
+        {
+            volume = 0x7f;
+        }
+        data2 = (BYTE)volume;
+        this->device.SendShortMsg(chStatus, cc, data2);
+    }
+}
+
 void MidiTimer::OnTimer()
 {
     QueryPerformanceCounter(&g_MidiTimerLastCounter);
@@ -660,4 +656,8 @@ void MidiTimer::StartTimer()
 void MidiTimer::StopTimer()
 {
     this->Stop();
+}
+
+void MmTimer::OnTimer()
+{
 }
