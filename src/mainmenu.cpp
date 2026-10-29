@@ -2136,13 +2136,13 @@ int MainMenu::InitTitleScene()
         delete g_GameManager.unk_4;
         g_GameManager.unk_4 = NULL;
     }
-    g_GameManager.unk_4 = new Unknown626270Unk4;
+    g_GameManager.unk_4 = new GameConfig;
     if (g_GameManager.stats != NULL)
     {
         delete g_GameManager.stats;
         g_GameManager.stats = NULL;
     }
-    g_GameManager.stats = new Unknown626270Stats;
+    g_GameManager.stats = new GameStats;
     g_App.gameSpeed = 1.0f;
     if (g_GameManager.unk_93d8 >> 3 & 1)
     {

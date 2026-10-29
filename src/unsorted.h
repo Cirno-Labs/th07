@@ -878,7 +878,7 @@ struct Vector2
 
 // The player's numbers, behind GameManager::stats. Only the fields
 // known so far.
-struct Unknown626270Stats
+struct GameStats
 {
     // The score shown, and the score.
     DWORD guiScore;
@@ -930,10 +930,10 @@ struct Unknown626270Stats
     int computedChecksum;
     DWORD checksumKeysE[5];
 };
-ASSERT_SIZE(Unknown626270Stats, 0xc8);
+ASSERT_SIZE(GameStats, 0xc8);
 
 // What GameManager::unk_4 points at.
-struct Unknown626270Unk4
+struct GameConfig
 {
     unsigned char pad_0[0x1c];
     // The lives a game starts with, as App's lifeCount (+0x1c of the
@@ -1057,8 +1057,8 @@ public:
     // A block of random size that AddedCallback allocates and frees
     // before it allocates unk_4 and stats.
     void *tempBuffer;
-    Unknown626270Unk4 *unk_4;
-    Unknown626270Stats *stats;
+    GameConfig *unk_4;
+    GameStats *stats;
     // Set while the game is paused: the screen shake holds still. As
     // th06's GameManager::isFrozen, probably.
     char isFrozen;

@@ -464,10 +464,10 @@ int GameManager::AddedCallback(GameManager *mgr)
         }
         size = g_Rng.GetRandomU32InRange(0xffff) + 0x10;
         mgr->tempBuffer = malloc(size);
-        mgr->unk_4 = new Unknown626270Unk4;
-        mgr->stats = new Unknown626270Stats;
+        mgr->unk_4 = new GameConfig;
+        mgr->stats = new GameStats;
         RerollStatsChecksumKeys();
-        *mgr->unk_4 = *(Unknown626270Unk4 *)&g_App.controllerMapping;
+        *mgr->unk_4 = *(GameConfig *)&g_App.controllerMapping;
         MemFree(mgr->tempBuffer);
         mgr->powerItemCombo = 0;
         mgr->bonusPoints = mgr->stats->grazeCount;

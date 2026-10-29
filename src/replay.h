@@ -22,16 +22,16 @@ struct ReplayStage
 {
     // The score the stage started with, divided by 10.
     int score;
-    // Unknown626270Stats::pointItemsTotal.
+    // GameStats::pointItemsTotal.
     int pointItemsTotal;
     // GameManager's unk_961c, unk_9618 and unk_9620, less
-    // Unknown626270Stats::unk_88.
+    // GameStats::unk_88.
     int unk_08;
     int unk_0c;
     int unk_10;
-    // Unknown626270Stats::grazeTotal.
+    // GameStats::grazeTotal.
     int grazeTotal;
-    // Unknown626270Stats::unk_2c and unk_30.
+    // GameStats::unk_2c and unk_30.
     int unk_18;
     int unk_1c;
     // GameManager::unk_95e4.
@@ -42,7 +42,7 @@ struct ReplayStage
     // GameManager::unk_9634 and unk_93d4.
     BYTE unk_25;
     BYTE unk_26;
-    // Unknown626270Stats::spellCardsCaptured.
+    // GameStats::spellCardsCaptured.
     BYTE spellCardsCaptured;
     BYTE pad_28[0x4];
     ReplayFrame frames[1];
@@ -86,7 +86,7 @@ struct ReplayHeader
     // 0x100.
     WORD unk_6a;
     DWORD score;
-    // The config the game was played with, an Unknown626270Unk4.
+    // The config the game was played with, an GameConfig.
     BYTE config[0x38];
     BYTE pad_a8[0x20];
     // How far the game ran below full speed, in percent, stored three

@@ -147,7 +147,7 @@ int ReplayManager::RecordAddedCallback(ReplayManager *replay)
         replay->data->exeChecksum = g_App.exeChecksum;
         replay->data->difficulty = g_GameManager.difficulty;
         *(DWORD *)replay->data->name = *(DWORD *)"NO NAME";
-        *(Unknown626270Unk4 *)replay->data->config = *g_GameManager.unk_4;
+        *(GameConfig *)replay->data->config = *g_GameManager.unk_4;
         for (idx = 0; idx < 7; idx++)
         {
             replay->data->stages[idx] = NULL;
@@ -342,7 +342,7 @@ int ReplayManager::PlayAddedCallback(ReplayManager *replay)
         g_GameManager.invulnerabilityBonus = g_GameManager.stats->grazeCount + 50000;
         StartBombState(&g_Player);
     }
-    *g_GameManager.unk_4 = *(Unknown626270Unk4 *)replay->data->config;
+    *g_GameManager.unk_4 = *(GameConfig *)replay->data->config;
     g_Rng.SetSeed(cur->rngSeed);
     g_GameManager.stats->spellCardsCaptured = cur->spellCardsCaptured;
     g_GameManager.stats->checksumKeyStage = cur->unk_18;
