@@ -411,3 +411,16 @@ void GuiImpl::StartMsgScript(int index)
         }
     }
 }
+
+BOOL Unknown49fbf0::MsgHoldsTimeline()
+{
+    if (this->impl == NULL)
+    {
+        return FALSE;
+    }
+    if (this->impl->msg.timelineRelease > 0)
+    {
+        return FALSE;
+    }
+    return this->impl->msg.scriptIndex >= 0;
+}

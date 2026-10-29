@@ -1197,7 +1197,9 @@ struct GuiMsg
     D3DCOLOR shadowColors[4];
     // The text's height in pixels.
     int fontSize;
-    unsigned char unk_e08[0x4];
+    // While it is above 0, the enemy timeline's wait for the dialogue
+    // ends, as th06's.
+    DWORD timelineRelease;
     // Lets the skip button fast-forward the script, as th06's.
     BYTE skippable;
     unsigned char unk_e0d[0x3];
@@ -1303,6 +1305,9 @@ public:
     // Runs impl->StartMsgScript(`index`). th06 also set
     // g_App.redrawFrames.
     void StartMsg(int index);
+    // Whether impl is set, a dialogue script runs and
+    // impl->msg.timelineRelease is 0.
+    BOOL MsgHoldsTimeline();
     // As th06's DrawBanners and DrawHud.
     void DrawBanners();
     void DrawHud();
@@ -1318,8 +1323,8 @@ public:
     // impl->unk_1fba0. Not in th06.
     void HideInterface();
 
-    // Whether the pointer at +8 is set and the int at its +0x1fbac is
-    // not negative, or is -2.
+    // Whether impl is set and impl->msg.scriptIndex is not negative, or
+    // is -2. th06's IsMsgRunning.
     int Func42ad66();
     // Returns impl->msg.skippable, as th06's IsMsgSkippable.
     int Func427be2();
