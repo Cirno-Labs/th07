@@ -183,16 +183,16 @@ int ReplayManager::RecordAddedCallback(ReplayManager *replay)
     cur->bombs = g_GameManager.stats->bombs;
     cur->lives = g_GameManager.stats->lives;
     cur->power = g_GameManager.stats->power;
-    cur->unk_25 = g_GameManager.rank;
+    cur->rank = g_GameManager.rank;
     cur->pointItemsTotal = g_GameManager.stats->pointItemsTotal;
     cur->rngSeed = g_GameManager.rngSeed;
-    cur->unk_26 = g_GameManager.powerItemCombo;
-    cur->unk_08 = g_GameManager.bonusPoints - g_GameManager.stats->grazeCount;
-    cur->unk_0c = g_GameManager.bonusPointsCap - g_GameManager.stats->grazeCount;
-    cur->unk_10 = g_GameManager.invulnerabilityBonus - g_GameManager.stats->grazeCount;
+    cur->powerItemCombo = g_GameManager.powerItemCombo;
+    cur->bonusPoints = g_GameManager.bonusPoints - g_GameManager.stats->grazeCount;
+    cur->bonusPointsCap = g_GameManager.bonusPointsCap - g_GameManager.stats->grazeCount;
+    cur->invulnerabilityBonus = g_GameManager.invulnerabilityBonus - g_GameManager.stats->grazeCount;
     cur->spellCardsCaptured = g_GameManager.stats->spellCardsCaptured;
-    cur->unk_18 = g_GameManager.stats->checksumKeyStage;
-    cur->unk_1c = g_GameManager.stats->checksumKeyPoints;
+    cur->checksumKeyStage = g_GameManager.stats->checksumKeyStage;
+    cur->checksumKeyPoints = g_GameManager.stats->checksumKeyPoints;
     replay->cursor = cur->frames;
     replay->extraCursor = extras;
     replay->cursor->input = 0;
@@ -325,7 +325,7 @@ int ReplayManager::PlayAddedCallback(ReplayManager *replay)
     g_GameManager.shotIndex = replay->data->shotType;
     g_GameManager.difficulty = replay->data->difficulty;
     g_GameManager.stats->pointItemsTotal = cur->pointItemsTotal;
-    g_GameManager.rank = cur->unk_25;
+    g_GameManager.rank = cur->rank;
     g_GameManager.SetLives(cur->lives);
     g_GameManager.RerollChecksumKeys();
     g_GameManager.SetBombs(cur->bombs);
@@ -333,10 +333,10 @@ int ReplayManager::PlayAddedCallback(ReplayManager *replay)
     g_GameManager.RerollChecksumKeys();
     g_GameManager.stats->grazeTotal = cur->grazeTotal;
     replay->cursor = cur->frames;
-    g_GameManager.powerItemCombo = cur->unk_26;
-    g_GameManager.bonusPoints = cur->unk_08 + g_GameManager.stats->grazeCount;
-    g_GameManager.bonusPointsCap = cur->unk_0c + g_GameManager.stats->grazeCount;
-    g_GameManager.invulnerabilityBonus = cur->unk_10 + g_GameManager.stats->grazeCount;
+    g_GameManager.powerItemCombo = cur->powerItemCombo;
+    g_GameManager.bonusPoints = cur->bonusPoints + g_GameManager.stats->grazeCount;
+    g_GameManager.bonusPointsCap = cur->bonusPointsCap + g_GameManager.stats->grazeCount;
+    g_GameManager.invulnerabilityBonus = cur->invulnerabilityBonus + g_GameManager.stats->grazeCount;
     if (g_GameManager.invulnerabilityBonus >= g_GameManager.stats->grazeCount + 50000)
     {
         g_GameManager.invulnerabilityBonus = g_GameManager.stats->grazeCount + 50000;
@@ -345,8 +345,8 @@ int ReplayManager::PlayAddedCallback(ReplayManager *replay)
     *g_GameManager.savedConfig = *(GameConfig *)replay->data->config;
     g_Rng.SetSeed(cur->rngSeed);
     g_GameManager.stats->spellCardsCaptured = cur->spellCardsCaptured;
-    g_GameManager.stats->checksumKeyStage = cur->unk_18;
-    g_GameManager.stats->checksumKeyPoints = cur->unk_1c;
+    g_GameManager.stats->checksumKeyStage = cur->checksumKeyStage;
+    g_GameManager.stats->checksumKeyPoints = cur->checksumKeyPoints;
     replay->extraCursor = extras;
     if (g_GameManager.stage >= 2 && g_GameManager.stage <= 6 &&
         replay->data->stages[g_GameManager.stage - 2] != NULL)

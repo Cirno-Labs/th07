@@ -26,22 +26,22 @@ struct ReplayStage
     int pointItemsTotal;
     // GameManager's unk_961c, unk_9618 and unk_9620, less
     // GameStats::unk_88.
-    int unk_08;
-    int unk_0c;
-    int unk_10;
+    int bonusPoints;
+    int bonusPointsCap;
+    int invulnerabilityBonus;
     // GameStats::grazeTotal.
     int grazeTotal;
     // GameStats::unk_2c and unk_30.
-    int unk_18;
-    int unk_1c;
+    int checksumKeyStage;
+    int checksumKeyPoints;
     // GameManager::unk_95e4.
     WORD rngSeed;
     BYTE power;
     BYTE lives;
     BYTE bombs;
     // GameManager::unk_9634 and unk_93d4.
-    BYTE unk_25;
-    BYTE unk_26;
+    BYTE rank;
+    BYTE powerItemCombo;
     // GameStats::spellCardsCaptured.
     BYTE spellCardsCaptured;
     BYTE pad_28[0x4];
