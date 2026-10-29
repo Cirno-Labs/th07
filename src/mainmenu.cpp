@@ -602,7 +602,7 @@ int MainMenu::UpdateOptions()
     return 1;
 }
 
-void MainMenu::ReassignButton(short button, short replacement, int unk)
+void MainMenu::ReassignButton(short button, short replacement, int unused)
 {
     if (this->controllerMapping.shootButton == button)
     {
@@ -2328,7 +2328,7 @@ int MainMenu::DeletedCallback(MainMenu *menu)
     return 0;
 }
 
-int SetUpTitleScene(int unk)
+int SetUpTitleScene(int unused)
 {
     MainMenu *menu = new MainMenu;
 

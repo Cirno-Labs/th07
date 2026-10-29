@@ -450,9 +450,9 @@ public:
     // The same, setting unk_10 to unk_1c instead of width and height.
     PlayerArea *AddHitboxAreaCircle(D3DXVECTOR3 *pos, float unk_10, float unk_14, int unk_18, int unk_1c);
     // Clears the player and adds it to the chains (update priority 8,
-    // draw 6 and 8), keeping `unk` in unk_2409. Returns 0, or -1 if
+    // draw 6 and 8), keeping `arg` in registerChainArg. Returns 0, or -1 if
     // adding fails.
-    static int RegisterChain(int unk);
+    static int RegisterChain(int arg);
     // Whether a `size` box at `pos` meets the unk_978 box while
     // playerState is 0, 3 or 4, as th06's (which tested the graze box).
     int TouchesGrazeBox(D3DXVECTOR3 *pos, D3DXVECTOR3 *size);
@@ -478,8 +478,8 @@ public:
     // unk_240d 0, resets GameManager::unk_9620, adds an area at the
     // player (AddHitboxAreaCircle with 32, 16, 0x32 and 8), bursts 32 effects
     // 0x1d in a circle and plays sounds 7 and 0x21, marking bit 0x10 of
-    // g_ReplayManager->unk_d6. `unk` is unused.
-    void StopBombState(int unk);
+    // g_ReplayManager->unk_d6. The argument is unused.
+    void StopBombState(int unused);
     // Ends playerState 4 (UpdateInvulnerability calls it when it runs out): calls
     // GameManager's IncreaseBonusCap and AddBonusPointsCapped with 10000, scores ten
     // times unk_961c over stats->unk_88 (shown through Gui's

@@ -81,8 +81,8 @@ public:
     // Frees loadedReplay and the sprites. Returns 0. Not in th06.
     int ReleaseTitleScene();
     // Gives every button of controllerMapping assigned `button` the
-    // value `replacement`. Unlike th06's, `unk` is unused.
-    void ReassignButton(short button, short replacement, int unk);
+    // value `replacement`. Unlike th06's, the third argument is unused.
+    void ReassignButton(short button, short replacement, int unused);
     // Shows `value` as two digits on `vm` and the sprite after it, or
     // hides both when it is negative. Returns 0. Not in th06.
     int ShowButtonDigits(Sprite *vm, short value);
@@ -144,8 +144,8 @@ public:
 ASSERT_SIZE(MainMenu, 0xd158);
 
 // Creates the title menu and adds its chain elements. Returns 0, or -1
-// if the update element cannot be added. `unk` is unused.
-int SetUpTitleScene(int unk);
+// if the update element cannot be added. The argument is unused.
+int SetUpTitleScene(int unused);
 
 // The help line the title menu shows for each entry.
 extern char *g_TitleHelpTexts[8];

@@ -55,15 +55,15 @@ struct GameConfigFlags
     unsigned int noDirectInput : 1;
     // Draws the items around the game every frame ("画面周りを毎回描画
     // します"). Not in th06.
-    unsigned int unk12 : 1;
+    unsigned int redrawHudEveryFrame : 1;
     // Each track of the wave music is read into memory before it plays,
     // rather than streamed from thbgm.dat. Not in th06.
     unsigned int preloadBgm : 1;
     // Not waiting for vsync ("垂直同期を取りません"): LoadConfig turns
     // presentImmediate on, and MeasureRefreshRate skips its measurement. Not in
     // th06.
-    unsigned int unk14 : 1;
-    unsigned int unk15 : 17;
+    unsigned int noVsync : 1;
+    unsigned int unusedBits : 17;
 };
 
 class App
@@ -327,7 +327,7 @@ int OpenGameArchive();
 
 // Measures the refresh rate by presenting surface 0, up to 1800 times
 // or until it has eight rates of 57 Hz or more, each over half a second
-// or so. Unless g_App.flags.unk14 is set, it turns presentImmediate on
+// or so. Unless g_App.flags.noVsync is set, it turns presentImmediate on
 // when their average is over 160 Hz (or there are fewer than two), and
 // also when it is 65 Hz or more, returning -2 then. Otherwise returns
 // 0. Not in th06.
@@ -532,7 +532,7 @@ public:
     void FadeOutBgm(float seconds);
     // Queues sound effect `idx` to start on the next update, unless
     // it is already queued or five are.
-    void QueueSound(int idx, int unk);
+    void QueueSound(int idx, int unused);
     // Queues a command of `type` with `arg` and `path` in the first free
     // entry of `commands`. Not in th06.
     void QueueSoundCommand(int type, int arg, char *path);
@@ -861,8 +861,8 @@ void ReleaseTextSurface();
 // Draws `text` at `x` in "ＭＳ ゴシック" `fontHeight` high, with a black
 // outline when `shadowColor` is -1 and a wider black shadow otherwise, on
 // g_TextSurface at twice the size, then scales `width` by `fontHeight` of
-// it into `texture`, `unk6` rows high at row `y`.
-void RenderTextToTexture(int x, int y, int width, int unk4, int fontHeight, int unk6, COLORREF textColor,
+// it into `texture`, `destHeight` rows high at row `y`.
+void RenderTextToTexture(int x, int y, int width, int unused, int fontHeight, int destHeight, COLORREF textColor,
                          COLORREF shadowColor, char *text, IDirect3DTexture8 *texture);
 
 // A 2D vector with a polar setter, out of line in the item file. Its
@@ -1444,10 +1444,10 @@ public:
     // g_App.redrawFrames to 2.
     void ShowBonusPopup(int bonus);
     // th06's ShowFullPowerPopup: shows `points` in impl->unk_209e0, at
-    // (416, 168), with `unk` as its shown value, and sets
+    // (416, 168), with `kind` as its shown value, and sets
     // g_App.redrawFrames to 2. Player::EndBombState calls it with the
     // points it scores and 4.
-    void ShowFullPowerPopup(int points, int unk);
+    void ShowFullPowerPopup(int points, int kind);
     // Shows `value` in spellBonusPopup, at (224, 16), and sets
     // g_App.redrawFrames to 2.
     void ShowSpellCardBonus(int value);

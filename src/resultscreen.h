@@ -227,9 +227,9 @@ ASSERT_SIZE(ScoreDat, 0x1c);
 int LoadPracticeScores(void *scoreDat, Pscr *pscrs);
 // Inserts the score file's high score chunks for `shot` and
 // `difficulty` into `list`, or into the file's own list if `list` is
-// NULL. Stores the best entry's unk_26 in `unk` if it is not NULL.
+// NULL. Stores the best entry's continues in `bestContinues` if it is not NULL.
 // Returns the best score, at least 100000.
-DWORD LoadHighScores(void *scoreDat, ListNode *list, int shot, int difficulty, BYTE *unk);
+DWORD LoadHighScores(void *scoreDat, ListNode *list, int shot, int difficulty, BYTE *bestContinues);
 // Copies the score file's version 1 "LSNM" chunk to `lsnm`. Returns 1,
 // or 0 if there is none. Not in th06.
 int LoadLsnmChunk(void *scoreDat, Lsnm *lsnm);
@@ -322,10 +322,10 @@ public:
     // 0x14 to 0x16 (RunStatisticsMenu). Steps the sprites. Returns 1, or 0 once
     // it sets the scene back to the title.
     // Allocates the screen and adds it to the chains (update priority
-    // 0xe, draw 0xd). With `unk` 1 it starts in state 10, or 0x12 in a
+    // 0xe, draw 0xd). With `mode` 1 it starts in state 10, or 0x12 in a
     // practice; with 2 (on exit) in state 0x13, running only
     // AddedCallback. Returns 0, or -1 if adding fails.
-    static int RegisterChain(int unk);
+    static int RegisterChain(int mode);
     static int OnUpdate(ResultScreen *screen);
     // Draws the sprites, the score lists or the spell cards, the name
     // entry's alphabet, the replay slots, then DrawStatistics. Returns 1.

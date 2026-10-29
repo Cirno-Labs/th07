@@ -486,9 +486,9 @@ int SoundPlayer::LoadSounds()
 void SoundPlayer::QueueSound(int idx, int unused)
 {
     int i;
-    int unk;
+    int pri;
 
-    unk = g_SoundInfos[idx].priority;
+    pri = g_SoundInfos[idx].priority;
     for (i = 0; i < 5; i++)
     {
         if (this->queue[i] < 0)
@@ -505,7 +505,7 @@ void SoundPlayer::QueueSound(int idx, int unused)
         return;
     }
     this->queue[i] = idx;
-    this->queuedSound[idx] = unk;
+    this->queuedSound[idx] = pri;
 }
 
 inline void SoundPlayer::FadeOutBgm(float seconds)

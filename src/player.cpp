@@ -1879,7 +1879,7 @@ PlayerArea *Player::AddHitboxAreaCircle(D3DXVECTOR3 *pos, float unk_10, float un
     return area;
 }
 
-void Player::StopBombState(int unk)
+void Player::StopBombState(int unused)
 {
     Effect *eff;
     int i;
@@ -2074,13 +2074,13 @@ float Player::AngleFrom(D3DXVECTOR3 *pos)
     return atan2f(y, x);
 }
 
-int Player::RegisterChain(int unk)
+int Player::RegisterChain(int arg)
 {
     Player *player = &g_Player;
 
     memset(player, 0, sizeof(Player));
     player->stateTimer.Set(0);
-    player->registerChainArg = unk;
+    player->registerChainArg = arg;
     player->calcChain = g_Chain.CreateElem((ChainCallback)Player::OnUpdate);
     player->drawChain = g_Chain.CreateElem((ChainCallback)Player::OnDraw);
     player->drawChain2 = g_Chain.CreateElem((ChainCallback)Player::OnDraw2);

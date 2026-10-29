@@ -1931,19 +1931,19 @@ done:
 #undef ANM_INT_VAR
 #undef ANM_FLOAT_VAR
 
-void SpriteEngine::RenderTextToTextureIndex(int textureIndex, int x, int y, int width, int unk4, int fontHeight,
-                                            int unk6, D3DCOLOR textColor, D3DCOLOR shadowColor, char *text,
+void SpriteEngine::RenderTextToTextureIndex(int textureIndex, int x, int y, int width, int unused, int fontHeight,
+                                            int destHeight, D3DCOLOR textColor, D3DCOLOR shadowColor, char *text,
                                             float scaleX, float scaleY)
 {
     if (fontHeight <= 0)
     {
         fontHeight = 15;
     }
-    if (unk6 <= 0)
+    if (destHeight <= 0)
     {
-        unk6 = 15;
+        destHeight = 15;
     }
-    RenderTextToTexture(x, y, width, unk4, fontHeight * scaleX, unk6 * scaleY, textColor, shadowColor, text,
+    RenderTextToTexture(x, y, width, unused, fontHeight * scaleX, destHeight * scaleY, textColor, shadowColor, text,
                         this->textures[textureIndex]);
 }
 

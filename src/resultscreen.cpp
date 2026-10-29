@@ -164,7 +164,7 @@ done:
     return dat;
 }
 
-DWORD LoadHighScores(void *scoreDat, ListNode *list, int shot, int difficulty, BYTE *unk)
+DWORD LoadHighScores(void *scoreDat, ListNode *list, int shot, int difficulty, BYTE *bestContinues)
 {
     Hscr *chunk;
     int left;
@@ -197,9 +197,9 @@ DWORD LoadHighScores(void *scoreDat, ListNode *list, int shot, int difficulty, B
         left -= chunk->size;
         chunk = (Hscr *)((BYTE *)chunk + chunk->size);
     }
-    if (unk != NULL)
+    if (bestContinues != NULL)
     {
-        *unk = dat1->scores->next != NULL ? (char)dat1->scores->next->data->continuesUsed : 0;
+        *bestContinues = dat1->scores->next != NULL ? (char)dat1->scores->next->data->continuesUsed : 0;
     }
     return dat1->scores->next != NULL
                ? (dat1->scores->next->data->score > 100000 ? dat1->scores->next->data->score : 100000)
@@ -2298,12 +2298,12 @@ int ResultScreen::DeletedCallback(ResultScreen *screen)
     return 0;
 }
 
-int ResultScreen::RegisterChain(int unk)
+int ResultScreen::RegisterChain(int mode)
 {
     ResultScreen *screen = new ResultScreen;
 
     DebugPrint2("Stg.PlayTimeAll = %d\r\n", g_GameManager.progressFrames);
-    if (unk == 1)
+    if (mode == 1)
     {
         if (!(g_GameManager.stateFlags & 1))
         {
@@ -2314,7 +2314,7 @@ int ResultScreen::RegisterChain(int unk)
             screen->SetState(0x12);
         }
     }
-    else if (unk == 2)
+    else if (mode == 2)
     {
         screen->SetState(0x13);
         ResultScreen::AddedCallback(screen);

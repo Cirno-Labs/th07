@@ -418,7 +418,7 @@ public:
     // Renders `text` into texture `textureIndex` with
     // RenderTextToTexture, its font sizes 15 when not positive and
     // scaled by `scaleX` and `scaleY`.
-    void RenderTextToTextureIndex(int textureIndex, int x, int y, int width, int unk4, int fontHeight, int unk6,
+    void RenderTextToTextureIndex(int textureIndex, int x, int y, int width, int unused, int fontHeight, int destHeight,
                                   D3DCOLOR textColor, D3DCOLOR shadowColor, char *text, float scaleX, float scaleY);
     // Renders text from `fmt` into `sprite`'s texture.
     void RenderText(Sprite *sprite, D3DCOLOR textColor, D3DCOLOR shadowColor, char *fmt, ...);

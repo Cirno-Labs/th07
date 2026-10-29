@@ -54,10 +54,10 @@ void Gui::ShowBonusPopup(int bonus)
     g_App.redrawFrames = 2;
 }
 
-void Gui::ShowFullPowerPopup(int points, int unk)
+void Gui::ShowFullPowerPopup(int points, int kind)
 {
     this->impl->unk_209e0.pos = D3DXVECTOR3(416.0f, 168.0f, 0.0f);
-    this->impl->unk_209e0.shown = unk;
+    this->impl->unk_209e0.shown = kind;
     this->impl->unk_209e0.timer.Set(0);
     this->impl->unk_209e0.value = points;
     g_App.redrawFrames = 2;
@@ -1259,7 +1259,7 @@ void Gui::DrawHud()
     g_App.viewport.Height = 480;
     g_App.d3dDevice->SetViewport(&g_App.viewport);
     vm = &this->impl->sprites[12];
-    if (g_App.flags.unk12 || vm->scriptPos != NULL || g_App.redrawFrames != 0)
+    if (g_App.flags.redrawHudEveryFrame || vm->scriptPos != NULL || g_App.redrawFrames != 0)
     {
         for (y = 0.0f; y < 464.0f; y += 32.0f)
         {
