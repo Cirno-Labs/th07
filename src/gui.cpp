@@ -433,3 +433,8 @@ int Unknown49fbf0::Func42ad66()
     }
     return this->impl->msg.scriptIndex >= 0 || this->impl->msg.scriptIndex == -2 ? 1 : 0;
 }
+
+int Unknown49fbf0::AddedCallback(Unknown49fbf0 *gui)
+{
+    return gui->LoadResources();
+}

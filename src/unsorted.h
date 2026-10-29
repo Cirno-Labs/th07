@@ -1313,6 +1313,11 @@ public:
     void DrawHud();
     // The update, as th06's UpdateInterface.
     void UpdateInterface();
+    // Loads the interface's sprites and the stage's portraits and
+    // messages, as th06's.
+    int LoadResources();
+    // The update element's added callback: runs LoadResources.
+    static int AddedCallback(Unknown49fbf0 *gui);
     // Sets bombName's pendingInterrupt to 1 and bombNameBar's to 2, as
     // the bomb ends. th06 interrupted bombName only.
     void EndBombName();
