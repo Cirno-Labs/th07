@@ -180,7 +180,7 @@ struct Enemy
     // Contexts saved by calls, as th06's.
     EnemyScriptState savedCtx[16];
     int stackDepth;
-    int unk_2a80;
+    int unusedInt2a80;
     // The subroutine the script runs when the enemy dies; negative for
     // none.
     int deathSub;
@@ -236,14 +236,14 @@ struct Enemy
     int item;
     char deathEffect;
     BYTE deathEffectIndex;
-    BYTE unk_2e16;
+    BYTE deathEffectVariant;
     // The enemy's slot in EnemyManager::bosses, while it is one.
     BYTE bossIndex;
     BYTE hitFlashTimer;
     unsigned char pad_2e19[0x3];
-    Timer unk_2e1c;
+    Timer unusedTimer2e1c;
     EnemyFlags flags;
-    WORD unk_2e2c;
+    WORD keepSpellCardDelay;
     // The turning sprite script last started, as th06's
     // flags.spriteDirection: 0 still, 1 left, 2 right, 0xff none yet.
     BYTE spriteDirection;
@@ -255,7 +255,7 @@ struct Enemy
     short turnStillFromRight;
     short turnLeft;
     short turnRight;
-    short unk_2e3a;
+    short unusedShort2e3a;
     // The bounds of the position, with flags.clampPos.
     float lowerBound[2];
     float upperBound[2];
@@ -277,8 +277,8 @@ struct Enemy
     EnemyScriptVars periodicSubVars;
     Timer periodicSubInterval;
     Timer periodicSubTimer;
-    int unk_2f68;
-    Timer unk_2f6c;
+    int unusedInt2f68;
+    Timer unusedTimer2f6c;
     EnemyBox trailBoxes[0x60];
     EnemyBox spriteStripVertices[0xc2];
     BYTE trailFlags;

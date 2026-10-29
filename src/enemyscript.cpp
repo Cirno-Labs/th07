@@ -1212,7 +1212,7 @@ loop:
         case 98:
             enemy->deathEffect = *(char *)instr->args;
             enemy->deathEffectIndex = ((BYTE *)instr->args)[1];
-            enemy->unk_2e16 = ((BYTE *)instr->args)[2];
+            enemy->deathEffectVariant = ((BYTE *)instr->args)[2];
             break;
         case 73:
             enemy->shootInterval = INT_ARG(0);
@@ -2092,11 +2092,11 @@ done:
         if (g_Player.bomb.running && g_SpellCardActive && g_SpellCardNumber >= 0x76)
         {
             enemy->flags.unk_1a = 1;
-            enemy->unk_2e2c = 1;
+            enemy->keepSpellCardDelay = 1;
         }
-        else if (enemy->unk_2e2c > 0)
+        else if (enemy->keepSpellCardDelay > 0)
         {
-            enemy->unk_2e2c--;
+            enemy->keepSpellCardDelay--;
         }
         else
         {
