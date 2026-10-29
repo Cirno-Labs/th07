@@ -255,6 +255,8 @@ public:
     // last entry, and sets it to a `width` by `height` area at `pos`
     // with unk_18 0. Returns it.
     PlayerArea *AddHitboxArea(D3DXVECTOR3 *pos, float width, float height, int unk_1c);
+    // The same, setting unk_10 to unk_1c instead of width and height.
+    PlayerArea *AddHitboxAreaCircle(D3DXVECTOR3 *pos, float unk_10, float unk_14, int unk_18, int unk_1c);
     static void RemoveChain();
 
     Sprite sprite;

@@ -701,6 +701,27 @@ PlayerArea *Player::AddHitboxArea(D3DXVECTOR3 *pos, float width, float height, i
     return area;
 }
 
+PlayerArea *Player::AddHitboxAreaCircle(D3DXVECTOR3 *pos, float unk_10, float unk_14, int unk_18, int unk_1c)
+{
+    PlayerArea *area = this->unk_17dc;
+    int i;
+
+    for (i = 0; i < 0x5f; i++, area++)
+    {
+        if (area->width == 0.0f && area->unk_10 == 0.0f)
+        {
+            break;
+        }
+    }
+    area->x = pos->x;
+    area->y = pos->y;
+    area->unk_10 = unk_10;
+    area->unk_14 = unk_14;
+    area->unk_18 = unk_18;
+    area->unk_1c = unk_1c;
+    return area;
+}
+
 int Player::OnDraw2(Player *player)
 {
     DrawHitBullets(player);
