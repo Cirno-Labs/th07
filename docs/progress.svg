@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">69.88% (485)</tspan> · <tspan class="decompiled">7.93% (55)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">22.05% (153)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">70.03% (486)</tspan> · <tspan class="decompiled">7.93% (55)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">21.90% (152)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="522.04" height="6" x="0" y="0" class="named"/>
-<rect width="59.20" height="6" x="522.04" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="581.24" y="0" class="nonmatching"/>
-<rect width="164.68" height="6" x="582.32" y="0" class="todo"/>
+<rect width="523.12" height="6" x="0" y="0" class="named"/>
+<rect width="59.20" height="6" x="523.12" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="582.32" y="0" class="nonmatching"/>
+<rect width="163.61" height="6" x="583.39" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="named"><title>0x00401000 D3DXMatrixIdentity (173 bytes)</title></rect>
@@ -106,7 +106,7 @@
 <rect width="12" height="12" x="510" y="0" class="decompiled"><title>0x00404fe0 Unknown626270::ChecksumMismatch (145 bytes)</title></rect>
 <rect width="12" height="12" x="525" y="0" class="named"><title>0x00405080 Unknown1347b00::Unknown1347b00 (585 bytes)</title></rect>
 <rect width="12" height="12" x="540" y="0" class="named"><title>0x004052d0 HermiteInterpolate (152 bytes)</title></rect>
-<rect width="12" height="12" x="555" y="0" class="todo"><title>0x00405370 Func405370 (775 bytes)</title></rect>
+<rect width="12" height="12" x="555" y="0" class="named"><title>0x00405370 UpdateEasedVector (775 bytes)</title></rect>
 <rect width="12" height="12" x="570" y="0" class="todo"><title>0x00405690 Func405690 (4611 bytes)</title></rect>
 <rect width="12" height="12" x="585" y="0" class="named"><title>0x00406930 Unknown1347b00::SetTintColor (157 bytes)</title></rect>
 <rect width="12" height="12" x="600" y="0" class="todo"><title>0x004069d0 Func4069d0 (1035 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">52.74%</tspan> · <tspan class="decompiled">2.83%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">44.34%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">52.94%</tspan> · <tspan class="decompiled">2.83%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">44.14%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="393.94" height="6" x="0" y="0" class="named"/>
-<rect width="21.15" height="6" x="393.94" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="415.09" y="0" class="nonmatching"/>
-<rect width="331.25" height="6" x="415.75" y="0" class="todo"/>
+<rect width="395.46" height="6" x="0" y="0" class="named"/>
+<rect width="21.15" height="6" x="395.46" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="416.61" y="0" class="nonmatching"/>
+<rect width="329.73" height="6" x="417.27" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -891,7 +891,7 @@
 <rect width="16.34" height="14.23" x="465.98" y="195.77" class="named"><title>0x0045cc30 CSoundManager::CreateStreamingFromMemory (795 bytes)</title></rect>
 <rect width="14.68" height="15.54" x="485.32" y="0" class="named"><title>0x004501a0 SpriteEngine::ProjectSprite3D (782 bytes)</title></rect>
 <rect width="14.68" height="15.42" x="485.32" y="18.54" class="todo"><title>0x0040a3a0 Func40a3a0 (777 bytes)</title></rect>
-<rect width="14.68" height="15.37" x="485.32" y="36.96" class="todo"><title>0x00405370 Func405370 (775 bytes)</title></rect>
+<rect width="14.68" height="15.37" x="485.32" y="36.96" class="named"><title>0x00405370 UpdateEasedVector (775 bytes)</title></rect>
 <rect width="14.68" height="15.33" x="485.32" y="55.34" class="named"><title>0x0041a750 EffectUpdateOrbit (773 bytes)</title></rect>
 <rect width="14.68" height="15.16" x="485.32" y="73.66" class="todo"><title>0x004182d0 Func4182d0 (766 bytes)</title></rect>
 <rect width="14.68" height="15.02" x="485.32" y="91.82" class="named"><title>0x004409f0 UpdateBombState (760 bytes)</title></rect>

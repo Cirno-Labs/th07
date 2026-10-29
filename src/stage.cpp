@@ -42,6 +42,55 @@ float HermiteInterpolate(float p0, float p1, float m0, float m1, float t)
     return f00 * p0 + f01 * p1 + f10 * m0 + f11 * m1;
 }
 
+void UpdateEasedVector(Unknown1347b00 *stage, int i, D3DXVECTOR3 *out, D3DXVECTOR3 *from, D3DXVECTOR3 *to, D3DXVECTOR3 *m0, D3DXVECTOR3 *m1)
+{
+    float t;
+
+    if (stage->unk_5248[i] < stage->unk_5238[i])
+    {
+        stage->unk_5248[i].Tick();
+        t = stage->unk_5248[i].AsFloat() / stage->unk_5238[i];
+    }
+    else
+    {
+        stage->unk_5248[i].Set(stage->unk_5238[i]);
+        t = 1.0f;
+        stage->unk_5238[i] = 0;
+    }
+    switch (stage->unk_5278[i])
+    {
+    case 1:
+        t = 1.0f - (t = 1.0f - t) * t;
+        break;
+    case 2:
+        t = 1.0f - (t = 1.0f - t) * t * t;
+        break;
+    case 3:
+        t = 1.0f - (t = 1.0f - t) * t * t * t;
+        break;
+    case 4:
+        t = t * t;
+        break;
+    case 5:
+        t = t * t * t;
+        break;
+    case 6:
+        t = t * t * t * t;
+        break;
+    }
+    if (stage->unk_5278[i] != 7)
+    {
+        *out = *to - *from;
+        *out = t * *out + *from;
+    }
+    else
+    {
+        out->x = HermiteInterpolate(from->x, to->x, m0->x, m1->x, t);
+        out->y = HermiteInterpolate(from->y, to->y, m0->y, m1->y, t);
+        out->z = HermiteInterpolate(from->z, to->z, m0->z, m1->z, t);
+    }
+}
+
 void Unknown1347b00::SetTintColor(D3DCOLOR color)
 {
     ColorBytes c;

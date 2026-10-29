@@ -1514,6 +1514,13 @@ struct StageCamera
 // (0 to 1). Not in th06.
 float HermiteInterpolate(float p0, float p1, float m0, float m1, float t);
 
+class Unknown1347b00;
+// Moves `out` from `from` to `to` over stage->unk_5238[i] frames, on
+// stage->unk_5248[i], eased by stage->unk_5278[i]: 1 to 3 slow down, 4
+// to 6 speed up, 7 follows a Hermite curve with tangents m0 and m1.
+// Clears the frame count once the timer reaches it. Not in th06.
+void UpdateEasedVector(Unknown1347b00 *stage, int i, D3DXVECTOR3 *out, D3DXVECTOR3 *from, D3DXVECTOR3 *to, D3DXVECTOR3 *m0, D3DXVECTOR3 *m1);
+
 // The object at 0x1347b00: th06's Stage, the background. Placeholder
 // name.
 class Unknown1347b00
