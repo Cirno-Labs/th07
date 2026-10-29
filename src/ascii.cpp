@@ -6,6 +6,19 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "app.h"
+#include "timer.h"
+
+// Out of line here, as th06's in its Gui file, which is the only
+// caller. The original places it at 0x4010b0, ahead of Sprite's inline
+// functions, so it is defined before sprite.h comes in.
+int Timer::NextTick()
+{
+    this->previous = this->current;
+    g_App.TickTimer(&this->current, &this->subFrame);
+    return this->current;
+}
+
 #include "ascii.h"
 #include "player.h"
 #include "unsorted.h"
@@ -20,17 +33,6 @@ void GameManager::RerollChecksumKeys()
     this->stats->checksum = this->stats->lifeChecksumKeys[2];
     this->stats->computedChecksum = this->ComputeChecksum();
     this->checksumValue = this->stats->computedChecksum + this->stats->checksumKeysD[3];
-}
-
-// The same for Timer::NextTick, which only the Gui file calls. The
-// original places it at 0x4010b0, ahead of Sprite's inline functions,
-// so it was defined before them there; here App is only defined after
-// sprite.h, so it follows them.
-int Timer::NextTick()
-{
-    this->previous = this->current;
-    g_App.TickTimer(&this->current, &this->subFrame);
-    return this->current;
 }
 
 // Like RerollChecksumKeys, without rerolling the keys.
