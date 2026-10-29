@@ -1611,6 +1611,14 @@ void FireBackwardFans(Enemy *enemy, EnemyScriptInstr *instr);
 // slow by 0.1 (above 0.5), turn square to the laser on the side their
 // velocity points to, take typeSprites[5]'s sprites, and wait 10 more.
 void UpdateLaserEdgeBullets(Enemy *enemy, EnemyScriptInstr *instr);
+// For every third laser by callbackTimer, those not ending: the flying
+// bullets with sprites inside one, 1.5 times its width, that it has not
+// deflected yet (unk_c08 neither li + 1 nor negative) slow to a random
+// 0.7 to 1 (0.8 to 1.2 from difficulty 2) of their speed, turn square
+// to the laser on the side their velocity points to, and take
+// typeSprites[5]'s sprites; unk_c08 becomes -1, or li + 1 from
+// difficulty 2.
+void DeflectBulletsOffLasers(Enemy *enemy, EnemyScriptInstr *instr);
 // Shakes the screen for 0x50 frames and starts the type 30 effects
 // falling (StartPetalsFalling).
 void ShakeAndStartFallingPetals(Enemy *enemy, EnemyScriptInstr *instr);

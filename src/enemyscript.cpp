@@ -1118,6 +1118,87 @@ void UpdateLaserEdgeBullets(Enemy *enemy, EnemyScriptInstr *instr)
     }
 }
 
+void DeflectBulletsOffLasers(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    D3DXVECTOR3 middle;
+    float c;
+    int li;
+    Laser *l;
+    float nx;
+    Bullet *blt;
+    D3DXVECTOR3 size;
+    float proj;
+    float s;
+    int n;
+    float ny;
+
+    l = g_BulletManager.lasers;
+    for (li = 0; li < 0x40; li++, l++)
+    {
+        if (l->active == 0)
+        {
+            continue;
+        }
+        if (enemy->callbackTimer % 3 != li % 3)
+        {
+            continue;
+        }
+        if (l->state < 2)
+        {
+            size.y = l->width * 1.5f;
+            size.x = l->endOffset - l->startOffset;
+            middle.x = (l->endOffset - l->startOffset) / 2.0f + l->startOffset + l->pos.x;
+            middle.y = l->pos.y;
+            SinCos(&s, &c, l->angle);
+            nx = -s;
+            ny = c;
+            blt = g_BulletManager.bullets;
+            for (n = 0; n < 0x400; n++, blt++)
+            {
+                if (blt->state == 0 || blt->state == 5)
+                {
+                    continue;
+                }
+                if (blt->sprites.sprite0.spriteData != NULL && blt->unk_c08 != li + 1 && blt->unk_c08 >= 0 &&
+                    PointInRotatedBox(&blt->pos, &middle, &size, &l->pos, s, c))
+                {
+                    if (g_Unknown626270.difficulty < 2)
+                    {
+                        blt->speed *= g_Rng.GetRandomF32ZeroToOne() * 0.3f + 0.7f;
+                    }
+                    else
+                    {
+                        blt->speed *= g_Rng.GetRandomF32ZeroToOne() * 0.4f + 0.8f;
+                    }
+                    proj = nx * blt->velocity.x + ny * blt->velocity.y;
+                    if (proj >= 0.0f)
+                    {
+                        blt->velocity.x = nx;
+                        blt->velocity.y = ny;
+                    }
+                    else
+                    {
+                        blt->velocity.x = -nx;
+                        blt->velocity.y = -ny;
+                    }
+                    blt->sprites = g_BulletManager.typeSprites[5];
+                    g_SpriteEngine->SetSprite(&blt->sprites.sprite0, blt->sprites.sprite0.spriteIndex + blt->color);
+                    blt->angle = atan2f(blt->velocity.y, blt->velocity.x);
+                    ((Vector2 *)&blt->velocity)->SetPolar(blt->angle, blt->speed);
+                    if (g_Unknown626270.difficulty < 2)
+                    {
+                        blt->unk_c08 = -1;
+                    }
+                    else
+                    {
+                        blt->unk_c08 = li + 1;
+                    }
+                }
+            }
+        }
+    }
+}
+
 void ShakeAndStartFallingPetals(Enemy *enemy, EnemyScriptInstr *instr)
 {
     ScreenEffect::StartEffect(1, 0x50, 8, 0, 0);

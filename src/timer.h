@@ -86,6 +86,11 @@ struct Timer
     {
         return this->current <= frames;
     }
+    // The count modulo `n`.
+    int operator%(int n)
+    {
+        return this->current % n;
+    }
 
     // `current` before the last change.
     int previous;
