@@ -192,6 +192,23 @@ struct AnmImage
     BYTE data[1];
 };
 
+// An ANM file's header. Only the fields known so far.
+struct AnmFile
+{
+    unsigned char unk_0[0x38];
+    // The offset of the next ANM in the same file, 0 for the last.
+    int nextOffset;
+};
+
+// The ANMs loaded into one slot. Not in th06.
+struct AnmSlot
+{
+    AnmFile *file;
+    int spriteOffset;
+    // How many slots, from this one, the file's ANMs take.
+    int count;
+};
+
 // Runs the sprites' ANM scripts. Only the fields known so far.
 class SpriteEngine
 {
@@ -268,6 +285,10 @@ public:
     int CreateTexture(int index, int width, int height, int format);
     // Releases texture `index` and its file.
     void ReleaseTexture(int index);
+    // Loads `anm` into slot `slot`, its sprites from `firstSprite` on.
+    // Returns the number of sprites it takes, or -1 on failure. Not in
+    // th06 as such.
+    int Func44e070(int slot, AnmFile *anm, int firstSprite, int ownsData);
     // Releases ANM slot `slot`.
     void ReleaseAnm(int slot);
     // Releases surface `surface`.
@@ -378,7 +399,8 @@ public:
     void *textureFiles[0x100];
     unsigned char unk_28acc[0x424];
     void *scripts[1];
-    unsigned char unk_28ef4[0x5254];
+    unsigned char unk_28ef4[0x4ffc];
+    AnmSlot anmSlots[0x32];
     // Images loaded as surfaces to copy to the back buffer from.
     IDirect3DSurface8 *surfaces[0x20];
     // System memory copies of them, to recreate them from.

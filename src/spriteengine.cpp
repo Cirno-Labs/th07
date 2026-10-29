@@ -270,6 +270,41 @@ int SpriteEngine::CreateTexture(int index, int width, int height, int format)
     return 0;
 }
 
+int SpriteEngine::LoadAnm(int slot, char *path, int firstSprite)
+{
+    AnmFile *anmFile;
+    int ownsData;
+    int firstSlot;
+    int count;
+
+    anmFile = (AnmFile *)LoadFileData(path, 0);
+    ownsData = 1;
+    firstSlot = slot;
+    if (anmFile == NULL)
+    {
+        LogError(&g_Log, "アニメが読み込めません。データが失われてるか壊れています\r\n");
+        return -1;
+    }
+    while (1)
+    {
+        count = this->Func44e070(slot, anmFile, firstSprite, ownsData);
+        if (count < 0)
+        {
+            this->anmSlots[firstSlot].count = slot - firstSlot;
+            return count;
+        }
+        slot++;
+        if (anmFile->nextOffset == 0)
+        {
+            this->anmSlots[firstSlot].count = slot - firstSlot;
+            return 0;
+        }
+        anmFile = (AnmFile *)((BYTE *)anmFile + anmFile->nextOffset);
+        ownsData = 0;
+        firstSprite += count;
+    }
+}
+
 void SpriteEngine::RenderTextToTextureIndex(int textureIndex, int x, int y, int width, int unk4, int fontHeight,
                                             int unk6, D3DCOLOR textColor, D3DCOLOR shadowColor, char *text,
                                             float scaleX, float scaleY)
