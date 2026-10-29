@@ -708,3 +708,13 @@ void UpdateSakuyaABomb(Player *player);
 // Draws Sakuya A's bomb: the stage tint, then each knife's sprite at
 // its position, turned along its angle (not offset by the play area).
 void DrawSakuyaABomb(Player *player);
+
+// Sakuya A's focused bomb: 250 frames with stateTimer at 290, an aura,
+// an effect 0x15 that follows the player for 60 frames and the player
+// slowed to 0.3; from frame 20 to 114 two knives every other frame
+// (0x60, around a ring), which fly out, stop and turn from their frame
+// 30 to 70, then aim at unk_2428 (when set) at speed 14 and speed up.
+// Each is an area (AddHitboxAreaCircle, 32) and a 24 box of 22 damage
+// until its first hit, then restarts its sprite at script 0x460 and
+// bursts effect 0.
+void UpdateSakuyaABombFocused(Player *player);
