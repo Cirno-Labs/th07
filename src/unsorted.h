@@ -298,7 +298,7 @@ extern App g_App;
 // yet. The set-up ones return nonzero on failure.
 // th06's GameManager::RegisterChain and RemoveChain.
 int RegisterGameManagerChain();
-void Func42f45d();
+void RemoveGameManagerChain();
 // th06's Ending::RegisterChain.
 int Func41e820();
 

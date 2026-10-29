@@ -179,7 +179,7 @@ int App::OnUpdate(App *arg)
                 }
                 break;
             case 9:
-                Func42f45d();
+                RemoveGameManagerChain();
                 if (Func41e820() != 0)
                 {
                     return 4;
@@ -203,19 +203,19 @@ int App::OnUpdate(App *arg)
             case -1:
                 return 4;
             case 1:
-                Func42f45d();
+                RemoveGameManagerChain();
                 arg->scene = 0;
                 SaveReplay(NULL, NULL);
                 goto title;
             case 6:
-                Func42f45d();
+                RemoveGameManagerChain();
                 if (ResultScreen::RegisterChain(1) != 0)
                 {
                     return 4;
                 }
                 break;
             case 10:
-                Func42f45d();
+                RemoveGameManagerChain();
                 if (!(g_Unknown626270.unk_93d8 & 1) && g_Unknown626270.difficulty < 4)
                 {
                     g_Unknown626270.stage = 0;
@@ -233,7 +233,7 @@ int App::OnUpdate(App *arg)
                 break;
             case 11:
                 g_App.scene = 3;
-                Func42f45d();
+                RemoveGameManagerChain();
                 g_Unknown626270.stage--;
                 if (RegisterGameManagerChain() != 0)
                 {
@@ -243,7 +243,7 @@ int App::OnUpdate(App *arg)
                 break;
             case 12:
                 g_App.scene = 3;
-                Func42f45d();
+                RemoveGameManagerChain();
                 if (RegisterGameManagerChain() != 0)
                 {
                     return 4;
@@ -251,7 +251,7 @@ int App::OnUpdate(App *arg)
                 arg->scene = 2;
                 break;
             case 3:
-                Func42f45d();
+                RemoveGameManagerChain();
                 if (RegisterGameManagerChain() != 0)
                 {
                     return 4;
@@ -259,7 +259,7 @@ int App::OnUpdate(App *arg)
                 arg->scene = 2;
                 break;
             case 7:
-                Func42f45d();
+                RemoveGameManagerChain();
                 arg->scene = 0;
                 SaveReplay(NULL, NULL);
                 arg->scene = 1;
@@ -271,7 +271,7 @@ int App::OnUpdate(App *arg)
                 break;
             case 9:
                 g_Unknown626270.plst.counts[g_Unknown626270.difficulty].clears++;
-                Func42f45d();
+                RemoveGameManagerChain();
                 if (Func41e820() != 0)
                 {
                     return 4;

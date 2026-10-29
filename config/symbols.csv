@@ -274,7 +274,7 @@ address,size,name,symbol
 0x0042e83e,2726,Unknown626270::AddedCallback,?AddedCallback@Unknown626270@@SIHPAV1@@Z
 0x0042f2e4,225,Unknown626270::DeletedCallback,?DeletedCallback@Unknown626270@@SIHPAV1@@Z
 0x0042f3c5,152,RegisterGameManagerChain,?RegisterGameManagerChain@@YIHXZ
-0x0042f45d,77,Func42f45d,?Func42f45d@@YIXXZ
+0x0042f45d,77,RemoveGameManagerChain,?RemoveGameManagerChain@@YIXXZ
 0x0042f4aa,124,Unknown626270::AddSubRank,?AddSubRank@Unknown626270@@QAEXH@Z
 0x0042f526,124,Unknown626270::SubSubRank,?SubSubRank@Unknown626270@@QAEXH@Z
 0x0042f5a2,253,Func42f5a2,

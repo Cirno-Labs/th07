@@ -272,3 +272,14 @@ int RegisterGameManagerChain()
     g_Chain.AddToDrawChain(&g_Unknown626270DrawChain, 2);
     return 0;
 }
+
+void RemoveGameManagerChain()
+{
+    g_Chain.Remove(&g_Unknown626270CalcChain);
+    g_Chain.Remove(&g_Unknown626270DrawChain);
+    if (g_Unknown626270.stats->score >= 1000000000)
+    {
+        g_Unknown626270.stats->score = 999999999;
+    }
+    g_Unknown626270.stats->guiScore = g_Unknown626270.stats->score;
+}
