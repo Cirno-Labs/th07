@@ -26,11 +26,9 @@ class MainMenu
 {
 public:
     // Constructs the sprites, then zeroes the menu. Inline, but too large
-    // to expand: SetUpTitleScene calls the copy at 0x45547d.
-    MainMenu()
-    {
-        memset(this, 0, sizeof(MainMenu));
-    }
+    // to expand: SetUpTitleScene calls the copy at 0x45547d. Defined in
+    // mainmenu.cpp after SetState, where the original's copy is.
+    MainMenu();
 
     // The update element's callback: runs the state's function, then
     // steps the sprites.

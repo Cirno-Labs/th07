@@ -31,6 +31,11 @@ inline void MainMenu::SetState(int state)
     this->subMenuIdleFrames = 0;
 }
 
+inline MainMenu::MainMenu()
+{
+    memset(this, 0, sizeof(MainMenu));
+}
+
 int MainMenu::OnUpdate(MainMenu *menu)
 {
     int status;
