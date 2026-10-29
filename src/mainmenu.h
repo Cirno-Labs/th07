@@ -104,7 +104,7 @@ public:
     unsigned char pad_10[0x54];
     // The state before the current one.
     int prevState;
-    int unk_68;
+    int returningFromPractice;
     // The replay menu's entries: their files' paths, the numbers shown
     // for them, and the replays' headers.
     char replayPaths[60][0x200];
@@ -112,13 +112,13 @@ public:
     ReplayHeader replays[60];
     // The replay picked in the replay menu.
     ReplayHeader *loadedReplay;
-    int unk_b0b0;
+    int clearedInReplayMenu;
     // The number of replays listed, the one at the cursor and the
     // stage picked from it.
     int replayCount;
     int replayCursor;
     int replayStage;
-    int unk_b0c0;
+    int subMenuIdleFrames;
     // The menu's sprites, spriteCount of them.
     Sprite *sprites;
     Sprite *helpSprite;

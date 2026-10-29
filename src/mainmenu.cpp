@@ -28,7 +28,7 @@ inline void MainMenu::SetState(int state)
     this->stateFrames = 0;
     this->inputLockout = 0;
     this->subState = 0;
-    this->unk_b0c0 = 0;
+    this->subMenuIdleFrames = 0;
 }
 
 int MainMenu::OnUpdate(MainMenu *menu)
@@ -118,7 +118,7 @@ int MainMenu::StartTitle()
             g_GameManager.SetUnk93d8Bit3(0);
             return 1;
         }
-        if (this->unk_68 != 0)
+        if (this->returningFromPractice != 0)
         {
             this->SetState(8);
             g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 5);
@@ -297,7 +297,7 @@ int MainMenu::StartTitle()
             return 1;
         }
     }
-    this->unk_b0c0++;
+    this->subMenuIdleFrames++;
     this->stateFrames++;
     this->inputLockout++;
     return 1;
@@ -542,9 +542,9 @@ int MainMenu::UpdateOptions()
     idle:
         if (g_Buttons != 0)
         {
-            this->unk_b0c0 = 0;
+            this->subMenuIdleFrames = 0;
         }
-        if (this->unk_b0c0 >= 3600)
+        if (this->subMenuIdleFrames >= 3600)
         {
             goto leave;
         }
@@ -596,7 +596,7 @@ int MainMenu::UpdateOptions()
             g_SoundPlayer.PlayQueuedSounds();
         }
     }
-    this->unk_b0c0++;
+    this->subMenuIdleFrames++;
     this->stateFrames++;
     this->inputLockout++;
     return 1;
@@ -805,9 +805,9 @@ int MainMenu::UpdateKeyConfig()
         }
         if (g_Buttons != 0)
         {
-            this->unk_b0c0 = 0;
+            this->subMenuIdleFrames = 0;
         }
-        if (this->unk_b0c0 >= 3600)
+        if (this->subMenuIdleFrames >= 3600)
         {
             goto leave;
         }
@@ -832,7 +832,7 @@ int MainMenu::UpdateKeyConfig()
             }
         }
     }
-    this->unk_b0c0++;
+    this->subMenuIdleFrames++;
     this->stateFrames++;
     this->inputLockout++;
     return 1;
@@ -916,7 +916,7 @@ int MainMenu::UpdateDifficultyMenu()
             this->stateFrames = 0;
             this->helpSprite = NULL;
         }
-        if (this->unk_68 != 0)
+        if (this->returningFromPractice != 0)
         {
             this->SetState(9);
             this->cursor = 0;
@@ -1023,7 +1023,7 @@ int MainMenu::UpdateDifficultyMenu()
         break;
     }
     this->stateFrames++;
-    this->unk_b0c0++;
+    this->subMenuIdleFrames++;
     this->inputLockout++;
     return 1;
 }
@@ -1167,7 +1167,7 @@ int MainMenu::UpdateCharacterMenu()
             this->subState = 0;
             this->stateFrames = 0;
         }
-        if (this->unk_68 != 0)
+        if (this->returningFromPractice != 0)
         {
             this->SetState(10);
             this->cursor = 0;
@@ -1303,7 +1303,7 @@ int MainMenu::UpdateCharacterMenu()
         }
         break;
     }
-    this->unk_b0c0++;
+    this->subMenuIdleFrames++;
     this->stateFrames++;
     this->inputLockout++;
     return 1;
@@ -1394,10 +1394,10 @@ int MainMenu::UpdateShotTypeMenu()
             this->subState = 0;
             this->stateFrames = 0;
         }
-        if (this->unk_68 != 0)
+        if (this->returningFromPractice != 0)
         {
             this->SetState(11);
-            this->unk_68 = 0;
+            this->returningFromPractice = 0;
             this->cursor = g_GameManager.stage - 1;
             return 1;
         }
@@ -1513,7 +1513,7 @@ int MainMenu::UpdateShotTypeMenu()
         }
         break;
     }
-    this->unk_b0c0++;
+    this->subMenuIdleFrames++;
     this->stateFrames++;
     this->inputLockout++;
     return 1;
@@ -1624,7 +1624,7 @@ int MainMenu::UpdateGameStartMenu()
         }
         break;
     }
-    this->unk_b0c0++;
+    this->subMenuIdleFrames++;
     this->stateFrames++;
     this->inputLockout++;
     return 1;
@@ -1702,7 +1702,7 @@ int MainMenu::UpdateReplayMenu()
             FindClose(findHandle);
             _chdir("../");
             this->replayCount = replayCount;
-            this->unk_b0b0 = 0;
+            this->clearedInReplayMenu = 0;
         }
         if (this->inputLockout >= 30)
         {
@@ -1873,7 +1873,7 @@ int MainMenu::UpdateReplayMenu()
         }
         break;
     }
-    this->unk_b0c0++;
+    this->subMenuIdleFrames++;
     this->stateFrames++;
     this->inputLockout++;
     return 1;
@@ -2248,11 +2248,11 @@ int MainMenu::InitTitleScene()
         this->cursor = 0;
         break;
     }
-    this->unk_68 = 0;
+    this->returningFromPractice = 0;
     if (g_GameManager.stateFlags & 1)
     {
         this->cursor = 2;
-        this->unk_68 = 1;
+        this->returningFromPractice = 1;
     }
     g_GameManager.stateFlags &= ~1;
     if (g_App.prevScene != 0)
