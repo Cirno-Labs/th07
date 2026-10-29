@@ -161,7 +161,7 @@ struct Enemy
     unsigned char unk_2b70[0x4];
     // Where shots start, from the position.
     D3DXVECTOR3 shootOffset;
-    unsigned char unk_2b80[0xc];
+    D3DXVECTOR3 unk_2b80;
     D3DXVECTOR3 unk_2b8c;
     Timer moveTimer;
     int unk_2ba4;

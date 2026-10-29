@@ -725,6 +725,11 @@ public:
     }
     // A random float from 0 up to 1.
     float GetRandomF32ZeroToOne();
+    // A random float from 0 up to `range`.
+    float GetRandomF32InRange(float range)
+    {
+        return this->GetRandomF32ZeroToOne() * range;
+    }
 
     WORD seed;
     // How many times the generator was advanced.
@@ -1470,6 +1475,10 @@ int GetIntOperand(Enemy *enemy, int id);
 // ResolveOperand, or `operand` itself if it names none or if `bit` is
 // not negative and clear in `mask`.
 int *ResolveOperand(Enemy *enemy, int *operand, WORD mask, int bit);
+// GetIntOperand for float operands: the value of script operand `id`
+// for `enemy` as a float, with random floats for 10055, 10056 and
+// 10060.
+float GetFloatOperand(Enemy *enemy, float id);
 
 // Set to 9 as the dialogue of stages 6 to 8 starts.
 extern int g_Unknown9a9ab8;
