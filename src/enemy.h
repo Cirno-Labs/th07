@@ -46,7 +46,7 @@ struct EnemyFlags
     // Set by WarpToBoss.
     unsigned char isWarpingToBoss : 1;
     // Cleared as a spell card starts.
-    unsigned char unk_19 : 1;
+    unsigned char hidden : 1;
     unsigned char unk_1a : 1;
     // While a bomb runs or the player is not in playerState 0, OnUpdate
     // skips the enemy's script, movement and damage, and holds

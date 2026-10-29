@@ -634,7 +634,7 @@ void StartSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
     enemy->effects[24]->sprite.scaleTween.z = 0.125f;
     enemy->effects[24]->sprite.colorTween.x = 0.125f;
     enemy->effects[24]->pos = enemy->pos;
-    enemy->flags.unk_19 = 0;
+    enemy->flags.hidden = 0;
     if (!g_GameManager.unk_93d8Bit3)
     {
         rec = &g_GameManager.catks[g_SpellCardNumber];
@@ -1810,8 +1810,8 @@ loop:
             g_BulletManager.ClearAll(0);
             break;
         case 149:
-            enemy->flags.unk_19 = INT_ARG(0);
-            if (!enemy->flags.unk_19)
+            enemy->flags.hidden = INT_ARG(0);
+            if (!enemy->flags.hidden)
             {
                 enemy->effects[24]->pos.x = FLOAT_ARG(1);
                 enemy->effects[24]->pos.y = FLOAT_ARG(2);

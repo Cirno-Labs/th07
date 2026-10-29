@@ -671,7 +671,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
             enemy->ClampPos();
             enemy->Move();
             enemy->ClampPos();
-            if (enemy->effects[24] != NULL && !enemy->flags.unk_19)
+            if (enemy->effects[24] != NULL && !enemy->flags.hidden)
             {
                 enemy->effects[24]->pos = (enemy->pos - enemy->effects[24]->pos) / 16.0f + enemy->effects[24]->pos;
             }
