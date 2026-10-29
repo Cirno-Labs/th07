@@ -1059,6 +1059,31 @@ void UpdateHitboxAreas(Player *player)
     }
 }
 
+void UpdateRespawningState(Player *player)
+{
+    float progress;
+
+    player->respawnClearFrames = 60;
+    progress = 1.0f - player->stateTimer.AsFloat() / 30.0f;
+    player->sprite.scaleX = 2.0f * progress + 1.0f;
+    player->sprite.scaleY = 1.0f - 1.0f * progress;
+    player->sprite.flags |= 0x10;
+    player->moveScaleY = 1.0f;
+    player->moveScaleX = 1.0f;
+    player->sprite.color = player->stateTimer.AsFrames() * 255 / 30 << 24 | 0xffffff;
+    player->deathbombFrames = 0;
+    if (player->stateTimer.AsFrames() >= 30)
+    {
+        player->playerState = 3;
+        player->sprite.scaleY = 1.0f;
+        player->sprite.scaleX = 1.0f;
+        player->sprite.color = 0xffffffff;
+        player->sprite.flags &= ~0x10;
+        player->stateTimer.Set(240);
+        player->deathbombFrames = g_Player.shotType->deathbombFrames;
+    }
+}
+
 PlayerArea *Player::AddHitboxArea(D3DXVECTOR3 *pos, float width, float height, int unk_1c)
 {
     PlayerArea *area = this->unk_17dc;
@@ -1141,7 +1166,7 @@ int Player::OnUpdate(Player *player)
     else if (player->playerState == 1)
     {
     respawn:
-        Func4411c0(player);
+        UpdateRespawningState(player);
     }
     Func441330(player);
     if (player->playerState != 2 && player->playerState != 1)

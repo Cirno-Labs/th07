@@ -95,7 +95,10 @@ struct ShotTable
 // the fields known so far.
 struct ShotTypeData
 {
-    unsigned char unk_0[0x34];
+    unsigned char unk_0[0x8];
+    // Player::deathbombFrames once the player has respawned.
+    int deathbombFrames;
+    unsigned char unk_c[0x28];
     ShotTable tables[1];
 };
 
@@ -178,7 +181,7 @@ void DrawHitBullets(Player *player);
 int UpdateFiring(Player *player);
 
 // OnUpdate's steps, not decompiled yet. Func43ee50 runs unless the
-// player is respawning or dying, Func440cf0 while dying, and Func4411c0
+// player is respawning or dying, Func440cf0 while dying, and UpdateRespawningState
 // while respawning or when Func440cf0 returns nonzero.
 int Func43ee50(Player *player);
 // OnUpdate's first step, as the start of th06's: clears the sizes of
@@ -187,7 +190,12 @@ int Func43ee50(Player *player);
 void UpdateHitboxAreas(Player *player);
 void Func4409f0(Player *player);
 int Func440cf0(Player *player);
-void Func4411c0(Player *player);
+// OnUpdate's respawning step, as th06's: for 60 frames clears bullets
+// (respawnClearFrames), fades the player in over 30 frames of
+// stateTimer, scaling it from 3 by 0 to 1 by 1, then makes it
+// invulnerable (playerState 3) for 240 frames, with deathbombFrames
+// from the shot type.
+void UpdateRespawningState(Player *player);
 void Func441330(Player *player);
 // OnUpdate's last step: clears unk_2428, homingTarget and unk_2440 for
 // the next frame, then sets AsciiText's unk_74d4 to 2 while the player
@@ -367,7 +375,15 @@ public:
     unsigned char unk_23dc[0x4];
     // The shot each laser was fired from, by ShotData::phase.
     ShotData *laserShots[3];
-    unsigned char unk_23ec[0x18];
+    unsigned char unk_23ec[0x4];
+    // Scale the player's movement, as th06's.
+    float moveScaleX;
+    float moveScaleY;
+    // As th06's: while the player dies, the frames left to bomb.
+    int deathbombFrames;
+    unsigned char unk_23fc[0x4];
+    // Frames left of clearing all bullets after a respawn, as th06's.
+    int respawnClearFrames;
     // The unk_1c of the PlayerArea CheckAreaHit met last.
     int unk_2404;
     // As th06's: 0 normally, 1 respawning, 2 dying, 3 invulnerable.
