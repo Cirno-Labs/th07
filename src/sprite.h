@@ -260,6 +260,9 @@ public:
     // g_TextureFormats[`format`] (16 bits when forced). Returns 0, or -1
     // on failure. Not in th06.
     int CreateTextureFromImage(int index, AnmImage *image, int format);
+    // Replaces the alpha of texture `index` with the blue of the image
+    // file at `path`. Returns 0, or -1 on failure.
+    int LoadTextureAlpha(int index, char *path, int format, D3DCOLOR colorKey);
     // Releases texture `index` and its file.
     void ReleaseTexture(int index);
     // Releases ANM slot `slot`.
