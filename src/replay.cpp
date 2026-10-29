@@ -355,3 +355,28 @@ int ReplayManager::PlayAddedCallback(ReplayManager *replay)
     }
     return 0;
 }
+
+int ReplayManager::DeletedCallback(ReplayManager *replay)
+{
+    g_Chain.Remove(replay->drawChain);
+    replay->drawChain = NULL;
+    if (replay->calcChain2 != NULL)
+    {
+        g_Chain.Remove(replay->calcChain2);
+        replay->calcChain2 = NULL;
+    }
+    if (replay->calcChain3 != NULL)
+    {
+        g_Chain.Remove(replay->calcChain3);
+        replay->calcChain3 = NULL;
+    }
+    MemFree(g_ReplayManager->data);
+    if (replay->unk_40 != NULL)
+    {
+        MemFree(replay->unk_40);
+    }
+    delete g_ReplayManager;
+    g_ReplayManager = NULL;
+    g_ReplayManager = NULL;
+    return 0;
+}

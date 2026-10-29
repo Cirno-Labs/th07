@@ -4,6 +4,7 @@
 
 #include <windows.h>
 
+#include "chain.h"
 #include "common.h"
 
 // One frame of a replay.
@@ -148,6 +149,9 @@ public:
     // into the game. Returns 0, or -1 if the replay or the stage is
     // missing.
     static int PlayAddedCallback(ReplayManager *replay);
+    // Removes the chain elements but the update one, frees the replay
+    // data and unk_40 and deletes the ReplayManager. Returns 0.
+    static int DeletedCallback(ReplayManager *replay);
 
     // The current frame.
     int frame;
@@ -169,7 +173,12 @@ public:
     // The same for the frame rates kept every 30 frames.
     BYTE *extraCursor;
     BYTE *extraEnds[7];
-    unsigned char unk_c4[0x10];
+    // The update element, the draw element, the second update element
+    // when playing and when recording.
+    ChainElem *calcChain;
+    ChainElem *drawChain;
+    ChainElem *calcChain2;
+    ChainElem *calcChain3;
     // The random seed at the start of the frame.
     WORD unk_d4;
     // Bits set during a frame: 2 when the player is hit.
