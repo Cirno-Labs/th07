@@ -153,10 +153,10 @@ int GameManager::OnUpdate(GameManager *mgr)
     if ((g_Unknown626270.unk_93d8 >> 3) & 1 && g_Unknown626270.unk_93df == 1 && !g_Unknown49fbf0.Func42ad66())
     {
         mgr->unk_962c++;
-        if ((g_App.unk_188 < 20 && mgr->unk_962c % 3 != 0) ||
-            (g_App.unk_188 >= 20 && g_App.unk_188 < 30 && mgr->unk_962c % 2 != 0) ||
-            (g_App.unk_188 >= 30 && g_App.unk_188 < 40 && mgr->unk_962c % 3 == 0) ||
-            (g_App.unk_188 >= 40 && g_App.unk_188 < 50 && mgr->unk_962c % 6 == 0))
+        if ((g_App.roundedFps < 20 && mgr->unk_962c % 3 != 0) ||
+            (g_App.roundedFps >= 20 && g_App.roundedFps < 30 && mgr->unk_962c % 2 != 0) ||
+            (g_App.roundedFps >= 30 && g_App.roundedFps < 40 && mgr->unk_962c % 3 == 0) ||
+            (g_App.roundedFps >= 40 && g_App.roundedFps < 50 && mgr->unk_962c % 6 == 0))
         {
             return 3;
         }
@@ -444,11 +444,11 @@ int GameManager::AddedCallback(GameManager *mgr)
     int shot;
     WORD seed;
 
-    g_App.unk_2b8 = 0;
+    g_App.clockMeasurementPending = 0;
     mgr->unk_14 = 1 << mgr->difficulty;
     mgr->unk_93d7 = mgr->character * 2 + mgr->shotType;
-    g_App.unk_194 = timeGetTime();
-    g_App.unk_178 = 1.0f;
+    g_App.lastTotalPlayTimeTick = timeGetTime();
+    g_App.gameSpeed = 1.0f;
     if (g_App.scene != 3)
     {
         DrawLoadingScreen();
@@ -713,8 +713,8 @@ int GameManager::AddedCallback(GameManager *mgr)
     mgr->unk_93d8 |= 4;
     if (g_App.scene != 3)
     {
-        g_App.unk_180 = 0.0f;
-        g_App.unk_184 = 0.0f;
+        g_App.achievedFrames = 0.0f;
+        g_App.expectedFrames = 0.0f;
     }
     mgr->isFrozen = 0;
     mgr->stats->score = 0;
@@ -748,7 +748,7 @@ int GameManager::DeletedCallback(GameManager *mgr)
     {
         g_App.AddTotalPlayTime();
     }
-    g_App.unk_194 = 0;
+    g_App.lastTotalPlayTimeTick = 0;
     g_App.AddPlayTime();
     mgr->unk_93d8 &= ~4;
     g_AsciiText.Initialize();

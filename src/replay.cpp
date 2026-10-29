@@ -36,7 +36,7 @@ int ReplayManager::RecordOnUpdate(ReplayManager *replay)
     {
         return 1;
     }
-    if (g_App.unk_18c >> 3 & 1)
+    if (g_App.stateFlags >> 3 & 1)
     {
         return 1;
     }
@@ -53,8 +53,8 @@ int ReplayManager::RecordOnUpdate(ReplayManager *replay)
     replay->cursor->events = replay->unk_d6;
     if (replay->frame % 30 == 0)
     {
-        *replay->extraCursor = (BYTE)g_App.unk_188 | (g_App.unk_2a4 != 0 ? 0x80 : 0);
-        replay->extraCursor[1] = (BYTE)g_App.unk_188;
+        *replay->extraCursor = (BYTE)g_App.roundedFps | (g_App.fastClockStreak != 0 ? 0x80 : 0);
+        replay->extraCursor[1] = (BYTE)g_App.roundedFps;
         replay->extraEnds[idx] = replay->extraCursor + 2;
         replay->extraCursor++;
     }
@@ -117,8 +117,8 @@ int ReplayManager::PlayOnUpdate(ReplayManager *replay)
     }
     if (replay->frame % 30 == 0)
     {
-        g_App.unk_188 = (char)replay->extraCursor[1] & 0x7f;
-        g_App.unk_2a8 = (char)replay->extraCursor[1] >> 7;
+        g_App.roundedFps = (char)replay->extraCursor[1] & 0x7f;
+        g_App.fpsWarning = (char)replay->extraCursor[1] >> 7;
         replay->extraCursor++;
     }
     replay->frame++;
@@ -538,7 +538,7 @@ void SaveReplay(char *path, char *name)
                     }
                 }
                 hX.score = g_Unknown626270.stats->guiScore;
-                slowdown2 = (g_App.unk_180 / g_App.unk_184 - 0.5f) * 2.0f;
+                slowdown2 = (g_App.achievedFrames / g_App.expectedFrames - 0.5f) * 2.0f;
                 if (slowdown2 < 0.0f)
                 {
                     slowdown2 = 0.0f;

@@ -75,7 +75,7 @@ int AsciiText::OnUpdate(AsciiText *text)
             {
                 continue;
             }
-            entry->pos.y -= 0.5f * g_App.unk_178;
+            entry->pos.y -= 0.5f * g_App.gameSpeed;
             entry->timer.Tick();
             if ((entry->timer.current > 60) != 0)
             {
@@ -502,7 +502,7 @@ int PauseMenu::UpdatePauseMenu()
         }
         this->state++;
         this->stateFrames = 0;
-        if ((g_App.unk_18c >> 1) & 1)
+        if ((g_App.stateFlags >> 1) & 1)
         {
             g_SpriteEngine->StartScript(&this->background, 0x724);
             if (g_SpriteEngine->SetPendingCopy(4, 0x20, 0x10, 0x180, 0x1c0, this->background.spriteData->startX,
@@ -645,7 +645,7 @@ int PauseMenu::UpdatePauseMenu()
             {
                 g_SoundPlayer.QueueSoundCommand(7, 0, "UnPause");
             }
-            g_App.unk_194 = timeGetTime();
+            g_App.lastTotalPlayTimeTick = timeGetTime();
         }
         break;
     case 5:
@@ -740,7 +740,7 @@ int PauseMenu::UpdatePauseMenu()
             {
                 this->sprites[i].ClearShown();
             }
-            g_App.unk_194 = timeGetTime();
+            g_App.lastTotalPlayTimeTick = timeGetTime();
         }
         break;
     case 10:
@@ -753,14 +753,14 @@ int PauseMenu::UpdatePauseMenu()
             {
                 this->sprites[i].ClearShown();
             }
-            g_App.unk_194 = timeGetTime();
+            g_App.lastTotalPlayTimeTick = timeGetTime();
         }
     }
     for (i = 0; i < ARRAY_SIZE(this->sprites); i++)
     {
         g_SpriteEngine->Step(&this->sprites[i]);
     }
-    if ((g_App.unk_18c >> 1) & 1)
+    if ((g_App.stateFlags >> 1) & 1)
     {
         g_SpriteEngine->Step(&this->background);
     }
@@ -780,7 +780,7 @@ void PauseMenu::DrawPauseMenu()
         g_App.viewport.Width = g_Unknown626270.arena[2];
         g_App.viewport.Height = g_Unknown626270.arena[3];
         g_App.d3dDevice->SetViewport(&g_App.viewport);
-        if ((g_App.unk_18c >> 1) & 1 && this->state != 0)
+        if ((g_App.stateFlags >> 1) & 1 && this->state != 0)
         {
             Sprite sprite = this->background;
 
@@ -837,7 +837,7 @@ int ContinueMenu::UpdateContinueMenu()
             g_SpriteEngine->SetSprite(&this->sprites[4], g_Unknown626270.unk_9630 + 0x106 -
                                                              g_Unknown626270.stats->continuesUsed);
             this->sprites[4].pendingInterrupt = 1;
-            if ((g_App.unk_18c >> 1) & 1)
+            if ((g_App.stateFlags >> 1) & 1)
             {
                 g_SpriteEngine->StartScript(&this->background, 0x724);
                 if (g_SpriteEngine->SetPendingCopy(4, 0x20, 0x10, 0x180, 0x1c0, this->background.spriteData->startX,
@@ -921,7 +921,7 @@ int ContinueMenu::UpdateContinueMenu()
                 this->sprites[i].ClearShown();
             }
             g_Unknown626270.stats->guiScore = g_Unknown626270.stats->score;
-            g_App.unk_194 = timeGetTime();
+            g_App.lastTotalPlayTimeTick = timeGetTime();
             return 0;
         }
         break;
@@ -966,7 +966,7 @@ int ContinueMenu::UpdateContinueMenu()
                                    999999);
             IncrementCounterCapped((DWORD *)&g_Unknown626270.plst.counts[6].continues, 999999);
             g_SoundPlayer.QueueSoundCommand(7, 0, "UnPause");
-            g_App.unk_194 = timeGetTime();
+            g_App.lastTotalPlayTimeTick = timeGetTime();
             return 0;
         }
     }
@@ -974,7 +974,7 @@ int ContinueMenu::UpdateContinueMenu()
     {
         g_SpriteEngine->Step(&this->sprites[i]);
     }
-    if ((g_App.unk_18c >> 1) & 1)
+    if ((g_App.stateFlags >> 1) & 1)
     {
         g_SpriteEngine->Step(&this->background);
     }
@@ -994,7 +994,7 @@ void ContinueMenu::DrawContinueMenu()
         g_App.viewport.Width = g_Unknown626270.arena[2];
         g_App.viewport.Height = g_Unknown626270.arena[3];
         g_App.d3dDevice->SetViewport(&g_App.viewport);
-        if ((g_App.unk_18c >> 1) & 1 && (this->state != 0 || this->stateFrames > 2))
+        if ((g_App.stateFlags >> 1) & 1 && (this->state != 0 || this->stateFrames > 2))
         {
             g_SpriteEngine->DrawUnrotated(&this->background);
         }

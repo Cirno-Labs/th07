@@ -593,8 +593,8 @@ void UpdateBullets(Player *player)
             bullet->state = 0;
             continue;
         }
-        bullet->pos[0] += g_App.unk_178 * bullet->velocity.x;
-        bullet->pos[1] += g_App.unk_178 * bullet->velocity.y;
+        bullet->pos[0] += g_App.gameSpeed * bullet->velocity.x;
+        bullet->pos[1] += g_App.gameSpeed * bullet->velocity.y;
         if (bullet->type != 4 && bullet->type != 5 &&
             !g_Unknown626270.IsInPlayArea(bullet->pos.x, bullet->pos.y, bullet->sprite.spriteData->width,
                                           bullet->sprite.spriteData->height))
@@ -1175,8 +1175,8 @@ int HandleInput(Player *player)
     }
     player->velocityX = deltaX;
     player->velocityY = deltaY;
-    player->unk_9cc = deltaX * player->moveScaleX * g_App.unk_178;
-    player->unk_9d0 = deltaY * player->moveScaleY * g_App.unk_178;
+    player->unk_9cc = deltaX * player->moveScaleX * g_App.gameSpeed;
+    player->unk_9d0 = deltaY * player->moveScaleY * g_App.gameSpeed;
     player->position[0] += player->unk_9cc;
     player->position[1] += player->unk_9d0;
     if (player->position.x < g_Unknown626270.unk_9604[0])
@@ -1421,8 +1421,8 @@ int HandleInput(Player *player)
             }
             else if (fabsf(player->unk_b7e58 - -1.5707964f) > 0.031415928f)
             {
-                angleStep = player->unk_b7e58 < -1.5707964f ? 0.062831856f * g_App.unk_178
-                                                             : -0.062831856f * g_App.unk_178;
+                angleStep = player->unk_b7e58 < -1.5707964f ? 0.062831856f * g_App.gameSpeed
+                                                             : -0.062831856f * g_App.gameSpeed;
                 player->unk_b7e58 += angleStep;
             }
             else

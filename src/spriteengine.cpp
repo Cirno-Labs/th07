@@ -1799,17 +1799,17 @@ int SpriteEngine::Step(Sprite *vm)
 done:
     if (vm->unk_c != 0.0f)
     {
-        vm->rotationX = AddNormalizeAngle(vm->rotationX, g_App.unk_178 * vm->unk_c);
+        vm->rotationX = AddNormalizeAngle(vm->rotationX, g_App.gameSpeed * vm->unk_c);
         vm->flags |= 4;
     }
     if (vm->unk_10 != 0.0f)
     {
-        vm->rotationY = AddNormalizeAngle(vm->rotationY, g_App.unk_178 * vm->unk_10);
+        vm->rotationY = AddNormalizeAngle(vm->rotationY, g_App.gameSpeed * vm->unk_10);
         vm->flags |= 4;
     }
     if (vm->unk_14 != 0.0f)
     {
-        vm->rotationZ = AddNormalizeAngle(vm->rotationZ, g_App.unk_178 * vm->unk_14);
+        vm->rotationZ = AddNormalizeAngle(vm->rotationZ, g_App.gameSpeed * vm->unk_14);
         vm->flags |= 4;
     }
     for (k = 0; k < 5; k++)
@@ -1894,12 +1894,12 @@ done:
     }
     if (vm->unk_24 != 0.0f)
     {
-        vm->scaleX += g_App.unk_178 * vm->unk_24;
+        vm->scaleX += g_App.gameSpeed * vm->unk_24;
         vm->flags |= 8;
     }
     if (vm->unk_20 != 0.0f)
     {
-        vm->scaleY += g_App.unk_178 * vm->unk_20;
+        vm->scaleY += g_App.gameSpeed * vm->unk_20;
         vm->flags |= 8;
         vm->flags |= 4;
     }

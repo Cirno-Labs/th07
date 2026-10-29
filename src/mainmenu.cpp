@@ -14,11 +14,11 @@
 
 void App::ResetClockDriftCounters()
 {
-    this->unk_2a4 = 0;
-    this->unk_2ac = 0;
-    this->unk_2b8 = 0;
-    this->unk_2b0 = 0;
-    this->unk_2b4 = 0;
+    this->fastClockStreak = 0;
+    this->maxFastClockStreak = 0;
+    this->clockMeasurementPending = 0;
+    this->fastClockCycleCount = 0;
+    this->fastClockCycles = 0;
 }
 
 inline void MainMenu::SetState(int state)
@@ -378,7 +378,7 @@ int MainMenu::UpdateOptions()
         {
             g_SpriteEngine->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex + 1);
         }
-        i = g_App.unk_13d + 0x20;
+        i = g_App.optionsMenuCursor + 0x20;
         g_SpriteEngine->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex);
         if (this->unk_d0fc < 4)
         {
@@ -450,13 +450,13 @@ int MainMenu::UpdateOptions()
                 }
                 break;
             case 5:
-                if (g_App.unk_13d == 0)
+                if (g_App.optionsMenuCursor == 0)
                 {
-                    g_App.unk_13d = 1;
+                    g_App.optionsMenuCursor = 1;
                 }
                 else
                 {
-                    g_App.unk_13d--;
+                    g_App.optionsMenuCursor--;
                 }
                 break;
             default:
@@ -524,13 +524,13 @@ int MainMenu::UpdateOptions()
                 }
                 break;
             case 5:
-                if (g_App.unk_13d >= 1)
+                if (g_App.optionsMenuCursor >= 1)
                 {
-                    g_App.unk_13d = 0;
+                    g_App.optionsMenuCursor = 0;
                 }
                 else
                 {
-                    g_App.unk_13d++;
+                    g_App.optionsMenuCursor++;
                 }
                 break;
             default:
@@ -557,7 +557,7 @@ int MainMenu::UpdateOptions()
                 g_App.bombCount = 3;
                 g_App.musicMode = 1;
                 g_App.playSounds = 1;
-                g_App.unk_13d = 0;
+                g_App.optionsMenuCursor = 0;
                 g_SoundPlayer.QueueSound(10, 0);
                 g_SoundPlayer.PlayQueuedSounds();
                 break;
@@ -2143,7 +2143,7 @@ int MainMenu::InitTitleScene()
         g_Unknown626270.stats = NULL;
     }
     g_Unknown626270.stats = new Unknown626270Stats;
-    g_App.unk_178 = 1.0f;
+    g_App.gameSpeed = 1.0f;
     if (g_Unknown626270.unk_93d8 >> 3 & 1)
     {
         g_Unknown626270.character = g_Unknown626270.unk_93d7 = 0;
@@ -2269,7 +2269,7 @@ int MainMenu::InitTitleScene()
         {
             g_App.LoadMidi(8, "bgm/th07_01.mid");
         }
-        if (g_App.unk_190 == 0)
+        if (g_App.lastPlayTimeTick == 0)
         {
             ScreenEffect::StartEffect(0, 70, 0xffffff, 0, 0);
         }

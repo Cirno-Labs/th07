@@ -213,9 +213,9 @@ public:
     // How many frames to skip drawing between drawn ones.
     BYTE frameSkip;
     // 0 to 2, 2 by default.
-    BYTE unk_13c;
+    BYTE effectsQuality;
     // The options screen's last entry: 0 or 1.
-    BYTE unk_13d;
+    BYTE optionsMenuCursor;
     // Whether holding shoot also focuses: ReadJoystick reports focus
     // once shoot has been held for 10 frames, and for a few frames after
     // it is let go.
@@ -241,30 +241,30 @@ public:
     // Frames are paced by the clock rather than by the presents.
     int presentImmediate;
     // Set while the device is created asking for 60 Hz.
-    int unk_170;
+    int wants60Hz;
     // Cleared by InitD3dDevice.
     int unk_174;
     // Set to 1 by the title menu.
-    float unk_178;
+    float gameSpeed;
     // The MIDI player; its long messages come back to WindowProc.
     MidiPlayer *midi;
     // Their ratio is the game's speed, which the score entry records
     // as slowdown.
-    float unk_180;
-    float unk_184;
+    float achievedFrames;
+    float expectedFrames;
     // The frame rate rounded, as DrawFps shows it with bit 3 of
     // g_Unknown626270.unk_93d8.
-    short unk_188;
+    short roundedFps;
     unsigned char unk_18a[0x2];
     // Bit 1: the device does T&L in hardware; 2: the back buffer is
     // lockable; 4: A8R8G8B8 textures work; 8: no score is recorded;
     // 0x10: the device was reset and no frame has been drawn since.
-    DWORD unk_18c;
+    DWORD stateFlags;
     // timeGetTime() when AddPlayTime last added to the run time.
-    DWORD unk_190;
+    DWORD lastPlayTimeTick;
     // timeGetTime() when AddTotalPlayTime last added to the play time.
     // GameManager::DeletedCallback clears it.
-    DWORD unk_194;
+    DWORD lastTotalPlayTimeTick;
     D3DCAPS8 caps;
     // QueryPerformanceFrequency's result, as AddedCallback read it. Only
     // 4-aligned, so not a LARGE_INTEGER.
@@ -278,18 +278,18 @@ public:
     // How many measurements in a row found the clock running more than
     // 2.5 times faster than the performance counter, one fewer for each
     // that did not.
-    int unk_2a4;
+    int fastClockStreak;
     // DrawFps shows the rate in red when it is set.
-    int unk_2a8;
+    int fpsWarning;
     // The highest unk_2a4 so far.
-    int unk_2ac;
+    int maxFastClockStreak;
     // The same, cleared after reaching 10, which adds one to unk_2b4.
-    int unk_2b0;
-    int unk_2b4;
+    int fastClockCycleCount;
+    int fastClockCycles;
     // Set while a measurement is pending; CheckClockDrift clears it.
-    int unk_2b8;
+    int clockMeasurementPending;
     // Set to 0xff before each frame is drawn; DisableFog clears it.
-    DWORD unk_2bc;
+    DWORD fogState;
     // The sum of the executable's dwords and its size, as read at
     // startup.
     DWORD exeChecksum;

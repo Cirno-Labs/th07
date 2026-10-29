@@ -974,7 +974,7 @@ int ResultScreen::HandleNameEntry()
     int i;
     float rate;
 
-    if (g_App.IsScoreDisabled() || (g_App.unk_18c >> 3 & 1))
+    if (g_App.IsScoreDisabled() || (g_App.stateFlags >> 3 & 1))
     {
         this->state = 0x10;
         this->frame = 0;
@@ -1009,7 +1009,7 @@ int ResultScreen::HandleNameEntry()
         this->entry.isNew = 1;
         strcpy(this->entry.name, this->lsnm.name);
         FormatTodayDate(this->entry.date);
-        rate = (g_App.unk_180 / g_App.unk_184 - 0.5f) * 2.0f;
+        rate = (g_App.achievedFrames / g_App.expectedFrames - 0.5f) * 2.0f;
         if (rate < 0.0f)
         {
             rate = 0.0f;
@@ -1185,7 +1185,7 @@ int ResultScreen::HandleReplaySaving()
     case 0xb:
         if (this->frame == 60)
         {
-            if (g_App.IsScoreDisabled() || (g_App.unk_18c >> 3 & 1))
+            if (g_App.IsScoreDisabled() || (g_App.stateFlags >> 3 & 1))
             {
                 interrupt = 0x13;
             }
@@ -1809,7 +1809,7 @@ int ResultScreen::DrawStatistics()
         cursorPos.y += 22.0f;
         g_AsciiText.AddFormat(&cursorPos, "%9d", g_Unknown626270.stats->spellCardsCaptured);
         rating += g_Unknown626270.stats->spellCardsCaptured * g_SpellCardRatings[g_Unknown626270.difficulty];
-        slowdown = (g_App.unk_180 / g_App.unk_184 - 0.5f) * 2.0f;
+        slowdown = (g_App.achievedFrames / g_App.expectedFrames - 0.5f) * 2.0f;
         if (slowdown < 0.0f)
         {
             slowdown = 0.0f;

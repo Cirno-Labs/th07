@@ -151,7 +151,7 @@ void UpdateReimuABomb(Player *player)
         }
         if (orb->state == 1)
         {
-            orb->speed -= 0.4f * g_App.unk_178;
+            orb->speed -= 0.4f * g_App.gameSpeed;
             ((Vector2 *)&orb->velocity)->SetPolar(orb->angle, orb->speed);
             if (orb->speed < -10.0f)
             {
@@ -194,8 +194,8 @@ void UpdateReimuABomb(Player *player)
                 orb->state = 0;
             }
         }
-        orb->pos.x += g_App.unk_178 * orb->velocity.x;
-        orb->pos.y += g_App.unk_178 * orb->velocity.y;
+        orb->pos.x += g_App.gameSpeed * orb->velocity.x;
+        orb->pos.y += g_App.gameSpeed * orb->velocity.y;
         g_SpriteEngine->Step(&orb->sprites[0]);
         g_SpriteEngine->Step(&orb->sprites[1]);
         g_SpriteEngine->Step(&orb->sprites[2]);
@@ -363,8 +363,8 @@ void UpdateReimuABombFocused(Player *player)
                 orb->state = 0;
             }
         }
-        orb->pos.x += g_App.unk_178 * orb->velocity.x;
-        orb->pos.y += g_App.unk_178 * orb->velocity.y;
+        orb->pos.x += g_App.gameSpeed * orb->velocity.x;
+        orb->pos.y += g_App.gameSpeed * orb->velocity.y;
         g_SpriteEngine->Step(&orb->sprites[0]);
         g_SpriteEngine->Step(&orb->sprites[1]);
         g_SpriteEngine->Step(&orb->sprites[2]);
@@ -593,7 +593,7 @@ void UpdateMarisaABomb(Player *player)
     {
         for (i = 0; i < 8; i++)
         {
-            player->bomb.parts[i].pos += player->bomb.parts[i].velocity * g_App.unk_178;
+            player->bomb.parts[i].pos += player->bomb.parts[i].velocity * g_App.gameSpeed;
             if (player->bomb.timer.HasTicked() && player->bomb.timer.AsFrames() % 3 != 0)
             {
                 player->AddHitboxAreaCircle(&player->bomb.parts[i].pos, 96.0f, 0.0f, 0, 6);
@@ -714,8 +714,8 @@ void UpdateMarisaABombFocused(Player *player)
             orb->trail[k] = orb->trail[k - 1];
         }
         orb->trail[0] = orb->pos;
-        orb->pos += orb->velocity * g_App.unk_178;
-        orb->velocity += orb->acceleration * g_App.unk_178;
+        orb->pos += orb->velocity * g_App.gameSpeed;
+        orb->velocity += orb->acceleration * g_App.gameSpeed;
         if (orb->pos.y < -256.0f)
         {
             orb->state = 0;
@@ -1023,7 +1023,7 @@ void UpdateSakuyaABomb(Player *player)
                 knife->velocity.y = sinf(knife->angle) * knife->speed;
                 if (player->unk_9dc[i].unk_1c < 30)
                 {
-                    knife->pos += knife->velocity * g_App.unk_178;
+                    knife->pos += knife->velocity * g_App.gameSpeed;
                     player->AddHitboxAreaCircle(&knife->pos, 32.0f, 0.0f, 0, 6);
                     player->unk_9dc[i].size.x = 24.0f;
                     player->unk_9dc[i].size.y = 24.0f;
@@ -1157,7 +1157,7 @@ void UpdateSakuyaABombFocused(Player *player)
         }
         if (player->unk_9dc[i].unk_1c == 0)
         {
-            knife->pos += knife->velocity * g_App.unk_178;
+            knife->pos += knife->velocity * g_App.gameSpeed;
             player->AddHitboxAreaCircle(&player->bomb.parts[i].pos, 32.0f, 0.0f, 0, 6);
             player->unk_9dc[i].size.x = 24.0f;
             player->unk_9dc[i].size.y = 24.0f;
@@ -1374,14 +1374,14 @@ void UpdateSakuyaBBombFocused(Player *player)
         {
             continue;
         }
-        knife->acceleration = (player->position - knife->pos) / 1700.0f * g_App.unk_178;
-        knife->velocity += knife->acceleration * g_App.unk_178;
+        knife->acceleration = (player->position - knife->pos) / 1700.0f * g_App.gameSpeed;
+        knife->velocity += knife->acceleration * g_App.gameSpeed;
         for (k = 31; k > 0; k--)
         {
             knife->trail[k] = knife->trail[k - 1];
         }
         knife->trail[0] = knife->pos;
-        knife->pos += knife->velocity * g_App.unk_178;
+        knife->pos += knife->velocity * g_App.gameSpeed;
         g_SpriteEngine->Step(knife->sprites);
     }
     player->playerState = 3;

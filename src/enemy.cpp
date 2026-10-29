@@ -54,14 +54,14 @@ inline void Enemy::Move()
     this->prevPos = this->pos;
     if (!this->flags.mirrored)
     {
-        this->pos.x += g_App.unk_178 * this->velocity.x;
+        this->pos.x += g_App.gameSpeed * this->velocity.x;
     }
     else
     {
-        this->pos.x -= g_App.unk_178 * this->velocity.x;
+        this->pos.x -= g_App.gameSpeed * this->velocity.x;
     }
-    this->pos.y += g_App.unk_178 * this->velocity.y;
-    this->pos.z += g_App.unk_178 * this->velocity.z;
+    this->pos.y += g_App.gameSpeed * this->velocity.y;
+    this->pos.z += g_App.gameSpeed * this->velocity.z;
 }
 
 void EnemyManager::Initialize()

@@ -826,7 +826,7 @@ int GuiImpl::RunMsg()
             g_App.redrawFrames = 0x192;
             break;
         case 11:
-            g_App.unk_2b8 = 0;
+            g_App.clockMeasurementPending = 0;
             g_Unknown626270.stats->guiScore = g_Unknown626270.stats->score;
             if (g_Unknown626270.unk_93d8 & 1)
             {

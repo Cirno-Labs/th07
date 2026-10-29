@@ -26,8 +26,8 @@ int EffectInitDrift(Effect *effect)
     effect->step.y = (g_Rng.GetRandomF32ZeroToOne() * 256.0f - 128.0f) / 12.0f;
     effect->step.z = 0.0f;
     effect->acceleration = -effect->step / 19.0f;
-    effect->step *= g_App.unk_178;
-    effect->acceleration *= g_App.unk_178;
+    effect->step *= g_App.gameSpeed;
+    effect->acceleration *= g_App.gameSpeed;
     return 0;
 }
 
@@ -44,8 +44,8 @@ int EffectInitDriftFast(Effect *effect)
     effect->step.y = (g_Rng.GetRandomF32ZeroToOne() * 256.0f - 128.0f) * 4.0f / 33.0f;
     effect->step.z = 0.0f;
     effect->acceleration = -effect->step / 20.0f;
-    effect->step *= g_App.unk_178;
-    effect->acceleration *= g_App.unk_178;
+    effect->step *= g_App.gameSpeed;
+    effect->acceleration *= g_App.gameSpeed;
     return 0;
 }
 
@@ -220,8 +220,8 @@ int EffectInitPetal20(Effect *effect)
     effect->step.z = g_Rng.GetRandomF32ZeroToOne() * 0.1f + 0.03f + effect->velocity.z;
     effect->acceleration.x = g_Rng.GetRandomF32ZeroToOne() * 0.0002f - 0.0001f;
     effect->acceleration.y = g_Rng.GetRandomF32ZeroToOne() * 0.0002f - 0.0001f;
-    effect->step = effect->step * g_App.unk_178;
-    effect->acceleration = effect->acceleration * g_App.unk_178;
+    effect->step = effect->step * g_App.gameSpeed;
+    effect->acceleration = effect->acceleration * g_App.gameSpeed;
     effect->drawList = 1;
     effect->sprite.rotationZ = g_Rng.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
     effect->sprite.rotationX = g_Rng.GetRandomF32ZeroToOne() * 0.031415928f - 0.015707964f;
@@ -248,7 +248,7 @@ int EffectInitPetal26(Effect *effect)
     effect->step.y = effect->unk_27c.x / effect->velocity.x;
     effect->step.z = g_Rng.GetRandomF32ZeroToOne() * 0.1f + 0.09f;
     effect->unk_27c += g_Unknown134cd04 / 2.0f + g_Unknown134ccf8;
-    effect->step = effect->step * g_App.unk_178;
+    effect->step = effect->step * g_App.gameSpeed;
     effect->drawList = 1;
     effect->sprite.rotationZ = g_Rng.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
     effect->sprite.rotationX = g_Rng.GetRandomF32ZeroToOne() * 0.06283186f - 0.031415928f;
@@ -276,7 +276,7 @@ int EffectInitPetal27(Effect *effect)
     effect->step.y = effect->unk_27c.x / effect->velocity.x;
     effect->step.z = -(g_Rng.GetRandomF32ZeroToOne() * 0.2f) - 0.06f;
     effect->unk_27c += g_Unknown134cd04 / 2.0f + g_Unknown134ccf8;
-    effect->step = effect->step * g_App.unk_178;
+    effect->step = effect->step * g_App.gameSpeed;
     effect->drawList = 1;
     effect->sprite.rotationZ = g_Rng.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
     effect->sprite.rotationX = g_Rng.GetRandomF32ZeroToOne() * 0.06283186f - 0.031415928f;
@@ -321,7 +321,7 @@ int EffectInitPetal31(Effect *effect)
     effect->step.y = g_Rng.GetRandomF32ZeroToOne() * 0.06f - 0.03f + effect->velocity.y;
     effect->step.z = -(g_Rng.GetRandomF32ZeroToOne() * 0.1f) + effect->velocity.z;
     effect->unk_27c += g_Unknown134cd04 / 2.0f + g_Unknown134ccf8;
-    effect->step = effect->step * g_App.unk_178;
+    effect->step = effect->step * g_App.gameSpeed;
     effect->drawList = 1;
     effect->sprite.rotationZ = g_Rng.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
     effect->sprite.rotationX = g_Rng.GetRandomF32ZeroToOne() * 0.06283186f - 0.031415928f;
@@ -624,14 +624,14 @@ int EffectManager::OnDraw2()
     float a;
     int t;
 
-    if (g_App.unk_13c == 0)
+    if (g_App.effectsQuality == 0)
     {
         return 1;
     }
     while (eff != NULL)
     {
         n++;
-        if (g_App.unk_13c == 1 && (n & 1) != 0)
+        if (g_App.effectsQuality == 1 && (n & 1) != 0)
         {
             return 1;
         }

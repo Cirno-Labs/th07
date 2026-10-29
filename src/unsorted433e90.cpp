@@ -116,7 +116,7 @@ restart:
                 {
                     break;
                 }
-                g_App.unk_18c &= ~0x10;
+                g_App.stateFlags &= ~0x10;
             }
             else if (testResult == D3DERR_DEVICENOTRESET)
             {
@@ -127,7 +127,7 @@ restart:
                 }
                 SetDefaultRenderStates();
                 g_App.redrawFrames = 3;
-                g_App.unk_18c |= 0x10;
+                g_App.stateFlags |= 0x10;
             }
         }
     }
@@ -254,7 +254,7 @@ int GameWindow::RunFrame()
         {
             g_App.d3dDevice->BeginScene();
             g_SpriteEngine->BeginQuadBatch();
-            g_App.unk_2bc = 0xff;
+            g_App.fogState = 0xff;
             g_App.DisableFog();
             g_Chain.RunDrawChain();
             g_SpriteEngine->FlushQuadBatch();
@@ -466,8 +466,8 @@ int InitD3dDevice()
     params3.EnableAutoDepthStencil = TRUE;
     params3.AutoDepthStencilFormat = D3DFMT_D16;
     params3.Flags = D3DPRESENTFLAG_LOCKABLE_BACKBUFFER;
-    g_App.unk_18c |= 2;
-    g_App.unk_170 = 1;
+    g_App.stateFlags |= 2;
+    g_App.wants60Hz = 1;
     retried = 0;
 retry:
     if (g_App.flags.referenceRasterizer)
@@ -496,7 +496,7 @@ retry:
                 {
                     LogPrintf(&g_Log, "リフレッシュレートが変更できません\r\n");
                     params3.FullScreen_RefreshRateInHz = 0;
-                    g_App.unk_170 = 0;
+                    g_App.wants60Hz = 0;
                     retried = 1;
                     goto retry;
                 }
@@ -519,20 +519,20 @@ retry:
             else
             {
                 LogPrintf(&g_Log, "REF で動作しますが、重すぎて恐らくゲームになりません...\r\n");
-                g_App.unk_18c &= ~1;
+                g_App.stateFlags &= ~1;
                 checkFormat = false;
             }
         }
         else
         {
             LogPrintf(&g_Log, "HAL で動作します\r\n");
-            g_App.unk_18c &= ~1;
+            g_App.stateFlags &= ~1;
         }
     }
     else
     {
         LogPrintf(&g_Log, "T&L HAL で動作しま～す\r\n");
-        g_App.unk_18c |= 1;
+        g_App.stateFlags |= 1;
     }
     memcpy(&g_App.presentParams, &params3, sizeof(params3));
     halfWidth = 320.0f;
@@ -567,11 +567,11 @@ retry:
         if (g_App.d3d->CheckDeviceFormat(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, params3.BackBufferFormat, 0,
                                          D3DRTYPE_TEXTURE, D3DFMT_A8R8G8B8) == D3D_OK)
         {
-            g_App.unk_18c |= 4;
+            g_App.stateFlags |= 4;
         }
         else
         {
-            g_App.unk_18c &= ~4;
+            g_App.stateFlags &= ~4;
             g_App.flags.force16BitTextures = 1;
             LogPrintf(&g_Log, "D3DFMT_A8R8G8B8 をサポートしていません、減色モードで動作します\r\n");
         }

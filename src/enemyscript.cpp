@@ -1855,8 +1855,8 @@ done:
         float radius;
         Vector2 polar;
 
-        enemy->unk_2b5c = AddNormalizeAngle(enemy->unk_2b5c, g_App.unk_178 * enemy->unk_2b60);
-        enemy->unk_2b6c = g_App.unk_178 * enemy->unk_2b70 + enemy->unk_2b6c;
+        enemy->unk_2b5c = AddNormalizeAngle(enemy->unk_2b5c, g_App.gameSpeed * enemy->unk_2b60);
+        enemy->unk_2b6c = g_App.gameSpeed * enemy->unk_2b70 + enemy->unk_2b6c;
         polar.SetPolar(enemy->unk_2b5c, enemy->unk_2b6c);
         enemy->velocity.x = polar.x + enemy->moveStart.x - enemy->pos.x;
         enemy->velocity.y = polar.y + enemy->moveStart.y - enemy->pos.y;
@@ -1876,8 +1876,8 @@ done:
         // Unused, as th06's vec.
         D3DXVECTOR3 vec;
 
-        enemy->angle = AddNormalizeAngle(enemy->angle, g_App.unk_178 * enemy->angularVelocity);
-        enemy->speed = g_App.unk_178 * enemy->acceleration + enemy->speed;
+        enemy->angle = AddNormalizeAngle(enemy->angle, g_App.gameSpeed * enemy->angularVelocity);
+        enemy->speed = g_App.gameSpeed * enemy->acceleration + enemy->speed;
         ((Vector2 *)&enemy->velocity)->SetPolar(enemy->angle, enemy->speed);
         enemy->velocity.z = 0.0f;
         if (enemy->moveDuration > 0)
@@ -2439,7 +2439,7 @@ void UpdateLaserEdgeBullets(Enemy *enemy, EnemyScriptInstr *instr)
                         {
                             blt->angle = AddNormalizeAngle(l->angle, -1.5707964f);
                         }
-                        ((Vector2 *)&blt->velocity)->SetPolar(blt->angle, g_App.unk_178 * blt->speed);
+                        ((Vector2 *)&blt->velocity)->SetPolar(blt->angle, g_App.gameSpeed * blt->speed);
                         blt->unk_c08 = 10;
                         blt->sprites = g_BulletManager.typeSprites[5];
                         g_SpriteEngine->SetSprite(&blt->sprites.sprite0, blt->sprites.sprite0.spriteIndex + blt->color);
@@ -2542,7 +2542,7 @@ void StartSlowdown(Enemy *enemy, EnemyScriptInstr *instr)
     Bullet *bullet;
     int i;
 
-    g_App.unk_178 = 1.0f / instr->args[1].i;
+    g_App.gameSpeed = 1.0f / instr->args[1].i;
     g_Unknown1347b00.unk_528[0].pendingInterrupt = 2;
     g_Unknown1347b00.unk_528[1].pendingInterrupt = 2;
     bullet = g_BulletManager.bullets;
@@ -2552,7 +2552,7 @@ void StartSlowdown(Enemy *enemy, EnemyScriptInstr *instr)
         {
             continue;
         }
-        bullet->velocity *= g_App.unk_178;
+        bullet->velocity *= g_App.gameSpeed;
         bullet->sprites.sprite0.baseSpriteIndex = bullet->sprites.sprite0.spriteIndex;
         if (bullet->sprites.sprite0.spriteIndex >= 0x260 && bullet->sprites.sprite0.spriteIndex <= 0x26f)
         {
@@ -2564,7 +2564,7 @@ void StartSlowdown(Enemy *enemy, EnemyScriptInstr *instr)
 void EndSlowdown(Enemy *enemy, EnemyScriptInstr *instr)
 {
     Bullet *bullet = g_BulletManager.bullets;
-    float scale = 1.0f / g_App.unk_178;
+    float scale = 1.0f / g_App.gameSpeed;
     int i;
 
     for (i = 0; i < 0x400; i++, bullet++)
@@ -2579,12 +2579,12 @@ void EndSlowdown(Enemy *enemy, EnemyScriptInstr *instr)
             g_SpriteEngine->SetSprite(&bullet->sprites.sprite0, bullet->sprites.sprite0.baseSpriteIndex);
         }
     }
-    g_App.unk_178 = 1.0f / instr->args[1].i;
-    if (g_App.unk_178 < 1.0f)
+    g_App.gameSpeed = 1.0f / instr->args[1].i;
+    if (g_App.gameSpeed < 1.0f)
     {
-        g_App.unk_18c |= 0x20;
+        g_App.stateFlags |= 0x20;
     }
-    g_App.unk_178 = 1.0f;
+    g_App.gameSpeed = 1.0f;
     g_Unknown1347b00.unk_528[0].pendingInterrupt = 1;
     g_Unknown1347b00.unk_528[1].pendingInterrupt = 1;
 }

@@ -27,7 +27,7 @@ void App::CheckClockDrift()
     double counterTime;
     double clockTime;
 
-    if (this->unk_2b8 == 0)
+    if (this->clockMeasurementPending == 0)
     {
         return;
     }
@@ -51,35 +51,35 @@ void App::CheckClockDrift()
     {
         if (clockTime / counterTime > 2.5)
         {
-            this->unk_2a4++;
-            if (this->unk_2ac < this->unk_2a4)
+            this->fastClockStreak++;
+            if (this->maxFastClockStreak < this->fastClockStreak)
             {
-                this->unk_2ac = this->unk_2a4;
+                this->maxFastClockStreak = this->fastClockStreak;
             }
-            if (this->unk_2b0 < this->unk_2a4)
+            if (this->fastClockCycleCount < this->fastClockStreak)
             {
-                this->unk_2b0 = this->unk_2a4;
+                this->fastClockCycleCount = this->fastClockStreak;
             }
-            if (this->unk_2b0 >= 10)
+            if (this->fastClockCycleCount >= 10)
             {
-                this->unk_2b4++;
-                this->unk_2b0 = 0;
+                this->fastClockCycles++;
+                this->fastClockCycleCount = 0;
             }
             DebugPrint2("alq チェック %f / %f = %f\r\n", clockTime, counterTime, clockTime / counterTime);
         }
-        else if (this->unk_2a4 != 0)
+        else if (this->fastClockStreak != 0)
         {
-            this->unk_2a4--;
+            this->fastClockStreak--;
         }
-        this->unk_2b8 = 0;
+        this->clockMeasurementPending = 0;
     }
-    if (this->unk_2ac >= 40 || this->unk_2b4 >= 16)
+    if (this->maxFastClockStreak >= 40 || this->fastClockCycles >= 16)
     {
-        this->unk_18c |= 8;
+        this->stateFlags |= 8;
     }
     else
     {
-        this->unk_18c &= ~8;
+        this->stateFlags &= ~8;
     }
 }
 
@@ -105,7 +105,7 @@ int App::OnUpdate(App *arg)
     g_SpriteEngine->ResetUnk0();
     g_SpriteEngine->shakeY = 0.0f;
     g_SpriteEngine->shakeX = 0.0f;
-    g_App.unk_2bc = 0xff;
+    g_App.fogState = 0xff;
     if (g_SoundPlayer.bgm != NULL)
     {
         g_SoundPlayer.bgm->UpdateFade();
@@ -630,8 +630,8 @@ int App::AddedCallback(App *arg)
     g_SpriteEngine->ReleaseSurface(0);
     arg->hideFps = 0;
     arg->redrawFrames = 0;
-    arg->unk_190 = timeGetTime();
-    g_Rng.SetSeed(arg->unk_190);
+    arg->lastPlayTimeTick = timeGetTime();
+    g_Rng.SetSeed(arg->lastPlayTimeTick);
     InitDirectInput(arg);
     if (arg->midi == NULL)
     {
@@ -795,30 +795,30 @@ void DrawFps(int draw)
                 {
                     float target = 60.0f;
 
-                    g_App.unk_184 += target;
+                    g_App.expectedFrames += target;
                     if (target * 0.9f < fps)
                     {
-                        g_App.unk_180 += target;
+                        g_App.achievedFrames += target;
                     }
                     else if (target * 0.7f < fps)
                     {
-                        g_App.unk_180 += target * 0.8f;
+                        g_App.achievedFrames += target * 0.8f;
                     }
                     else if (target * 0.5f < fps)
                     {
-                        g_App.unk_180 += target * 0.6f;
+                        g_App.achievedFrames += target * 0.6f;
                     }
                     else
                     {
-                        g_App.unk_180 += target * 0.5f;
+                        g_App.achievedFrames += target * 0.5f;
                     }
                     if (!(g_Unknown626270.unk_93d8 >> 3 & 1))
                     {
-                        g_App.unk_188 = fps + 0.5f;
+                        g_App.roundedFps = fps + 0.5f;
                     }
                     else
                     {
-                        sprintf(speedText, "%2d", g_App.unk_188);
+                        sprintf(speedText, "%2d", g_App.roundedFps);
                     }
                 }
             }
@@ -865,7 +865,7 @@ void DrawFps(int draw)
             speedPos.x = 384.0f;
             speedPos.y = 448.0f;
             speedPos.z = 0.0f;
-            if (g_App.unk_2a8 != 0)
+            if (g_App.fpsWarning != 0)
             {
                 g_AsciiText.color = 0xffff4040;
             }
@@ -881,13 +881,13 @@ void DrawFps(int draw)
 
 void Timer::Add(int frames)
 {
-    if (g_App.unk_18c >> 5 & 1)
+    if (g_App.stateFlags >> 5 & 1)
     {
         this->current++;
         this->subFrame = 0.0f;
         this->previous = -999;
     }
-    if (g_App.unk_178 > 0.99f)
+    if (g_App.gameSpeed > 0.99f)
     {
         this->current += frames;
     }
@@ -898,7 +898,7 @@ void Timer::Add(int frames)
     else
     {
         this->previous = this->current;
-        this->subFrame += g_App.unk_178 * frames;
+        this->subFrame += g_App.gameSpeed * frames;
         while (this->subFrame >= 1.0f)
         {
             this->current++;
@@ -909,13 +909,13 @@ void Timer::Add(int frames)
 
 void Timer::Sub(int frames)
 {
-    if (g_App.unk_18c >> 5 & 1)
+    if (g_App.stateFlags >> 5 & 1)
     {
         this->current--;
         this->subFrame = 0.0f;
         this->previous = -999;
     }
-    if (g_App.unk_178 > 0.99f)
+    if (g_App.gameSpeed > 0.99f)
     {
         this->current -= frames;
     }
@@ -926,7 +926,7 @@ void Timer::Sub(int frames)
     else
     {
         this->previous = this->current;
-        this->subFrame -= g_App.unk_178 * frames;
+        this->subFrame -= g_App.gameSpeed * frames;
         while (this->subFrame < 0.0f)
         {
             this->current--;
@@ -937,9 +937,9 @@ void Timer::Sub(int frames)
 
 void App::TickTimer(int *frames, float *subFrame)
 {
-    if (this->unk_178 <= 0.99f)
+    if (this->gameSpeed <= 0.99f)
     {
-        *subFrame += this->unk_178;
+        *subFrame += this->gameSpeed;
         if (*subFrame >= 1.0f)
         {
             (*frames)++;
@@ -1111,8 +1111,8 @@ int App::LoadConfig(char *path)
         g_App.windowed = 0;
         g_App.frameSkip = 0;
         g_App.controllerMapping = g_DefaultControllerMapping;
-        g_App.unk_13c = 2;
-        g_App.unk_13d = 0;
+        g_App.effectsQuality = 2;
+        g_App.optionsMenuCursor = 0;
         g_App.shootFocuses = 1;
     }
     else
@@ -1139,7 +1139,7 @@ int App::LoadConfig(char *path)
         }
         if (g_App.lifeCount >= 5 || g_App.bombCount >= 4 || g_App.colorMode16Bits >= 2 || g_App.musicMode >= 3 ||
             g_App.defaultDifficulty >= 6 || g_App.playSounds >= 2 || g_App.windowed >= 2 || g_App.frameSkip >= 3 ||
-            g_App.unk_13c >= 3 || g_App.unk_13d >= 2 || g_App.shootFocuses >= 2 || g_App.version != 0x70002 ||
+            g_App.effectsQuality >= 3 || g_App.optionsMenuCursor >= 2 || g_App.shootFocuses >= 2 || g_App.version != 0x70002 ||
             g_FileSize != sizeof(ConfigCopy))
         {
             LogPrintf(&g_Log, "コンフィグデータが異常でしたので再初期化しました\r\n");
@@ -1340,17 +1340,17 @@ int App::FadeOutMusic(float seconds)
     {
         // The wave fade counts frames, so it is stretched while the game
         // runs slow.
-        if (this->unk_178 == 0.0f)
+        if (this->gameSpeed == 0.0f)
         {
             duration = seconds;
         }
-        else if (this->unk_178 > 1.0f)
+        else if (this->gameSpeed > 1.0f)
         {
             duration = seconds;
         }
         else
         {
-            duration = seconds / this->unk_178;
+            duration = seconds / this->gameSpeed;
         }
         g_SoundPlayer.QueueSoundCommand(5, duration, "");
     }
@@ -1369,9 +1369,9 @@ int App::IsScoreDisabled()
 int App::EnableFog()
 {
     g_SpriteEngine->FlushQuadBatch();
-    if (this->unk_2bc != 1)
+    if (this->fogState != 1)
     {
-        this->unk_2bc = 1;
+        this->fogState = 1;
         return this->d3dDevice->SetRenderState(D3DRS_FOGENABLE, TRUE);
     }
     return 0;
@@ -1380,9 +1380,9 @@ int App::EnableFog()
 int App::DisableFog()
 {
     g_SpriteEngine->FlushQuadBatch();
-    if (this->unk_2bc != 0)
+    if (this->fogState != 0)
     {
-        this->unk_2bc = 0;
+        this->fogState = 0;
         return this->d3dDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
     }
     return 0;
@@ -1399,11 +1399,11 @@ void App::AddPlayTime()
     DWORD now = timeGetTime();
     DWORD delta;
 
-    if (now < this->unk_190)
+    if (now < this->lastPlayTimeTick)
     {
-        this->unk_190 = 0;
+        this->lastPlayTimeTick = 0;
     }
-    delta = now - this->unk_190;
+    delta = now - this->lastPlayTimeTick;
     g_Unknown626270.plst.runHours += delta / 3600000;
     delta %= 3600000;
     g_Unknown626270.plst.runMinutes += delta / 60000;
@@ -1426,7 +1426,7 @@ void App::AddPlayTime()
         g_Unknown626270.plst.runHours += g_Unknown626270.plst.runMinutes / 60;
         g_Unknown626270.plst.runMinutes %= 60;
     }
-    this->unk_190 = now;
+    this->lastPlayTimeTick = now;
 }
 
 void App::AddTotalPlayTime()
@@ -1434,11 +1434,11 @@ void App::AddTotalPlayTime()
     DWORD now = timeGetTime();
     DWORD delta;
 
-    if (now < this->unk_194)
+    if (now < this->lastTotalPlayTimeTick)
     {
-        this->unk_194 = 0;
+        this->lastTotalPlayTimeTick = 0;
     }
-    delta = now - this->unk_194;
+    delta = now - this->lastTotalPlayTimeTick;
     g_Unknown626270.plst.playHours += delta / 3600000;
     delta %= 3600000;
     g_Unknown626270.plst.playMinutes += delta / 60000;
@@ -1461,7 +1461,7 @@ void App::AddTotalPlayTime()
         g_Unknown626270.plst.playHours += g_Unknown626270.plst.playMinutes / 60;
         g_Unknown626270.plst.playMinutes %= 60;
     }
-    this->unk_194 = now;
+    this->lastTotalPlayTimeTick = now;
 }
 
 inline void FreeData(void *data)
