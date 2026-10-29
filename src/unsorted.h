@@ -1595,6 +1595,13 @@ void EndSlowdown(Enemy *enemy, EnemyScriptInstr *instr);
 void AimTurnedBulletsAtPlayer(Enemy *enemy, EnemyScriptInstr *instr);
 // Flashes the screen 0xd0cfcfff for argument 1 frames.
 void FlashScreen(Enemy *enemy, EnemyScriptInstr *instr);
+// Flashes the screen 0x50cfcfff for 8 frames. Each bullet with a sprite
+// over 48 high within 128 (difficulty 2) or 180 of the enemy in y
+// bursts into 15 bullets around it at speed 0.1 with a flag 0x20
+// command, of three random sprite and color pairs, at a random angle in
+// a 3 pi / 2 arc from -pi / 2 (argument 1 = 0) or from pi / 4, and is
+// removed.
+void BurstBulletsFixedCount(Enemy *enemy, EnemyScriptInstr *instr);
 // Fades the music out over 3 seconds.
 void ScriptFadeOutMusic(Enemy *enemy, EnemyScriptInstr *instr);
 // Plays music slot 2 (App::PlayMidi) and, if that returns nonzero,

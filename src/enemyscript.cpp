@@ -1202,6 +1202,66 @@ void FlashScreen(Enemy *enemy, EnemyScriptInstr *instr)
     ScreenEffect::StartEffect(3, instr->args[1].i, 1, 0xd0cfcfff, 0);
 }
 
+void BurstBulletsFixedCount(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    Bullet *bullet = g_BulletManager.bullets;
+    int i;
+    BulletShooter shooter;
+    float w;
+    int j;
+
+    w = g_Unknown626270.difficulty == 2 ? 128.0f : 180.0f;
+    ScreenEffect::StartEffect(3, 8, 1, 0x50cfcfff, 0);
+    for (i = 0; i < 0x400; i++, bullet++)
+    {
+        if (bullet->state == 0)
+        {
+            continue;
+        }
+        if (bullet->sprites.sprite0.spriteData->height > 48.0f && enemy->pos.y - w < bullet->pos.y &&
+            w + enemy->pos.y > bullet->pos.y)
+        {
+            for (j = 0; j < 15; j++)
+            {
+                shooter.pos = bullet->pos;
+                shooter.pos.x += g_Rng.GetRandomF32ZeroToOne() * 32.0f - 16.0f;
+                shooter.pos.y += g_Rng.GetRandomF32ZeroToOne() * 32.0f - 16.0f;
+                switch (g_Rng.GetRandomU16InRange(3))
+                {
+                case 0:
+                    shooter.sprite = 0;
+                    shooter.color = 4;
+                    break;
+                case 1:
+                    shooter.sprite = 3;
+                    shooter.color = 4;
+                    break;
+                case 2:
+                    shooter.sprite = 7;
+                    shooter.color = 2;
+                    break;
+                }
+                if (instr->args[1].i == 0)
+                {
+                    shooter.angle1 = g_Rng.GetRandomF32ZeroToOne() * 4.712389f - 1.5707964f;
+                }
+                else
+                {
+                    shooter.angle1 = AddNormalizeAngle(g_Rng.GetRandomF32ZeroToOne() * 4.712389f, 0.7853982f);
+                }
+                shooter.speed1 = 0.1f;
+                shooter.count1 = 1;
+                shooter.count2 = 1;
+                shooter.flags = 0;
+                shooter.aimMode = 1;
+                shooter.SetShooterTurnCommand(0, 0, 100, 0.0f, g_Rng.GetRandomF32ZeroToOne() * 0.008f + 0.01f);
+                g_BulletManager.FirePattern(&shooter);
+            }
+            bullet->FreeBullet();
+        }
+    }
+}
+
 void ScriptFadeOutMusic(Enemy *enemy, EnemyScriptInstr *instr)
 {
     g_App.FadeOutMusic(3.0f);
