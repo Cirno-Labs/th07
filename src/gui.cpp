@@ -655,18 +655,18 @@ void GuiImpl::StartMsgScript(int index)
             break;
         case 6:
             CopySpriteToTexture(0x619);
-            g_Unknown1347b00.unk_524 = 2;
+            g_Unknown1347b00.dialogueScriptOffset = 2;
             g_Unknown9a9ab8 = 9;
             break;
         case 7:
             CopySpriteToTexture(0x61b);
-            g_Unknown1347b00.unk_524 = 1;
-            g_Unknown1347b00.unk_520 = 2;
+            g_Unknown1347b00.dialogueScriptOffset = 1;
+            g_Unknown1347b00.dialogueSpriteCount = 2;
             g_Unknown9a9ab8 = 9;
             break;
         case 8:
             CopySpriteToTexture(0x61d);
-            g_Unknown1347b00.unk_524 = 2;
+            g_Unknown1347b00.dialogueScriptOffset = 2;
             g_Unknown9a9ab8 = 9;
             break;
         }

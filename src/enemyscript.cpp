@@ -609,9 +609,9 @@ void StartSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
     g_BulletManager.ClearAll(1);
     g_Unknown1347b00.spellCardState = 1;
     g_Unknown1347b00.spellCardFrames = 0;
-    for (i = 0; i < g_Unknown1347b00.unk_520; i++)
+    for (i = 0; i < g_Unknown1347b00.dialogueSpriteCount; i++)
     {
-        g_SpriteEngine->StartScript(&g_Unknown1347b00.unk_528[i], i + g_Unknown1347b00.unk_524 + 0x2dc);
+        g_SpriteEngine->StartScript(&g_Unknown1347b00.dialogueSprites[i], i + g_Unknown1347b00.dialogueScriptOffset + 0x2dc);
     }
     g_Unknown12fe0c8 = 1;
     g_Unknown12fe0c4 = 1;
@@ -1684,7 +1684,7 @@ loop:
             g_ItemManager.SpawnItem(&enemy->pos, INT_ARG(0), 0);
             break;
         case 125:
-            g_Unknown1347b00.unk_50f4 = INT_ARG(0);
+            g_Unknown1347b00.waitLabel = INT_ARG(0);
             break;
         case 126:
             g_Unknown49fbf0.SetBossLives(INT_ARG(0));
@@ -2543,8 +2543,8 @@ void StartSlowdown(Enemy *enemy, EnemyScriptInstr *instr)
     int i;
 
     g_App.gameSpeed = 1.0f / instr->args[1].i;
-    g_Unknown1347b00.unk_528[0].pendingInterrupt = 2;
-    g_Unknown1347b00.unk_528[1].pendingInterrupt = 2;
+    g_Unknown1347b00.dialogueSprites[0].pendingInterrupt = 2;
+    g_Unknown1347b00.dialogueSprites[1].pendingInterrupt = 2;
     bullet = g_BulletManager.bullets;
     for (i = 0; i < 0x400; i++, bullet++)
     {
@@ -2585,8 +2585,8 @@ void EndSlowdown(Enemy *enemy, EnemyScriptInstr *instr)
         g_App.stateFlags |= 0x20;
     }
     g_App.gameSpeed = 1.0f;
-    g_Unknown1347b00.unk_528[0].pendingInterrupt = 1;
-    g_Unknown1347b00.unk_528[1].pendingInterrupt = 1;
+    g_Unknown1347b00.dialogueSprites[0].pendingInterrupt = 1;
+    g_Unknown1347b00.dialogueSprites[1].pendingInterrupt = 1;
 }
 
 void BurstBulletsByDifficulty(Enemy *enemy, EnemyScriptInstr *instr)

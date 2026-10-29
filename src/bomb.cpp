@@ -35,7 +35,7 @@ void DimPlayAreaForBomb(Player *player)
     }
     g_SpriteEngine->ResetUnk0();
     g_Unknown1347b00.SetTintColor(color.color);
-    g_Unknown1347b00.unk_52b0 = 1;
+    g_Unknown1347b00.keepTintColor = 1;
 }
 
 void SpawnBombAura(Player *player)

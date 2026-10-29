@@ -27,8 +27,8 @@ Stage::Stage()
     this->camera.at = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
     this->camera.up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
     this->camera.fov = 0.5235988f;
-    this->unk_50f8 = this->camera;
-    this->unk_5138 = this->camera;
+    this->cameraFrom = this->camera;
+    this->cameraTo = this->camera;
 }
 
 float HermiteInterpolate(float p0, float p1, float m0, float m1, float t)
@@ -49,18 +49,18 @@ void UpdateEasedVector(Stage *stage, int i, D3DXVECTOR3 *out, D3DXVECTOR3 *from,
 {
     float t;
 
-    if (stage->unk_5248[i] < stage->unk_5238[i])
+    if (stage->cameraFadeTimer[i] < stage->cameraFadeFrames[i])
     {
-        stage->unk_5248[i].Tick();
-        t = stage->unk_5248[i].AsFloat() / stage->unk_5238[i];
+        stage->cameraFadeTimer[i].Tick();
+        t = stage->cameraFadeTimer[i].AsFloat() / stage->cameraFadeFrames[i];
     }
     else
     {
-        stage->unk_5248[i].Set(stage->unk_5238[i]);
+        stage->cameraFadeTimer[i].Set(stage->cameraFadeFrames[i]);
         t = 1.0f;
-        stage->unk_5238[i] = 0;
+        stage->cameraFadeFrames[i] = 0;
     }
-    switch (stage->unk_5278[i])
+    switch (stage->cameraFadeMode[i])
     {
     case 1:
         t = 1.0f - (t = 1.0f - t) * t;
@@ -81,7 +81,7 @@ void UpdateEasedVector(Stage *stage, int i, D3DXVECTOR3 *out, D3DXVECTOR3 *from,
         t = t * t * t * t;
         break;
     }
-    if (stage->unk_5278[i] != 7)
+    if (stage->cameraFadeMode[i] != 7)
     {
         *out = *to - *from;
         *out = t * *out + *from;
@@ -104,12 +104,12 @@ int Stage::OnUpdate(Stage *stage)
     {
         return 1;
     }
-    if (stage->unk_50f4 != 0)
+    if (stage->waitLabel != 0)
     {
         idx = 0;
         cmd = stage->script;
         stage->scriptIndex = 0;
-        while ((cmd->opcode != 0x1f || stage->unk_50f4 != *(int *)&cmd->args.x) && cmd->frame != -1)
+        while ((cmd->opcode != 0x1f || stage->waitLabel != *(int *)&cmd->args.x) && cmd->frame != -1)
         {
             cmd++;
             idx++;
@@ -118,7 +118,7 @@ int Stage::OnUpdate(Stage *stage)
         {
             stage->scriptIndex = idx + 1;
             stage->scriptTime.Set(cmd->frame);
-            stage->unk_50f4 = 0;
+            stage->waitLabel = 0;
         }
     }
 loop:
@@ -164,129 +164,129 @@ loop:
             stage->fogFadeTime.Set(0);
             break;
         case 5:
-            if (stage->unk_52a8)
+            if (stage->cameraOffsetChanged)
             {
-                D3DXVECTOR3 offset = cmd->args - stage->unk_50f8.eye;
+                D3DXVECTOR3 offset = cmd->args - stage->cameraFrom.eye;
                 OffsetPetalEffects(&offset);
-                stage->unk_52a8 = 0;
+                stage->cameraOffsetChanged = 0;
             }
-            stage->unk_5138.eye = stage->unk_50f8.eye;
-            stage->unk_50f8.eye = cmd->args;
-            if (stage->unk_5238[0] == 0)
+            stage->cameraTo.eye = stage->cameraFrom.eye;
+            stage->cameraFrom.eye = cmd->args;
+            if (stage->cameraFadeFrames[0] == 0)
             {
                 stage->camera.eye = cmd->args;
             }
             break;
         case 6:
-            stage->unk_5238[0] = *(int *)&cmd->args.x;
-            stage->unk_5248[0].Set(0);
-            stage->unk_5278[0] = *(int *)&cmd->args.y;
+            stage->cameraFadeFrames[0] = *(int *)&cmd->args.x;
+            stage->cameraFadeTimer[0].Set(0);
+            stage->cameraFadeMode[0] = *(int *)&cmd->args.y;
             break;
         case 7:
-            stage->unk_5138.at = stage->unk_50f8.at;
-            stage->unk_50f8.at = cmd->args;
-            if (stage->unk_5238[1] == 0)
+            stage->cameraTo.at = stage->cameraFrom.at;
+            stage->cameraFrom.at = cmd->args;
+            if (stage->cameraFadeFrames[1] == 0)
             {
                 stage->camera.at = cmd->args;
             }
             break;
         case 8:
-            stage->unk_5238[1] = *(int *)&cmd->args.x;
-            stage->unk_5248[1].Set(0);
-            stage->unk_5278[1] = *(int *)&cmd->args.y;
+            stage->cameraFadeFrames[1] = *(int *)&cmd->args.x;
+            stage->cameraFadeTimer[1].Set(0);
+            stage->cameraFadeMode[1] = *(int *)&cmd->args.y;
             break;
         case 9:
-            stage->unk_5138.up = stage->unk_50f8.up;
-            stage->unk_50f8.up = cmd->args;
-            if (stage->unk_5238[2] == 0)
+            stage->cameraTo.up = stage->cameraFrom.up;
+            stage->cameraFrom.up = cmd->args;
+            if (stage->cameraFadeFrames[2] == 0)
             {
                 stage->camera.up = cmd->args;
             }
             break;
         case 10:
-            stage->unk_5238[2] = *(int *)&cmd->args.x;
-            stage->unk_5278[2] = *(int *)&cmd->args.y;
-            stage->unk_5248[2].Set(0);
+            stage->cameraFadeFrames[2] = *(int *)&cmd->args.x;
+            stage->cameraFadeMode[2] = *(int *)&cmd->args.y;
+            stage->cameraFadeTimer[2].Set(0);
             break;
         case 11:
-            stage->unk_5138.fov = stage->unk_50f8.fov;
-            stage->unk_50f8.fov = cmd->args.x;
-            if (stage->unk_5238[3] == 0)
+            stage->cameraTo.fov = stage->cameraFrom.fov;
+            stage->cameraFrom.fov = cmd->args.x;
+            if (stage->cameraFadeFrames[3] == 0)
             {
                 stage->camera.fov = cmd->args.x;
             }
             break;
         case 12:
-            stage->unk_5238[3] = *(int *)&cmd->args.x;
-            stage->unk_5248[3].Set(0);
-            stage->unk_5278[3] = *(int *)&cmd->args.y;
+            stage->cameraFadeFrames[3] = *(int *)&cmd->args.x;
+            stage->cameraFadeTimer[3].Set(0);
+            stage->cameraFadeMode[3] = *(int *)&cmd->args.y;
             break;
         case 13:
-            stage->unk_4d8 = *(D3DCOLOR *)&cmd->args.x;
+            stage->clearColor = *(D3DCOLOR *)&cmd->args.x;
             break;
         case 3:
-            if (stage->unk_50f4 != 0)
+            if (stage->waitLabel != 0)
             {
-                stage->unk_50f4 = 0;
+                stage->waitLabel = 0;
                 break;
             }
             goto done;
         case 4:
             stage->scriptIndex = *(int *)&cmd->args.x;
             stage->scriptTime.Set(*(int *)&cmd->args.y);
-            stage->unk_5238[0] = 0;
-            stage->unk_52a8 = 1;
+            stage->cameraFadeFrames[0] = 0;
+            stage->cameraOffsetChanged = 1;
             goto loop;
         case 14:
-            stage->unk_5138.eye = cmd->args;
+            stage->cameraTo.eye = cmd->args;
             break;
         case 15:
-            stage->unk_50f8.eye = cmd->args;
+            stage->cameraFrom.eye = cmd->args;
             break;
         case 16:
-            stage->unk_51b8.eye = cmd->args;
+            stage->cameraFadeStart.eye = cmd->args;
             break;
         case 17:
-            stage->unk_5178.eye = cmd->args;
+            stage->cameraFadeTarget.eye = cmd->args;
             break;
         case 18:
-            stage->unk_5238[0] = *(int *)&cmd->args.x;
-            stage->unk_5248[0].Set(0);
-            stage->unk_5278[0] = 7;
+            stage->cameraFadeFrames[0] = *(int *)&cmd->args.x;
+            stage->cameraFadeTimer[0].Set(0);
+            stage->cameraFadeMode[0] = 7;
             break;
         case 19:
-            stage->unk_5138.at = cmd->args;
+            stage->cameraTo.at = cmd->args;
             break;
         case 20:
-            stage->unk_50f8.at = cmd->args;
+            stage->cameraFrom.at = cmd->args;
             break;
         case 21:
-            stage->unk_51b8.at = cmd->args;
+            stage->cameraFadeStart.at = cmd->args;
             break;
         case 22:
-            stage->unk_5178.at = cmd->args;
+            stage->cameraFadeTarget.at = cmd->args;
             break;
         case 23:
-            stage->unk_5238[1] = *(int *)&cmd->args.x;
-            stage->unk_5248[1].Set(0);
-            stage->unk_5278[1] = 7;
+            stage->cameraFadeFrames[1] = *(int *)&cmd->args.x;
+            stage->cameraFadeTimer[1].Set(0);
+            stage->cameraFadeMode[1] = 7;
             break;
         case 24:
-            stage->unk_5138.up = cmd->args;
+            stage->cameraTo.up = cmd->args;
             break;
         case 25:
-            stage->unk_50f8.up = cmd->args;
+            stage->cameraFrom.up = cmd->args;
             break;
         case 26:
-            stage->unk_51b8.up = cmd->args;
+            stage->cameraFadeStart.up = cmd->args;
             break;
         case 27:
-            stage->unk_5178.up = cmd->args;
+            stage->cameraFadeTarget.up = cmd->args;
             break;
         case 28:
-            stage->unk_5238[2] = *(int *)&cmd->args.x;
-            stage->unk_5248[2].Set(0);
-            stage->unk_5278[2] = 7;
+            stage->cameraFadeFrames[2] = *(int *)&cmd->args.x;
+            stage->cameraFadeTimer[2].Set(0);
+            stage->cameraFadeMode[2] = 7;
             break;
         case 29:
             if (*(int *)&cmd->args.x >= 0)
@@ -320,35 +320,35 @@ done:
         float t;
 
         i = 0;
-        if (stage->unk_5238[i] != 0)
+        if (stage->cameraFadeFrames[i] != 0)
         {
-            UpdateEasedVector(stage, i, &stage->camera.eye, &stage->unk_5138.eye, &stage->unk_50f8.eye, &stage->unk_51b8.eye, &stage->unk_5178.eye);
+            UpdateEasedVector(stage, i, &stage->camera.eye, &stage->cameraTo.eye, &stage->cameraFrom.eye, &stage->cameraFadeStart.eye, &stage->cameraFadeTarget.eye);
         }
         i = 1;
-        if (stage->unk_5238[i] != 0)
+        if (stage->cameraFadeFrames[i] != 0)
         {
-            UpdateEasedVector(stage, i, &stage->camera.at, &stage->unk_5138.at, &stage->unk_50f8.at, &stage->unk_51b8.at, &stage->unk_5178.at);
+            UpdateEasedVector(stage, i, &stage->camera.at, &stage->cameraTo.at, &stage->cameraFrom.at, &stage->cameraFadeStart.at, &stage->cameraFadeTarget.at);
         }
         i = 2;
-        if (stage->unk_5238[i] != 0)
+        if (stage->cameraFadeFrames[i] != 0)
         {
-            UpdateEasedVector(stage, i, &stage->camera.up, &stage->unk_5138.up, &stage->unk_50f8.up, &stage->unk_51b8.up, &stage->unk_5178.up);
+            UpdateEasedVector(stage, i, &stage->camera.up, &stage->cameraTo.up, &stage->cameraFrom.up, &stage->cameraFadeStart.up, &stage->cameraFadeTarget.up);
         }
         i = 3;
-        if (stage->unk_5238[i] != 0)
+        if (stage->cameraFadeFrames[i] != 0)
         {
-            if (stage->unk_5248[i] < stage->unk_5238[i])
+            if (stage->cameraFadeTimer[i] < stage->cameraFadeFrames[i])
             {
-                stage->unk_5248[i].Tick();
-                t = stage->unk_5248[i].AsFloat() / stage->unk_5238[i];
+                stage->cameraFadeTimer[i].Tick();
+                t = stage->cameraFadeTimer[i].AsFloat() / stage->cameraFadeFrames[i];
             }
             else
             {
-                stage->unk_5248[i].Set(stage->unk_5238[i]);
+                stage->cameraFadeTimer[i].Set(stage->cameraFadeFrames[i]);
                 t = 1.0f;
-                stage->unk_5238[i] = 0;
+                stage->cameraFadeFrames[i] = 0;
             }
-            switch (stage->unk_5278[i])
+            switch (stage->cameraFadeMode[i])
             {
             case 1:
                 t = 1.0f - (t = 1.0f - t) * t;
@@ -369,7 +369,7 @@ done:
                 t = t * t * t * t;
                 break;
             }
-            stage->camera.fov = (delta = stage->unk_50f8.fov - stage->unk_5138.fov) * t + stage->unk_5138.fov;
+            stage->camera.fov = (delta = stage->cameraFrom.fov - stage->cameraTo.fov) * t + stage->cameraTo.fov;
         }
     }
     D3DXVec3Normalize(&stage->camera.dir, &stage->camera.at);
@@ -411,9 +411,9 @@ done:
             stage->spellCardState++;
         }
         stage->spellCardFrames++;
-        for (k = 0; k < stage->unk_520; k++)
+        for (k = 0; k < stage->dialogueSpriteCount; k++)
         {
-            g_SpriteEngine->Step(&stage->unk_528[k]);
+            g_SpriteEngine->Step(&stage->dialogueSprites[k]);
         }
     }
     if (stage->unk_4.spriteIndex > 0)
@@ -436,17 +436,17 @@ void Stage::SetTintColor(D3DCOLOR color)
 {
     ColorBytes c;
 
-    if (this->unk_52ac.a == 0)
+    if (this->tintColor.a == 0)
     {
-        this->unk_52ac.color = color;
+        this->tintColor.color = color;
     }
     else
     {
         c.color = color;
-        this->unk_52ac.r = (DWORD)(c.r + this->unk_52ac.r) >> 1;
-        this->unk_52ac.g = (DWORD)(c.g + this->unk_52ac.g) >> 1;
-        this->unk_52ac.b = (DWORD)(c.b + this->unk_52ac.b) >> 1;
-        this->unk_52ac.a = (DWORD)(c.a + this->unk_52ac.a) >> 1;
+        this->tintColor.r = (DWORD)(c.r + this->tintColor.r) >> 1;
+        this->tintColor.g = (DWORD)(c.g + this->tintColor.g) >> 1;
+        this->tintColor.b = (DWORD)(c.b + this->tintColor.b) >> 1;
+        this->tintColor.a = (DWORD)(c.a + this->tintColor.a) >> 1;
     }
 }
 
@@ -484,7 +484,7 @@ int Stage::OnDraw(Stage *stage)
         g_App.DisableFog();
     }
     g_SpriteEngine->FlushQuadBatch();
-    if (stage->unk_51c != 0)
+    if (stage->clearScreenOnce != 0)
     {
         viewport.X = 32;
         viewport.Y = 16;
@@ -492,17 +492,17 @@ int Stage::OnDraw(Stage *stage)
         viewport.Height = 448;
         g_App.d3dDevice->SetViewport(&viewport);
         g_App.d3dDevice->Clear(0, NULL, D3DCLEAR_TARGET, 0xff000000, 1.0f, 0);
-        stage->unk_51c = 0;
+        stage->clearScreenOnce = 0;
     }
     g_App.d3dDevice->SetViewport(&g_App.viewport);
-    if (stage->unk_52ac.a > 0)
+    if (stage->tintColor.a > 0)
     {
-        g_SpriteEngine->SetUnk0(stage->unk_52ac.color);
+        g_SpriteEngine->SetUnk0(stage->tintColor.color);
     }
-    stage->unk_52ac.a = 0;
-    stage->unk_52ac.r = 0x80;
-    stage->unk_52ac.g = 0x80;
-    stage->unk_52ac.b = 0x80;
+    stage->tintColor.a = 0;
+    stage->tintColor.r = 0x80;
+    stage->tintColor.g = 0x80;
+    stage->tintColor.b = 0x80;
     if (stage->spellCardState <= 1 && !g_Unknown49fbf0.IsLoadingShown())
     {
         if (stage->unk_4.spriteIndex > 0)
@@ -514,13 +514,13 @@ int Stage::OnDraw(Stage *stage)
             g_SpriteEngine->DrawAndFlush(&stage->unk_250);
         }
     }
-    if (stage->unk_4d8 != 0)
+    if (stage->clearColor != 0)
     {
-        g_App.d3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, stage->unk_4d8, 1.0f, 0);
+        g_App.d3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, stage->clearColor, 1.0f, 0);
     }
     else
     {
-        g_App.d3dDevice->Clear(0, NULL, D3DCLEAR_ZBUFFER, stage->unk_4d8, 1.0f, 0);
+        g_App.d3dDevice->Clear(0, NULL, D3DCLEAR_ZBUFFER, stage->clearColor, 1.0f, 0);
     }
     g_App.SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
     if (g_SpriteEngine->modulateColorEnabled == 0)
@@ -589,9 +589,9 @@ int Stage::OnDraw2(Stage *stage)
     }
     if (stage->spellCardState >= 1)
     {
-        for (j = 0; j < stage->unk_520; j++)
+        for (j = 0; j < stage->dialogueSpriteCount; j++)
         {
-            g_SpriteEngine->DrawAndFlush(&stage->unk_528[j]);
+            g_SpriteEngine->DrawAndFlush(&stage->dialogueSprites[j]);
         }
     }
     g_SpriteEngine->SetUnk2e4d4(0);
@@ -601,11 +601,11 @@ int Stage::OnDraw2(Stage *stage)
     g_App.SetRenderState(D3DRS_FOGSTART, *(DWORD *)&fog);
     fog = 2000.0f;
     g_App.SetRenderState(D3DRS_FOGEND, *(DWORD *)&fog);
-    if (stage->unk_52b0 == 0)
+    if (stage->keepTintColor == 0)
     {
         g_SpriteEngine->ResetUnk0();
     }
-    stage->unk_52b0 = 0;
+    stage->keepTintColor = 0;
     return 1;
 }
 
@@ -698,14 +698,14 @@ int Stage::AddedCallback(Stage *stage)
     stage->camera.at = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
     stage->camera.up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
     stage->camera.fov = 0.5235988f;
-    stage->unk_50f8 = stage->camera;
-    stage->unk_5138 = stage->camera;
+    stage->cameraFrom = stage->camera;
+    stage->cameraTo = stage->camera;
     for (i = 0; i < 4; i++)
     {
-        stage->unk_5238[i] = 0;
-        stage->unk_5248[i].Set(0);
+        stage->cameraFadeFrames[i] = 0;
+        stage->cameraFadeTimer[i].Set(0);
     }
-    stage->unk_50f4 = 0;
+    stage->waitLabel = 0;
     return 0;
 }
 
