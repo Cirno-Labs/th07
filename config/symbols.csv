@@ -94,7 +94,7 @@ address,size,name,symbol
 0x00417af0,33,SinCos,?SinCos@@YIXPAM0M@Z
 0x00417b20,107,Bullet::FreeBullet,?FreeBullet@Bullet@@QAEXXZ
 0x00417b90,151,WarpToBoss,?WarpToBoss@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
-0x00417c30,533,Func417c30,
+0x00417c30,533,ShakeAndSpinBullets,?ShakeAndSpinBullets@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x00417e50,680,Func417e50,
 0x00418110,16,Func418110,
 0x00418120,311,Func418120,

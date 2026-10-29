@@ -9,6 +9,7 @@
 #include "effect.h"
 #include "enemy.h"
 #include "player.h"
+#include "screeneffect.h"
 #include "unsorted.h"
 
 // Argument `n` of `instr`, or the value of the variable it names.
@@ -782,4 +783,60 @@ void WarpToBoss(Enemy *enemy, EnemyScriptInstr *instr)
     enemy->velocity = g_Unknown9a9b00.bosses[boss]->velocity;
     enemy->angle = g_Unknown9a9b00.bosses[boss]->angle;
     enemy->flags.unk_18 = 1;
+}
+
+void ShakeAndSpinBullets(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    int i;
+    Bullet *curBullet;
+    float angle;
+
+    curBullet = g_BulletManager.bullets;
+    ScreenEffect::StartEffect(1, 0x1e, 0xc, 0, 0);
+    ScreenEffect::StartEffect(3, 4, 3, 0x80ffcfcf, 0);
+    for (i = 0; i < 0x400; i++, curBullet++)
+    {
+        if (curBullet->state == 0 || curBullet->state == 5)
+        {
+            continue;
+        }
+        if (curBullet->sprites.sprite0.spriteData != NULL && curBullet->unk_c08 == 0)
+        {
+            if (instr->args[1].i == 1 && curBullet->color != 8)
+            {
+                continue;
+            }
+            if (instr->args[1].i == 2 && curBullet->color != 4)
+            {
+                continue;
+            }
+            if (curBullet->color == 2)
+            {
+                angle = -3.1415927f / (g_Rng.GetRandomF32ZeroToOne() * 60.0f + 180.0f);
+            }
+            else if (curBullet->color == 6)
+            {
+                angle = 3.1415927f / (g_Rng.GetRandomF32ZeroToOne() * 60.0f + 180.0f);
+            }
+            else if (curBullet->color == 8)
+            {
+                angle = 3.1415927f / (g_Rng.GetRandomF32ZeroToOne() * 60.0f + 180.0f);
+            }
+            else if (curBullet->color == 4)
+            {
+                angle = -3.1415927f / (g_Rng.GetRandomF32ZeroToOne() * 60.0f + 180.0f);
+            }
+            curBullet->speed = 0.3f;
+            memset(curBullet->commands, 0, sizeof(curBullet->commands));
+            if (g_Unknown626270.difficulty < 3)
+            {
+                curBullet->SetTurnCommand(0, 0, 60, angle, 1.0f / 60.0f);
+            }
+            else
+            {
+                curBullet->SetTurnCommand(0, 0, 240, angle, 1.0f / 190.0f);
+            }
+            curBullet->unk_c08 = 1;
+        }
+    }
 }

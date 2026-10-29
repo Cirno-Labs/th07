@@ -1550,6 +1550,11 @@ void EndSpellCard(Enemy *enemy, EnemyScriptInstr *instr);
 // Puts `enemy` where boss argument 1 is, with its velocity and angle,
 // and sets flags.unk_18.
 void WarpToBoss(Enemy *enemy, EnemyScriptInstr *instr);
+// Shakes and flashes the screen, and starts the flying bullets with
+// sprites that no call has turned yet (only color 8 for argument 1 = 1,
+// color 4 for 2) turning by a small random angle a frame, its sign by
+// color, slowed to 0.3.
+void ShakeAndSpinBullets(Enemy *enemy, EnemyScriptInstr *instr);
 
 // Set to 9 as the dialogue of stages 6 to 8 starts.
 extern int g_Unknown9a9ab8;
