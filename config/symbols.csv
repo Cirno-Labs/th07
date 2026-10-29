@@ -3,7 +3,7 @@ address,size,name,symbol
 0x004010b0,52,Func4010b0,
 0x004010f0,124,Sprite::Initialize,?Initialize@Sprite@@QAEXXZ
 0x00401170,50,Sprite::Sprite,??0Sprite@@QAE@XZ
-0x004011b0,251,Func4011b0,
+0x004011b0,251,SpriteBase::SpriteBase,??0SpriteBase@@QAE@XZ
 0x004012b0,212,Unknown626270::Func4012b0,?Func4012b0@Unknown626270@@QAEXXZ
 0x00401390,107,Unknown626270::SetBombs,?SetBombs@Unknown626270@@QAEXH@Z
 0x00401400,155,AsciiText::RunScripts,?RunScripts@AsciiText@@QAEXXZ
