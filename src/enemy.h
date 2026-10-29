@@ -215,6 +215,10 @@ void MoveEnemyEffects(Enemy *enemy);
 // Lets go of the effects following `enemy`: each fades out, as th06's.
 void ReleaseEnemyEffects(Enemy *enemy);
 
+// The lower of angles `a` and `b` plus the fraction `t` of the shorter
+// of their direct and wrapped-around (2 pi) distances. Not in th06.
+float LerpAngle(float a, float b, float t);
+
 // The enemies, at 0x9a9b00, th06's EnemyManager. Placeholder name; only
 // what is known so far.
 class Unknown9a9b00

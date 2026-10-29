@@ -179,7 +179,7 @@ address,size,name,symbol
 0x004203b0,213,Enemy::ClampPos,?ClampPos@Enemy@@QAEXXZ
 0x00420490,386,Enemy::CheckPlayerContact,?CheckPlayerContact@Enemy@@QAEXPAUD3DXVECTOR3@@0@Z
 0x00420620,6840,Func420620,
-0x004220f0,114,Func4220f0,
+0x004220f0,114,LerpAngle,?LerpAngle@@YIMMMM@Z
 0x00422170,2863,Func422170,
 0x00422ca0,23,Func422ca0,
 0x00422cc0,26,Func422cc0,
