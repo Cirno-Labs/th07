@@ -326,3 +326,13 @@ void RenderTextToTexture(int x, int y, int width, int unused, int fontHeight, in
         dstSurface = NULL;
     }
 }
+
+// The original's object also referenced memmove, from code that /LTCG
+// discarded: libcmt's memmove.obj comes right after memcpy.obj there,
+// as this object's memcpy, memmove, strlen, memset references order it.
+#ifdef TH07_EXE
+void UnusedMemmove(void *dst, const void *src, size_t size)
+{
+    memmove(dst, src, size);
+}
+#endif // TH07_EXE
