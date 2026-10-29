@@ -426,3 +426,19 @@ void BulletManager::ConvertBulletsToItems(D3DXVECTOR3 *pos, float radius)
         memset(bullet, 0, sizeof(Bullet));
     }
 }
+
+void SlowBulletStart(Bullet *bullet)
+{
+    float speed;
+
+    if (bullet->ex[0].timer <= 16)
+    {
+        speed = 5.0f - bullet->ex[0].timer.AsFloat() * 5.0f / 16.0f;
+        ((Unknown4325c0 *)&bullet->velocity)->SetPolar(bullet->angle, (speed + bullet->speed) * g_App.unk_178);
+    }
+    else
+    {
+        bullet->activeFlags ^= 1;
+    }
+    bullet->ex[0].timer.Tick();
+}

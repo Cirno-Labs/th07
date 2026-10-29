@@ -256,6 +256,12 @@ extern int g_BulletColorOffsets32[16];
 // for the spawning sprites, out of line and without its 0x207 case.
 void ShowSpawnSprite(Sprite *dst, Sprite *src, Bullet *bullet, int color);
 
+// The bullet behaviors BulletManager::OnUpdate runs by activeFlags, th06's
+// sections of its OnUpdate as functions, each on its own BulletEx.
+// Flag 1, ex[0]: for 16 frames the bullet runs 5 to 0 faster than its
+// speed.
+void SlowBulletStart(Bullet *bullet);
+
 // The colors of effect 0xd by index, as th06's; RegisterChain points
 // g_EffectColors at them.
 extern DWORD g_EffectColorsFull[0x1c];
