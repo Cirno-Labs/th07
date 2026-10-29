@@ -424,3 +424,12 @@ BOOL Unknown49fbf0::MsgHoldsTimeline()
     }
     return this->impl->msg.scriptIndex >= 0;
 }
+
+int Unknown49fbf0::Func42ad66()
+{
+    if (this->impl == NULL)
+    {
+        return 0;
+    }
+    return this->impl->msg.scriptIndex >= 0 || this->impl->msg.scriptIndex == -2 ? 1 : 0;
+}
