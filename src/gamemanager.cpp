@@ -374,3 +374,11 @@ void Unknown626270::IncreaseBonusCap(int amount)
         this->unk_9618 = this->stats->unk_88 + 9999990;
     }
 }
+
+int Unknown626270::HasExtraOpen(int shot)
+{
+    return this->clrds[shot].stagesClearedNoContinue[0] == 99 || this->clrds[shot].stagesClearedNoContinue[1] == 99 ||
+                   this->clrds[shot].stagesClearedNoContinue[2] == 99 || this->clrds[shot].stagesClearedNoContinue[3] == 99
+               ? TRUE
+               : FALSE;
+}

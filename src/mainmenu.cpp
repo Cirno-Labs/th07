@@ -1051,7 +1051,7 @@ int MainMenu::UpdateCharacterMenu()
             this->cursor = g_Unknown626270.character;
             if (g_App.defaultDifficulty == 4)
             {
-                while (!g_Unknown626270.Func42f7df(this->cursor * 2) && !g_Unknown626270.Func42f7df(this->cursor * 2 + 1))
+                while (!g_Unknown626270.HasExtraOpen(this->cursor * 2) && !g_Unknown626270.HasExtraOpen(this->cursor * 2 + 1))
                 {
                     this->cursor++;
                     if (this->cursor >= 3)
@@ -1183,7 +1183,7 @@ int MainMenu::UpdateCharacterMenu()
         {
             if (g_App.defaultDifficulty == 4)
             {
-                while (!g_Unknown626270.Func42f7df(this->cursor * 2) && !g_Unknown626270.Func42f7df(this->cursor * 2 + 1))
+                while (!g_Unknown626270.HasExtraOpen(this->cursor * 2) && !g_Unknown626270.HasExtraOpen(this->cursor * 2 + 1))
                 {
                     this->cursor++;
                     if (this->cursor >= 3)
@@ -1347,7 +1347,7 @@ int MainMenu::UpdateShotTypeMenu()
             this->cursor = g_Unknown626270.shotType;
             if (g_App.defaultDifficulty == 4)
             {
-                while (!g_Unknown626270.Func42f7df(this->cursor + g_Unknown626270.character * 2))
+                while (!g_Unknown626270.HasExtraOpen(this->cursor + g_Unknown626270.character * 2))
                 {
                     this->cursor++;
                     if (this->cursor >= 2)
@@ -1411,7 +1411,7 @@ int MainMenu::UpdateShotTypeMenu()
         {
             if (g_App.defaultDifficulty == 4)
             {
-                while (!g_Unknown626270.Func42f7df(this->cursor + g_Unknown626270.character * 2))
+                while (!g_Unknown626270.HasExtraOpen(this->cursor + g_Unknown626270.character * 2))
                 {
                     this->cursor++;
                     if (this->cursor >= 2)

@@ -928,11 +928,11 @@ public:
     // Whether Phantasm is open: a shot type cleared Extra (or captured
     // 60 spell cards, which marks those that cleared Extra as such).
     int Func42f94c();
-    // Whether a shot type has Extra open (Func42f7df for any of them).
+    // Whether a shot type has Extra open (HasExtraOpen for any of them).
     int Func42f8de();
     // Whether shot type `shot` (character * 2 + shot) cleared one of
     // the four main difficulties, which opens Extra for it.
-    int Func42f7df(int shot);
+    int HasExtraOpen(int shot);
     // Whether shot type `shot` has Phantasm open (Func42f94c for one
     // shot type).
     int Func42f853(int shot);
