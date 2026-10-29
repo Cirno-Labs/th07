@@ -292,7 +292,7 @@ ASSERT_SIZE(BulletManager, 0x37a164);
 extern BulletManager g_BulletManager;
 
 // The scripts of each bullet type's five sprites, as th06's.
-extern int g_BulletTypeScripts[11][5];
+extern const int g_BulletTypeScripts[11][5];
 
 // Sprite offsets by color, for bullets up to 16 and up to 32 high, as
 // th06's.

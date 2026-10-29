@@ -4,6 +4,14 @@
 #include "lzss.h"
 #include "unsorted.h"
 
+// The game's data, as the original defines it here. The DLL build uses
+// the original's copies instead.
+#ifdef TH07_EXE
+const DWORD g_SeekOrigins[3] = {
+    0, 1, 2,
+};
+#endif // TH07_EXE
+
 DatArchive::DatArchive()
 {
     this->entries = NULL;

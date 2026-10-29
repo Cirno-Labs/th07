@@ -1727,9 +1727,9 @@ address,size,name,symbol
 0x004904d8,,IID_IPersistFile,_IID_IPersistFile
 0x004904e8,,GUID_NULL,_GUID_NULL
 0x00495120,,g_SeekOrigins,?g_SeekOrigins@@3QBKB
-0x0049512c,,g_TextureFormats,?g_TextureFormats@@3PAW4_D3DFORMAT@@A
-0x00495144,,g_TextureFormatSizes,?g_TextureFormatSizes@@3PAHA
-0x00495160,,g_BulletTypeScripts,?g_BulletTypeScripts@@3PAY04HA
+0x0049512c,,g_TextureFormats,?g_TextureFormats@@3QBW4_D3DFORMAT@@B
+0x00495144,,g_TextureFormatSizes,?g_TextureFormatSizes@@3QBHB
+0x00495160,,g_BulletTypeScripts,?g_BulletTypeScripts@@3QAY04$$CBHA
 0x00495248,36,File::`vftable',??_7File@@6B@
 0x0049526c,32,FileBase::`vftable',??_7FileBase@@6B@
 0x0049528c,4,CStreamingSound::`vftable',??_7CStreamingSound@@6B@

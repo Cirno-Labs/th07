@@ -18,32 +18,6 @@
 #include "sprite.h"
 #include "unsorted.h"
 
-// .rdata in the original.
-const DWORD g_SeekOrigins[3] = {
-    0, 1, 2,
-};
-D3DFORMAT g_TextureFormats[6] = {
-    D3DFMT_UNKNOWN, D3DFMT_A8R8G8B8, D3DFMT_A1R5G5B5, D3DFMT_R5G6B5, D3DFMT_R8G8B8, D3DFMT_A4R4G4B4,
-};
-int g_TextureFormatSizes[7] = {
-    4, 4, 2, 2, 3, 2, 0,
-};
-int g_BulletTypeScripts[11][5] = {
-    {512, 530, 531, 532, 527},
-    {513, 533, 534, 535, 528},
-    {514, 533, 534, 535, 528},
-    {515, 533, 534, 535, 528},
-    {516, 533, 534, 535, 528},
-    {517, 533, 534, 535, 528},
-    {518, 533, 534, 535, 528},
-    {519, 536, 536, 536, 529},
-    {520, 536, 536, 536, 529},
-    {521, 536, 536, 536, 529},
-    {680, 682, 682, 682, 681},
-};
-float g_DifficultyRatings[5] = {
-    -30.0f, -10.0f, 20.0f, 30.0f, 30.0f,
-};
 float g_Half = 0.5f;
 
 // .data in the original.

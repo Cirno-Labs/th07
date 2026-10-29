@@ -692,9 +692,9 @@ extern D3DXVECTOR3 g_CameraSizeOffset;
 // buffer.
 extern VertexTex1DiffuseXyz g_DiffuseQuadXyz[4];
 // The texture formats LoadTexture takes by number.
-extern D3DFORMAT g_TextureFormats[];
+extern const D3DFORMAT g_TextureFormats[];
 // The bytes per pixel of each of g_TextureFormats.
-extern int g_TextureFormatSizes[];
+extern const int g_TextureFormatSizes[];
 
 inline BOOL Sprite::HasTexture()
 {

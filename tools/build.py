@@ -14,7 +14,9 @@ against the real libraries, plus the original's resources. Like the
 original, its objects are compiled with /GL and linked with /LTCG, which
 puts each object's inline functions first. Those objects hold no machine
 code, so the exe's are compiled again into build/obj_gl; the DLL and
-compare.py keep reading build/obj.
+compare.py keep reading build/obj. Only the exe's objects define the
+game's globals and tables, in the files that own them: they are guarded
+by `#ifdef TH07_EXE`, so the DLL binds the original's.
 """
 import collections, csv, glob, json, os, struct, subprocess, sys
 from concurrent.futures import ThreadPoolExecutor
@@ -30,7 +32,9 @@ EXE = "build/th07.exe"
 EXE_MAP = "build/th07_exe.map"  # the DLL's map is build/th07.map
 ORIGINAL = "build/th07_100b.exe"
 CFLAGS = ["/Od", "/Ob1", "/Gr", "/GX", "/Oi", "/Gy", "/GF"]
-GL_CFLAGS = CFLAGS + ["/GL"]  # the exe's; a file opts out with `-/GL`
+# The exe's; a file opts out with `-/GL`. TH07_EXE guards the definitions
+# of the game's data, which the DLL takes from the original.
+GL_CFLAGS = CFLAGS + ["/GL", "/DTH07_EXE"]
 GLUE_PREFIX = "dll_"  # objects from src/dll/, the DLL's own code
 DLL_ONLY, EXE_ONLY = "dll", "exe"  # subdirectories of src/ only one target builds
 TIMEOUT = 60  # cl spins forever after a fatal error
