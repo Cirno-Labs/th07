@@ -579,3 +579,10 @@ void DimPlayAreaForBomb(Player *player);
 // Ends the effect at unk_b7e68 and starts a red effect 0x19 at the
 // player in slot 0 that runs as long as stateTimer, keeping it there.
 void SpawnBombAura(Player *player);
+
+// Sets the bomb's unk_c, what each of its frames takes from
+// GameManager::unk_961c: `share` of unk_961c over stats->unk_88, halved
+// on difficulty 2, quartered on 3 and a third on 4 and 5, spread over
+// the bomb's duration, but at least `minimum` spread the same way,
+// both rounded down to tens.
+void SetBombDrain(Player *player, int minimum, float share);

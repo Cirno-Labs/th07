@@ -55,3 +55,28 @@ void SpawnBombAura(Player *player)
     effect->sprite.unk_rgb[0] = 0x40;
     player->unk_b7e68 = effect;
 }
+
+void SetBombDrain(Player *player, int minimum, float share)
+{
+    int drain;
+
+    drain = (g_Unknown626270.unk_961c - g_Unknown626270.stats->unk_88) * share;
+    switch (g_Unknown626270.difficulty)
+    {
+    case 2:
+        drain /= 2;
+        break;
+    case 3:
+        drain /= 4;
+        break;
+    case 4:
+    case 5:
+        drain /= 3;
+        break;
+    }
+    drain /= player->bomb.duration;
+    drain -= drain % 10;
+    minimum /= player->bomb.duration;
+    minimum -= minimum % 10;
+    player->bomb.unk_c = drain < minimum ? minimum : drain;
+}
