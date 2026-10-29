@@ -173,6 +173,11 @@ public:
     {
         this->unk_b7c[idx].pos = *pos;
     }
+    // Sets unk_14ac[idx], the same way.
+    void SetUnk14ac(int idx, int value)
+    {
+        this->unk_14ac[idx] = value;
+    }
     // unk_74d4, and setting it while sending unk_498 the same
     // interrupt. Inlines: each read takes a temporary in ResetHomingAndText.
     int GetUnk74d4()

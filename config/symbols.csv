@@ -1756,6 +1756,7 @@ address,size,name,symbol
 0x0049ef38,,g_EffectColors,?g_EffectColors@@3PAKA
 0x0049ef40,,g_BulletColorOffsets16,?g_BulletColorOffsets16@@3PAHA
 0x0049ef80,,g_BulletColorOffsets32,?g_BulletColorOffsets32@@3PAHA
+0x0049efa0,,g_EnemyItemDrops,?g_EnemyItemDrops@@3PAEA
 0x0049efc0,,g_EffectInfos,?g_EffectInfos@@3PAUEffectInfo@@A
 0x0049f1b8,,g_SpellCardBonuses,?g_SpellCardBonuses@@3PAHA
 0x0049f40c,,g_PracticeStageNames,?g_PracticeStageNames@@3PAPADA

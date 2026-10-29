@@ -1456,6 +1456,11 @@ public:
     {
         this->bossTimer = seconds;
     }
+    // Sets bossHealth, as th06's SetBossHealth.
+    void SetBossHealth(float health)
+    {
+        this->bossHealth = health;
+    }
 
     // Counts OnUpdate's frames.
     int unk_0;
@@ -1557,6 +1562,8 @@ struct EnemyScriptHeader
     void *timelines[16];
 };
 
+struct EnemyTimelineEntry;
+
 // The object at 0x1347938, where th06 has its EnemyScripts.
 // Placeholder name; only what is known so far.
 class EnemyScripts
@@ -1573,6 +1580,12 @@ public:
     int RunEnemy(Enemy *enemy);
     // Frees the script file, as th06's Release.
     void Release();
+    // Timeline `i` of the file. Inline: EnemyManager::OnUpdate keeps
+    // what it returns in a temporary.
+    EnemyTimelineEntry *GetTimeline(int i)
+    {
+        return (EnemyTimelineEntry *)this->file->timelines[i];
+    }
 
     EnemyScriptHeader *file;
     void **subs;

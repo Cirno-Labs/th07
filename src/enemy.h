@@ -48,6 +48,10 @@ struct EnemyFlags
     // Cleared as a spell card starts.
     unsigned char unk_19 : 1;
     unsigned char unk_1a : 1;
+    // While a bomb runs or the player is not in playerState 0, OnUpdate
+    // skips the enemy's script, movement and damage, and holds
+    // callbackTimer back.
+    unsigned char unk_1b : 1;
 };
 
 // The variables of an enemy's script, by number from 10000: 10000 to
@@ -94,7 +98,8 @@ ASSERT_SIZE(EnemyScriptState, 0x218);
 struct EnemyBox
 {
     D3DXVECTOR3 pos;
-    unsigned char unk_c[0xc];
+    // The enemy's velocity there.
+    D3DXVECTOR3 unk_c;
     float angle;
 };
 ASSERT_SIZE(EnemyBox, 0x1c);
@@ -104,7 +109,8 @@ struct Enemy
 {
     // Moves by the velocity scaled by App::unk_178, mirrored with
     // flags.mirrored, as th06's; first keeps the last move in posDelta
-    // and the position in prevPos.
+    // and the position in prevPos. An inline too large to expand (in
+    // enemy.cpp): OnUpdate calls the copy and reserves its temporaries.
     void Move();
     // Once the life falls below one of lifeCallbackLife: sets it to
     // that, starts the matching lifeCallbackSub, drops the timer
@@ -157,7 +163,8 @@ struct Enemy
     D3DXVECTOR3 posDelta;
     // The size of the enemy's hitbox.
     D3DXVECTOR3 hitboxSize;
-    unsigned char unk_2b48[0xc];
+    // A second hitbox size, tested while its x is above 0.
+    D3DXVECTOR3 unk_2b48;
     float angle;
     float angularVelocity;
     float unk_2b5c;
@@ -195,7 +202,7 @@ struct Enemy
     Laser *lasers[0x20];
     int laserIndex;
     int item;
-    BYTE deathEffect;
+    char deathEffect;
     BYTE unk_2e15;
     BYTE unk_2e16;
     // The enemy's slot in EnemyManager::bosses, while it is one.
@@ -204,7 +211,9 @@ struct Enemy
     unsigned char unk_2e19[0x3];
     Timer unk_2e1c;
     EnemyFlags flags;
-    unsigned char unk_2e2c[0x4];
+    unsigned char unk_2e2c[0x3];
+    // The draw list (EnemyManager::unk_954700) OnUpdate puts it in.
+    BYTE unk_2e2f;
     // The sprite scripts for turning, as th06's.
     short turnStill;
     short turnStillFromLeft;
@@ -240,7 +249,9 @@ struct Enemy
     BYTE unk_4f30;
     unsigned char unk_4f31[0x1];
     short unk_4f32;
-    unsigned char unk_4f34[0x2];
+    // The trail boxes (unk_2f78) below it touch the player, every sixth
+    // from 1.
+    short unk_4f34;
     short unk_4f36;
     Timer unk_4f38;
     Enemy *unk_4f44;
@@ -352,7 +363,17 @@ public:
     static int RegisterChain(char *anmPath, char *anmPath2);
     // Removes the three chain elements.
     static void RemoveChain();
-    // The update callback, th06's OnUpdate.
+    // The update callback, th06's OnUpdate, reworked. Outside dialogue,
+    // adds 100 to the subrank every 2400 - 240 * lives frames and counts
+    // GameManager::progressFrames; runs the timelines; then for each
+    // active enemy: its script (again after a life or timer callback),
+    // movement, trail, leaving the play area, contact with the player,
+    // damage (bonus points for it; cut by stage for shot type 0, by
+    // spell cards and by unk_4f38), the homing targets, death (with th06's
+    // death modes and drops, and a boss clearing the bullets and enemies
+    // for a bonus), the hit flash in color2, the boss bar and markers,
+    // and the draw lists. Returns 4 when a checksum check every 200
+    // frames fails, else 1.
     static int OnUpdate(EnemyManager *mgr);
 
     // The stage's two enemy sprite files.
@@ -367,10 +388,15 @@ public:
     // the next of them, as th06's; start below 3 and below 8.
     WORD dropCounter;
     WORD dropIndex;
-    unsigned char unk_9545bc[0xc];
+    // The active enemies, counted by OnUpdate.
+    int enemyCount;
+    unsigned char unk_9545c0[0x8];
     // th06's spellCardActive; other code reaches it as g_Unknown12fe0c8.
     int spellCardActive;
-    unsigned char unk_9545cc[0x14];
+    unsigned char unk_9545cc[0x10];
+    // While a spell card runs, a bomb's damage counts (divided by 2.5)
+    // only while it is set, as th06's spellCardBombed.
+    int unk_9545dc;
     Timer unk_9545e0;
     unsigned char unk_9545ec[0x8];
     EnemyTimeline unk_9545f4[16];
@@ -379,6 +405,9 @@ public:
 };
 ASSERT_SIZE(EnemyManager, 0x954710);
 extern EnemyManager g_Unknown9a9b00;
+// The items the enemies without one of their own drop in turn, every
+// third, as th06's.
+extern BYTE g_EnemyItemDrops[0x20];
 // Its statically allocated chain elements.
 extern ChainElem g_Unknown9a9b00CalcChain;
 extern ChainElem g_Unknown9a9b00DrawChain;
