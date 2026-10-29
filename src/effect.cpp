@@ -254,3 +254,60 @@ int EffectManager::OnDraw(EffectManager *mgr)
     }
     return 1;
 }
+
+int EffectManager::OnDraw2()
+{
+    Effect *eff = this->drawList1.next;
+    int n = 0;
+    float r;
+    float g;
+    float b;
+    float a;
+    int t;
+
+    if (g_App.unk_13c == 0)
+    {
+        return 1;
+    }
+    while (eff != NULL)
+    {
+        n++;
+        if (g_App.unk_13c == 1 && (n & 1) != 0)
+        {
+            return 1;
+        }
+        if (eff->type == 20)
+        {
+            r = eff->sprite.unk_rgb[2];
+            g = eff->sprite.unk_rgb[1];
+            b = eff->sprite.unk_rgb[0];
+            a = eff->sprite.alpha;
+            t = r * this->colorScale[0];
+            eff->sprite.unk_rgb[2] = t > 0xff ? 0xff : t;
+            t = g * this->colorScale[1];
+            eff->sprite.unk_rgb[1] = t > 0xff ? 0xff : t;
+            t = b * this->colorScale[2];
+            eff->sprite.unk_rgb[0] = t > 0xff ? 0xff : t;
+            t = a * this->colorScale[3];
+            eff->sprite.alpha = t > 0xff ? 0xff : t;
+        }
+        eff->sprite.pos = eff->pos;
+        if (eff->drawList == 1)
+        {
+            g_SpriteEngine->DrawProjected(&eff->sprite);
+        }
+        else
+        {
+            g_SpriteEngine->DrawProjected3D(&eff->sprite);
+        }
+        if (eff->type == 20)
+        {
+            eff->sprite.unk_rgb[2] = r;
+            eff->sprite.unk_rgb[1] = g;
+            eff->sprite.unk_rgb[0] = b;
+            eff->sprite.alpha = a;
+        }
+        eff = eff->next;
+    }
+    return 1;
+}

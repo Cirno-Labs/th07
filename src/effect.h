@@ -90,13 +90,17 @@ public:
     // fourth draw lists, the first and fourth moved into the play area.
     // Returns 1.
     static int OnDraw(EffectManager *mgr);
+    // Draws the second draw list, unless App::unk_13c is 0; with 1 it
+    // returns at the first effect. Type 20 is drawn with its color
+    // scaled by colorScale. Returns 1.
+    int OnDraw2();
 
     // Where SpawnEffect looks for a free effect next.
     int next;
     unsigned char unk_4[0x4];
     // How many effects were active this frame.
     int activeCount;
-    // What Func41cb80 scales type 20's red, green, blue and alpha by.
+    // What OnDraw2 scales type 20's red, green, blue and alpha by.
     float colorScale[4];
     Effect effects[0x199];
     // The heads of the draw lists, and their last effects.
