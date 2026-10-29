@@ -378,6 +378,11 @@ int EffectUpdateFixedPos(Effect *effect)
     return 1;
 }
 
+int EffectUpdateNone(Effect *effect)
+{
+    return 1;
+}
+
 Effect *EffectManager::SpawnEffect(int type, D3DXVECTOR3 *pos, int count, D3DCOLOR color)
 {
     Effect *effect;

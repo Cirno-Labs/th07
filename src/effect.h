@@ -168,6 +168,10 @@ int EffectUpdateDivergeEased(Effect *effect);
 // plus g_CameraAt (at z 0), in the second draw list. Returns 1.
 int EffectUpdateFixedPos(Effect *effect);
 
+// Returns 1, so the effect only runs its script. The original's linker
+// folded it with ReplayManager::OnDraw, which has the same bytes.
+int EffectUpdateNone(Effect *effect);
+
 // The effects, at 0x12fe250: 400 started in turn, 8 reserved slots and
 // a spare.
 class EffectManager

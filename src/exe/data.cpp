@@ -18,11 +18,6 @@
 #include "sprite.h"
 #include "unsorted.h"
 
-// The effects that never move use a function that only returns 1. The
-// original's linker folded it with ReplayManager::OnDraw, which has the
-// same bytes, so that is the address the table holds.
-#define EffectUpdateNone ((int (*)(Effect *))ReplayManager::OnDraw)
-
 // .rdata in the original.
 const DWORD g_SeekOrigins[3] = {
     0, 1, 2,

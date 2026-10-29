@@ -142,7 +142,7 @@ address,size,name,symbol
 0x0041bec0,263,EffectInitDiverge,?EffectInitDiverge@@YIHPAUEffect@@@Z
 0x0041bfd0,301,EffectUpdateDivergeEased,?EffectUpdateDivergeEased@@YIHPAUEffect@@@Z
 0x0041c100,173,EffectUpdateFixedPos,?EffectUpdateFixedPos@@YIHPAUEffect@@@Z
-0x0041c1b0,16,ReplayManager::OnDraw,?OnDraw@ReplayManager@@SIHPAV1@@Z
+0x0041c1b0,16,ReplayManager::OnDraw,?OnDraw@ReplayManager@@SIHPAV1@@Z ?EffectUpdateNone@@YIHPAUEffect@@@Z
 0x0041c1c0,564,EffectManager::SpawnEffect,?SpawnEffect@EffectManager@@QAEPAUEffect@@HPAUD3DXVECTOR3@@HK@Z
 0x0041c400,521,EffectManager::SpawnEffectWithVelocity,?SpawnEffectWithVelocity@EffectManager@@QAEPAUEffect@@HPAUD3DXVECTOR3@@0HK@Z
 0x0041c610,374,EffectManager::SpawnReservedEffect,?SpawnReservedEffect@EffectManager@@QAEPAUEffect@@HPAUD3DXVECTOR3@@HHK@Z
