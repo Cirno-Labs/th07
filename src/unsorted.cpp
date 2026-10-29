@@ -4,10 +4,6 @@
 
 #include "unsorted.h"
 
-void DebugPrint(const char *fmt, ...)
-{
-}
-
 WORD InitJoystick()
 {
     JOYINFOEX joyInfo;
