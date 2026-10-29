@@ -933,6 +933,70 @@ int SpriteEngine::DrawNoRound(Sprite *vm)
     return this->DrawQuad(vm, 0);
 }
 
+int SpriteEngine::ProjectSprite(Sprite *vm)
+{
+    D3DXVECTOR3 o;
+    float c;
+    D3DXVECTOR3 d;
+    D3DXVECTOR3 projPos;
+    D3DXVECTOR3 edge;
+    float angle;
+    D3DXMATRIX world;
+    float s;
+    float x;
+    float y;
+    float h;
+    float w;
+
+    angle = vm->rotationZ;
+    __asm
+    {
+        fld angle
+        fsincos
+        fstp c
+        fstp s
+    }
+    o.x = 0.0f;
+    o.y = 0.0f;
+    o.z = 0.0f;
+    D3DXMatrixIdentity(&world);
+    world._41 = vm->pos.x;
+    world._42 = vm->pos.y;
+    world._43 = vm->pos.z;
+    D3DXVec3Project(&projPos, &o, &g_App.viewport, &g_App.projectionMatrix, &g_App.viewMatrix, &world);
+    if (projPos.z < 0.0f || projPos.z > 1.0f)
+    {
+        return -1;
+    }
+    D3DXVec3Project(&edge, &g_Unknown134cd28, &g_App.viewport, &g_App.projectionMatrix, &g_App.viewMatrix, &world);
+    d = edge - projPos;
+    x = D3DXVec3Length(&d) * 0.5f;
+    w = x * vm->spriteData->width * vm->scaleY;
+    h = x * vm->spriteData->height * vm->scaleX;
+    x = projPos.x;
+    y = projPos.y;
+    this->RotatePoint((float *)&g_DiffuseQuad[0].pos, -w, -h, s, c, x, y);
+    this->RotatePoint((float *)&g_DiffuseQuad[1].pos, w, -h, s, c, x, y);
+    this->RotatePoint((float *)&g_DiffuseQuad[2].pos, -w, h, s, c, x, y);
+    this->RotatePoint((float *)&g_DiffuseQuad[3].pos, w, h, s, c, x, y);
+    g_DiffuseQuad[0].pos.z = g_DiffuseQuad[1].pos.z = g_DiffuseQuad[2].pos.z = g_DiffuseQuad[3].pos.z = projPos.z;
+    if ((vm->flags >> 10 & 3) & 1)
+    {
+        g_DiffuseQuad[0].pos.x += w;
+        g_DiffuseQuad[1].pos.x += w;
+        g_DiffuseQuad[2].pos.x += w;
+        g_DiffuseQuad[3].pos.x += w;
+    }
+    if ((vm->flags >> 10 & 3) & 2)
+    {
+        g_DiffuseQuad[0].pos.y += h;
+        g_DiffuseQuad[1].pos.y += h;
+        g_DiffuseQuad[2].pos.y += h;
+        g_DiffuseQuad[3].pos.y += h;
+    }
+    return 0;
+}
+
 void SpriteEngine::RenderTextToTextureIndex(int textureIndex, int x, int y, int width, int unk4, int fontHeight,
                                             int unk6, D3DCOLOR textColor, D3DCOLOR shadowColor, char *text,
                                             float scaleX, float scaleY)

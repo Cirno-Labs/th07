@@ -279,6 +279,11 @@ public:
     int DrawUnrotated(Sprite *vm);
     // DrawUnrotated without rounding to pixels, as th06's DrawNoRound.
     int DrawNoRound(Sprite *vm);
+    // Sets g_DiffuseQuad to `vm` projected from its 3D position, rotated,
+    // its size scaled by how far g_Unknown134cd28 from it reaches on the
+    // screen. Returns 0, or -1 when it is outside the depth range. Not in
+    // th06.
+    int ProjectSprite(Sprite *vm);
     // Copies surface `surface` to the back buffer at (`left`, `top`),
     // as in th06.
     void CopySurfaceToBackBuffer(int surface, int left, int top, int x, int y);
@@ -532,6 +537,9 @@ extern SpriteEngine *g_SpriteEngine;
 extern VertexTex1DiffuseXyzrwh g_DiffuseQuad[4];
 // 0.5, for DrawQuad's rounding.
 extern float g_Half;
+// The offset from a sprite's position whose projection sets the size
+// ProjectSprite draws it at.
+extern D3DXVECTOR3 g_Unknown134cd28;
 // CreateQuad's quad with a color, for drawing without the vertex
 // buffer.
 extern VertexTex1DiffuseXyz g_DiffuseQuadXyz[4];

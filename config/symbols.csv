@@ -574,7 +574,7 @@ address,size,name,symbol
 0x0044f960,58,SpriteEngine::RotatePoint,?RotatePoint@SpriteEngine@@QAEXPAMMMMMMM@Z
 0x0044f9a0,616,SpriteEngine::Draw,?Draw@SpriteEngine@@QAEHPAVSprite@@@Z
 0x0044fc10,487,SpriteEngine::DrawNoRound,?DrawNoRound@SpriteEngine@@QAEHPAVSprite@@@Z
-0x0044fe00,805,Func44fe00,
+0x0044fe00,805,SpriteEngine::ProjectSprite,?ProjectSprite@SpriteEngine@@QAEHPAVSprite@@@Z
 0x00450130,111,Func450130,
 0x004501a0,782,Func4501a0,
 0x004504b0,102,Func4504b0,
@@ -706,7 +706,7 @@ address,size,name,symbol
 0x00461eb8,84,Func461eb8,
 0x00461f0c,167,Func461f0c,
 0x00461fb3,208,Func461fb3,
-0x00462083,253,Func462083,
+0x00462083,253,D3DXVec3Project,_D3DXVec3Project@24
 0x004621a0,262,D3DXMatrixLookAtLH,_D3DXMatrixLookAtLH@16
 0x004622a6,36,Func4622a6,
 0x004622ca,128,Func4622ca,
@@ -1798,6 +1798,7 @@ address,size,name,symbol
 0x012fe250,,g_EffectManager,?g_EffectManager@@3VEffectManager@@A
 0x01347b00,,g_Unknown1347b00,?g_Unknown1347b00@@3VUnknown1347b00@@A
 0x01348010,,g_Unknown1348010,?g_Unknown1348010@@3EA
+0x0134cd28,,g_Unknown134cd28,?g_Unknown134cd28@@3UD3DXVECTOR3@@A
 0x0134ce18,,g_AsciiText,?g_AsciiText@@3VAsciiText@@A
 0x0135e1f4,,g_AppMutex,?g_AppMutex@@3PAXA
 0x0135e210,,g_Unknown135e210,?g_Unknown135e210@@3T_LARGE_INTEGER@@A
