@@ -1297,19 +1297,19 @@ struct GuiImpl
     Sprite trackNumberSprites[5];
     Sprite bombPortrait;
     Sprite spellPortrait;
-    Sprite unk_5be4;
-    Sprite unk_5e30;
-    Sprite unk_607c;
-    Sprite unk_62c8;
+    Sprite bombPortraitGlow;
+    Sprite spellPortraitGlow;
+    Sprite bombPortraitFrame;
+    Sprite spellPortraitFrame;
     Sprite bombName;
     Sprite spellName;
     Sprite bombNameBar;
     Sprite spellNameBar;
-    Sprite unk_6e44;
-    Sprite unk_7090;
-    Sprite unk_72dc;
-    Sprite unk_7528;
-    Sprite unk_7774;
+    Sprite loadingIcon;
+    Sprite loadingCaption;
+    Sprite loadingBar;
+    Sprite spellScoreDigit;
+    Sprite spellScoreBar;
     Sprite backgroundTiles[0xa8];
     int backgroundTileCount;
     // Starts script `index` of msg.msgFile, as th06's.

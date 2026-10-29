@@ -16,7 +16,7 @@
 
 BOOL Gui::IsLoadingShown()
 {
-    return this->impl->unk_6e44.spriteIndex >= 0 && (this->impl->unk_6e44.flags >> 13 & 1);
+    return this->impl->loadingIcon.spriteIndex >= 0 && (this->impl->loadingIcon.flags >> 13 & 1);
 }
 
 void Gui::EndBombName()
@@ -29,14 +29,14 @@ void Gui::EndSpellCardName()
 {
     this->impl->spellName.pendingInterrupt = 1;
     this->impl->spellNameBar.SetPendingInterrupt(2);
-    this->impl->unk_7774.SetPendingInterrupt(2);
+    this->impl->spellScoreBar.SetPendingInterrupt(2);
 }
 
 void Gui::HideInterface()
 {
-    this->impl->unk_6e44.spriteIndex = -1;
-    this->impl->unk_7090.spriteIndex = -1;
-    this->impl->unk_72dc.spriteIndex = -1;
+    this->impl->loadingIcon.spriteIndex = -1;
+    this->impl->loadingCaption.spriteIndex = -1;
+    this->impl->loadingBar.spriteIndex = -1;
     this->impl->backgroundTileCount = 0;
 }
 
@@ -279,10 +279,10 @@ void Gui::ShowBombName(int sprite, char *name)
 {
     g_SpriteEngine->StartScript(&this->impl->bombPortrait, 0x4a1);
     g_SpriteEngine->SetSprite(&this->impl->bombPortrait, sprite);
-    g_SpriteEngine->StartScript(&this->impl->unk_5be4, 0x4a4);
-    g_SpriteEngine->SetSprite(&this->impl->unk_5be4, 0x4ac);
-    g_SpriteEngine->StartScript(&this->impl->unk_607c, 0x4a6);
-    g_SpriteEngine->SetSprite(&this->impl->unk_607c, 0x4ac);
+    g_SpriteEngine->StartScript(&this->impl->bombPortraitGlow, 0x4a4);
+    g_SpriteEngine->SetSprite(&this->impl->bombPortraitGlow, 0x4ac);
+    g_SpriteEngine->StartScript(&this->impl->bombPortraitFrame, 0x4a6);
+    g_SpriteEngine->SetSprite(&this->impl->bombPortraitFrame, 0x4ac);
     g_SpriteEngine->StartScript(&this->impl->bombName, 0x704);
     g_SpriteEngine->RenderText(&this->impl->bombName, 0xf0f0ff, 0, name);
     this->bombNameWidth = strlen(name) * 15 / 2.0f + 16.0f;
@@ -310,15 +310,15 @@ void Gui::ShowSpellCardName(int sprite, char *text)
             this->impl->spellPortrait.posOffset.x = 0.0f;
         }
     }
-    g_SpriteEngine->StartScript(&this->impl->unk_5e30, 0x4a5);
-    g_SpriteEngine->SetSprite(&this->impl->unk_5e30, 0x4ac);
-    g_SpriteEngine->StartScript(&this->impl->unk_62c8, 0x4a7);
-    g_SpriteEngine->SetSprite(&this->impl->unk_62c8, 0x4ac);
+    g_SpriteEngine->StartScript(&this->impl->spellPortraitGlow, 0x4a5);
+    g_SpriteEngine->SetSprite(&this->impl->spellPortraitGlow, 0x4ac);
+    g_SpriteEngine->StartScript(&this->impl->spellPortraitFrame, 0x4a7);
+    g_SpriteEngine->SetSprite(&this->impl->spellPortraitFrame, 0x4ac);
     g_SpriteEngine->StartScript(&this->impl->spellName, 0x705);
     g_SpriteEngine->RenderTextRightAligned(&this->impl->spellName, 0xfff0f0, 0, text);
     this->spellNameWidth = strlen(text) * 15 / 2.0f + 16.0f;
     this->impl->spellNameBar.SetPendingInterrupt(1);
-    this->impl->unk_7774.SetPendingInterrupt(1);
+    this->impl->spellScoreBar.SetPendingInterrupt(1);
     g_SoundPlayer.QueueSound(14, 0);
     g_App.redrawFrames = 2;
 }
@@ -375,12 +375,12 @@ int Gui::LoadResources()
     else
     {
         this->HideInterface();
-        g_SpriteEngine->StartScript(&this->impl->unk_72dc, 0x725);
-        this->impl->unk_72dc.pendingInterrupt = 1;
-        g_SpriteEngine->SetPendingCopy(4, 0x20, 0x10, 0x180, 0x1c0, this->impl->unk_72dc.spriteData->startX,
-                                       this->impl->unk_72dc.spriteData->startY,
-                                       this->impl->unk_72dc.spriteData->width,
-                                       this->impl->unk_72dc.spriteData->height);
+        g_SpriteEngine->StartScript(&this->impl->loadingBar, 0x725);
+        this->impl->loadingBar.pendingInterrupt = 1;
+        g_SpriteEngine->SetPendingCopy(4, 0x20, 0x10, 0x180, 0x1c0, this->impl->loadingBar.spriteData->startX,
+                                       this->impl->loadingBar.spriteData->startY,
+                                       this->impl->loadingBar.spriteData->width,
+                                       this->impl->loadingBar.spriteData->height);
         for (y = 0; y < 0xe; y++)
         {
             for (x = 0; x < 0xc; x++)
@@ -539,23 +539,23 @@ int Gui::LoadResources()
     g_SpriteEngine->StartSpriteSeries(this->impl->trackNumberSprites, 0x800, 5);
     g_SpriteEngine->StartScript(&this->impl->bombNameBar, 1);
     g_SpriteEngine->StartScript(&this->impl->spellNameBar, 0);
-    g_SpriteEngine->StartScript(&this->impl->unk_7774, 2);
-    g_SpriteEngine->StartScript(&this->impl->unk_7528, 3);
+    g_SpriteEngine->StartScript(&this->impl->spellScoreBar, 2);
+    g_SpriteEngine->StartScript(&this->impl->spellScoreDigit, 3);
     this->impl->bombPortrait.scriptPos = NULL;
-    this->impl->unk_5be4.scriptPos = NULL;
-    this->impl->unk_607c.scriptPos = NULL;
+    this->impl->bombPortraitGlow.scriptPos = NULL;
+    this->impl->bombPortraitFrame.scriptPos = NULL;
     this->impl->bombName.scriptPos = NULL;
     this->impl->spellPortrait.scriptPos = NULL;
-    this->impl->unk_5e30.scriptPos = NULL;
-    this->impl->unk_62c8.scriptPos = NULL;
+    this->impl->spellPortraitGlow.scriptPos = NULL;
+    this->impl->spellPortraitFrame.scriptPos = NULL;
     this->impl->spellName.scriptPos = NULL;
     this->impl->bombPortrait.shown = 0;
-    this->impl->unk_5be4.shown = 0;
-    this->impl->unk_607c.shown = 0;
+    this->impl->bombPortraitGlow.shown = 0;
+    this->impl->bombPortraitFrame.shown = 0;
     this->impl->bombName.shown = 0;
     this->impl->spellPortrait.shown = 0;
-    this->impl->unk_5e30.shown = 0;
-    this->impl->unk_62c8.shown = 0;
+    this->impl->spellPortraitGlow.shown = 0;
+    this->impl->spellPortraitFrame.shown = 0;
     this->impl->spellName.shown = 0;
     this->impl->bombName.fontWidth = 15;
     this->impl->bombName.fontHeight = 15;
@@ -804,12 +804,12 @@ int GuiImpl::RunMsg()
             this->stageClearShown = 1;
             if (g_GameManager.stage < 6)
             {
-                g_SpriteEngine->StartScript(&this->unk_6e44, 0x61e);
-                g_SpriteEngine->StartScript(&this->unk_72dc, 0x725);
-                g_SpriteEngine->SetPendingCopy(4, 0x20, 0x10, 0x180, 0x1c0, this->unk_72dc.spriteData->startX,
-                                               this->unk_72dc.spriteData->startY,
-                                               this->unk_72dc.spriteData->width,
-                                               this->unk_72dc.spriteData->height);
+                g_SpriteEngine->StartScript(&this->loadingIcon, 0x61e);
+                g_SpriteEngine->StartScript(&this->loadingBar, 0x725);
+                g_SpriteEngine->SetPendingCopy(4, 0x20, 0x10, 0x180, 0x1c0, this->loadingBar.spriteData->startX,
+                                               this->loadingBar.spriteData->startY,
+                                               this->loadingBar.spriteData->width,
+                                               this->loadingBar.spriteData->height);
             }
             else
             {
@@ -841,7 +841,7 @@ int GuiImpl::RunMsg()
                     g_App.scene = 7;
                     goto stepSprites;
                 }
-                g_SpriteEngine->InitSprite(&this->unk_7090, 0x10c);
+                g_SpriteEngine->InitSprite(&this->loadingCaption, 0x10c);
                 this->returnToTitleRequested = 1;
                 this->msg.scriptIndex = -2;
             }
@@ -1116,25 +1116,25 @@ void Gui::UpdateInterface()
     g_SpriteEngine->StepSprites(this->impl->sprites, 0x21);
     g_SpriteEngine->StepSprites(this->impl->trackNumberSprites, 5);
     g_SpriteEngine->Step(&this->impl->bombPortrait);
-    g_SpriteEngine->Step(&this->impl->unk_5be4);
-    g_SpriteEngine->Step(&this->impl->unk_607c);
+    g_SpriteEngine->Step(&this->impl->bombPortraitGlow);
+    g_SpriteEngine->Step(&this->impl->bombPortraitFrame);
     g_SpriteEngine->Step(&this->impl->bombName);
     g_SpriteEngine->Step(&this->impl->spellPortrait);
-    g_SpriteEngine->Step(&this->impl->unk_5e30);
-    g_SpriteEngine->Step(&this->impl->unk_62c8);
+    g_SpriteEngine->Step(&this->impl->spellPortraitGlow);
+    g_SpriteEngine->Step(&this->impl->spellPortraitFrame);
     g_SpriteEngine->Step(&this->impl->spellName);
     g_SpriteEngine->Step(&this->impl->bombNameBar);
     g_SpriteEngine->Step(&this->impl->spellNameBar);
-    g_SpriteEngine->Step(&this->impl->unk_7774);
-    if (this->impl->unk_6e44.spriteIndex >= 0)
+    g_SpriteEngine->Step(&this->impl->spellScoreBar);
+    if (this->impl->loadingIcon.spriteIndex >= 0)
     {
-        if (g_SpriteEngine->Step(&this->impl->unk_6e44) != 0)
+        if (g_SpriteEngine->Step(&this->impl->loadingIcon) != 0)
         {
-            this->impl->unk_6e44.spriteIndex = -1;
+            this->impl->loadingIcon.spriteIndex = -1;
         }
-        if (g_SpriteEngine->Step(&this->impl->unk_72dc) != 0)
+        if (g_SpriteEngine->Step(&this->impl->loadingBar) != 0)
         {
-            this->impl->unk_72dc.spriteIndex = -1;
+            this->impl->loadingBar.spriteIndex = -1;
         }
     }
     if (this->impl->backgroundTileCount != 0)
@@ -1507,8 +1507,8 @@ void Gui::DrawBanners()
     if (this->impl->bombPortrait.shown)
     {
         g_SpriteEngine->DrawUnrotated(&this->impl->bombPortrait);
-        g_SpriteEngine->DrawUnrotated(&this->impl->unk_5be4);
-        g_SpriteEngine->Draw(&this->impl->unk_607c);
+        g_SpriteEngine->DrawUnrotated(&this->impl->bombPortraitGlow);
+        g_SpriteEngine->Draw(&this->impl->bombPortraitFrame);
     }
     if (this->impl->spellPortrait.shown)
     {
@@ -1516,8 +1516,8 @@ void Gui::DrawBanners()
         this->impl->spellPortrait.pos += this->impl->spellPortrait.posOffset;
         g_SpriteEngine->DrawUnrotated(&this->impl->spellPortrait);
         this->impl->spellPortrait.pos = oldPos2;
-        g_SpriteEngine->DrawUnrotated(&this->impl->unk_5e30);
-        g_SpriteEngine->Draw(&this->impl->unk_62c8);
+        g_SpriteEngine->DrawUnrotated(&this->impl->spellPortraitGlow);
+        g_SpriteEngine->Draw(&this->impl->spellPortraitFrame);
     }
     if (this->impl->bombName.shown)
     {
@@ -1530,7 +1530,7 @@ void Gui::DrawBanners()
         this->impl->spellNameBar.pos = this->impl->spellName.pos;
         g_SpriteEngine->DrawUnrotated(&this->impl->spellNameBar);
         g_SpriteEngine->Draw(&this->impl->spellName);
-        g_SpriteEngine->DrawUnrotated(&this->impl->unk_7774);
+        g_SpriteEngine->DrawUnrotated(&this->impl->spellScoreBar);
         score = g_SpellCardBonus + g_SpellCardGrazeBonus;
         div2 = 10000000;
         shown = 0;
@@ -1539,8 +1539,8 @@ void Gui::DrawBanners()
         {
             score = 0;
         }
-        this->impl->unk_7528.pos = this->impl->unk_7774.pos;
-        this->impl->unk_7528.pos.x -= 40.0f;
+        this->impl->spellScoreDigit.pos = this->impl->spellScoreBar.pos;
+        this->impl->spellScoreDigit.pos.x -= 40.0f;
         for (iVal = 0; iVal < 8; iVal++)
         {
             digit = score / div2;
@@ -1550,10 +1550,10 @@ void Gui::DrawBanners()
             }
             if (shown || div2 == 1)
             {
-                this->impl->unk_7528.spriteData = GetSpriteData(digit + 0x84);
-                g_SpriteEngine->DrawUnrotated(&this->impl->unk_7528);
+                this->impl->spellScoreDigit.spriteData = GetSpriteData(digit + 0x84);
+                g_SpriteEngine->DrawUnrotated(&this->impl->spellScoreDigit);
             }
-            this->impl->unk_7528.pos.x += 7.0f;
+            this->impl->spellScoreDigit.pos.x += 7.0f;
             score %= div2;
             div2 /= 10;
         }
@@ -1562,38 +1562,38 @@ void Gui::DrawBanners()
         {
             digit = 99;
         }
-        this->impl->unk_7528.pos.x += 36.0f;
+        this->impl->spellScoreDigit.pos.x += 36.0f;
         if (digit / 10 != 0)
         {
-            this->impl->unk_7528.spriteData = GetSpriteData(digit / 10 + 0x84);
-            g_SpriteEngine->DrawUnrotated(&this->impl->unk_7528);
+            this->impl->spellScoreDigit.spriteData = GetSpriteData(digit / 10 + 0x84);
+            g_SpriteEngine->DrawUnrotated(&this->impl->spellScoreDigit);
         }
-        this->impl->unk_7528.pos.x += 7.0f;
-        this->impl->unk_7528.spriteData = GetSpriteData(digit % 10 + 0x84);
-        g_SpriteEngine->DrawUnrotated(&this->impl->unk_7528);
+        this->impl->spellScoreDigit.pos.x += 7.0f;
+        this->impl->spellScoreDigit.spriteData = GetSpriteData(digit % 10 + 0x84);
+        g_SpriteEngine->DrawUnrotated(&this->impl->spellScoreDigit);
         digit = catks->attempts[g_GameManager.shotIndex];
         if (digit > 99)
         {
             digit = 99;
         }
-        this->impl->unk_7528.pos.x += 14.0f;
+        this->impl->spellScoreDigit.pos.x += 14.0f;
         if (digit / 10 != 0)
         {
-            this->impl->unk_7528.spriteData = GetSpriteData(digit / 10 + 0x84);
-            g_SpriteEngine->DrawUnrotated(&this->impl->unk_7528);
+            this->impl->spellScoreDigit.spriteData = GetSpriteData(digit / 10 + 0x84);
+            g_SpriteEngine->DrawUnrotated(&this->impl->spellScoreDigit);
         }
-        this->impl->unk_7528.pos.x += 7.0f;
-        this->impl->unk_7528.spriteData = GetSpriteData(digit % 10 + 0x84);
-        g_SpriteEngine->DrawUnrotated(&this->impl->unk_7528);
+        this->impl->spellScoreDigit.pos.x += 7.0f;
+        this->impl->spellScoreDigit.spriteData = GetSpriteData(digit % 10 + 0x84);
+        g_SpriteEngine->DrawUnrotated(&this->impl->spellScoreDigit);
     }
-    if (this->impl->unk_6e44.spriteIndex >= 0)
+    if (this->impl->loadingIcon.spriteIndex >= 0)
     {
-        g_SpriteEngine->DrawUnrotated(&this->impl->unk_6e44);
-        g_SpriteEngine->DrawUnrotated(&this->impl->unk_72dc);
-        if (this->impl->unk_7090.spriteIndex >= 0)
+        g_SpriteEngine->DrawUnrotated(&this->impl->loadingIcon);
+        g_SpriteEngine->DrawUnrotated(&this->impl->loadingBar);
+        if (this->impl->loadingCaption.spriteIndex >= 0)
         {
-            this->impl->unk_7090.pos = D3DXVECTOR3(304.0f, 448.0f, 0.0f);
-            g_SpriteEngine->DrawUnrotated(&this->impl->unk_7090);
+            this->impl->loadingCaption.pos = D3DXVECTOR3(304.0f, 448.0f, 0.0f);
+            g_SpriteEngine->DrawUnrotated(&this->impl->loadingCaption);
         }
     }
     if (this->impl->backgroundTileCount != 0)
