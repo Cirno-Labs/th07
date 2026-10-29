@@ -1176,6 +1176,11 @@ void EndSlowdown(Enemy *enemy, EnemyScriptInstr *instr)
     g_Unknown1347b00.unk_528[1].pendingInterrupt = 1;
 }
 
+void FlashScreen(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    ScreenEffect::StartEffect(3, instr->args[1].i, 1, 0xd0cfcfff, 0);
+}
+
 // As in bullet.cpp: defined after its callers, so they call the copy.
 inline void Bullet::FreeBullet()
 {
