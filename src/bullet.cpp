@@ -158,7 +158,7 @@ int BulletManager::SpawnBullet(BulletShooter *shooter, int col, int row, float a
     CopyBulletSprite(&cur->sprites.sprite0, &shooter->typeSprites->sprite0);
     CopyBulletSprite(&cur->sprites.sprite4, &shooter->typeSprites->sprite4);
     cur->sprites.hitboxSize = shooter->typeSprites->hitboxSize;
-    cur->sprites.unk_b88 = shooter->typeSprites->unk_b88;
+    cur->sprites.spawnCopiedFlag = shooter->typeSprites->spawnCopiedFlag;
     cur->sprites.height = shooter->typeSprites->height;
     cur->sprites.sizeClass = shooter->typeSprites->sizeClass;
     cur->sound = shooter->bulletSound;

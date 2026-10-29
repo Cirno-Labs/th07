@@ -32,13 +32,13 @@ struct BulletTypeSprites
     Sprite sprite4;
     // The size of the bullet's hitbox.
     D3DXVECTOR3 hitboxSize;
-    BYTE unk_b88;
+    BYTE spawnCopiedFlag;
     // The height of the bullet's sprite.
     BYTE height;
     // A size class: 5 up to 8 high, 4 or 3 up to 16, 2 or 1 up to 32,
     // 0 above.
     BYTE sizeClass;
-    BYTE unk_b8b;
+    BYTE unusedByteB8b;
 };
 ASSERT_SIZE(BulletTypeSprites, 0xb8c);
 
