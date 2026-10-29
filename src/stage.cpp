@@ -462,6 +462,159 @@ int Unknown1347b00::Load(char *dataPath)
     return 0;
 }
 
+int Unknown1347b00::DrawLayer(int layer)
+{
+    Sprite *spr;
+    int objCount;
+    int fog;
+    StageInstance *placement;
+    D3DXMATRIX mat;
+    D3DXVECTOR3 centre;
+    D3DXVECTOR3 rightValue;
+    float dotVal;
+    StageObject *objData;
+    StageQuad *quad;
+    D3DXVECTOR3 diff2;
+    float range;
+    int any;
+    D3DXVECTOR3 origin;
+    D3DCOLOR colVal;
+    float w2;
+
+    placement = this->instances;
+    objCount = 0;
+    any = 0;
+    origin.x = 0.0f;
+    origin.y = 0.0f;
+    origin.z = 0.0f;
+    fog = 0xff;
+    this->SetupCamera();
+    g_SpriteEngine->SetUnk2e4d4(1);
+    D3DXMatrixIdentity(&mat);
+    while (placement->id >= 0)
+    {
+        objData = this->objects[placement->id];
+        if (objData->layer == layer)
+        {
+            quad = objData->quads;
+            centre.x = objData->pos.x + placement->pos.x - this->cameraPos.x + objData->size.x / 2.0f;
+            centre.y = objData->pos.y + placement->pos.y - this->cameraPos.y + objData->size.y / 2.0f;
+            centre.z = objData->pos.z + placement->pos.z - this->cameraPos.z + objData->size.z / 2.0f;
+            centre = centre - this->camera.eye;
+            if (D3DXVec3LengthSq(&centre) > 1690000.0f)
+            {
+                goto next;
+            }
+            dotVal = D3DXVec3Dot(&centre, &this->camera.dir);
+            range = D3DXVec3Length(&objData->size) / 2.0f + 880.0f;
+            if (dotVal > range || dotVal < 60.0f)
+            {
+                goto next;
+            }
+            objData->flags |= 2;
+            any = 1;
+            while (quad->type >= 0)
+            {
+                spr = &this->sprites[quad->spriteIndex];
+                switch (quad->type)
+                {
+                case 0:
+                    spr->pos.x = spr->posOffset.x + quad->pos.x + placement->pos.x - this->cameraPos.x;
+                    spr->pos.y = spr->posOffset.y + quad->pos.y + placement->pos.y - this->cameraPos.y;
+                    spr->pos.z = spr->posOffset.z + quad->pos.z + placement->pos.z - this->cameraPos.z;
+                    // scaleY and scaleX are SpriteBase's +0x18 and +0x1c,
+                    // really the horizontal and vertical scales.
+                    if (quad->width != 0.0f)
+                    {
+                        spr->scaleY = quad->width / spr->spriteData->width;
+                    }
+                    if (quad->height != 0.0f)
+                    {
+                        spr->scaleX = quad->height / spr->spriteData->height;
+                    }
+                    if (spr->autoRotate == 2)
+                    {
+                        mat._41 = spr->pos.x;
+                        mat._42 = spr->pos.y;
+                        mat._43 = spr->pos.z;
+                        D3DXVec3Project(&centre, &origin, &g_App.viewport, &g_App.projectionMatrix, &g_App.viewMatrix, &mat);
+                        rightValue.x = g_App.viewMatrix._11;
+                        rightValue.y = g_App.viewMatrix._12;
+                        rightValue.z = g_App.viewMatrix._13;
+                        D3DXVec3Normalize(&rightValue, &rightValue);
+                        if (quad->width != 0.0f)
+                        {
+                            w2 = quad->width;
+                        }
+                        else
+                        {
+                            w2 = spr->spriteData->width;
+                        }
+                        mat._41 += rightValue.x * w2 * spr->scaleY;
+                        mat._42 += rightValue.y * w2 * spr->scaleY;
+                        mat._43 += rightValue.z * w2 * spr->scaleY;
+                        D3DXVec3Project(&rightValue, &origin, &g_App.viewport, &g_App.projectionMatrix, &g_App.viewMatrix, &mat);
+                        diff2 = rightValue - centre;
+                        spr->scaleY = D3DXVec3Length(&diff2) / w2;
+                        spr->scaleX = spr->scaleY;
+                        diff2 = spr->pos - this->camera.eye;
+                        w2 = D3DXVec3Length(&diff2);
+                        colVal = spr->color;
+                        if (this->fog.nearPlane < w2)
+                        {
+                            w2 = (this->fog.nearPlane - w2) / (this->fog.nearPlane - this->fog.farPlane);
+                            if (w2 >= 1.0f)
+                            {
+                                goto nextQuad;
+                            }
+                            ((BYTE *)&spr->color)[0] = ((BYTE *)&spr->color)[0] - (BYTE)((((BYTE *)&spr->color)[0] - ((BYTE *)&this->fog.color)[0]) * w2);
+                            ((BYTE *)&spr->color)[1] = ((BYTE *)&spr->color)[1] - (BYTE)((((BYTE *)&spr->color)[1] - ((BYTE *)&this->fog.color)[1]) * w2);
+                            ((BYTE *)&spr->color)[2] = ((BYTE *)&spr->color)[2] - (BYTE)((((BYTE *)&spr->color)[2] - ((BYTE *)&this->fog.color)[2]) * w2);
+                            ((BYTE *)&spr->color)[3] = ((BYTE *)&spr->color)[3] * (1.0f - w2);
+                        }
+                        spr->pos = centre;
+                        if (spr->pos.z < 0.0f || spr->pos.z > 1.0f)
+                        {
+                        }
+                        else
+                        {
+                            if (fog != 0)
+                            {
+                                if (!g_App.flags.noFog)
+                                {
+                                    g_App.DisableFog();
+                                }
+                                fog = 0;
+                            }
+                            g_SpriteEngine->DrawNoRound(spr);
+                        }
+                        spr->color = colVal;
+                    }
+                    else
+                    {
+                        if (!g_App.flags.noFog && fog != 1)
+                        {
+                            if (!g_App.flags.noFog)
+                            {
+                                g_App.EnableFog();
+                            }
+                            fog = 1;
+                        }
+                        g_SpriteEngine->Draw3D(spr);
+                    }
+                    break;
+                }
+            nextQuad:
+                quad = (StageQuad *)((char *)quad + quad->size);
+            }
+            objCount++;
+        }
+    next:
+        placement++;
+    }
+    return 0;
+}
+
 int Unknown1347b00::StepObjects()
 {
     StageQuad *altQuad;
