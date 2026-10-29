@@ -47,3 +47,12 @@ void Unknown49fbf0::Func427c81(int points, int unk)
     this->impl->unk_209e0.value = points;
     g_App.redrawFrames = 2;
 }
+
+void Unknown49fbf0::ShowSpellCardBonus(int value)
+{
+    this->impl->spellBonusPopup.pos = D3DXVECTOR3(224.0f, 16.0f, 0.0f);
+    this->impl->spellBonusPopup.shown = 1;
+    this->impl->spellBonusPopup.timer.Set(0);
+    this->impl->spellBonusPopup.value = value;
+    g_App.redrawFrames = 2;
+}

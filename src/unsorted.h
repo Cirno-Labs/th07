@@ -1245,6 +1245,9 @@ public:
     // g_App.redrawFrames to 2. Player::EndBombState calls it with the
     // points it scores and 4.
     void Func427c81(int points, int unk);
+    // Shows `value` in spellBonusPopup, at (224, 16), and sets
+    // g_App.redrawFrames to 2.
+    void ShowSpellCardBonus(int value);
 
     unsigned char unk_0[0x4];
     // Set to 2 when they change, as th06's GuiFlags.

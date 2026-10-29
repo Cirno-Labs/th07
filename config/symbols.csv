@@ -232,7 +232,7 @@ address,size,name,symbol
 0x00427be2,22,Unknown49fbf0::Func427be2,?Func427be2@Unknown49fbf0@@QAEHXZ
 0x00427bf8,137,Unknown49fbf0::ShowBonusPopup,?ShowBonusPopup@Unknown49fbf0@@QAEXH@Z
 0x00427c81,136,Unknown49fbf0::Func427c81,?Func427c81@Unknown49fbf0@@QAEXHH@Z
-0x00427d09,137,Func427d09,
+0x00427d09,137,Unknown49fbf0::ShowSpellCardBonus,?ShowSpellCardBonus@Unknown49fbf0@@QAEXH@Z
 0x00427d92,234,Func427d92,
 0x00427e7c,166,Func427e7c,
 0x00427f22,1899,Func427f22,
