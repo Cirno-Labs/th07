@@ -302,6 +302,14 @@ public:
     // Whether a `size` box at `pos` meets the unk_978 box while
     // playerState is 0, 3 or 4, as th06's (which tested the graze box).
     int TouchesGrazeBox(D3DXVECTOR3 *pos, D3DXVECTOR3 *size);
+    // Whether a laser hits or grazes the player, as th06's: `pos` and
+    // `size` are its box in its own frame, into which the hitbox is
+    // turned by `angle` around `origin`. On a hit, marks bit 2 of g_ReplayManager->unk_d6, then
+    // calls Func441bd0(0) while playerState is 4 and kills the player
+    // while it is 0, returning 1 in both cases, else 0. Otherwise, with
+    // `canGraze`, grazes the player within 48 of the box unless it is
+    // respawning or dying, returning 2; else returns 0.
+    int CheckLaserHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size, D3DXVECTOR3 *origin, float angle, int canGraze);
     // Scores a graze of the bullet at `pos`.
     void Graze(D3DXVECTOR3 *pos);
     // CheckHit calls it with 0 on a hit while playerState is 4.
@@ -331,7 +339,9 @@ public:
     // The corners of the box TouchesGrazeBox tests.
     D3DXVECTOR3 unk_978;
     D3DXVECTOR3 unk_984;
-    unsigned char unk_990[0x24];
+    // The hitbox's half size, as th06's.
+    D3DXVECTOR3 hitboxSize;
+    unsigned char unk_99c[0x18];
     // Where the two options are.
     D3DXVECTOR3 optionPos[2];
     unsigned char unk_9cc[0x10];
