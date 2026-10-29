@@ -254,7 +254,7 @@ address,size,name,symbol
 0x0042d04b,235,Unknown49fbf0::DeletedCallback,?DeletedCallback@Unknown49fbf0@@SIHPAV1@@Z
 0x0042d136,279,Unknown49fbf0::RegisterChain,?RegisterChain@Unknown49fbf0@@SIHXZ
 0x0042d24d,536,GuiImpl::GuiImpl,??0GuiImpl@@QAE@XZ
-0x0042d465,216,Func42d465,
+0x0042d465,216,GuiMsg::GuiMsg,??0GuiMsg@@QAE@XZ
 0x0042d53d,35,Func42d53d,?Func42d53d@@YIXXZ
 0x0042d560,109,Unknown626270::Unknown626270,??0Unknown626270@@QAE@XZ
 0x0042d5cd,69,Unknown626270::AddLives,?AddLives@Unknown626270@@QAEXH@Z
