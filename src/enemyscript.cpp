@@ -192,3 +192,59 @@ int GetIntOperand(Enemy *enemy, int id)
     }
     return id;
 }
+
+int *ResolveOperand(Enemy *enemy, int *operand, WORD mask, int bit)
+{
+    if (bit >= 0 && (mask & (1 << bit)) == 0)
+    {
+        return operand;
+    }
+    switch (*operand)
+    {
+    case 10000:
+        return &enemy->ctx.vars.ints[0];
+    case 10001:
+        return &enemy->ctx.vars.ints[1];
+    case 10002:
+        return &enemy->ctx.vars.ints[2];
+    case 10003:
+        return &enemy->ctx.vars.ints[3];
+    case 10029:
+        return &enemy->ctx.vars.ints3[0];
+    case 10030:
+        return &enemy->ctx.vars.ints3[1];
+    case 10031:
+        return &enemy->ctx.vars.ints3[2];
+    case 10032:
+        return &enemy->ctx.vars.ints3[3];
+    case 10012:
+        return &enemy->ctx.vars.ints2[0];
+    case 10013:
+        return &enemy->ctx.vars.ints2[1];
+    case 10014:
+        return &enemy->ctx.vars.ints2[2];
+    case 10015:
+        return &enemy->ctx.vars.ints2[3];
+    case 10016:
+        return &g_Unknown626270.difficulty;
+    case 10017:
+        return &g_Unknown626270.unk_9634;
+    case 10025:
+        return &enemy->callbackTimer.current;
+    case 10027:
+        return &enemy->life;
+    case 10070:
+        return &enemy->item;
+    case 10071:
+        return &enemy->score;
+    case 10037:
+        return &g_Unknown1347938.globalInts[0];
+    case 10038:
+        return &g_Unknown1347938.globalInts[1];
+    case 10039:
+        return &g_Unknown1347938.globalInts[2];
+    case 10040:
+        return &g_Unknown1347938.globalInts[3];
+    }
+    return operand;
+}

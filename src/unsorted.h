@@ -1466,6 +1466,10 @@ extern Unknown1347938 g_Unknown1347938;
 // truncated) or another value the scripts read by number from 10000;
 // any other number is its own value.
 int GetIntOperand(Enemy *enemy, int id);
+// The int variable script operand `operand` names, as th06's
+// ResolveOperand, or `operand` itself if it names none or if `bit` is
+// not negative and clear in `mask`.
+int *ResolveOperand(Enemy *enemy, int *operand, WORD mask, int bit);
 
 // Set to 9 as the dialogue of stages 6 to 8 starts.
 extern int g_Unknown9a9ab8;
