@@ -50,6 +50,17 @@ struct Effect
 };
 ASSERT_SIZE(Effect, 0x2d8);
 
+// What each type of effect starts with.
+struct EffectInfo
+{
+    int script;
+    int (*update)(Effect *effect);
+    // Called once the effect is started, if set; the effect ends at once
+    // when it returns nonzero.
+    int (*init)(Effect *effect);
+};
+extern EffectInfo g_EffectInfos[];
+
 // The effects, at 0x12fe250: 400 started in turn, 8 reserved slots and
 // a spare.
 class EffectManager

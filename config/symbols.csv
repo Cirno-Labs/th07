@@ -1749,6 +1749,7 @@ address,size,name,symbol
 0x0049ece8,,g_ShotHitFuncs,?g_ShotHitFuncs@@3PAP6IHPAVPlayer@@PAUPlayerBullet@@PAUD3DXVECTOR3@@@ZA
 0x0049ed98,,g_FormatInfos,?g_FormatInfos@@3PAUFormatInfo@@A
 0x0049ee40,,g_DefaultControllerMapping,?g_DefaultControllerMapping@@3UControllerMapping@@A
+0x0049efc0,,g_EffectInfos,?g_EffectInfos@@3PAUEffectInfo@@A
 0x0049f40c,,g_PracticeStageNames,?g_PracticeStageNames@@3PAPADA
 0x0049f424,,g_MenuStageNames,?g_MenuStageNames@@3PAPADA
 0x0049f444,,g_MenuDifficultyNames,?g_MenuDifficultyNames@@3PAPADA
