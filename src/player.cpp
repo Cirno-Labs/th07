@@ -30,7 +30,7 @@ void Unknown626270::AddDeaths(int deaths)
         memset(&g_App, 0xff, 0x2d0);
     }
     this->stats->deaths += deaths;
-    this->Func4012b0();
+    this->RerollChecksumKeys();
 }
 
 void Unknown626270::AddBombsUsed(int bombs)
@@ -40,7 +40,7 @@ void Unknown626270::AddBombsUsed(int bombs)
         memset(&g_App, 0xff, 0x2d0);
     }
     this->stats->bombsUsed += bombs;
-    this->Func4012b0();
+    this->RerollChecksumKeys();
 }
 
 Player::Player()
@@ -1028,7 +1028,7 @@ void Player::Graze(D3DXVECTOR3 *pos)
 
 void Player::Die()
 {
-    g_Unknown626270.Func4012b0();
+    g_Unknown626270.RerollChecksumKeys();
     g_EffectManager.Func41c610(0xc, &this->position, 3, 1, 0xff4040ff);
     g_EffectManager.SpawnEffect(6, &this->position, 16, 0xffffffff);
     this->playerState = 2;
@@ -1156,7 +1156,7 @@ int UpdateDyingState(Player *player)
                 if ((int)g_Unknown626270.stats->power <= 16)
                 {
                     g_Unknown626270.stats->power = 0;
-                    g_Unknown626270.Func4012b0();
+                    g_Unknown626270.RerollChecksumKeys();
                 }
                 else
                 {
@@ -1189,7 +1189,7 @@ int UpdateDyingState(Player *player)
             else
             {
                 g_Unknown626270.stats->power = 0;
-                g_Unknown626270.Func4012b0();
+                g_Unknown626270.RerollChecksumKeys();
                 g_ItemManager.SpawnItem(&player->position, 4, 2);
                 g_ItemManager.SpawnItem(&player->position, 4, 2);
                 g_ItemManager.SpawnItem(&player->position, 4, 2);

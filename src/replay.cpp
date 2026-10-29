@@ -326,10 +326,10 @@ int ReplayManager::PlayAddedCallback(ReplayManager *replay)
     g_Unknown626270.stats->pointItemsTotal = cur->pointItemsTotal;
     g_Unknown626270.unk_9634 = cur->unk_25;
     g_Unknown626270.SetLives(cur->lives);
-    g_Unknown626270.Func4012b0();
+    g_Unknown626270.RerollChecksumKeys();
     g_Unknown626270.SetBombs(cur->bombs);
     g_Unknown626270.SetPower(cur->power);
-    g_Unknown626270.Func4012b0();
+    g_Unknown626270.RerollChecksumKeys();
     g_Unknown626270.stats->grazeTotal = cur->grazeTotal;
     replay->cursor = cur->frames;
     g_Unknown626270.unk_93d4 = cur->unk_26;

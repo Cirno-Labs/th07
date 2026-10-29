@@ -10,6 +10,18 @@
 #include "player.h"
 #include "unsorted.h"
 
+// Probably an inline of unsorted.h whose out-of-line copy the original
+// keeps with this file's (0x401000-0x4013f0); defined here, not inline,
+// so that the other files' calls stay calls.
+void Unknown626270::RerollChecksumKeys()
+{
+    this->stats->unk_34[2] = g_Rng.GetRandomU32InRange(100000) + 6543;
+    this->stats->unk_8c[3] = g_Rng.GetRandomU32InRange(100000) + 6543;
+    this->stats->unk_ac = this->stats->unk_34[2];
+    this->stats->unk_b0 = this->ComputeChecksum();
+    this->unk_9614 = this->stats->unk_b0 + this->stats->unk_8c[3];
+}
+
 AsciiText::AsciiText()
 {
 }

@@ -29,7 +29,7 @@ void Unknown626270::AddLives(int lives)
         memset(&g_App, 0xff, 0x2d0);
     }
     this->stats->lives += lives;
-    this->Func4012b0();
+    this->RerollChecksumKeys();
 }
 
 void Unknown626270::AddBombs(int bombs)
@@ -39,7 +39,7 @@ void Unknown626270::AddBombs(int bombs)
         memset(&g_App, 0xff, 0x2d0);
     }
     this->stats->bombs += bombs;
-    this->Func4012b0();
+    this->RerollChecksumKeys();
 }
 
 void Unknown626270::SetPlayArea()

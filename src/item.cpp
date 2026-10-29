@@ -25,7 +25,7 @@ void Unknown626270::AddPower(int power)
         memset(&g_App, 0xff, 0x2d0);
     }
     this->stats->power += power;
-    this->Func4012b0();
+    this->RerollChecksumKeys();
 }
 
 ItemManager::ItemManager()

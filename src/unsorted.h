@@ -959,7 +959,7 @@ public:
     // Sets the rank and its bounds from g_Ranks for the difficulty.
     void SetRankForDifficulty();
     // Rerolls the checksum keys and recomputes the checksums.
-    void Func4012b0();
+    void RerollChecksumKeys();
     // Adds `amount` hundredths to the rank, as th06's.
     void AddSubRank(int amount);
     // Add `amount` to unk_9618 and to unk_961c, each up to a limit.
