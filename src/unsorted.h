@@ -257,6 +257,7 @@ public:
     // timeGetTime() when AddPlayTime last added to the run time.
     DWORD unk_190;
     // timeGetTime() when AddTotalPlayTime last added to the play time.
+    // Unknown626270::DeletedCallback clears it.
     DWORD unk_194;
     D3DCAPS8 caps;
     // QueryPerformanceFrequency's result, as AddedCallback read it. Only
@@ -299,6 +300,15 @@ extern App g_App;
 // th06's GameManager::RegisterChain and RemoveChain.
 int RegisterGameManagerChain();
 void RemoveGameManagerChain();
+// Remove the chains of objects not named yet, in the order th06's
+// GameManager::DeletedCallback removes Stage, BulletManager, Player,
+// EnemyManager, EffectManager and Gui (Player::RemoveChain is the third
+// here).
+void Func4075d0();
+void Func427760();
+void Func423050();
+void Func41d150();
+void Func42d53d();
 // th06's Ending::RegisterChain.
 int Func41e820();
 
@@ -1176,6 +1186,16 @@ extern int g_Unknown12fe0cc;
 // starts.
 extern int g_Unknown12fe0c8;
 extern int g_Unknown12fe0dc;
+
+// The object at 0x1347938, where th06 has its EnemyScripts.
+// Placeholder name; only what is known so far.
+class Unknown1347938
+{
+public:
+    // Called where th06 calls EnemyScripts::Release.
+    void Func40e4f0();
+};
+extern Unknown1347938 g_Unknown1347938;
 
 // The object at 0x9a9b00. Placeholder name; only what is known so far.
 class Unknown9a9b00

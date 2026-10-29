@@ -14,7 +14,7 @@ address,size,name,symbol
 0x004017e0,391,Func4017e0,
 0x00401970,99,Func401970,
 0x004019e0,24,Func4019e0,
-0x00401a00,407,Func401a00,
+0x00401a00,407,AsciiText::Func401a00,?Func401a00@AsciiText@@QAEXXZ
 0x00401ba0,456,Func401ba0,
 0x00401d70,104,Func401d70,
 0x00401de0,65,Func401de0,
@@ -44,7 +44,7 @@ address,size,name,symbol
 0x00407000,1001,Func407000,
 0x00407410,166,Func407410,
 0x004074c0,270,Func4074c0,
-0x004075d0,50,Func4075d0,
+0x004075d0,50,Func4075d0,?Func4075d0@@YIXXZ
 0x00407610,474,Func407610,
 0x004077f0,263,Func4077f0,
 0x00407900,2167,Func407900,
@@ -78,7 +78,7 @@ address,size,name,symbol
 0x0040da80,2048,Func40da80,
 0x0040e280,406,Func40e280,
 0x0040e420,197,Func40e420,
-0x0040e4f0,50,Func40e4f0,
+0x0040e4f0,50,Unknown1347938::Func40e4f0,?Func40e4f0@Unknown1347938@@QAEXXZ
 0x0040e530,128,Func40e530,
 0x0040e5b0,1310,Func40e5b0,
 0x0040ec00,325,Func40ec00,
@@ -152,7 +152,7 @@ address,size,name,symbol
 0x0041cde0,581,Func41cde0,
 0x0041d050,65,Func41d050,
 0x0041d0a0,165,Func41d0a0,
-0x0041d150,35,Func41d150,
+0x0041d150,35,Func41d150,?Func41d150@@YIXXZ
 0x0041d180,357,Func41d180,
 0x0041d2f0,141,Func41d2f0,
 0x0041d380,131,Func41d380,
@@ -186,7 +186,7 @@ address,size,name,symbol
 0x00422ce0,394,Func422ce0,
 0x00422e70,193,Func422e70,
 0x00422f40,267,Func422f40,
-0x00423050,50,Func423050,
+0x00423050,50,Func423050,?Func423050@@YIXXZ
 0x00423090,522,Func423090,
 0x004232a0,64,Unknown9a9b00::Func4232a0,?Func4232a0@Unknown9a9b00@@QAEHXZ
 0x004232e0,67,Func4232e0,
@@ -215,7 +215,7 @@ address,size,name,symbol
 0x00426f60,1703,Func426f60,
 0x00427620,116,Func427620,
 0x004276a0,192,Func4276a0,
-0x00427760,51,Func427760,
+0x00427760,51,Func427760,?Func427760@@YIXXZ
 0x004277a0,266,Func4277a0,
 0x004278b0,91,Func4278b0,
 0x00427910,73,Func427910,
@@ -255,7 +255,7 @@ address,size,name,symbol
 0x0042d136,279,Func42d136,
 0x0042d24d,536,Func42d24d,
 0x0042d465,216,Func42d465,
-0x0042d53d,35,Func42d53d,
+0x0042d53d,35,Func42d53d,?Func42d53d@@YIXXZ
 0x0042d560,109,Unknown626270::Unknown626270,??0Unknown626270@@QAE@XZ
 0x0042d5cd,69,Unknown626270::AddLives,?AddLives@Unknown626270@@QAEXH@Z
 0x0042d612,69,Unknown626270::AddBombs,?AddBombs@Unknown626270@@QAEXH@Z
@@ -1800,6 +1800,7 @@ address,size,name,symbol
 0x012fe0d0,,g_Unknown12fe0d0,?g_Unknown12fe0d0@@3HA
 0x012fe0dc,,g_Unknown12fe0dc,?g_Unknown12fe0dc@@3HA
 0x012fe250,,g_EffectManager,?g_EffectManager@@3VEffectManager@@A
+0x01347938,,g_Unknown1347938,?g_Unknown1347938@@3VUnknown1347938@@A
 0x01347b00,,g_Unknown1347b00,?g_Unknown1347b00@@3VUnknown1347b00@@A
 0x01348010,,g_Unknown1348010,?g_Unknown1348010@@3EA
 0x0134cd28,,g_Unknown134cd28,?g_Unknown134cd28@@3UD3DXVECTOR3@@A

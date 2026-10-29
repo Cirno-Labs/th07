@@ -4,7 +4,10 @@
 
 #include <string.h>
 
+#include "ascii.h"
+#include "midi.h"
 #include "player.h"
+#include "replay.h"
 #include "sprite.h"
 #include "unsorted.h"
 
@@ -253,6 +256,37 @@ void IncrementStatCounter(DWORD *count, DWORD max)
     {
         (*count)++;
     }
+}
+
+int Unknown626270::DeletedCallback(Unknown626270 *mgr)
+{
+    g_App.StopMusic();
+    if (g_App.musicMode == 2 && g_App.midi != NULL)
+    {
+        g_App.midi->Restart(0x1e);
+    }
+    while (g_SoundPlayer.PlayQueuedSounds())
+    {
+    }
+    Func4075d0();
+    Func427760();
+    Player::RemoveChain();
+    Func423050();
+    g_Unknown1347938.Func40e4f0();
+    Func41d150();
+    Func42d53d();
+    ReplayManager::EndStage();
+    if (!g_Unknown626270.unk_93d8Bit3)
+    {
+        g_App.AddTotalPlayTime();
+    }
+    g_App.unk_194 = 0;
+    g_App.AddPlayTime();
+    mgr->unk_93d8 &= ~4;
+    g_AsciiText.Func401a00();
+    g_Unknown626270.unk_d = 0;
+    g_Unknown626270.unk_95e8 = 0;
+    return 0;
 }
 
 int RegisterGameManagerChain()

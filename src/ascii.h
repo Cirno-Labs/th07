@@ -14,6 +14,8 @@ public:
     static int RegisterChain();
     // Removes them.
     static void RemoveChain();
+    // Not named yet; called where th06 calls AsciiText::Initialize.
+    void Func401a00();
 
     // Queues `text` to be drawn at `pos`.
     void AddString(D3DXVECTOR3 *pos, char *text);
