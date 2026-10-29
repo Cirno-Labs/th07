@@ -995,7 +995,8 @@ public:
     unsigned char unk_9604[0x18];
     // Added to (up to unk_9618) by Func42f736.
     int unk_961c;
-    unsigned char unk_9620[0x4];
+    // UpdateInvulnerability sets it while Player::playerState is 4.
+    int unk_9620;
     // Whether Phantasm was open when the title menu last came up.
     int unk_9624;
     // The frames played, which the result screen shows as progress.
@@ -1025,3 +1026,13 @@ extern Unknown49fbf0 g_Unknown49fbf0;
 // Grows by 2500 plus 20 for every 1500 of Unknown626270::unk_961c above
 // stats->unk_88 with each graze. Probably a field of a larger object.
 extern int g_Unknown12fe0d0;
+
+// The object at 0x1347b00. Placeholder name; only what is known so far.
+class Unknown1347b00
+{
+public:
+    // Sets the color at +0x52ac to `color`, or to the average of the two
+    // while its alpha byte is set.
+    void Func406930(D3DCOLOR color);
+};
+extern Unknown1347b00 g_Unknown1347b00;

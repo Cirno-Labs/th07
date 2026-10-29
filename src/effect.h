@@ -5,7 +5,20 @@
 #include <d3d8.h>
 #include <d3dx8math.h>
 
-struct Effect;
+#include "common.h"
+#include "sprite.h"
+
+// One effect. Only the fields known so far.
+struct Effect
+{
+    Sprite sprite;
+    D3DXVECTOR3 pos;
+    unsigned char unk_258[0x74];
+    // Whether it runs, as th06's.
+    char active;
+    unsigned char unk_2cd[0xb];
+};
+ASSERT_SIZE(Effect, 0x2d8);
 
 // The effects, at 0x12fe250. Its effects are 0x2d8 bytes, 400 of them.
 class EffectManager

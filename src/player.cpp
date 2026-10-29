@@ -4,6 +4,7 @@
 #include <math.h>
 
 #include "ascii.h"
+#include "bullet.h"
 #include "effect.h"
 #include "player.h"
 #include "replay.h"
@@ -1084,6 +1085,98 @@ void UpdateRespawningState(Player *player)
     }
 }
 
+void UpdateInvulnerability(Player *player)
+{
+    ColorBytes color;
+
+    if (player->respawnClearFrames != 0)
+    {
+        player->respawnClearFrames--;
+        g_BulletManager.ClearAll(0);
+    }
+    if (player->playerState == 3)
+    {
+        if (player->unk_b7e68 != NULL)
+        {
+            player->unk_b7e68->pos = player->position;
+        }
+        player->stateTimer.Sub(1);
+        if (player->stateTimer.AsFrames() <= 0)
+        {
+            if (player->unk_b7e68 != NULL)
+            {
+                player->unk_b7e68->active = 0;
+                player->unk_b7e68 = NULL;
+            }
+            player->playerState = 0;
+            player->stateTimer.Set(0);
+            player->sprite.color = 0xffffffff;
+        }
+        else if (player->stateTimer.AsFrames() % 8 < 2)
+        {
+            player->sprite.color = 0xff404040;
+        }
+        else
+        {
+            player->sprite.color = 0xffffffff;
+        }
+    }
+    else if (player->playerState == 4)
+    {
+        if (player->unk_b7e6c != NULL)
+        {
+            player->unk_b7e6c->pos = player->position;
+        }
+        g_Unknown626270.unk_9620 = player->stateTimer.AsFrames() * 50000 / player->unk_16a0c.AsFrames();
+        if (g_Unknown626270.unk_9620 < 0)
+        {
+            g_Unknown626270.unk_9620 = 0;
+        }
+        g_Unknown626270.unk_9620 += g_Unknown626270.stats->unk_88;
+        player->stateTimer.Sub(1);
+        if (player->stateTimer.AsFrames() <= 0)
+        {
+            player->sprite.color = 0xffffffff;
+            player->Func441670();
+        }
+        else
+        {
+            if (player->stateTimer.AsFrames() % 4 < 2)
+            {
+                player->sprite.color = 0xffff0000;
+            }
+            else
+            {
+                player->sprite.color = 0xffffffff;
+            }
+            color.a = 0x80;
+            if (g_Player.stateTimer >= 510)
+            {
+                color.b = 0x80 - (540 - g_Player.stateTimer.AsFrames()) * 80 / 30;
+                color.g = color.b;
+                color.r = color.g;
+            }
+            else if (g_Player.stateTimer < 30)
+            {
+                color.b = 0x80 - g_Player.stateTimer.AsFrames() * 80 / 30;
+                color.g = color.b;
+                color.r = color.g;
+            }
+            else
+            {
+                color.b = 0x30;
+                color.g = color.b;
+                color.r = color.g;
+            }
+            g_Unknown1347b00.Func406930(color.color);
+        }
+    }
+    else
+    {
+        player->stateTimer.Tick();
+    }
+}
+
 PlayerArea *Player::AddHitboxArea(D3DXVECTOR3 *pos, float width, float height, int unk_1c)
 {
     PlayerArea *area = this->unk_17dc;
@@ -1168,7 +1261,7 @@ int Player::OnUpdate(Player *player)
     respawn:
         UpdateRespawningState(player);
     }
-    Func441330(player);
+    UpdateInvulnerability(player);
     if (player->playerState != 2 && player->playerState != 1)
     {
         Func43ee50(player);

@@ -10,6 +10,7 @@
 #include "timer.h"
 
 class Player;
+struct Effect;
 struct PlayerBullet;
 struct ShotData;
 
@@ -196,7 +197,16 @@ int Func440cf0(Player *player);
 // invulnerable (playerState 3) for 240 frames, with deathbombFrames
 // from the shot type.
 void UpdateRespawningState(Player *player);
-void Func441330(Player *player);
+// OnUpdate's step after the dying and respawning ones, as the end of
+// th06's OnUpdate: runs down respawnClearFrames, clearing the bullets
+// meanwhile. While invulnerable (playerState 3) keeps unk_b7e68 on the
+// player and counts stateTimer down, blinking the player, and at 0 ends
+// unk_b7e68 and returns to playerState 0. While playerState is 4 keeps
+// unk_b7e6c on the player, sets Unknown626270::unk_9620 from the time
+// left, and counts stateTimer down, blinking the player red and setting
+// Unknown1347b00's color, then calls Func441670 at 0. Otherwise ticks
+// stateTimer.
+void UpdateInvulnerability(Player *player);
 // OnUpdate's last step: clears unk_2428, homingTarget and unk_2440 for
 // the next frame, then sets AsciiText's unk_74d4 to 2 while the player
 // is in the bottom left (y at least 400, x below 160) and back to 3
@@ -339,6 +349,8 @@ public:
     void Graze(D3DXVECTOR3 *pos);
     // CheckHit calls it with 0 on a hit while playerState is 4.
     void Func441bd0(int unk);
+    // UpdateInvulnerability calls it when playerState 4 runs out.
+    void Func441670();
     // The update callback: unless the game is frozen, runs the steps
     // (UpdateHitboxAreas on), steps the sprites (the options' while unk_240a
     // is set), the bullets (UpdateBullets) and the firing (UpdateFiring).
@@ -429,7 +441,9 @@ public:
     ChainElem *calcChain;
     ChainElem *drawChain;
     ChainElem *drawChain2;
-    unsigned char unk_b7e68[0x8];
+    // Effects that follow the player while playerState is 3 and 4.
+    Effect *unk_b7e68;
+    Effect *unk_b7e6c;
     // The shot type's data, unfocused and focused.
     ShotTypeData *shotType;
     ShotTypeData *shotTypeFocused;
