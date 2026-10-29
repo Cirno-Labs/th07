@@ -15,3 +15,13 @@ void Unknown626270::AddLives(int lives)
     this->stats->lives += lives;
     this->Func4012b0();
 }
+
+void Unknown626270::AddBombs(int bombs)
+{
+    if (this->Func404fe0())
+    {
+        memset(&g_App, 0xff, 0x2d0);
+    }
+    this->stats->bombs += bombs;
+    this->Func4012b0();
+}
