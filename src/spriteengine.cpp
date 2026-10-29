@@ -511,6 +511,25 @@ int SpriteEngine::SetSprite(Sprite *vm, int sprite)
     return 0;
 }
 
+void SpriteEngine::SetScript(Sprite *vm, void *script)
+{
+    if (script == NULL)
+    {
+        memset(vm, 0, sizeof(Sprite));
+    }
+    else
+    {
+        vm->flags &= ~0x300;
+        vm->Initialize();
+        vm->scriptStart = (AnmInstr *)script;
+        vm->scriptPos = vm->scriptStart;
+        vm->unk_30.Set(0);
+        vm->flags &= ~1;
+        this->Step(vm);
+        this->unk_8++;
+    }
+}
+
 void SpriteEngine::RenderTextToTextureIndex(int textureIndex, int x, int y, int width, int unk4, int fontHeight,
                                             int unk6, D3DCOLOR textColor, D3DCOLOR shadowColor, char *text,
                                             float scaleX, float scaleY)

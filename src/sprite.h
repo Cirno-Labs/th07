@@ -39,6 +39,9 @@ struct SpriteData
 };
 ASSERT_SIZE(SpriteData, 0x40);
 
+// An instruction of an ANM script.
+struct AnmInstr;
+
 // The part of Sprite up to pos. Its implicit constructor (0x4011b0)
 // constructs the Timers; Sprite's calls it rather than expanding it.
 struct SpriteBase
@@ -140,7 +143,10 @@ public:
     short baseSpriteIndex;
     // The script SpriteEngine::StartScript started.
     short scriptIndex;
-    unsigned char unk_1da[0xa];
+    unsigned char unk_1da[0x2];
+    // The script SetScript started, and the instruction Step runs next.
+    AnmInstr *scriptStart;
+    AnmInstr *scriptPos;
     // The entry SetSprite chose.
     SpriteData *spriteData;
     D3DXVECTOR3 unk_1e8;
@@ -431,6 +437,7 @@ public:
 
     D3DCOLOR unk_0;
     DWORD unk_4;
+    // Counts the scripts SetScript started.
     DWORD unk_8;
     DWORD unk_c;
     DWORD unk_10;
