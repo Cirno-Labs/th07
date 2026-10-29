@@ -109,3 +109,12 @@ void Bullet::SetTurnCommand(int idx, int unk_14, int unk_8, float unk_4, float u
     cmd->unk_0 = unk_0;
     cmd->unk_4 = unk_4;
 }
+
+void Bullet::SetAccelerateCommand(int idx, int unk_14, int unk_8, float unk_0, float unk_4)
+{
+    BulletCommand *cmd = this->RestartCommand(idx, unk_14, 0x10);
+
+    cmd->unk_8 = unk_8;
+    cmd->unk_0 = unk_0;
+    cmd->unk_4 = unk_4;
+}
