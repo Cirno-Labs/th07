@@ -10,44 +10,6 @@
 #include "replay.h"
 #include "unsorted.h"
 
-void MoveEnemyEffects(Enemy *enemy)
-{
-    Effect *eff;
-    int i;
-
-    for (i = 0; i < enemy->effectCount; i++)
-    {
-        eff = enemy->effects[i];
-        if (eff == NULL)
-        {
-            continue;
-        }
-        eff->sprite.visible = !enemy->flags.hideFollowEffects;
-        eff->origin = enemy->pos;
-        if (eff->radius < enemy->effectRadius)
-        {
-            eff->radius += 0.3f;
-        }
-        eff->angle = AddNormalizeAngle(eff->angle, 0.031415928f);
-    }
-}
-
-void ReleaseEnemyEffects(Enemy *enemy)
-{
-    int i;
-
-    for (i = 0; i < enemy->effectCount; i++)
-    {
-        if (enemy->effects[i] == NULL)
-        {
-            continue;
-        }
-        enemy->effects[i]->fadeOut = 1;
-        enemy->effects[i] = NULL;
-    }
-    enemy->effectCount = 0;
-}
-
 inline void Enemy::Move()
 {
     this->posDelta = this->pos - this->prevPos;
@@ -213,6 +175,44 @@ Enemy *EnemyManager::SpawnWithVars(int sub, D3DXVECTOR3 *pos, int life, int item
         break;
     }
     return enemy;
+}
+
+void MoveEnemyEffects(Enemy *enemy)
+{
+    Effect *eff;
+    int i;
+
+    for (i = 0; i < enemy->effectCount; i++)
+    {
+        eff = enemy->effects[i];
+        if (eff == NULL)
+        {
+            continue;
+        }
+        eff->sprite.visible = !enemy->flags.hideFollowEffects;
+        eff->origin = enemy->pos;
+        if (eff->radius < enemy->effectRadius)
+        {
+            eff->radius += 0.3f;
+        }
+        eff->angle = AddNormalizeAngle(eff->angle, 0.031415928f);
+    }
+}
+
+void ReleaseEnemyEffects(Enemy *enemy)
+{
+    int i;
+
+    for (i = 0; i < enemy->effectCount; i++)
+    {
+        if (enemy->effects[i] == NULL)
+        {
+            continue;
+        }
+        enemy->effects[i]->fadeOut = 1;
+        enemy->effects[i] = NULL;
+    }
+    enemy->effectCount = 0;
 }
 
 void EnemyTimeline::RunTimeline()
@@ -574,32 +574,6 @@ void Enemy::CheckPlayerContact(D3DXVECTOR3 *pos, D3DXVECTOR3 *size)
         !this->flags.grazeable)
     {
         this->life -= 10;
-    }
-}
-
-float LerpAngle(float a, float b, float t)
-{
-    float diff;
-    float wrap;
-
-    if (a < b)
-    {
-        diff = b - a;
-        wrap = a + 6.2831855f - b;
-    }
-    else
-    {
-        diff = a - b;
-        wrap = b + 6.2831855f - a;
-        a = b;
-    }
-    if (diff < wrap)
-    {
-        return diff * t + a;
-    }
-    else
-    {
-        return wrap * t + a;
     }
 }
 
@@ -1070,6 +1044,32 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
     return 1;
 }
 
+float LerpAngle(float a, float b, float t)
+{
+    float diff;
+    float wrap;
+
+    if (a < b)
+    {
+        diff = b - a;
+        wrap = a + 6.2831855f - b;
+    }
+    else
+    {
+        diff = a - b;
+        wrap = b + 6.2831855f - a;
+        a = b;
+    }
+    if (diff < wrap)
+    {
+        return diff * t + a;
+    }
+    else
+    {
+        return wrap * t + a;
+    }
+}
+
 int EnemyManager::DrawEnemies(EnemyManager *mgr, int from, int to)
 {
     float uSpan2;
@@ -1340,20 +1340,6 @@ void EnemyManager::RemoveChain()
     g_Chain.Remove(&g_EnemyManagerDrawChain2);
 }
 
-int EnemyManager::AnyBossActive()
-{
-    int i;
-
-    for (i = 0; i < 8; i++)
-    {
-        if (this->bosses[i] != NULL)
-        {
-            return 1;
-        }
-    }
-    return 0;
-}
-
 int EnemyManager::ClearEnemiesForBonus(int maxBonus, int start)
 {
     Enemy *enemy = this->enemies;
@@ -1406,4 +1392,18 @@ int EnemyManager::ClearEnemiesForBonus(int maxBonus, int start)
         }
     }
     return total;
+}
+
+int EnemyManager::AnyBossActive()
+{
+    int i;
+
+    for (i = 0; i < 8; i++)
+    {
+        if (this->bosses[i] != NULL)
+        {
+            return 1;
+        }
+    }
+    return 0;
 }
