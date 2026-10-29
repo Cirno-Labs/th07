@@ -1183,7 +1183,8 @@ struct GuiImpl
     Sprite unk_7528;
     Sprite unk_7774;
     Sprite unk_79c0[0xa8];
-    unsigned char unk_1fba0[0xe90];
+    int unk_1fba0;
+    unsigned char unk_1fba4[0xe8c];
 };
 ASSERT_SIZE(GuiImpl, 0x20a30);
 
@@ -1198,6 +1199,9 @@ public:
     // Sets spellName's pendingInterrupt to 1 and spellNameBar's and
     // unk_7774's to 2, as the spell card ends.
     void EndSpellCardName();
+    // Hides unk_6e44, unk_7090 and unk_72dc (spriteIndex -1) and clears
+    // impl->unk_1fba0. Not in th06.
+    void HideInterface();
 
     // Whether the pointer at +8 is set and the int at its +0x1fbac is
     // not negative, or is -2.

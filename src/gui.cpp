@@ -16,3 +16,11 @@ void Unknown49fbf0::EndSpellCardName()
     this->impl->spellNameBar.SetPendingInterrupt(2);
     this->impl->unk_7774.SetPendingInterrupt(2);
 }
+
+void Unknown49fbf0::HideInterface()
+{
+    this->impl->unk_6e44.spriteIndex = -1;
+    this->impl->unk_7090.spriteIndex = -1;
+    this->impl->unk_72dc.spriteIndex = -1;
+    this->impl->unk_1fba0 = 0;
+}

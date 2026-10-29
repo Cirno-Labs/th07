@@ -228,7 +228,7 @@ address,size,name,symbol
 0x00427ae0,65,Func427ae0,
 0x00427b21,51,Unknown49fbf0::EndBombName,?EndBombName@Unknown49fbf0@@QAEXXZ
 0x00427b54,78,Unknown49fbf0::EndSpellCardName,?EndSpellCardName@Unknown49fbf0@@QAEXXZ
-0x00427ba2,64,Func427ba2,
+0x00427ba2,64,Unknown49fbf0::HideInterface,?HideInterface@Unknown49fbf0@@QAEXXZ
 0x00427be2,22,Unknown49fbf0::Func427be2,?Func427be2@Unknown49fbf0@@QAEHXZ
 0x00427bf8,137,Func427bf8,
 0x00427c81,136,Unknown49fbf0::Func427c81,?Func427c81@Unknown49fbf0@@QAEXHH@Z
