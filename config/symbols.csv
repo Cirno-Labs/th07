@@ -9,7 +9,7 @@ address,size,name,symbol
 0x00401400,155,AsciiText::RunScripts,?RunScripts@AsciiText@@QAEXXZ
 0x004014a0,496,AsciiText::AsciiText,??0AsciiText@@QAE@XZ
 0x00401690,143,PauseMenu::PauseMenu,??0PauseMenu@@QAE@XZ
-0x00401720,143,Func401720,
+0x00401720,143,ContinueMenu::ContinueMenu,??0ContinueMenu@@QAE@XZ
 0x004017b0,40,Func4017b0,
 0x004017e0,391,AsciiText::OnUpdate,?OnUpdate@AsciiText@@SIHPAV1@@Z
 0x00401970,99,AsciiText::OnDraw,?OnDraw@AsciiText@@SIHPAV1@@Z
