@@ -955,6 +955,8 @@ public:
     // unk_961c reaches unk_9618 and changed, calls Unknown49fbf0's
     // Func427c81 with unk_961c less stats->unk_88 and 3.
     void AddBonusPoints(int amount);
+    // The same without unk_9620.
+    void AddBonusPointsNoTrack(int amount);
     // Takes `amount` from unk_961c, down to stats->unk_88.
     void SubUnk961c(int amount)
     {
