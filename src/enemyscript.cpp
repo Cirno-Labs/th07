@@ -1049,6 +1049,75 @@ int PointInRotatedBox(D3DXVECTOR3 *point, D3DXVECTOR3 *center, D3DXVECTOR3 *size
     return 1;
 }
 
+void UpdateLaserEdgeBullets(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    D3DXVECTOR3 middle;
+    float c;
+    int li;
+    Laser *l;
+    Bullet *blt;
+    D3DXVECTOR3 size;
+    float proj;
+    float s;
+    int n;
+
+    l = g_BulletManager.lasers;
+    for (li = 0; li < 0x40; li++, l++)
+    {
+        if (l->active == 0)
+        {
+            continue;
+        }
+        if (enemy->callbackTimer.current % 2 != li)
+        {
+            continue;
+        }
+        if (l->state < 2)
+        {
+            size.y = l->width;
+            size.x = l->endOffset - l->startOffset;
+            middle.x = (l->endOffset - l->startOffset) / 2.0f + l->startOffset + l->pos.x;
+            middle.y = l->pos.y;
+            SinCos(&s, &c, l->angle);
+            blt = g_BulletManager.bullets;
+            for (n = 0; n < 0x400; n++, blt++)
+            {
+                if (blt->state == 0 || blt->state == 5)
+                {
+                    continue;
+                }
+                if (blt->sprites.sprite0.spriteData != NULL && PointInRotatedBox(&blt->pos, &middle, &size, &l->pos, s, c))
+                {
+                    if (blt->unk_c08 > 0)
+                    {
+                        blt->unk_c08--;
+                    }
+                    if (blt->unk_c08 == 0)
+                    {
+                        if (blt->speed > 0.5f)
+                        {
+                            blt->speed -= 0.1f;
+                        }
+                        proj = c * blt->velocity.y + s * blt->velocity.x;
+                        if (proj >= 0.0f)
+                        {
+                            blt->angle = AddNormalizeAngle(l->angle, 1.5707964f);
+                        }
+                        else
+                        {
+                            blt->angle = AddNormalizeAngle(l->angle, -1.5707964f);
+                        }
+                        ((Unknown4325c0 *)&blt->velocity)->SetPolar(blt->angle, g_App.unk_178 * blt->speed);
+                        blt->unk_c08 = 10;
+                        blt->sprites = g_BulletManager.typeSprites[5];
+                        g_SpriteEngine->SetSprite(&blt->sprites.sprite0, blt->sprites.sprite0.spriteIndex + blt->color);
+                    }
+                }
+            }
+        }
+    }
+}
+
 // As in bullet.cpp: defined after its callers, so they call the copy.
 inline void Bullet::FreeBullet()
 {

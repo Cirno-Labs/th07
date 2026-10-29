@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">81.56% (566)</tspan> · <tspan class="decompiled">9.65% (67)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">8.65% (60)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">81.70% (567)</tspan> · <tspan class="decompiled">9.65% (67)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">8.50% (59)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="609.22" height="6" x="0" y="0" class="named"/>
-<rect width="72.12" height="6" x="609.22" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="681.34" y="0" class="nonmatching"/>
-<rect width="64.58" height="6" x="682.42" y="0" class="todo"/>
+<rect width="610.30" height="6" x="0" y="0" class="named"/>
+<rect width="72.12" height="6" x="610.30" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="682.42" y="0" class="nonmatching"/>
+<rect width="63.51" height="6" x="683.49" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="named"><title>0x00401000 D3DXMatrixIdentity (173 bytes)</title></rect>
@@ -171,7 +171,7 @@
 <rect width="12" height="12" x="735" y="15" class="named"><title>0x00418260 CopyBossMoveStart (106 bytes)</title></rect>
 <rect width="12" height="12" x="0" y="30" class="named"><title>0x004182d0 FireBackwardFans (766 bytes)</title></rect>
 <rect width="12" height="12" x="15" y="30" class="named"><title>0x004185d0 PointInRotatedBox (679 bytes)</title></rect>
-<rect width="12" height="12" x="30" y="30" class="todo"><title>0x00418880 Func418880 (703 bytes)</title></rect>
+<rect width="12" height="12" x="30" y="30" class="named"><title>0x00418880 UpdateLaserEdgeBullets (703 bytes)</title></rect>
 <rect width="12" height="12" x="45" y="30" class="todo"><title>0x00418b40 Func418b40 (820 bytes)</title></rect>
 <rect width="12" height="12" x="60" y="30" class="todo"><title>0x00418e80 Func418e80 (42 bytes)</title></rect>
 <rect width="12" height="12" x="75" y="30" class="todo"><title>0x00418eb0 Func418eb0 (262 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">64.28%</tspan> · <tspan class="decompiled">3.75%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">31.88%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">64.47%</tspan> · <tspan class="decompiled">3.75%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">31.69%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="480.21" height="6" x="0" y="0" class="named"/>
-<rect width="28" height="6" x="480.21" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="508.20" y="0" class="nonmatching"/>
-<rect width="238.13" height="6" x="508.87" y="0" class="todo"/>
+<rect width="481.59" height="6" x="0" y="0" class="named"/>
+<rect width="28" height="6" x="481.59" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="509.58" y="0" class="nonmatching"/>
+<rect width="236.75" height="6" x="510.25" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Unknown1347938::RunEnemy (29464 bytes)</title></rect>
@@ -901,7 +901,7 @@
 <rect width="14.68" height="13.88" x="485.32" y="162.57" class="named"><title>0x00424e00 BulletManager::SpawnLaser (712 bytes)</title></rect>
 <rect width="14.68" height="13.83" x="485.32" y="179.45" class="named"><title>0x0041b4a0 EffectInitPetal26 (710 bytes)</title></rect>
 <rect width="14.68" height="13.71" x="485.32" y="196.29" class="named"><title>0x0044b560 SoundPlayer::Initialize (705 bytes)</title></rect>
-<rect width="14.34" height="13.99" x="503" y="0" class="todo"><title>0x00418880 Func418880 (703 bytes)</title></rect>
+<rect width="14.34" height="13.99" x="503" y="0" class="named"><title>0x00418880 UpdateLaserEdgeBullets (703 bytes)</title></rect>
 <rect width="14.34" height="13.92" x="503" y="16.99" class="named"><title>0x0044d630 SpriteEngine::CreateQuad (700 bytes)</title></rect>
 <rect width="14.34" height="13.90" x="503" y="33.91" class="named"><title>0x004395fb App::SaveScreenshot (699 bytes)</title></rect>
 <rect width="14.34" height="13.53" x="503" y="50.81" class="named"><title>0x0041ef70 Enemy::Enemy (684 bytes)</title></rect>

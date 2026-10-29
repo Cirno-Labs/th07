@@ -1571,6 +1571,11 @@ void CopyBossMoveStart(Enemy *enemy, EnemyScriptInstr *instr);
 // Each flying bullet with a sprite of color 6, 15 or 2 (argument 1 = 0,
 // 1 or 2) fires three fans back the way it came and is removed.
 void FireBackwardFans(Enemy *enemy, EnemyScriptInstr *instr);
+// For the even or odd lasers by callbackTimer, those not ending: the
+// flying bullets with sprites inside one count unk_c08 down; at 0 they
+// slow by 0.1 (above 0.5), turn square to the laser on the side their
+// velocity points to, take typeSprites[5]'s sprites, and wait 10 more.
+void UpdateLaserEdgeBullets(Enemy *enemy, EnemyScriptInstr *instr);
 // Whether `point`, turned about `origin` by the angle with sine
 // `sinAngle` and cosine `cosAngle`, lies in the `size` box centred on
 // `center` (x and y only).
