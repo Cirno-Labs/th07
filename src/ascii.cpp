@@ -953,7 +953,7 @@ int ContinueMenu::UpdateContinueMenu()
             g_Gui.livesChanged = 2;
             g_Gui.bombsChanged = 2;
             g_Gui.grazeChanged = 2;
-            g_Gui.unk_4_8 = 2;
+            g_Gui.frameItemsHideTimer = 2;
             g_Gui.powerChanged = 2;
             IncrementCounterCapped((DWORD *)&g_GameManager.plst.counts[g_GameManager.difficulty].plays[0], 999999);
             IncrementCounterCapped((DWORD *)&g_GameManager.plst.counts[6].plays[0], 999999);

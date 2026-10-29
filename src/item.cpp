@@ -276,7 +276,7 @@ void ItemManager::UpdateItems()
                 g_GameManager.AddScore(amount);
                 g_GameManager.stats->stageClearPoints++;
                 g_GameManager.stats->pointItemsTotal++;
-                g_Gui.unk_4_8 = 2;
+                g_Gui.frameItemsHideTimer = 2;
                 if (entry->pos.y < 128.0f)
                 {
                     g_GameManager.AddSubRank(10);
