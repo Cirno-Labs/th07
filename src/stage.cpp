@@ -8,6 +8,24 @@
 #include "sprite.h"
 #include "unsorted.h"
 
+// The game's data, as the original defines it here. The DLL build uses
+// the original's copies instead.
+#ifdef TH07_EXE
+Stage g_Stage;
+ChainElem g_StageCalcChain;
+ChainElem g_StageDrawChain;
+ChainElem g_StageDrawChain2;
+// Inside g_Stage in the original (Stage is 0x52b4 bytes), where these
+// are fields: g_Stage + 0x510, 0x520, 0x524 and 0x51f8 to 0x5234.
+BYTE g_FogColorChanged;
+int g_EffectStyle;
+int g_EffectManagerInitFlag;
+D3DXVECTOR3 g_CameraEye;
+D3DXVECTOR3 g_CameraAt;
+D3DXVECTOR3 g_CameraDir;
+D3DXVECTOR3 g_CameraSizeOffset;
+#endif // TH07_EXE
+
 // An inline of unsorted.h, probably, whose out-of-line copy the original
 // keeps with this file's; defined here so that the other files' calls
 // stay calls. checksum has to be lifeChecksumKeys[2] plus checksumKeysE[2] for each byte

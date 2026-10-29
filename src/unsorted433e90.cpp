@@ -17,6 +17,13 @@
 #include "sprite.h"
 #include "unsorted.h"
 
+// The game's data, as the original defines it here. The DLL build uses
+// the original's copies instead.
+#ifdef TH07_EXE
+GameWindow g_GameWindow;
+HANDLE g_AppMutex;
+#endif // TH07_EXE
+
 void Log::Flush()
 {
     if (this->cursor != this->buffer)

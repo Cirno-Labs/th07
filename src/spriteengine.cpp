@@ -19,6 +19,9 @@ const int g_TextureFormatSizes[7] = {
     4, 4, 2, 2, 3, 2, 0,
 };
 const float g_Half = 0.5f;
+VertexTex1Xyzrwh g_Quad[4];
+VertexTex1DiffuseXyzrwh g_DiffuseQuad[4];
+VertexTex1DiffuseXyz g_DiffuseQuadXyz[4];
 #endif // TH07_EXE
 
 SpriteEngine::SpriteEngine()

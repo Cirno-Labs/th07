@@ -15,6 +15,14 @@
 #include "sprite.h"
 #include "unsorted.h"
 
+// The game's data, as the original defines it here. The DLL build uses
+// the original's copies instead.
+#ifdef TH07_EXE
+GameManager g_GameManager;
+ChainElem g_GameManagerCalcChain;
+ChainElem g_GameManagerDrawChain;
+#endif // TH07_EXE
+
 GameManager::GameManager()
 {
     memset(this, 0, sizeof(GameManager));

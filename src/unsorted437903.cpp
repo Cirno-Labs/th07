@@ -18,6 +18,12 @@
 #include "sprite.h"
 #include "unsorted.h"
 
+// The game's data, as the original defines it here. The DLL build uses
+// the original's copies instead.
+#ifdef TH07_EXE
+App g_App;
+#endif // TH07_EXE
+
 void DebugPrint2(const char *fmt, ...)
 {
 }

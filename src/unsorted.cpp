@@ -10,6 +10,9 @@
 ControllerMapping g_DefaultControllerMapping = {
     0, 1, 2, 4, -1, -1, -1, -1, 3,
 };
+JOYCAPSA g_JoyCaps;
+WORD g_ShotHeldFrames;
+Rng g_Rng;
 #endif // TH07_EXE
 
 WORD InitJoystick()
@@ -176,6 +179,9 @@ WORD ReadJoystick(WORD buttons)
 
 BYTE *GetPadButtons()
 {
+#ifdef TH07_EXE
+    static BYTE g_PadButtons[0x80];
+#endif // TH07_EXE
     JOYINFOEX joyInfo;
     DWORD mask;
     DWORD button;

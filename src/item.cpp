@@ -21,6 +21,10 @@ int g_PowerLevels[9] = {
     8, 16, 32, 48, 64, 80, 96, 128,
     999,
 };
+ItemManager g_ItemManager;
+// Constructed, never used.
+ChainElem g_ChainElem6241ec;
+ChainElem g_ChainElem575c4c;
 #endif // TH07_EXE
 
 void Vector2::SetPolar(float angle, float radius)

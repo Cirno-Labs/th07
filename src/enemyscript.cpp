@@ -72,6 +72,9 @@ EnemyScriptInterp g_EnemyScriptInterps[8] = {
     ScriptMoveLinear,
     ScriptMoveHermite,
 };
+// Constructed, never used.
+ChainElem g_ChainElem1347ac0;
+EnemyScripts g_EnemyScripts;
 #endif // TH07_EXE
 
 // Argument `n` of `instr`, or the value of the variable it names.

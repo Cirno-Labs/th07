@@ -48,6 +48,7 @@ ShotHitFunc g_ShotHitFuncs[4] = {
     BurstHitEffect,
     (ShotHitFunc)1,
 };
+Player g_Player;
 #endif // TH07_EXE
 
 void GameManager::RerollLifeChecksumKeys()

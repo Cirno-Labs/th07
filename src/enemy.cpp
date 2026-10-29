@@ -17,6 +17,19 @@ BYTE g_EnemyItemDrops[0x20] = {
     0, 0, 1, 0, 1, 0, 0, 7, 1, 1, 0, 0, 7, 1, 1, 0,
     1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 7, 1, 1, 1, 0, 2,
 };
+ChainElem g_EnemyManagerCalcChain;
+ChainElem g_EnemyManagerDrawChain;
+ChainElem g_EnemyManagerDrawChain2;
+EnemyManager g_EnemyManager;
+// Inside g_EnemyManager in the original (from + 0x9545c4), where these
+// are fields.
+int g_SpellCardCapture;
+int g_SpellCardActive;
+int g_SpellCardBonus;
+int g_SpellCardGrazeBonus;
+int g_SpellCardBonusStep;
+int g_SpellCardNumber;
+int g_SpellCardActiveAtBomb;
 #endif // TH07_EXE
 
 inline void Enemy::Move()

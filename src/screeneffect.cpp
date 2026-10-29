@@ -6,6 +6,14 @@
 #include "sprite.h"
 #include "unsorted.h"
 
+// The game's data, as the original defines it here. The DLL build uses
+// the original's copies instead.
+#ifdef TH07_EXE
+// Constructed, never used; which of replay.cpp, resultscreen.cpp and
+// screeneffect.cpp defines it is a guess.
+Timer g_Timer4bdac8;
+#endif // TH07_EXE
+
 void ClearScreen(D3DCOLOR color)
 {
     g_App.d3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, color, 1.0f, 0);

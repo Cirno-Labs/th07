@@ -3,6 +3,27 @@
 #include "chain.h"
 #include "unsorted.h"
 
+// The game's data, as the original defines it here. The DLL build uses
+// the original's copies instead.
+#ifdef TH07_EXE
+Chain g_Chain;
+// Set to NULL and destroyed, never used.
+struct Unknown626268
+{
+    Unknown626268()
+    {
+        this->ptr = NULL;
+    }
+    ~Unknown626268()
+    {
+    }
+    void *ptr;
+};
+Unknown626268 g_Unknown626268;
+DatArchive g_Archive;
+Log g_Log;
+#endif // TH07_EXE
+
 Chain::~Chain()
 {
 }

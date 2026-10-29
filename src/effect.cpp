@@ -46,6 +46,9 @@ EffectInfo g_EffectInfos[34] = {
     {0x000002c1, EffectUpdateDivergeEased, EffectInitDiverge},
     {0x000002b1, EffectUpdateConverge, EffectInitConverge},
 };
+EffectManager g_EffectManager;
+ChainElem g_EffectCalcChain;
+ChainElem g_EffectDrawChain;
 #endif // TH07_EXE
 
 EffectManager::EffectManager()

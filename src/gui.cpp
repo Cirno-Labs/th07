@@ -14,6 +14,14 @@
 #include "screeneffect.h"
 #include "unsorted.h"
 
+// The game's data, as the original defines it here. The DLL build uses
+// the original's copies instead.
+#ifdef TH07_EXE
+ChainElem g_GuiCalcChain;
+ChainElem g_GuiDrawChain;
+Gui g_Gui;
+#endif // TH07_EXE
+
 BOOL Gui::IsLoadingShown()
 {
     return this->impl->loadingIcon.spriteIndex >= 0 && (this->impl->loadingIcon.flags >> 13 & 1);

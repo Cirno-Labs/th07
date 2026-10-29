@@ -67,6 +67,13 @@ struct GameConfigFlags
 class App
 {
 public:
+    // Zeroes the application. Inline: the original runs it as g_App's
+    // static initializer.
+    App()
+    {
+        memset(this, 0, sizeof(App));
+    }
+
     // Reads the config file at `path` into the config, resetting it to
     // the defaults if the file is missing or invalid, checks the header
     // of thbgm.dat, logs the options in effect and writes the config

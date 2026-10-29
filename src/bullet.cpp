@@ -52,6 +52,11 @@ int g_BulletColorOffsets16[16] = {
 int g_BulletColorOffsets32[8] = {
     0, 1, 1, 2, 2, 3, 4, 0,
 };
+ChainElem g_BulletCalcChain;
+ChainElem g_BulletDrawChain;
+BulletManager g_BulletManager;
+// g_BulletManager's last field in the original (+ 0x37a160).
+int g_ClearedBulletItem;
 #endif // TH07_EXE
 
 void BulletManager::Reset()

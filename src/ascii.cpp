@@ -23,6 +23,15 @@ int Timer::NextTick()
 #include "player.h"
 #include "unsorted.h"
 
+// The game's data, as the original defines it here. The DLL build uses
+// the original's copies instead.
+#ifdef TH07_EXE
+AsciiText g_AsciiText;
+ChainElem g_AsciiCalcChain;
+ChainElem g_AsciiDrawChain;
+ChainElem g_AsciiDrawChain2;
+#endif // TH07_EXE
+
 // Probably an inline of unsorted.h whose out-of-line copy the original
 // keeps with this file's (0x401000-0x4013f0); defined here, not inline,
 // so that the other files' calls stay calls.

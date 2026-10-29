@@ -645,6 +645,9 @@ void MidiPlayer::SendVolume(int offset)
 
 void MidiTimer::OnTimer()
 {
+#ifdef TH07_EXE
+    static LARGE_INTEGER g_MidiTimerLastCounter;
+#endif // TH07_EXE
     QueryPerformanceCounter(&g_MidiTimerLastCounter);
 }
 

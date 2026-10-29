@@ -79,6 +79,7 @@ char *g_SoundPaths[30] = {
     "data/wav/se_bonus2.wav",
     "data/wav/se_pause.wav",
 };
+SoundPlayer g_SoundPlayer;
 #endif // TH07_EXE
 
 char *FindRiffChunk(char *data, char *name, int *chunkSize, unsigned int size);

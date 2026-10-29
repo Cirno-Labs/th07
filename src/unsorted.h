@@ -67,6 +67,13 @@ inline void Timer::Tick()
 // The game window (at 0x575c20), as in th06 with more fields.
 struct GameWindow
 {
+    // Zeroes the window. Inline: the original runs it as g_GameWindow's
+    // static initializer.
+    GameWindow()
+    {
+        memset(this, 0, sizeof(GameWindow));
+    }
+
     // Runs one frame of the main loop. Returns 0 to go on, else what
     // App::RegisterChain's result means.
     int RunFrame();
@@ -332,6 +339,13 @@ extern int g_FileSize;
 class Log
 {
 public:
+    // Empties the log and logs its header line. Inline: the original
+    // runs it as g_Log's static initializer.
+    Log();
+    ~Log()
+    {
+    }
+
     char buffer[0x2000];
     // The end of the text in `buffer`.
     char *cursor;
@@ -347,6 +361,14 @@ extern Log g_Log;
 
 // Logs a printf-style message to a log object.
 int LogPrintf(Log *log, const char *fmt, ...);
+inline Log::Log()
+{
+    this->cursor = this->buffer;
+    *this->cursor = '\0';
+    this->hasError = 0;
+    LogPrintf(this, "東方動作記録 --------------------------------------------- \r\n");
+}
+
 // Like LogPrintf, and marks the log as holding an error.
 int LogError(Log *log, const char *fmt, ...);
 
