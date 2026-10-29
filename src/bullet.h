@@ -102,7 +102,7 @@ struct Bullet
     float unk_bc4;
     Timer timer;
     Timer grazeDelayTimer;
-    unsigned char unk_be0[0x10];
+    unsigned char pad_be0[0x10];
     // Set by a command with flag 0x2000.
     int boundsCheckDelay;
     // The behaviors running, by BulletCommand::flag.
@@ -116,7 +116,7 @@ struct Bullet
     WORD outOfBoundsFrames;
     BYTE unk_c00;
     BYTE grazed;
-    unsigned char unk_c02[0x2];
+    unsigned char pad_c02[0x2];
     // The next bullet in the same BulletManager draw list.
     Bullet *next;
     int unk_c08;
@@ -204,7 +204,7 @@ struct Laser
     short color;
     BYTE state;
     BYTE unk_4e9;
-    unsigned char unk_4ea[0x2];
+    unsigned char pad_4ea[0x2];
 };
 ASSERT_SIZE(Laser, 0x4ec);
 

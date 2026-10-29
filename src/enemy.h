@@ -240,7 +240,7 @@ struct Enemy
     // The enemy's slot in EnemyManager::bosses, while it is one.
     BYTE bossIndex;
     BYTE hitFlashTimer;
-    unsigned char unk_2e19[0x3];
+    unsigned char pad_2e19[0x3];
     Timer unk_2e1c;
     EnemyFlags flags;
     WORD unk_2e2c;
@@ -282,7 +282,7 @@ struct Enemy
     EnemyBox trailBoxes[0x60];
     EnemyBox spriteStripVertices[0xc2];
     BYTE trailFlags;
-    unsigned char unk_4f31[0x1];
+    unsigned char pad_4f31[0x1];
     short trailSegmentCount;
     // The trail boxes (unk_2f78) below it touch the player, every sixth
     // from 1.
@@ -425,10 +425,10 @@ public:
     WORD dropIndex;
     // The active enemies, counted by OnUpdate.
     int enemyCount;
-    unsigned char unk_9545c0[0x8];
+    unsigned char pad_9545c0[0x8];
     // th06's spellCardActive; other code reaches it as g_Unknown12fe0c8.
     int spellCardActive;
-    unsigned char unk_9545cc[0x10];
+    unsigned char pad_9545cc[0x10];
     // While a spell card runs, a bomb's damage counts (divided by 2.5)
     // only while it is set, as th06's spellCardBombed.
     int spellCardBombed;

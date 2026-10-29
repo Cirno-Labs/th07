@@ -44,7 +44,7 @@ struct ReplayStage
     BYTE unk_26;
     // Unknown626270Stats::spellCardsCaptured.
     BYTE spellCardsCaptured;
-    BYTE unk_28[0x4];
+    BYTE pad_28[0x4];
     ReplayFrame frames[1];
 };
 
@@ -55,14 +55,14 @@ struct ReplayHeader
     char magic[4];
     // 0x1100, 0x100 in its low 12 bits.
     WORD version;
-    BYTE unk_06[0x2];
+    BYTE pad_06[0x2];
     // 0x3f000318 plus the bytes from `key` on.
     int checksum;
     BYTE unk_0c;
     // The bytes from `size` on are stored plus key, key + 7, key + 14,
     // ...
     BYTE key;
-    BYTE unk_0e[0x2];
+    BYTE pad_0e[0x2];
     // The size of the file decompressed.
     int size;
     // In the file, the size of the compressed data after the first 0x54
@@ -88,7 +88,7 @@ struct ReplayHeader
     DWORD score;
     // The config the game was played with, an Unknown626270Unk4.
     BYTE config[0x38];
-    BYTE unk_a8[0x20];
+    BYTE pad_a8[0x20];
     // How far the game ran below full speed, in percent, stored three
     // times: plus 1.12, as is, and plus 2.34.
     float slowdown2;
@@ -100,7 +100,7 @@ struct ReplayHeader
     DWORD exeSize;
     DWORD exeChecksum;
     char exeVersion[6];
-    BYTE unk_e6[0x2];
+    BYTE pad_e6[0x2];
 };
 ASSERT_SIZE(ReplayHeader, 0xe8);
 
@@ -205,7 +205,7 @@ public:
     // RegisterChain's arguments.
     int mode;
     char *path;
-    unsigned char unk_4c[0x36];
+    unsigned char pad_4c[0x36];
     WORD unk_82;
     // The last frame recorded or played; [stage - 1] is where that
     // stage's frames end (stages past 7 share the last).

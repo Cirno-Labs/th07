@@ -22,7 +22,7 @@ struct Item
     // Set when it is drawn to the player while Player::unk_240d is 1:
     // a point item then scores in full.
     char countsFullValue;
-    char unk_281[3];
+    char pad_281[3];
     // The next item to draw; NULL after the last.
     Item *next;
 };

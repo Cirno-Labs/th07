@@ -14,11 +14,11 @@
 // to copy.
 struct ConfigCopy
 {
-    unsigned char unk_0[0x1e];
+    unsigned char pad_0[0x1e];
     BYTE colorMode16Bits;
-    unsigned char unk_1f[0x3];
+    unsigned char pad_1f[0x3];
     BYTE windowed;
-    unsigned char unk_23[0x15];
+    unsigned char pad_23[0x15];
 };
 ASSERT_SIZE(ConfigCopy, 0x38);
 
@@ -101,7 +101,7 @@ public:
     int subState;
     // Counts the frames in the current state.
     int stateFrames;
-    unsigned char unk_10[0x54];
+    unsigned char pad_10[0x54];
     // The state before the current one.
     int prevState;
     int unk_68;
@@ -137,7 +137,7 @@ public:
     ChainElem *drawChain;
     // The button mapping the options screen edits.
     ControllerMapping controllerMapping;
-    unsigned char unk_d11e[0x2];
+    unsigned char pad_d11e[0x2];
     // A copy of g_App's config, taken as StartTitle enters state 2.
     ConfigCopy savedConfig;
 };

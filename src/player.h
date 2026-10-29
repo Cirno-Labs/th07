@@ -96,7 +96,7 @@ struct ShotTable
 // the fields known so far.
 struct ShotTypeData
 {
-    unsigned char unk_0[0x2];
+    unsigned char pad_0[0x2];
     // How many entries tables has.
     WORD tableCount;
     // The bombs the player respawns with.
@@ -518,7 +518,7 @@ public:
     Sprite sprite;
     Sprite optionSprites[3];
     D3DXVECTOR3 position;
-    unsigned char unk_93c[0xc];
+    unsigned char pad_93c[0xc];
     // The corners of the hitbox and of the graze box, as th06's.
     D3DXVECTOR3 hitboxMin;
     D3DXVECTOR3 hitboxMax;
@@ -536,7 +536,7 @@ public:
     // The movement of the last frame, scaled by the frame rate.
     float moveDeltaX;
     float moveDeltaY;
-    unsigned char unk_9d4[0x4];
+    unsigned char pad_9d4[0x4];
     // The effect HandleInput shows while the player is focused.
     Effect *optionEffect;
     PlayerBombHit bombHitboxes[0x70];
@@ -545,7 +545,7 @@ public:
     int bombJustStarted;
     // The shot each laser was fired from, by ShotData::phase.
     ShotData *laserShots[3];
-    unsigned char unk_23ec[0x4];
+    unsigned char pad_23ec[0x4];
     // Scale the player's movement, as th06's.
     float moveScaleX;
     float moveScaleY;
@@ -571,7 +571,7 @@ public:
     BYTE hitCounter;
     // Graze treats 1 specially.
     char bombState;
-    unsigned char unk_240e[0x2];
+    unsigned char pad_240e[0x2];
     Timer optionTimer;
     // Cleared by AddedCallback, as th06's direction.
     int direction;
@@ -594,7 +594,7 @@ public:
     // Started from 0 by RegisterChain, as th06's.
     Timer stateTimer;
     Timer unk_16a0c;
-    unsigned char unk_16a18[0x8];
+    unsigned char pad_16a18[0x8];
     PlayerBomb bomb;
     // The angle FireAimedShot's shots fly at, turned by sd->angle + pi / 2.
     float aimedShotAngle;

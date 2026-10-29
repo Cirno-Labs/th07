@@ -22,7 +22,7 @@ struct Hscr
     BYTE version;
     // Set on the entry just added, which is the one being named.
     BYTE isNew;
-    BYTE unk_0a[0x2];
+    BYTE pad_0a[0x2];
     DWORD score;
     // How much the game slowed down, in percent.
     float slowdown;
@@ -47,7 +47,7 @@ struct Th7k
     WORD size;
     WORD size2;
     BYTE version;
-    BYTE unk_09[0x3];
+    BYTE pad_09[0x3];
 };
 ASSERT_SIZE(Th7k, 0xc);
 
@@ -58,7 +58,7 @@ struct Catk
     WORD size;
     WORD size2;
     BYTE version;
-    BYTE unk_09[0x3];
+    BYTE pad_09[0x3];
     // By shot type, then with every shot type: the best bonus got.
     DWORD maxBonus[7];
     // The card's number.
@@ -80,14 +80,14 @@ struct Clrd
     WORD size;
     WORD size2;
     BYTE version;
-    BYTE unk_09[0x3];
+    BYTE pad_09[0x3];
     // By difficulty: the number of stages cleared, 99 ('c') for the
     // whole game, without continues and with.
     BYTE stagesClearedNoContinue[6];
     BYTE stagesCleared[6];
     // The shot type.
     BYTE shot;
-    BYTE unk_19[0x3];
+    BYTE pad_19[0x3];
 };
 ASSERT_SIZE(Clrd, 0x1c);
 
@@ -98,7 +98,7 @@ struct Lsnm
     WORD size;
     WORD size2;
     BYTE version;
-    BYTE unk_09[0x3];
+    BYTE pad_09[0x3];
     char name[0xc];
 };
 ASSERT_SIZE(Lsnm, 0x18);
@@ -112,7 +112,7 @@ struct Vrsm
     WORD size2;
     BYTE version;
     BYTE unk_09;
-    BYTE unk_0a[0x2];
+    BYTE pad_0a[0x2];
     // "0100b".
     char gameVersion[0x8];
     DWORD exeSize;
@@ -127,7 +127,7 @@ struct Pscr
     WORD size;
     WORD size2;
     BYTE version;
-    BYTE unk_09[0x3];
+    BYTE pad_09[0x3];
     DWORD playCount;
     DWORD score;
     BYTE shot;
@@ -157,7 +157,7 @@ struct Plst
     WORD size;
     WORD size2;
     BYTE version;
-    BYTE unk_09[0x3];
+    BYTE pad_09[0x3];
     // How long the game has run, App::AddPlayTime keeps it up to date.
     DWORD runHours;
     DWORD runMinutes;
@@ -397,7 +397,7 @@ public:
     int capturedSpellCounts[7];
     // The runSeconds that textSprites[0] shows, in states 0x14 to 0x16.
     BYTE shownRunSeconds;
-    BYTE unk_6d[0x3];
+    BYTE pad_6d[0x3];
     Sprite sprites[0x29];
     // Text drawn with RenderText; the first holds the shot's name.
     Sprite textSprites[0xf];

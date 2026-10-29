@@ -34,7 +34,7 @@ struct Effect
     float radius;
     float angle;
     Timer timer;
-    unsigned char unk_2c4[0x4];
+    unsigned char pad_2c4[0x4];
     // From g_EffectInfos. Called every frame while set; the effect ends
     // when it returns anything but 1.
     int (*update)(Effect *effect);
@@ -48,7 +48,7 @@ struct Effect
     // fourth with sprite flag bit 4), 1 and 3 the second, others the
     // third.
     char drawList;
-    unsigned char unk_2d1[0x3];
+    unsigned char pad_2d1[0x3];
     // The next effect in its draw list.
     Effect *next;
 };
@@ -215,7 +215,7 @@ public:
 
     // Where SpawnEffect looks for a free effect next.
     int next;
-    unsigned char unk_4[0x4];
+    unsigned char pad_4[0x4];
     // How many effects were active this frame.
     int activeCount;
     // What OnDraw2 scales type 20's red, green, blue and alpha by.

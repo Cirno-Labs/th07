@@ -220,7 +220,7 @@ public:
     // once shoot has been held for 10 frames, and for a few frames after
     // it is let go.
     BYTE shootFocuses;
-    unsigned char unk_13f[0xd];
+    unsigned char pad_13f[0xd];
     GameConfigFlags flags;
     // Counts OnUpdate's calls.
     int frames;
@@ -232,7 +232,7 @@ public:
     int scene;
     // The scene the game came from.
     int prevScene;
-    unsigned char unk_160[0x4];
+    unsigned char pad_160[0x4];
     // How many more frames to draw in full, after the device was reset.
     int redrawFrames;
     // DrawFps shows the frame rate while it is 0; AddedCallback sets it
@@ -255,7 +255,7 @@ public:
     // The frame rate rounded, as DrawFps shows it with bit 3 of
     // g_GameManager.unk_93d8.
     short roundedFps;
-    unsigned char unk_18a[0x2];
+    unsigned char pad_18a[0x2];
     // Bit 1: the device does T&L in hardware; 2: the back buffer is
     // lockable; 4: A8R8G8B8 textures work; 8: no score is recorded;
     // 0x10: the device was reset and no frame has been drawn since.
@@ -362,13 +362,13 @@ struct GameWindow
     WPARAM isAppActive;
     int isAppInactive;
     char curFrame;
-    unsigned char unk_11[0x3];
+    unsigned char pad_11[0x3];
     // QueryPerformanceFrequency's result.
     DWORD perfFrequency[2];
     // Set when the game was started from a shortcut or another path;
     // paces every frame by the clock, even ones that are early.
     BYTE forceClockPacing;
-    unsigned char unk_1d[0x3];
+    unsigned char pad_1d[0x3];
     // The screen saver and power settings, put back on exit.
     int screenSaveActive;
     int lowPowerActive;
@@ -890,13 +890,13 @@ struct Unknown626270Stats
     // What LoadHighScores stores from the best entry; cleared in a
     // practice.
     BYTE bestContinuesUsed;
-    unsigned char unk_11[0x3];
+    unsigned char pad_11[0x3];
     // The stage's grazes, up to 9999, and the game's, up to 999999.
     int graze;
     int grazeTotal;
     int spellCardsCaptured;
     BYTE continuesUsed;
-    unsigned char unk_21[0x3];
+    unsigned char pad_21[0x3];
     // Cleared when a game continues.
     int stageClearPoints;
     int pointItemsTotal;
@@ -935,14 +935,14 @@ ASSERT_SIZE(Unknown626270Stats, 0xc8);
 // What GameManager::unk_4 points at.
 struct Unknown626270Unk4
 {
-    unsigned char unk_0[0x1c];
+    unsigned char pad_0[0x1c];
     // The lives a game starts with, as App's lifeCount (+0x1c of the
     // config).
     BYTE lifeCount;
-    unsigned char unk_1d[0x8];
+    unsigned char pad_1d[0x8];
     // App::IsScoreDisabled tests it.
     BYTE scoreDisabled;
-    unsigned char unk_26[0x12];
+    unsigned char pad_26[0x12];
 };
 
 // Holds the player's numbers (at 0x626270), with checksums against
@@ -1064,7 +1064,7 @@ public:
     char isFrozen;
     // DrawFps measures nothing while it is set.
     char skipFpsMeasure;
-    unsigned char unk_e[0x2];
+    unsigned char pad_e[0x2];
     int difficulty;
     // 1 << difficulty, set by AddedCallback.
     int difficultyMask;
@@ -1120,12 +1120,12 @@ public:
     char replayFile[0x200];
     // A replay stage keeps it.
     WORD rngSeed;
-    unsigned char unk_95e6[0x2];
+    unsigned char pad_95e6[0x2];
     // The screen shake ends at once while this is 1 or less. Cleared
     // by RegisterGameManagerChain, as th06's stageFrames.
     int stageFrames;
     int stage;
-    unsigned char unk_95f0[0x4];
+    unsigned char pad_95f0[0x4];
     // The play area: x, y, width and height. Its neighbours (a 0x200
     // byte replay file name, the stage) are th06's GameManager's, so
     // this is probably th07's GameManager.
@@ -1270,7 +1270,7 @@ struct GuiMsg
     DWORD timelineRelease;
     // Lets the skip button fast-forward the script, as th06's.
     BYTE skippable;
-    unsigned char unk_e0d[0x3];
+    unsigned char pad_e0d[0x3];
 };
 ASSERT_SIZE(GuiMsg, 0xe10);
 
@@ -1293,7 +1293,7 @@ struct GuiImpl
     // The boss's bar (sprites[11]): 0 hidden, 1 appearing, 2 shown, 3
     // leaving, as th06's.
     BYTE bossBarState;
-    unsigned char unk_4bcd[0x3];
+    unsigned char pad_4bcd[0x3];
     Sprite trackNumberSprites[5];
     Sprite bombPortrait;
     Sprite spellPortrait;
@@ -1504,12 +1504,12 @@ public:
     int lastDrawnBossTimer;
     // Set while a boss fight runs.
     BYTE bossPresent;
-    unsigned char unk_25[0x3];
+    unsigned char pad_25[0x3];
     // The boss's life as a fraction of its maximum, and what the bar
     // shows, following it.
     float bossHealth;
     float bossHealthShown;
-    unsigned char unk_30[0x4];
+    unsigned char pad_30[0x4];
     // Eight sections DrawBanners draws over the boss bar: where each
     // ends and starts, as fractions of the bar (unused while the end
     // is 0), and its color.
@@ -1621,7 +1621,7 @@ public:
 
     EnemyScriptHeader *file;
     void **subs;
-    unsigned char unk_8[0x160];
+    unsigned char pad_8[0x160];
     // The scripts' shared variables, 10037 to 10040 and 10041 to 10044.
     int globalInts[4];
     float globalFloats[4];
@@ -1830,7 +1830,7 @@ struct StageFog
 // An object of the stage data: its quads start at +0x1c. As th06's.
 struct StageObject
 {
-    BYTE unk_00[0x2];
+    BYTE pad_00[0x2];
     // The background layer it is drawn on.
     char layer;
     // Bit 0: its sprites still run scripts. Bit 1: DrawLayer drew it.
@@ -1980,7 +1980,7 @@ public:
     int fogFadeFrames;
     Timer fogFadeTime;
     BYTE unk_510;
-    unsigned char unk_511[0x3];
+    unsigned char pad_511[0x3];
     int spellCardState;
     int spellCardFrames;
     int clearScreenOnce;
@@ -2003,7 +2003,7 @@ public:
     D3DXVECTOR3 keyPos;
     int keyFrame;
     BYTE cameraOffsetChanged;
-    unsigned char unk_52a9[0x3];
+    unsigned char pad_52a9[0x3];
     ColorBytes tintColor;
     int keepTintColor;
 };

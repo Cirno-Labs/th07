@@ -76,7 +76,7 @@ struct AsciiPopup
     Timer timer;
     BYTE active;
     BYTE digitCount;
-    unsigned char unk_26[0x2];
+    unsigned char pad_26[0x2];
 };
 ASSERT_SIZE(AsciiPopup, 0x28);
 

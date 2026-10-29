@@ -95,7 +95,7 @@ struct SpriteBase
     BYTE unk_c3;
     // Player's StartBombState sets these on its effect.
     BYTE unk_c4;
-    unsigned char unk_c5[0x3];
+    unsigned char pad_c5[0x3];
     // The script's variables: an argument of 10000 to 10009 stands for
     // one of them. 10000-10003 and 10008-10009 are ints, 10004-10007
     // floats.
@@ -224,7 +224,7 @@ public:
     short baseSpriteIndex;
     // The script SpriteEngine::StartScript started.
     short scriptIndex;
-    unsigned char unk_1da[0x2];
+    unsigned char pad_1da[0x2];
     // The script SetScript started, and the instruction Step runs next.
     AnmInstr *scriptStart;
     AnmInstr *scriptPos;
@@ -243,7 +243,7 @@ public:
     // The size of the characters RenderText draws.
     BYTE fontWidth;
     BYTE fontHeight;
-    unsigned char unk_242[0xa];
+    unsigned char pad_242[0xa];
 };
 ASSERT_SIZE(Sprite, 0x24c);
 
@@ -285,12 +285,12 @@ struct VertexTex1DiffuseXyz
 // Not in th06.
 struct AnmImage
 {
-    unsigned char unk_0[0x6];
+    unsigned char pad_0[0x6];
     // The pixels' format, an index into g_TextureFormats.
     short format;
     short width;
     short height;
-    unsigned char unk_c[0x4];
+    unsigned char pad_c[0x4];
     BYTE data[1];
 };
 
@@ -333,10 +333,10 @@ struct AnmFile
     // Set on the first ANM of a file: its memory is the file's, which
     // ReleaseAnm frees.
     BYTE ownsData;
-    unsigned char unk_36[0x2];
+    unsigned char pad_36[0x2];
     // The offset of the next ANM in the same file, 0 for the last.
     int nextOffset;
-    unsigned char unk_3c[0x4];
+    unsigned char pad_3c[0x4];
     int spriteOffsets[1];
 };
 
@@ -625,7 +625,7 @@ public:
     void *textureFiles[0x100];
     // The image file names of the ANMs loaded into each slot.
     char *anmImageNames[0x32];
-    unsigned char unk_28b94[0x358];
+    unsigned char pad_28b94[0x358];
     // Counts the sprites loaded, for SpriteData::spriteId.
     int spriteCount;
     // The scripts of the loaded ANM files.
@@ -651,7 +651,7 @@ public:
     // Flag bit 14 of the sprite last drawn: which of
     // g_Stage's two set-ups the device has.
     BYTE lastCameraSetupFlag;
-    unsigned char unk_2e4d5[0x3];
+    unsigned char pad_2e4d5[0x3];
     // The sprite data Draw last used, NULL when unknown.
     void *currentSpriteData;
     IDirect3DVertexBuffer8 *vertexBuffer;

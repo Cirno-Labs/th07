@@ -218,7 +218,7 @@ public:
     // Parsed tracks, `trackCount` of them.
     MidiTrack *tracks;
     MidiDevice device;
-    unsigned char unk_144[0x10];
+    unsigned char pad_144[0x10];
     MidiChannel channels[0x10];
     // Added to every note number.
     char transpose;
