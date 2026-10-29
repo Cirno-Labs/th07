@@ -18,8 +18,12 @@ our own analysis or, for library code, from the libraries themselves.
 
 ## Status
 
-The toolchain and workflow are up, taken from the th06 project, and the
-first function matches and is hooked.
+All 694 of the game's functions are decompiled and match the original,
+all 381,170 bytes, and all of them are named. The standalone exe
+(`just exe`) is the whole game, built from source; it runs, and 89.2% of
+its bytes are identical to the original's. The rest is the order in
+which link-time code generation emits functions, which decides the
+copies the linker keeps of identical library functions.
 
 Ghidra finds 1561 functions. As in th06, the game code is compiled
 without optimization, so its functions start with `push ebp; mov ebp,
