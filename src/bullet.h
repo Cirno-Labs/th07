@@ -21,7 +21,10 @@ struct BulletTypeSprites
     // The size of the bullet's hitbox.
     D3DXVECTOR3 hitboxSize;
     BYTE unk_b88;
-    BYTE unk_b89;
+    // The height of the bullet's sprite.
+    BYTE height;
+    // A size class: 5 up to 8 high, 4 or 3 up to 16, 2 or 1 up to 32,
+    // 0 above.
     BYTE unk_b8a;
     BYTE unk_b8b;
 };
@@ -250,6 +253,9 @@ public:
 };
 ASSERT_SIZE(BulletManager, 0x37a164);
 extern BulletManager g_BulletManager;
+
+// The scripts of each bullet type's five sprites, as th06's.
+extern int g_BulletTypeScripts[11][5];
 
 // Sprite offsets by color, for bullets up to 16 and up to 32 high, as
 // th06's.

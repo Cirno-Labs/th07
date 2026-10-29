@@ -56,5 +56,7 @@ public:
     int activeCount;
     // The head of the list of items to draw, which UpdateItems builds.
     Item drawList;
+    // The last item of the draw list.
+    Item *drawListTail;
 };
 extern ItemManager g_ItemManager;

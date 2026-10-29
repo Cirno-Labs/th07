@@ -768,3 +768,91 @@ int BulletManager::OnDraw(BulletManager *mgr)
     }
     return 1;
 }
+
+int BulletManager::AddedCallback(BulletManager *mgr)
+{
+    DWORD i;
+
+    if ((g_App.scene != 3 && g_App.scene != 0xb && g_App.scene != 0xc) != 0)
+    {
+        if (g_SpriteEngine->LoadAnm(0xb, "data/etama.anm", 0x200) != 0)
+        {
+            return -1;
+        }
+    }
+    for (i = 0; i < ARRAY_SIZE(g_BulletTypeScripts); i++)
+    {
+        g_SpriteEngine->StartScript(&mgr->typeSprites[i].sprite0, g_BulletTypeScripts[i][0]);
+        g_SpriteEngine->StartScript(&mgr->typeSprites[i].sprite1, g_BulletTypeScripts[i][1]);
+        g_SpriteEngine->StartScript(&mgr->typeSprites[i].sprite2, g_BulletTypeScripts[i][2]);
+        g_SpriteEngine->StartScript(&mgr->typeSprites[i].sprite3, g_BulletTypeScripts[i][3]);
+        g_SpriteEngine->StartScript(&mgr->typeSprites[i].sprite4, g_BulletTypeScripts[i][4]);
+        mgr->typeSprites[i].sprite0.flags |= 0x1000;
+        mgr->typeSprites[i].sprite1.flags |= 0x1000;
+        mgr->typeSprites[i].sprite2.flags |= 0x1000;
+        mgr->typeSprites[i].sprite3.flags |= 0x1000;
+        mgr->typeSprites[i].sprite4.flags |= 0x1000;
+        mgr->typeSprites[i].sprite0.baseSpriteIndex = mgr->typeSprites[i].sprite0.spriteIndex;
+        mgr->typeSprites[i].height = mgr->typeSprites[i].sprite0.spriteData->height;
+        if (mgr->typeSprites[i].sprite0.spriteData->height <= 8.0f)
+        {
+            mgr->typeSprites[i].hitboxSize.x = 4.0f;
+            mgr->typeSprites[i].hitboxSize.y = 4.0f;
+            mgr->typeSprites[i].unk_b8a = 5;
+        }
+        else if (mgr->typeSprites[i].sprite0.spriteData->height <= 16.0f)
+        {
+            switch (g_BulletTypeScripts[i][0])
+            {
+            case 0x202:
+                mgr->typeSprites[i].hitboxSize.x = 4.0f;
+                mgr->typeSprites[i].hitboxSize.y = 4.0f;
+                mgr->typeSprites[i].unk_b8a = 4;
+                break;
+            case 0x204:
+            case 0x206:
+                mgr->typeSprites[i].hitboxSize.x = 4.0f;
+                mgr->typeSprites[i].hitboxSize.y = 4.0f;
+                mgr->typeSprites[i].unk_b8a = 4;
+                break;
+            case 0x205:
+                mgr->typeSprites[i].hitboxSize.x = 4.0f;
+                mgr->typeSprites[i].hitboxSize.y = 4.0f;
+                mgr->typeSprites[i].unk_b8a = 4;
+                break;
+            default:
+                mgr->typeSprites[i].hitboxSize.x = 6.0f;
+                mgr->typeSprites[i].hitboxSize.y = 6.0f;
+                mgr->typeSprites[i].unk_b8a = 3;
+            }
+        }
+        else if (mgr->typeSprites[i].sprite0.spriteData->height <= 32.0f)
+        {
+            switch (g_BulletTypeScripts[i][0])
+            {
+            case 0x208:
+                mgr->typeSprites[i].hitboxSize.x = 5.0f;
+                mgr->typeSprites[i].hitboxSize.y = 5.0f;
+                mgr->typeSprites[i].unk_b8a = 1;
+                break;
+            case 0x209:
+                mgr->typeSprites[i].hitboxSize.x = 8.0f;
+                mgr->typeSprites[i].hitboxSize.y = 8.0f;
+                mgr->typeSprites[i].unk_b8a = 2;
+                break;
+            default:
+                mgr->typeSprites[i].hitboxSize.x = 10.0f;
+                mgr->typeSprites[i].hitboxSize.y = 10.0f;
+                mgr->typeSprites[i].unk_b8a = 2;
+            }
+        }
+        else
+        {
+            mgr->typeSprites[i].unk_b8a = 0;
+            mgr->typeSprites[i].hitboxSize.x = 24.0f;
+            mgr->typeSprites[i].hitboxSize.y = 24.0f;
+        }
+    }
+    memset(&g_ItemManager, 0, sizeof(ItemManager));
+    return 0;
+}
