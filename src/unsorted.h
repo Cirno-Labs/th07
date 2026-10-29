@@ -1565,6 +1565,9 @@ void NoOp(Enemy *enemy, EnemyScriptInstr *instr);
 // its position in floats[0] and [1] (floats[0] is -999 if none),
 // starts effect 2 there and removes the bullet.
 void ReplaceTallBulletWithEffect(Enemy *enemy, EnemyScriptInstr *instr);
+// Copies boss 0's position into moveStart, and its unk_2b6c and
+// unk_2b60; then switches on its ints2[0] with no cases.
+void CopyBossMoveStart(Enemy *enemy, EnemyScriptInstr *instr);
 
 // Set to 9 as the dialogue of stages 6 to 8 starts.
 extern int g_Unknown9a9ab8;

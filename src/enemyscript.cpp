@@ -928,6 +928,19 @@ void ReplaceTallBulletWithEffect(Enemy *enemy, EnemyScriptInstr *instr)
     }
 }
 
+void CopyBossMoveStart(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    Enemy *boss;
+
+    boss = g_Unknown9a9b00.bosses[0];
+    enemy->moveStart = boss->pos;
+    enemy->unk_2b6c = boss->unk_2b6c;
+    enemy->unk_2b60 = boss->unk_2b60;
+    switch (boss->ctx.vars.ints2[0])
+    {
+    }
+}
+
 // As in bullet.cpp: defined after its callers, so they call the copy.
 inline void Bullet::FreeBullet()
 {

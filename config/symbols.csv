@@ -98,7 +98,7 @@ address,size,name,symbol
 0x00417e50,680,SpawnFansFromNearbyBullets,?SpawnFansFromNearbyBullets@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x00418110,16,NoOp,?NoOp@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x00418120,311,ReplaceTallBulletWithEffect,?ReplaceTallBulletWithEffect@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
-0x00418260,106,Func418260,
+0x00418260,106,CopyBossMoveStart,?CopyBossMoveStart@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x004182d0,766,Func4182d0,
 0x004185d0,679,Func4185d0,
 0x00418880,703,Func418880,
