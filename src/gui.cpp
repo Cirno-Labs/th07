@@ -798,8 +798,8 @@ int GuiImpl::RunMsg()
             break;
         case 9:
             this->stageClearPower = g_Unknown626270.stats->power;
-            this->stageClearPoints = g_Unknown626270.stats->unk_24;
-            this->stageClearCherry = g_Unknown626270.bonusPointsCap - g_Unknown626270.stats->unk_88;
+            this->stageClearPoints = g_Unknown626270.stats->stageClearPoints;
+            this->stageClearCherry = g_Unknown626270.bonusPointsCap - g_Unknown626270.stats->grazeCount;
             this->stageClearGraze = g_Unknown626270.stats->graze;
             this->stageClearShown = 1;
             if (g_Unknown626270.stage < 6)
@@ -813,7 +813,7 @@ int GuiImpl::RunMsg()
             }
             else
             {
-                g_Unknown626270.stats->unk_2c = -1;
+                g_Unknown626270.stats->checksumKeyStage = -1;
             }
             break;
         case 10:
@@ -1383,7 +1383,7 @@ void Gui::DrawHud()
         {
             g_AsciiText.AddFormat(&scorePos, "%.8d", g_Unknown626270.stats->highScore);
             scorePos.x += 112.0f;
-            g_AsciiText.AddFormat(&scorePos, "%1d", g_Unknown626270.stats->unk_10);
+            g_AsciiText.AddFormat(&scorePos, "%1d", g_Unknown626270.stats->bestContinuesUsed);
         }
         else
         {
@@ -1393,7 +1393,7 @@ void Gui::DrawHud()
             // Nine digits 14 wide at the 0.9 scale; the folded product is
             // one ulp below 113.4f.
             scorePos.x += 126.0f * 0.9f;
-            g_AsciiText.AddFormat(&scorePos, "%1d", g_Unknown626270.stats->unk_10);
+            g_AsciiText.AddFormat(&scorePos, "%1d", g_Unknown626270.stats->bestContinuesUsed);
             g_AsciiText.scaleX = 1.0f;
             g_AsciiText.scaleY = 1.0f;
         }
@@ -1406,7 +1406,7 @@ void Gui::DrawHud()
         {
             scorePos = D3DXVECTOR3(496.0f, 176.0f, 0.0f);
             g_AsciiText.AddFormat(&scorePos, "%d/%d", g_Unknown626270.stats->pointItemsTotal,
-                                  g_Unknown626270.stats->unk_30);
+                                  g_Unknown626270.stats->checksumKeyPoints);
         }
     }
     g_SpriteEngine->FlushQuadBatch();

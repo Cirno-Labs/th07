@@ -13,14 +13,14 @@
 
 void GameManager::RerollLifeChecksumKeys()
 {
-    this->stats->unk_34[0] = g_Rng.GetRandomU32InRange(100000) + 6543;
-    this->stats->unk_34[1] = g_Rng.GetRandomU32InRange(100000) + 6543;
-    this->stats->unk_34[2] = g_Rng.GetRandomU32InRange(100000) + 6543;
-    this->stats->unk_34[3] = g_Rng.GetRandomU32InRange(100000) + 6543;
-    this->stats->unk_34[4] = g_Rng.GetRandomU32InRange(100000) + 6543;
-    this->stats->unk_70[0] = g_Rng.GetRandomF32ZeroToOne() * 100000.0f + 6543.0f;
-    this->stats->unk_70[1] = g_Rng.GetRandomF32ZeroToOne() * 100000.0f + 6543.0f;
-    this->stats->unk_70[2] = g_Rng.GetRandomF32ZeroToOne() * 100000.0f + 6543.0f;
+    this->stats->lifeChecksumKeys[0] = g_Rng.GetRandomU32InRange(100000) + 6543;
+    this->stats->lifeChecksumKeys[1] = g_Rng.GetRandomU32InRange(100000) + 6543;
+    this->stats->lifeChecksumKeys[2] = g_Rng.GetRandomU32InRange(100000) + 6543;
+    this->stats->lifeChecksumKeys[3] = g_Rng.GetRandomU32InRange(100000) + 6543;
+    this->stats->lifeChecksumKeys[4] = g_Rng.GetRandomU32InRange(100000) + 6543;
+    this->stats->lifeChecksumKeysF[0] = g_Rng.GetRandomF32ZeroToOne() * 100000.0f + 6543.0f;
+    this->stats->lifeChecksumKeysF[1] = g_Rng.GetRandomF32ZeroToOne() * 100000.0f + 6543.0f;
+    this->stats->lifeChecksumKeysF[2] = g_Rng.GetRandomF32ZeroToOne() * 100000.0f + 6543.0f;
 }
 
 void GameManager::AddDeaths(int deaths)
@@ -1009,7 +1009,7 @@ void Player::Graze(D3DXVECTOR3 *pos)
     g_Unknown626270.AddSubRank(6);
     g_Unknown49fbf0.grazeChanged = 2;
     g_SoundPlayer.QueueSound(0x1e, 0);
-    g_Unknown12fe0d0 += 2500 + (g_Unknown626270.bonusPoints - g_Unknown626270.stats->unk_88) / 1500 * 20;
+    g_Unknown12fe0d0 += 2500 + (g_Unknown626270.bonusPoints - g_Unknown626270.stats->grazeCount) / 1500 * 20;
     g_Unknown626270.AddScore(2000);
     if (this->bombState == 1)
     {
@@ -1567,7 +1567,7 @@ int UpdateDyingState(Player *player)
                 g_ItemManager.SpawnItem(&player->position, 0, 2);
                 g_ItemManager.SpawnItem(&player->position, 0, 2);
                 g_Unknown49fbf0.powerChanged = 2;
-                bonus = (g_Unknown626270.bonusPoints - g_Unknown626270.stats->unk_88) * g_Player.shotType->deathScoreShare;
+                bonus = (g_Unknown626270.bonusPoints - g_Unknown626270.stats->grazeCount) * g_Player.shotType->deathScoreShare;
                 if (g_Unknown626270.character != 2)
                 {
                     if (bonus > 100000)
@@ -1706,7 +1706,7 @@ void UpdateInvulnerability(Player *player)
         {
             g_Unknown626270.invulnerabilityBonus = 0;
         }
-        g_Unknown626270.invulnerabilityBonus += g_Unknown626270.stats->unk_88;
+        g_Unknown626270.invulnerabilityBonus += g_Unknown626270.stats->grazeCount;
         player->stateTimer.Sub(1);
         if (player->stateTimer.AsFrames() <= 0)
         {
@@ -1811,11 +1811,11 @@ void Player::EndBombState()
 
     g_Unknown626270.IncreaseBonusCap(10000);
     g_Unknown626270.AddBonusPointsCapped(10000);
-    bonus = g_Unknown626270.bonusPoints - g_Unknown626270.stats->unk_88;
+    bonus = g_Unknown626270.bonusPoints - g_Unknown626270.stats->grazeCount;
     bonus *= 10;
     g_Unknown626270.AddScore(bonus);
     g_Unknown49fbf0.Func427c81(bonus, 4);
-    g_Unknown626270.invulnerabilityBonus = g_Unknown626270.stats->unk_88;
+    g_Unknown626270.invulnerabilityBonus = g_Unknown626270.stats->grazeCount;
     g_SoundPlayer.QueueSound(0x21, 0);
     if (this->playerState == 1)
     {
@@ -1913,7 +1913,7 @@ void Player::StopBombState(int unk)
     this->playerState = 3;
     this->stateTimer.Set(40);
     this->bombCooldown = 40;
-    g_Unknown626270.invulnerabilityBonus = g_Unknown626270.stats->unk_88;
+    g_Unknown626270.invulnerabilityBonus = g_Unknown626270.stats->grazeCount;
     this->AddHitboxAreaCircle(&this->position, 32.0f, 16.0f, 0x32, 8);
     angle = -D3DX_PI;
     for (i = 0; i < 0x20; i++, angle += D3DX_PI / 16.0f)
@@ -2184,9 +2184,9 @@ int Player::AddedCallback(Player *player)
     g_AsciiText.SetUnkB7cInterrupt(0, 2);
     g_AsciiText.SetUnkB7cInterrupt(1, 2);
     g_AsciiText.SetUnkB7cInterrupt(2, 2);
-    if (g_Unknown626270.invulnerabilityBonus >= g_Unknown626270.stats->unk_88 + 50000)
+    if (g_Unknown626270.invulnerabilityBonus >= g_Unknown626270.stats->grazeCount + 50000)
     {
-        g_Unknown626270.invulnerabilityBonus = g_Unknown626270.stats->unk_88 + 50000;
+        g_Unknown626270.invulnerabilityBonus = g_Unknown626270.stats->grazeCount + 50000;
         StartBombState(&g_Player);
     }
     return 0;

@@ -14,8 +14,8 @@
 // ComputeChecksum sums (0x84 past unk_ac), unk_b0 plus unk_8c[3] unk_9614.
 int GameManager::ChecksumMismatch()
 {
-    return this->stats->unk_ac == this->stats->unk_34[2] + this->stats->unk_b4[2] * ((BYTE *)&this->stats->unk_ac - (BYTE *)this->stats->unk_34 + 0x84) &&
-                   this->stats->unk_b0 + this->stats->unk_8c[3] == (int)this->checksumValue
+    return this->stats->checksum == this->stats->lifeChecksumKeys[2] + this->stats->checksumKeysE[2] * ((BYTE *)&this->stats->checksum - (BYTE *)this->stats->lifeChecksumKeys + 0x84) &&
+                   this->stats->computedChecksum + this->stats->checksumKeysD[3] == (int)this->checksumValue
                ? FALSE
                : TRUE;
 }

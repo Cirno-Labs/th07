@@ -187,12 +187,12 @@ int ReplayManager::RecordAddedCallback(ReplayManager *replay)
     cur->pointItemsTotal = g_Unknown626270.stats->pointItemsTotal;
     cur->rngSeed = g_Unknown626270.rngSeed;
     cur->unk_26 = g_Unknown626270.powerItemCombo;
-    cur->unk_08 = g_Unknown626270.bonusPoints - g_Unknown626270.stats->unk_88;
-    cur->unk_0c = g_Unknown626270.bonusPointsCap - g_Unknown626270.stats->unk_88;
-    cur->unk_10 = g_Unknown626270.invulnerabilityBonus - g_Unknown626270.stats->unk_88;
+    cur->unk_08 = g_Unknown626270.bonusPoints - g_Unknown626270.stats->grazeCount;
+    cur->unk_0c = g_Unknown626270.bonusPointsCap - g_Unknown626270.stats->grazeCount;
+    cur->unk_10 = g_Unknown626270.invulnerabilityBonus - g_Unknown626270.stats->grazeCount;
     cur->spellCardsCaptured = g_Unknown626270.stats->spellCardsCaptured;
-    cur->unk_18 = g_Unknown626270.stats->unk_2c;
-    cur->unk_1c = g_Unknown626270.stats->unk_30;
+    cur->unk_18 = g_Unknown626270.stats->checksumKeyStage;
+    cur->unk_1c = g_Unknown626270.stats->checksumKeyPoints;
     replay->cursor = cur->frames;
     replay->extraCursor = extras;
     replay->cursor->input = 0;
@@ -334,19 +334,19 @@ int ReplayManager::PlayAddedCallback(ReplayManager *replay)
     g_Unknown626270.stats->grazeTotal = cur->grazeTotal;
     replay->cursor = cur->frames;
     g_Unknown626270.powerItemCombo = cur->unk_26;
-    g_Unknown626270.bonusPoints = cur->unk_08 + g_Unknown626270.stats->unk_88;
-    g_Unknown626270.bonusPointsCap = cur->unk_0c + g_Unknown626270.stats->unk_88;
-    g_Unknown626270.invulnerabilityBonus = cur->unk_10 + g_Unknown626270.stats->unk_88;
-    if (g_Unknown626270.invulnerabilityBonus >= g_Unknown626270.stats->unk_88 + 50000)
+    g_Unknown626270.bonusPoints = cur->unk_08 + g_Unknown626270.stats->grazeCount;
+    g_Unknown626270.bonusPointsCap = cur->unk_0c + g_Unknown626270.stats->grazeCount;
+    g_Unknown626270.invulnerabilityBonus = cur->unk_10 + g_Unknown626270.stats->grazeCount;
+    if (g_Unknown626270.invulnerabilityBonus >= g_Unknown626270.stats->grazeCount + 50000)
     {
-        g_Unknown626270.invulnerabilityBonus = g_Unknown626270.stats->unk_88 + 50000;
+        g_Unknown626270.invulnerabilityBonus = g_Unknown626270.stats->grazeCount + 50000;
         StartBombState(&g_Player);
     }
     *g_Unknown626270.unk_4 = *(Unknown626270Unk4 *)replay->data->config;
     g_Rng.SetSeed(cur->rngSeed);
     g_Unknown626270.stats->spellCardsCaptured = cur->spellCardsCaptured;
-    g_Unknown626270.stats->unk_2c = cur->unk_18;
-    g_Unknown626270.stats->unk_30 = cur->unk_1c;
+    g_Unknown626270.stats->checksumKeyStage = cur->unk_18;
+    g_Unknown626270.stats->checksumKeyPoints = cur->unk_1c;
     replay->extraCursor = extras;
     if (g_Unknown626270.stage >= 2 && g_Unknown626270.stage <= 6 &&
         replay->data->stages[g_Unknown626270.stage - 2] != NULL)

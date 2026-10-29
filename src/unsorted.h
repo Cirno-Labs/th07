@@ -889,7 +889,7 @@ struct Unknown626270Stats
     DWORD highScore;
     // What LoadHighScores stores from the best entry; cleared in a
     // practice.
-    BYTE unk_10;
+    BYTE bestContinuesUsed;
     unsigned char unk_11[0x3];
     // The stage's grazes, up to 9999, and the game's, up to 999999.
     int graze;
@@ -898,37 +898,37 @@ struct Unknown626270Stats
     BYTE continuesUsed;
     unsigned char unk_21[0x3];
     // Cleared when a game continues.
-    int unk_24;
+    int stageClearPoints;
     int pointItemsTotal;
-    int unk_2c;
-    int unk_30;
+    int checksumKeyStage;
+    int checksumKeyPoints;
     // Set to 6543 plus a random number under 100000 by
     // GameManager::RerollLifeChecksumKeys.
-    DWORD unk_34[7];
+    DWORD lifeChecksumKeys[7];
     float deaths;
     // Set to random floats from 6543 up by RerollStatsChecksumKeys, as unk_60,
     // unk_70 and unk_80.
-    float unk_54[2];
+    float statsChecksumKeysA[2];
     // The lives left, a float behind checksums, as the other counts.
     float lives;
-    float unk_60[2];
+    float statsChecksumKeysB[2];
     // The bombs left, the same way.
     float bombs;
     float bombsUsed;
     // Set to 6543 plus a random float under 100000 by
     // GameManager::RerollLifeChecksumKeys.
-    float unk_70[3];
+    float lifeChecksumKeysF[3];
     // The shot power, up to 128.
     float power;
-    float unk_80[2];
+    float statsChecksumKeysC[2];
     // Player::Graze subtracts it from GameManager::unk_961c.
-    int unk_88;
-    int unk_8c[8];
+    int grazeCount;
+    int checksumKeysD[8];
     // ChecksumBytes adds unk_b4[2] to it for every byte it sums.
-    int unk_ac;
+    int checksum;
     // The checksum, from ComputeChecksum.
-    int unk_b0;
-    DWORD unk_b4[5];
+    int computedChecksum;
+    DWORD checksumKeysE[5];
 };
 ASSERT_SIZE(Unknown626270Stats, 0xc8);
 
@@ -996,13 +996,13 @@ public:
     // Takes `amount` from unk_961c, down to stats->unk_88.
     void SubUnk961c(int amount)
     {
-        if (this->bonusPoints - this->stats->unk_88 >= amount)
+        if (this->bonusPoints - this->stats->grazeCount >= amount)
         {
             this->bonusPoints -= amount;
         }
         else
         {
-            this->bonusPoints = this->stats->unk_88;
+            this->bonusPoints = this->stats->grazeCount;
         }
     }
     // Adds `points` to stats->score, which counts in tens.

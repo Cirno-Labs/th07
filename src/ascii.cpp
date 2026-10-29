@@ -15,11 +15,11 @@
 // so that the other files' calls stay calls.
 void GameManager::RerollChecksumKeys()
 {
-    this->stats->unk_34[2] = g_Rng.GetRandomU32InRange(100000) + 6543;
-    this->stats->unk_8c[3] = g_Rng.GetRandomU32InRange(100000) + 6543;
-    this->stats->unk_ac = this->stats->unk_34[2];
-    this->stats->unk_b0 = this->ComputeChecksum();
-    this->checksumValue = this->stats->unk_b0 + this->stats->unk_8c[3];
+    this->stats->lifeChecksumKeys[2] = g_Rng.GetRandomU32InRange(100000) + 6543;
+    this->stats->checksumKeysD[3] = g_Rng.GetRandomU32InRange(100000) + 6543;
+    this->stats->checksum = this->stats->lifeChecksumKeys[2];
+    this->stats->computedChecksum = this->ComputeChecksum();
+    this->checksumValue = this->stats->computedChecksum + this->stats->checksumKeysD[3];
 }
 
 // The same for Timer::NextTick, which only the Gui file calls.
@@ -34,9 +34,9 @@ int Timer::NextTick()
 void GameManager::SetBombs(int bombs)
 {
     this->stats->bombs = bombs;
-    this->stats->unk_ac = this->stats->unk_34[2];
-    this->stats->unk_b0 = this->ComputeChecksum();
-    this->checksumValue = this->stats->unk_b0 + this->stats->unk_8c[3];
+    this->stats->checksum = this->stats->lifeChecksumKeys[2];
+    this->stats->computedChecksum = this->ComputeChecksum();
+    this->checksumValue = this->stats->computedChecksum + this->stats->checksumKeysD[3];
 }
 
 AsciiText::AsciiText()
@@ -943,13 +943,13 @@ int ContinueMenu::UpdateContinueMenu()
             g_Unknown626270.RerollChecksumKeys();
             g_Unknown626270.SetBombs(g_Player.shotType->bombs);
             g_Unknown626270.stats->graze = 0;
-            g_Unknown626270.stats->unk_24 = 0;
+            g_Unknown626270.stats->stageClearPoints = 0;
             g_Unknown626270.stats->pointItemsTotal = 0;
             g_Unknown626270.stats->power = 0.0f;
             g_Unknown626270.RerollChecksumKeys();
-            g_Unknown626270.stats->unk_2c = 0;
-            g_Unknown626270.stats->unk_30 = 50;
-            g_Unknown626270.bonusPoints = g_Unknown626270.stats->unk_88;
+            g_Unknown626270.stats->checksumKeyStage = 0;
+            g_Unknown626270.stats->checksumKeyPoints = 50;
+            g_Unknown626270.bonusPoints = g_Unknown626270.stats->grazeCount;
             g_Unknown49fbf0.livesChanged = 2;
             g_Unknown49fbf0.bombsChanged = 2;
             g_Unknown49fbf0.grazeChanged = 2;
@@ -1083,7 +1083,7 @@ void AsciiText::DrawPopups()
     {
         div = 100000;
         nonzero = 0;
-        amount = g_Unknown626270.bonusPoints - g_Unknown626270.stats->unk_88;
+        amount = g_Unknown626270.bonusPoints - g_Unknown626270.stats->grazeCount;
         g_SpriteEngine->DrawUnrotated(&this->unk_498);
         this->unk_6e4.pos.x = this->unk_498.pos.x + 40.0f + 6.0f;
         this->unk_6e4.pos.y = this->unk_498.pos.y + 11.0f;
@@ -1123,7 +1123,7 @@ void AsciiText::DrawPopups()
             this->unk_6e4.pos.x += 7.0f;
         }
         nonzero = 0;
-        amount = g_Unknown626270.bonusPointsCap - g_Unknown626270.stats->unk_88;
+        amount = g_Unknown626270.bonusPointsCap - g_Unknown626270.stats->grazeCount;
         this->unk_6e4.unk_rgb[2] = 0xf0;
         this->unk_6e4.unk_rgb[1] = 0xd0;
         this->unk_6e4.unk_rgb[0] = 0xe0;
@@ -1158,7 +1158,7 @@ void AsciiText::DrawPopups()
         nonzero = 0;
         this->unk_6e4.pos.x = this->unk_498.pos.x + 40.0f + 6.0f + 7.0f;
         this->unk_6e4.pos.y = this->unk_498.pos.y + 2.0f;
-        amount = g_Unknown626270.invulnerabilityBonus - g_Unknown626270.stats->unk_88;
+        amount = g_Unknown626270.invulnerabilityBonus - g_Unknown626270.stats->grazeCount;
         if (g_Player.bombState)
         {
             this->unk_6e4.unk_rgb[2] = 0xff;

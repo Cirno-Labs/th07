@@ -473,7 +473,7 @@ int Enemy::CheckTimerCallback()
                 g_Unknown12fe0c8++;
             }
             g_BulletManager.ClearAll(10);
-            lost = (g_Unknown626270.bonusPoints - g_Unknown626270.stats->unk_88) * 0.25f;
+            lost = (g_Unknown626270.bonusPoints - g_Unknown626270.stats->grazeCount) * 0.25f;
             lost -= lost % 10;
             g_Unknown626270.bonusPoints -= lost;
         }

@@ -259,14 +259,14 @@ void ItemManager::UpdateItems()
                 }
                 if (amount >= 50000)
                 {
-                    if (g_Unknown626270.bonusPoints - g_Unknown626270.stats->unk_88 > 50000)
+                    if (g_Unknown626270.bonusPoints - g_Unknown626270.stats->grazeCount > 50000)
                     {
-                        amount = g_Unknown626270.bonusPoints - g_Unknown626270.stats->unk_88;
+                        amount = g_Unknown626270.bonusPoints - g_Unknown626270.stats->grazeCount;
                     }
                 }
-                else if (g_Unknown626270.bonusPoints - g_Unknown626270.stats->unk_88 > 50000)
+                else if (g_Unknown626270.bonusPoints - g_Unknown626270.stats->grazeCount > 50000)
                 {
-                    amount += (g_Unknown626270.bonusPoints - g_Unknown626270.stats->unk_88 - 50000) / 5;
+                    amount += (g_Unknown626270.bonusPoints - g_Unknown626270.stats->grazeCount - 50000) / 5;
                 }
                 amount -= amount % 10;
                 g_AsciiText.AddPopup(&entry->pos, amount,
@@ -274,7 +274,7 @@ void ItemManager::UpdateItems()
                                          ? 0xffffff00
                                          : 0xffffffff);
                 g_Unknown626270.AddScore(amount);
-                g_Unknown626270.stats->unk_24++;
+                g_Unknown626270.stats->stageClearPoints++;
                 g_Unknown626270.stats->pointItemsTotal++;
                 g_Unknown49fbf0.unk_4_8 = 2;
                 if (entry->pos.y < 128.0f)
@@ -285,41 +285,41 @@ void ItemManager::UpdateItems()
                 {
                     g_Unknown626270.AddSubRank(3);
                 }
-                if (g_Unknown626270.stats->unk_2c >= 0)
+                if (g_Unknown626270.stats->checksumKeyStage >= 0)
                 {
                     for (;;)
                     {
                         if (g_Unknown626270.difficulty < 4)
                         {
-                            if (g_Unknown626270.stats->unk_2c < 3)
+                            if (g_Unknown626270.stats->checksumKeyStage < 3)
                             {
-                                g_Unknown626270.stats->unk_30 = g_Unknown626270.stats->unk_2c * 75 + 50;
+                                g_Unknown626270.stats->checksumKeyPoints = g_Unknown626270.stats->checksumKeyStage * 75 + 50;
                             }
-                            else if (g_Unknown626270.stats->unk_2c < 5)
+                            else if (g_Unknown626270.stats->checksumKeyStage < 5)
                             {
-                                g_Unknown626270.stats->unk_30 = (g_Unknown626270.stats->unk_2c - 3) * 150 + 300;
+                                g_Unknown626270.stats->checksumKeyPoints = (g_Unknown626270.stats->checksumKeyStage - 3) * 150 + 300;
                             }
                             else
                             {
-                                g_Unknown626270.stats->unk_30 = (g_Unknown626270.stats->unk_2c - 5) * 200 + 800;
+                                g_Unknown626270.stats->checksumKeyPoints = (g_Unknown626270.stats->checksumKeyStage - 5) * 200 + 800;
                             }
                         }
-                        else if (g_Unknown626270.stats->unk_2c == 0)
+                        else if (g_Unknown626270.stats->checksumKeyStage == 0)
                         {
-                            g_Unknown626270.stats->unk_30 = 200;
+                            g_Unknown626270.stats->checksumKeyPoints = 200;
                         }
-                        else if (g_Unknown626270.stats->unk_2c == 1)
+                        else if (g_Unknown626270.stats->checksumKeyStage == 1)
                         {
-                            g_Unknown626270.stats->unk_30 = 500;
+                            g_Unknown626270.stats->checksumKeyPoints = 500;
                         }
                         else
                         {
-                            g_Unknown626270.stats->unk_30 = (g_Unknown626270.stats->unk_2c - 2) * 500 + 800;
+                            g_Unknown626270.stats->checksumKeyPoints = (g_Unknown626270.stats->checksumKeyStage - 2) * 500 + 800;
                         }
-                        if (g_Unknown626270.stats->pointItemsTotal >= g_Unknown626270.stats->unk_30)
+                        if (g_Unknown626270.stats->pointItemsTotal >= g_Unknown626270.stats->checksumKeyPoints)
                         {
                             g_Unknown626270.AddLifeOrBomb();
-                            g_Unknown626270.stats->unk_2c++;
+                            g_Unknown626270.stats->checksumKeyStage++;
                             continue;
                         }
                         break;

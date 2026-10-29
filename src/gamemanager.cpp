@@ -88,7 +88,7 @@ int ChecksumBytes(BYTE *data, int size)
     for (i = 0; i < size; i++, data++)
     {
         sum += *data;
-        g_Unknown626270.stats->unk_ac += g_Unknown626270.stats->unk_b4[2];
+        g_Unknown626270.stats->checksum += g_Unknown626270.stats->checksumKeysE[2];
     }
     return sum;
 }
@@ -97,8 +97,8 @@ int GameManager::ComputeChecksum()
 {
     int sum;
 
-    sum = ChecksumBytes((BYTE *)g_Unknown626270.stats->unk_34, (BYTE *)&this->stats->unk_ac - (BYTE *)this->stats->unk_34);
-    sum += ChecksumBytes((BYTE *)g_Unknown626270.stats->unk_b4, sizeof(g_Unknown626270.stats->unk_b4));
+    sum = ChecksumBytes((BYTE *)g_Unknown626270.stats->lifeChecksumKeys, (BYTE *)&this->stats->checksum - (BYTE *)this->stats->lifeChecksumKeys);
+    sum += ChecksumBytes((BYTE *)g_Unknown626270.stats->checksumKeysE, sizeof(g_Unknown626270.stats->checksumKeysE));
     sum += ChecksumBytes((BYTE *)g_Unknown626270.unk_4, 0x38);
     sum += ChecksumBytes((BYTE *)&g_App.controllerMapping, 0x38);
     return sum;
@@ -181,19 +181,19 @@ int GameManager::OnUpdate(GameManager *mgr)
             return 3;
         }
     }
-    g_Unknown626270.stats->unk_ac = g_Unknown626270.stats->unk_34[2];
+    g_Unknown626270.stats->checksum = g_Unknown626270.stats->lifeChecksumKeys[2];
     check = mgr->ComputeChecksum();
-    g_Unknown626270.checksumValue = (float)check + g_Unknown626270.stats->unk_8c[3];
+    g_Unknown626270.checksumValue = (float)check + g_Unknown626270.stats->checksumKeysD[3];
     for (i = 0; i < 7; i++)
     {
-        if ((int)mgr->stats->unk_34[i] < 6543 || (int)mgr->stats->unk_34[i] > 106543)
+        if ((int)mgr->stats->lifeChecksumKeys[i] < 6543 || (int)mgr->stats->lifeChecksumKeys[i] > 106543)
         {
             g_Unknown626270.checksumValue = -9999.0f;
         }
     }
     for (i = 0; i < 2; i++)
     {
-        if (mgr->stats->unk_60[i] < 6543.0f || mgr->stats->unk_60[i] > 106543.0f)
+        if (mgr->stats->statsChecksumKeysB[i] < 6543.0f || mgr->stats->statsChecksumKeysB[i] > 106543.0f)
         {
             g_Unknown626270.checksumValue = -9999.0f;
         }
@@ -201,14 +201,14 @@ int GameManager::OnUpdate(GameManager *mgr)
     mgr->isPlaying = !mgr->isInContinueMenu && !mgr->isPaused ? 1 : 0;
     for (i = 0; i < 2; i++)
     {
-        if (mgr->stats->unk_54[i] < 6543.0f || mgr->stats->unk_54[i] > 106543.0f)
+        if (mgr->stats->statsChecksumKeysA[i] < 6543.0f || mgr->stats->statsChecksumKeysA[i] > 106543.0f)
         {
             g_Unknown626270.checksumValue = -9999.0f;
         }
     }
     for (i = 0; i < 8; i++)
     {
-        if (mgr->stats->unk_8c[i] < 6543 || mgr->stats->unk_8c[i] > 106543)
+        if (mgr->stats->checksumKeysD[i] < 6543 || mgr->stats->checksumKeysD[i] > 106543)
         {
             g_Unknown626270.checksumValue = -9999.0f;
         }
@@ -254,26 +254,26 @@ int GameManager::OnUpdate(GameManager *mgr)
         if (mgr->stats->highScore < mgr->stats->guiScore)
         {
             mgr->stats->highScore = mgr->stats->guiScore;
-            mgr->stats->unk_10 = mgr->stats->continuesUsed;
+            mgr->stats->bestContinuesUsed = mgr->stats->continuesUsed;
         }
     }
     for (i = 0; i < 3; i++)
     {
-        if (mgr->stats->unk_70[i] < 6543.0f || mgr->stats->unk_70[i] > 106543.0f)
+        if (mgr->stats->lifeChecksumKeysF[i] < 6543.0f || mgr->stats->lifeChecksumKeysF[i] > 106543.0f)
         {
             g_Unknown626270.checksumValue = -9999.0f;
         }
     }
     for (i = 0; i < 2; i++)
     {
-        if (mgr->stats->unk_80[i] < 6543.0f || mgr->stats->unk_80[i] > 106543.0f)
+        if (mgr->stats->statsChecksumKeysC[i] < 6543.0f || mgr->stats->statsChecksumKeysC[i] > 106543.0f)
         {
             g_Unknown626270.checksumValue = -9999.0f;
         }
     }
     for (i = 0; i < 5; i++)
     {
-        if ((int)mgr->stats->unk_b4[i] < 6543 || (int)mgr->stats->unk_b4[i] > 106543)
+        if ((int)mgr->stats->checksumKeysE[i] < 6543 || (int)mgr->stats->checksumKeysE[i] > 106543)
         {
             g_Unknown626270.checksumValue = -9999.0f;
         }
@@ -350,39 +350,39 @@ void RerollStatsChecksumKeys()
     int sum;
     int j;
 
-    g_Unknown626270.stats->unk_88 = g_Rng.GetRandomU32InRange(100000) + 6543;
-    for (j = 0; j < ARRAY_SIZE(g_Unknown626270.stats->unk_34); j++)
+    g_Unknown626270.stats->grazeCount = g_Rng.GetRandomU32InRange(100000) + 6543;
+    for (j = 0; j < ARRAY_SIZE(g_Unknown626270.stats->lifeChecksumKeys); j++)
     {
-        g_Unknown626270.stats->unk_34[j] = g_Rng.GetRandomU32InRange(100000) + 6543;
+        g_Unknown626270.stats->lifeChecksumKeys[j] = g_Rng.GetRandomU32InRange(100000) + 6543;
     }
-    for (j = 0; j < ARRAY_SIZE(g_Unknown626270.stats->unk_8c); j++)
+    for (j = 0; j < ARRAY_SIZE(g_Unknown626270.stats->checksumKeysD); j++)
     {
-        g_Unknown626270.stats->unk_8c[j] = g_Rng.GetRandomU32InRange(100000) + 6543;
+        g_Unknown626270.stats->checksumKeysD[j] = g_Rng.GetRandomU32InRange(100000) + 6543;
     }
-    for (j = 0; j < ARRAY_SIZE(g_Unknown626270.stats->unk_54); j++)
+    for (j = 0; j < ARRAY_SIZE(g_Unknown626270.stats->statsChecksumKeysA); j++)
     {
-        g_Unknown626270.stats->unk_54[j] = g_Rng.GetRandomF32ZeroToOne() * 100000.0f + 6543.0f;
+        g_Unknown626270.stats->statsChecksumKeysA[j] = g_Rng.GetRandomF32ZeroToOne() * 100000.0f + 6543.0f;
     }
-    for (j = 0; j < ARRAY_SIZE(g_Unknown626270.stats->unk_60); j++)
+    for (j = 0; j < ARRAY_SIZE(g_Unknown626270.stats->statsChecksumKeysB); j++)
     {
-        g_Unknown626270.stats->unk_60[j] = g_Rng.GetRandomF32ZeroToOne() * 100000.0f + 6543.0f;
+        g_Unknown626270.stats->statsChecksumKeysB[j] = g_Rng.GetRandomF32ZeroToOne() * 100000.0f + 6543.0f;
     }
-    for (j = 0; j < ARRAY_SIZE(g_Unknown626270.stats->unk_70); j++)
+    for (j = 0; j < ARRAY_SIZE(g_Unknown626270.stats->lifeChecksumKeysF); j++)
     {
-        g_Unknown626270.stats->unk_70[j] = g_Rng.GetRandomF32ZeroToOne() * 100000.0f + 6543.0f;
+        g_Unknown626270.stats->lifeChecksumKeysF[j] = g_Rng.GetRandomF32ZeroToOne() * 100000.0f + 6543.0f;
     }
-    for (j = 0; j < ARRAY_SIZE(g_Unknown626270.stats->unk_80); j++)
+    for (j = 0; j < ARRAY_SIZE(g_Unknown626270.stats->statsChecksumKeysC); j++)
     {
-        g_Unknown626270.stats->unk_80[j] = g_Rng.GetRandomF32ZeroToOne() * 100000.0f + 6543.0f;
+        g_Unknown626270.stats->statsChecksumKeysC[j] = g_Rng.GetRandomF32ZeroToOne() * 100000.0f + 6543.0f;
     }
-    for (j = 0; j < ARRAY_SIZE(g_Unknown626270.stats->unk_b4); j++)
+    for (j = 0; j < ARRAY_SIZE(g_Unknown626270.stats->checksumKeysE); j++)
     {
-        g_Unknown626270.stats->unk_b4[j] = g_Rng.GetRandomU32InRange(100000) + 6543;
+        g_Unknown626270.stats->checksumKeysE[j] = g_Rng.GetRandomU32InRange(100000) + 6543;
     }
-    g_Unknown626270.stats->unk_ac = g_Unknown626270.stats->unk_34[2];
+    g_Unknown626270.stats->checksum = g_Unknown626270.stats->lifeChecksumKeys[2];
     sum = g_Unknown626270.ComputeChecksum();
-    g_Unknown626270.stats->unk_b0 = sum;
-    g_Unknown626270.checksumValue = (float)sum + g_Unknown626270.stats->unk_8c[3];
+    g_Unknown626270.stats->computedChecksum = sum;
+    g_Unknown626270.checksumValue = (float)sum + g_Unknown626270.stats->checksumKeysD[3];
 }
 
 int LoadScoreFile()
@@ -415,7 +415,7 @@ int LoadScoreFile()
         LogPrintf(&g_Log, "error : スコアファイルの読み取りに失敗しました\r\n");
         return -1;
     }
-    g_Unknown626270.stats->highScore = LoadHighScores(data, NULL, g_Unknown626270.shotIndex, g_Unknown626270.difficulty, &g_Unknown626270.stats->unk_10);
+    g_Unknown626270.stats->highScore = LoadHighScores(data, NULL, g_Unknown626270.shotIndex, g_Unknown626270.difficulty, &g_Unknown626270.stats->bestContinuesUsed);
     LoadSpellCards(data, g_Unknown626270.catks);
     LoadClears(data, g_Unknown626270.clrds);
     LoadPracticeScores(data, &g_Unknown626270.pscrs[0][0][0]);
@@ -423,7 +423,7 @@ int LoadScoreFile()
     {
         g_Unknown626270.stats->highScore = g_Unknown626270.pscrs[g_Unknown626270.shotIndex][g_Unknown626270.stage][g_Unknown626270.difficulty].score;
         g_Unknown626270.pscrs[g_Unknown626270.shotIndex][g_Unknown626270.stage][g_Unknown626270.difficulty].playCount++;
-        g_Unknown626270.stats->unk_10 = 0;
+        g_Unknown626270.stats->bestContinuesUsed = 0;
     }
     ReleaseScoreDat(data);
     memcpy(g_Unknown626270.savedCatks, g_Unknown626270.catks, sizeof(g_Unknown626270.catks));
@@ -470,8 +470,8 @@ int GameManager::AddedCallback(GameManager *mgr)
         *mgr->unk_4 = *(Unknown626270Unk4 *)&g_App.controllerMapping;
         MemFree(mgr->tempBuffer);
         mgr->powerItemCombo = 0;
-        mgr->bonusPoints = mgr->stats->unk_88;
-        mgr->invulnerabilityBonus = mgr->stats->unk_88;
+        mgr->bonusPoints = mgr->stats->grazeCount;
+        mgr->invulnerabilityBonus = mgr->stats->grazeCount;
         if (g_Unknown626270.difficulty >= 4)
         {
             mgr->unk_4->lifeCount = 2;
@@ -504,14 +504,14 @@ int GameManager::AddedCallback(GameManager *mgr)
         mgr->stats->pointItemsTotal = 0;
         if (mgr->difficulty < 4)
         {
-            mgr->stats->unk_30 = 50;
+            mgr->stats->checksumKeyPoints = 50;
         }
         else
         {
-            mgr->stats->unk_30 = 200;
+            mgr->stats->checksumKeyPoints = 200;
             mgr->unk_4->unk_25 = 0;
         }
-        mgr->stats->unk_2c = 0;
+        mgr->stats->checksumKeyStage = 0;
         if (LoadScoreFile() != 0)
         {
             return -1;
@@ -527,24 +527,24 @@ int GameManager::AddedCallback(GameManager *mgr)
             switch (mgr->difficulty)
             {
             case 0:
-                mgr->bonusPointsCap = mgr->stats->unk_88 + 200000;
+                mgr->bonusPointsCap = mgr->stats->grazeCount + 200000;
                 break;
             case 1:
-                mgr->bonusPointsCap = mgr->stats->unk_88 + 200000;
+                mgr->bonusPointsCap = mgr->stats->grazeCount + 200000;
                 break;
             case 2:
-                mgr->bonusPointsCap = mgr->stats->unk_88 + 250000;
+                mgr->bonusPointsCap = mgr->stats->grazeCount + 250000;
                 break;
             case 3:
-                mgr->bonusPointsCap = mgr->stats->unk_88 + 300000;
+                mgr->bonusPointsCap = mgr->stats->grazeCount + 300000;
                 break;
             case 4:
-                mgr->bonusPointsCap = mgr->stats->unk_88 + 400000;
-                mgr->bonusPoints = mgr->stats->unk_88 + 200000;
+                mgr->bonusPointsCap = mgr->stats->grazeCount + 400000;
+                mgr->bonusPoints = mgr->stats->grazeCount + 200000;
                 break;
             case 5:
-                mgr->bonusPointsCap = mgr->stats->unk_88 + 400000;
-                mgr->bonusPoints = mgr->stats->unk_88 + 300000;
+                mgr->bonusPointsCap = mgr->stats->grazeCount + 400000;
+                mgr->bonusPoints = mgr->stats->grazeCount + 300000;
                 break;
             }
         }
@@ -553,16 +553,16 @@ int GameManager::AddedCallback(GameManager *mgr)
             switch (mgr->difficulty)
             {
             case 0:
-                mgr->bonusPointsCap = mgr->stats->unk_88 + 200000;
+                mgr->bonusPointsCap = mgr->stats->grazeCount + 200000;
                 break;
             case 1:
-                mgr->bonusPointsCap = mgr->stats->unk_88 + 200000;
+                mgr->bonusPointsCap = mgr->stats->grazeCount + 200000;
                 break;
             case 2:
-                mgr->bonusPointsCap = mgr->stats->unk_88 + 250000;
+                mgr->bonusPointsCap = mgr->stats->grazeCount + 250000;
                 break;
             case 3:
-                mgr->bonusPointsCap = mgr->stats->unk_88 + 300000;
+                mgr->bonusPointsCap = mgr->stats->grazeCount + 300000;
                 break;
             }
             switch (mgr->stage + 1)
@@ -624,7 +624,7 @@ int GameManager::AddedCallback(GameManager *mgr)
         }
     }
     mgr->subRank = 0;
-    mgr->stats->unk_24 = 0;
+    mgr->stats->stageClearPoints = 0;
     mgr->stats->graze = 0;
     mgr->isPaused = 0;
     mgr->stage++;
@@ -828,15 +828,15 @@ void GameManager::AddBonusPoints(int amount)
     if (amount > 0 && !g_Player.bombState)
     {
         this->invulnerabilityBonus += amount;
-        if (this->invulnerabilityBonus >= this->stats->unk_88 + 50000)
+        if (this->invulnerabilityBonus >= this->stats->grazeCount + 50000)
         {
-            this->invulnerabilityBonus = this->stats->unk_88 + 50000;
+            this->invulnerabilityBonus = this->stats->grazeCount + 50000;
             StartBombState(&g_Player);
         }
     }
     if (this->bonusPoints >= this->bonusPointsCap && prev != this->bonusPoints)
     {
-        g_Unknown49fbf0.Func427c81(this->bonusPoints - this->stats->unk_88, 3);
+        g_Unknown49fbf0.Func427c81(this->bonusPoints - this->stats->grazeCount, 3);
     }
 }
 
@@ -852,7 +852,7 @@ void GameManager::AddBonusPointsNoTrack(int amount)
     }
     if (this->bonusPoints >= this->bonusPointsCap && prev != this->bonusPoints)
     {
-        g_Unknown49fbf0.Func427c81(this->bonusPoints - this->stats->unk_88, 3);
+        g_Unknown49fbf0.Func427c81(this->bonusPoints - this->stats->grazeCount, 3);
     }
 }
 
@@ -871,9 +871,9 @@ void GameManager::AddBonusPointsCapped(int amount)
 void GameManager::IncreaseBonusCap(int amount)
 {
     this->bonusPointsCap += amount;
-    if (this->bonusPointsCap >= this->stats->unk_88 + 9999990)
+    if (this->bonusPointsCap >= this->stats->grazeCount + 9999990)
     {
-        this->bonusPointsCap = this->stats->unk_88 + 9999990;
+        this->bonusPointsCap = this->stats->grazeCount + 9999990;
     }
 }
 
