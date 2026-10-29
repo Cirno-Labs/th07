@@ -531,3 +531,31 @@ void StopTurnToAngle(Bullet *bullet)
     ((Unknown4325c0 *)&bullet->velocity)->SetPolar(bullet->angle, speed * g_App.unk_178);
     bullet->ex[3].timer.Tick();
 }
+
+void StopTurnToPlayer(Bullet *bullet)
+{
+    float speed;
+
+    if (bullet->ex[3].timer >= bullet->ex[3].duration)
+    {
+        if (bullet->sound >= 0)
+        {
+            g_SoundPlayer.QueueSound(bullet->sound, 0);
+        }
+        bullet->ex[3].unk_28++;
+        if (bullet->ex[3].unk_28 >= bullet->ex[3].unk_24)
+        {
+            bullet->activeFlags &= ~0x80;
+        }
+        bullet->angle = AddNormalizeAngle(g_Player.AngleFrom(&bullet->pos), bullet->ex[3].unk_10);
+        bullet->speed = bullet->ex[3].unk_c;
+        speed = bullet->speed;
+        bullet->ex[3].timer.Set(0);
+    }
+    else
+    {
+        speed = bullet->speed - bullet->ex[3].timer.AsFloat() * bullet->speed / bullet->ex[3].duration;
+    }
+    ((Unknown4325c0 *)&bullet->velocity)->SetPolar(bullet->angle, speed * g_App.unk_178);
+    bullet->ex[3].timer.Tick();
+}

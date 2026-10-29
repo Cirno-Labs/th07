@@ -273,6 +273,7 @@ void TurnAndAccelerate(Bullet *bullet);
 // times (counted in unk_28).
 void StopTurnAndRestart(Bullet *bullet);
 void StopTurnToAngle(Bullet *bullet);
+void StopTurnToPlayer(Bullet *bullet);
 
 // The colors of effect 0xd by index, as th06's; RegisterChain points
 // g_EffectColors at them.
