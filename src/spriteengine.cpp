@@ -1037,7 +1037,7 @@ int SpriteEngine::ProjectSprite(Sprite *vm)
     {
         return -1;
     }
-    D3DXVec3Project(&edge, &g_CameraSizeOffset, &g_App.viewport, &g_App.projectionMatrix, &g_App.viewMatrix, &world);
+    D3DXVec3Project(&edge, &g_Stage.camera.cameraRight, &g_App.viewport, &g_App.projectionMatrix, &g_App.viewMatrix, &world);
     d = edge - projPos;
     x = D3DXVec3Length(&d) * 0.5f;
     w = x * vm->spriteData->width * vm->scaleY;

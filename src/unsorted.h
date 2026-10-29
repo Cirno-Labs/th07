@@ -149,9 +149,6 @@ void FormatCapsReport(D3DCAPS8 *caps, char *buffer);
 // Sets the device's render and texture stage states, as the config
 // flags pick them, and forgets SpriteEngine's cached states.
 void SetDefaultRenderStates();
-// Set by SetDefaultRenderStates; th06 sets g_Stage.fogColorChanged
-// there.
-extern BYTE g_FogColorChanged;
 // Creates g_AppMutex and returns -1 if another instance holds it, as
 // th06's CheckSingleInstance. Also sets g_GameWindow.forceClockPacing when the
 // game was started through a shortcut or a path other than its own.
@@ -1608,6 +1605,8 @@ struct StageCamera
     D3DXVECTOR3 up;
     // `at`, normalized.
     D3DXVECTOR3 dir;
+    // ProjectSprite projects a sprite's position plus this vector to
+    // get the size it draws the sprite at.
     D3DXVECTOR3 cameraRight;
     float fov;
 };
@@ -1716,12 +1715,15 @@ public:
     StageFog fogTarget;
     int fogFadeFrames;
     Timer fogFadeTime;
-    BYTE unusedByte510;
+    // Set by SetDefaultRenderStates, as th06's.
+    BYTE fogColorChanged;
     unsigned char pad_511[0x3];
     int spellCardState;
     int spellCardFrames;
     int clearScreenOnce;
-    // Set as the dialogue of stages 6 to 8 starts.
+    // Set to 1 or 2 by stage in EffectManager::AddedCallback, which
+    // clears dialogueScriptOffset, and again as the dialogue of stages 6
+    // to 8 starts.
     int dialogueSpriteCount;
     int dialogueScriptOffset;
     Sprite dialogueSprites[0x20];
