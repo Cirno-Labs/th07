@@ -1036,6 +1036,404 @@ void Player::Die()
     g_SoundPlayer.QueueSound(4, 0);
 }
 
+int HandleInput(Player *player)
+{
+    int previous;
+    float deltaY;
+    float deltaX;
+    float sideY;
+    float sideX;
+    float spreadX;
+    float spreadY;
+    float t;
+    float angleStep;
+
+    deltaX = 0.0f;
+    deltaY = 0.0f;
+    previous = player->unk_241c;
+    player->unk_241c = 0;
+    if (g_Unknown4b9e50 & 0x10)
+    {
+        player->unk_241c = 1;
+        if (g_Unknown4b9e50 & 0x40)
+        {
+            player->unk_241c = 5;
+        }
+        if (g_Unknown4b9e50 & 0x80)
+        {
+            player->unk_241c = 6;
+        }
+    }
+    else if (g_Unknown4b9e50 & 0x20)
+    {
+        player->unk_241c = 2;
+        if (g_Unknown4b9e50 & 0x40)
+        {
+            player->unk_241c = 7;
+        }
+        if (g_Unknown4b9e50 & 0x80)
+        {
+            player->unk_241c = 8;
+        }
+    }
+    else
+    {
+        if (g_Unknown4b9e50 & 0x40)
+        {
+            player->unk_241c = 3;
+        }
+        if (g_Unknown4b9e50 & 0x80)
+        {
+            player->unk_241c = 4;
+        }
+    }
+    if (g_Unknown4b9e50 & 4)
+    {
+        player->focused = 1;
+        switch (player->unk_241c)
+        {
+        case 4:
+            deltaX = player->shotType->speedFocused;
+            break;
+        case 3:
+            deltaX = -player->shotType->speedFocused;
+            break;
+        case 1:
+            deltaY = -player->shotType->speedFocused;
+            break;
+        case 2:
+            deltaY = player->shotType->speedFocused;
+            break;
+        case 5:
+            deltaX = -player->shotType->speedDiagonalFocused;
+            deltaY = deltaX;
+            break;
+        case 7:
+            deltaY = player->shotType->speedDiagonalFocused;
+            deltaX = -deltaY;
+            break;
+        case 6:
+            deltaX = player->shotType->speedDiagonalFocused;
+            deltaY = -deltaX;
+            break;
+        case 8:
+            deltaX = player->shotType->speedDiagonalFocused;
+            deltaY = deltaX;
+            break;
+        }
+    }
+    else
+    {
+        player->focused = 0;
+        switch (player->unk_241c)
+        {
+        case 4:
+            deltaX = player->shotType->speed;
+            break;
+        case 3:
+            deltaX = -player->shotType->speed;
+            break;
+        case 1:
+            deltaY = -player->shotType->speed;
+            break;
+        case 2:
+            deltaY = player->shotType->speed;
+            break;
+        case 5:
+            deltaX = -player->shotType->speedDiagonal;
+            deltaY = deltaX;
+            break;
+        case 7:
+            deltaY = player->shotType->speedDiagonal;
+            deltaX = -deltaY;
+            break;
+        case 6:
+            deltaX = player->shotType->speedDiagonal;
+            deltaY = -deltaX;
+            break;
+        case 8:
+            deltaX = player->shotType->speedDiagonal;
+            deltaY = deltaX;
+            break;
+        }
+    }
+    if (deltaX < 0.0f && player->velocityX >= 0.0f)
+    {
+        g_SpriteEngine->StartScript(&player->sprite, 0x401);
+    }
+    else if (deltaX == 0.0f && player->velocityX < 0.0f)
+    {
+        g_SpriteEngine->StartScript(&player->sprite, 0x402);
+    }
+    if (deltaX > 0.0f && player->velocityX <= 0.0f)
+    {
+        g_SpriteEngine->StartScript(&player->sprite, 0x403);
+    }
+    else if (deltaX == 0.0f && player->velocityX > 0.0f)
+    {
+        g_SpriteEngine->StartScript(&player->sprite, 0x404);
+    }
+    player->velocityX = deltaX;
+    player->velocityY = deltaY;
+    player->unk_9cc = deltaX * player->moveScaleX * g_App.unk_178;
+    player->unk_9d0 = deltaY * player->moveScaleY * g_App.unk_178;
+    player->position[0] += player->unk_9cc;
+    player->position[1] += player->unk_9d0;
+    if (player->position.x < g_Unknown626270.unk_9604[0])
+    {
+        player->position.x = g_Unknown626270.unk_9604[0];
+    }
+    else if (g_Unknown626270.unk_9604[0] + g_Unknown626270.unk_9604[2] < player->position.x)
+    {
+        player->position.x = g_Unknown626270.unk_9604[0] + g_Unknown626270.unk_9604[2];
+    }
+    if (player->position.y < g_Unknown626270.unk_9604[1])
+    {
+        player->position.y = g_Unknown626270.unk_9604[1];
+    }
+    else if (g_Unknown626270.unk_9604[1] + g_Unknown626270.unk_9604[3] < player->position.y)
+    {
+        player->position.y = g_Unknown626270.unk_9604[1] + g_Unknown626270.unk_9604[3];
+    }
+    player->hitboxMin = player->position - player->hitboxSize;
+    player->hitboxMax = player->position + player->hitboxSize;
+    player->grazeMin = player->position - player->grazeSize;
+    player->grazeMax = player->position + player->grazeSize;
+    player->unk_978 = player->position - player->unk_9a8;
+    player->unk_984 = player->position + player->unk_9a8;
+    player->optionPos[0] = player->position;
+    player->optionPos[1] = player->position;
+    sideX = sideY = 0.0f;
+    if (g_Unknown626270.character != 2 || g_Unknown626270.shotType != 1)
+    {
+        switch (player->unk_240a)
+        {
+        case 0:
+            player->unk_2410.Set(0);
+            break;
+        case 1:
+            sideX = 24.0f;
+            player->unk_2410.Set(0);
+            if (player->focused)
+            {
+                player->unk_240a = 2;
+                player->unk_9d8 = g_EffectManager.SpawnReservedEffect(0x18, &player->position, 2, 1, 0xffffffff);
+            }
+            else
+            {
+                break;
+            }
+        case 2:
+        slideIn:
+            player->unk_2410.Tick();
+            t = player->unk_2410.AsFloat() / 8.0f;
+            sideY = (1.0f - t) * 32.0f + -32.0f;
+            t = t * t;
+            sideX = -16.0f * t + 24.0f;
+            if (player->unk_2410 >= 8)
+            {
+                player->unk_240a = 3;
+            }
+            if (!player->focused)
+            {
+                player->unk_240a = 4;
+                player->unk_2410.Set(8 - player->unk_2410.AsFrames());
+                if (player->unk_9d8 != NULL)
+                {
+                    player->unk_9d8->sprite.SetPendingInterrupt(1);
+                }
+                goto slideOut;
+            }
+            break;
+        case 3:
+            sideX = 8.0f;
+            sideY = -32.0f;
+            player->unk_2410.Set(0);
+            if (!player->focused)
+            {
+                player->unk_240a = 4;
+                if (player->unk_9d8 != NULL)
+                {
+                    player->unk_9d8->sprite.SetPendingInterrupt(1);
+                }
+            }
+            else
+            {
+                break;
+            }
+        case 4:
+        slideOut:
+            player->unk_2410.Tick();
+            t = player->unk_2410.AsFloat() / 8.0f;
+            sideY = 32.0f * t + -32.0f;
+            t = t * t;
+            t = 1.0f - t;
+            sideX = -16.0f * t + 24.0f;
+            if (player->unk_2410 >= 8)
+            {
+                player->unk_240a = 1;
+            }
+            if (player->focused)
+            {
+                player->unk_240a = 2;
+                player->unk_2410.Set(8 - player->unk_2410.AsFrames());
+                player->unk_9d8 = g_EffectManager.SpawnReservedEffect(0x18, &player->position, 2, 1, 0xffffffff);
+                goto slideIn;
+            }
+            break;
+        }
+        player->optionPos[0].x -= sideX;
+        player->optionPos[1].x += sideX;
+        player->optionPos[0].y += sideY;
+        player->optionPos[1].y += sideY;
+    }
+    else
+    {
+        switch (player->unk_240a)
+        {
+        case 0:
+            player->unk_2410.Set(0);
+            break;
+        case 1:
+            sideX = cosf(player->unk_b7e58 + 1.5707964f) * 24.0f;
+            sideY = sinf(player->unk_b7e58 + 1.5707964f) * 24.0f;
+            player->unk_2410.Set(0);
+            if (player->focused)
+            {
+                player->unk_240a = 2;
+                player->unk_9d8 = g_EffectManager.SpawnReservedEffect(0x18, &player->position, 2, 1, 0xffffffff);
+            }
+            else
+            {
+                player->optionPos[0].x -= sideX;
+                player->optionPos[1].x += sideX;
+                player->optionPos[0].y -= sideY;
+                player->optionPos[1].y += sideY;
+                break;
+            }
+        case 2:
+        fanOut:
+            if (!player->focused)
+            {
+                player->unk_240a = 4;
+                player->unk_2410.Set(8 - player->unk_2410.AsFrames());
+                if (player->unk_9d8 != NULL)
+                {
+                    player->unk_9d8->sprite.SetPendingInterrupt(1);
+                }
+                goto fanIn;
+            }
+            player->unk_2410.Tick();
+            t = player->unk_2410.AsFloat() / 8.0f;
+            sideX = cosf(player->unk_b7e58 + 1.5707964f) * 24.0f;
+            sideY = sinf(player->unk_b7e58 + 1.5707964f) * 24.0f;
+            spreadX = cosf(player->unk_b7e58 + 0.22439948f) * 24.0f;
+            spreadY = sinf(player->unk_b7e58 + 0.22439948f) * 24.0f;
+            spreadX = (spreadX - sideX) * t + sideX;
+            spreadY = (spreadY - sideY) * t + sideY;
+            player->optionPos[1].x += spreadX;
+            player->optionPos[1].y += spreadY;
+            spreadX = cosf(player->unk_b7e58 - 0.22439948f) * 24.0f;
+            spreadY = sinf(player->unk_b7e58 - 0.22439948f) * 24.0f;
+            spreadX = (spreadX + sideX) * t - sideX;
+            spreadY = (spreadY + sideY) * t - sideY;
+            if (player->unk_2410 >= 8)
+            {
+                player->unk_240a = 3;
+            }
+            player->optionPos[0].x += spreadX;
+            player->optionPos[0].y += spreadY;
+            break;
+        case 3:
+            player->unk_2410.Set(0);
+            if (!player->focused)
+            {
+                player->unk_240a = 4;
+                if (player->unk_9d8 != NULL)
+                {
+                    player->unk_9d8->sprite.SetPendingInterrupt(1);
+                }
+            }
+            else
+            {
+                spreadX = cosf(player->unk_b7e58 + 0.22439948f) * 24.0f;
+                spreadY = sinf(player->unk_b7e58 + 0.22439948f) * 24.0f;
+                player->optionPos[1].x += spreadX;
+                player->optionPos[1].y += spreadY;
+                spreadX = cosf(player->unk_b7e58 - 0.22439948f) * 24.0f;
+                spreadY = sinf(player->unk_b7e58 - 0.22439948f) * 24.0f;
+                player->optionPos[0].x += spreadX;
+                player->optionPos[0].y += spreadY;
+                break;
+            }
+        case 4:
+        fanIn:
+            if (player->focused)
+            {
+                player->unk_240a = 2;
+                player->unk_2410.Set(8 - player->unk_2410.AsFrames());
+                player->unk_9d8 = g_EffectManager.SpawnReservedEffect(0x18, &player->position, 2, 1, 0xffffffff);
+                goto fanOut;
+            }
+            player->unk_2410.Tick();
+            t = 1.0f - player->unk_2410.AsFloat() / 8.0f;
+            sideX = cosf(player->unk_b7e58 + 1.5707964f) * 24.0f;
+            sideY = sinf(player->unk_b7e58 + 1.5707964f) * 24.0f;
+            spreadX = cosf(player->unk_b7e58 + 0.22439948f) * 24.0f;
+            spreadY = sinf(player->unk_b7e58 + 0.22439948f) * 24.0f;
+            spreadX = (spreadX - sideX) * t + sideX;
+            spreadY = (spreadY - sideY) * t + sideY;
+            player->optionPos[1].x += spreadX;
+            player->optionPos[1].y += spreadY;
+            spreadX = cosf(player->unk_b7e58 - 0.22439948f) * 24.0f;
+            spreadY = sinf(player->unk_b7e58 - 0.22439948f) * 24.0f;
+            spreadX = (spreadX + sideX) * t - sideX;
+            spreadY = (spreadY + sideY) * t - sideY;
+            if (player->unk_2410 >= 8)
+            {
+                player->unk_240a = 1;
+            }
+            player->optionPos[0].x += spreadX;
+            player->optionPos[0].y += spreadY;
+            break;
+        }
+    }
+    if ((g_Unknown4b9e50 & 1) && !g_Unknown49fbf0.Func42ad66())
+    {
+        if (!g_Unknown626270.ChecksumMismatch())
+        {
+            Player::StartFiring(player);
+        }
+        if (!(g_Unknown4b9e50 & 4))
+        {
+            if (player->unk_9cc != 0.0f)
+            {
+                angleStep = -(player->unk_9cc / 4.0f) * D3DX_PI / 5.0f / 10.0f;
+                player->unk_b7e58 -= angleStep;
+                if (player->unk_b7e58 < -2.1991148f)
+                {
+                    player->unk_b7e58 = -2.1991148f;
+                }
+                else if (player->unk_b7e58 > -0.9424778f)
+                {
+                    player->unk_b7e58 = -0.9424778f;
+                }
+            }
+            else if (fabsf(player->unk_b7e58 - -1.5707964f) > 0.031415928f)
+            {
+                angleStep = player->unk_b7e58 < -1.5707964f ? 0.062831856f * g_App.unk_178
+                                                             : -0.062831856f * g_App.unk_178;
+                player->unk_b7e58 += angleStep;
+            }
+            else
+            {
+                player->unk_b7e58 = -1.5707964f;
+            }
+        }
+    }
+    return 0;
+}
+
 void UpdateHitboxAreas(Player *player)
 {
     int i;
@@ -1574,7 +1972,7 @@ int Player::OnUpdate(Player *player)
     UpdateInvulnerability(player);
     if (player->playerState != 2 && player->playerState != 1)
     {
-        Func43ee50(player);
+        HandleInput(player);
     }
     g_SpriteEngine->Step(&player->sprite);
     if (player->unk_240a)

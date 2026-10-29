@@ -116,7 +116,12 @@ struct ShotTypeData
     // Above this line the player draws the items in, at full power or
     // from difficulty 4 up.
     float unk_20;
-    unsigned char unk_24[0x10];
+    // The movement speeds, straight and diagonal, unfocused and focused,
+    // as th06's.
+    float speed;
+    float speedFocused;
+    float speedDiagonal;
+    float speedDiagonalFocused;
     ShotTable tables[1];
 };
 
@@ -226,10 +231,20 @@ void DrawHitBullets(Player *player);
 // after 30 frames or while respawning or dying. Returns 0.
 int UpdateFiring(Player *player);
 
-// OnUpdate's steps, not decompiled yet. Func43ee50 runs unless the
-// player is respawning or dying, UpdateDyingState while dying, and UpdateRespawningState
+// OnUpdate's steps. HandleInput runs unless the player is respawning
+// or dying, UpdateDyingState while dying, and UpdateRespawningState
 // while respawning or when UpdateDyingState returns nonzero.
-int Func43ee50(Player *player);
+//
+// th06's HandleInput: moves the player by the buttons the game plays by
+// (g_Unknown4b9e50) at the shot type's speeds, within
+// GameManager::unk_9604, sets the boxes and moves the options in and
+// out while focused, with effect 0x18 (unk_9d8) on the way in. Sakuya B
+// (character 2, shot type 1) fans her options around unk_b7e58
+// instead. On button 1, unless Gui's Func42ad66 holds, starts firing
+// (if the checksums agree) and, unfocused, turns unk_b7e58 with the
+// sideways movement, between -7pi/10 and -3pi/10, or else back to
+// -pi/2. Returns 0.
+int HandleInput(Player *player);
 // OnUpdate's first step, as the start of th06's: clears the sizes of
 // the 0x70 unk_9dc hitboxes, then counts down each PlayerArea's unk_18,
 // growing unk_10 by unk_14 meanwhile, and frees it once it is 0.
@@ -518,7 +533,12 @@ public:
     D3DXVECTOR3 unk_9a8;
     // Where the two options are.
     D3DXVECTOR3 optionPos[2];
-    unsigned char unk_9cc[0x10];
+    // The movement of the last frame, scaled by the frame rate.
+    float unk_9cc;
+    float unk_9d0;
+    unsigned char unk_9d4[0x4];
+    // The effect HandleInput shows while the player is focused.
+    Effect *unk_9d8;
     PlayerBombHit unk_9dc[0x70];
     PlayerArea unk_17dc[0x60];
     // 1 on the frame a bomb starts, else 0 (UpdateBombState).

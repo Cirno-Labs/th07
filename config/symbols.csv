@@ -458,7 +458,7 @@ address,size,name,symbol
 0x0043e6b0,1247,Player::CheckLaserHit,?CheckLaserHit@Player@@QAEHPAUD3DXVECTOR3@@00MH@Z
 0x0043eb90,549,Player::Graze,?Graze@Player@@QAEXPAUD3DXVECTOR3@@@Z
 0x0043edc0,143,Player::Die,?Die@Player@@QAEXXZ
-0x0043ee50,6790,Func43ee50,?Func43ee50@@YIHPAVPlayer@@@Z
+0x0043ee50,6790,HandleInput,?HandleInput@@YIHPAVPlayer@@@Z
 0x00440940,169,UpdateHitboxAreas,?UpdateHitboxAreas@@YIXPAVPlayer@@@Z
 0x004409f0,760,UpdateBombState,?UpdateBombState@@YIXPAVPlayer@@@Z
 0x00440cf0,1231,UpdateDyingState,?UpdateDyingState@@YIHPAVPlayer@@@Z

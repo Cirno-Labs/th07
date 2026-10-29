@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">98.70% (685)</tspan> · <tspan class="decompiled">0.43% (3)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">0.72% (5)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">98.85% (686)</tspan> · <tspan class="decompiled">0.43% (3)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">0.58% (4)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="737.31" height="6" x="0" y="0" class="named"/>
-<rect width="3.23" height="6" x="737.31" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="740.54" y="0" class="nonmatching"/>
-<rect width="5.38" height="6" x="741.62" y="0" class="todo"/>
+<rect width="738.39" height="6" x="0" y="0" class="named"/>
+<rect width="3.23" height="6" x="738.39" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="741.62" y="0" class="nonmatching"/>
+<rect width="4.31" height="6" x="742.69" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="named"><title>0x00401000 D3DXMatrixIdentity (173 bytes)</title></rect>
@@ -528,7 +528,7 @@
 <rect width="12" height="12" x="90" y="135" class="named"><title>0x0043e6b0 Player::CheckLaserHit (1247 bytes)</title></rect>
 <rect width="12" height="12" x="105" y="135" class="named"><title>0x0043eb90 Player::Graze (549 bytes)</title></rect>
 <rect width="12" height="12" x="120" y="135" class="named"><title>0x0043edc0 Player::Die (143 bytes)</title></rect>
-<rect width="12" height="12" x="135" y="135" class="todo"><title>0x0043ee50 Func43ee50 (6790 bytes)</title></rect>
+<rect width="12" height="12" x="135" y="135" class="named"><title>0x0043ee50 HandleInput (6790 bytes)</title></rect>
 <rect width="12" height="12" x="150" y="135" class="named"><title>0x00440940 UpdateHitboxAreas (169 bytes)</title></rect>
 <rect width="12" height="12" x="165" y="135" class="named"><title>0x004409f0 UpdateBombState (760 bytes)</title></rect>
 <rect width="12" height="12" x="180" y="135" class="named"><title>0x00440cf0 UpdateDyingState (1231 bytes)</title></rect>
@@ -767,18 +767,18 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">85.03%</tspan> · <tspan class="decompiled">0.06%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">14.82%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">86.81%</tspan> · <tspan class="decompiled">0.06%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">13.04%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="635.17" height="6" x="0" y="0" class="named"/>
-<rect width="0.44" height="6" x="635.17" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="635.62" y="0" class="nonmatching"/>
-<rect width="110.72" height="6" x="636.28" y="0" class="todo"/>
+<rect width="648.48" height="6" x="0" y="0" class="named"/>
+<rect width="0.44" height="6" x="648.48" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="648.92" y="0" class="nonmatching"/>
+<rect width="97.41" height="6" x="649.59" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 EnemyScripts::RunEnemy (29464 bytes)</title></rect>
 <rect width="80.90" height="62.83" x="0" y="147.17" class="todo"><title>0x00450d60 SpriteEngine::Step (13178 bytes)</title></rect>
 <rect width="43.76" height="58.30" x="83.90" y="0" class="todo"><title>0x00420620 EnemyManager::OnUpdate (6840 bytes)</title></rect>
-<rect width="43.76" height="57.85" x="83.90" y="61.30" class="todo"><title>0x0043ee50 Func43ee50 (6790 bytes)</title></rect>
+<rect width="43.76" height="57.85" x="83.90" y="61.30" class="named"><title>0x0043ee50 HandleInput (6790 bytes)</title></rect>
 <rect width="43.76" height="45.64" x="83.90" y="122.16" class="named"><title>0x00457fe5 MainMenu::UpdateCharacterMenu (5427 bytes)</title></rect>
 <rect width="43.76" height="39.20" x="83.90" y="170.80" class="named"><title>0x00402780 PauseMenu::UpdatePauseMenu (4709 bytes)</title></rect>
 <rect width="37.81" height="44.35" x="130.67" y="0" class="named"><title>0x00405690 Stage::OnUpdate (4611 bytes)</title></rect>
