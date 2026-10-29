@@ -160,6 +160,10 @@ int EffectInitPetal31(Effect *effect);
 // less, and axis is 1 to 2.5 long. Returns 0.
 int EffectInitDiverge(Effect *effect);
 
+// An effect update for types 22 and 32: goes out from origin along
+// axis, easing out to 128 axis lengths at frame 90, at z 0. Returns 1.
+int EffectUpdateDivergeEased(Effect *effect);
+
 // The effects, at 0x12fe250: 400 started in turn, 8 reserved slots and
 // a spare.
 class EffectManager

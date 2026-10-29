@@ -357,6 +357,17 @@ int EffectInitDiverge(Effect *effect)
     return 0;
 }
 
+int EffectUpdateDivergeEased(Effect *effect)
+{
+    float f;
+
+    f = effect->timer.AsFloat() / 90.0f;
+    f = 1.0f - (1.0f - f) * (1.0f - f);
+    effect->pos = f * effect->axis * 128.0f + effect->origin;
+    effect->pos.z = 0.0f;
+    return 1;
+}
+
 Effect *EffectManager::SpawnEffect(int type, D3DXVECTOR3 *pos, int count, D3DCOLOR color)
 {
     Effect *effect;
