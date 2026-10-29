@@ -264,6 +264,9 @@ void SlowBulletStart(Bullet *bullet);
 // Flag 0x10, ex[1]: for its duration the bullet speeds up by accel,
 // turned along its velocity.
 void AccelerateAlongVelocity(Bullet *bullet);
+// Flag 0x20, ex[2]: for its duration the bullet turns by unk_10 and
+// speeds up by unk_c a frame.
+void TurnAndAccelerate(Bullet *bullet);
 
 // The colors of effect 0xd by index, as th06's; RegisterChain points
 // g_EffectColors at them.

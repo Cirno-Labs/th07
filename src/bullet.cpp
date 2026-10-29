@@ -460,3 +460,18 @@ void AccelerateAlongVelocity(Bullet *bullet)
     }
     bullet->ex[1].timer.Tick();
 }
+
+void TurnAndAccelerate(Bullet *bullet)
+{
+    if (bullet->ex[2].timer >= bullet->ex[2].duration)
+    {
+        bullet->activeFlags &= ~0x20;
+    }
+    else
+    {
+        bullet->angle = AddNormalizeAngle(bullet->angle, g_App.unk_178 * bullet->ex[2].unk_10);
+        bullet->speed = g_App.unk_178 * bullet->ex[2].unk_c + bullet->speed;
+        ((Unknown4325c0 *)&bullet->velocity)->SetPolar(bullet->angle, g_App.unk_178 * bullet->speed);
+    }
+    bullet->ex[2].timer.Tick();
+}
