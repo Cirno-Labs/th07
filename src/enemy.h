@@ -113,13 +113,13 @@ struct EnemyScriptState
     EnemyScriptInstr *funcInstr;
     EnemyScriptVars vars;
     // While above 0 the script waits, holding timer back.
-    Timer unk_80;
-    EnemyScriptLoop unk_8c[8];
+    Timer waitTimer;
+    EnemyScriptLoop loops[8];
     // The result of the last laser test, as th06's compareResult.
     int compareResult;
     // Set by the timed call of opcode 144: returning from it copies the
     // variables back into Enemy::unk_2ee8.
-    int unk_210;
+    int timedCallActive;
     short sub;
     short unk_216;
 };

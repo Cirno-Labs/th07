@@ -54,7 +54,7 @@ int EnemyScripts::StartSub(EnemyScriptState *ctx, short sub)
 {
     ctx->code = this->subs[sub];
     ctx->timer.Set(0);
-    ctx->unk_80.Set(0);
+    ctx->waitTimer.Set(0);
     ctx->sub = sub;
     return 0;
 }
@@ -821,13 +821,13 @@ restart:
                 enemy->stackDepth++;
             }
             instr = (EnemyScriptInstr *)enemy->ctx.code;
-            enemy->ctx.unk_210 = 1;
+            enemy->ctx.timedCallActive = 1;
         }
     }
 loop:
-    if (enemy->ctx.unk_80.AsFrames() > 0)
+    if (enemy->ctx.waitTimer.AsFrames() > 0)
     {
-        enemy->ctx.unk_80.Sub(1);
+        enemy->ctx.waitTimer.Sub(1);
         enemy->ctx.timer.Sub(1);
         goto done;
     }
@@ -842,7 +842,7 @@ loop:
         case 1:
             return -1;
         case 45:
-            enemy->ctx.unk_80.Set(INT_ARG(0));
+            enemy->ctx.waitTimer.Set(INT_ARG(0));
             break;
         case 3:
             (*ResolveOperand(enemy, &instr->args[2].i, instr->paramMask, 2))--;
@@ -949,7 +949,7 @@ loop:
             int i;
             EnemyScriptLoop *loop;
 
-            for (loop = enemy->ctx.unk_8c, i = 0; i < 8; i++, loop++)
+            for (loop = enemy->ctx.loops, i = 0; i < 8; i++, loop++)
             {
                 if (loop->func != NULL && loop->target != instr->args[0].f)
                 {
@@ -1065,10 +1065,10 @@ loop:
                 DebugPrint("error : no Stack Ret\r\n");
             }
             enemy->stackDepth--;
-            if (enemy->ctx.unk_210)
+            if (enemy->ctx.timedCallActive)
             {
                 enemy->periodicSubVars = enemy->ctx.vars;
-                enemy->ctx.unk_210 = 0;
+                enemy->ctx.timedCallActive = 0;
             }
             enemy->ctx = enemy->savedCtx[enemy->stackDepth];
             goto restart;
@@ -2018,7 +2018,7 @@ done:
             D3DXVECTOR3 savedPos;
 
             moved = FALSE;
-            l = enemy->ctx.unk_8c;
+            l = enemy->ctx.loops;
             savedPos = enemy->pos;
             for (i = 0; i < 8; i++, l++)
             {
