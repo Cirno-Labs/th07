@@ -97,7 +97,7 @@ int MainMenu::StartTitle()
         {
             this->spriteCount = 0xa4;
             this->sprites = new Sprite[this->spriteCount];
-            g_SpriteEngine->Func455110(this->sprites, 0x900, this->spriteCount);
+            g_SpriteEngine->StartSpriteSeries(this->sprites, 0x900, this->spriteCount);
         }
         g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 2);
         for (i = 0; i < 8; i++)

@@ -175,7 +175,7 @@ public:
     void StepSprites(Sprite *vms, int count);
     // Starts script `script` + n on sprite n of the `count` sprites from
     // `vms`, and makes their sprites their base sprites. Not in th06.
-    void Func455110(Sprite *vms, int script, int count);
+    void StartSpriteSeries(Sprite *vms, int script, int count);
     // Sends interrupt `interrupt` to the `count` sprites from `vms` that
     // show a loaded sprite. Not in th06.
     void SendInterruptToLoadedSprites(Sprite *vms, int count, short interrupt);
@@ -261,6 +261,19 @@ public:
     {
         this->unk_4 = 0;
         this->unk_0 = 0x80808080;
+    }
+
+    // Like StartScript, after zeroing the position and posOffset and
+    // setting fontWidth and fontHeight to 15, as in th06. Inline, but
+    // too large to expand: callers call the copy at 0x404f30.
+    void StartScriptAtOrigin(Sprite *vm, int script)
+    {
+        vm->scriptIndex = script;
+        vm->pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+        vm->posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+        vm->fontHeight = 15;
+        vm->fontWidth = 15;
+        this->SetScript(vm, this->scripts[script]);
     }
 
     // Resets `vm` and shows sprite `sprite` on it.

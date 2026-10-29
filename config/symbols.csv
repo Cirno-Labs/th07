@@ -32,7 +32,7 @@ address,size,name,symbol
 0x00404690,2010,Func404690,
 0x00404e70,62,Func404e70,
 0x00404eb0,124,Func404eb0,
-0x00404f30,169,Func404f30,
+0x00404f30,169,SpriteEngine::StartScriptAtOrigin,?StartScriptAtOrigin@SpriteEngine@@QAEXPAVSprite@@H@Z
 0x00404fe0,145,Unknown626270::Func404fe0,?Func404fe0@Unknown626270@@QAEHXZ
 0x00405080,585,Func405080,
 0x004052d0,152,Func4052d0,
@@ -596,7 +596,7 @@ address,size,name,symbol
 0x00454f30,251,SpriteEngine::CopyTextureRect,?CopyTextureRect@SpriteEngine@@QAEXHHPAUtagRECT@@0@Z
 0x00455030,140,SpriteEngine::SendInterruptToLoadedSprites,?SendInterruptToLoadedSprites@SpriteEngine@@QAEXPAVSprite@@HF@Z
 0x004550c0,70,SpriteEngine::StepSprites,?StepSprites@SpriteEngine@@QAEXPAVSprite@@H@Z
-0x00455110,91,SpriteEngine::Func455110,?Func455110@SpriteEngine@@QAEXPAVSprite@@HH@Z
+0x00455110,91,SpriteEngine::StartSpriteSeries,?StartSpriteSeries@SpriteEngine@@QAEXPAVSprite@@HH@Z
 0x00455170,352,Func455170,
 0x004552d0,298,Func4552d0,
 0x004553fa,59,App::ResetClockDriftCounters,?ResetClockDriftCounters@App@@QAEXXZ

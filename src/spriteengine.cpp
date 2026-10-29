@@ -354,3 +354,15 @@ void SpriteEngine::StepSprites(Sprite *vms, int count)
         count--;
     }
 }
+
+void SpriteEngine::StartSpriteSeries(Sprite *vms, int script, int count)
+{
+    while (count != 0)
+    {
+        g_SpriteEngine->StartScriptAtOrigin(vms, script);
+        vms->baseSpriteIndex = vms->spriteIndex;
+        script++;
+        vms++;
+        count--;
+    }
+}
