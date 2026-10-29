@@ -130,6 +130,8 @@ public:
     // Shows `value` rising from `pos` (play-area coordinates) in `color`
     // for 60 frames, in one of the first 0x2d0 popups, as th06's.
     void AddPopup(D3DXVECTOR3 *pos, int value, D3DCOLOR color);
+    // Like AddPopup, in the last three popups, as th06's AddPopup2.
+    void AddPopup2(D3DXVECTOR3 *pos, int value, D3DCOLOR color);
 
     void SetColor(D3DCOLOR color)
     {
