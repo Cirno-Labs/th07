@@ -47,7 +47,7 @@ address,size,name,symbol
 0x004075d0,50,Unknown1347b00::RemoveChain,?RemoveChain@Unknown1347b00@@SIXXZ
 0x00407610,474,Unknown1347b00::Load,?Load@Unknown1347b00@@QAEHPAD@Z
 0x004077f0,263,Unknown1347b00::StepObjects,?StepObjects@Unknown1347b00@@QAEHXZ
-0x00407900,2167,Func407900,
+0x00407900,2167,Unknown1347b00::DrawLayer,?DrawLayer@Unknown1347b00@@QAEHH@Z
 0x00408180,304,Unknown1347b00::SetupFixedCamera,?SetupFixedCamera@Unknown1347b00@@QAEXXZ
 0x004082b0,315,Unknown1347b00::SetupCamera,?SetupCamera@Unknown1347b00@@QAEXXZ
 0x004083f0,243,Func4083f0,
@@ -225,7 +225,7 @@ address,size,name,symbol
 0x00427a20,74,Func427a20,
 0x00427a70,62,Func427a70,
 0x00427ab0,48,Func427ab0,
-0x00427ae0,65,Func427ae0,
+0x00427ae0,65,Unknown49fbf0::IsLoadingShown,?IsLoadingShown@Unknown49fbf0@@QAEHXZ
 0x00427b21,51,Unknown49fbf0::EndBombName,?EndBombName@Unknown49fbf0@@QAEXXZ
 0x00427b54,78,Unknown49fbf0::EndSpellCardName,?EndSpellCardName@Unknown49fbf0@@QAEXXZ
 0x00427ba2,64,Unknown49fbf0::HideInterface,?HideInterface@Unknown49fbf0@@QAEXXZ

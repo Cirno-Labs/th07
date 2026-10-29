@@ -1342,6 +1342,9 @@ public:
     // Hides unk_6e44, unk_7090 and unk_72dc (spriteIndex -1) and clears
     // impl->unk_1fba0. Not in th06.
     void HideInterface();
+    // Whether impl->unk_6e44 shows a sprite with flag bit 13 set, as
+    // th06's IsLoadingShown.
+    BOOL IsLoadingShown();
 
     // Whether impl is set and impl->msg.scriptIndex is not negative, or
     // is -2. th06's IsMsgRunning.
@@ -1538,6 +1541,12 @@ public:
     static void RemoveChain();
     static int OnUpdate(Unknown1347b00 *stage);
     static int OnDraw(Unknown1347b00 *stage);
+    // Draws layers 2 and 3 unless spellCardState is above 1 or the Gui's
+    // loading sprite shows, with a rectangle fading in while
+    // spellCardState is 1, as th06's; then unk_528's first unk_520
+    // sprites, the fixed camera (SetupFixedCamera) and the fog at 1000 to
+    // 2000. Resets the SpriteEngine's color unless unk_52b0 was set,
+    // and clears it. Returns 1.
     static int OnDraw2(Unknown1347b00 *stage);
     // Resets the script, loads the stage's background ANMs (five for
     // stage 4) and its data from g_StageDataFiles, and sets the fog and
@@ -1548,6 +1557,9 @@ public:
     // sprites' scripts, as th06's (the ANMs are loaded by AddedCallback
     // here). Returns 0, or -1 on failure.
     int Load(char *dataPath);
+    // Draws the objects on `layer` near enough the camera, as th06's
+    // DrawLayer with a different test. Returns 0.
+    int DrawLayer(int layer);
     // Runs one frame of the scripts of each animated object's sprites,
     // as th06's. Returns 0.
     int StepObjects();

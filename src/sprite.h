@@ -484,6 +484,16 @@ public:
         this->unk_4 = 0;
         this->unk_0 = 0x80808080;
     }
+    void SetUnk2e4d4(int value)
+    {
+        this->unk_2e4d4 = value;
+    }
+    // Draws `vm`, then the batched quads.
+    void DrawAndFlush(Sprite *vm)
+    {
+        this->Draw(vm);
+        this->FlushQuadBatch();
+    }
 
     // Like StartScript, after zeroing the position and posOffset and
     // setting fontWidth and fontHeight to 15, as in th06. Inline, but
