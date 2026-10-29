@@ -359,6 +359,9 @@ public:
     void BeginQuadBatch();
     // Draws the batched quads, if any. Not in th06.
     void FlushQuadBatch();
+    // Adds `quad`, a triangle strip, to the batch as two triangles.
+    // Returns 0. Not in th06.
+    int AddQuadToBatch(VertexTex1DiffuseXyzrwh *quad);
     // Copies the `srcWidth` by `srcHeight` rectangle at (`srcLeft`,
     // `srcTop`) of the back buffer into the `dstWidth` by `dstHeight`
     // rectangle at (`dstLeft`, `dstTop`) of texture `texture`.
