@@ -110,64 +110,6 @@ int Chain::AddToDrawChain(ChainElem *elem, int priority)
     return 0;
 }
 
-void Chain::Remove(ChainElem *elem)
-{
-    BOOL isDraw = FALSE;
-    ChainElem *cur;
-    ChainCallback callback;
-
-    if (elem == NULL)
-    {
-        return;
-    }
-    cur = &this->calcChain;
-    while (cur != NULL)
-    {
-        if (cur == elem)
-        {
-            goto found;
-        }
-        cur = cur->next;
-    }
-    isDraw = TRUE;
-    cur = &this->drawChain;
-    while (cur != NULL)
-    {
-        if (cur == elem)
-        {
-            goto found;
-        }
-        cur = cur->next;
-    }
-    return;
-
-found:
-    // isDraw is set but no longer used: th06 logged which chain the
-    // element was cut from.
-    if (elem->prev != NULL)
-    {
-        elem->callback = NULL;
-        elem->prev->next = elem->next;
-        if (elem->next != NULL)
-        {
-            elem->next->prev = elem->prev;
-        }
-        elem->prev = NULL;
-        elem->next = NULL;
-        if (elem->allocated)
-        {
-            delete elem;
-            elem = NULL;
-        }
-        else if (elem->deletedCallback != NULL)
-        {
-            callback = elem->deletedCallback;
-            elem->deletedCallback = NULL;
-            callback(elem->arg);
-        }
-    }
-}
-
 int Chain::RunCalcChain()
 {
     ChainElem *current;
@@ -294,4 +236,62 @@ ChainElem *Chain::CreateElem(ChainCallback callback)
     elem->SetCallback(callback);
     elem->allocated = 1;
     return elem;
+}
+
+void Chain::Remove(ChainElem *elem)
+{
+    BOOL isDraw = FALSE;
+    ChainElem *cur;
+    ChainCallback callback;
+
+    if (elem == NULL)
+    {
+        return;
+    }
+    cur = &this->calcChain;
+    while (cur != NULL)
+    {
+        if (cur == elem)
+        {
+            goto found;
+        }
+        cur = cur->next;
+    }
+    isDraw = TRUE;
+    cur = &this->drawChain;
+    while (cur != NULL)
+    {
+        if (cur == elem)
+        {
+            goto found;
+        }
+        cur = cur->next;
+    }
+    return;
+
+found:
+    // isDraw is set but no longer used: th06 logged which chain the
+    // element was cut from.
+    if (elem->prev != NULL)
+    {
+        elem->callback = NULL;
+        elem->prev->next = elem->next;
+        if (elem->next != NULL)
+        {
+            elem->next->prev = elem->prev;
+        }
+        elem->prev = NULL;
+        elem->next = NULL;
+        if (elem->allocated)
+        {
+            delete elem;
+            elem = NULL;
+        }
+        else if (elem->deletedCallback != NULL)
+        {
+            callback = elem->deletedCallback;
+            elem->deletedCallback = NULL;
+            callback(elem->arg);
+        }
+    }
 }
