@@ -1155,7 +1155,7 @@ address,size,name,symbol
 0x0047ea7d,423,entry,
 0x0047ec4f,56,Func47ec4f,
 0x0047ec87,23,Func47ec87,
-0x0047eca0,20,Func47eca0,
+0x0047eca0,20,__CIacos,__CIacos
 0x0047ecbd,174,Func47ecbd,
 0x0047ed6b,154,Func47ed6b,
 0x0047ee10,498,Func47ee10,
@@ -1452,9 +1452,9 @@ address,size,name,symbol
 0x0048b8a0,117,__ftol2,__ftol2
 0x0048b920,20,__CItan,__CItan
 0x0048b93d,149,Func48b93d,
-0x0048ba20,79,Func48ba20,
+0x0048ba20,79,__CIatan,__CIatan
 0x0048ba78,125,Func48ba78,
-0x0048bb0a,10,Func48bb0a,
+0x0048bb0a,10,__CIfmod,__CIfmod
 0x0048bb40,20,__CIsin,__CIsin
 0x0048bb5d,145,Func48bb5d,
 0x0048bbf0,20,__CIcos,__CIcos

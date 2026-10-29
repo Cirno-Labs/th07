@@ -1,5 +1,6 @@
 // The file with SpriteEngine, from 0x44d3e0.
 
+#include <math.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
@@ -1336,6 +1337,599 @@ int *Sprite::ResolveIntArgumentPtr(int *value, WORD mask, int bit)
     }
     return value;
 }
+
+#define ANM_INT_ARG(n) \
+    ((curInstr->paramMask & (1 << (n))) ? vm->ResolveIntArgument(curInstr->args[n].i) : curInstr->args[n].i)
+#define ANM_FLOAT_ARG(n) \
+    ((curInstr->paramMask & (1 << (n))) ? vm->ResolveFloatArgument(curInstr->args[n].f) : curInstr->args[n].f)
+#define ANM_INT_VAR(n) (*vm->ResolveIntArgumentPtr(&curInstr->args[n].i, curInstr->paramMask, (n)))
+#define ANM_FLOAT_VAR(n) (*vm->ResolveFloatArgumentPtr(&curInstr->args[n].f, curInstr->paramMask, (n)))
+
+int SpriteEngine::Step(Sprite *vm)
+{
+    AnmInstr *curInstr;
+    AnmInstr *fallback;
+    int k;
+    float t;
+
+    if (vm->scriptPos == NULL)
+    {
+        return 1;
+    }
+    if (vm->pendingInterrupt != 0)
+    {
+        goto interrupt;
+    }
+    while (curInstr = vm->scriptPos, curInstr->time <= vm->unk_30.AsFrames())
+    {
+        switch (curInstr->opcode)
+        {
+        case -1:
+        case 1:
+            vm->shown = 0;
+        case 2:
+            vm->scriptPos = NULL;
+            return 1;
+        case 3:
+            vm->shown = 1;
+            this->SetSprite(vm, ANM_INT_ARG(0) + this->scriptSpriteOffsets[vm->scriptIndex]);
+            vm->unk_23c = vm->unk_30.AsFrames();
+            break;
+        case 7:
+            vm->scaleY = ANM_FLOAT_ARG(0);
+            vm->scaleX = ANM_FLOAT_ARG(1);
+            vm->flags |= 8;
+            break;
+        case 8:
+            vm->alpha = curInstr->args[0].i & 0xff;
+            break;
+        case 9:
+            vm->color = vm->color & 0xff000000 | curInstr->args[0].i & 0xffffff;
+            break;
+        case 4:
+            vm->unk_30.Set(curInstr->args[1].i);
+            vm->scriptPos = (AnmInstr *)((BYTE *)vm->scriptStart + curInstr->args[0].i);
+            continue;
+        case 5:
+            ANM_INT_VAR(0)--;
+            if (ANM_INT_ARG(0) > 0)
+            {
+                vm->unk_30.Set(curInstr->args[2].i);
+                vm->scriptPos = (AnmInstr *)((BYTE *)vm->scriptStart + curInstr->args[1].i);
+                continue;
+            }
+            break;
+        case 10:
+            vm->flip ^= 1;
+            vm->scaleY *= -1.0f;
+            vm->flags |= 8;
+            break;
+        case 24:
+            vm->usePosOffset = curInstr->args[0].i;
+            break;
+        case 11:
+            vm->flip ^= 2;
+            vm->scaleX *= -1.0f;
+            vm->flags |= 8;
+            break;
+        case 12:
+            vm->rotationX = ANM_FLOAT_ARG(0);
+            vm->rotationY = ANM_FLOAT_ARG(1);
+            vm->rotationZ = ANM_FLOAT_ARG(2);
+            vm->flags |= 4;
+            break;
+        case 13:
+            vm->unk_c = ANM_FLOAT_ARG(0);
+            vm->unk_10 = ANM_FLOAT_ARG(1);
+            vm->unk_14 = ANM_FLOAT_ARG(2);
+            vm->flags |= 4;
+            break;
+        case 14:
+            vm->unk_20 = ANM_FLOAT_ARG(0);
+            vm->unk_24 = ANM_FLOAT_ARG(1);
+            break;
+        case 29:
+            vm->unk_48[4].Set(0);
+            vm->unk_84[4].Set(ANM_INT_ARG(2));
+            vm->unk_c4 = 0;
+            *(D3DXVECTOR2 *)&vm->unk_218 = *(D3DXVECTOR2 *)&vm->scaleY;
+            vm->unk_218.z = ANM_FLOAT_ARG(0);
+            vm->unk_224.x = ANM_FLOAT_ARG(1);
+            break;
+        case 15:
+            ((BYTE *)&vm->unk_224.y)[3] = vm->alpha;
+            ((BYTE *)&vm->unk_224.z)[3] = curInstr->args[0].i;
+            vm->unk_48[2].Set(0);
+            vm->unk_84[2].Set(ANM_INT_ARG(1));
+            vm->unk_c2 = 0;
+            break;
+        case 16:
+            vm->blendMode = curInstr->args[0].i;
+            break;
+        case 6:
+            if (!vm->usePosOffset)
+            {
+                vm->pos = D3DXVECTOR3(ANM_FLOAT_ARG(0), ANM_FLOAT_ARG(1), ANM_FLOAT_ARG(2));
+            }
+            else
+            {
+                vm->posOffset = D3DXVECTOR3(ANM_FLOAT_ARG(0), ANM_FLOAT_ARG(1), ANM_FLOAT_ARG(2));
+            }
+            break;
+        case 19:
+            vm->unk_c0 = 6;
+            goto posInterp;
+        case 18:
+            vm->unk_c0 = 4;
+            goto posInterp;
+        case 17:
+            vm->unk_c0 = 0;
+        posInterp:
+            if (!vm->usePosOffset)
+            {
+                vm->unk_1e8 = vm->pos;
+            }
+            else
+            {
+                vm->unk_1e8 = vm->posOffset;
+            }
+            vm->unk_1f4 = D3DXVECTOR3(ANM_FLOAT_ARG(0), ANM_FLOAT_ARG(1), ANM_FLOAT_ARG(2));
+            vm->unk_84[0].Set(ANM_INT_ARG(3));
+            vm->unk_48[0].Set(0);
+            break;
+        case 79:
+            if (vm->unk_3c == 0)
+            {
+                vm->unk_3c.Set(ANM_INT_ARG(0));
+            }
+            else
+            {
+                vm->unk_3c.Sub(1);
+            }
+            if (vm->unk_3c <= 0)
+            {
+                vm->unk_3c.Set(0);
+                break;
+            }
+            vm->unk_30.Sub(1);
+            goto done;
+        case 23:
+            vm->shown = 0;
+        case 20:
+            if (vm->pendingInterrupt == 0)
+            {
+                vm->stopped = 1;
+                vm->unk_30.Sub(1);
+                goto done;
+            }
+        interrupt:
+            fallback = NULL;
+            curInstr = vm->scriptStart;
+            while ((curInstr->opcode != 21 || vm->pendingInterrupt != curInstr->args[0].i) &&
+                   curInstr->opcode != -1)
+            {
+                if (curInstr->opcode == 21 && curInstr->args[0].i == -1)
+                {
+                    fallback = curInstr;
+                }
+                curInstr = (AnmInstr *)((BYTE *)curInstr + curInstr->size);
+            }
+            vm->pendingInterrupt = 0;
+            vm->stopped = 0;
+            if (curInstr->opcode != 21)
+            {
+                if (fallback == NULL)
+                {
+                    vm->unk_30.Sub(1);
+                    goto done;
+                }
+                curInstr = fallback;
+            }
+            curInstr = (AnmInstr *)((BYTE *)curInstr + curInstr->size);
+            vm->scriptPos = curInstr;
+            vm->unk_30.Set(vm->scriptPos->time);
+            vm->shown = 1;
+            continue;
+        case 28:
+            vm->shown = curInstr->args[0].i;
+            break;
+        case 22:
+            vm->anchor = 3;
+            break;
+        case 25:
+            vm->autoRotate = curInstr->args[0].i;
+            break;
+        case 26:
+            vm->uvScrollX += ANM_FLOAT_ARG(0);
+            if (vm->uvScrollX >= 1.0f)
+            {
+                vm->uvScrollX -= 1.0f;
+            }
+            else if (vm->uvScrollX < 0.0f)
+            {
+                vm->uvScrollX += 1.0f;
+            }
+            break;
+        case 27:
+            vm->uvScrollY += ANM_FLOAT_ARG(0);
+            if (vm->uvScrollY >= 1.0f)
+            {
+                vm->uvScrollY -= 1.0f;
+            }
+            else if (vm->uvScrollY < 0.0f)
+            {
+                vm->uvScrollY += 1.0f;
+            }
+            break;
+        case 80:
+            vm->unk_f0 = ANM_FLOAT_ARG(0);
+            break;
+        case 81:
+            vm->unk_f4 = ANM_FLOAT_ARG(0);
+            break;
+        case 30:
+            vm->zWriteDisabled = curInstr->args[0].i;
+            break;
+        case 31:
+            vm->unk_14b = curInstr->args[0].i;
+            break;
+        case 32:
+            vm->unk_48[0].Set(0);
+            vm->unk_84[0].Set(ANM_INT_ARG(0));
+            vm->unk_c0 = curInstr->args[1].i;
+            if (!vm->usePosOffset)
+            {
+                vm->unk_1e8 = vm->pos;
+            }
+            else
+            {
+                vm->unk_1e8 = vm->posOffset;
+            }
+            vm->unk_1f4.x = ANM_FLOAT_ARG(2);
+            vm->unk_1f4.y = ANM_FLOAT_ARG(3);
+            vm->unk_1f4.z = ANM_FLOAT_ARG(4);
+            break;
+        case 33:
+            vm->unk_48[1].Set(0);
+            vm->unk_84[1].Set(ANM_INT_ARG(0));
+            vm->unk_c1 = curInstr->args[1].i;
+            ((BYTE *)&vm->unk_224.y)[2] = vm->unk_rgb[2];
+            ((BYTE *)&vm->unk_224.y)[1] = vm->unk_rgb[1];
+            ((BYTE *)&vm->unk_224.y)[0] = vm->unk_rgb[0];
+            ((BYTE *)&vm->unk_224.z)[2] = curInstr->args[2].b[0];
+            ((BYTE *)&vm->unk_224.z)[1] = curInstr->args[2].b[1];
+            ((BYTE *)&vm->unk_224.z)[0] = curInstr->args[2].b[2];
+            break;
+        case 34:
+            vm->unk_48[2].Set(0);
+            vm->unk_84[2].Set(ANM_INT_ARG(0));
+            vm->unk_c2 = curInstr->args[1].i;
+            ((BYTE *)&vm->unk_224.y)[3] = vm->alpha;
+            ((BYTE *)&vm->unk_224.z)[3] = curInstr->args[2].i;
+            break;
+        case 35:
+            vm->unk_48[3].Set(0);
+            vm->unk_84[3].Set(ANM_INT_ARG(0));
+            vm->unk_c3 = curInstr->args[1].i;
+            vm->unk_200 = *(D3DXVECTOR3 *)&vm->rotationX;
+            vm->unk_20c.x = ANM_FLOAT_ARG(2);
+            vm->unk_20c.y = ANM_FLOAT_ARG(3);
+            vm->unk_20c.z = ANM_FLOAT_ARG(4);
+            vm->flags |= 4;
+            break;
+        case 36:
+            vm->unk_48[4].Set(0);
+            vm->unk_84[4].Set(ANM_INT_ARG(0));
+            vm->unk_c4 = curInstr->args[1].i;
+            *(D3DXVECTOR2 *)&vm->unk_218 = *(D3DXVECTOR2 *)&vm->scaleY;
+            vm->unk_218.z = ANM_FLOAT_ARG(2);
+            vm->unk_224.x = ANM_FLOAT_ARG(3);
+            vm->flags |= 8;
+            break;
+        case 37:
+            ANM_INT_VAR(0) = ANM_INT_ARG(1);
+            break;
+        case 38:
+            ANM_FLOAT_VAR(0) = ANM_FLOAT_ARG(1);
+            break;
+        case 49:
+            ANM_INT_VAR(0) = ANM_INT_ARG(1) + ANM_INT_ARG(2);
+            break;
+        case 50:
+            ANM_FLOAT_VAR(0) = ANM_FLOAT_ARG(1) + ANM_FLOAT_ARG(2);
+            break;
+        case 51:
+            ANM_INT_VAR(0) = ANM_INT_ARG(1) - ANM_INT_ARG(2);
+            break;
+        case 52:
+            ANM_FLOAT_VAR(0) = ANM_FLOAT_ARG(1) - ANM_FLOAT_ARG(2);
+            break;
+        case 53:
+            ANM_INT_VAR(0) = ANM_INT_ARG(1) * ANM_INT_ARG(2);
+            break;
+        case 54:
+            ANM_FLOAT_VAR(0) = ANM_FLOAT_ARG(1) * ANM_FLOAT_ARG(2);
+            break;
+        case 55:
+            ANM_INT_VAR(0) = ANM_INT_ARG(1) / ANM_INT_ARG(2);
+            break;
+        case 56:
+            ANM_FLOAT_VAR(0) = ANM_FLOAT_ARG(1) / ANM_FLOAT_ARG(2);
+            break;
+        case 57:
+            ANM_INT_VAR(0) = ANM_INT_ARG(1) % ANM_INT_ARG(2);
+            break;
+        case 58:
+            ANM_FLOAT_VAR(0) = fmodf(ANM_FLOAT_ARG(1), ANM_FLOAT_ARG(2));
+            break;
+        case 39:
+            ANM_INT_VAR(0) += ANM_INT_ARG(1);
+            break;
+        case 40:
+            ANM_FLOAT_VAR(0) += ANM_FLOAT_ARG(1);
+            break;
+        case 41:
+            ANM_INT_VAR(0) -= ANM_INT_ARG(1);
+            break;
+        case 42:
+            ANM_FLOAT_VAR(0) -= ANM_FLOAT_ARG(1);
+            break;
+        case 43:
+            ANM_INT_VAR(0) *= ANM_INT_ARG(1);
+            break;
+        case 44:
+            ANM_FLOAT_VAR(0) *= ANM_FLOAT_ARG(1);
+            break;
+        case 45:
+            ANM_INT_VAR(0) /= ANM_INT_ARG(1);
+            break;
+        case 46:
+            ANM_FLOAT_VAR(0) /= ANM_FLOAT_ARG(1);
+            break;
+        case 47:
+            ANM_INT_VAR(0) %= ANM_INT_ARG(1);
+            break;
+        case 48:
+            ANM_FLOAT_VAR(0) = fmodf(ANM_FLOAT_ARG(0), ANM_FLOAT_ARG(1));
+            break;
+        case 59:
+            ANM_INT_VAR(0) = g_Rng.GetRandomU32InRange(ANM_INT_ARG(1));
+            break;
+        case 60:
+            ANM_FLOAT_VAR(0) = g_Rng.GetRandomF32InRange(ANM_FLOAT_ARG(1));
+            break;
+        case 61:
+            ANM_FLOAT_VAR(0) = sinf(ANM_FLOAT_ARG(1));
+            break;
+        case 62:
+            ANM_FLOAT_VAR(0) = cosf(ANM_FLOAT_ARG(1));
+            break;
+        case 63:
+            ANM_FLOAT_VAR(0) = tanf(ANM_FLOAT_ARG(1));
+            break;
+        case 64:
+            ANM_FLOAT_VAR(0) = acosf(ANM_FLOAT_ARG(1));
+            break;
+        case 65:
+            ANM_FLOAT_VAR(0) = atanf(ANM_FLOAT_ARG(1));
+            break;
+        case 66:
+            ANM_FLOAT_VAR(0) = AddNormalizeAngle(ANM_FLOAT_ARG(0), 0.0f);
+            break;
+        case 67:
+            if (ANM_INT_ARG(0) == ANM_INT_ARG(1))
+            {
+                goto jump;
+            }
+            break;
+        case 68:
+            if (ANM_FLOAT_ARG(0) == ANM_FLOAT_ARG(1))
+            {
+                goto jump;
+            }
+            break;
+        case 69:
+            if (ANM_INT_ARG(0) != ANM_INT_ARG(1))
+            {
+                goto jump;
+            }
+            break;
+        case 70:
+            if (ANM_FLOAT_ARG(0) != ANM_FLOAT_ARG(1))
+            {
+                goto jump;
+            }
+            break;
+        case 71:
+            if (ANM_INT_ARG(0) < ANM_INT_ARG(1))
+            {
+                goto jump;
+            }
+            break;
+        case 72:
+            if (ANM_FLOAT_ARG(0) < ANM_FLOAT_ARG(1))
+            {
+                goto jump;
+            }
+            break;
+        case 73:
+            if (ANM_INT_ARG(0) <= ANM_INT_ARG(1))
+            {
+                goto jump;
+            }
+            break;
+        case 74:
+            if (ANM_FLOAT_ARG(0) <= ANM_FLOAT_ARG(1))
+            {
+                goto jump;
+            }
+            break;
+        case 75:
+            if (ANM_INT_ARG(0) > ANM_INT_ARG(1))
+            {
+                goto jump;
+            }
+            break;
+        case 76:
+            if (ANM_FLOAT_ARG(0) > ANM_FLOAT_ARG(1))
+            {
+                goto jump;
+            }
+            break;
+        case 77:
+            if (ANM_INT_ARG(0) >= ANM_INT_ARG(1))
+            {
+                goto jump;
+            }
+            break;
+        case 78:
+            if (ANM_FLOAT_ARG(0) >= ANM_FLOAT_ARG(1))
+            {
+                goto jump;
+            }
+            break;
+        jump:
+            vm->unk_30.Set(curInstr->args[3].i);
+            vm->scriptPos = (AnmInstr *)((BYTE *)vm->scriptStart + curInstr->args[2].i);
+            continue;
+        }
+        vm->scriptPos = (AnmInstr *)((BYTE *)curInstr + curInstr->size);
+    }
+
+done:
+    if (vm->unk_c != 0.0f)
+    {
+        vm->rotationX = AddNormalizeAngle(vm->rotationX, g_App.unk_178 * vm->unk_c);
+        vm->flags |= 4;
+    }
+    if (vm->unk_10 != 0.0f)
+    {
+        vm->rotationY = AddNormalizeAngle(vm->rotationY, g_App.unk_178 * vm->unk_10);
+        vm->flags |= 4;
+    }
+    if (vm->unk_14 != 0.0f)
+    {
+        vm->rotationZ = AddNormalizeAngle(vm->rotationZ, g_App.unk_178 * vm->unk_14);
+        vm->flags |= 4;
+    }
+    for (k = 0; k < 5; k++)
+    {
+        if (vm->unk_84[k] > 0)
+        {
+            vm->unk_48[k].Tick();
+            if (vm->unk_48[k] >= vm->unk_84[k].AsFrames())
+            {
+                t = 1.0f;
+                vm->unk_84[k].Set(0);
+            }
+            else
+            {
+                t = vm->unk_48[k].AsFloat() / vm->unk_84[k].AsFloat();
+            }
+            switch ((&vm->unk_c0)[k])
+            {
+            case 1:
+                t = t * t;
+                break;
+            case 2:
+                t = t * t * t;
+                break;
+            case 3:
+                t = (t = t * t) * t;
+                break;
+            case 4:
+                t = (t = 1.0f - t) * t;
+                t = 1.0f - t;
+                break;
+            case 5:
+                t = (t = 1.0f - t) * t * t;
+                t = 1.0f - t;
+                break;
+            case 6:
+                t = (t = (t = 1.0f - t) * t) * t;
+                t = 1.0f - t;
+                break;
+            }
+            switch (k)
+            {
+            case 0:
+                if (!vm->usePosOffset)
+                {
+                    vm->pos.x = (vm->unk_1f4.x - vm->unk_1e8.x) * t + vm->unk_1e8.x;
+                    vm->pos.y = (vm->unk_1f4.y - vm->unk_1e8.y) * t + vm->unk_1e8.y;
+                    vm->pos.z = (vm->unk_1f4.z - vm->unk_1e8.z) * t + vm->unk_1e8.z;
+                }
+                else
+                {
+                    vm->posOffset.x = (vm->unk_1f4.x - vm->unk_1e8.x) * t + vm->unk_1e8.x;
+                    vm->posOffset.y = (vm->unk_1f4.y - vm->unk_1e8.y) * t + vm->unk_1e8.y;
+                    vm->posOffset.z = (vm->unk_1f4.z - vm->unk_1e8.z) * t + vm->unk_1e8.z;
+                }
+                break;
+            case 1:
+                vm->unk_rgb[2] = (((BYTE *)&vm->unk_224.z)[2] - ((BYTE *)&vm->unk_224.y)[2]) * t +
+                                 ((BYTE *)&vm->unk_224.y)[2];
+                vm->unk_rgb[1] = (((BYTE *)&vm->unk_224.z)[1] - ((BYTE *)&vm->unk_224.y)[1]) * t +
+                                 ((BYTE *)&vm->unk_224.y)[1];
+                vm->unk_rgb[0] = (((BYTE *)&vm->unk_224.z)[0] - ((BYTE *)&vm->unk_224.y)[0]) * t +
+                                 ((BYTE *)&vm->unk_224.y)[0];
+                break;
+            case 2:
+                vm->alpha = (((BYTE *)&vm->unk_224.z)[3] - ((BYTE *)&vm->unk_224.y)[3]) * t +
+                            ((BYTE *)&vm->unk_224.y)[3];
+                break;
+            case 3:
+                vm->rotationX = AddNormalizeAngle((vm->unk_20c.x - vm->unk_200.x) * t, vm->unk_200.x);
+                vm->rotationY = AddNormalizeAngle((vm->unk_20c.y - vm->unk_200.y) * t, vm->unk_200.y);
+                vm->rotationZ = AddNormalizeAngle((vm->unk_20c.z - vm->unk_200.z) * t, vm->unk_200.z);
+                vm->flags |= 4;
+                break;
+            case 4:
+                vm->scaleY = (vm->unk_218.z - vm->unk_218.x) * t + vm->unk_218.x;
+                vm->scaleX = (vm->unk_224.x - vm->unk_218.y) * t + vm->unk_218.y;
+                vm->flags |= 8;
+                break;
+            }
+        }
+    }
+    if (vm->unk_24 != 0.0f)
+    {
+        vm->scaleX += g_App.unk_178 * vm->unk_24;
+        vm->flags |= 8;
+    }
+    if (vm->unk_20 != 0.0f)
+    {
+        vm->scaleY += g_App.unk_178 * vm->unk_20;
+        vm->flags |= 8;
+        vm->flags |= 4;
+    }
+    vm->uvScrollX = vm->uvScrollX + vm->unk_f0;
+    if (vm->uvScrollX >= 1.0f)
+    {
+        vm->uvScrollX -= 1.0f;
+    }
+    else if (vm->uvScrollX < 0.0f)
+    {
+        vm->uvScrollX += 1.0f;
+    }
+    vm->uvScrollY = vm->uvScrollY + vm->unk_f4;
+    if (vm->uvScrollY >= 1.0f)
+    {
+        vm->uvScrollY -= 1.0f;
+    }
+    else if (vm->uvScrollY < 0.0f)
+    {
+        vm->uvScrollY += 1.0f;
+    }
+    vm->unk_30.Tick();
+    this->unk_c++;
+    return 0;
+}
+
+#undef ANM_INT_ARG
+#undef ANM_FLOAT_ARG
+#undef ANM_INT_VAR
+#undef ANM_FLOAT_VAR
 
 void SpriteEngine::RenderTextToTextureIndex(int textureIndex, int x, int y, int width, int unk4, int fontHeight,
                                             int unk6, D3DCOLOR textColor, D3DCOLOR shadowColor, char *text,

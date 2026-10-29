@@ -39,8 +39,26 @@ struct SpriteData
 };
 ASSERT_SIZE(SpriteData, 0x40);
 
+// An argument of an ANM instruction.
+union AnmArg
+{
+    int i;
+    float f;
+    BYTE b[4];
+};
+
 // An instruction of an ANM script.
-struct AnmInstr;
+struct AnmInstr
+{
+    short opcode;
+    // The size of the instruction, arguments included.
+    WORD size;
+    // The frame of the script it runs on.
+    short time;
+    // Bit n: argument n names a script variable (10000 to 10009).
+    WORD paramMask;
+    AnmArg args[1];
+};
 
 // The part of Sprite up to pos. Its implicit constructor (0x4011b0)
 // constructs the Timers; Sprite's calls it rather than expanding it.
@@ -50,13 +68,17 @@ struct SpriteBase
     float rotationX;
     float rotationY;
     float rotationZ;
-    unsigned char unk_c[0x8];
+    // The rotation speeds about x, y and z, which Step adds each frame.
+    float unk_c;
+    float unk_10;
     // Player's StartBombState negates it on its effect.
     float unk_14;
     // SpriteEngine::Draw scales the sprite's height and width by these.
     float scaleY;
     float scaleX;
-    unsigned char unk_20[0x8];
+    // The scale speeds, which Step adds to scaleY and scaleX each frame.
+    float unk_20;
+    float unk_24;
     // Added to the sprite's texture coordinates, as in th06.
     float uvScrollX;
     float uvScrollY;
@@ -64,10 +86,13 @@ struct SpriteBase
     Timer unk_3c;
     Timer unk_48[5];
     Timer unk_84[5];
-    unsigned char unk_c0[0x2];
+    // How Step eases each of the five interpolations (position, color,
+    // alpha, rotation, scale) that unk_48 and unk_84 time.
+    BYTE unk_c0;
+    BYTE unk_c1;
     // Player's StopBombState sets it on its effect.
     BYTE unk_c2;
-    unsigned char unk_c3[0x1];
+    BYTE unk_c3;
     // Player's StartBombState sets these on its effect.
     BYTE unk_c4;
     unsigned char unk_c5[0x3];
@@ -84,7 +109,9 @@ struct SpriteBase
     float unk_e4;
     int unk_e8;
     int unk_ec;
-    unsigned char unk_f0[0x8];
+    // The texture scroll speeds, added to uvScrollX and uvScrollY.
+    float unk_f0;
+    float unk_f4;
     D3DXMATRIX matrix;
     // A copy of matrix, made by SetSprite.
     D3DXMATRIX unk_138;
@@ -112,6 +139,21 @@ struct SpriteBase
             // Bits 0 and 1, for bitfield stores.
             DWORD shown : 1;
             DWORD visible : 1;
+            DWORD unk_2 : 1;
+            DWORD unk_3 : 1;
+            DWORD blendMode : 1;
+            DWORD unk_5 : 1;
+            DWORD unk_6 : 1;
+            // Step's position instructions move posOffset instead of
+            // pos.
+            DWORD usePosOffset : 1;
+            DWORD flip : 2;
+            DWORD anchor : 2;
+            DWORD zWriteDisabled : 1;
+            // Set while the script waits for an interrupt.
+            DWORD stopped : 1;
+            // Bit 14, which Step's instruction 31 sets.
+            DWORD unk_14b : 1;
         };
     };
     // Whether the bullets' draw functions turn it along their angle, as
@@ -196,7 +238,8 @@ public:
     D3DXVECTOR3 unk_224;
     // Added to pos when it is drawn.
     D3DXVECTOR3 posOffset;
-    unsigned char unk_23c[0x4];
+    // The script frame of the last sprite change, as th06's spriteTime.
+    int unk_23c;
     // The size of the characters RenderText draws.
     BYTE fontWidth;
     BYTE fontHeight;
@@ -351,7 +394,11 @@ public:
     // Copies the `width` by `height` rectangle at (`left`, `top`) of
     // surface `surface` to the back buffer at (`x`, `y`), as in th06.
     void CopySurfaceRectToBackBuffer(int surface, int x, int y, int left, int top, int width, int height);
-    // Runs `vm`'s script for one frame.
+    // Runs `vm`'s script for one frame, as th06's: the instructions due
+    // (th07's set, with script variables, arithmetic, conditional jumps
+    // and five eased interpolations timed by unk_48 and unk_84), then the
+    // rotation, scale and texture scroll speeds, and counts the call in
+    // unk_c. Returns 1 once the script has ended, else 0.
     int Step(Sprite *vm);
     // Steps the `count` sprites from `vms` that run a script. Not in
     // th06.
