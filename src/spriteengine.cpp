@@ -537,16 +537,16 @@ int SpriteEngine::SetSprite(Sprite *vm, int sprite)
     vm->spriteIndex = sprite;
     vm->spriteData = &this->sprites[sprite];
     D3DXMatrixIdentity(&vm->matrix);
-    D3DXMatrixIdentity(&vm->unk_178);
+    D3DXMatrixIdentity(&vm->sizeMatrix);
     if (vm->spriteData->scaleX < 1.0f)
     {
         sprite = 0;
     }
     vm->matrix.m[0][0] = vm->spriteData->width / 256.0f;
     vm->matrix.m[1][1] = vm->spriteData->height / 256.0f;
-    vm->unk_178.m[0][0] = vm->spriteData->width / vm->spriteData->textureWidth * vm->spriteData->scaleX;
-    vm->unk_178.m[1][1] = vm->spriteData->height / vm->spriteData->textureHeight * vm->spriteData->scaleY;
-    vm->unk_138 = vm->matrix;
+    vm->sizeMatrix.m[0][0] = vm->spriteData->width / vm->spriteData->textureWidth * vm->spriteData->scaleX;
+    vm->sizeMatrix.m[1][1] = vm->spriteData->height / vm->spriteData->textureHeight * vm->spriteData->scaleY;
+    vm->drawMatrix = vm->matrix;
     return 0;
 }
 
@@ -1064,28 +1064,28 @@ void SpriteEngine::ProjectSprite3D(Sprite *vm)
 
     if ((vm->flags >> 15 & 1) == 0 && ((vm->flags >> 3 & 1) != 0 || (vm->flags >> 2 & 1) != 0))
     {
-        vm->unk_138 = vm->matrix;
-        vm->unk_138._11 *= vm->scaleY;
-        vm->unk_138._22 *= vm->scaleX;
+        vm->drawMatrix = vm->matrix;
+        vm->drawMatrix._11 *= vm->scaleY;
+        vm->drawMatrix._22 *= vm->scaleX;
         vm->flags &= ~8;
         if (vm->rotationX != 0.0)
         {
             D3DXMatrixRotationX(&rotationMatrix, vm->rotationX);
-            D3DXMatrixMultiply(&vm->unk_138, &vm->unk_138, &rotationMatrix);
+            D3DXMatrixMultiply(&vm->drawMatrix, &vm->drawMatrix, &rotationMatrix);
         }
         if (vm->rotationY != 0.0)
         {
             D3DXMatrixRotationY(&rotationMatrix, vm->rotationY);
-            D3DXMatrixMultiply(&vm->unk_138, &vm->unk_138, &rotationMatrix);
+            D3DXMatrixMultiply(&vm->drawMatrix, &vm->drawMatrix, &rotationMatrix);
         }
         if (vm->rotationZ != 0.0)
         {
             D3DXMatrixRotationZ(&rotationMatrix, vm->rotationZ);
-            D3DXMatrixMultiply(&vm->unk_138, &vm->unk_138, &rotationMatrix);
+            D3DXMatrixMultiply(&vm->drawMatrix, &vm->drawMatrix, &rotationMatrix);
         }
         vm->flags &= ~4;
     }
-    worldMatrix = vm->unk_138;
+    worldMatrix = vm->drawMatrix;
     if (((vm->flags >> 10 & 3) & 1) == 0)
     {
         worldMatrix._41 = vm->pos.x;
@@ -1156,28 +1156,28 @@ int SpriteEngine::Draw3D(Sprite *vm)
     }
     if ((vm->flags >> 15 & 1) == 0 && ((vm->flags >> 3 & 1) != 0 || (vm->flags >> 2 & 1) != 0))
     {
-        vm->unk_138 = vm->matrix;
-        vm->unk_138._11 *= vm->scaleY;
-        vm->unk_138._22 *= vm->scaleX;
+        vm->drawMatrix = vm->matrix;
+        vm->drawMatrix._11 *= vm->scaleY;
+        vm->drawMatrix._22 *= vm->scaleX;
         vm->flags &= ~8;
         if (vm->rotationX != 0.0)
         {
             D3DXMatrixRotationX(&rotationMatrix, vm->rotationX);
-            D3DXMatrixMultiply(&vm->unk_138, &vm->unk_138, &rotationMatrix);
+            D3DXMatrixMultiply(&vm->drawMatrix, &vm->drawMatrix, &rotationMatrix);
         }
         if (vm->rotationY != 0.0)
         {
             D3DXMatrixRotationY(&rotationMatrix, vm->rotationY);
-            D3DXMatrixMultiply(&vm->unk_138, &vm->unk_138, &rotationMatrix);
+            D3DXMatrixMultiply(&vm->drawMatrix, &vm->drawMatrix, &rotationMatrix);
         }
         if (vm->rotationZ != 0.0)
         {
             D3DXMatrixRotationZ(&rotationMatrix, vm->rotationZ);
-            D3DXMatrixMultiply(&vm->unk_138, &vm->unk_138, &rotationMatrix);
+            D3DXMatrixMultiply(&vm->drawMatrix, &vm->drawMatrix, &rotationMatrix);
         }
         vm->flags &= ~4;
     }
-    worldMatrix = vm->unk_138;
+    worldMatrix = vm->drawMatrix;
     if (((vm->flags >> 10 & 3) & 1) == 0)
     {
         worldMatrix._41 = vm->pos.x;
@@ -1202,7 +1202,7 @@ int SpriteEngine::Draw3D(Sprite *vm)
     if (this->currentSpriteData != vm->spriteData)
     {
         this->currentSpriteData = vm->spriteData;
-        textureMatrix = vm->unk_178;
+        textureMatrix = vm->sizeMatrix;
         textureMatrix._31 = vm->spriteData->uvStartX + vm->uvScrollX;
         textureMatrix._32 = vm->spriteData->uvStartY + vm->uvScrollY;
         g_App.d3dDevice->SetTransform(D3DTS_TEXTURE0, &textureMatrix);
@@ -1243,25 +1243,25 @@ float Sprite::ResolveFloatArgument(float value)
     switch ((int)value)
     {
     case 10000:
-        return this->unk_c8;
+        return this->scriptVar0;
     case 10001:
-        return this->unk_cc;
+        return this->scriptVar1;
     case 10002:
-        return this->unk_d0;
+        return this->scriptVar2;
     case 10003:
-        return this->unk_d4;
+        return this->scriptVar3;
     case 10004:
-        return this->unk_d8;
+        return this->scriptVarF0;
     case 10005:
-        return this->unk_dc;
+        return this->scriptVarF1;
     case 10006:
-        return this->unk_e0;
+        return this->scriptVarF2;
     case 10007:
-        return this->unk_e4;
+        return this->scriptVarF3;
     case 10008:
-        return this->unk_e8;
+        return this->scriptVar8;
     case 10009:
-        return this->unk_ec;
+        return this->scriptVar9;
     }
     return value;
 }
@@ -1271,25 +1271,25 @@ int Sprite::ResolveIntArgument(int value)
     switch (value)
     {
     case 10000:
-        return this->unk_c8;
+        return this->scriptVar0;
     case 10001:
-        return this->unk_cc;
+        return this->scriptVar1;
     case 10002:
-        return this->unk_d0;
+        return this->scriptVar2;
     case 10003:
-        return this->unk_d4;
+        return this->scriptVar3;
     case 10004:
-        return this->unk_d8;
+        return this->scriptVarF0;
     case 10005:
-        return this->unk_dc;
+        return this->scriptVarF1;
     case 10006:
-        return this->unk_e0;
+        return this->scriptVarF2;
     case 10007:
-        return this->unk_e4;
+        return this->scriptVarF3;
     case 10008:
-        return this->unk_e8;
+        return this->scriptVar8;
     case 10009:
-        return this->unk_ec;
+        return this->scriptVar9;
     }
     return value;
 }
@@ -1303,13 +1303,13 @@ float *Sprite::ResolveFloatArgumentPtr(float *value, WORD mask, int bit)
     switch ((int)*value)
     {
     case 10004:
-        return &this->unk_d8;
+        return &this->scriptVarF0;
     case 10005:
-        return &this->unk_dc;
+        return &this->scriptVarF1;
     case 10006:
-        return &this->unk_e0;
+        return &this->scriptVarF2;
     case 10007:
-        return &this->unk_e4;
+        return &this->scriptVarF3;
     }
     return value;
 }
@@ -1323,17 +1323,17 @@ int *Sprite::ResolveIntArgumentPtr(int *value, WORD mask, int bit)
     switch (*value)
     {
     case 10000:
-        return &this->unk_c8;
+        return &this->scriptVar0;
     case 10001:
-        return &this->unk_cc;
+        return &this->scriptVar1;
     case 10002:
-        return &this->unk_d0;
+        return &this->scriptVar2;
     case 10003:
-        return &this->unk_d4;
+        return &this->scriptVar3;
     case 10008:
-        return &this->unk_e8;
+        return &this->scriptVar8;
     case 10009:
-        return &this->unk_ec;
+        return &this->scriptVar9;
     }
     return value;
 }
@@ -1419,18 +1419,18 @@ int SpriteEngine::Step(Sprite *vm)
             vm->flags |= 4;
             break;
         case 13:
-            vm->unk_c = ANM_FLOAT_ARG(0);
-            vm->unk_10 = ANM_FLOAT_ARG(1);
-            vm->unk_14 = ANM_FLOAT_ARG(2);
+            vm->rotationSpeedX = ANM_FLOAT_ARG(0);
+            vm->rotationSpeedY = ANM_FLOAT_ARG(1);
+            vm->rotationSpeedZ = ANM_FLOAT_ARG(2);
             vm->flags |= 4;
             break;
         case 14:
-            vm->unk_20 = ANM_FLOAT_ARG(0);
-            vm->unk_24 = ANM_FLOAT_ARG(1);
+            vm->scaleSpeedY = ANM_FLOAT_ARG(0);
+            vm->scaleSpeedX = ANM_FLOAT_ARG(1);
             break;
         case 29:
-            vm->unk_48[4].Set(0);
-            vm->unk_84[4].Set(ANM_INT_ARG(2));
+            vm->interpDuration[4].Set(0);
+            vm->interpFrame[4].Set(ANM_INT_ARG(2));
             vm->unk_c4 = 0;
             *(D3DXVECTOR2 *)&vm->scaleTween = *(D3DXVECTOR2 *)&vm->scaleY;
             vm->scaleTween.z = ANM_FLOAT_ARG(0);
@@ -1439,8 +1439,8 @@ int SpriteEngine::Step(Sprite *vm)
         case 15:
             ((BYTE *)&vm->colorTween.y)[3] = vm->alpha;
             ((BYTE *)&vm->colorTween.z)[3] = curInstr->args[0].i;
-            vm->unk_48[2].Set(0);
-            vm->unk_84[2].Set(ANM_INT_ARG(1));
+            vm->interpDuration[2].Set(0);
+            vm->interpFrame[2].Set(ANM_INT_ARG(1));
             vm->unk_c2 = 0;
             break;
         case 16:
@@ -1457,13 +1457,13 @@ int SpriteEngine::Step(Sprite *vm)
             }
             break;
         case 19:
-            vm->unk_c0 = 6;
+            vm->interpEasing = 6;
             goto posInterp;
         case 18:
-            vm->unk_c0 = 4;
+            vm->interpEasing = 4;
             goto posInterp;
         case 17:
-            vm->unk_c0 = 0;
+            vm->interpEasing = 0;
         posInterp:
             if (!vm->usePosOffset)
             {
@@ -1474,8 +1474,8 @@ int SpriteEngine::Step(Sprite *vm)
                 vm->moveStart = vm->posOffset;
             }
             vm->moveEnd = D3DXVECTOR3(ANM_FLOAT_ARG(0), ANM_FLOAT_ARG(1), ANM_FLOAT_ARG(2));
-            vm->unk_84[0].Set(ANM_INT_ARG(3));
-            vm->unk_48[0].Set(0);
+            vm->interpFrame[0].Set(ANM_INT_ARG(3));
+            vm->interpDuration[0].Set(0);
             break;
         case 79:
             if (vm->unk_3c == 0)
@@ -1562,10 +1562,10 @@ int SpriteEngine::Step(Sprite *vm)
             }
             break;
         case 80:
-            vm->unk_f0 = ANM_FLOAT_ARG(0);
+            vm->uvScrollSpeedX = ANM_FLOAT_ARG(0);
             break;
         case 81:
-            vm->unk_f4 = ANM_FLOAT_ARG(0);
+            vm->uvScrollSpeedY = ANM_FLOAT_ARG(0);
             break;
         case 30:
             vm->zWriteDisabled = curInstr->args[0].i;
@@ -1574,9 +1574,9 @@ int SpriteEngine::Step(Sprite *vm)
             vm->unk_14b = curInstr->args[0].i;
             break;
         case 32:
-            vm->unk_48[0].Set(0);
-            vm->unk_84[0].Set(ANM_INT_ARG(0));
-            vm->unk_c0 = curInstr->args[1].i;
+            vm->interpDuration[0].Set(0);
+            vm->interpFrame[0].Set(ANM_INT_ARG(0));
+            vm->interpEasing = curInstr->args[1].i;
             if (!vm->usePosOffset)
             {
                 vm->moveStart = vm->pos;
@@ -1590,8 +1590,8 @@ int SpriteEngine::Step(Sprite *vm)
             vm->moveEnd.z = ANM_FLOAT_ARG(4);
             break;
         case 33:
-            vm->unk_48[1].Set(0);
-            vm->unk_84[1].Set(ANM_INT_ARG(0));
+            vm->interpDuration[1].Set(0);
+            vm->interpFrame[1].Set(ANM_INT_ARG(0));
             vm->unk_c1 = curInstr->args[1].i;
             ((BYTE *)&vm->colorTween.y)[2] = vm->unk_rgb[2];
             ((BYTE *)&vm->colorTween.y)[1] = vm->unk_rgb[1];
@@ -1601,15 +1601,15 @@ int SpriteEngine::Step(Sprite *vm)
             ((BYTE *)&vm->colorTween.z)[0] = curInstr->args[2].b[2];
             break;
         case 34:
-            vm->unk_48[2].Set(0);
-            vm->unk_84[2].Set(ANM_INT_ARG(0));
+            vm->interpDuration[2].Set(0);
+            vm->interpFrame[2].Set(ANM_INT_ARG(0));
             vm->unk_c2 = curInstr->args[1].i;
             ((BYTE *)&vm->colorTween.y)[3] = vm->alpha;
             ((BYTE *)&vm->colorTween.z)[3] = curInstr->args[2].i;
             break;
         case 35:
-            vm->unk_48[3].Set(0);
-            vm->unk_84[3].Set(ANM_INT_ARG(0));
+            vm->interpDuration[3].Set(0);
+            vm->interpFrame[3].Set(ANM_INT_ARG(0));
             vm->unk_c3 = curInstr->args[1].i;
             vm->rotateStart = *(D3DXVECTOR3 *)&vm->rotationX;
             vm->rotateEnd.x = ANM_FLOAT_ARG(2);
@@ -1618,8 +1618,8 @@ int SpriteEngine::Step(Sprite *vm)
             vm->flags |= 4;
             break;
         case 36:
-            vm->unk_48[4].Set(0);
-            vm->unk_84[4].Set(ANM_INT_ARG(0));
+            vm->interpDuration[4].Set(0);
+            vm->interpFrame[4].Set(ANM_INT_ARG(0));
             vm->unk_c4 = curInstr->args[1].i;
             *(D3DXVECTOR2 *)&vm->scaleTween = *(D3DXVECTOR2 *)&vm->scaleY;
             vm->scaleTween.z = ANM_FLOAT_ARG(2);
@@ -1797,36 +1797,36 @@ int SpriteEngine::Step(Sprite *vm)
     }
 
 done:
-    if (vm->unk_c != 0.0f)
+    if (vm->rotationSpeedX != 0.0f)
     {
-        vm->rotationX = AddNormalizeAngle(vm->rotationX, g_App.gameSpeed * vm->unk_c);
+        vm->rotationX = AddNormalizeAngle(vm->rotationX, g_App.gameSpeed * vm->rotationSpeedX);
         vm->flags |= 4;
     }
-    if (vm->unk_10 != 0.0f)
+    if (vm->rotationSpeedY != 0.0f)
     {
-        vm->rotationY = AddNormalizeAngle(vm->rotationY, g_App.gameSpeed * vm->unk_10);
+        vm->rotationY = AddNormalizeAngle(vm->rotationY, g_App.gameSpeed * vm->rotationSpeedY);
         vm->flags |= 4;
     }
-    if (vm->unk_14 != 0.0f)
+    if (vm->rotationSpeedZ != 0.0f)
     {
-        vm->rotationZ = AddNormalizeAngle(vm->rotationZ, g_App.gameSpeed * vm->unk_14);
+        vm->rotationZ = AddNormalizeAngle(vm->rotationZ, g_App.gameSpeed * vm->rotationSpeedZ);
         vm->flags |= 4;
     }
     for (k = 0; k < 5; k++)
     {
-        if (vm->unk_84[k] > 0)
+        if (vm->interpFrame[k] > 0)
         {
-            vm->unk_48[k].Tick();
-            if (vm->unk_48[k] >= vm->unk_84[k].AsFrames())
+            vm->interpDuration[k].Tick();
+            if (vm->interpDuration[k] >= vm->interpFrame[k].AsFrames())
             {
                 t = 1.0f;
-                vm->unk_84[k].Set(0);
+                vm->interpFrame[k].Set(0);
             }
             else
             {
-                t = vm->unk_48[k].AsFloat() / vm->unk_84[k].AsFloat();
+                t = vm->interpDuration[k].AsFloat() / vm->interpFrame[k].AsFloat();
             }
-            switch ((&vm->unk_c0)[k])
+            switch ((&vm->interpEasing)[k])
             {
             case 1:
                 t = t * t;
@@ -1892,18 +1892,18 @@ done:
             }
         }
     }
-    if (vm->unk_24 != 0.0f)
+    if (vm->scaleSpeedX != 0.0f)
     {
-        vm->scaleX += g_App.gameSpeed * vm->unk_24;
+        vm->scaleX += g_App.gameSpeed * vm->scaleSpeedX;
         vm->flags |= 8;
     }
-    if (vm->unk_20 != 0.0f)
+    if (vm->scaleSpeedY != 0.0f)
     {
-        vm->scaleY += g_App.gameSpeed * vm->unk_20;
+        vm->scaleY += g_App.gameSpeed * vm->scaleSpeedY;
         vm->flags |= 8;
         vm->flags |= 4;
     }
-    vm->uvScrollX = vm->uvScrollX + vm->unk_f0;
+    vm->uvScrollX = vm->uvScrollX + vm->uvScrollSpeedX;
     if (vm->uvScrollX >= 1.0f)
     {
         vm->uvScrollX -= 1.0f;
@@ -1912,7 +1912,7 @@ done:
     {
         vm->uvScrollX += 1.0f;
     }
-    vm->uvScrollY = vm->uvScrollY + vm->unk_f4;
+    vm->uvScrollY = vm->uvScrollY + vm->uvScrollSpeedY;
     if (vm->uvScrollY >= 1.0f)
     {
         vm->uvScrollY -= 1.0f;

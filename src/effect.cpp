@@ -326,7 +326,7 @@ int EffectInitPetal31(Effect *effect)
     effect->sprite.rotationZ = g_Rng.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
     effect->sprite.rotationX = g_Rng.GetRandomF32ZeroToOne() * 0.06283186f - 0.031415928f;
     g_SpriteEngine->SetSprite(&effect->sprite, 0x2d8);
-    effect->sprite.unk_14 *= 2.0f;
+    effect->sprite.rotationSpeedZ *= 2.0f;
     effect->sprite.unk_rgb[2] = 0xff;
     effect->sprite.unk_rgb[1] = 0xff;
     effect->sprite.unk_rgb[0] = 0xff;

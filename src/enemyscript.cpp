@@ -627,8 +627,8 @@ void StartSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
     enemy->rankCount2Low = 0;
     enemy->rankCount2High = 0;
     enemy->effects[24] = g_EffectManager.SpawnReservedEffect(0x19, &enemy->pos, 1, 1, 0xffffffff);
-    enemy->effects[24]->sprite.unk_48[4].Set(0);
-    enemy->effects[24]->sprite.unk_84[4].Set(enemy->timerCallbackTime);
+    enemy->effects[24]->sprite.interpDuration[4].Set(0);
+    enemy->effects[24]->sprite.interpFrame[4].Set(enemy->timerCallbackTime);
     enemy->effects[24]->sprite.unk_c4 = 0;
     *(D3DXVECTOR2 *)&enemy->effects[24]->sprite.scaleTween = *(D3DXVECTOR2 *)&enemy->effects[24]->sprite.scaleY;
     enemy->effects[24]->sprite.scaleTween.z = 0.125f;

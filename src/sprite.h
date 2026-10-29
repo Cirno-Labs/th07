@@ -69,26 +69,26 @@ struct SpriteBase
     float rotationY;
     float rotationZ;
     // The rotation speeds about x, y and z, which Step adds each frame.
-    float unk_c;
-    float unk_10;
+    float rotationSpeedX;
+    float rotationSpeedY;
     // Player's StartBombState negates it on its effect.
-    float unk_14;
+    float rotationSpeedZ;
     // SpriteEngine::Draw scales the sprite's height and width by these.
     float scaleY;
     float scaleX;
     // The scale speeds, which Step adds to scaleY and scaleX each frame.
-    float unk_20;
-    float unk_24;
+    float scaleSpeedY;
+    float scaleSpeedX;
     // Added to the sprite's texture coordinates, as in th06.
     float uvScrollX;
     float uvScrollY;
     Timer unk_30;
     Timer unk_3c;
-    Timer unk_48[5];
-    Timer unk_84[5];
+    Timer interpDuration[5];
+    Timer interpFrame[5];
     // How Step eases each of the five interpolations (position, color,
     // alpha, rotation, scale) that unk_48 and unk_84 time.
-    BYTE unk_c0;
+    BYTE interpEasing;
     BYTE unk_c1;
     // Player's StopBombState sets it on its effect.
     BYTE unk_c2;
@@ -99,25 +99,25 @@ struct SpriteBase
     // The script's variables: an argument of 10000 to 10009 stands for
     // one of them. 10000-10003 and 10008-10009 are ints, 10004-10007
     // floats.
-    int unk_c8;
-    int unk_cc;
-    int unk_d0;
-    int unk_d4;
-    float unk_d8;
-    float unk_dc;
-    float unk_e0;
-    float unk_e4;
-    int unk_e8;
-    int unk_ec;
+    int scriptVar0;
+    int scriptVar1;
+    int scriptVar2;
+    int scriptVar3;
+    float scriptVarF0;
+    float scriptVarF1;
+    float scriptVarF2;
+    float scriptVarF3;
+    int scriptVar8;
+    int scriptVar9;
     // The texture scroll speeds, added to uvScrollX and uvScrollY.
-    float unk_f0;
-    float unk_f4;
+    float uvScrollSpeedX;
+    float uvScrollSpeedY;
     D3DXMATRIX matrix;
     // A copy of matrix, made by SetSprite.
-    D3DXMATRIX unk_138;
+    D3DXMATRIX drawMatrix;
     // The sprite's size relative to its texture, scaled by the sprite
     // data's scale, set by SetSprite.
-    D3DXMATRIX unk_178;
+    D3DXMATRIX sizeMatrix;
     union
     {
         D3DCOLOR color;

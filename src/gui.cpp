@@ -386,7 +386,7 @@ int Gui::LoadResources()
             for (x = 0; x < 0xc; x++)
             {
                 g_SpriteEngine->StartScript(&this->impl->backgroundTiles[y * 0xc + x], ((y + x) & 1) + 0x726);
-                this->impl->backgroundTiles[y * 0xc + x].unk_e8 = y + x * 2;
+                this->impl->backgroundTiles[y * 0xc + x].scriptVar8 = y + x * 2;
                 this->impl->backgroundTiles[y * 0xc + x].pos.x = x * 32.0f - 0.5f + 16.0f;
                 this->impl->backgroundTiles[y * 0xc + x].pos.y = y * 32.0f - 0.5f + 16.0f;
                 this->impl->backgroundTiles[y * 0xc + x].pos.z = 0.0f;

@@ -47,14 +47,14 @@ void SpawnBombAura(Player *player)
         player->invulnerabilityEffect->active = 0;
     }
     effect = g_EffectManager.SpawnReservedEffect(0x19, &player->position, 0, 1, 0xffffffff);
-    effect->sprite.unk_48[4].Set(0);
-    effect->sprite.unk_84[4] = player->stateTimer;
+    effect->sprite.interpDuration[4].Set(0);
+    effect->sprite.interpFrame[4] = player->stateTimer;
     effect->sprite.unk_c4 = 0;
     *(D3DXVECTOR2 *)&effect->sprite.scaleTween = *(D3DXVECTOR2 *)&effect->sprite.scaleY;
     effect->sprite.scaleTween.z = 0.0625f;
     effect->sprite.colorTween.x = 0.0625f;
-    effect->sprite.unk_c8 = player->stateTimer.AsFrames();
-    effect->sprite.unk_14 *= -1.0f;
+    effect->sprite.scriptVar0 = player->stateTimer.AsFrames();
+    effect->sprite.rotationSpeedZ *= -1.0f;
     effect->sprite.unk_rgb[2] = 0xff;
     effect->sprite.unk_rgb[1] = 0x40;
     effect->sprite.unk_rgb[0] = 0x40;
