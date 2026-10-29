@@ -273,7 +273,7 @@ public:
     // Draws `vm` at its position.
     int Draw(Sprite *vm);
     // Draws `vm` when it is not rotated. Not in th06 as such.
-    int Func44f770(Sprite *vm);
+    int DrawUnrotated(Sprite *vm);
     // Copies surface `surface` to the back buffer at (`left`, `top`),
     // as in th06.
     void CopySurfaceToBackBuffer(int surface, int left, int top, int x, int y);

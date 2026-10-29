@@ -1879,7 +1879,7 @@ int ResultScreen::OnDraw(ResultScreen *screen)
     {
         pos3 = sprite->pos;
         sprite->pos += sprite->posOffset;
-        g_SpriteEngine->Func44f770(sprite);
+        g_SpriteEngine->DrawUnrotated(sprite);
         sprite->pos = pos3;
     }
     sprite = &screen->sprites[0x10];
@@ -1890,7 +1890,7 @@ int ResultScreen::OnDraw(ResultScreen *screen)
             pos3 = sprite->pos;
             screen->textSprites[0].pos = pos3;
             screen->textSprites[0].pos.x += 64.0f;
-            g_SpriteEngine->Func44f770(&screen->textSprites[0]);
+            g_SpriteEngine->DrawUnrotated(&screen->textSprites[0]);
             pos3[1] += 18.0f;
             pos3[0] += 24.0f;
             g_AsciiText.color = 0xffe0e0ef;
@@ -1950,7 +1950,7 @@ int ResultScreen::OnDraw(ResultScreen *screen)
         {
             pos3 = sprite->pos;
             screen->textSprites[10].pos = pos3;
-            g_SpriteEngine->Func44f770(&screen->textSprites[10]);
+            g_SpriteEngine->DrawUnrotated(&screen->textSprites[10]);
             pos3[1] += 16.0f;
             for (i = 0; i < 10; i++)
             {
@@ -1964,7 +1964,7 @@ int ResultScreen::OnDraw(ResultScreen *screen)
                 pos3[1] += 16.0f;
                 screen->unk_835c.pos = pos3;
                 screen->unk_835c.scaleY = 2.375f;
-                g_SpriteEngine->Func44f770(&screen->unk_835c);
+                g_SpriteEngine->DrawUnrotated(&screen->unk_835c);
                 pos3[1] -= 16.0f;
                 pos3.x = x0;
                 screen->textSprites[i].pos = pos3;
@@ -1982,7 +1982,7 @@ int ResultScreen::OnDraw(ResultScreen *screen)
                 }
                 g_AsciiText.AddFormat(&pos3, "No.%.2d", card + 1);
                 screen->textSprites[i].pos[0] += 96.0f;
-                g_SpriteEngine->Func44f770(&screen->textSprites[i]);
+                g_SpriteEngine->DrawUnrotated(&screen->textSprites[i]);
                 pos3[0] += 496.0f;
                 if (g_Unknown626270.catks[card].attempts[screen->unk_28] == 0)
                 {
@@ -2087,7 +2087,7 @@ int ResultScreen::OnDraw(ResultScreen *screen)
         sprite = &screen->sprites[0x12];
         for (i = 0; i < 6; i++, sprite++)
         {
-            g_SpriteEngine->Func44f770(sprite);
+            g_SpriteEngine->DrawUnrotated(sprite);
         }
         sprite = &screen->sprites[0x18];
         pos3 = sprite->pos;
@@ -2137,7 +2137,7 @@ int ResultScreen::OnDraw(ResultScreen *screen)
         sprite = screen->textSprites;
         for (i = 0; i < 0xe; i++, sprite++)
         {
-            g_SpriteEngine->Func44f770(sprite);
+            g_SpriteEngine->DrawUnrotated(sprite);
         }
     }
     return 1;

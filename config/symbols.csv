@@ -570,7 +570,7 @@ address,size,name,symbol
 0x0044f580,60,SpriteEngine::BeginQuadBatch,?BeginQuadBatch@SpriteEngine@@QAEXXZ
 0x0044f5c0,198,SpriteEngine::FlushQuadBatch,?FlushQuadBatch@SpriteEngine@@QAEXXZ
 0x0044f690,211,SpriteEngine::AddQuadToBatch,?AddQuadToBatch@SpriteEngine@@QAEHPAUVertexTex1DiffuseXyzrwh@@@Z
-0x0044f770,487,SpriteEngine::Func44f770,?Func44f770@SpriteEngine@@QAEHPAVSprite@@@Z
+0x0044f770,487,SpriteEngine::DrawUnrotated,?DrawUnrotated@SpriteEngine@@QAEHPAVSprite@@@Z
 0x0044f960,58,Func44f960,
 0x0044f9a0,616,SpriteEngine::Draw,?Draw@SpriteEngine@@QAEHPAVSprite@@@Z
 0x0044fc10,487,Func44fc10,

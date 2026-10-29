@@ -2114,14 +2114,14 @@ int MainMenu::OnDraw(MainMenu *menu)
             }
             else
             {
-                g_SpriteEngine->Func44f770(vm);
+                g_SpriteEngine->DrawUnrotated(vm);
             }
             vm->pos = savedPos;
         }
     }
     if (menu->unk_b0c8 != NULL)
     {
-        g_SpriteEngine->Func44f770(menu->unk_b0c8);
+        g_SpriteEngine->DrawUnrotated(menu->unk_b0c8);
     }
     return 1;
 }

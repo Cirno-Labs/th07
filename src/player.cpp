@@ -1609,7 +1609,7 @@ int Player::OnDraw(Player *player)
         player->sprite.pos.x = g_Unknown626270.arena[0] + player->position.x;
         player->sprite.pos.y = g_Unknown626270.arena[1] + player->position.y;
         player->sprite.pos.z = 0.0f;
-        g_SpriteEngine->Func44f770(&player->sprite);
+        g_SpriteEngine->DrawUnrotated(&player->sprite);
         if (player->unk_240a && (player->playerState == 0 || player->playerState == 4 || player->playerState == 3))
         {
             player->optionSprites[0].pos.x = g_Unknown626270.arena[0] + player->optionPos[0].x;
