@@ -147,10 +147,12 @@ project.toml  th07's settings for the tools: exe, flags, link order
 build/    outputs; build/game/ is a runnable copy of the patched game
 ```
 
-`tools/` is the decomp-tools repository, shared with the other games and
-kept here as a git subtree: `just tools-pull` brings in its changes and
-`just tools-push` sends changes made here back. Each pull adds a squash
-commit and a merge commit.
+`tools/` is the decomp-tools repository, shared with the other games, as
+a git submodule: clone with `--recursive`, or run
+`git submodule update --init tools` after cloning, and `just tools-init`
+to put it on its `main` branch. A change to the tools is a commit made in
+`tools/` and sent with `just tools-push`; `just tools-pull` brings in the
+other games' changes. Either way, commit the new `tools` pointer here.
 
 ## Requirements
 
