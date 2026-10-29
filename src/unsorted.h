@@ -1160,6 +1160,17 @@ int LoadScoreFile();
 // 999999 as `max`, which it ignores.
 void IncrementStatCounter(DWORD *count, DWORD max);
 
+// The dialogue (th06's GuiMsg), GuiImpl+0x1fba4, 0xe10 bytes. Only what
+// is known so far.
+struct GuiMsg
+{
+    unsigned char unk_0[0xe0c];
+    // Lets the skip button fast-forward the script, as th06's.
+    BYTE skippable;
+    unsigned char unk_e0d[0x3];
+};
+ASSERT_SIZE(GuiMsg, 0xe10);
+
 // The bulk of Unknown49fbf0 (th06's GuiImpl), 0x20a30 bytes. Only what
 // is known so far.
 struct GuiImpl
@@ -1184,7 +1195,8 @@ struct GuiImpl
     Sprite unk_7774;
     Sprite unk_79c0[0xa8];
     int unk_1fba0;
-    unsigned char unk_1fba4[0xe8c];
+    GuiMsg msg;
+    unsigned char unk_209b4[0x7c];
 };
 ASSERT_SIZE(GuiImpl, 0x20a30);
 
@@ -1206,7 +1218,7 @@ public:
     // Whether the pointer at +8 is set and the int at its +0x1fbac is
     // not negative, or is -2.
     int Func42ad66();
-    // The byte at +0x209b0 of what the pointer at +8 points at.
+    // Returns impl->msg.skippable, as th06's IsMsgSkippable.
     int Func427be2();
     // Player::EndBombState calls it with the points it scores and 4.
     void Func427c81(int points, int unk);

@@ -24,3 +24,8 @@ void Unknown49fbf0::HideInterface()
     this->impl->unk_72dc.spriteIndex = -1;
     this->impl->unk_1fba0 = 0;
 }
+
+int Unknown49fbf0::Func427be2()
+{
+    return this->impl->msg.skippable;
+}
