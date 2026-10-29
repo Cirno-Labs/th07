@@ -729,6 +729,16 @@ int Player::CheckAreaHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size)
     return 0;
 }
 
+void Player::Die()
+{
+    g_Unknown626270.Func4012b0();
+    g_EffectManager.Func41c610(0xc, &this->position, 3, 1, 0xff4040ff);
+    g_EffectManager.SpawnEffect(6, &this->position, 16, 0xffffffff);
+    this->playerState = 2;
+    this->stateTimer.Set(0);
+    g_SoundPlayer.QueueSound(4, 0);
+}
+
 void UpdateHitboxAreas(Player *player)
 {
     int i;

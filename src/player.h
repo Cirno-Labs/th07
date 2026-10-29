@@ -273,6 +273,10 @@ public:
     int CheckAreaHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size);
     // The angle from `pos` to the player, pi / 2 when they coincide.
     float AngleFrom(D3DXVECTOR3 *pos);
+    // Starts dying, as th06's: rerolls the checksums, bursts the death
+    // effects, sets playerState to 2 and stateTimer to 0, and plays
+    // sound 4.
+    void Die();
     // Removes the player's update and draw elements from the chain.
     // Takes the first free one of unk_17dc's first 0x5f entries, or the
     // last entry, and sets it to a `width` by `height` area at `pos`

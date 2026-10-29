@@ -145,7 +145,7 @@ address,size,name,symbol
 0x0041c1b0,16,Func41c1b0,
 0x0041c1c0,564,EffectManager::SpawnEffect,?SpawnEffect@EffectManager@@QAEPAUEffect@@HPAUD3DXVECTOR3@@HK@Z
 0x0041c400,521,Func41c400,
-0x0041c610,374,Func41c610,
+0x0041c610,374,EffectManager::Func41c610,?Func41c610@EffectManager@@QAEPAUEffect@@HPAUD3DXVECTOR3@@HHK@Z
 0x0041c790,625,Func41c790,
 0x0041ca10,354,Func41ca10,
 0x0041cb80,596,Func41cb80,
@@ -457,7 +457,7 @@ address,size,name,symbol
 0x0043e4e0,456,Func43e4e0,
 0x0043e6b0,1247,Func43e6b0,
 0x0043eb90,549,Func43eb90,
-0x0043edc0,143,Func43edc0,
+0x0043edc0,143,Player::Die,?Die@Player@@QAEXXZ
 0x0043ee50,6790,Func43ee50,?Func43ee50@@YIHPAVPlayer@@@Z
 0x00440940,169,UpdateHitboxAreas,?UpdateHitboxAreas@@YIXPAVPlayer@@@Z
 0x004409f0,760,Func4409f0,?Func4409f0@@YIXPAVPlayer@@@Z

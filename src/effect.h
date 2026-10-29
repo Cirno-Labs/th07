@@ -15,5 +15,8 @@ public:
     // last effect started, or the spare one if there were not enough
     // free slots.
     Effect *SpawnEffect(int type, D3DXVECTOR3 *pos, int count, D3DCOLOR color);
+    // Starts an effect of `type` at `pos` in `color` in reserved slot
+    // `slot` (from 400 on). `count` is unused. Returns it.
+    Effect *Func41c610(int type, D3DXVECTOR3 *pos, int slot, int count, D3DCOLOR color);
 };
 extern EffectManager g_EffectManager;
