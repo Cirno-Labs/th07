@@ -7,6 +7,52 @@
 
 #include "sprite.h"
 
+// The pause menu, AsciiText's at 0x74e8. th06 had one class for both
+// menus; th07's two differ in size.
+class PauseMenu
+{
+public:
+    // While g_Unknown626270 is paused, as th06's. Returns 0.
+    int UpdatePauseMenu();
+
+    int state;
+    // Frames since the state changed.
+    int stateFrames;
+    Sprite sprites[10];
+    // The copy of the play area behind the menu, as in th06.
+    Sprite background;
+};
+ASSERT_SIZE(PauseMenu, 0x194c);
+
+// The continue menu, AsciiText's at 0x8e34.
+class ContinueMenu
+{
+public:
+    // While g_Unknown626270.isInContinueMenu is set, as th06's.
+    int UpdateContinueMenu();
+
+    int state;
+    int stateFrames;
+    Sprite sprites[6];
+    Sprite background;
+};
+ASSERT_SIZE(ContinueMenu, 0x101c);
+
+// A number rising from where something scored, as in th06. OnUpdate
+// moves it up and retires it after 60 frames.
+struct AsciiPopup
+{
+    // Least significant first.
+    BYTE digits[8];
+    D3DXVECTOR3 pos;
+    D3DCOLOR color;
+    Timer timer;
+    BYTE active;
+    BYTE digitCount;
+    unsigned char unk_26[0x2];
+};
+ASSERT_SIZE(AsciiPopup, 0x28);
+
 class AsciiText
 {
 public:
@@ -19,6 +65,11 @@ public:
     // Runs the scripts of unk_498, unk_6e4, unk_b7c[] and unk_930 for a
     // frame.
     void RunScripts();
+    // The update element's callback: moves the active popups along
+    // unless g_Unknown626270 is paused or in the continue menu, then
+    // runs the menus as th06's. Also shows unk_9e50 (script 7) while bit
+    // 1 of g_Unknown626270.unk_93d8 is set. Returns 1.
+    static int OnUpdate(AsciiText *text);
 
     // Queues `text` to be drawn at `pos`.
     void AddString(D3DXVECTOR3 *pos, char *text);
@@ -74,5 +125,11 @@ public:
     int highlight;
     // Player::DeletedCallback sets it to 99.
     int unk_74d4;
+    unsigned char unk_74d8[0x10];
+    PauseMenu pauseMenu;
+    ContinueMenu continueMenu;
+    Sprite unk_9e50;
+    AsciiPopup popups[0x2d3];
 };
+ASSERT_SIZE(AsciiText, 0x11194);
 extern AsciiText g_AsciiText;
