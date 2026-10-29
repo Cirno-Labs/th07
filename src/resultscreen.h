@@ -133,7 +133,7 @@ struct Pscr
     BYTE shot;
     BYTE difficulty;
     BYTE stage;
-    BYTE unk_17;
+    BYTE unusedByte17;
 };
 ASSERT_SIZE(Pscr, 0x18);
 
