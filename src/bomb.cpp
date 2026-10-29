@@ -371,3 +371,32 @@ void UpdateReimuABombFocused(Player *player)
     }
     bombs->timer.Tick();
 }
+
+// The same with th06's own macro's stores, for part i of the bomb.
+#define DRAW_BOMB_PART_SPRITE()                                         \
+    curSprite->pos = player->bomb.parts[i].pos + curSprite->posOffset;  \
+    curSprite->pos[0] += g_Unknown626270.arena[0];                      \
+    curSprite->pos[1] += g_Unknown626270.arena[1];                      \
+    curSprite->pos.z = 0.0f;                                            \
+    g_SpriteEngine->DrawUnrotated(curSprite);                           \
+    curSprite++;
+
+void DrawReimuABombFocused(Player *player)
+{
+    Sprite *curSprite;
+    int i;
+
+    DimPlayAreaForBomb(player);
+    for (i = 0; i < 8; i++)
+    {
+        if (player->bomb.parts[i].state == 0)
+        {
+            continue;
+        }
+        curSprite = player->bomb.parts[i].sprites;
+        DRAW_BOMB_PART_SPRITE();
+        DRAW_BOMB_PART_SPRITE();
+        DRAW_BOMB_PART_SPRITE();
+        DRAW_BOMB_PART_SPRITE();
+    }
+}

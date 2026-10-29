@@ -618,3 +618,6 @@ void DrawReimuABomb(Player *player);
 // frames are left, then bursts as Reimu A's. Stops at the end,
 // restoring the player's speed.
 void UpdateReimuABombFocused(Player *player);
+
+// Draws Reimu A's focused bomb, as DrawReimuABomb.
+void DrawReimuABombFocused(Player *player);
