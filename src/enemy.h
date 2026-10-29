@@ -121,7 +121,7 @@ struct EnemyScriptState
     // variables back into Enemy::unk_2ee8.
     int timedCallActive;
     short sub;
-    short unk_216;
+    short unusedShort216;
 };
 ASSERT_SIZE(EnemyScriptState, 0x218);
 
