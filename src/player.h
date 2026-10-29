@@ -181,7 +181,10 @@ int UpdateFiring(Player *player);
 // player is respawning or dying, Func440cf0 while dying, and Func4411c0
 // while respawning or when Func440cf0 returns nonzero.
 int Func43ee50(Player *player);
-void Func440940(Player *player);
+// OnUpdate's first step, as the start of th06's: clears the sizes of
+// the 0x70 unk_9dc hitboxes, then counts down each PlayerArea's unk_18,
+// growing unk_10 by unk_14 meanwhile, and frees it once it is 0.
+void UpdateHitboxAreas(Player *player);
 void Func4409f0(Player *player);
 int Func440cf0(Player *player);
 void Func4411c0(Player *player);
@@ -273,7 +276,7 @@ public:
     // adding fails.
     static int RegisterChain(int unk);
     // The update callback: unless the game is frozen, runs the steps
-    // (Func440940 on), steps the sprites (the options' while unk_240a
+    // (UpdateHitboxAreas on), steps the sprites (the options' while unk_240a
     // is set), the bullets (UpdateBullets) and the firing (UpdateFiring).
     // Returns 1.
     static int OnUpdate(Player *player);

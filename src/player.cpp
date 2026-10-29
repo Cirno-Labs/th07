@@ -681,6 +681,31 @@ void Player::StartFiring(Player *player)
     }
 }
 
+void UpdateHitboxAreas(Player *player)
+{
+    int i;
+    PlayerArea *area;
+
+    for (i = 0; i < 0x70; i++)
+    {
+        player->unk_9dc[i].size.x = 0.0f;
+    }
+    area = player->unk_17dc;
+    for (i = 0; i < 0x60; i++, area++)
+    {
+        if (area->unk_18 <= 0)
+        {
+            area->unk_10 = 0.0f;
+            area->width = 0.0f;
+        }
+        else
+        {
+            area->unk_18--;
+            area->unk_10 += area->unk_14;
+        }
+    }
+}
+
 PlayerArea *Player::AddHitboxArea(D3DXVECTOR3 *pos, float width, float height, int unk_1c)
 {
     PlayerArea *area = this->unk_17dc;
@@ -729,7 +754,7 @@ int Player::OnUpdate(Player *player)
     {
         return 1;
     }
-    Func440940(player);
+    UpdateHitboxAreas(player);
     Func4409f0(player);
     if (player->playerState == 2)
     {

@@ -459,7 +459,7 @@ address,size,name,symbol
 0x0043eb90,549,Func43eb90,
 0x0043edc0,143,Func43edc0,
 0x0043ee50,6790,Func43ee50,?Func43ee50@@YIHPAVPlayer@@@Z
-0x00440940,169,Func440940,?Func440940@@YIXPAVPlayer@@@Z
+0x00440940,169,UpdateHitboxAreas,?UpdateHitboxAreas@@YIXPAVPlayer@@@Z
 0x004409f0,760,Func4409f0,?Func4409f0@@YIXPAVPlayer@@@Z
 0x00440cf0,1231,Func440cf0,?Func440cf0@@YIHPAVPlayer@@@Z
 0x004411c0,353,Func4411c0,?Func4411c0@@YIXPAVPlayer@@@Z
