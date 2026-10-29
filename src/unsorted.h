@@ -313,7 +313,6 @@ void RemoveGameManagerChain();
 void Func4075d0();
 void Func427760();
 void Func423050();
-void Func41d150();
 
 // Measures the frame rate every half second, with the performance
 // counter when there is one (calling g_App.CheckClockDrift every eighth

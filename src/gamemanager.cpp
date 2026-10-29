@@ -5,6 +5,7 @@
 #include <string.h>
 
 #include "ascii.h"
+#include "effect.h"
 #include "midi.h"
 #include "player.h"
 #include "replay.h"
@@ -273,7 +274,7 @@ int Unknown626270::DeletedCallback(Unknown626270 *mgr)
     Player::RemoveChain();
     Func423050();
     g_Unknown1347938.Func40e4f0();
-    Func41d150();
+    EffectManager::RemoveChain();
     Unknown49fbf0::RemoveChain();
     ReplayManager::EndStage();
     if (!g_Unknown626270.unk_93d8Bit3)

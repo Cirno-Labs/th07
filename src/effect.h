@@ -103,6 +103,8 @@ public:
     // Resets and adds the update element (priority 11) and the draw
     // element (priority 9). Returns 0, or -1 if adding fails.
     static int RegisterChain();
+    // Removes the two chain elements.
+    static void RemoveChain();
 
     // Where SpawnEffect looks for a free effect next.
     int next;

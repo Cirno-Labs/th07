@@ -422,3 +422,9 @@ int EffectManager::RegisterChain()
     g_Chain.AddToDrawChain(&g_EffectDrawChain, 9);
     return 0;
 }
+
+void EffectManager::RemoveChain()
+{
+    g_Chain.Remove(&g_EffectCalcChain);
+    g_Chain.Remove(&g_EffectDrawChain);
+}
