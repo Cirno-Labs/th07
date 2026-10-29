@@ -118,7 +118,7 @@ struct EnemyScriptState
     // The result of the last laser test, as th06's compareResult.
     int compareResult;
     // Set by the timed call of opcode 144: returning from it copies the
-    // variables back into Enemy::unk_2ee8.
+    // variables back into Enemy::periodicSubVars.
     int timedCallActive;
     short sub;
     short unusedShort216;
@@ -139,7 +139,7 @@ ASSERT_SIZE(EnemyBox, 0x1c);
 // One enemy (0x4f48 bytes).
 struct Enemy
 {
-    // Moves by the velocity scaled by App::unk_178, mirrored with
+    // Moves by the velocity scaled by App::gameSpeed, mirrored with
     // flags.mirrored, as th06's; first keeps the last move in posDelta
     // and the position in prevPos. An inline too large to expand (in
     // enemy.cpp): OnUpdate calls the copy and reserves its temporaries.
@@ -153,7 +153,7 @@ struct Enemy
     // Once callbackTimer reaches timerCallbackTime: restores the life
     // from the highest lifeCallbackLife, starts timerCallbackSub, makes
     // the death subroutine the next, ends the spell card (taking a
-    // quarter of GameManager::unk_961c above stats->unk_88, in tens)
+    // quarter of GameManager::bonusPoints above stats->grazeCount, in tens)
     // and clears the bullets unless flags.keepSpellCard, clears the
     // other enemies and resets as CheckLifeCallback, as th06's. While
     // it is boss 0, shows the seconds left first. Returns 1 then, else
@@ -247,7 +247,7 @@ struct Enemy
     // The turning sprite script last started, as th06's
     // flags.spriteDirection: 0 still, 1 left, 2 right, 0xff none yet.
     BYTE spriteDirection;
-    // The draw list (EnemyManager::unk_954700) OnUpdate puts it in.
+    // The draw list (EnemyManager::drawListHeads) OnUpdate puts it in.
     BYTE drawListIndex;
     // The sprite scripts for turning, as th06's.
     short turnStill;
@@ -284,7 +284,7 @@ struct Enemy
     BYTE trailFlags;
     unsigned char pad_4f31[0x1];
     short trailSegmentCount;
-    // The trail boxes (unk_2f78) below it touch the player, every sixth
+    // The trail boxes (trailBoxes) below it touch the player, every sixth
     // from 1.
     short trailContactSegments;
     short trailSegmentStep;
@@ -295,7 +295,7 @@ ASSERT_SIZE(Enemy, 0x4f48);
 
 // Keeps the effects following `enemy` on it, widening their circle up
 // to effectRadius and turning them, as th06's; they are shown unless
-// flags.unk_b is set.
+// flags.hideFollowEffects is set.
 void MoveEnemyEffects(Enemy *enemy);
 // Lets go of the effects following `enemy`: each fades out, as th06's.
 void ReleaseEnemyEffects(Enemy *enemy);
@@ -325,7 +325,7 @@ struct EnemyTimelineEntry
     EnemyTimelineArgs args;
 };
 
-// One of EnemyManager's sixteen unk_9545f4: th06's timelinePos and
+// One of EnemyManager's sixteen timelines: th06's timelinePos and
 // timelineTime, one per timeline.
 struct EnemyTimeline
 {
@@ -362,8 +362,8 @@ public:
     Enemy *SpawnWithVars(int sub, D3DXVECTOR3 *pos, int life, int item, int score,
                       EnemyScriptVars *vars);
     // Kills every enemy but the bosses, as th06's spell card ends do.
-    // Those with flags.unk_d, and their first unk_4f32 boxes (every
-    // sixth, while unk_4f30 is set), each drop item 6 and show a bonus
+    // Those with flags.unk_d, and their first trailSegmentCount boxes (every
+    // sixth, while trailFlags is set), each drop item 6 and show a bonus
     // that starts at 2000 and grows by 30 up to `maxBonus` (white
     // below it, yellow from it). Returns `start` plus the bonuses.
     // GuiImpl::StartMsgScript calls it with (0, 0) as a dialogue starts.
@@ -373,11 +373,11 @@ public:
 
     // Draws the enemies of the lists at +0x954700, from `from` up to
     // `to`, as th06's OnDraw: sprites[0], the main sprite (unless
-    // unk_4f30 bit 4 or flags.hideEffectsAndTrail) and sprites[1], each at the
-    // enemy's position plus posOffset. With unk_4f30 set, also its trail
-    // along unk_2f78 (every unk_4f36th of unk_4f32 boxes): copies of the
+    // trailFlags bit 4 or flags.hideEffectsAndTrail) and sprites[1], each at the
+    // enemy's position plus posOffset. With trailFlags set, also its trail
+    // along trailBoxes (every unk_4f36th of trailSegmentCount boxes): copies of the
     // main sprite on the boxes not at x below -990, or with bit 3 a
-    // vertex strip in unk_39f8 up to the first such box; bit 1 narrows
+    // vertex strip in spriteStripVertices up to the first such box; bit 1 narrows
     // it and bit 2 fades it towards the end. Returns 1.
     static int DrawEnemies(EnemyManager *mgr, int from, int to);
     // A draw callback: DrawEnemies for lists 0 and 1.
@@ -386,10 +386,10 @@ public:
     static int OnDraw2(EnemyManager *mgr);
     // Loads the enemy sprites into slots 0xf and 0x10 (either path may
     // be NULL), picks dropCounter and dropIndex at random, ends the spell
-    // card and hides AsciiText's unk_b7c sprites at -999. Returns 0, or
+    // card and hides AsciiText's nearbyLabels sprites at -999. Returns 0, or
     // -1 if loading fails.
     static int AddedCallback(EnemyManager *mgr);
-    // Frees the enemy sprites and hides AsciiText's unk_b7c sprites at
+    // Frees the enemy sprites and hides AsciiText's nearbyLabels sprites at
     // -999 again. Returns 0.
     static int DeletedCallback(EnemyManager *mgr);
     // Initializes, remembers the stage's two enemy sprite files and adds
@@ -404,7 +404,7 @@ public:
     // active enemy: its script (again after a life or timer callback),
     // movement, trail, leaving the play area, contact with the player,
     // damage (bonus points for it; cut by stage for shot type 0, by
-    // spell cards and by unk_4f38), the homing targets, death (with th06's
+    // spell cards and by invulnTimer), the homing targets, death (with th06's
     // death modes and drops, and a boss clearing the bullets and enemies
     // for a bonus), the hit flash in color2, the boss bar and markers,
     // and the draw lists. Returns 4 when a checksum check every 200

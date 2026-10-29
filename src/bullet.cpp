@@ -295,78 +295,78 @@ void BulletManager::StopAllBullets()
     }
 }
 
-BulletCommand *Bullet::RestartCommand(int idx, int unk_14, DWORD flag)
+BulletCommand *Bullet::RestartCommand(int idx, int concurrentFlag, DWORD flag)
 {
     BulletCommand *cmd = &this->commands[idx];
 
     cmd->flag = flag;
-    cmd->concurrentFlag = unk_14;
+    cmd->concurrentFlag = concurrentFlag;
     this->flags |= flag;
     this->commandIndex = 0;
     return cmd;
 }
 
-BulletCommand *BulletShooter::StartCommand(int idx, int unk_14, DWORD flag)
+BulletCommand *BulletShooter::StartCommand(int idx, int concurrentFlag, DWORD flag)
 {
     BulletCommand *cmd = &this->commands[idx];
 
     cmd->flag = flag;
-    cmd->concurrentFlag = unk_14;
+    cmd->concurrentFlag = concurrentFlag;
     this->flags |= flag;
     return cmd;
 }
 
-void Bullet::SetTurnCommand(int idx, int unk_14, int unk_8, float unk_4, float unk_0)
+void Bullet::SetTurnCommand(int idx, int concurrentFlag, int frames, float arg1, float arg0)
 {
-    BulletCommand *cmd = this->RestartCommand(idx, unk_14, 0x20);
+    BulletCommand *cmd = this->RestartCommand(idx, concurrentFlag, 0x20);
 
-    cmd->frames = unk_8;
-    cmd->arg0 = unk_0;
-    cmd->arg1 = unk_4;
+    cmd->frames = frames;
+    cmd->arg0 = arg0;
+    cmd->arg1 = arg1;
 }
 
-void Bullet::SetAccelerateCommand(int idx, int unk_14, int unk_8, float unk_0, float unk_4)
+void Bullet::SetAccelerateCommand(int idx, int concurrentFlag, int frames, float arg0, float arg1)
 {
-    BulletCommand *cmd = this->RestartCommand(idx, unk_14, 0x10);
+    BulletCommand *cmd = this->RestartCommand(idx, concurrentFlag, 0x10);
 
-    cmd->frames = unk_8;
-    cmd->arg0 = unk_0;
-    cmd->arg1 = unk_4;
+    cmd->frames = frames;
+    cmd->arg0 = arg0;
+    cmd->arg1 = arg1;
 }
 
-void BulletShooter::SetShooterTurnCommand(int idx, int unk_14, int unk_8, float unk_4, float unk_0)
+void BulletShooter::SetShooterTurnCommand(int idx, int concurrentFlag, int frames, float arg1, float arg0)
 {
-    BulletCommand *cmd = this->StartCommand(idx, unk_14, 0x20);
+    BulletCommand *cmd = this->StartCommand(idx, concurrentFlag, 0x20);
 
-    cmd->frames = unk_8;
-    cmd->arg0 = unk_0;
-    cmd->arg1 = unk_4;
+    cmd->frames = frames;
+    cmd->arg0 = arg0;
+    cmd->arg1 = arg1;
 }
 
-void BulletShooter::SetStopTurnCommand(int idx, int unk_14, int unk_8, int unk_c, float unk_0, float unk_4)
+void BulletShooter::SetStopTurnCommand(int idx, int concurrentFlag, int frames, int maxTurns, float arg0, float arg1)
 {
-    BulletCommand *cmd = this->StartCommand(idx, unk_14, 0x80);
+    BulletCommand *cmd = this->StartCommand(idx, concurrentFlag, 0x80);
 
-    cmd->frames = unk_8;
-    cmd->maxTurns = unk_c;
-    cmd->arg0 = unk_0;
-    cmd->arg1 = unk_4;
+    cmd->frames = frames;
+    cmd->maxTurns = maxTurns;
+    cmd->arg0 = arg0;
+    cmd->arg1 = arg1;
 }
 
-void BulletShooter::SetShooterAccelerateCommand(int idx, int unk_14, int unk_8, float unk_0, float unk_4)
+void BulletShooter::SetShooterAccelerateCommand(int idx, int concurrentFlag, int frames, float arg0, float arg1)
 {
-    BulletCommand *cmd = this->StartCommand(idx, unk_14, 0x10);
+    BulletCommand *cmd = this->StartCommand(idx, concurrentFlag, 0x10);
 
-    cmd->frames = unk_8;
-    cmd->arg0 = unk_0;
-    cmd->arg1 = unk_4;
+    cmd->frames = frames;
+    cmd->arg0 = arg0;
+    cmd->arg1 = arg1;
 }
 
-void BulletShooter::SetHiddenCommand(int idx, int unk_14, int unk_8)
+void BulletShooter::SetHiddenCommand(int idx, int concurrentFlag, int frames)
 {
-    BulletCommand *cmd = this->StartCommand(idx, unk_14, 0x2000);
+    BulletCommand *cmd = this->StartCommand(idx, concurrentFlag, 0x2000);
 
-    cmd->frames = unk_8;
+    cmd->frames = frames;
 }
 
 int BulletManager::FirePattern(BulletShooter *shooter)

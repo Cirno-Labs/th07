@@ -76,14 +76,14 @@ struct Bullet
 {
     // Sets command `idx` to run under `flag`, adds `flag` to flags and
     // starts over from the first command. Returns the command.
-    BulletCommand *RestartCommand(int idx, int unk_14, DWORD flag);
+    BulletCommand *RestartCommand(int idx, int concurrentFlag, DWORD flag);
     // Sets command `idx` up for flag 0x10.
-    void SetAccelerateCommand(int idx, int unk_14, int unk_8, float unk_0, float unk_4);
+    void SetAccelerateCommand(int idx, int concurrentFlag, int frames, float arg0, float arg1);
     // Frees the bullet: state 0 and both timers reset. Inline, defined
     // after BulletManager::OnUpdate, which calls it out of line.
     void FreeBullet();
     // Sets command `idx` up for flag 0x20.
-    void SetTurnCommand(int idx, int unk_14, int unk_8, float unk_4, float unk_0);
+    void SetTurnCommand(int idx, int concurrentFlag, int frames, float arg1, float arg0);
     // Clears command `idx`'s flag, so the commands stop there.
     void ClearCommandFlag(int idx)
     {
@@ -140,15 +140,15 @@ struct BulletShooter
 
     // Sets command `idx` to run under `flag` and adds `flag` to flags.
     // Returns the command.
-    BulletCommand *StartCommand(int idx, int unk_14, DWORD flag);
+    BulletCommand *StartCommand(int idx, int concurrentFlag, DWORD flag);
     // Sets command `idx` up for flag 0x20.
-    void SetShooterTurnCommand(int idx, int unk_14, int unk_8, float unk_4, float unk_0);
+    void SetShooterTurnCommand(int idx, int concurrentFlag, int frames, float arg1, float arg0);
     // Sets command `idx` up for flag 0x80.
-    void SetStopTurnCommand(int idx, int unk_14, int unk_8, int unk_c, float unk_0, float unk_4);
+    void SetStopTurnCommand(int idx, int concurrentFlag, int frames, int maxTurns, float arg0, float arg1);
     // Sets command `idx` up for flag 0x10.
-    void SetShooterAccelerateCommand(int idx, int unk_14, int unk_8, float unk_0, float unk_4);
+    void SetShooterAccelerateCommand(int idx, int concurrentFlag, int frames, float arg0, float arg1);
     // Sets command `idx` up for flag 0x2000.
-    void SetHiddenCommand(int idx, int unk_14, int unk_8);
+    void SetHiddenCommand(int idx, int concurrentFlag, int frames);
     // A random angle from angle2 up to angle1, and a random speed from
     // speed2 up to speed1. Inline, defined in bullet.cpp.
     float RandomAngle();
@@ -220,8 +220,8 @@ public:
     // Ends every bullet, and every laser without flag 4 (all of them
     // for `mode` 10): with `mode` 0 or over 8 they fade out; with 1 or 2
     // bullets, and points every 32 along each laser, turn into
-    // `mode` items of type unk_37a160, with 3 to 8 into one item of
-    // type 8. Then sets unk_37a12c to 10.
+    // `mode` items of type clearItemType, with 3 to 8 into one item of
+    // type 8. Then sets clearAllFrames to 10.
     void ClearAll(int mode);
     // Like ClearAll(1), but each bullet scores a bonus, from 2000 up by
     // 20 per bullet to `maxBonus`, shown as a popup; lasers turn into
@@ -241,7 +241,7 @@ public:
     int FirePattern(BulletShooter *shooter);
     // Starts a laser from `shooter` in a free slot: exFloats give its
     // start and end offsets, length and width, exInts its timings.
-    // Returns it, or the first laser while unk_37a12c is set and flag 4
+    // Returns it, or the first laser while clearAllFrames is set and flag 4
     // is not, or past the last one if none is free.
     Laser *SpawnLaser(BulletShooter *shooter);
     // Stops every bullet of g_BulletManager where it is and turns it to
@@ -300,7 +300,7 @@ void ShowSpawnSprite(Sprite *dst, Sprite *src, Bullet *bullet, int color);
 // Starts the bullet's commands from commandIndex on: skips those whose
 // flag the bullet lacks, and stops at an empty one, at one whose unk_14
 // is 0 while a behavior is still running, or after starting one
-// behavior in its BulletEx (flag 0x2000 only sets unk_bf0 and goes on).
+// behavior in its BulletEx (flag 0x2000 only sets boundsCheckDelay and goes on).
 // Behaviors started after the first play the bullet's sound.
 void RunBulletCommands(Bullet *bullet);
 

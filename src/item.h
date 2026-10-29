@@ -19,7 +19,7 @@ struct Item
     char active;
     char onScreen;
     char state;
-    // Set when it is drawn to the player while Player::unk_240d is 1:
+    // Set when it is drawn to the player while Player::bombState is 1:
     // a point item then scores in full.
     char countsFullValue;
     char pad_281[3];

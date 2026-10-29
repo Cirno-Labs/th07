@@ -33,7 +33,7 @@ public:
     // Draws it while paused, as th06's, flushing SpriteEngine's batch
     // before setting the play area's viewport: the background with z
     // writes off if the back buffer is lockable (bit 1 of
-    // g_App.unk_18c) and state is nonzero, then the shown sprites.
+    // g_App.stateFlags) and state is nonzero, then the shown sprites.
     void DrawPauseMenu();
 
     int state;
@@ -94,22 +94,22 @@ public:
     static void RemoveChain();
     // Initializes everything, where th06 calls AsciiText::Initialize:
     // zeroes the sprites, strings, menus and popups, sets the color to
-    // white, the scale to 1, unk_74d8 to 14, and the sprites up, digit
-    // anchored, then sends unk_498 interrupt unk_74d4.
+    // white, the scale to 1, glyphWidth to 14, and the sprites up, digit
+    // anchored, then sends summaryPopup interrupt summaryPendingInterrupt.
     void Initialize();
-    // Runs the scripts of unk_498, unk_6e4, unk_b7c[] and unk_930 for a
+    // Runs the scripts of summaryPopup, summaryDigit, nearbyLabels[] and summaryBombIcon for a
     // frame.
     void RunScripts();
-    // Starts the scripts of unk_498 (4), unk_6e4 (3), unk_930 (5) and
-    // unk_b7c[] (6).
+    // Starts the scripts of summaryPopup (4), summaryDigit (3), summaryBombIcon (5) and
+    // nearbyLabels[] (6).
     void StartScripts();
     // The update element's callback: moves the active popups along
     // unless g_GameManager is paused or in the continue menu, then
-    // runs the menus as th06's. Also shows unk_9e50 (script 7) while bit
-    // 1 of g_GameManager.unk_93d8 is set. Returns 1.
+    // runs the menus as th06's. Also shows demoIcon (script 7) while bit
+    // 1 of g_GameManager.stateFlags is set. Returns 1.
     static int OnUpdate(AsciiText *text);
     // The first draw element's callback: draws the queued strings and
-    // empties the queue, draws the menus, then unk_9e50 while it runs a
+    // empties the queue, draws the menus, then demoIcon while it runs a
     // script. Returns 1.
     static int OnDraw(AsciiText *text);
     // The update element's added callback: zeroes the object, loads
@@ -120,11 +120,11 @@ public:
     // The update element's deleted callback: frees the ANM files of
     // slots 1 to 4. Returns 0.
     static int DeletedCallback(AsciiText *text);
-    // Draws the queued strings, as th06's, unk_74d8 pixels a glyph and
+    // Draws the queued strings, as th06's, glyphWidth pixels a glyph and
     // flushing SpriteEngine's batch before each viewport change. Then
-    // draws those of unk_b7c[] whose x is 56 to 392, fading them in
+    // draws those of nearbyLabels[] whose x is 56 to 392, fading them in
     // from alpha 48 as they get within 64 pixels of the player, and in
-    // blue while unk_14ac[i] is set.
+    // blue while nearbyLabelDimmed[i] is set.
     void DrawStrings();
     // The second draw element's callback: draws the popups. th06 picked
     // DrawPopups or DrawPopups2 by g_App.hardwareTnL. Returns 1.
@@ -132,10 +132,10 @@ public:
     // Draws the active popups, as th06's, with fog off (unless the
     // config has it off already) and the z test always passing. Their
     // alpha grows with the distance to the player, and their digits
-    // show other sprites from frame 52 and 56. Then, while unk_498 is
-    // shown, draws it with three numbers through unk_6e4: unk_961c,
-    // unk_9618 and unk_9620 of g_GameManager, each less
-    // stats->unk_88, and unk_930 while Player::unk_240d is 1.
+    // show other sprites from frame 52 and 56. Then, while summaryPopup is
+    // shown, draws it with three numbers through summaryDigit: bonusPoints,
+    // bonusPointsCap and invulnerabilityBonus of g_GameManager, each less
+    // stats->grazeCount, and summaryBombIcon while Player::bombState is 1.
     void DrawPopups();
 
     // Queues `text` to be drawn at `pos`.
@@ -156,29 +156,29 @@ public:
     {
         this->highlight = highlight;
     }
-    // Sends unk_b7c[idx] interrupt 99. Must be an inline: under /Od only
+    // Sends nearbyLabels[idx] interrupt 99. Must be an inline: under /Od only
     // an inline's constant argument leaves the index multiplied out at
     // run time, as Player::DeletedCallback does.
     void InterruptNearbyLabel(int idx)
     {
         this->nearbyLabels[idx].pendingInterrupt = 99;
     }
-    // Sends unk_b7c[idx] interrupt `interrupt`, the same way.
+    // Sends nearbyLabels[idx] interrupt `interrupt`, the same way.
     void SetNearbyLabelInterrupt(int idx, int interrupt)
     {
         this->nearbyLabels[idx].pendingInterrupt = interrupt;
     }
-    // Moves unk_b7c[idx] to `pos`, the same way.
+    // Moves nearbyLabels[idx] to `pos`, the same way.
     void SetNearbyLabelPos(int idx, D3DXVECTOR3 *pos)
     {
         this->nearbyLabels[idx].pos = *pos;
     }
-    // Sets unk_14ac[idx], the same way.
+    // Sets nearbyLabelDimmed[idx], the same way.
     void SetNearbyLabelDimmed(int idx, int value)
     {
         this->nearbyLabelDimmed[idx] = value;
     }
-    // unk_74d4, and setting it while sending unk_498 the same
+    // summaryPendingInterrupt, and setting it while sending summaryPopup the same
     // interrupt. Inlines: each read takes a temporary in ResetHomingAndText.
     int GetSummaryPendingInterrupt()
     {
@@ -199,7 +199,7 @@ public:
     Sprite summaryDigit;
     Sprite summaryBombIcon;
     Sprite nearbyLabels[4];
-    // Whether unk_b7c[i] is drawn dimmed in blue by DrawStrings.
+    // Whether nearbyLabels[i] is drawn dimmed in blue by DrawStrings.
     int nearbyLabelDimmed[4];
     AsciiString strings[0x100];
     // How many strings are queued.

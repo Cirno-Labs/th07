@@ -1837,7 +1837,7 @@ void Player::EndBombState()
     }
 }
 
-PlayerArea *Player::AddHitboxArea(D3DXVECTOR3 *pos, float width, float height, int unk_1c)
+PlayerArea *Player::AddHitboxArea(D3DXVECTOR3 *pos, float width, float height, int itemType)
 {
     PlayerArea *area = this->hitAreas;
     int i;
@@ -1854,11 +1854,11 @@ PlayerArea *Player::AddHitboxArea(D3DXVECTOR3 *pos, float width, float height, i
     area->width = width;
     area->height = height;
     area->framesLeft = 0;
-    area->itemType = unk_1c;
+    area->itemType = itemType;
     return area;
 }
 
-PlayerArea *Player::AddHitboxAreaCircle(D3DXVECTOR3 *pos, float unk_10, float unk_14, int unk_18, int unk_1c)
+PlayerArea *Player::AddHitboxAreaCircle(D3DXVECTOR3 *pos, float radius, float radiusGrowth, int framesLeft, int itemType)
 {
     PlayerArea *area = this->hitAreas;
     int i;
@@ -1872,10 +1872,10 @@ PlayerArea *Player::AddHitboxAreaCircle(D3DXVECTOR3 *pos, float unk_10, float un
     }
     area->x = pos->x;
     area->y = pos->y;
-    area->radius = unk_10;
-    area->radiusGrowth = unk_14;
-    area->framesLeft = unk_18;
-    area->itemType = unk_1c;
+    area->radius = radius;
+    area->radiusGrowth = radiusGrowth;
+    area->framesLeft = framesLeft;
+    area->itemType = itemType;
     return area;
 }
 
@@ -1902,7 +1902,7 @@ void Player::StopBombState(int unused)
     eff->sprite.interpFrame[2].Set(30);
     eff->sprite.alphaInterpEasing = 1;
     // Bytes 0x22b and 0x22f, probably the alphas of two colors over
-    // unk_224.y and .z (the vector type keeps Sprite's inline budget).
+    // colorTween.y and .z (the vector type keeps Sprite's inline budget).
     ((BYTE *)&eff->sprite.colorTween.y)[3] = eff->sprite.alpha;
     ((BYTE *)&eff->sprite.colorTween.z)[3] = 0;
     eff->sprite.scriptVar0 = 30;
@@ -2141,7 +2141,7 @@ int Player::AddedCallback(Player *player)
     player->position.z = 0.49f;
     player->optionPos[0].z = 0.49f;
     player->optionPos[1].z = 0.49f;
-    // 0x80 entries: past unk_9dc's 0x70, into unk_17dc.
+    // 0x80 entries: past bombHitboxes's 0x70, into hitAreas.
     for (i = 0; i < 0x80; i++)
     {
         player->bombHitboxes[i].size.x = 0.0f;

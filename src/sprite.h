@@ -87,7 +87,7 @@ struct SpriteBase
     Timer interpDuration[5];
     Timer interpFrame[5];
     // How Step eases each of the five interpolations (position, color,
-    // alpha, rotation, scale) that unk_48 and unk_84 time.
+    // alpha, rotation, scale) that interpDuration and interpFrame time.
     BYTE interpEasing;
     BYTE colorInterpEasing;
     // Player's StopBombState sets it on its effect.
@@ -396,9 +396,9 @@ public:
     void CopySurfaceRectToBackBuffer(int surface, int x, int y, int left, int top, int width, int height);
     // Runs `vm`'s script for one frame, as th06's: the instructions due
     // (th07's set, with script variables, arithmetic, conditional jumps
-    // and five eased interpolations timed by unk_48 and unk_84), then the
+    // and five eased interpolations timed by interpDuration and interpFrame), then the
     // rotation, scale and texture scroll speeds, and counts the call in
-    // unk_c. Returns 1 once the script has ended, else 0.
+    // stepCount. Returns 1 once the script has ended, else 0.
     int Step(Sprite *vm);
     // Steps the `count` sprites from `vms` that run a script. Not in
     // th06.
@@ -536,7 +536,7 @@ public:
         this->modulateColorEnabled = 0;
         this->modulateColor = 0x80808080;
     }
-    // Modulates sprites by `color` (sets unk_4).
+    // Modulates sprites by `color` (sets modulateColorEnabled).
     void SetColorModulation(D3DCOLOR color)
     {
         this->modulateColorEnabled = 1;
@@ -601,7 +601,7 @@ public:
         return 0;
     }
 
-    // The color sprites are modulated by while unk_4 is set, 0x80 per
+    // The color sprites are modulated by while modulateColorEnabled is set, 0x80 per
     // channel for 1.
     D3DCOLOR modulateColor;
     DWORD modulateColorEnabled;

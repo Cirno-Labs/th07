@@ -67,7 +67,7 @@ extern EffectInfo g_EffectInfos[];
 
 // An effect init, as the first frame of th06's EffectUpdateDrift: a
 // random step that slows to a stop over 19 frames, both scaled by
-// App::unk_178. Returns 0.
+// App::gameSpeed. Returns 0.
 int EffectInitDrift(Effect *effect);
 
 // An effect update: moves by step, which changes by acceleration, as
@@ -108,31 +108,31 @@ int EffectUpdateConvergeSlow(Effect *effect);
 // origin along axis, 256 every 30 frames. Returns 1.
 int EffectUpdateDivergeLinear(Effect *effect);
 
-// Moves unk_27c of every started effect of type 20 or 31 by `offset`.
+// Moves truePos of every started effect of type 20 or 31 by `offset`.
 void OffsetPetalEffects(D3DXVECTOR3 *offset);
 
 // Sets the z acceleration of every started effect of type 30 to -0.01.
 void StartPetalsFalling();
 
 // An effect update for the falling petals (types 20, 26, 27, 30 and
-// 31): moves unk_27c by step, which changes by acceleration, and draws
+// 31): moves truePos by step, which changes by acceleration, and draws
 // the effect there, turning it by its x rotation. Ends it (returns 0)
 // once it is out of the view along g_CameraDir from
 // g_CameraEye, or at z 0 and above; otherwise returns 1.
 int EffectUpdatePetal(Effect *effect);
 
-// An effect init for petal type 20: starts unk_27c at g_CameraEye
+// An effect init for petal type 20: starts truePos at g_CameraEye
 // plus half of g_CameraAt, scattered at random, with a random
 // step on top of velocity and a little acceleration, both scaled by
-// App::unk_178, and a random spin; puts it in the second draw list. The
-// fuller unk_961c is (above stats->unk_88, out of unk_9618), the
+// App::gameSpeed, and a random spin; puts it in the second draw list. The
+// fuller bonusPoints is (above stats->grazeCount, out of bonusPointsCap), the
 // likelier it is shown as sprite 0x2d8 in white. Returns 0.
 int EffectInitPetal20(Effect *effect);
 
-// An effect init for petal type 26: starts unk_27c at random around
+// An effect init for petal type 26: starts truePos at random around
 // g_CameraEye plus half of g_CameraAt, with an x/y step
 // across its offset from there (turned a quarter, over velocity.x) and
-// a z step of 0.09 to 0.19, scaled by App::unk_178, and no
+// a z step of 0.09 to 0.19, scaled by App::gameSpeed, and no
 // acceleration; a random spin and the second draw list. Shown as
 // sprite 0x2d8 in white as in EffectInitPetal20. Returns 0.
 int EffectInitPetal26(Effect *effect);
@@ -141,16 +141,16 @@ int EffectInitPetal26(Effect *effect);
 // always shown as sprite 0x2d8 in white. Returns 0.
 int EffectInitPetal27(Effect *effect);
 
-// An effect init for petal type 30: starts unk_27c at random around
+// An effect init for petal type 30: starts truePos at random around
 // g_CameraEye plus half of g_CameraAt, with a small random
-// step on top of velocity (not scaled by App::unk_178) and no
+// step on top of velocity (not scaled by App::gameSpeed) and no
 // acceleration; a random spin, the second draw list and sprite 0x2d8
 // in white. Returns 0.
 int EffectInitPetal30(Effect *effect);
 
-// An effect init for petal type 31: starts unk_27c at random around
+// An effect init for petal type 31: starts truePos at random around
 // g_CameraEye plus half of g_CameraAt, with a random step
-// on top of velocity, scaled by App::unk_178, and a z acceleration of
+// on top of velocity, scaled by App::gameSpeed, and a z acceleration of
 // -0.015; a random spin, the second draw list and sprite 0x2d8 in
 // white, its unk_14 doubled. Returns 0.
 int EffectInitPetal31(Effect *effect);
@@ -197,7 +197,7 @@ public:
     // fourth draw lists, the first and fourth moved into the play area.
     // Returns 1.
     static int OnDraw(EffectManager *mgr);
-    // Draws the second draw list, unless App::unk_13c is 0; with 1 it
+    // Draws the second draw list, unless App::effectsQuality is 0; with 1 it
     // returns at the first effect. Type 20 is drawn with its color
     // scaled by colorScale. Returns 1.
     int OnDraw2();

@@ -12,7 +12,7 @@ struct ReplayFrame
 {
     // The buttons held.
     WORD input;
-    // ReplayManager::unk_d6 for the frame.
+    // ReplayManager::frameEvents for the frame.
     WORD events;
 };
 
@@ -24,22 +24,22 @@ struct ReplayStage
     int score;
     // GameStats::pointItemsTotal.
     int pointItemsTotal;
-    // GameManager's unk_961c, unk_9618 and unk_9620, less
-    // GameStats::unk_88.
+    // GameManager's bonusPoints, bonusPointsCap and invulnerabilityBonus, less
+    // GameStats::grazeCount.
     int bonusPoints;
     int bonusPointsCap;
     int invulnerabilityBonus;
     // GameStats::grazeTotal.
     int grazeTotal;
-    // GameStats::unk_2c and unk_30.
+    // GameStats::checksumKeyStage and unk_30.
     int checksumKeyStage;
     int checksumKeyPoints;
-    // GameManager::unk_95e4.
+    // GameManager::rngSeed.
     WORD rngSeed;
     BYTE power;
     BYTE lives;
     BYTE bombs;
-    // GameManager::unk_9634 and unk_93d4.
+    // GameManager::rank and powerItemCombo.
     BYTE rank;
     BYTE powerItemCombo;
     // GameStats::spellCardsCaptured.
@@ -106,13 +106,13 @@ ASSERT_SIZE(ReplayHeader, 0xe8);
 
 // Checks and decodes the replay file `data` of `size` bytes: its magic,
 // version and checksum, then decompresses it into a new copy, which it
-// returns unless the config's unk_25 is set or App::CheckVersionFile rejects
+// returns unless the config's scoreDisabled is set or App::CheckVersionFile rejects
 // the executable it was recorded with. Frees `data`, and returns NULL
 // if it is not a valid replay.
 ReplayHeader *ValidateReplay(void *data, int size);
 // Saves the replay being recorded to `path`, under `name`, unless it
 // was played with another config than the current one (outside
-// practice, Extra and Phantasm) or with the config's unk_25 set: the
+// practice, Extra and Phantasm) or with the config's scoreDisabled set: the
 // header's first 0x54 bytes as they are, the rest and the stages'
 // frames and frame rates compressed with LzssCompress, all encoded as
 // ValidateReplay decodes them. Then frees the stages and removes the
@@ -129,27 +129,27 @@ class ReplayManager
 {
 public:
     // The second update callback while recording, run before the game's
-    // own: clears unk_d6 (marking 0x100 when GameManager::unk_93d0 is
-    // set, which it clears), keeps the random seed in unk_d4 and clears
+    // own: clears frameEvents (marking 0x100 when GameManager::pauseRequested is
+    // set, which it clears), keeps the random seed in frameSeed and clears
     // the count of random numbers. Returns 1. Not in th06.
     static int RecordOnUpdate2(ReplayManager *replay);
     // The update callback while recording: while bit 2 of
-    // GameManager::unk_93d8 is set, plays by g_Buttons and, unless the
-    // config's unk_25 or bit 3 of App::unk_18c is set, records them with
-    // unk_d6, and every 30 frames the frame rate (0x80 set while
-    // App::unk_2a4 is), then counts the frame. Returns 1.
+    // GameManager::stateFlags is set, plays by g_Buttons and, unless the
+    // config's scoreDisabled or bit 3 of App::stateFlags is set, records them with
+    // frameEvents, and every 30 frames the frame rate (0x80 set while
+    // App::fastClockStreak is), then counts the frame. Returns 1.
     static int RecordOnUpdate(ReplayManager *replay);
     // The second update callback while playing: while bit 2 of
-    // GameManager::unk_93d8 is set, returns 6 on two frames of every
+    // GameManager::stateFlags is set, returns 6 on two frames of every
     // three while g_Gui's IsMsgRunning and IsMsgSkippable hold, and
-    // on four of every five while unk_93df is 2 and
+    // on four of every five while replayMenuChoice is 2 and
     // g_EnemyManager.AnyBossActive() does not; otherwise 1.
     static int PlayOnUpdate2(ReplayManager *replay);
     // The update callback while playing: while bit 2 of
-    // GameManager::unk_93d8 is set and the config's unk_25 is not,
+    // GameManager::stateFlags is set and the config's scoreDisabled is not,
     // plays the recorded buttons for the frame, with key repeat as in
     // App::OnUpdate, and every 30 frames puts the recorded frame rate
-    // back into App::unk_188 and unk_2a8, then counts the frame.
+    // back into App::roundedFps and fpsWarning, then counts the frame.
     // Returns 1.
     static int PlayOnUpdate(ReplayManager *replay);
     // The update element's added callback when recording: starts the
@@ -165,7 +165,7 @@ public:
     // missing.
     static int PlayAddedCallback(ReplayManager *replay);
     // Removes the chain elements but the update one, frees the replay
-    // data and unk_40 and deletes the ReplayManager. Returns 0.
+    // data and frameRateBuffer and deletes the ReplayManager. Returns 0.
     static int DeletedCallback(ReplayManager *replay);
     // The draw callback; does nothing. Returns 1.
     static int OnDraw(ReplayManager *replay);

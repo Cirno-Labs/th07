@@ -110,7 +110,7 @@ struct ShotTypeData
     float itemPullSpeed;
     // The width and height of the box the player collects items in.
     float itemCatchSize;
-    // The share of GameManager::unk_961c over stats->unk_88 a death
+    // The share of GameManager::bonusPoints over stats->grazeCount a death
     // costs.
     float deathScoreShare;
     // Above this line the player draws the items in, at full power or
@@ -161,23 +161,23 @@ void FireShot(Player *player, PlayerBullet *bullet, ShotData *sd);
 // `bullet` if it fires on `frame`, returning 1 if it did, else 0.
 // Fires on frames where frame % interval is phase.
 int TryFireShot(Player *player, PlayerBullet *bullet, int frame, ShotData *sd);
-// A laser, while Player::unk_240a is 1: fires if laser sd->phase is
+// A laser, while Player::optionState is 1: fires if laser sd->phase is
 // free, running its timer for sd->interval frames; while it flies from
 // another shot, sends its bullet interrupt 1 and frees it.
 int FireLaser(Player *player, PlayerBullet *bullet, int frame, ShotData *sd);
-// The same while Player::unk_240a is 3, with the timer at 999: also
-// keeps sd->interval in bullet->unk_352 and moves its pos and the 16
-// unk_258 to x = -999.
+// The same while Player::optionState is 3, with the timer at 999: also
+// keeps sd->interval in bullet->trailLength and moves its pos and the 16
+// trail to x = -999.
 int FireTrailLaser(Player *player, PlayerBullet *bullet, int frame, ShotData *sd);
 // A plain shot that, when there is a homingTarget, flies at it, turned
 // by sd->angle + pi / 2, at 1.5 times its speed.
 int FireHomingShot(Player *player, PlayerBullet *bullet, int frame, ShotData *sd);
-// A plain shot that flies at Player::unk_b7e58, turned by sd->angle +
+// A plain shot that flies at Player::aimedShotAngle, turned by sd->angle +
 // pi / 2.
 int FireAimedShot(Player *player, PlayerBullet *bullet, int frame, ShotData *sd);
 
 // Steers a flying homing bullet, as th06's UpdateBullets did Reimu A's
-// orbs: for its first 40 frames towards Player::unk_2428, if any, at up
+// orbs: for its first 40 frames towards Player::orbHomingTarget, if any, at up
 // to 10; otherwise speeds it up by a third up to 10. Returns 0.
 int UpdateHomingOrb(Player *player, PlayerBullet *bullet);
 // The same at up to 18, speeding up by 0.6.
@@ -192,7 +192,7 @@ int UpdateAcceleratingBullet(Player *player, PlayerBullet *bullet);
 // 0 otherwise.
 int UpdateLaserBullet(Player *player, PlayerBullet *bullet);
 // FireTrailLaser's lasers: ended and cut short like UpdateLaserBullet's; the
-// first unk_352 points of the bullet's trail (unk_258, from pos, newest
+// first trailLength points of the bullet's trail (trail, from pos, newest
 // first) that are set (x at least -900) become Player hitboxes 0x60 on,
 // with the bullet's size. Unless Player::playerState is 2 (returning 1),
 // the laser then runs from the player to the top. Returns 0 otherwise.
@@ -214,7 +214,7 @@ int BurstHitEffect(Player *player, PlayerBullet *bullet, D3DXVECTOR3 *pos);
 // through each shot's fire function, giving the bullets its callbacks.
 void FireShots(Player *player, int frame);
 // th06's UpdateBullets: drops lasers whose options are gone (lasers 0
-// and 1 unless unk_240a is 1, laser 2 unless it is 3) or all of them
+// and 1 unless optionState is 1, laser 2 unless it is 3) or all of them
 // while playerState is 2, runs down the laser timers (cut to 50 while
 // fireTimer is idle), then moves the flying bullets, through their
 // update callback first, ending those that leave the play area (but
@@ -237,51 +237,51 @@ int UpdateFiring(Player *player);
 //
 // th06's HandleInput: moves the player by the buttons the game plays by
 // (g_GameButtons) at the shot type's speeds, within
-// GameManager::unk_9604, sets the boxes and moves the options in and
-// out while focused, with effect 0x18 (unk_9d8) on the way in. Sakuya B
-// (character 2, shot type 1) fans her options around unk_b7e58
+// GameManager::arena2, sets the boxes and moves the options in and
+// out while focused, with effect 0x18 (optionEffect) on the way in. Sakuya B
+// (character 2, shot type 1) fans her options around aimedShotAngle
 // instead. On button 1, unless Gui's IsMsgRunning holds, starts firing
-// (if the checksums agree) and, unfocused, turns unk_b7e58 with the
+// (if the checksums agree) and, unfocused, turns aimedShotAngle with the
 // sideways movement, between -7pi/10 and -3pi/10, or else back to
 // -pi/2. Returns 0.
 int HandleInput(Player *player);
 // OnUpdate's first step, as the start of th06's: clears the sizes of
-// the 0x70 unk_9dc hitboxes, then counts down each PlayerArea's unk_18,
+// the 0x70 bombHitboxes hitboxes, then counts down each PlayerArea's framesLeft,
 // growing unk_10 by unk_14 meanwhile, and frees it once it is 0.
 void UpdateHitboxAreas(Player *player);
-// OnUpdate's bomb step, the bomb part of th06's: with unk_240d set and
+// OnUpdate's bomb step, the bomb part of th06's: with bombState set and
 // button 2 held outside a bomb, ends playerState 4 (StopBombState(1)) and
 // collects all items instead. Otherwise tries StartBombState while
-// unk_240d is 2 and runs down unk_23fc. A running bomb takes its unk_c
-// from GameManager::unk_961c on each new frame (down to stats->
-// unk_88) and runs. Else, with button 2 held, deathbombFrames left,
-// bombs left, unk_23fc at 0, intact checksums and no
+// bombState is 2 and runs down bombCooldown. A running bomb takes its unk_c
+// from GameManager::bonusPoints on each new frame (down to stats->
+// grazeCount) and runs. Else, with button 2 held, deathbombFrames left,
+// bombs left, bombCooldown at 0, intact checksums and no
 // g_Gui.IsMsgRunning(), starts a bomb: marks bit 1 of
-// g_ReplayManager->unk_d6, uses a bomb, runs it for the player's
+// g_ReplayManager->frameEvents, uses a bomb, runs it for the player's
 // focus, takes 2 from the rank and gives 6 more deathbombFrames (up to
-// the shot type's). unk_23dc is 1 on the frame a bomb starts, else 0.
+// the shot type's). bombJustStarted is 1 on the frame a bomb starts, else 0.
 void UpdateBombState(Player *player);
 // OnUpdate's dying step, the dying part of th06's: while
 // deathbombFrames run, ends playerState 4 at once (StopBombState(0)) if
-// unk_240d is 1, else counts them down and at 0 loses a life: marks bit
-// 4 of g_ReplayManager->unk_d6, counts the death, and with lives left
+// bombState is 1, else counts them down and at 0 loses a life: marks bit
+// 4 of g_ReplayManager->frameEvents, counts the death, and with lives left
 // drops 16 power and spawns six power items and takes a share of
-// GameManager::unk_961c (at most 100000, or 60000 for character 2);
+// GameManager::bonusPoints (at most 100000, or 60000 for character 2);
 // without, drops all power and spawns five type 4 items; then takes 16
 // from the rank. Afterwards it fades and stretches the player out over
 // 30 frames, then puts it back at the bottom of the play area,
 // respawning, and takes a life and refills the bombs, returning 1, or
 // with no lives left opens the continue menu. Returns 0 otherwise.
 int UpdateDyingState(Player *player);
-// Tries to start playerState 4 (UpdateBombState calls it while unk_240d is
-// 2): sets unk_240d to 2 during a bomb or while
+// Tries to start playerState 4 (UpdateBombState calls it while bombState is
+// 2): sets bombState to 2 during a bomb or while
 // g_Gui.IsMsgRunning(), or while playerState is 1 or 3, or
 // while dying without deathbombFrames; while dying with them calls
 // StopBombState(0). Otherwise starts playerState 4 for 540 frames of
-// stateTimer (kept in unk_16a0c), with unk_240d 1: ends unk_b7e68 (and
-// lets unk_b7e6c end), starts effect 0x1c in slot 4 to follow the
-// player in unk_b7e6c, calls Gui's ShowFullPowerPopup(0, 2), plays
-// sounds 0x20 and 0x24 and marks bit 8 of g_ReplayManager->unk_d6.
+// stateTimer (kept in bombStateTimerSnapshot), with bombState 1: ends invulnerabilityEffect (and
+// lets bombInvulnerabilityEffect end), starts effect 0x1c in slot 4 to follow the
+// player in bombInvulnerabilityEffect, calls Gui's ShowFullPowerPopup(0, 2), plays
+// sounds 0x20 and 0x24 and marks bit 8 of g_ReplayManager->frameEvents.
 void StartBombState(Player *player);
 // OnUpdate's respawning step, as th06's: for 60 frames clears bullets
 // (respawnClearFrames), fades the player in over 30 frames of
@@ -291,16 +291,16 @@ void StartBombState(Player *player);
 void UpdateRespawningState(Player *player);
 // OnUpdate's step after the dying and respawning ones, as the end of
 // th06's OnUpdate: runs down respawnClearFrames, clearing the bullets
-// meanwhile. While invulnerable (playerState 3) keeps unk_b7e68 on the
+// meanwhile. While invulnerable (playerState 3) keeps invulnerabilityEffect on the
 // player and counts stateTimer down, blinking the player, and at 0 ends
-// unk_b7e68 and returns to playerState 0. While playerState is 4 keeps
-// unk_b7e6c on the player, sets GameManager::unk_9620 from the time
+// invulnerabilityEffect and returns to playerState 0. While playerState is 4 keeps
+// bombInvulnerabilityEffect on the player, sets GameManager::invulnerabilityBonus from the time
 // left, and counts stateTimer down, blinking the player red and setting
 // Stage's color, then calls EndBombState at 0. Otherwise ticks
 // stateTimer.
 void UpdateInvulnerability(Player *player);
-// OnUpdate's last step: clears unk_2428, homingTarget and unk_2440 for
-// the next frame, then sets AsciiText's unk_74d4 to 2 while the player
+// OnUpdate's last step: clears orbHomingTarget, homingTarget and homingTargetSet for
+// the next frame, then sets AsciiText's summaryPendingInterrupt to 2 while the player
 // is in the bottom left (y at least 400, x below 160) and back to 3
 // once it leaves.
 void ResetHomingAndText(Player *player);
@@ -335,7 +335,7 @@ ASSERT_SIZE(PlayerArea, 0x20);
 struct PlayerBombPart
 {
     // Reimu A: 0 unused, 1 flying, 2 and up after it bursts, while
-    // unk_4 counts to 30.
+    // burstTimer counts to 30.
     int state;
     int burstTimer;
     union
@@ -371,7 +371,7 @@ struct PlayerBomb
     int focused;
     // Set to 999 when a bomb starts, as th06's.
     int duration;
-    // What each frame of the bomb takes from GameManager::unk_961c.
+    // What each frame of the bomb takes from GameManager::bonusPoints.
     int drainPerFrame;
     Timer timer;
     // Run the bomb and draw it, unfocused and focused, as th06's update
@@ -416,13 +416,13 @@ public:
     // callback returns nonzero; then, unless of type 4 or 5, it is
     // marked hit (restarting its script 0x20 on and bursting effect 5
     // if it was flying) and, unless of type 3, slowed to an eighth.
-    // Each unk_9dc box that meets it deals its unk_18 and adds it to
+    // Each bombHitboxes box that meets it deals its unk_18 and adds it to
     // its unk_1c; every fourth such hit bursts effect 3 at `pos` (5
     // for the last 0x10 boxes), and during a bomb sets *hitByBomb.
     int CalcDamage(D3DXVECTOR3 *pos, D3DXVECTOR3 *size, int *hitByBomb);
-    // Whether a `size` box at `pos` meets one of unk_17dc's areas: a box
+    // Whether a `size` box at `pos` meets one of hitAreas's areas: a box
     // while its width is set, else a circle of radius unk_10 if that is
-    // set. Keeps the area's unk_1c in unk_2404 and returns 2 if so, else
+    // set. Keeps the area's unk_1c in areaItemType and returns 2 if so, else
     // returns 0. Not in th06.
     int CheckAreaHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size);
     // The angle from `pos` to the player, pi / 2 when they coincide.
@@ -432,33 +432,33 @@ public:
     // sound 4.
     void Die();
     // Whether a `size` box at `pos` hits the player, as th06's: 2 if it
-    // meets one of unk_17dc's areas (CheckAreaHit, unk_2404 6 otherwise),
+    // meets one of hitAreas's areas (CheckAreaHit, areaItemType 6 otherwise),
     // else 1 if it meets the hitbox, else 0. A hit marks bit 2 of
-    // g_ReplayManager->unk_d6; it calls StopBombState(0) while playerState
+    // g_ReplayManager->frameEvents; it calls StopBombState(0) while playerState
     // is 4 and kills the player while it is 0.
     int CheckHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size);
     // Whether a `size` box at `pos`, grown by 20 on each side, grazes the
-    // player, as th06's: 2 if the box itself meets one of unk_17dc's
+    // player, as th06's: 2 if the box itself meets one of hitAreas's
     // areas, else 0 while respawning or dying or off the graze box, else
     // grazes `pos` (Graze) and returns 1.
     int CheckGraze(D3DXVECTOR3 *pos, D3DXVECTOR3 *size);
     // Removes the player's update and draw elements from the chain.
-    // Takes the first free one of unk_17dc's first 0x5f entries, or the
+    // Takes the first free one of hitAreas's first 0x5f entries, or the
     // last entry, and sets it to a `width` by `height` area at `pos`
     // with unk_18 0. Returns it.
-    PlayerArea *AddHitboxArea(D3DXVECTOR3 *pos, float width, float height, int unk_1c);
+    PlayerArea *AddHitboxArea(D3DXVECTOR3 *pos, float width, float height, int itemType);
     // The same, setting unk_10 to unk_1c instead of width and height.
-    PlayerArea *AddHitboxAreaCircle(D3DXVECTOR3 *pos, float unk_10, float unk_14, int unk_18, int unk_1c);
+    PlayerArea *AddHitboxAreaCircle(D3DXVECTOR3 *pos, float radius, float radiusGrowth, int framesLeft, int itemType);
     // Clears the player and adds it to the chains (update priority 8,
     // draw 6 and 8), keeping `arg` in registerChainArg. Returns 0, or -1 if
     // adding fails.
     static int RegisterChain(int arg);
-    // Whether a `size` box at `pos` meets the unk_978 box while
+    // Whether a `size` box at `pos` meets the grazeTestMin box while
     // playerState is 0, 3 or 4, as th06's (which tested the graze box).
     int TouchesGrazeBox(D3DXVECTOR3 *pos, D3DXVECTOR3 *size);
     // Whether a laser hits or grazes the player, as th06's: `pos` and
     // `size` are its box in its own frame, into which the hitbox is
-    // turned by `angle` around `origin`. On a hit, marks bit 2 of g_ReplayManager->unk_d6, then
+    // turned by `angle` around `origin`. On a hit, marks bit 2 of g_ReplayManager->frameEvents, then
     // calls StopBombState(0) while playerState is 4 and kills the player
     // while it is 0, returning 1 in both cases, else 0. Otherwise, with
     // `canGraze`, grazes the player within 48 of the box unless it is
@@ -466,36 +466,36 @@ public:
     int CheckLaserHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size, D3DXVECTOR3 *origin, float angle, int canGraze);
     // Scores a graze of the bullet at `pos`, as th06's: counts it
     // unless a bomb runs, bursts effect 8 halfway to it (three red ones
-    // while unk_240d is 1 and not focused), adds 6 hundredths to the
+    // while bombState is 1 and not focused), adds 6 hundredths to the
     // rank, plays sound 0x1e, adds to g_SpellCardGrazeBonus and 2000 points,
-    // and while unk_240d is 1 calls GameManager's IncreaseBonusCap and
+    // and while bombState is 1 calls GameManager's IncreaseBonusCap and
     // AddBonusPointsCapped with 30 (focused) or 80.
     void Graze(D3DXVECTOR3 *pos);
     // Ends playerState 4 early (the hit checks call it on a hit,
-    // StartBombState while dying with deathbombFrames): ends unk_b7e6c and
+    // StartBombState while dying with deathbombFrames): ends bombInvulnerabilityEffect and
     // starts a new effect 0x1c in slot 4 there, makes the player
-    // invulnerable (playerState 3) for 40 frames with unk_23fc 40 and
-    // unk_240d 0, resets GameManager::unk_9620, adds an area at the
+    // invulnerable (playerState 3) for 40 frames with bombCooldown 40 and
+    // bombState 0, resets GameManager::invulnerabilityBonus, adds an area at the
     // player (AddHitboxAreaCircle with 32, 16, 0x32 and 8), bursts 32 effects
     // 0x1d in a circle and plays sounds 7 and 0x21, marking bit 0x10 of
-    // g_ReplayManager->unk_d6. The argument is unused.
+    // g_ReplayManager->frameEvents. The argument is unused.
     void StopBombState(int unused);
     // Ends playerState 4 (UpdateInvulnerability calls it when it runs out): calls
     // GameManager's IncreaseBonusCap and AddBonusPointsCapped with 10000, scores ten
-    // times unk_961c over stats->unk_88 (shown through Gui's
-    // ShowFullPowerPopup), resets unk_9620, plays sound 0x21, finishes a respawn
+    // times bonusPoints over stats->grazeCount (shown through Gui's
+    // ShowFullPowerPopup), resets invulnerabilityBonus, plays sound 0x21, finishes a respawn
     // if one runs, then makes the player invulnerable (playerState 3)
-    // for 40 frames, with unk_23fc 40 and unk_240d 0, and ends the
-    // unk_b7e6c effect.
+    // for 40 frames, with bombCooldown 40 and bombState 0, and ends the
+    // bombInvulnerabilityEffect effect.
     void EndBombState();
     // The update callback: unless the game is frozen, runs the steps
-    // (UpdateHitboxAreas on), steps the sprites (the options' while unk_240a
+    // (UpdateHitboxAreas on), steps the sprites (the options' while optionState
     // is set), the bullets (UpdateBullets) and the firing (UpdateFiring).
     // Returns 1.
     static int OnUpdate(Player *player);
     // The draw callback, as th06's: draws the flying bullets
     // (DrawBullets) and a running bomb, then, unless the game is in the
-    // continue menu, the player and, while unk_240a is set and
+    // continue menu, the player and, while optionState is set and
     // playerState is 0, 3 or 4, the options, all offset by the play
     // area. While playerState is 4 and stateTimer runs, blinks the
     // player red and sets Stage's color, as UpdateInvulnerability.
@@ -506,11 +506,11 @@ public:
     // 12), the character's ANM, then sets up the player, its boxes from
     // the shot type, options, bullets, timers and bomb callbacks, and
     // (outside those scenes) sends g_AsciiText's sprites interrupt 1,
-    // its unk_b7c interrupt 2. Caps GameManager::unk_9620 as
+    // its nearbyLabels interrupt 2. Caps GameManager::invulnerabilityBonus as
     // PlayAddedCallback does. Returns 0, or -1 if a file fails to load.
     static int AddedCallback(Player *player);
     // Unless the scene is 3, 0xb or 0xc, releases ANM 10 and sets
-    // AsciiText's sprite interrupts (99) and unk_74d4; frees the shot
+    // AsciiText's sprite interrupts (99) and summaryPendingInterrupt; frees the shot
     // type data. Returns 0.
     static int DeletedCallback(Player *player);
     static void RemoveChain();
@@ -618,16 +618,16 @@ extern Player g_Player;
 // Probably th06's DimPlayAreaForBomb, turned into a stage tint: over
 // the bomb's first and last 60 frames the stage fades between gray
 // (0x80) and 0x30, through Stage::SetTintColor, after resetting the
-// SpriteEngine's color; sets the stage's unk_52b0, which keeps OnDraw2
+// SpriteEngine's color; sets the stage's keepTintColor, which keeps OnDraw2
 // from resetting that color.
 void DimPlayAreaForBomb(Player *player);
 
-// Ends the effect at unk_b7e68 and starts a red effect 0x19 at the
+// Ends the effect at invulnerabilityEffect and starts a red effect 0x19 at the
 // player in slot 0 that runs as long as stateTimer, keeping it there.
 void SpawnBombAura(Player *player);
 
 // Sets the bomb's unk_c, what each of its frames takes from
-// GameManager::unk_961c: `share` of unk_961c over stats->unk_88, halved
+// GameManager::bonusPoints: `share` of bonusPoints over stats->grazeCount, halved
 // on difficulty 2, quartered on 3 and a third on 4 and 5, spread over
 // the bomb's duration, but at least `minimum` spread the same way,
 // both rounded down to tens.
@@ -650,7 +650,7 @@ void DrawReimuABomb(Player *player);
 // Reimu A's focused bomb, closest to th06's UpdateReimuABomb: 300
 // frames with stateTimer at 360 and the player slowed to 0.6; from
 // frame 60 an orb every 16 frames (7) in a random direction, homing
-// in on unk_2428 (else the player), until it has hit 100 times or 30
+// in on orbHomingTarget (else the player), until it has hit 100 times or 30
 // frames are left, then bursts as Reimu A's. Stops at the end,
 // restoring the player's speed.
 void UpdateReimuABombFocused(Player *player);
@@ -739,7 +739,7 @@ void DrawSakuyaABomb(Player *player);
 // an effect 0x15 that follows the player for 60 frames and the player
 // slowed to 0.3; from frame 20 to 114 two knives every other frame
 // (0x60, around a ring), which fly out, stop and turn from their frame
-// 30 to 70, then aim at unk_2428 (when set) at speed 14 and speed up.
+// 30 to 70, then aim at orbHomingTarget (when set) at speed 14 and speed up.
 // Each is an area (AddHitboxAreaCircle, 32) and a 24 box of 22 damage
 // until its first hit, then restarts its sprite at script 0x460 and
 // bursts effect 0.
@@ -765,7 +765,7 @@ void DrawSakuyaBBomb(Player *player);
 // are pulled towards it, keeping a trail of 32 positions; the first is
 // an area (AddHitboxAreaCircle, 96) and a 160 box of 1 damage. Stops
 // all bullets at frames 40 and 100; ends with an area at the player
-// (800) and sets unk_17dc[0] to a 448 by 512 box at the play area's
+// (800) and sets hitAreas[0] to a 448 by 512 box at the play area's
 // middle.
 void UpdateSakuyaBBombFocused(Player *player);
 

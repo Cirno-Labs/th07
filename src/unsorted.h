@@ -89,11 +89,11 @@ public:
     // Adds the time since the last call to the play time in
     // g_GameManager.plst. Not in th06.
     void AddPlayTime();
-    // Unless unk_2b8 is clear, compares the time the local clock and
+    // Unless clockMeasurementPending is clear, compares the time the local clock and
     // the performance counter say passed since startTime and
-    // startCounter, counting in unk_2a4 to unk_2b4 how often the clock
-    // ran over 2.5 times faster, then clears unk_2b8. Sets bit 0x8 of
-    // unk_18c (no score is recorded) once unk_2ac reaches 40 or unk_2b4
+    // startCounter, counting in fastClockStreak to fastClockCycles how often the clock
+    // ran over 2.5 times faster, then clears clockMeasurementPending. Sets bit 0x8 of
+    // stateFlags (no score is recorded) once maxFastClockStreak reaches 40 or fastClockCycles
     // 16, and clears it otherwise. Called by DrawFps. Not in th06.
     void CheckClockDrift();
     // Checks the version file against `version` ("0100b") and the
@@ -105,16 +105,16 @@ public:
     // Adds the time since the last call to the time played in
     // g_GameManager.plst. Not in th06.
     void AddTotalPlayTime();
-    // Whether g_GameManager.unk_4 is set and its byte at 0x25 is not
+    // Whether g_GameManager.savedConfig is set and its byte at 0x25 is not
     // 0. The result screen records no score then. Not in th06.
     int IsScoreDisabled();
     // Saves the back buffer as a 24-bit 640x480 bitmap at `path`, from an
     // X8R8G8B8 back buffer only (a 16-bit one is logged and skipped).
     // Returns 1 for any other format, otherwise 0. Not in th06.
     int SaveScreenshot(char *path);
-    // Flushes the sprites and turns fog off if unk_2bc is set; returns
+    // Flushes the sprites and turns fog off if fogState is set; returns
     // 0 when it was not. Not in th06.
-    // Flushes the sprites and turns fog on unless unk_2bc is 1 already;
+    // Flushes the sprites and turns fog on unless fogState is 1 already;
     // returns 0 when it was. Not in th06.
     int EnableFog();
     int DisableFog();
@@ -124,7 +124,7 @@ public:
     // Advances `frames` by one frame, or by a fraction of one into
     // `subFrame` while the game runs slow.
     void TickTimer(int *frames, float *subFrame);
-    // Clears unk_2a4 and unk_2ac to unk_2b8. Called by the title menu's
+    // Clears fastClockStreak and maxFastClockStreak to clockMeasurementPending. Called by the title menu's
     // added callback. Not in th06.
     void ResetClockDriftCounters();
     // th06's StopMusic: stops the MIDI player in MIDI mode; in wave mode
@@ -145,7 +145,7 @@ public:
     // Returns -1 if the music mode is neither, otherwise 0.
     int PlayMusic(char *path);
     // Fades the music out over `seconds`: in wave mode by queueing sound
-    // command 5 with the whole seconds, stretched by unk_178 while the
+    // command 5 with the whole seconds, stretched by gameSpeed while the
     // game runs slow. Returns -1 if the music mode is neither wave nor
     // MIDI, otherwise 0.
     int FadeOutMusic(float seconds);
@@ -253,7 +253,7 @@ public:
     float achievedFrames;
     float expectedFrames;
     // The frame rate rounded, as DrawFps shows it with bit 3 of
-    // g_GameManager.unk_93d8.
+    // g_GameManager.stateFlags.
     short roundedFps;
     unsigned char pad_18a[0x2];
     // Bit 1: the device does T&L in hardware; 2: the back buffer is
@@ -281,9 +281,9 @@ public:
     int fastClockStreak;
     // DrawFps shows the rate in red when it is set.
     int fpsWarning;
-    // The highest unk_2a4 so far.
+    // The highest fastClockStreak so far.
     int maxFastClockStreak;
-    // The same, cleared after reaching 10, which adds one to unk_2b4.
+    // The same, cleared after reaching 10, which adds one to fastClockCycles.
     int fastClockCycleCount;
     int fastClockCycles;
     // Set while a measurement is pending; CheckClockDrift clears it.
@@ -310,9 +310,9 @@ void RemoveGameManagerChain();
 // Measures the frame rate every half second, with the performance
 // counter when there is one (calling g_App.CheckClockDrift every eighth
 // time), and adds up the frames there should have been and those there
-// were while bit 2 of g_GameManager.unk_93d8 is set and `draw` is.
+// were while bit 2 of g_GameManager.stateFlags is set and `draw` is.
 // Shows the rate when `draw` is set and hideFps is not, with
-// g_App.unk_188 below it while bits 2 and 3 are set.
+// g_App.roundedFps below it while bits 2 and 3 are set.
 void DrawFps(int draw);
 
 // Sets up DirectInput as the DirectX 8 SDK's Keyboard and Joystick
@@ -431,7 +431,7 @@ void SetDefaultRenderStates();
 // there.
 extern BYTE g_FogColorChanged;
 // Creates g_AppMutex and returns -1 if another instance holds it, as
-// th06's CheckSingleInstance. Also sets g_GameWindow.unk_1c when the
+// th06's CheckSingleInstance. Also sets g_GameWindow.forceClockPacing when the
 // game was started through a shortcut or a path other than its own.
 int CheckSingleInstance(HINSTANCE instance);
 // The mutex that keeps a second instance from starting.
@@ -906,8 +906,8 @@ struct GameStats
     // GameManager::RerollLifeChecksumKeys.
     DWORD lifeChecksumKeys[7];
     float deaths;
-    // Set to random floats from 6543 up by RerollStatsChecksumKeys, as unk_60,
-    // unk_70 and unk_80.
+    // Set to random floats from 6543 up by RerollStatsChecksumKeys, as statsChecksumKeysB,
+    // lifeChecksumKeysF and statsChecksumKeysC.
     float statsChecksumKeysA[2];
     // The lives left, a float behind checksums, as the other counts.
     float lives;
@@ -921,10 +921,10 @@ struct GameStats
     // The shot power, up to 128.
     float power;
     float statsChecksumKeysC[2];
-    // Player::Graze subtracts it from GameManager::unk_961c.
+    // Player::Graze subtracts it from GameManager::bonusPoints.
     int grazeCount;
     int checksumKeysD[8];
-    // ChecksumBytes adds unk_b4[2] to it for every byte it sums.
+    // ChecksumBytes adds checksumKeysE[2] to it for every byte it sums.
     int checksum;
     // The checksum, from ComputeChecksum.
     int computedChecksum;
@@ -932,7 +932,7 @@ struct GameStats
 };
 ASSERT_SIZE(GameStats, 0xc8);
 
-// What GameManager::unk_4 points at.
+// What GameManager::savedConfig points at.
 struct GameConfig
 {
     unsigned char pad_0[0x1c];
@@ -956,7 +956,7 @@ public:
     static int OnUpdate(GameManager *mgr);
     static int AddedCallback(GameManager *mgr);
     static int DeletedCallback(GameManager *mgr);
-    // The draw chain callback, as th06's: moves unk_93dc on from 1 to
+    // The draw chain callback, as th06's: moves isPaused on from 1 to
     // 2. Returns 1.
     static int OnDraw(GameManager *mgr);
     // Whether the checksummed fields of `stats` no longer agree.
@@ -972,8 +972,8 @@ public:
     // Whether shot type `shot` has Phantasm open (IsPhantasmOpen for one
     // shot type).
     int HasPhantasmOpen(int shot);
-    // The checksum: ChecksumBytes over stats from unk_34 to unk_ac, over
-    // stats->unk_b4, over what unk_4 points at and over g_App's config
+    // The checksum: ChecksumBytes over stats from unk_34 to checksum, over
+    // stats->checksumKeysE, over what savedConfig points at and over g_App's config
     // (0x38 bytes each).
     int ComputeChecksum();
     // Sets the rank and its bounds from g_Ranks for the difficulty.
@@ -982,18 +982,18 @@ public:
     void RerollChecksumKeys();
     // Adds `amount` hundredths to the rank, as th06's.
     void AddSubRank(int amount);
-    // Add `amount` to unk_9618 and to unk_961c, each up to a limit.
+    // Add `amount` to bonusPointsCap and to bonusPoints, each up to a limit.
     void IncreaseBonusCap(int amount);
     void AddBonusPointsCapped(int amount);
-    // Adds `amount` to unk_961c, up to unk_9618. A gain outside
-    // Player::unk_240d also adds to unk_9620 and, once that reaches
-    // stats->unk_88 + 50000, caps it there and calls StartBombState. When
-    // unk_961c reaches unk_9618 and changed, calls Gui's
-    // ShowFullPowerPopup with unk_961c less stats->unk_88 and 3.
+    // Adds `amount` to bonusPoints, up to bonusPointsCap. A gain outside
+    // Player::bombState also adds to invulnerabilityBonus and, once that reaches
+    // stats->grazeCount + 50000, caps it there and calls StartBombState. When
+    // bonusPoints reaches bonusPointsCap and changed, calls Gui's
+    // ShowFullPowerPopup with bonusPoints less stats->grazeCount and 3.
     void AddBonusPoints(int amount);
-    // The same without unk_9620.
+    // The same without invulnerabilityBonus.
     void AddBonusPointsNoTrack(int amount);
-    // Takes `amount` from unk_961c, down to stats->unk_88.
+    // Takes `amount` from bonusPoints, down to stats->grazeCount.
     void SubBonusPoints(int amount)
     {
         if (this->bonusPoints - this->stats->grazeCount >= amount)
@@ -1013,13 +1013,13 @@ public:
     // Whether a `width` by `height` box centred on (`x`, `y`) touches the
     // play area, as th06's GameManager::IsInPlayArea.
     BOOL IsInPlayArea(float x, float y, float width, float height);
-    // Sets arena to th06's play area (32, 16, 384, 448) and unk_9604
+    // Sets arena to th06's play area (32, 16, 384, 448) and arena2
     // to (8, 16, 368, 416).
     void SetPlayArea();
     // Adds `power` to stats->power and recomputes the checksums; wipes
     // g_App with 0xff first if the checksums were already wrong.
     void AddPower(int power);
-    // Sets stats->unk_34 and unk_70 to random numbers from 6543 up.
+    // Sets stats->lifeChecksumKeys and lifeChecksumKeysF to random numbers from 6543 up.
     // Not in th06.
     void RerollLifeChecksumKeys();
     // Adds `lives` to stats->lives, checked like AddPower.
@@ -1048,14 +1048,14 @@ public:
     void AddDeaths(int deaths);
     // Adds `bombs` to stats->bombsUsed, checked like AddPower.
     void AddBombsUsed(int bombs);
-    // Sets bit 3 (0x8) of unk_93d8 to `value`.
+    // Sets bit 3 (0x8) of stateFlags to `value`.
     void SetIsInReplay(int value)
     {
         this->isInReplay = value;
     }
 
     // A block of random size that AddedCallback allocates and frees
-    // before it allocates unk_4 and stats.
+    // before it allocates savedConfig and stats.
     void *tempBuffer;
     GameConfig *savedConfig;
     GameStats *stats;
@@ -1133,10 +1133,10 @@ public:
     // A second rectangle, set with arena by SetPlayArea: x, y, width
     // and height.
     float arena2[4];
-    // RerollStatsChecksumKeys sets it to the checksum plus stats->unk_8c[3].
+    // RerollStatsChecksumKeys sets it to the checksum plus stats->checksumKeysD[3].
     float checksumValue;
     int bonusPointsCap;
-    // Added to (up to unk_9618) by AddBonusPointsCapped.
+    // Added to (up to bonusPointsCap) by AddBonusPointsCapped.
     int bonusPoints;
     // UpdateInvulnerability sets it while Player::playerState is 4.
     int invulnerabilityBonus;
@@ -1145,7 +1145,7 @@ public:
     // The frames played, which the result screen shows as progress.
     int progressFrames;
     // Counts frames for OnUpdate's slowdowns: of a replay played slowly
-    // (unk_93df 1) and, while unk_4->unk_25 is set, by bullet count.
+    // (replayMenuChoice 1) and, while savedConfig->unk_25 is set, by bullet count.
     DWORD slowdownCounter;
     // Set by the title menu from the play time: 3 under 7 hours, 4
     // under 14, else 5.
@@ -1187,7 +1187,7 @@ extern EnemyAnmPaths g_EnemyAnmPaths[];
 extern char *g_EclPaths[];
 
 // The sum of the `size` bytes at `data`. Adds
-// g_GameManager.stats->unk_b4[2] to its unk_ac for every byte.
+// g_GameManager.stats->checksumKeysE[2] to its checksum for every byte.
 int ChecksumBytes(BYTE *data, int size);
 // Fills the checksum keys in g_GameManager.stats with random numbers
 // from 6543 up, then stores the checksum. Not in th06.
@@ -1315,9 +1315,9 @@ struct GuiImpl
     // Starts script `index` of msg.msgFile, as th06's.
     void StartMsgScript(int index);
     // Runs the dialogue for a frame, as th06's. New: each frame it calls
-    // g_Player.EndBombState while unk_240d is set and collects the items
+    // g_Player.EndBombState while bombState is set and collects the items
     // unless the player is dying;
-    // opcode 7 shows the song name in unk_4bd0[0], 9 records the stage
+    // opcode 7 shows the song name in trackNumberSprites[0], 9 records the stage
     // clear bonus, 11 picks the next scene from the game mode, 14 fades
     // the screen out.
     int RunMsg();
@@ -1351,8 +1351,8 @@ class Gui
 {
 public:
     // The update element's callback: unless g_GameManager.isFrozen is
-    // set, sets g_App.scene to 3 if impl->unk_209bc is set, runs
-    // UpdateInterface and impl->RunMsg and counts unk_0 up; plays MIDI
+    // set, sets g_App.scene to 3 if impl->returnToTitleRequested is set, runs
+    // UpdateInterface and impl->RunMsg and counts frameCounter up; plays MIDI
     // slot 0 on frame 300 of stage 6, and holds g_App.redrawFrames at 8
     // or more while button 0x100 is held. Returns 1.
     static int OnUpdate(Gui *gui);
@@ -1369,7 +1369,7 @@ public:
     // sprite `sprite` + 0x4ad in spellPortrait (script 0x4a3), moved left
     // by 288 or 112 when it is wider than 256 or 128; scripts 0x4a5 and
     // 0x4a7 with sprite 0x4ac, and spellName (script 0x705); sends
-    // spellNameBar and unk_7774 interrupt 1, plays sound 14 and sets
+    // spellNameBar and spellScoreBar interrupt 1, plays sound 14 and sets
     // g_App.redrawFrames to 2.
     void ShowSpellCardName(int sprite, char *text);
     // Loads the message file at `path` into impl->msg.msgFile, turning
@@ -1394,8 +1394,8 @@ public:
     void DrawHud();
     // The update: while no dialogue runs, the boss bar (sprites[11],
     // interrupt 1 to show it, 2 to hide it, its flag 13 when done) and
-    // its life; then the interface's sprites, unk_6e44 and unk_72dc
-    // (hidden when done), the unk_79c0 sprites while impl->unk_1fba0
+    // its life; then the interface's sprites, loadingIcon and loadingBar
+    // (hidden when done), the backgroundTiles sprites while impl->backgroundTileCount
     // is set (counting those still running into it), the popups, and
     // once the stage is cleared, the bonus (stage, grazes, point items,
     // cherry and, on the last stages, lives and bombs, by difficulty
@@ -1404,9 +1404,9 @@ public:
     // Loads the interface's sprites and the stage's portraits and
     // messages, as th06's. Unless the scene is 3, 0xb or 0xc, zeroes impl
     // and loads front.anm and the character's face and loading ANMs;
-    // otherwise restarts unk_72dc (script 0x725), has the play area of
+    // otherwise restarts loadingBar (script 0x725), has the play area of
     // the back buffer copied to texture 4 at its sprite and lays out the
-    // 14 by 12 unk_79c0 tiles. Stages 1 to 8 run CopySpriteToTexture and
+    // 14 by 12 backgroundTiles tiles. Stages 1 to 8 run CopySpriteToTexture and
     // load their face, text and message files; others return -1. Returns
     // 0, or -1 when a file fails to load.
     int LoadResources();
@@ -1426,12 +1426,12 @@ public:
     // the bomb ends. th06 interrupted bombName only.
     void EndBombName();
     // Sets spellName's pendingInterrupt to 1 and spellNameBar's and
-    // unk_7774's to 2, as the spell card ends.
+    // spellScoreBar's to 2, as the spell card ends.
     void EndSpellCardName();
-    // Hides unk_6e44, unk_7090 and unk_72dc (spriteIndex -1) and clears
-    // impl->unk_1fba0. Not in th06.
+    // Hides loadingIcon, loadingCaption and loadingBar (spriteIndex -1) and clears
+    // impl->backgroundTileCount. Not in th06.
     void HideInterface();
-    // Whether impl->unk_6e44 shows a sprite with flag bit 13 set, as
+    // Whether impl->loadingIcon shows a sprite with flag bit 13 set, as
     // th06's IsLoadingShown.
     BOOL IsLoadingShown();
 
@@ -1467,7 +1467,7 @@ public:
     {
         this->sectionColors[idx] = color;
     }
-    // Sets unk_18, the boss lives marked beside the bar, as th06's
+    // Sets bossLives, the boss lives marked beside the bar, as th06's
     // SetBossLives.
     void SetBossLives(int lives)
     {
@@ -1527,8 +1527,8 @@ extern D3DCOLOR g_BossTimerColors[4];
 // 0x609's in texture 0x15 (SpriteEngine::CopyTextureRect). Not in th06.
 void CopySpriteToTexture(int sprite);
 
-// Grows by 2500 plus 20 for every 1500 of GameManager::unk_961c above
-// stats->unk_88 with each graze. Probably a field of a larger object.
+// Grows by 2500 plus 20 for every 1500 of GameManager::bonusPoints above
+// stats->grazeCount with each graze. Probably a field of a larger object.
 extern int g_SpellCardGrazeBonus;
 // Cleared by Player::StopBombState, next to g_SpellCardGrazeBonus.
 extern int g_SpellCardCapture;
@@ -1661,16 +1661,16 @@ void ScriptMoveHermite(Enemy *enemy, EnemyScriptInstr *instr, float t);
 // bullets, starts the stage's spell card background, sets the bonus
 // from g_SpellCardBonuses[index] (the high word of argument 0), resets
 // the rank values, and starts effect 0x19 in reserved slot 1 as
-// effects[24], with its scale and then 0.125 twice in unk_218 and
-// timerCallbackTime in its unk_84[4] timer. Unless bit 3 of
-// g_GameManager.unk_93d8 is set, counts the attempt in the card's
-// Catk (by unk_93d7 and in all), first clearing its counts if their
-// checksum (unk_2a, with the name's) fails.
+// effects[24], with its scale and then 0.125 twice in scaleTween and
+// timerCallbackTime in its interpFrame[4] timer. Unless bit 3 of
+// g_GameManager.stateFlags is set, counts the attempt in the card's
+// Catk (by shotIndex and in all), first clearing its counts if their
+// checksum (checksum, with the name's) fails.
 void StartSpellCard(Enemy *enemy, EnemyScriptInstr *instr);
 // Ends the spell card, as th06's RunEnemy did: hides the name; if it
 // was active (1), clears the bullets and the other enemies for bonuses
 // and, if it was captured, scores its bonus and, unless bit 3 of
-// g_GameManager.unk_93d8 is set, keeps the best bonus and counts the
+// g_GameManager.stateFlags is set, keeps the best bonus and counts the
 // capture in its Catk as StartSpellCard does the attempt. Then releases
 // the bosses' effects[24] and plays sound 0xf. Always resets the
 // stage's spellCardState.
@@ -1697,36 +1697,36 @@ void NoOp(Enemy *enemy, EnemyScriptInstr *instr);
 // its position in floats[0] and [1] (floats[0] is -999 if none),
 // starts effect 2 there and removes the bullet.
 void ReplaceTallBulletWithEffect(Enemy *enemy, EnemyScriptInstr *instr);
-// Copies boss 0's position into moveStart, and its unk_2b6c and
-// unk_2b60; then switches on its ints2[0] with no cases.
+// Copies boss 0's position into moveStart, and its orbitRadius and
+// orbitAngularVelocity; then switches on its ints2[0] with no cases.
 void CopyBossMoveStart(Enemy *enemy, EnemyScriptInstr *instr);
 // Each flying bullet with a sprite of color 6, 15 or 2 (argument 1 = 0,
 // 1 or 2) fires three fans back the way it came and is removed.
 void FireBackwardFans(Enemy *enemy, EnemyScriptInstr *instr);
 // For the even or odd lasers by callbackTimer, those not ending: the
-// flying bullets with sprites inside one count unk_c08 down; at 0 they
+// flying bullets with sprites inside one count deflectState down; at 0 they
 // slow by 0.1 (above 0.5), turn square to the laser on the side their
 // velocity points to, take typeSprites[5]'s sprites, and wait 10 more.
 void UpdateLaserEdgeBullets(Enemy *enemy, EnemyScriptInstr *instr);
 // For every third laser by callbackTimer, those not ending: the flying
 // bullets with sprites inside one, 1.5 times its width, that it has not
-// deflected yet (unk_c08 neither li + 1 nor negative) slow to a random
+// deflected yet (deflectState neither li + 1 nor negative) slow to a random
 // 0.7 to 1 (0.8 to 1.2 from difficulty 2) of their speed, turn square
 // to the laser on the side their velocity points to, and take
-// typeSprites[5]'s sprites; unk_c08 becomes -1, or li + 1 from
+// typeSprites[5]'s sprites; deflectState becomes -1, or li + 1 from
 // difficulty 2.
 void DeflectBulletsOffLasers(Enemy *enemy, EnemyScriptInstr *instr);
 // Shakes the screen for 0x50 frames and starts the type 30 effects
 // falling (StartPetalsFalling).
 void ShakeAndStartFallingPetals(Enemy *enemy, EnemyScriptInstr *instr);
-// Slows the game to 1 / argument 1 (App::unk_178), sends interrupt 2 to
-// the stage's first two unk_528 sprites, and scales the velocity of
+// Slows the game to 1 / argument 1 (App::gameSpeed), sends interrupt 2 to
+// the stage's first two dialogueSprites sprites, and scales the velocity of
 // every bullet by it, keeping each sprite in baseSpriteIndex and
 // showing sprites 0x260 to 0x26f as 0x26f.
 void StartSlowdown(Enemy *enemy, EnemyScriptInstr *instr);
 // Undoes StartSlowdown: scales the bullets' velocities back up, restores
 // sprites 0x260 to 0x26f from baseSpriteIndex, sets bit 5 of
-// App::unk_18c if 1 / argument 1 is below 1, and puts the game speed
+// App::stateFlags if 1 / argument 1 is below 1, and puts the game speed
 // and the stage sprites' interrupts back to 1.
 void EndSlowdown(Enemy *enemy, EnemyScriptInstr *instr);
 // Flashes the screen 0x50cfcfff for 8 frames. Each bullet with a sprite
@@ -1737,7 +1737,7 @@ void EndSlowdown(Enemy *enemy, EnemyScriptInstr *instr);
 // = 0) or from pi / 4, every other one with flag 2, and is removed.
 void BurstBulletsByDifficulty(Enemy *enemy, EnemyScriptInstr *instr);
 // Flashes the screen 0x50cfcfff for 0x10 frames; each bullet turned
-// once (unk_c08 1) gets a flag 0x10 command 0 for 0x5a frames with its
+// once (deflectState 1) gets a flag 0x10 command 0 for 0x5a frames with its
 // angle to the player, clears command 1's flag and is marked 2.
 void AimTurnedBulletsAtPlayer(Enemy *enemy, EnemyScriptInstr *instr);
 // Flashes the screen 0xd0cfcfff for argument 1 frames.
@@ -1754,24 +1754,24 @@ void ScriptFadeOutMusic(Enemy *enemy, EnemyScriptInstr *instr);
 // Plays music slot 2 (App::PlayMidi) and, if that returns nonzero,
 // bgm/th07_13b.mid.
 void ScriptPlayMusic(Enemy *enemy, EnemyScriptInstr *instr);
-// Each bullet not yet turned (unk_c08 0) with y between the enemy's
+// Each bullet not yet turned (deflectState 0) with y between the enemy's
 // and 352 and x within 16 of it starts turning by pi / 60 a frame
 // (-pi / 60 for even indices) for 0xa0 frames, slowing by its speed /
 // 180, and is marked turned (1).
 void TurnNearbyBullets(Enemy *enemy, EnemyScriptInstr *instr);
-// Each bullet not yet turned (unk_c08 0) with a sprite from 0x278 to
+// Each bullet not yet turned (deflectState 0) with a sprite from 0x278 to
 // 0x27f fires five color 6 bullets (aim mode 1, pi / 8 apart) back the
 // way it came, at speed floats[1].
 void FireBackFromUnturned(Enemy *enemy, EnemyScriptInstr *instr);
 // Flashes the screen 0x80cfcfff for 0xc frames. Each bullet not yet
-// turned (unk_c08 0) with sprite 0x27c is replaced by an enemy running
+// turned (deflectState 0) with sprite 0x27c is replaced by an enemy running
 // the next sub (life 1, item -2, score 10) with a copy of this enemy's
 // variables, floats[0] the bullet's angle and floats[7] an angle from
 // -pi up in steps of pi / 4; bullets with sprites 0x278 to 0x27f are
 // removed.
 void ReplaceBulletsWithEnemies(Enemy *enemy, EnemyScriptInstr *instr);
 // Counts in ints[0] the bullets with sprite 0x27c not yet turned
-// (unk_c08 0).
+// (deflectState 0).
 void CountUnturnedBullets(Enemy *enemy, EnemyScriptInstr *instr);
 // Unless callbackTimer is a multiple of 3: each bullet without behavior
 // 0x40 above y 320 with a sprite over 60 high fires bullets at a random
@@ -1880,8 +1880,8 @@ struct StageCamera
 float HermiteInterpolate(float p0, float p1, float m0, float m1, float t);
 
 class Stage;
-// Moves `out` from `from` to `to` over stage->unk_5238[i] frames, on
-// stage->unk_5248[i], eased by stage->unk_5278[i]: 1 to 3 slow down, 4
+// Moves `out` from `from` to `to` over stage->cameraFadeFrames[i] frames, on
+// stage->cameraFadeTimer[i], eased by stage->cameraFadeMode[i]: 1 to 3 slow down, 4
 // to 6 speed up, 7 follows a Hermite curve with tangents m0 and m1.
 // Clears the frame count once the timer reaches it. Not in th06.
 void UpdateEasedVector(Stage *stage, int i, D3DXVECTOR3 *out, D3DXVECTOR3 *from, D3DXVECTOR3 *to, D3DXVECTOR3 *m0, D3DXVECTOR3 *m1);
@@ -1893,7 +1893,7 @@ class Stage
 public:
     // Zeroes the object, then puts the camera at (0, 0, 1000) looking
     // nowhere, with up along y and a field of view of pi / 6, and copies
-    // it to unk_50f8 and unk_5138.
+    // it to cameraFrom and cameraTo.
     Stage();
 
     // Zeroes the stage, remembers `stage` and adds the update element
@@ -1903,26 +1903,26 @@ public:
     // Removes the update element and the two draw elements.
     static void RemoveChain();
     // Runs the stage script up to the current frame, as th06's, with
-    // th07's opcodes: 3 waits for unk_50f4 (which first restarts the
+    // th07's opcodes: 3 waits for waitLabel (which first restarts the
     // script after the opcode 31 with that argument), 4 jumps, 5 to 28
     // set and fade the cameras' eye, at, up and field of view (fade
-    // modes as UpdateEasedVector's), 29 and 30 start unk_4's and unk_250's
+    // modes as UpdateEasedVector's), 29 and 30 start backgroundLayer0's and backgroundLayer1's
     // scripts. Then fades the cameras and the fog and runs the sprites.
     // Returns 1, or 4 when ChecksumMismatch finds the player's numbers
     // tampered with (checked every 500 frames).
     static int OnUpdate(Stage *stage);
     // Resets the SpriteEngine's render state, clears the play area to
-    // black once if unk_51c is set, makes the SpriteEngine modulate by
-    // unk_52ac if its alpha is set (and resets it to gray), draws unk_4
-    // and unk_250, clears the viewport to unk_4d8, sets the fog (its
+    // black once if clearScreenOnce is set, makes the SpriteEngine modulate by
+    // tintColor if its alpha is set (and resets it to gray), draws backgroundLayer0
+    // and backgroundLayer1, clears the viewport to clearColor, sets the fog (its
     // color modulated as the SpriteEngine's) and draws layers 0 and 1
     // under the same conditions as OnDraw2. Returns 1.
     static int OnDraw(Stage *stage);
     // Draws layers 2 and 3 unless spellCardState is above 1 or the Gui's
     // loading sprite shows, with a rectangle fading in while
-    // spellCardState is 1, as th06's; then unk_528's first unk_520
+    // spellCardState is 1, as th06's; then dialogueSprites's first dialogueSpriteCount
     // sprites, the fixed camera (SetupFixedCamera) and the fog at 1000 to
-    // 2000. Resets the SpriteEngine's color unless unk_52b0 was set,
+    // 2000. Resets the SpriteEngine's color unless keepTintColor was set,
     // and clears it. Returns 1.
     static int OnDraw2(Stage *stage);
     // Resets the script, loads the stage's background ANMs (five for
@@ -1954,7 +1954,7 @@ public:
     void SetupFixedCamera();
     // The other: looks from camera.eye along camera.at, with a field of
     // view of camera.fov and planes at 30 and 1800, then sets
-    // camera.unk_30 to the unit vector across at and up.
+    // camera.cameraRight to the unit vector across at and up.
     void SetupCamera();
 
     // One Sprite per object sprite in the data, malloc'd.

@@ -375,7 +375,7 @@ public:
     int charIndex;
     // A second cursor, moved by LoadScreenPlstChunk: the spell cards' shot type.
     int spellCursor;
-    // The unk_24 that textSprites show; with spellPage.
+    // The spellCursor that textSprites show; with spellPage.
     int shownShotType;
     int spellInfoSliding;
     // The shot type whose name textSprites show; -1 to redraw.
