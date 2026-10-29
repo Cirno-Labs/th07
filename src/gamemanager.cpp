@@ -72,3 +72,14 @@ int ChecksumBytes(BYTE *data, int size)
     }
     return sum;
 }
+
+int Unknown626270::ComputeChecksum()
+{
+    int sum;
+
+    sum = ChecksumBytes((BYTE *)g_Unknown626270.stats->unk_34, (BYTE *)&this->stats->unk_ac - (BYTE *)this->stats->unk_34);
+    sum += ChecksumBytes((BYTE *)g_Unknown626270.stats->unk_b4, sizeof(g_Unknown626270.stats->unk_b4));
+    sum += ChecksumBytes((BYTE *)g_Unknown626270.unk_4, 0x38);
+    sum += ChecksumBytes((BYTE *)&g_App.controllerMapping, 0x38);
+    return sum;
+}

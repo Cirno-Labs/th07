@@ -262,7 +262,7 @@ address,size,name,symbol
 0x0042d657,129,Unknown626270::SetPlayArea,?SetPlayArea@Unknown626270@@QAEXXZ
 0x0042d6d8,130,Unknown626270::IsInPlayArea,?IsInPlayArea@Unknown626270@@QAEHMMMM@Z
 0x0042d75a,100,ChecksumBytes,?ChecksumBytes@@YIHPAEH@Z
-0x0042d7be,124,Func42d7be,
+0x0042d7be,124,Unknown626270::ComputeChecksum,?ComputeChecksum@Unknown626270@@QAEHXZ
 0x0042d83a,155,Func42d83a,
 0x0042d8d5,2303,Func42d8d5,
 0x0042e1d4,36,Func42e1d4,

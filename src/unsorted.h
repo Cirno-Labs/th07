@@ -919,6 +919,10 @@ public:
     // Whether shot type `shot` has Phantasm open (Func42f94c for one
     // shot type).
     int Func42f853(int shot);
+    // The checksum: ChecksumBytes over stats from unk_34 to unk_ac, over
+    // stats->unk_b4, over what unk_4 points at and over g_App's config
+    // (0x38 bytes each).
+    int ComputeChecksum();
     // Rerolls the checksum keys and recomputes the checksums.
     void Func4012b0();
     // Adds `amount` hundredths to the rank, as th06's.
