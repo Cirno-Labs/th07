@@ -1311,6 +1311,15 @@ struct EnemySpawnArgs
 
 struct EnemyTimelineEntry;
 
+// Something of 0x160 bytes in EnemyScripts. Unknown, except that it
+// ends with eight vectors: the original's static initializer runs their
+// (empty) constructors.
+struct EnemyScriptsUnknown8
+{
+    unsigned char pad_0[0x100];
+    D3DXVECTOR3 vectors[8];
+};
+
 // The object at 0x1347938, where th06 has its EnemyScripts.
 // Placeholder name; only what is known so far.
 class EnemyScripts
@@ -1341,7 +1350,7 @@ public:
 
     EnemyScriptHeader *file;
     void **subs;
-    unsigned char pad_8[0x160];
+    EnemyScriptsUnknown8 unknown8;
     // The scripts' shared variables, 10037 to 10040 and 10041 to 10044.
     int globalInts[4];
     float globalFloats[4];
