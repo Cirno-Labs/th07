@@ -64,12 +64,12 @@ void Enemy::Move()
     this->pos.z += g_App.unk_178 * this->velocity.z;
 }
 
-void Unknown9a9b00::Initialize()
+void EnemyManager::Initialize()
 {
     int i;
     Enemy *enemy = this->enemies;
 
-    memset(this, 0, sizeof(Unknown9a9b00));
+    memset(this, 0, sizeof(EnemyManager));
     enemy = &this->enemyTemplate;
     memset(enemy, 0, sizeof(Enemy));
     for (i = 0; i < 2; i++)
@@ -131,12 +131,12 @@ void Unknown9a9b00::Initialize()
     enemy->shooter.unk_cc = 0x19;
 }
 
-Unknown9a9b00::Unknown9a9b00()
+EnemyManager::EnemyManager()
 {
     this->Initialize();
 }
 
-Enemy *Unknown9a9b00::Spawn(short sub, D3DXVECTOR3 *pos, int life, char item, int score, BYTE mirrored)
+Enemy *EnemyManager::Spawn(short sub, D3DXVECTOR3 *pos, int life, char item, int score, BYTE mirrored)
 {
     Enemy *enemy;
     int i;
@@ -173,7 +173,7 @@ Enemy *Unknown9a9b00::Spawn(short sub, D3DXVECTOR3 *pos, int life, char item, in
     return enemy;
 }
 
-Enemy *Unknown9a9b00::SpawnWithVars(short sub, D3DXVECTOR3 *pos, int life, char item, int score,
+Enemy *EnemyManager::SpawnWithVars(short sub, D3DXVECTOR3 *pos, int life, char item, int score,
                                  EnemyScriptVars *vars)
 {
     Enemy *enemy;
@@ -442,17 +442,17 @@ float LerpAngle(float a, float b, float t)
     }
 }
 
-int Unknown9a9b00::OnDraw(Unknown9a9b00 *mgr)
+int EnemyManager::OnDraw(EnemyManager *mgr)
 {
-    return Unknown9a9b00::Func422170(mgr, 0, 2);
+    return EnemyManager::Func422170(mgr, 0, 2);
 }
 
-int Unknown9a9b00::OnDraw2(Unknown9a9b00 *mgr)
+int EnemyManager::OnDraw2(EnemyManager *mgr)
 {
-    return Unknown9a9b00::Func422170(mgr, 2, 4);
+    return EnemyManager::Func422170(mgr, 2, 4);
 }
 
-int Unknown9a9b00::AddedCallback(Unknown9a9b00 *mgr)
+int EnemyManager::AddedCallback(EnemyManager *mgr)
 {
     Enemy *unused = mgr->enemies;
 
@@ -475,7 +475,7 @@ int Unknown9a9b00::AddedCallback(Unknown9a9b00 *mgr)
     return 0;
 }
 
-int Unknown9a9b00::DeletedCallback(Unknown9a9b00 *mgr)
+int EnemyManager::DeletedCallback(EnemyManager *mgr)
 {
     g_SpriteEngine->ReleaseAnm(0x10);
     g_SpriteEngine->ReleaseAnm(0xf);
@@ -487,28 +487,28 @@ int Unknown9a9b00::DeletedCallback(Unknown9a9b00 *mgr)
     return 0;
 }
 
-int Unknown9a9b00::RegisterChain(char *anmPath, char *anmPath2)
+int EnemyManager::RegisterChain(char *anmPath, char *anmPath2)
 {
-    Unknown9a9b00 *mgr = &g_Unknown9a9b00;
+    EnemyManager *mgr = &g_Unknown9a9b00;
 
     mgr->Initialize();
     mgr->anmPath = anmPath;
     mgr->anmPath2 = anmPath2;
-    g_Unknown9a9b00CalcChain.SetCallback((ChainCallback)Unknown9a9b00::OnUpdate);
-    g_Unknown9a9b00CalcChain.addedCallback = (ChainCallback)Unknown9a9b00::AddedCallback;
-    g_Unknown9a9b00CalcChain.deletedCallback = (ChainCallback)Unknown9a9b00::DeletedCallback;
+    g_Unknown9a9b00CalcChain.SetCallback((ChainCallback)EnemyManager::OnUpdate);
+    g_Unknown9a9b00CalcChain.addedCallback = (ChainCallback)EnemyManager::AddedCallback;
+    g_Unknown9a9b00CalcChain.deletedCallback = (ChainCallback)EnemyManager::DeletedCallback;
     g_Unknown9a9b00CalcChain.arg = mgr;
     if (g_Chain.AddToCalcChain(&g_Unknown9a9b00CalcChain, 10) != 0)
     {
         return -1;
     }
-    g_Unknown9a9b00DrawChain.SetCallback((ChainCallback)Unknown9a9b00::OnDraw);
+    g_Unknown9a9b00DrawChain.SetCallback((ChainCallback)EnemyManager::OnDraw);
     g_Unknown9a9b00DrawChain.arg = mgr;
     if (g_Chain.AddToDrawChain(&g_Unknown9a9b00DrawChain, 5) != 0)
     {
         return -1;
     }
-    g_Unknown9a9b00DrawChain2.SetCallback((ChainCallback)Unknown9a9b00::OnDraw2);
+    g_Unknown9a9b00DrawChain2.SetCallback((ChainCallback)EnemyManager::OnDraw2);
     g_Unknown9a9b00DrawChain2.arg = mgr;
     if (g_Chain.AddToDrawChain(&g_Unknown9a9b00DrawChain2, 7) != 0)
     {
@@ -517,14 +517,14 @@ int Unknown9a9b00::RegisterChain(char *anmPath, char *anmPath2)
     return 0;
 }
 
-void Unknown9a9b00::RemoveChain()
+void EnemyManager::RemoveChain()
 {
     g_Chain.Remove(&g_Unknown9a9b00CalcChain);
     g_Chain.Remove(&g_Unknown9a9b00DrawChain);
     g_Chain.Remove(&g_Unknown9a9b00DrawChain2);
 }
 
-int Unknown9a9b00::AnyBossActive()
+int EnemyManager::AnyBossActive()
 {
     int i;
 
@@ -538,7 +538,7 @@ int Unknown9a9b00::AnyBossActive()
     return 0;
 }
 
-int Unknown9a9b00::ClearEnemiesForBonus(int maxBonus, int start)
+int EnemyManager::ClearEnemiesForBonus(int maxBonus, int start)
 {
     Enemy *enemy = this->enemies;
     int total = start;

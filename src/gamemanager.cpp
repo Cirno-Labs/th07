@@ -274,7 +274,7 @@ int GameManager::DeletedCallback(GameManager *mgr)
     Stage::RemoveChain();
     BulletManager::RemoveChain();
     Player::RemoveChain();
-    Unknown9a9b00::RemoveChain();
+    EnemyManager::RemoveChain();
     g_Unknown1347938.Release();
     EffectManager::RemoveChain();
     Gui::RemoveChain();

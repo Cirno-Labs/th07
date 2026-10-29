@@ -122,7 +122,7 @@ struct Enemy
     // After the enemy leaves the play area or its script ends: frees it
     // (flags.deathMode 0) or makes it unshootable, hides the boss bar
     // for bosses 0 to 3 and releases its effects, as th06's. A boss
-    // also leaves Unknown9a9b00::bosses. Marks the replay frame with
+    // also leaves EnemyManager::bosses. Marks the replay frame with
     // 0x20.
     void Despawn();
     // Keeps the position within the bounds, with flags.clampPos, as
@@ -196,7 +196,7 @@ struct Enemy
     BYTE deathEffect;
     BYTE unk_2e15;
     BYTE unk_2e16;
-    // The enemy's slot in Unknown9a9b00::bosses, while it is one.
+    // The enemy's slot in EnemyManager::bosses, while it is one.
     BYTE bossIndex;
     BYTE hitFlashTimer;
     unsigned char unk_2e19[0x3];
@@ -255,7 +255,7 @@ void ReleaseEnemyEffects(Enemy *enemy);
 // of their direct and wrapped-around (2 pi) distances. Not in th06.
 float LerpAngle(float a, float b, float t);
 
-// One of Unknown9a9b00's sixteen unk_9545f4.
+// One of EnemyManager's sixteen unk_9545f4.
 struct Unknown9a9b00Timer
 {
     Timer timer;
@@ -264,11 +264,11 @@ struct Unknown9a9b00Timer
 
 // The enemies, at 0x9a9b00, th06's EnemyManager. Placeholder name; only
 // what is known so far.
-class Unknown9a9b00
+class EnemyManager
 {
 public:
     // Constructs the members and initializes, as th06's.
-    Unknown9a9b00();
+    EnemyManager();
 
     // Zeroes everything and sets the template up, as th06's Initialize.
     void Initialize();
@@ -294,19 +294,19 @@ public:
 
     // Draws the enemies of the lists at +0x954700, from `from` up to
     // `to`. Returns 1.
-    static int Func422170(Unknown9a9b00 *mgr, int from, int to);
+    static int Func422170(EnemyManager *mgr, int from, int to);
     // A draw callback: Func422170 for lists 0 and 1.
-    static int OnDraw(Unknown9a9b00 *mgr);
+    static int OnDraw(EnemyManager *mgr);
     // The other draw callback: lists 2 and 3.
-    static int OnDraw2(Unknown9a9b00 *mgr);
+    static int OnDraw2(EnemyManager *mgr);
     // Loads the enemy sprites into slots 0xf and 0x10 (either path may
     // be NULL), picks dropCounter and dropIndex at random, ends the spell
     // card and hides AsciiText's unk_b7c sprites at -999. Returns 0, or
     // -1 if loading fails.
-    static int AddedCallback(Unknown9a9b00 *mgr);
+    static int AddedCallback(EnemyManager *mgr);
     // Frees the enemy sprites and hides AsciiText's unk_b7c sprites at
     // -999 again. Returns 0.
-    static int DeletedCallback(Unknown9a9b00 *mgr);
+    static int DeletedCallback(EnemyManager *mgr);
     // Initializes, remembers the stage's two enemy sprite files and adds
     // the update element (priority 10) and the draw elements (5 and 7).
     // Returns 0, or -1 if adding fails.
@@ -314,7 +314,7 @@ public:
     // Removes the three chain elements.
     static void RemoveChain();
     // The update callback, th06's OnUpdate.
-    static int OnUpdate(Unknown9a9b00 *mgr);
+    static int OnUpdate(EnemyManager *mgr);
 
     // The stage's two enemy sprite files.
     char *anmPath;
@@ -338,8 +338,8 @@ public:
     Timer unk_9546f4;
     unsigned char unk_954700[0x10];
 };
-ASSERT_SIZE(Unknown9a9b00, 0x954710);
-extern Unknown9a9b00 g_Unknown9a9b00;
+ASSERT_SIZE(EnemyManager, 0x954710);
+extern EnemyManager g_Unknown9a9b00;
 // Its statically allocated chain elements.
 extern ChainElem g_Unknown9a9b00CalcChain;
 extern ChainElem g_Unknown9a9b00DrawChain;
