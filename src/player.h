@@ -317,8 +317,13 @@ struct PlayerBombPart
     // unk_4 counts to 30.
     int state;
     int unk_4;
-    // Reimu A focused: the orb's speed, as th06's partSpeed.
-    float homingSpeed;
+    union
+    {
+        // Reimu A focused: the orb's speed, as th06's partSpeed.
+        float homingSpeed;
+        // Marisa B: the laser's direction.
+        float laserAngle;
+    };
     float speed;
     float angle;
     D3DXVECTOR3 pos;
@@ -353,7 +358,7 @@ struct PlayerBomb
     void (*drawFocused)(Player *player);
     PlayerBombPart parts[0x80];
     // Where the player was when the bomb started (Reimu A, Reimu B
-    // focused).
+    // focused, Marisa B).
     D3DXVECTOR3 startPos;
 };
 ASSERT_SIZE(PlayerBomb, 0xa1438);
@@ -665,3 +670,10 @@ void UpdateMarisaABombFocused(Player *player);
 // Draws Marisa A's focused bomb: the stage tint, then each star at
 // its position and at trail[3] and trail[7], shrinking.
 void DrawMarisaABombFocused(Player *player);
+
+// Marisa B's bomb: 300 frames with stateTimer at 300, an aura and the
+// player slowed to 0.4; three lasers from the player, 120 degrees
+// apart, turning faster and faster (one way or the other by startPos's
+// side of the play area), each six 128 boxes of 10 damage and areas
+// (AddHitboxAreaCircle, 64) along its length.
+void UpdateMarisaBBomb(Player *player);

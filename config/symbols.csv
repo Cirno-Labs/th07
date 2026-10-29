@@ -65,7 +65,7 @@ address,size,name,symbol
 0x0040aba0,870,DrawMarisaABomb,?DrawMarisaABomb@@YIXPAVPlayer@@@Z
 0x0040af10,1714,UpdateMarisaABombFocused,?UpdateMarisaABombFocused@@YIXPAVPlayer@@@Z
 0x0040b5d0,505,DrawMarisaABombFocused,?DrawMarisaABombFocused@@YIXPAVPlayer@@@Z
-0x0040b7d0,1229,Func40b7d0,
+0x0040b7d0,1229,UpdateMarisaBBomb,?UpdateMarisaBBomb@@YIXPAVPlayer@@@Z
 0x0040bca0,372,Func40bca0,
 0x0040be20,830,Func40be20,
 0x0040c160,369,Func40c160,

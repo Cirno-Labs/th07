@@ -771,3 +771,83 @@ void DrawMarisaABombFocused(Player *player)
         curSprite++;
     }
 }
+
+void UpdateMarisaBBomb(Player *player)
+{
+    int i;
+    PlayerBombPart *laser;
+    PlayerBombHit *hit;
+    float len;
+    int k;
+    D3DXVECTOR3 unused;
+    float theta;
+
+    if (player->bomb.timer >= player->bomb.duration)
+    {
+        g_Unknown49fbf0.EndBombName();
+        player->bomb.running = 0;
+        player->moveScaleY = 1.0f;
+        player->moveScaleX = 1.0f;
+        return;
+    }
+    if (player->bomb.timer.HasTicked() && player->bomb.timer == 0)
+    {
+        g_ItemManager.CollectAll();
+        player->bomb.startPos = player->position;
+        g_Unknown49fbf0.ShowBombName(0x4a1, "恋符「ノンディレクショナルレーザー」");
+        player->bomb.duration = 300;
+        player->stateTimer.Set(300);
+        SpawnBombAura(player);
+        for (laser = player->bomb.parts, i = 0; i < 3; i++, laser++)
+        {
+            g_SpriteEngine->StartScriptAtOrigin(laser->sprites, i + 0x40c);
+            laser->pos = player->position;
+            laser->laserAngle = i * 6.2831855f / 3.0f + -1.5707964f;
+        }
+        g_SoundPlayer.QueueSound(0x13, 0);
+        player->moveScaleY = 0.4f;
+        player->moveScaleX = 0.4f;
+        SetBombDrain(player, 8000, 0.35f);
+    }
+    else
+    {
+        for (laser = player->bomb.parts, hit = player->unk_9dc, i = 0; i < 3; i++, laser++)
+        {
+            if (player->bomb.startPos.x < 192.0f)
+            {
+                laser->laserAngle = AddNormalizeAngle(laser->laserAngle, player->bomb.timer.AsFloat() * 3.1415927f / 30.0f / player->bomb.duration);
+            }
+            else
+            {
+                laser->laserAngle = AddNormalizeAngle(laser->laserAngle, player->bomb.timer.AsFloat() * -3.1415927f / 30.0f / player->bomb.duration);
+            }
+            theta = laser->laserAngle;
+            laser->sprites[0].pos = player->position;
+            laser->sprites[0].pos.x += cosf(theta) * laser->sprites[0].spriteData->height * laser->sprites[0].scaleX / 2.0f;
+            laser->sprites[0].pos.y += sinf(theta) * laser->sprites[0].spriteData->height * laser->sprites[0].scaleX / 2.0f;
+            len = 32.0f;
+            for (k = 0; k < 6; k++, hit++)
+            {
+                hit->pos = player->position;
+                hit->pos.x += cosf(theta) * len;
+                hit->pos.y += sinf(theta) * len;
+                hit->size.x = 128.0f;
+                hit->size.y = 128.0f;
+                hit->unk_18 = 10;
+                player->AddHitboxAreaCircle(&hit->pos, 64.0f, 0.0f, 0, 6);
+                len += laser->sprites[0].spriteData->height * laser->sprites[0].scaleX / 5.0f;
+            }
+            g_SpriteEngine->Step(laser->sprites);
+        }
+        if (player->bomb.timer == 20)
+        {
+            ScreenEffect::StartEffect(1, 60, 1, 7, 0);
+        }
+        else if (player->bomb.timer == 80)
+        {
+            ScreenEffect::StartEffect(1, 100, 24, 0, 0);
+        }
+    }
+    player->playerState = 3;
+    player->bomb.timer.Tick();
+}
