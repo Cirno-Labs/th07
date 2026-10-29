@@ -1428,6 +1428,12 @@ extern int g_Unknown12fe0cc;
 // starts.
 extern int g_Unknown12fe0c8;
 extern int g_Unknown12fe0dc;
+// Set as a spell card starts: the card's number, and its bonus over
+// ten plus its seconds.
+extern int g_Unknown12fe0d8;
+extern int g_Unknown12fe0d4;
+// The bonus of each spell card, by number.
+extern int g_SpellCardBonuses[];
 
 struct Enemy;
 struct EnemyScriptState;
@@ -1518,6 +1524,17 @@ void ScriptMoveLinear(Enemy *enemy, EnemyScriptInstr *instr, float t);
 // ScriptMoveLinear along a cubic Hermite curve from argument 4 to argument
 // 5, with tangents arguments 6 and 7.
 void ScriptMoveHermite(Enemy *enemy, EnemyScriptInstr *instr, float t);
+// Starts a spell card, as th06's RunEnemy did: shows the name
+// (arguments 1 on, xor 0xaa) with sprite argument 0, clears the
+// bullets, starts the stage's spell card background, sets the bonus
+// from g_SpellCardBonuses[index] (the high word of argument 0), resets
+// the rank values, and starts effect 0x19 in reserved slot 1 as
+// effects[24], with its scale and then 0.125 twice in unk_218 and
+// timerCallbackTime in its unk_84[4] timer. Unless bit 3 of
+// g_Unknown626270.unk_93d8 is set, counts the attempt in the card's
+// Catk (by unk_93d7 and in all), first clearing its counts if their
+// checksum (unk_2a, with the name's) fails.
+void StartSpellCard(Enemy *enemy, EnemyScriptInstr *instr);
 
 // Set to 9 as the dialogue of stages 6 to 8 starts.
 extern int g_Unknown9a9ab8;

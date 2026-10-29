@@ -2,7 +2,11 @@
 // th06's enemyscript.cpp.
 
 #include <math.h>
+#include <string.h>
 
+#include "ascii.h"
+#include "bullet.h"
+#include "effect.h"
 #include "enemy.h"
 #include "player.h"
 #include "unsorted.h"
@@ -577,4 +581,99 @@ void ScriptMoveHermite(Enemy *enemy, EnemyScriptInstr *instr, float t)
     outWeight = (t - 1.0f) * t * t;
     *ResolveFloatOperand(enemy, &instr->args[8].f, 0, -1) =
         hStart * start + wEnd * end + weightIn * slopeIn + outWeight * tangentOut;
+}
+
+// A spell card's name in its instruction.
+struct SpellCardName
+{
+    BYTE text[0x30];
+};
+
+void StartSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    int sum2;
+    int sum;
+    int len;
+    Catk *rec;
+    SpellCardName cardName;
+    int i;
+
+    cardName = *(SpellCardName *)&instr->args[1];
+    for (i = 0; i < ARRAY_SIZE(cardName.text); i++)
+    {
+        cardName.text[i] ^= 0xaa;
+    }
+    g_Unknown49fbf0.ShowSpellCardName(*(short *)&instr->args[0], (char *)cardName.text);
+    g_BulletManager.ClearAll(1);
+    g_Unknown1347b00.spellCardState = 1;
+    g_Unknown1347b00.spellCardFrames = 0;
+    for (i = 0; i < g_Unknown1347b00.unk_520; i++)
+    {
+        g_SpriteEngine->StartScript(&g_Unknown1347b00.unk_528[i], i + g_Unknown1347b00.unk_524 + 0x2dc);
+    }
+    g_Unknown12fe0c8 = 1;
+    g_Unknown12fe0c4 = 1;
+    g_Unknown12fe0d8 = *((WORD *)&instr->args[0] + 1);
+    g_Unknown12fe0cc = g_SpellCardBonuses[g_Unknown12fe0d8];
+    g_Unknown12fe0d0 = 0;
+    g_Unknown12fe0d4 = g_Unknown12fe0cc / (enemy->timerCallbackTime / 60 + 10);
+    g_Unknown9a9b00.unk_9545e0.Set(0);
+    enemy->rankSpeedLow = -0.5f;
+    enemy->rankSpeedHigh = 0.5f;
+    enemy->rankCount1Low = 0;
+    enemy->rankCount1High = 0;
+    enemy->rankCount2Low = 0;
+    enemy->rankCount2High = 0;
+    enemy->effects[24] = g_EffectManager.SpawnReservedEffect(0x19, &enemy->pos, 1, 1, 0xffffffff);
+    enemy->effects[24]->sprite.unk_48[4].Set(0);
+    enemy->effects[24]->sprite.unk_84[4].Set(enemy->timerCallbackTime);
+    enemy->effects[24]->sprite.unk_c4 = 0;
+    *(D3DXVECTOR2 *)&enemy->effects[24]->sprite.unk_218 = *(D3DXVECTOR2 *)&enemy->effects[24]->sprite.scaleY;
+    enemy->effects[24]->sprite.unk_218.z = 0.125f;
+    enemy->effects[24]->sprite.unk_224.x = 0.125f;
+    enemy->effects[24]->pos = enemy->pos;
+    enemy->flags.unk_19 = 0;
+    if (!g_Unknown626270.unk_93d8Bit3)
+    {
+        rec = &g_Unknown626270.catks[g_Unknown12fe0d8];
+        sum = 0;
+        strcpy(rec->name, (char *)cardName.text);
+        len = strlen(rec->name);
+        while (len > 0)
+        {
+            len--;
+            sum += rec->name[len];
+        }
+        sum2 = sum;
+        for (len = 0; len < 7; len++)
+        {
+            sum += rec->captures[len];
+            sum += rec->attempts[len];
+            sum += rec->maxBonus[len];
+        }
+        if (rec->unk_2a != (BYTE)sum)
+        {
+            for (len = 0; len < 7; len++)
+            {
+                rec->captures[len] = 0;
+                rec->attempts[len] = 0;
+                rec->maxBonus[len] = 0;
+            }
+        }
+        if (rec->attempts[g_Unknown626270.unk_93d7] < 9999)
+        {
+            rec->attempts[g_Unknown626270.unk_93d7]++;
+        }
+        if (rec->attempts[6] < 9999)
+        {
+            rec->attempts[6]++;
+        }
+        for (len = 0; len < 7; len++)
+        {
+            sum2 += rec->captures[len];
+            sum2 += rec->attempts[len];
+            sum2 += rec->maxBonus[len];
+        }
+        rec->unk_2a = sum2;
+    }
 }

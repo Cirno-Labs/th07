@@ -88,7 +88,7 @@ address,size,name,symbol
 0x0040f8f0,566,ScriptMovePos,?ScriptMovePos@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x0040fb30,89,ScriptMoveLinear,?ScriptMoveLinear@@YIXPAUEnemy@@PAUEnemyScriptInstr@@M@Z
 0x0040fb90,256,ScriptMoveHermite,?ScriptMoveHermite@@YIXPAUEnemy@@PAUEnemyScriptInstr@@M@Z
-0x0040fc90,1285,Func40fc90,
+0x0040fc90,1285,StartSpellCard,?StartSpellCard@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x004101a0,889,Func4101a0,
 0x00410520,29464,Unknown1347938::RunEnemy,?RunEnemy@Unknown1347938@@QAEHPAUEnemy@@@Z
 0x00417af0,33,SinCos,?SinCos@@YIXPAM0M@Z
@@ -1755,6 +1755,7 @@ address,size,name,symbol
 0x0049ef40,,g_BulletColorOffsets16,?g_BulletColorOffsets16@@3PAHA
 0x0049ef80,,g_BulletColorOffsets32,?g_BulletColorOffsets32@@3PAHA
 0x0049efc0,,g_EffectInfos,?g_EffectInfos@@3PAUEffectInfo@@A
+0x0049f1b8,,g_SpellCardBonuses,?g_SpellCardBonuses@@3PAHA
 0x0049f40c,,g_PracticeStageNames,?g_PracticeStageNames@@3PAPADA
 0x0049f424,,g_MenuStageNames,?g_MenuStageNames@@3PAPADA
 0x0049f444,,g_MenuDifficultyNames,?g_MenuDifficultyNames@@3PAPADA
@@ -1814,6 +1815,8 @@ address,size,name,symbol
 0x012fe0c8,,g_Unknown12fe0c8,?g_Unknown12fe0c8@@3HA
 0x012fe0cc,,g_Unknown12fe0cc,?g_Unknown12fe0cc@@3HA
 0x012fe0d0,,g_Unknown12fe0d0,?g_Unknown12fe0d0@@3HA
+0x012fe0d4,,g_Unknown12fe0d4,?g_Unknown12fe0d4@@3HA
+0x012fe0d8,,g_Unknown12fe0d8,?g_Unknown12fe0d8@@3HA
 0x012fe0dc,,g_Unknown12fe0dc,?g_Unknown12fe0dc@@3HA
 0x012fe210,,g_Unknown9a9b00CalcChain,?g_Unknown9a9b00CalcChain@@3UChainElem@@A
 0x012fe230,,g_Unknown9a9b00DrawChain2,?g_Unknown9a9b00DrawChain2@@3UChainElem@@A

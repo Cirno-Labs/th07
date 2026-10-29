@@ -42,6 +42,10 @@ struct EnemyFlags
     // CheckTimerCallback leaves the spell card and the bullets alone, as
     // th06's.
     unsigned char keepSpellCard : 1;
+    unsigned char unk_17 : 1;
+    unsigned char unk_18 : 1;
+    // Cleared as a spell card starts.
+    unsigned char unk_19 : 1;
 };
 
 // The variables of an enemy's script, by number from 10000: 10000 to
@@ -197,7 +201,7 @@ struct Enemy
     unsigned char unk_2e19[0x3];
     Timer unk_2e1c;
     EnemyFlags flags;
-    unsigned char unk_2e2b[0x5];
+    unsigned char unk_2e2c[0x4];
     // The sprite scripts for turning, as th06's.
     short turnStill;
     short turnStillFromLeft;
