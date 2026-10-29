@@ -1510,6 +1510,10 @@ struct StageCamera
     float fov;
 };
 
+// The cubic Hermite curve from p0 to p1, with tangents m0 and m1, at `t`
+// (0 to 1). Not in th06.
+float HermiteInterpolate(float p0, float p1, float m0, float m1, float t);
+
 // The object at 0x1347b00: th06's Stage, the background. Placeholder
 // name.
 class Unknown1347b00
