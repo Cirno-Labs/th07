@@ -412,6 +412,21 @@ int SpriteEngine::LoadAnmSprites(int slot, AnmFile *anm, int firstSprite, int ow
     return highest + 1;
 }
 
+void SpriteEngine::ReleaseTexture(int index)
+{
+    if (index < 0 || index >= ARRAY_SIZE(this->textures))
+    {
+        return;
+    }
+    if (this->textures[index] != NULL)
+    {
+        this->textures[index]->Release();
+        this->textures[index] = NULL;
+    }
+    MemFree(this->textureFiles[index]);
+    this->textureFiles[index] = NULL;
+}
+
 void SpriteEngine::RenderTextToTextureIndex(int textureIndex, int x, int y, int width, int unk4, int fontHeight,
                                             int unk6, D3DCOLOR textColor, D3DCOLOR shadowColor, char *text,
                                             float scaleX, float scaleY)
