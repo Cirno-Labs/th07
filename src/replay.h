@@ -63,7 +63,8 @@ struct ReplayHeader
     // ...
     BYTE key;
     BYTE unk_0e[0x2];
-    BYTE unk_10[0x4];
+    // The size of the file decompressed.
+    int size;
     // In the file, the size of the compressed data after the first 0x54
     // bytes, and its size decompressed.
     int compressedSize;
@@ -87,10 +88,14 @@ struct ReplayHeader
     DWORD score;
     // The config the game was played with, an Unknown626270Unk4.
     BYTE config[0x38];
-    BYTE unk_a8[0x24];
-    // How far the game ran below full speed, in percent.
+    BYTE unk_a8[0x20];
+    // How far the game ran below full speed, in percent, stored three
+    // times: plus 1.12, as is, and plus 2.34.
+    float slowdown2;
     float slowdown;
-    BYTE unk_d0[0x8];
+    float slowdown3;
+    // 30.
+    int unk_d4;
     // App::exeSize and exeChecksum, and "0100b".
     DWORD exeSize;
     DWORD exeChecksum;
@@ -105,7 +110,13 @@ ASSERT_SIZE(ReplayHeader, 0xe8);
 // the executable it was recorded with. Frees `data`, and returns NULL
 // if it is not a valid replay.
 ReplayHeader *ValidateReplay(void *data, int size);
-// Saves the replay being recorded to `path`, under `name`.
+// Saves the replay being recorded to `path`, under `name`, unless it
+// was played with another config than the current one (outside
+// practice, Extra and Phantasm) or with the config's unk_25 set: the
+// header's first 0x54 bytes as they are, the rest and the stages'
+// frames and frame rates compressed with LzssCompress, all encoded as
+// ValidateReplay decodes them. Then frees the stages and removes the
+// update element.
 void SaveReplay(char *path, char *name);
 
 // Records and plays back replays, behind the pointer at 0x4b9e48. Only
@@ -157,6 +168,12 @@ public:
 
     ReplayManager()
     {
+    }
+
+    // 0 when recording, 1 when playing.
+    int GetMode()
+    {
+        return this->mode;
     }
 
     // Creates the ReplayManager, recording (`mode` 0) or playing (1) the
