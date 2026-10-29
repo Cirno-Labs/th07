@@ -1601,6 +1601,9 @@ void ScriptPlayMusic(Enemy *enemy, EnemyScriptInstr *instr);
 // (-pi / 60 for even indices) for 0xa0 frames, slowing by its speed /
 // 180, and is marked turned (1).
 void TurnNearbyBullets(Enemy *enemy, EnemyScriptInstr *instr);
+// Counts in ints[0] the bullets with sprite 0x27c not yet turned
+// (unk_c08 0).
+void CountUnturnedBullets(Enemy *enemy, EnemyScriptInstr *instr);
 // Whether `point`, turned about `origin` by the angle with sine
 // `sinAngle` and cosine `cosAngle`, lies in the `size` box centred on
 // `center` (x and y only).

@@ -1214,6 +1214,25 @@ void TurnNearbyBullets(Enemy *enemy, EnemyScriptInstr *instr)
     }
 }
 
+void CountUnturnedBullets(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    Bullet *bullet = g_BulletManager.bullets;
+    int i;
+
+    enemy->ctx.vars.ints[0] = 0;
+    for (i = 0; i < 0x400; i++, bullet++)
+    {
+        if (bullet->state == 0)
+        {
+            continue;
+        }
+        if (bullet->unk_c08 == 0 && bullet->sprites.sprite0.spriteIndex == 0x27c)
+        {
+            enemy->ctx.vars.ints[0]++;
+        }
+    }
+}
+
 // As in bullet.cpp: defined after its callers, so they call the copy.
 inline void Bullet::FreeBullet()
 {
