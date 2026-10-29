@@ -275,12 +275,12 @@ address,size,name,symbol
 0x0042f2e4,225,Func42f2e4,
 0x0042f3c5,152,Func42f3c5,?Func42f3c5@@YIHXZ
 0x0042f45d,77,Func42f45d,?Func42f45d@@YIXXZ
-0x0042f4aa,124,Func42f4aa,
+0x0042f4aa,124,Unknown626270::AddSubRank,?AddSubRank@Unknown626270@@QAEXH@Z
 0x0042f526,124,Func42f526,
 0x0042f5a2,253,Func42f5a2,
 0x0042f69f,151,Func42f69f,
-0x0042f736,83,Func42f736,
-0x0042f789,86,Func42f789,
+0x0042f736,83,Unknown626270::Func42f736,?Func42f736@Unknown626270@@QAEXH@Z
+0x0042f789,86,Unknown626270::Func42f789,?Func42f789@Unknown626270@@QAEXH@Z
 0x0042f7df,116,Unknown626270::Func42f7df,?Func42f7df@Unknown626270@@QAEHH@Z
 0x0042f853,139,Unknown626270::Func42f853,?Func42f853@Unknown626270@@QAEHH@Z
 0x0042f8de,110,Unknown626270::Func42f8de,?Func42f8de@Unknown626270@@QAEHXZ
@@ -1773,6 +1773,7 @@ address,size,name,symbol
 0x00626218,,g_Chain,?g_Chain@@3VChain@@A
 0x00626258,,g_Archive,?g_Archive@@3VDatArchive@@A
 0x00626270,,g_Unknown626270,?g_Unknown626270@@3VUnknown626270@@A
+0x012fe0d0,,g_Unknown12fe0d0,?g_Unknown12fe0d0@@3HA
 0x012fe250,,g_EffectManager,?g_EffectManager@@3VEffectManager@@A
 0x01348010,,g_Unknown1348010,?g_Unknown1348010@@3EA
 0x0134ce18,,g_AsciiText,?g_AsciiText@@3VAsciiText@@A

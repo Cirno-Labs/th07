@@ -850,7 +850,9 @@ struct Unknown626270Stats
     // The score shown, and the score.
     DWORD guiScore;
     DWORD score;
-    unsigned char unk_8[0x10];
+    unsigned char unk_8[0xc];
+    // The stage's grazes, up to 9999, and the game's, up to 999999.
+    int graze;
     int grazeTotal;
     int spellCardsCaptured;
     BYTE continuesUsed;
@@ -869,7 +871,10 @@ struct Unknown626270Stats
     float unk_70[3];
     // The shot power, up to 128.
     float power;
-    unsigned char unk_80[0x48];
+    unsigned char unk_80[0x8];
+    // Player::Graze subtracts it from Unknown626270::unk_961c.
+    int unk_88;
+    unsigned char unk_8c[0x3c];
 };
 ASSERT_SIZE(Unknown626270Stats, 0xc8);
 
@@ -902,6 +907,16 @@ public:
     int Func42f853(int shot);
     // Rerolls the checksum keys and recomputes the checksums.
     void Func4012b0();
+    // Adds `amount` hundredths to the rank, as th06's.
+    void AddSubRank(int amount);
+    // Add `amount` to unk_9618 and to unk_961c, each up to a limit.
+    void Func42f789(int amount);
+    void Func42f736(int amount);
+    // Adds `points` to stats->score, which counts in tens.
+    void AddScore(int points)
+    {
+        this->stats->score += points / 10;
+    }
     // Whether a `width` by `height` box centred on (`x`, `y`) touches the
     // play area, as th06's GameManager::IsInPlayArea.
     BOOL IsInPlayArea(float x, float y, float width, float height);
@@ -977,7 +992,10 @@ public:
     // byte replay file name, the stage) are th06's GameManager's, so
     // this is probably th07's GameManager.
     float arena[4];
-    unsigned char unk_9604[0x20];
+    unsigned char unk_9604[0x18];
+    // Added to (up to unk_9618) by Func42f736.
+    int unk_961c;
+    unsigned char unk_9620[0x4];
     // Whether Phantasm was open when the title menu last came up.
     int unk_9624;
     // The frames played, which the result screen shows as progress.
@@ -996,5 +1014,14 @@ public:
     // Whether the pointer at +8 is set and the int at its +0x1fbac is
     // not negative, or is -2.
     int Func42ad66();
+
+    unsigned char unk_0[0x4];
+    // Set to 2 when the player grazes, as th06's GuiFlags.grazeChanged.
+    unsigned int unk_4 : 6;
+    unsigned int grazeChanged : 2;
 };
 extern Unknown49fbf0 g_Unknown49fbf0;
+
+// Grows by 2500 plus 20 for every 1500 of Unknown626270::unk_961c above
+// stats->unk_88 with each graze. Probably a field of a larger object.
+extern int g_Unknown12fe0d0;

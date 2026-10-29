@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">46.25% (321)</tspan> · <tspan class="decompiled">1.59% (11)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">52.02% (361)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">46.40% (322)</tspan> · <tspan class="decompiled">1.59% (11)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">51.87% (360)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="345.51" height="6" x="0" y="0" class="named"/>
-<rect width="11.84" height="6" x="345.51" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="357.35" y="0" class="nonmatching"/>
-<rect width="388.57" height="6" x="358.43" y="0" class="todo"/>
+<rect width="346.59" height="6" x="0" y="0" class="named"/>
+<rect width="11.84" height="6" x="346.59" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="358.43" y="0" class="nonmatching"/>
+<rect width="387.49" height="6" x="359.51" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (173 bytes)</title></rect>
@@ -345,12 +345,12 @@
 <rect width="12" height="12" x="345" y="75" class="todo"><title>0x0042f2e4 Func42f2e4 (225 bytes)</title></rect>
 <rect width="12" height="12" x="360" y="75" class="todo"><title>0x0042f3c5 Func42f3c5 (152 bytes)</title></rect>
 <rect width="12" height="12" x="375" y="75" class="todo"><title>0x0042f45d Func42f45d (77 bytes)</title></rect>
-<rect width="12" height="12" x="390" y="75" class="todo"><title>0x0042f4aa Func42f4aa (124 bytes)</title></rect>
+<rect width="12" height="12" x="390" y="75" class="todo"><title>0x0042f4aa Unknown626270::AddSubRank (124 bytes)</title></rect>
 <rect width="12" height="12" x="405" y="75" class="todo"><title>0x0042f526 Func42f526 (124 bytes)</title></rect>
 <rect width="12" height="12" x="420" y="75" class="todo"><title>0x0042f5a2 Func42f5a2 (253 bytes)</title></rect>
 <rect width="12" height="12" x="435" y="75" class="todo"><title>0x0042f69f Func42f69f (151 bytes)</title></rect>
-<rect width="12" height="12" x="450" y="75" class="todo"><title>0x0042f736 Func42f736 (83 bytes)</title></rect>
-<rect width="12" height="12" x="465" y="75" class="todo"><title>0x0042f789 Func42f789 (86 bytes)</title></rect>
+<rect width="12" height="12" x="450" y="75" class="todo"><title>0x0042f736 Unknown626270::Func42f736 (83 bytes)</title></rect>
+<rect width="12" height="12" x="465" y="75" class="todo"><title>0x0042f789 Unknown626270::Func42f789 (86 bytes)</title></rect>
 <rect width="12" height="12" x="480" y="75" class="todo"><title>0x0042f7df Unknown626270::Func42f7df (116 bytes)</title></rect>
 <rect width="12" height="12" x="495" y="75" class="todo"><title>0x0042f853 Unknown626270::Func42f853 (139 bytes)</title></rect>
 <rect width="12" height="12" x="510" y="75" class="todo"><title>0x0042f8de Unknown626270::Func42f8de (110 bytes)</title></rect>
@@ -526,7 +526,7 @@
 <rect width="12" height="12" x="60" y="135" class="named"><title>0x0043e3b0 Player::CheckGraze (293 bytes)</title></rect>
 <rect width="12" height="12" x="75" y="135" class="named"><title>0x0043e4e0 Player::TouchesGrazeBox (456 bytes)</title></rect>
 <rect width="12" height="12" x="90" y="135" class="named"><title>0x0043e6b0 Player::CheckLaserHit (1247 bytes)</title></rect>
-<rect width="12" height="12" x="105" y="135" class="todo"><title>0x0043eb90 Player::Graze (549 bytes)</title></rect>
+<rect width="12" height="12" x="105" y="135" class="named"><title>0x0043eb90 Player::Graze (549 bytes)</title></rect>
 <rect width="12" height="12" x="120" y="135" class="named"><title>0x0043edc0 Player::Die (143 bytes)</title></rect>
 <rect width="12" height="12" x="135" y="135" class="todo"><title>0x0043ee50 Func43ee50 (6790 bytes)</title></rect>
 <rect width="12" height="12" x="150" y="135" class="named"><title>0x00440940 UpdateHitboxAreas (169 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">34.94%</tspan> · <tspan class="decompiled">0.21%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">64.76%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">35.09%</tspan> · <tspan class="decompiled">0.21%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">64.62%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="261.02" height="6" x="0" y="0" class="named"/>
-<rect width="1.55" height="6" x="261.02" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="262.57" y="0" class="nonmatching"/>
-<rect width="483.77" height="6" x="263.23" y="0" class="todo"/>
+<rect width="262.09" height="6" x="0" y="0" class="named"/>
+<rect width="1.55" height="6" x="262.09" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="263.64" y="0" class="nonmatching"/>
+<rect width="482.69" height="6" x="264.31" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -941,7 +941,7 @@
 <rect width="12.83" height="11.80" x="536.19" y="168.85" class="todo"><title>0x0041b9f0 Func41b9f0 (559 bytes)</title></rect>
 <rect width="12.83" height="11.67" x="536.19" y="183.66" class="named"><title>0x0043c250 UpdateHomingOrb (554 bytes)</title></rect>
 <rect width="12.83" height="11.67" x="536.19" y="198.33" class="named"><title>0x0043c480 UpdateHomingOrbFast (554 bytes)</title></rect>
-<rect width="12.65" height="11.70" x="552.02" y="0" class="todo"><title>0x0043eb90 Player::Graze (549 bytes)</title></rect>
+<rect width="12.65" height="11.70" x="552.02" y="0" class="named"><title>0x0043eb90 Player::Graze (549 bytes)</title></rect>
 <rect width="12.59" height="11.70" x="567.67" y="0" class="named"><title>0x00436790 MidiPlayer::ParseFile (547 bytes)</title></rect>
 <rect width="12.56" height="11.70" x="583.26" y="0" class="todo"><title>0x00419dc0 Func419dc0 (546 bytes)</title></rect>
 <rect width="12.45" height="11.70" x="598.82" y="0" class="todo"><title>0x00406de0 Func406de0 (542 bytes)</title></rect>
@@ -1257,7 +1257,7 @@
 <rect width="3.81" height="4.63" x="709.15" y="129.84" class="todo"><title>0x004010f0 Func4010f0 (124 bytes)</title></rect>
 <rect width="3.81" height="4.63" x="715.95" y="129.84" class="todo"><title>0x00404eb0 Func404eb0 (124 bytes)</title></rect>
 <rect width="3.81" height="4.63" x="722.76" y="129.84" class="todo"><title>0x0042d7be Func42d7be (124 bytes)</title></rect>
-<rect width="3.81" height="4.63" x="729.57" y="129.84" class="todo"><title>0x0042f4aa Func42f4aa (124 bytes)</title></rect>
+<rect width="3.81" height="4.63" x="729.57" y="129.84" class="todo"><title>0x0042f4aa Unknown626270::AddSubRank (124 bytes)</title></rect>
 <rect width="3.81" height="4.63" x="736.38" y="129.84" class="todo"><title>0x0042f526 Func42f526 (124 bytes)</title></rect>
 <rect width="3.81" height="4.63" x="743.19" y="129.84" class="named"><title>0x0044a520 ClearViewport (124 bytes)</title></rect>
 <rect width="4.22" height="4.20" x="674.06" y="137.48" class="todo"><title>0x00450c10 Func450c10 (124 bytes)</title></rect>
@@ -1314,12 +1314,12 @@
 <rect width="2.76" height="3.47" x="688.06" y="156.98" class="named"><title>0x0045547d MainMenu::MainMenu (89 bytes)</title></rect>
 <rect width="2.76" height="3.40" x="688.06" y="163.46" class="named"><title>0x00431870 Rng::GetRandomU16 (88 bytes)</title></rect>
 <rect width="2.76" height="3.26" x="688.06" y="169.86" class="todo"><title>0x0041ae90 Func41ae90 (86 bytes)</title></rect>
-<rect width="2.76" height="3.26" x="688.06" y="176.12" class="todo"><title>0x0042f789 Func42f789 (86 bytes)</title></rect>
+<rect width="2.76" height="3.26" x="688.06" y="176.12" class="todo"><title>0x0042f789 Unknown626270::Func42f789 (86 bytes)</title></rect>
 <rect width="2.76" height="3.18" x="688.06" y="182.37" class="named"><title>0x00430290 InitJoystick (85 bytes)</title></rect>
 <rect width="2.76" height="3.18" x="688.06" y="188.56" class="named"><title>0x00442b10 Player::RemoveChain (85 bytes)</title></rect>
 <rect width="2.76" height="3.11" x="688.06" y="194.74" class="named"><title>0x00432630 ItemManager::ItemManager (84 bytes)</title></rect>
 <rect width="2.76" height="3.11" x="688.06" y="200.85" class="named"><title>0x0045e130 CWaveFile::SwitchTrack (84 bytes)</title></rect>
-<rect width="2.76" height="3.04" x="688.06" y="206.96" class="todo"><title>0x0042f736 Func42f736 (83 bytes)</title></rect>
+<rect width="2.76" height="3.04" x="688.06" y="206.96" class="todo"><title>0x0042f736 Unknown626270::Func42f736 (83 bytes)</title></rect>
 <rect width="2.96" height="2.76" x="693.83" y="156.98" class="named"><title>0x0042fb20 ChainElem::~ChainElem (82 bytes)</title></rect>
 <rect width="2.96" height="2.76" x="693.83" y="162.75" class="named"><title>0x0045e5c0 File::~File (82 bytes)</title></rect>
 <rect width="2.96" height="2.69" x="693.83" y="168.51" class="named"><title>0x00436ad0 MidiPlayer::Play (81 bytes)</title></rect>

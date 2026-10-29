@@ -865,6 +865,57 @@ hit:
     return 1;
 }
 
+void Player::Graze(D3DXVECTOR3 *pos)
+{
+    D3DXVECTOR3 mid;
+
+    if (!g_Player.bomb.running)
+    {
+        if (g_Unknown626270.stats->graze < 9999)
+        {
+            g_Unknown626270.stats->graze++;
+        }
+        if (g_Unknown626270.stats->grazeTotal < 999999)
+        {
+            g_Unknown626270.stats->grazeTotal++;
+        }
+    }
+    mid = (this->position + *pos) / 2.0f;
+    if (this->unk_240d == 1)
+    {
+        if (this->focused)
+        {
+            g_EffectManager.SpawnEffect(8, &mid, 1, 0xffffffff);
+        }
+        else
+        {
+            g_EffectManager.SpawnEffect(8, &mid, 3, 0xffff8080);
+        }
+    }
+    else
+    {
+        g_EffectManager.SpawnEffect(8, &mid, 1, 0xffffffff);
+    }
+    g_Unknown626270.AddSubRank(6);
+    g_Unknown49fbf0.grazeChanged = 2;
+    g_SoundPlayer.QueueSound(0x1e, 0);
+    g_Unknown12fe0d0 += 2500 + (g_Unknown626270.unk_961c - g_Unknown626270.stats->unk_88) / 1500 * 20;
+    g_Unknown626270.AddScore(2000);
+    if (this->unk_240d == 1)
+    {
+        if (this->focused)
+        {
+            g_Unknown626270.Func42f789(30);
+            g_Unknown626270.Func42f736(30);
+        }
+        else
+        {
+            g_Unknown626270.Func42f789(80);
+            g_Unknown626270.Func42f736(80);
+        }
+    }
+}
+
 void Player::Die()
 {
     g_Unknown626270.Func4012b0();

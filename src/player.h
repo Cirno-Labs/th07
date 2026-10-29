@@ -310,7 +310,12 @@ public:
     // `canGraze`, grazes the player within 48 of the box unless it is
     // respawning or dying, returning 2; else returns 0.
     int CheckLaserHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size, D3DXVECTOR3 *origin, float angle, int canGraze);
-    // Scores a graze of the bullet at `pos`.
+    // Scores a graze of the bullet at `pos`, as th06's: counts it
+    // unless a bomb runs, bursts effect 8 halfway to it (three red ones
+    // while unk_240d is 1 and not focused), adds 6 hundredths to the
+    // rank, plays sound 0x1e, adds to g_Unknown12fe0d0 and 2000 points,
+    // and while unk_240d is 1 calls Unknown626270's Func42f789 and
+    // Func42f736 with 30 (focused) or 80.
     void Graze(D3DXVECTOR3 *pos);
     // CheckHit calls it with 0 on a hit while playerState is 4.
     void Func441bd0(int unk);
@@ -365,7 +370,9 @@ public:
     char focused;
     // Counts hits on enemies, to burst an effect every few, as in th06.
     BYTE hitCounter;
-    unsigned char unk_240d[0x3];
+    // Graze treats 1 specially.
+    char unk_240d;
+    unsigned char unk_240e[0x2];
     Timer unk_2410;
     unsigned char unk_241c[0xc];
     // What UpdateHomingOrb's and UpdateHomingOrbFast's shots home in on; x is -100 or
