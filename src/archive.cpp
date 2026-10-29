@@ -271,7 +271,7 @@ DatArchiveEntry *DatArchive::BuildEntryTable(BYTE *table, int count, DWORD table
         p += 4;
         entries[i].size = *(DWORD *)p;
         p += 4;
-        entries[i].unk_0c = *(DWORD *)p;
+        entries[i].checksum = *(DWORD *)p;
         p += 4;
     }
     entries[count].offset = tableOffset;
