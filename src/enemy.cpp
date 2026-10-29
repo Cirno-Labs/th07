@@ -367,3 +367,26 @@ void Enemy::Despawn()
     }
     g_ReplayManager->unk_d6 |= 0x20;
 }
+
+void Enemy::ClampPos()
+{
+    if (this->flags.clampPos)
+    {
+        if (this->pos.x < this->lowerBound[0])
+        {
+            this->pos.x = this->lowerBound[0];
+        }
+        else if (this->pos.x > this->upperBound[0])
+        {
+            this->pos.x = this->upperBound[0];
+        }
+        if (this->pos.y < this->lowerBound[1])
+        {
+            this->pos.y = this->lowerBound[1];
+        }
+        else if (this->pos.y > this->upperBound[1])
+        {
+            this->pos.y = this->upperBound[1];
+        }
+    }
+}

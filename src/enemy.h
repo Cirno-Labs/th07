@@ -97,6 +97,9 @@ struct Enemy
     // also leaves Unknown9a9b00::bosses. Marks the replay frame with
     // 0x20.
     void Despawn();
+    // Keeps the position within the bounds, with flags.clampPos, as
+    // th06's.
+    void ClampPos();
 
     Sprite sprite;
     Sprite sprites[2];
