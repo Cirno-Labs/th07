@@ -128,7 +128,7 @@ void EnemyManager::Initialize()
     enemy->rankSpeedLow = -0.15f;
     enemy->rankSpeedHigh = 0.15f;
     enemy->shooter.sound = 7;
-    enemy->shooter.unk_cc = 0x19;
+    enemy->shooter.bulletSound = 0x19;
 }
 
 EnemyManager::EnemyManager()

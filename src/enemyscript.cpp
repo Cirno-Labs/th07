@@ -1186,7 +1186,7 @@ loop:
                     bs->speed2 = 0.3f;
                 }
             }
-            bs->unk_c2 = 0;
+            bs->patternCounter = 0;
             bs->flags = bulletArgs[7].i;
             value = ((short *)bulletArgs)[1];
             bs->color = INT_OP(value, 2);
@@ -1747,7 +1747,7 @@ loop:
             {
                 enemy->shooter.flags &= ~0x200;
             }
-            enemy->shooter.unk_cc = INT_ARG(1);
+            enemy->shooter.bulletSound = INT_ARG(1);
             break;
         case 130:
             enemy->flags.disableCallStack = instr->args[0].i;
@@ -2906,7 +2906,7 @@ void FireAimedBulletPattern1(Enemy *enemy, EnemyScriptInstr *instr)
             pattern.count2 = 1;
             pattern.flags = 0x208;
             pattern.aimMode = 3;
-            pattern.unk_cc = 0x19;
+            pattern.bulletSound = 0x19;
             if (variant != 0)
             {
                 pattern.SetStopTurnCommand(0, 0, 0x3c, 1, 0.0f, 3.1f);
@@ -2968,7 +2968,7 @@ void FireAimedBulletPattern2(Enemy *enemy, EnemyScriptInstr *instr)
             pattern.count2 = 1;
             pattern.flags = 0x208;
             pattern.aimMode = 3;
-            pattern.unk_cc = 0x19;
+            pattern.bulletSound = 0x19;
             if (variant != 0)
             {
                 pattern.SetStopTurnCommand(0, 0, 0x28, 1, 0.0f, 2.9f);

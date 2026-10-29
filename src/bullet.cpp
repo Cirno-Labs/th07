@@ -161,7 +161,7 @@ int BulletManager::SpawnBullet(BulletShooter *shooter, int col, int row, float a
     cur->sprites.unk_b88 = shooter->typeSprites->unk_b88;
     cur->sprites.height = shooter->typeSprites->height;
     cur->sprites.sizeClass = shooter->typeSprites->sizeClass;
-    cur->sound = shooter->unk_cc;
+    cur->sound = shooter->bulletSound;
     cur->boundsCheckDelay = 0;
     if (cur->sprites.sprite0.spriteIndex != shooter->typeSprites->sprite0.spriteIndex + shooter->color)
     {

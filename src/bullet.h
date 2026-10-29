@@ -135,7 +135,7 @@ struct BulletShooter
     BulletShooter()
     {
         memset(this, 0, sizeof(BulletShooter));
-        this->unk_cc = -1;
+        this->bulletSound = -1;
     }
 
     // Sets command `idx` to run under `flag` and adds `flag` to flags.
@@ -171,11 +171,11 @@ struct BulletShooter
     short count1;
     short count2;
     WORD aimMode;
-    WORD unk_c2;
+    WORD patternCounter;
     int flags;
     int sound;
     // Bullet::sound.
-    int unk_cc;
+    int bulletSound;
     // FirePattern sets it to the bullet type's sprites.
     BulletTypeSprites *typeSprites;
 };
