@@ -154,6 +154,20 @@ int EffectUpdateDivergeLinear(Effect *effect)
     return 1;
 }
 
+void OffsetPetalEffects(D3DXVECTOR3 *offset)
+{
+    Effect *eff = g_EffectManager.effects;
+    int i;
+
+    for (i = 0; i < 400; i++, eff++)
+    {
+        if (eff->type == 20 || eff->type == 31)
+        {
+            eff->unk_27c += *offset;
+        }
+    }
+}
+
 Effect *EffectManager::SpawnEffect(int type, D3DXVECTOR3 *pos, int count, D3DCOLOR color)
 {
     Effect *effect;
