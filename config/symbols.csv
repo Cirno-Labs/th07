@@ -1766,6 +1766,7 @@ address,size,name,symbol
 0x0049f5d0,,g_Ranks,?g_Ranks@@3PAURankSettings@@A
 0x0049f628,,g_BadEndingFiles,?g_BadEndingFiles@@3PAPADA
 0x0049f634,,g_EndingFiles,?g_EndingFiles@@3PAPADA
+0x0049f64c,,g_StageDataFiles,?g_StageDataFiles@@3PAPADA
 0x0049fbf0,,g_Unknown49fbf0,?g_Unknown49fbf0@@3VUnknown49fbf0@@A
 0x0049fc88,,g_JoyCaps,?g_JoyCaps@@3UtagJOYCAPSA@@A
 0x0049fe1c,,g_ShotHeldFrames,?g_ShotHeldFrames@@3GA

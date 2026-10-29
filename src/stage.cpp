@@ -109,6 +109,106 @@ void Unknown1347b00::SetTintColor(D3DCOLOR color)
     }
 }
 
+int Unknown1347b00::AddedCallback(Unknown1347b00 *stage)
+{
+    int i;
+
+    stage->scriptTime.Set(0);
+    stage->scriptIndex = 0;
+    stage->cameraPos.x = 0.0f;
+    stage->cameraPos.y = 0.0f;
+    stage->cameraPos.z = 0.0f;
+    stage->spellCardState = 0;
+    stage->fogFadeFrames = 0;
+    switch (g_Unknown626270.stage)
+    {
+    case 1:
+        if (g_SpriteEngine->LoadAnm(5, "data/stg1bg.anm", 0x300) != 0)
+        {
+            return -1;
+        }
+        break;
+    case 2:
+        if (g_SpriteEngine->LoadAnm(5, "data/stg2bg.anm", 0x300) != 0)
+        {
+            return -1;
+        }
+        break;
+    case 3:
+        if (g_SpriteEngine->LoadAnm(5, "data/stg3bg.anm", 0x300) != 0)
+        {
+            return -1;
+        }
+        break;
+    case 4:
+        if (g_SpriteEngine->LoadAnm(5, "data/stg4bg.anm", 0x300) != 0)
+        {
+            return -1;
+        }
+        if (g_SpriteEngine->LoadAnm(6, "data/stg4bg2.anm", 0x310) != 0)
+        {
+            return -1;
+        }
+        if (g_SpriteEngine->LoadAnm(7, "data/stg4bg3.anm", 0x320) != 0)
+        {
+            return -1;
+        }
+        if (g_SpriteEngine->LoadAnm(8, "data/stg4bg4.anm", 0x330) != 0)
+        {
+            return -1;
+        }
+        if (g_SpriteEngine->LoadAnm(9, "data/stg4bg5.anm", 0x340) != 0)
+        {
+            return -1;
+        }
+        break;
+    case 5:
+        if (g_SpriteEngine->LoadAnm(5, "data/stg5bg.anm", 0x300) != 0)
+        {
+            return -1;
+        }
+        break;
+    case 6:
+        if (g_SpriteEngine->LoadAnm(5, "data/stg6bg.anm", 0x300) != 0)
+        {
+            return -1;
+        }
+        break;
+    case 7:
+        if (g_SpriteEngine->LoadAnm(5, "data/stg7bg.anm", 0x300) != 0)
+        {
+            return -1;
+        }
+        break;
+    case 8:
+        if (g_SpriteEngine->LoadAnm(5, "data/stg8bg.anm", 0x300) != 0)
+        {
+            return -1;
+        }
+        break;
+    }
+    if (stage->Load(g_StageDataFiles[g_Unknown626270.stage]) != 0)
+    {
+        return -1;
+    }
+    stage->fog.color = 0xff000000;
+    stage->fog.nearPlane = 200.0f;
+    stage->fog.farPlane = 500.0f;
+    stage->camera.eye = D3DXVECTOR3(0.0f, 0.0f, 1000.0f);
+    stage->camera.at = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+    stage->camera.up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+    stage->camera.fov = 0.5235988f;
+    stage->unk_50f8 = stage->camera;
+    stage->unk_5138 = stage->camera;
+    for (i = 0; i < 4; i++)
+    {
+        stage->unk_5238[i] = 0;
+        stage->unk_5248[i].Set(0);
+    }
+    stage->unk_50f4 = 0;
+    return 0;
+}
+
 int Unknown1347b00::DeletedCallback(Unknown1347b00 *stage)
 {
     g_SpriteEngine->ReleaseAnm(5);

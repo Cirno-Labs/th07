@@ -1539,6 +1539,10 @@ public:
     static int OnUpdate(Unknown1347b00 *stage);
     static int OnDraw(Unknown1347b00 *stage);
     static int OnDraw2(Unknown1347b00 *stage);
+    // Resets the script, loads the stage's background ANMs (five for
+    // stage 4) and its data from g_StageDataFiles, and sets the fog and
+    // the cameras up as the constructor. Returns 0, or -1 if loading
+    // fails.
     static int AddedCallback(Unknown1347b00 *stage);
     // Loads the stage data from `dataPath` and starts the background
     // sprites' scripts, as th06's (the ANMs are loaded by AddedCallback
@@ -1610,6 +1614,8 @@ public:
 };
 ASSERT_SIZE(Unknown1347b00, 0x52b4);
 extern Unknown1347b00 g_Unknown1347b00;
+// The stage data file of each stage; stage 0 has a "dummy" one.
+extern char *g_StageDataFiles[];
 // Unknown1347b00's statically allocated chain elements.
 extern ChainElem g_Unknown1347b00CalcChain;
 extern ChainElem g_Unknown1347b00DrawChain;
