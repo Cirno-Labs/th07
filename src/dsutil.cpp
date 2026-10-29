@@ -472,7 +472,7 @@ HRESULT CSound::Play(DWORD dwPriority, DWORD dwFlags)
     this->isPlaying = 1;
     this->dwPlayPriority = dwPriority;
     this->dwPlayFlags = dwFlags;
-    this->unk_2c = 0;
+    this->clearedOnPlay = 0;
     return pDSB->Play(0, dwPriority, dwFlags);
 }
 
