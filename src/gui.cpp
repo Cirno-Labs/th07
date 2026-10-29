@@ -1021,6 +1021,236 @@ void Gui::UpdateInterface()
     }
 }
 
+void Gui::DrawHud()
+{
+    float y;
+    float xx;
+    int idx;
+    Sprite *vm;
+
+    g_SpriteEngine->FlushQuadBatch();
+    g_App.viewport.X = 0;
+    g_App.viewport.Y = 0;
+    g_App.viewport.Width = 640;
+    g_App.viewport.Height = 480;
+    g_App.d3dDevice->SetViewport(&g_App.viewport);
+    vm = &this->impl->sprites[12];
+    if (g_App.flags.unk12 || vm->scriptPos != NULL || g_App.redrawFrames != 0)
+    {
+        for (y = 0.0f; y < 464.0f; y += 32.0f)
+        {
+            vm->pos = D3DXVECTOR3(0.0f, y, 0.49f);
+            g_SpriteEngine->DrawUnrotated(vm);
+        }
+        for (xx = 416.0f; xx < 624.0f; xx += 32.0f)
+        {
+            for (y = 16.0f; y < 464.0f; y += 32.0f)
+            {
+                vm->pos = D3DXVECTOR3(xx, y, 0.49f);
+                g_SpriteEngine->DrawUnrotated(vm);
+            }
+        }
+        vm = &this->impl->sprites[13];
+        for (xx = 0.0f; xx < 624.0f; xx += 128.0f)
+        {
+            vm->pos = D3DXVECTOR3(xx, 0.0f, 0.49f);
+            g_SpriteEngine->DrawUnrotated(vm);
+            vm->pos = D3DXVECTOR3(xx, 464.0f, 0.49f);
+            g_SpriteEngine->DrawUnrotated(vm);
+        }
+        g_SpriteEngine->DrawUnrotated(&this->impl->sprites[0]);
+        g_SpriteEngine->Draw(&this->impl->sprites[1]);
+        g_SpriteEngine->DrawUnrotated(&this->impl->sprites[2]);
+        g_SpriteEngine->DrawUnrotated(&this->impl->sprites[3]);
+        g_SpriteEngine->DrawUnrotated(&this->impl->sprites[4]);
+        g_SpriteEngine->DrawUnrotated(&this->impl->sprites[5]);
+        g_SpriteEngine->DrawUnrotated(&this->impl->sprites[6]);
+        g_SpriteEngine->DrawUnrotated(&this->impl->sprites[7]);
+        g_SpriteEngine->DrawUnrotated(&this->impl->sprites[8]);
+        this->livesChanged = 2;
+        this->bombsChanged = 2;
+        this->grazeChanged = 2;
+        this->unk_4_8 = 2;
+        this->powerChanged = 2;
+    }
+    if (!g_App.flags.noFrameItems)
+    {
+        vm = &this->impl->sprites[13];
+        xx = 496.0f;
+        vm->pos = D3DXVECTOR3(xx, 48.0f, 0.49f);
+        g_SpriteEngine->DrawUnrotated(vm);
+        vm->pos = D3DXVECTOR3(xx, 64.0f, 0.49f);
+        g_SpriteEngine->DrawUnrotated(vm);
+        if (this->livesChanged)
+        {
+            vm->pos = D3DXVECTOR3(xx, 96.0f, 0.48f);
+            g_SpriteEngine->DrawUnrotated(vm);
+        }
+        if (this->bombsChanged)
+        {
+            vm->pos = D3DXVECTOR3(xx, 112.0f, 0.48f);
+            g_SpriteEngine->DrawUnrotated(vm);
+        }
+        if (this->powerChanged)
+        {
+            vm->pos = D3DXVECTOR3(xx, 144.0f, 0.48f);
+            g_SpriteEngine->DrawUnrotated(vm);
+        }
+        if (this->grazeChanged)
+        {
+            vm->pos = D3DXVECTOR3(xx, 160.0f, 0.48f);
+            g_SpriteEngine->DrawUnrotated(vm);
+        }
+        if (this->unk_4_8)
+        {
+            vm->pos = D3DXVECTOR3(xx, 176.0f, 0.48f);
+            g_SpriteEngine->DrawUnrotated(vm);
+        }
+        vm->pos = D3DXVECTOR3(512.0f, 464.0f, 0.48f);
+        g_SpriteEngine->DrawUnrotated(vm);
+    }
+    if (this->livesChanged)
+    {
+        vm = &this->impl->sprites[9];
+        for (idx = 0, xx = 496.0f; idx < (int)g_Unknown626270.stats->lives; idx++, xx += 16.0f)
+        {
+            vm->pos = D3DXVECTOR3(xx, 96.0f, 0.46f);
+            g_SpriteEngine->DrawUnrotated(vm);
+        }
+    }
+    if (this->bombsChanged)
+    {
+        vm = &this->impl->sprites[10];
+        for (idx = 0, xx = 496.0f; idx < (int)g_Unknown626270.stats->bombs; idx++, xx += 16.0f)
+        {
+            vm->pos = D3DXVECTOR3(xx, 112.0f, 0.46f);
+            g_SpriteEngine->DrawUnrotated(vm);
+        }
+    }
+    vm = &this->impl->sprites[13];
+    for (xx = 32.0f; xx < 368.0f; xx += 128.0f)
+    {
+        vm->pos = D3DXVECTOR3(xx, 464.0f, 0.49f);
+        g_SpriteEngine->DrawUnrotated(vm);
+    }
+    {
+        D3DXVECTOR3 scorePos(496.0f, 64.0f, 0.0f);
+
+        if (g_Unknown626270.stats->guiScore < 100000000)
+        {
+            g_AsciiText.AddFormat(&scorePos, "%.8d", g_Unknown626270.stats->guiScore);
+            scorePos.x += 112.0f;
+            g_AsciiText.AddFormat(&scorePos, "%1d", g_Unknown626270.stats->continuesUsed);
+        }
+        else
+        {
+            g_AsciiText.scaleX = 0.9f;
+            g_AsciiText.scaleY = 1.0f;
+            g_AsciiText.AddFormat(&scorePos, "%.9d", g_Unknown626270.stats->guiScore);
+            // Nine digits 14 wide at the 0.9 scale; the folded product is
+            // one ulp below 113.4f.
+            scorePos.x += 126.0f * 0.9f;
+            g_AsciiText.AddFormat(&scorePos, "%1d", g_Unknown626270.stats->continuesUsed);
+            g_AsciiText.scaleX = 1.0f;
+            g_AsciiText.scaleY = 1.0f;
+        }
+        scorePos = D3DXVECTOR3(496.0f, 48.0f, 0.0f);
+        if (g_Unknown626270.stats->highScore < 100000000)
+        {
+            g_AsciiText.AddFormat(&scorePos, "%.8d", g_Unknown626270.stats->highScore);
+            scorePos.x += 112.0f;
+            g_AsciiText.AddFormat(&scorePos, "%1d", g_Unknown626270.stats->unk_10);
+        }
+        else
+        {
+            g_AsciiText.scaleX = 0.9f;
+            g_AsciiText.scaleY = 1.0f;
+            g_AsciiText.AddFormat(&scorePos, "%.9d", g_Unknown626270.stats->highScore);
+            // Nine digits 14 wide at the 0.9 scale; the folded product is
+            // one ulp below 113.4f.
+            scorePos.x += 126.0f * 0.9f;
+            g_AsciiText.AddFormat(&scorePos, "%1d", g_Unknown626270.stats->unk_10);
+            g_AsciiText.scaleX = 1.0f;
+            g_AsciiText.scaleY = 1.0f;
+        }
+        if (this->grazeChanged || g_App.flags.noFrameItems)
+        {
+            scorePos = D3DXVECTOR3(496.0f, 160.0f, 0.0f);
+            g_AsciiText.AddFormat(&scorePos, "%d", g_Unknown626270.stats->grazeTotal);
+        }
+        if (this->unk_4_8 || g_App.flags.noFrameItems)
+        {
+            scorePos = D3DXVECTOR3(496.0f, 176.0f, 0.0f);
+            g_AsciiText.AddFormat(&scorePos, "%d/%d", g_Unknown626270.stats->pointItemsTotal,
+                                  g_Unknown626270.stats->unk_30);
+        }
+    }
+    g_SpriteEngine->FlushQuadBatch();
+    if (this->powerChanged || g_App.flags.noFrameItems)
+    {
+        VertexDiffuseXyzrwh vertices[4];
+
+        if ((int)g_Unknown626270.stats->power > 0)
+        {
+            vertices[0].pos = D3DXVECTOR3(496.0f, 144.0f, 0.1f);
+            vertices[1].pos = D3DXVECTOR3((int)g_Unknown626270.stats->power + 496 + 0.0f, 144.0f, 0.1f);
+            vertices[2].pos = D3DXVECTOR3(496.0f, 160.0f, 0.1f);
+            vertices[3].pos = D3DXVECTOR3((int)g_Unknown626270.stats->power + 496 + 0.0f, 160.0f, 0.1f);
+            vertices[0].diffuse = vertices[2].diffuse = 0xe0e0e0ff;
+            vertices[1].diffuse = vertices[3].diffuse = 0x80e0e0ff;
+            vertices[0].w = vertices[1].w = vertices[2].w = vertices[3].w = 1.0f;
+            if (!g_App.flags.noColorBlending)
+            {
+                g_App.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
+                g_App.d3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
+            }
+            g_App.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_DIFFUSE);
+            g_App.d3dDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_DIFFUSE);
+            if (!g_App.flags.noDepthTest)
+            {
+                g_App.SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+            }
+            g_App.d3dDevice->SetVertexShader(D3DFVF_XYZRHW | D3DFVF_DIFFUSE);
+            g_App.d3dDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, vertices, sizeof(VertexDiffuseXyzrwh));
+            g_SpriteEngine->ClearVertexFormat();
+            g_SpriteEngine->ClearColorOp();
+            g_SpriteEngine->ClearBlendMode();
+            g_SpriteEngine->ClearZWrite();
+            if (!g_App.flags.noColorBlending)
+            {
+                g_App.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
+                g_App.d3dDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
+            }
+            g_App.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
+            g_App.d3dDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+        }
+        if ((int)g_Unknown626270.stats->power < 128)
+        {
+            g_AsciiText.AddFormat(&D3DXVECTOR3(496.0f, 144.0f, 0.0f), "%d", (int)g_Unknown626270.stats->power);
+        }
+        else
+        {
+            g_AsciiText.AddFormat(&D3DXVECTOR3(496.0f, 144.0f, 0.0f), "MAX");
+        }
+    }
+    if (this->livesChanged)
+    {
+        this->livesChanged--;
+    }
+    if (this->powerChanged)
+    {
+        this->powerChanged--;
+    }
+    if (this->bombsChanged)
+    {
+        this->bombsChanged--;
+    }
+    if (this->grazeChanged)
+    {
+        this->grazeChanged--;
+    }
+}
+
 // Sprite `sprite`'s entry in the sprite engine.
 inline SpriteData *GetSpriteData(int sprite)
 {
