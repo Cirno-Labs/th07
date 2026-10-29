@@ -134,7 +134,7 @@ void UpdateReimuABomb(Player *player)
             ang = -i * 6.2831855f / 8.0f - 1.5707964f;
         }
         orb->angle = AddNormalizeAngle(ang, 0.0f);
-        orb->unk_4 = 0;
+        orb->burstTimer = 0;
         player->bombHitboxes[i].damageDealt = 0;
         for (sprite = orb->sprites, k = 0; k < 4; k++, sprite++)
         {
@@ -188,8 +188,8 @@ void UpdateReimuABomb(Player *player)
             player->bombHitboxes[i].size.x = 256.0f;
             player->bombHitboxes[i].size.y = 256.0f;
             player->bombHitboxes[i].damage = 2;
-            orb->unk_4++;
-            if (orb->unk_4 >= 30)
+            orb->burstTimer++;
+            if (orb->burstTimer >= 30)
             {
                 orb->state = 0;
             }
@@ -281,7 +281,7 @@ void UpdateReimuABombFocused(Player *player)
             if (i != 0)
             {
                 orb->state = 1;
-                orb->unk_4 = 0;
+                orb->burstTimer = 0;
                 orb->homingSpeed = 8.0f;
                 orb->pos = player->position;
                 x = g_Rng.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
@@ -357,8 +357,8 @@ void UpdateReimuABombFocused(Player *player)
         }
         else if (orb->state != 0 && bombs->timer.HasTicked())
         {
-            orb->unk_4++;
-            if (orb->unk_4 >= 30)
+            orb->burstTimer++;
+            if (orb->burstTimer >= 30)
             {
                 orb->state = 0;
             }

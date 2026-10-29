@@ -337,7 +337,7 @@ struct PlayerBombPart
     // Reimu A: 0 unused, 1 flying, 2 and up after it bursts, while
     // unk_4 counts to 30.
     int state;
-    int unk_4;
+    int burstTimer;
     union
     {
         // Reimu A focused: the orb's speed, as th06's partSpeed.
