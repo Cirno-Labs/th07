@@ -137,8 +137,8 @@ void AsciiText::Initialize()
     this->stringCount = 0;
     this->inArena = 0;
     this->highlight = 0;
-    this->unk_74dc = 0;
-    this->unk_74e0 = 0;
+    this->nextPopup = 0;
+    this->nextPopup2 = 0;
     this->unk_74e4 = 0;
     this->color = 0xffffffff;
     this->scaleX = 1.0f;
@@ -148,7 +148,7 @@ void AsciiText::Initialize()
     g_SpriteEngine->InitSprite(&this->glyph, 0x20);
     this->digit.pos.z = 0.1f;
     this->highlight = 0;
-    this->unk_74d8 = 14;
+    this->glyphWidth = 14;
     this->SetUnk74d4(this->unk_74d4);
 }
 
@@ -270,7 +270,7 @@ void AsciiText::DrawStrings()
         c = (BYTE *)string->text;
         this->glyph.scaleY = string->scaleX;
         this->glyph.scaleX = string->scaleY;
-        advance = this->unk_74d8 * string->scaleX;
+        advance = this->glyphWidth * string->scaleX;
         if (clipped != string->inArena)
         {
             clipped = string->inArena;
@@ -357,11 +357,11 @@ void AsciiText::AddPopup(D3DXVECTOR3 *pos, int value, D3DCOLOR color)
     AsciiPopup *popup;
     int n;
 
-    if (this->unk_74dc >= 0x2d0)
+    if (this->nextPopup >= 0x2d0)
     {
-        this->unk_74dc = 0;
+        this->nextPopup = 0;
     }
-    popup = &this->popups[this->unk_74dc];
+    popup = &this->popups[this->nextPopup];
     popup->active = 1;
     n = 0;
     if (value >= 0)
@@ -389,7 +389,7 @@ void AsciiText::AddPopup(D3DXVECTOR3 *pos, int value, D3DCOLOR color)
     popup->pos = *pos;
     popup->pos.x += g_Unknown626270.arena[0];
     popup->pos.y += g_Unknown626270.arena[1];
-    this->unk_74dc++;
+    this->nextPopup++;
 }
 
 void AsciiText::AddPopup2(D3DXVECTOR3 *pos, int value, D3DCOLOR color)
@@ -397,11 +397,11 @@ void AsciiText::AddPopup2(D3DXVECTOR3 *pos, int value, D3DCOLOR color)
     AsciiPopup *popup;
     int n;
 
-    if (this->unk_74e0 >= 3)
+    if (this->nextPopup2 >= 3)
     {
-        this->unk_74e0 = 0;
+        this->nextPopup2 = 0;
     }
-    popup = &this->popups[this->unk_74e0 + 0x2d0];
+    popup = &this->popups[this->nextPopup2 + 0x2d0];
     popup->active = 1;
     n = 0;
     if (value >= 0)
@@ -429,7 +429,7 @@ void AsciiText::AddPopup2(D3DXVECTOR3 *pos, int value, D3DCOLOR color)
     popup->pos = *pos;
     popup->pos.x += g_Unknown626270.arena[0];
     popup->pos.y += g_Unknown626270.arena[1];
-    this->unk_74e0++;
+    this->nextPopup2++;
 }
 
 int PauseMenu::UpdatePauseMenu()

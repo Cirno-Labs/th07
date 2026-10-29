@@ -216,10 +216,10 @@ public:
     // Player::DeletedCallback sets it to 99.
     int unk_74d4;
     // The width DrawStrings gives each glyph: 14, as in th06.
-    int unk_74d8;
+    int glyphWidth;
     // As th06's nextPopup and nextPopup2.
-    int unk_74dc;
-    int unk_74e0;
+    int nextPopup;
+    int nextPopup2;
     int unk_74e4;
     PauseMenu pauseMenu;
     ContinueMenu continueMenu;

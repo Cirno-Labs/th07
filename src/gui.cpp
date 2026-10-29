@@ -229,13 +229,13 @@ int Gui::OnDraw(Gui *gui)
     case 2:
         g_AsciiText.scaleX = 0.9f;
         g_AsciiText.scaleY = 1.0f;
-        g_AsciiText.unk_74d8 = 11;
+        g_AsciiText.glyphWidth = 11;
         g_AsciiText.color = 0xffe0b0ff;
         g_AsciiText.AddFormat(&gui->impl->unk_209e0.pos, "Supernatural Border!!");
         g_AsciiText.color = 0xffffffff;
         g_AsciiText.scaleX = 1.0f;
         g_AsciiText.scaleY = 1.0f;
-        g_AsciiText.unk_74d8 = 14;
+        g_AsciiText.glyphWidth = 14;
         break;
     case 3:
         g_AsciiText.color = 0xffc0b0ff;
@@ -245,13 +245,13 @@ int Gui::OnDraw(Gui *gui)
     case 4:
         g_AsciiText.scaleX = 0.9f;
         g_AsciiText.scaleY = 1.0f;
-        g_AsciiText.unk_74d8 = 11;
+        g_AsciiText.glyphWidth = 11;
         g_AsciiText.color = 0xffe0b0ff;
         g_AsciiText.AddFormat(&gui->impl->unk_209e0.pos, "Border Bonus %7d", gui->impl->unk_209e0.value);
         g_AsciiText.color = 0xffffffff;
         g_AsciiText.scaleX = 1.0f;
         g_AsciiText.scaleY = 1.0f;
-        g_AsciiText.unk_74d8 = 14;
+        g_AsciiText.glyphWidth = 14;
         break;
     }
     if (gui->impl->spellBonusPopup.shown)
