@@ -93,7 +93,9 @@ struct Bullet
     WORD unk_bfe;
     BYTE unk_c00;
     BYTE grazed;
-    unsigned char unk_c02[0x6];
+    unsigned char unk_c02[0x2];
+    // The next bullet in the same BulletManager draw list.
+    Bullet *next;
     int unk_c08;
     // The sound the bullet's behaviors play as they start.
     int sound;
@@ -238,7 +240,9 @@ public:
     int unk_37a13c;
     // RegisterChain's argument.
     char *anmPath;
-    int unk_37a144[6];
+    // Six lists of the bullets to draw, in order, linked by
+    // Bullet::next.
+    Bullet *drawLists[6];
     // Where SpawnBullet looks for a free bullet first.
     Bullet *nextBullet;
     // The item type cleared bullets turn into (g_Unknown9a9ab8).

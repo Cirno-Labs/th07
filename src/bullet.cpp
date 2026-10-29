@@ -710,3 +710,61 @@ void DrawBullet(Bullet *bullet)
     }
     g_SpriteEngine->Draw(sprite);
 }
+
+int BulletManager::OnDraw(BulletManager *mgr)
+{
+    int i;
+    float s;
+    Laser *laser;
+    float len;
+    float ca;
+    Bullet *blt;
+
+    laser = mgr->lasers;
+    for (i = 0; i < 0x40; i++, laser++)
+    {
+        if (!laser->active)
+        {
+            continue;
+        }
+        SinCos(&s, &ca, laser->angle);
+        len = (laser->endOffset - laser->startOffset) / 2.0f + laser->startOffset;
+        laser->sprite0.pos.x = ca * len + laser->pos.x;
+        laser->sprite0.pos.y = s * len + laser->pos.y;
+        laser->sprite0.pos.z = 0.05f;
+        laser->color = laser->color & 0xff000000 | 0xffffff;
+        laser->sprite0.pos.x = g_Unknown626270.arena[0] + laser->sprite0.pos.x;
+        laser->sprite0.pos.y = g_Unknown626270.arena[1] + laser->sprite0.pos.y;
+        g_SpriteEngine->Draw(&laser->sprite0);
+        if ((laser->startOffset < 16.0f || laser->speed == 0.0f) && (laser->unk_4e9 == 0 || laser->state != 0))
+        {
+            laser->sprite1.pos.x = ca * laser->startOffset + laser->pos.x;
+            laser->sprite1.pos.y = s * laser->startOffset + laser->pos.y;
+            laser->sprite1.pos.z = 0.05f;
+            laser->sprite1.color = laser->sprite0.color;
+            laser->sprite1.flags |= 0x20;
+            laser->sprite1.color = laser->sprite1.color & 0xffffff | 0xff000000;
+            laser->sprite1.scaleY = laser->width / 10.0f * ((16.0f - laser->startOffset) / 16.0f);
+            laser->sprite1.scaleX = laser->sprite1.scaleY;
+            if (laser->sprite1.scaleX <= 0.0f)
+            {
+                laser->sprite1.scaleY = laser->width / 10.0f;
+                laser->sprite1.scaleX = laser->sprite1.scaleY;
+            }
+            laser->sprite1.pos.x = g_Unknown626270.arena[0] + laser->sprite1.pos.x;
+            laser->sprite1.pos.y = g_Unknown626270.arena[1] + laser->sprite1.pos.y;
+            g_SpriteEngine->Draw(&laser->sprite1);
+        }
+    }
+    g_ItemManager.DrawItems();
+    for (i = 0; i < 6; i++)
+    {
+        blt = mgr->drawLists[i];
+        while (blt != NULL)
+        {
+            DrawBullet(blt);
+            blt = blt->next;
+        }
+    }
+    return 1;
+}
