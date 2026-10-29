@@ -30,6 +30,13 @@ int EffectInitDrift(Effect *effect)
     return 0;
 }
 
+int EffectUpdateMove(Effect *effect)
+{
+    effect->pos += effect->step;
+    effect->step += effect->acceleration;
+    return 1;
+}
+
 Effect *EffectManager::SpawnEffect(int type, D3DXVECTOR3 *pos, int count, D3DCOLOR color)
 {
     Effect *effect;

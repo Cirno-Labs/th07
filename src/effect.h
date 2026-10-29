@@ -70,6 +70,10 @@ extern EffectInfo g_EffectInfos[];
 // App::unk_178. Returns 0.
 int EffectInitDrift(Effect *effect);
 
+// An effect update: moves by step, which changes by acceleration, as
+// th06's (without frameAdvance). Returns 1.
+int EffectUpdateMove(Effect *effect);
+
 // The effects, at 0x12fe250: 400 started in turn, 8 reserved slots and
 // a spare.
 class EffectManager
