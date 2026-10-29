@@ -178,7 +178,7 @@ public:
     void Func455110(Sprite *vms, int script, int count);
     // Sends interrupt `interrupt` to the `count` sprites from `vms` that
     // show a loaded sprite. Not in th06.
-    void Func455030(Sprite *vms, int count, short interrupt);
+    void SendInterruptToLoadedSprites(Sprite *vms, int count, short interrupt);
     // Loads the image at `path` as surface `surface`. Returns 0, or -1 on
     // failure.
     int LoadSurface(int surface, char *path);

@@ -328,3 +328,16 @@ void SpriteEngine::CopyTextureRect(int dstTexture, int srcTexture, RECT *dstRect
     dest->Release();
     src->Release();
 }
+
+void SpriteEngine::SendInterruptToLoadedSprites(Sprite *vms, int count, short interrupt)
+{
+    while (count != 0)
+    {
+        if (vms->HasTexture())
+        {
+            vms->pendingInterrupt = interrupt;
+        }
+        vms++;
+        count--;
+    }
+}

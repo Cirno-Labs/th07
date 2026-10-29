@@ -99,7 +99,7 @@ int MainMenu::StartTitle()
             this->sprites = new Sprite[this->spriteCount];
             g_SpriteEngine->Func455110(this->sprites, 0x900, this->spriteCount);
         }
-        g_SpriteEngine->Func455030(this->sprites, this->spriteCount, 2);
+        g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 2);
         for (i = 0; i < 8; i++)
         {
             g_SpriteEngine->SetSprite(&this->sprites[i + 1], this->sprites[i + 1].baseSpriteIndex + 1);
@@ -113,7 +113,7 @@ int MainMenu::StartTitle()
         if (g_Unknown626270.unk_93d8Bit3)
         {
             this->SetState(7);
-            g_SpriteEngine->Func455030(this->sprites, this->spriteCount, 13);
+            g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 13);
             this->unk_b0c8->SetPendingInterrupt(2);
             g_Unknown626270.SetUnk93d8Bit3(0);
             return 1;
@@ -121,7 +121,7 @@ int MainMenu::StartTitle()
         if (this->unk_68 != 0)
         {
             this->SetState(8);
-            g_SpriteEngine->Func455030(this->sprites, this->spriteCount, 5);
+            g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 5);
             this->unk_b0c8->SetPendingInterrupt(2);
             return 1;
         }
@@ -207,7 +207,7 @@ int MainMenu::StartTitle()
                     this->cursor = 2;
                 }
                 this->SetState(4);
-                g_SpriteEngine->Func455030(this->sprites, this->spriteCount, 5);
+                g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 5);
                 this->unk_b0c8->SetPendingInterrupt(2);
                 return 1;
             case 2:
@@ -218,7 +218,7 @@ int MainMenu::StartTitle()
                     this->cursor = 2;
                 }
                 this->SetState(8);
-                g_SpriteEngine->Func455030(this->sprites, this->spriteCount, 5);
+                g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 5);
                 this->unk_b0c8->SetPendingInterrupt(2);
                 return 1;
             case 1:
@@ -227,14 +227,14 @@ int MainMenu::StartTitle()
                     g_Unknown626270.unk_93d8 &= ~1;
                     this->cursor = g_App.defaultDifficulty == 5;
                     this->SetState(12);
-                    g_SpriteEngine->Func455030(this->sprites, this->spriteCount, 5);
+                    g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 5);
                     this->unk_b0c8->SetPendingInterrupt(2);
                     return 1;
                 }
             case 3:
                 g_Unknown626270.unk_93d8 &= ~1;
                 this->SetState(7);
-                g_SpriteEngine->Func455030(this->sprites, this->spriteCount, 13);
+                g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 13);
                 this->unk_b0c8->SetPendingInterrupt(2);
                 return 1;
             case 5:
@@ -258,7 +258,7 @@ int MainMenu::StartTitle()
             case 7:
                 this->unk_8 = 2;
                 this->stateFrames = 0;
-                g_SpriteEngine->Func455030(this->sprites, this->spriteCount, 1);
+                g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 1);
                 if (g_App.musicMode == 2)
                 {
                     g_App.midi->Restart(30);
@@ -312,7 +312,7 @@ int MainMenu::UpdateOptions()
     case 0:
         if (this->unk_d0fc == 0)
         {
-            g_SpriteEngine->Func455030(this->sprites, this->spriteCount, 3);
+            g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 3);
             for (i = 0; i < 9; i++)
             {
                 g_SpriteEngine->SetSprite(&this->sprites[i + 9], this->sprites[i + 9].baseSpriteIndex + 1);
@@ -654,7 +654,7 @@ int MainMenu::UpdateKeyConfig()
     case 0:
         if (this->unk_d0fc == 0)
         {
-            g_SpriteEngine->Func455030(this->sprites, this->spriteCount, 4);
+            g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 4);
             for (i = 0; i < 12; i++)
             {
                 g_SpriteEngine->SetSprite(&this->sprites[i + 0x23], this->sprites[i + 0x23].baseSpriteIndex + 1);
@@ -874,16 +874,16 @@ int MainMenu::UpdateDifficultyMenu()
             this->cursor = g_App.defaultDifficulty;
             if (this->state != 12)
             {
-                g_SpriteEngine->Func455030(this->sprites, this->spriteCount, 7);
+                g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 7);
             }
             else if (!g_Unknown626270.Func42f94c())
             {
-                g_SpriteEngine->Func455030(this->sprites, this->spriteCount, 12);
+                g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 12);
                 this->cursor = 4;
             }
             else
             {
-                g_SpriteEngine->Func455030(this->sprites, this->spriteCount, 22);
+                g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 22);
             }
             if (this->state != 12)
             {
@@ -994,7 +994,7 @@ int MainMenu::UpdateDifficultyMenu()
             g_SoundPlayer.PlayQueuedSounds();
             this->unk_8 = 3;
             this->stateFrames = 0;
-            g_SpriteEngine->Func455030(this->sprites, this->spriteCount, 6);
+            g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 6);
         }
         break;
     case 3:
@@ -1035,7 +1035,7 @@ int MainMenu::UpdateCharacterMenu()
     case 0:
         if (this->unk_d0fc == 0)
         {
-            g_SpriteEngine->Func455030(this->sprites, this->spriteCount, 8);
+            g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 8);
             if (g_App.defaultDifficulty < 4)
             {
                 this->sprites[g_App.defaultDifficulty + 0x43].SetPendingInterrupt(9);
@@ -1316,7 +1316,7 @@ int MainMenu::UpdateShotTypeMenu()
     case 0:
         if (this->unk_d0fc == 0)
         {
-            g_SpriteEngine->Func455030(this->sprites, this->spriteCount, 10);
+            g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 10);
             if (g_App.defaultDifficulty < 4)
             {
                 this->sprites[g_App.defaultDifficulty + 0x43].SetPendingInterrupt(9);
@@ -1528,7 +1528,7 @@ int MainMenu::UpdateGameStartMenu()
     case 0:
         if (this->unk_d0fc == 0)
         {
-            g_SpriteEngine->Func455030(this->sprites, this->spriteCount, 18);
+            g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 18);
             this->sprites[0x48].flags &= ~2;
             this->sprites[0x49].flags &= ~2;
             this->sprites[0x47].flags &= ~2;
@@ -1648,7 +1648,7 @@ int MainMenu::UpdateReplayMenu()
             {
                 return 0;
             }
-            g_SpriteEngine->Func455030(this->sprites, this->spriteCount, 14);
+            g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 14);
             this->cursor = 0;
             this->unk_8 = 0;
             this->stateFrames = 0;
@@ -1746,7 +1746,7 @@ int MainMenu::UpdateReplayMenu()
             }
             g_SoundPlayer.QueueSound(10, 0);
             this->unk_8 = 2;
-            g_SpriteEngine->Func455030(this->sprites, this->spriteCount, 15);
+            g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 15);
             this->sprites[this->replayCursor % 15 + 0x87].SetPendingInterrupt(17);
             this->loadedReplay = (ReplayHeader *)LoadFileData(this->replayPaths[this->replayCursor], 1);
             this->loadedReplay = ValidateReplay(this->loadedReplay, g_FileSize);
@@ -1775,7 +1775,7 @@ int MainMenu::UpdateReplayMenu()
             g_SoundPlayer.QueueSound(11, 0);
             this->unk_8 = 4;
             this->stateFrames = 0;
-            g_SpriteEngine->Func455030(this->sprites, this->spriteCount, 16);
+            g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 16);
         }
         break;
     case 2:
@@ -1805,7 +1805,7 @@ int MainMenu::UpdateReplayMenu()
         this->replayStage = this->cursor;
         if (WAS_PRESSED(0x1001))
         {
-            g_SpriteEngine->Func455030(this->sprites, this->spriteCount, 19);
+            g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 19);
             this->sprites[this->replayCursor % 15 + 0x87].SetPendingInterrupt(17);
             this->unk_8 = 3;
             this->cursor = 0;
@@ -1821,7 +1821,7 @@ int MainMenu::UpdateReplayMenu()
             this->loadedReplay = NULL;
             this->unk_8 = 1;
             this->unk_d0fc = 0;
-            g_SpriteEngine->Func455030(this->sprites, this->spriteCount, 14);
+            g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 14);
             this->cursor = this->replayCursor;
             break;
         }
@@ -1859,7 +1859,7 @@ int MainMenu::UpdateReplayMenu()
             this->unk_8 = 2;
             this->unk_d0fc = 0;
             this->cursor = this->replayStage;
-            g_SpriteEngine->Func455030(this->sprites, this->spriteCount, 15);
+            g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 15);
             this->sprites[this->replayCursor % 15 + 0x87].SetPendingInterrupt(17);
             break;
         }
