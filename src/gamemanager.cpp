@@ -160,3 +160,43 @@ void Unknown626270::SetRankForDifficulty()
     this->minRank = g_Ranks[g_Unknown626270.difficulty].minRank;
     this->maxRank = g_Ranks[g_Unknown626270.difficulty].maxRank;
 }
+
+void RerollStatsChecksumKeys()
+{
+    int sum;
+    int j;
+
+    g_Unknown626270.stats->unk_88 = g_Rng.GetRandomU32InRange(100000) + 6543;
+    for (j = 0; j < ARRAY_SIZE(g_Unknown626270.stats->unk_34); j++)
+    {
+        g_Unknown626270.stats->unk_34[j] = g_Rng.GetRandomU32InRange(100000) + 6543;
+    }
+    for (j = 0; j < ARRAY_SIZE(g_Unknown626270.stats->unk_8c); j++)
+    {
+        g_Unknown626270.stats->unk_8c[j] = g_Rng.GetRandomU32InRange(100000) + 6543;
+    }
+    for (j = 0; j < ARRAY_SIZE(g_Unknown626270.stats->unk_54); j++)
+    {
+        g_Unknown626270.stats->unk_54[j] = g_Rng.GetRandomF32ZeroToOne() * 100000.0f + 6543.0f;
+    }
+    for (j = 0; j < ARRAY_SIZE(g_Unknown626270.stats->unk_60); j++)
+    {
+        g_Unknown626270.stats->unk_60[j] = g_Rng.GetRandomF32ZeroToOne() * 100000.0f + 6543.0f;
+    }
+    for (j = 0; j < ARRAY_SIZE(g_Unknown626270.stats->unk_70); j++)
+    {
+        g_Unknown626270.stats->unk_70[j] = g_Rng.GetRandomF32ZeroToOne() * 100000.0f + 6543.0f;
+    }
+    for (j = 0; j < ARRAY_SIZE(g_Unknown626270.stats->unk_80); j++)
+    {
+        g_Unknown626270.stats->unk_80[j] = g_Rng.GetRandomF32ZeroToOne() * 100000.0f + 6543.0f;
+    }
+    for (j = 0; j < ARRAY_SIZE(g_Unknown626270.stats->unk_b4); j++)
+    {
+        g_Unknown626270.stats->unk_b4[j] = g_Rng.GetRandomU32InRange(100000) + 6543;
+    }
+    g_Unknown626270.stats->unk_ac = g_Unknown626270.stats->unk_34[2];
+    sum = g_Unknown626270.ComputeChecksum();
+    g_Unknown626270.stats->unk_b0 = sum;
+    g_Unknown626270.unk_9614 = (float)sum + g_Unknown626270.stats->unk_8c[3];
+}

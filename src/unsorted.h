@@ -866,13 +866,14 @@ struct Unknown626270Stats
     int unk_30;
     // Set to 6543 plus a random number under 100000 by
     // Unknown626270::RerollLifeChecksumKeys.
-    DWORD unk_34[5];
-    unsigned char unk_48[0x8];
+    DWORD unk_34[7];
     float deaths;
-    unsigned char unk_54[0x8];
+    // Set to random floats from 6543 up by RerollStatsChecksumKeys, as unk_60,
+    // unk_70 and unk_80.
+    float unk_54[2];
     // The lives left, a float behind checksums, as the other counts.
     float lives;
-    unsigned char unk_60[0x8];
+    float unk_60[2];
     // The bombs left, the same way.
     float bombs;
     float bombsUsed;
@@ -881,13 +882,14 @@ struct Unknown626270Stats
     float unk_70[3];
     // The shot power, up to 128.
     float power;
-    unsigned char unk_80[0x8];
+    float unk_80[2];
     // Player::Graze subtracts it from Unknown626270::unk_961c.
     int unk_88;
-    unsigned char unk_8c[0x20];
+    int unk_8c[8];
     // ChecksumBytes adds unk_b4[2] to it for every byte it sums.
     int unk_ac;
-    unsigned char unk_b0[0x4];
+    // The checksum, from ComputeChecksum.
+    int unk_b0;
     DWORD unk_b4[5];
 };
 ASSERT_SIZE(Unknown626270Stats, 0xc8);
@@ -1064,7 +1066,8 @@ public:
     // A second rectangle, set with arena by SetPlayArea: x, y, width
     // and height.
     float unk_9604[4];
-    unsigned char unk_9614[0x4];
+    // RerollStatsChecksumKeys sets it to the checksum plus stats->unk_8c[3].
+    float unk_9614;
     int unk_9618;
     // Added to (up to unk_9618) by Func42f736.
     int unk_961c;
@@ -1101,6 +1104,9 @@ extern RankSettings g_Ranks[6];
 // The sum of the `size` bytes at `data`. Adds
 // g_Unknown626270.stats->unk_b4[2] to its unk_ac for every byte.
 int ChecksumBytes(BYTE *data, int size);
+// Fills the checksum keys in g_Unknown626270.stats with random numbers
+// from 6543 up, then stores the checksum. Not in th06.
+void RerollStatsChecksumKeys();
 
 // The object at 0x49fbf0. Placeholder name; only what is known so far.
 class Unknown49fbf0

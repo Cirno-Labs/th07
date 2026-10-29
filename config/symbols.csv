@@ -268,7 +268,7 @@ address,size,name,symbol
 0x0042e1d4,36,Unknown626270::OnDraw,?OnDraw@Unknown626270@@SIHPAV1@@Z
 0x0042e1f8,404,DrawLoadingScreen,?DrawLoadingScreen@@YIXXZ
 0x0042e38c,78,Unknown626270::SetRankForDifficulty,?SetRankForDifficulty@Unknown626270@@QAEXXZ
-0x0042e3da,602,Func42e3da,
+0x0042e3da,602,RerollStatsChecksumKeys,?RerollStatsChecksumKeys@@YIXXZ
 0x0042e634,487,Func42e634,
 0x0042e81b,35,Func42e81b,
 0x0042e83e,2726,Func42e83e,
