@@ -30,7 +30,10 @@ class PauseMenu
 public:
     // While g_Unknown626270 is paused, as th06's. Returns 0.
     int UpdatePauseMenu();
-    // Draws it while paused, as th06's.
+    // Draws it while paused, as th06's, flushing SpriteEngine's batch
+    // before setting the play area's viewport: the background with z
+    // writes off if the back buffer is lockable (bit 1 of
+    // g_App.unk_18c) and state is nonzero, then the shown sprites.
     void DrawPauseMenu();
 
     int state;

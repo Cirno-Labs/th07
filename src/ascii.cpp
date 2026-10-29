@@ -423,3 +423,32 @@ void AsciiText::AddPopup2(D3DXVECTOR3 *pos, int value, D3DCOLOR color)
     popup->pos.y += g_Unknown626270.arena[1];
     this->unk_74e0++;
 }
+
+void PauseMenu::DrawPauseMenu()
+{
+    DWORD i;
+
+    if (g_Unknown626270.unk_93dc)
+    {
+        g_SpriteEngine->FlushQuadBatch();
+        g_App.viewport.X = g_Unknown626270.arena[0];
+        g_App.viewport.Y = g_Unknown626270.arena[1];
+        g_App.viewport.Width = g_Unknown626270.arena[2];
+        g_App.viewport.Height = g_Unknown626270.arena[3];
+        g_App.d3dDevice->SetViewport(&g_App.viewport);
+        if ((g_App.unk_18c >> 1) & 1 && this->state != 0)
+        {
+            Sprite sprite = this->background;
+
+            sprite.flags |= 0x1000;
+            g_SpriteEngine->DrawUnrotated(&sprite);
+        }
+        for (i = 0; i < ARRAY_SIZE(this->sprites); i++)
+        {
+            if (this->sprites[i].flags & 1)
+            {
+                g_SpriteEngine->DrawUnrotated(&this->sprites[i]);
+            }
+        }
+    }
+}
