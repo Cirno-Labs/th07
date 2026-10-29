@@ -714,7 +714,7 @@ address,size,name,symbol
 0x0046272c,566,Func46272c,
 0x00462962,40,Func462962,
 0x0046298a,102,Func46298a,
-0x004629f0,182,Func4629f0,
+0x004629f0,182,D3DXLoadSurfaceFromFileInMemory,_D3DXLoadSurfaceFromFileInMemory@36
 0x00462aa6,285,D3DXLoadSurfaceFromSurface,_D3DXLoadSurfaceFromSurface@32
 0x00462bc3,305,Func462bc3,
 0x00462cf4,1041,Func462cf4,

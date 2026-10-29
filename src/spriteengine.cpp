@@ -97,3 +97,70 @@ void SpriteEngine::ReleaseSurface(int surface)
         this->surfacesBackup[surface] = NULL;
     }
 }
+
+int SpriteEngine::LoadSurface(int surface, char *path)
+{
+    IDirect3DSurface8 *srcSurface;
+    void *fileData;
+
+    if (this->surfaces[surface] != NULL)
+    {
+        this->ReleaseSurface(surface);
+    }
+    fileData = LoadFileData(path, 0);
+    if (fileData == NULL)
+    {
+        LogError(&g_Log, "%sが読み込めないです。\r\n", path);
+        return -1;
+    }
+    if (g_App.d3dDevice->CreateImageSurface(640, 1024, g_App.presentParams.BackBufferFormat, &srcSurface) != D3D_OK)
+    {
+        return -1;
+    }
+    if (D3DXLoadSurfaceFromFileInMemory(srcSurface, NULL, NULL, fileData, g_FileSize, NULL, D3DX_FILTER_NONE, 0,
+                                        &this->surfaceInfos[surface]) != D3D_OK)
+    {
+        goto fail;
+    }
+    if (g_App.d3dDevice->CreateRenderTarget(this->surfaceInfos[surface].Width, this->surfaceInfos[surface].Height,
+                                            g_App.presentParams.BackBufferFormat, D3DMULTISAMPLE_NONE, TRUE,
+                                            &this->surfaces[surface]) != D3D_OK &&
+        g_App.d3dDevice->CreateImageSurface(this->surfaceInfos[surface].Width, this->surfaceInfos[surface].Height,
+                                            g_App.presentParams.BackBufferFormat,
+                                            &this->surfaces[surface]) != D3D_OK)
+    {
+        goto fail;
+    }
+    if (g_App.d3dDevice->CreateImageSurface(this->surfaceInfos[surface].Width, this->surfaceInfos[surface].Height,
+                                            g_App.presentParams.BackBufferFormat,
+                                            &this->surfacesBackup[surface]) != D3D_OK)
+    {
+        goto fail;
+    }
+    if (D3DXLoadSurfaceFromSurface(this->surfaces[surface], NULL, NULL, srcSurface, NULL, NULL, D3DX_FILTER_NONE, 0) !=
+        D3D_OK)
+    {
+        goto fail;
+    }
+    if (D3DXLoadSurfaceFromSurface(this->surfacesBackup[surface], NULL, NULL, srcSurface, NULL, NULL, D3DX_FILTER_NONE,
+                                   0) != D3D_OK)
+    {
+        goto fail;
+    }
+    if (srcSurface != NULL)
+    {
+        srcSurface->Release();
+        srcSurface = NULL;
+    }
+    free(fileData);
+    return 0;
+
+fail:
+    if (srcSurface != NULL)
+    {
+        srcSurface->Release();
+        srcSurface = NULL;
+    }
+    free(fileData);
+    return -1;
+}

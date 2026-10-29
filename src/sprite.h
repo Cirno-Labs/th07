@@ -290,7 +290,9 @@ public:
     IDirect3DSurface8 *surfaces[0x20];
     // System memory copies of them, to recreate them from.
     IDirect3DSurface8 *surfacesBackup[0x20];
-    unsigned char unk_2e248[0x284];
+    // The images' sizes and formats.
+    D3DXIMAGE_INFO surfaceInfos[0x20];
+    unsigned char unk_2e4c8[0x4];
     // The texture last set on the device.
     IDirect3DTexture8 *currentTexture;
     // The states Draw last set, 0xff when unknown.
