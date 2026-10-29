@@ -1429,21 +1429,149 @@ extern Unknown9a9b00 g_Unknown9a9b00;
 // Set to 9 as the dialogue of stages 6 to 8 starts.
 extern int g_Unknown9a9ab8;
 
-// The object at 0x1347b00. Placeholder name; only what is known so far.
+// A run of quads in the stage data, ended by one with a negative type,
+// as th06's.
+struct StageQuad
+{
+    short type;
+    // The offset of the next quad.
+    short size;
+    short script;
+    // Set by Load: the quad's Sprite in Unknown1347b00::sprites.
+    short spriteIndex;
+    D3DXVECTOR3 pos;
+    float width;
+    float height;
+};
+
+// An instruction of the stage script: at `frame`, `opcode` acts on
+// `args`. As th06's, with more opcodes.
+struct StageInstr
+{
+    int frame;
+    short opcode;
+    short unk_06;
+    D3DXVECTOR3 args;
+};
+
+// D3DRS_FOGSTART, D3DRS_FOGEND and D3DRS_FOGCOLOR, as th06's.
+struct StageFog
+{
+    float nearPlane;
+    float farPlane;
+    D3DCOLOR color;
+};
+
+// An object of the stage data: its quads start at +0x1c. As th06's.
+struct StageObject
+{
+    BYTE unk_00[0x2];
+    // The background layer it is drawn on.
+    char layer;
+    // Bit 0: its sprites still run scripts. Bit 1: DrawLayer drew it.
+    char flags;
+    D3DXVECTOR3 pos;
+    D3DXVECTOR3 size;
+    StageQuad quads[1];
+};
+
+// A placement of an object; a negative `id` ends the list.
+struct StageInstance
+{
+    short id;
+    short unk_02;
+    D3DXVECTOR3 pos;
+};
+
+// The start of the stage data file, as th06's.
+struct StageData
+{
+    short objectCount;
+    short quadCount;
+    int instancesOffset;
+    int scriptOffset;
+    DWORD unk_0c;
+    char name[0x80];
+    char songNames[4][0x80];
+    char songPaths[4][0x80];
+    // Then, at 0x490, the objects' offsets.
+};
+
+// A camera of the stage script: where it is, where it looks (relative to
+// `eye`) and its field of view. Not in th06.
+struct StageCamera
+{
+    D3DXVECTOR3 eye;
+    D3DXVECTOR3 at;
+    D3DXVECTOR3 up;
+    // `at`, normalized.
+    D3DXVECTOR3 dir;
+    D3DXVECTOR3 unk_30;
+    float fov;
+};
+
+// The object at 0x1347b00: th06's Stage, the background. Placeholder
+// name.
 class Unknown1347b00
 {
 public:
     // Sets the color at +0x52ac to `color`, or to the average of the two
     // while its alpha byte is set.
-    void Func406930(D3DCOLOR color);
+    void SetTintColor(D3DCOLOR color);
     // One of the two set-ups SetRenderStateForSprite switches between
     // on flag bit 14, before it sets the viewport.
     void Func408180();
     void Func4082b0();
 
-    unsigned char unk_0[0x520];
+    // One Sprite per object sprite in the data, malloc'd.
+    Sprite *sprites;
+    Sprite unk_4;
+    Sprite unk_250;
+    StageData *data;
+    int quadCount;
+    int objectCount;
+    StageObject **objects;
+    StageInstance *instances;
+    StageInstr *script;
+    Timer scriptTime;
+    int scriptIndex;
+    int unk_4c4;
+    // RegisterChain's argument.
+    int stage;
+    D3DXVECTOR3 cameraPos;
+    D3DCOLOR unk_4d8;
+    StageFog fog;
+    StageFog fogStart;
+    StageFog fogTarget;
+    int fogFadeFrames;
+    Timer fogFadeTime;
+    BYTE unk_510;
+    unsigned char unk_511[0x3];
+    int spellCardState;
+    int spellCardFrames;
+    int unk_51c;
     // Set as the dialogue of stages 6 to 8 starts.
     int unk_520;
     int unk_524;
+    Sprite unk_528[0x20];
+    Sprite unk_4ea8;
+    int unk_50f4;
+    StageCamera unk_50f8;
+    StageCamera unk_5138;
+    StageCamera unk_5178;
+    StageCamera unk_51b8;
+    StageCamera camera;
+    int unk_5238[4];
+    Timer unk_5248[4];
+    int unk_5278[4];
+    D3DXVECTOR3 nextKeyPos;
+    int nextKeyFrame;
+    D3DXVECTOR3 keyPos;
+    int keyFrame;
+    BYTE unk_52a8;
+    unsigned char unk_52a9[0x3];
+    ColorBytes unk_52ac;
+    int unk_52b0;
 };
+ASSERT_SIZE(Unknown1347b00, 0x52b4);
 extern Unknown1347b00 g_Unknown1347b00;

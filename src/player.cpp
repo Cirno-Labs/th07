@@ -1344,7 +1344,7 @@ void UpdateInvulnerability(Player *player)
                 color.g = color.b;
                 color.r = color.g;
             }
-            g_Unknown1347b00.Func406930(color.color);
+            g_Unknown1347b00.SetTintColor(color.color);
         }
     }
     else
@@ -1651,7 +1651,7 @@ int Player::OnDraw(Player *player)
             color.g = color.b;
             color.r = color.g;
         }
-        g_Unknown1347b00.Func406930(color.color);
+        g_Unknown1347b00.SetTintColor(color.color);
     }
     return 1;
 }
