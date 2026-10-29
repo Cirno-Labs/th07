@@ -36,7 +36,7 @@ struct Hscr
     // "%m/%d" and a NUL.
     char date[6];
     BYTE continuesUsed;
-    BYTE unk_27;
+    BYTE unusedByte27;
 };
 ASSERT_SIZE(Hscr, 0x28);
 
