@@ -21,7 +21,6 @@
 // the original's copies instead.
 #ifdef TH07_EXE
 GameWindow g_GameWindow;
-HANDLE g_AppMutex;
 #endif // TH07_EXE
 
 void Log::Flush()
@@ -825,8 +824,11 @@ int CheckSingleInstance(HINSTANCE instance)
     char exePath[0x105];
     char consoleTitle[0x105];
     char *extension;
+    // A static here in the original: it sits among the function-local
+    // statics. Keeps a second instance from starting.
+    static HANDLE mutex;
 
-    g_AppMutex = CreateMutexA(NULL, TRUE, "Touhou YouYouMu App");
+    mutex = CreateMutexA(NULL, TRUE, "Touhou YouYouMu App");
     if (GetLastError() == ERROR_ALREADY_EXISTS)
     {
         LogError(&g_Log, "二つは起動できません\r\n");
@@ -859,7 +861,7 @@ int CheckSingleInstance(HINSTANCE instance)
             }
         }
     }
-    if (g_AppMutex == NULL)
+    if (mutex == NULL)
     {
         return -1;
     }

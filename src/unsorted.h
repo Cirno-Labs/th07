@@ -149,12 +149,10 @@ void FormatCapsReport(D3DCAPS8 *caps, char *buffer);
 // Sets the device's render and texture stage states, as the config
 // flags pick them, and forgets SpriteEngine's cached states.
 void SetDefaultRenderStates();
-// Creates g_AppMutex and returns -1 if another instance holds it, as
+// Creates a mutex and returns -1 if another instance holds it, as
 // th06's CheckSingleInstance. Also sets g_GameWindow.forceClockPacing when the
 // game was started through a shortcut or a path other than its own.
 int CheckSingleInstance(HINSTANCE instance);
-// The mutex that keeps a second instance from starting.
-extern HANDLE g_AppMutex;
 // Resolves the shortcut at `path` into `out`, `size` bytes long. Not in
 // th06.
 int ResolveShortcut(char *path, char *out, int size);
