@@ -401,8 +401,8 @@ public:
     Sprite sprites[0x29];
     // Text drawn with RenderText; the first holds the shot's name.
     Sprite textSprites[0xf];
-    Sprite unk_8110;
-    Sprite unk_835c;
+    Sprite unusedSprite8110;
+    Sprite spellCardRowDivider;
     // The high score lists, by difficulty and shot.
     ListNode scores[6][6];
     // The entries the lists start with, by difficulty, shot and rank.

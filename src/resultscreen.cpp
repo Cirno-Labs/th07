@@ -1962,9 +1962,9 @@ int ResultScreen::OnDraw(ResultScreen *screen)
                 x0 = pos3.x;
                 pos3[0] += 320.0f;
                 pos3[1] += 16.0f;
-                screen->unk_835c.pos = pos3;
-                screen->unk_835c.scaleY = 2.375f;
-                g_SpriteEngine->DrawUnrotated(&screen->unk_835c);
+                screen->spellCardRowDivider.pos = pos3;
+                screen->spellCardRowDivider.scaleY = 2.375f;
+                g_SpriteEngine->DrawUnrotated(&screen->spellCardRowDivider);
                 pos3[1] -= 16.0f;
                 pos3.x = x0;
                 screen->textSprites[i].pos = pos3;
@@ -2192,7 +2192,7 @@ int ResultScreen::AddedCallback(ResultScreen *screen)
             sprite->posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
             g_SpriteEngine->StartScript(sprite, i + 0x900);
         }
-        g_SpriteEngine->InitSprite(&screen->unk_835c, 0x910);
+        g_SpriteEngine->InitSprite(&screen->spellCardRowDivider, 0x910);
         sprite = screen->textSprites;
         for (i = 0; i < 0xf; i++, sprite++)
         {
@@ -2259,7 +2259,7 @@ int ResultScreen::AddedCallback(ResultScreen *screen)
     screen->spellCursor = 6;
     screen->shownShotType = 6;
     screen->spellInfoSliding = 0;
-    screen->unk_8110.spriteIndex = -1;
+    screen->unusedSprite8110.spriteIndex = -1;
     if (screen->state == 0x13)
     {
         ResultScreen::DeletedCallback(screen);
