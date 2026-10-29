@@ -141,6 +141,8 @@ public:
     // The value of `value` as a float argument: the variable it stands
     // for, if any, or itself.
     float ResolveFloatArgument(float value);
+    // The same for an int argument; float variables are truncated.
+    int ResolveIntArgument(int value);
     void SetPendingInterrupt(short interrupt)
     {
         this->pendingInterrupt = interrupt;
