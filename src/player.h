@@ -96,7 +96,9 @@ struct ShotTable
 // the fields known so far.
 struct ShotTypeData
 {
-    unsigned char unk_0[0x4];
+    unsigned char unk_0[0x2];
+    // How many entries tables has.
+    WORD tableCount;
     // The bombs the player respawns with.
     float bombs;
     // Player::deathbombFrames once the player has respawned.
@@ -108,6 +110,18 @@ struct ShotTypeData
     unsigned char unk_20[0x14];
     ShotTable tables[1];
 };
+
+// The shot callbacks a shot file names by index, which LoadShotTypeFile turns
+// into pointers. Entry 0 is NULL.
+extern ShotFireFunc g_ShotFireFuncs[];
+extern ShotUpdateFunc g_ShotUpdateFuncs[];
+extern ShotUpdateFunc g_ShotDrawFuncs[];
+extern ShotHitFunc g_ShotHitFuncs[];
+
+// Loads the shot type file at `path` into `*out`: turns its table
+// offsets into pointers and its shots' callback indices into the
+// callbacks. Returns 0, or -1 if the file does not load.
+int LoadShotTypeFile(ShotTypeData **out, char *path);
 
 // Fills `bullet` with shot `sd` and starts it: from the player or its
 // option, its script and its sound. th06's FireShot did this inline.

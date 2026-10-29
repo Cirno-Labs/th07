@@ -478,7 +478,7 @@ address,size,name,symbol
 0x004428e0,232,Player::DeletedCallback,?DeletedCallback@Player@@SIHPAV1@@Z
 0x004429d0,312,Player::RegisterChain,?RegisterChain@Player@@SIHH@Z
 0x00442b10,85,Player::RemoveChain,?RemoveChain@Player@@SIXXZ
-0x00442b70,231,Func442b70,
+0x00442b70,231,LoadShotTypeFile,?LoadShotTypeFile@@YIHPAPAUShotTypeData@@PAD@Z
 0x00442c60,100,Func442c60,
 0x00442cd0,378,Func442cd0,
 0x00442e50,142,Func442e50,
@@ -1738,6 +1738,10 @@ address,size,name,symbol
 0x0049ebb8,,g_SoundPaths,?g_SoundPaths@@3PAPADA
 0x0049ec30,,g_NameAlphabet,?g_NameAlphabet@@3PADA
 0x0049ec34,,g_ShotNames,?g_ShotNames@@3PAPADA
+0x0049ecb0,,g_ShotFireFuncs,?g_ShotFireFuncs@@3PAP6IHPAVPlayer@@PAUPlayerBullet@@HPAUShotData@@@ZA
+0x0049ecc8,,g_ShotUpdateFuncs,?g_ShotUpdateFuncs@@3PAP6IHPAVPlayer@@PAUPlayerBullet@@@ZA
+0x0049ece0,,g_ShotDrawFuncs,?g_ShotDrawFuncs@@3PAP6IHPAVPlayer@@PAUPlayerBullet@@@ZA
+0x0049ece8,,g_ShotHitFuncs,?g_ShotHitFuncs@@3PAP6IHPAVPlayer@@PAUPlayerBullet@@PAUD3DXVECTOR3@@@ZA
 0x0049ed98,,g_FormatInfos,?g_FormatInfos@@3PAUFormatInfo@@A
 0x0049ee40,,g_DefaultControllerMapping,?g_DefaultControllerMapping@@3UControllerMapping@@A
 0x0049f40c,,g_PracticeStageNames,?g_PracticeStageNames@@3PAPADA
