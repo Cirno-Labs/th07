@@ -1015,6 +1015,8 @@ public:
     // Whether the pointer at +8 is set and the int at its +0x1fbac is
     // not negative, or is -2.
     int Func42ad66();
+    // Player::EndBombState calls it with the points it scores and 4.
+    void Func427c81(int points, int unk);
 
     unsigned char unk_0[0x4];
     // Set to 2 when the player grazes, as th06's GuiFlags.grazeChanged.

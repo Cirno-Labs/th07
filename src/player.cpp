@@ -1137,7 +1137,7 @@ void UpdateInvulnerability(Player *player)
         if (player->stateTimer.AsFrames() <= 0)
         {
             player->sprite.color = 0xffffffff;
-            player->Func441670();
+            player->EndBombState();
         }
         else
         {
@@ -1174,6 +1174,38 @@ void UpdateInvulnerability(Player *player)
     else
     {
         player->stateTimer.Tick();
+    }
+}
+
+void Player::EndBombState()
+{
+    int bonus;
+
+    g_Unknown626270.Func42f789(10000);
+    g_Unknown626270.Func42f736(10000);
+    bonus = g_Unknown626270.unk_961c - g_Unknown626270.stats->unk_88;
+    bonus *= 10;
+    g_Unknown626270.AddScore(bonus);
+    g_Unknown49fbf0.Func427c81(bonus, 4);
+    g_Unknown626270.unk_9620 = g_Unknown626270.stats->unk_88;
+    g_SoundPlayer.QueueSound(0x21, 0);
+    if (this->playerState == 1)
+    {
+        this->sprite.scaleY = 1.0f;
+        this->sprite.scaleX = 1.0f;
+        this->sprite.color = 0xffffffff;
+        this->sprite.flags &= ~0x10;
+        this->stateTimer.Set(240);
+        this->deathbombFrames = g_Player.shotType->deathbombFrames;
+    }
+    this->playerState = 3;
+    this->stateTimer.Set(40);
+    this->unk_23fc = 40;
+    this->unk_240d = 0;
+    if (this->unk_b7e6c != NULL)
+    {
+        this->unk_b7e6c->active = 0;
+        this->unk_b7e6c = NULL;
     }
 }
 

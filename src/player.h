@@ -204,7 +204,7 @@ void UpdateRespawningState(Player *player);
 // unk_b7e68 and returns to playerState 0. While playerState is 4 keeps
 // unk_b7e6c on the player, sets Unknown626270::unk_9620 from the time
 // left, and counts stateTimer down, blinking the player red and setting
-// Unknown1347b00's color, then calls Func441670 at 0. Otherwise ticks
+// Unknown1347b00's color, then calls EndBombState at 0. Otherwise ticks
 // stateTimer.
 void UpdateInvulnerability(Player *player);
 // OnUpdate's last step: clears unk_2428, homingTarget and unk_2440 for
@@ -349,8 +349,14 @@ public:
     void Graze(D3DXVECTOR3 *pos);
     // CheckHit calls it with 0 on a hit while playerState is 4.
     void Func441bd0(int unk);
-    // UpdateInvulnerability calls it when playerState 4 runs out.
-    void Func441670();
+    // Ends playerState 4 (UpdateInvulnerability calls it when it runs out): calls
+    // Unknown626270's Func42f789 and Func42f736 with 10000, scores ten
+    // times unk_961c over stats->unk_88 (shown through Unknown49fbf0's
+    // Func427c81), resets unk_9620, plays sound 0x21, finishes a respawn
+    // if one runs, then makes the player invulnerable (playerState 3)
+    // for 40 frames, with unk_23fc 40 and unk_240d 0, and ends the
+    // unk_b7e6c effect.
+    void EndBombState();
     // The update callback: unless the game is frozen, runs the steps
     // (UpdateHitboxAreas on), steps the sprites (the options' while unk_240a
     // is set), the bullets (UpdateBullets) and the firing (UpdateFiring).
@@ -393,7 +399,8 @@ public:
     float moveScaleY;
     // As th06's: while the player dies, the frames left to bomb.
     int deathbombFrames;
-    unsigned char unk_23fc[0x4];
+    // Set to 40 by EndBombState.
+    int unk_23fc;
     // Frames left of clearing all bullets after a respawn, as th06's.
     int respawnClearFrames;
     // The unk_1c of the PlayerArea CheckAreaHit met last.

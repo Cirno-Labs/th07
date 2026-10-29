@@ -231,7 +231,7 @@ address,size,name,symbol
 0x00427ba2,64,Func427ba2,
 0x00427be2,22,Func427be2,
 0x00427bf8,137,Func427bf8,
-0x00427c81,136,Func427c81,
+0x00427c81,136,Unknown49fbf0::Func427c81,?Func427c81@Unknown49fbf0@@QAEXHH@Z
 0x00427d09,137,Func427d09,
 0x00427d92,234,Func427d92,
 0x00427e7c,166,Func427e7c,
@@ -464,7 +464,7 @@ address,size,name,symbol
 0x00440cf0,1231,Func440cf0,?Func440cf0@@YIHPAVPlayer@@@Z
 0x004411c0,353,UpdateRespawningState,?UpdateRespawningState@@YIXPAVPlayer@@@Z
 0x00441330,825,UpdateInvulnerability,?UpdateInvulnerability@@YIXPAVPlayer@@@Z
-0x00441670,394,Player::Func441670,?Func441670@Player@@QAEXXZ
+0x00441670,394,Player::EndBombState,?EndBombState@Player@@QAEXXZ
 0x00441800,163,Player::AddHitboxArea,?AddHitboxArea@Player@@QAEPAUPlayerArea@@PAUD3DXVECTOR3@@MMH@Z
 0x004418b0,162,Player::AddHitboxAreaCircle,?AddHitboxAreaCircle@Player@@QAEPAUPlayerArea@@PAUD3DXVECTOR3@@MMHH@Z
 0x00441960,612,Func441960,
