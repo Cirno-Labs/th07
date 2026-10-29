@@ -1432,10 +1432,13 @@ public:
     // The boss bar's alpha, raised by 4 a frame up to 0xff while a boss
     // fight runs.
     DWORD bossBarAlpha;
-    unsigned char unk_18[0x4];
+    // How many boss lives DrawBanners marks beside the bar.
+    int unk_18;
     // The seconds left on the boss's timer.
     int bossTimer;
-    unsigned char unk_20[0x4];
+    // bossTimer as DrawBanners last drew it: it plays sound 0x1d when
+    // the timer changes under 10.
+    int unk_20;
     // Set while a boss fight runs.
     BYTE bossPresent;
     unsigned char unk_25[0x3];
@@ -1443,12 +1446,20 @@ public:
     // shows, following it.
     float bossHealth;
     float bossHealthShown;
-    unsigned char unk_30[0x64];
+    unsigned char unk_30[0x4];
+    // Eight sections DrawBanners draws over the boss bar: where each
+    // ends and starts, as fractions of the bar (unused while the end
+    // is 0), and its color.
+    float unk_34[8];
+    float unk_54[8];
+    int unk_74[8];
 };
 ASSERT_SIZE(Gui, 0x94);
 extern Gui g_Unknown49fbf0;
 extern ChainElem g_Unknown49fbf0CalcChain;
 extern ChainElem g_Unknown49fbf0DrawChain;
+// The colors of the boss timer: 20 seconds and more, 10, 5 and under 5.
+extern D3DCOLOR g_BossTimerColors[4];
 // Copies the rectangle of sprite `sprite` in texture 0x16 into sprite
 // 0x609's in texture 0x15 (SpriteEngine::CopyTextureRect). Not in th06.
 void CopySpriteToTexture(int sprite);

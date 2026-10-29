@@ -1772,6 +1772,7 @@ address,size,name,symbol
 0x0049f560,,g_EclPaths,?g_EclPaths@@3PAPADA
 0x0049f588,,g_EnemyAnmPaths,?g_EnemyAnmPaths@@3PAUEnemyAnmPaths@@A
 0x0049f5d0,,g_Ranks,?g_Ranks@@3PAURankSettings@@A
+0x0049f618,,g_BossTimerColors,?g_BossTimerColors@@3PAKA
 0x0049f628,,g_BadEndingFiles,?g_BadEndingFiles@@3PAPADA
 0x0049f634,,g_EndingFiles,?g_EndingFiles@@3PAPADA
 0x0049f64c,,g_StageDataFiles,?g_StageDataFiles@@3PAPADA

@@ -1020,3 +1020,211 @@ void Gui::UpdateInterface()
         this->impl->stageClearShown++;
     }
 }
+
+// Sprite `sprite`'s entry in the sprite engine.
+inline SpriteData *GetSpriteData(int sprite)
+{
+    return &g_SpriteEngine->sprites[sprite];
+}
+
+void Gui::DrawBanners()
+{
+    Catk *catks;
+    int score;
+    D3DXVECTOR3 oldPos2;
+    int iVal;
+    int digit;
+    int div2;
+    D3DCOLOR colorA2;
+    D3DCOLOR dark;
+    int shown;
+    float r2[4];
+    D3DCOLOR timerColor;
+    float end;
+    int index2;
+    int total;
+    int shrink;
+    D3DXVECTOR3 pos;
+
+    for (iVal = 0; iVal < 5; iVal++)
+    {
+        g_SpriteEngine->Draw(&this->impl->unk_4bd0[iVal]);
+    }
+    if (this->impl->bombPortrait.shown)
+    {
+        g_SpriteEngine->DrawUnrotated(&this->impl->bombPortrait);
+        g_SpriteEngine->DrawUnrotated(&this->impl->unk_5be4);
+        g_SpriteEngine->Draw(&this->impl->unk_607c);
+    }
+    if (this->impl->spellPortrait.shown)
+    {
+        oldPos2 = this->impl->spellPortrait.pos;
+        this->impl->spellPortrait.pos += this->impl->spellPortrait.posOffset;
+        g_SpriteEngine->DrawUnrotated(&this->impl->spellPortrait);
+        this->impl->spellPortrait.pos = oldPos2;
+        g_SpriteEngine->DrawUnrotated(&this->impl->unk_5e30);
+        g_SpriteEngine->Draw(&this->impl->unk_62c8);
+    }
+    if (this->impl->bombName.shown)
+    {
+        this->impl->bombNameBar.pos = this->impl->bombName.pos;
+        g_SpriteEngine->DrawUnrotated(&this->impl->bombNameBar);
+        g_SpriteEngine->Draw(&this->impl->bombName);
+    }
+    if (this->impl->spellName.shown)
+    {
+        this->impl->spellNameBar.pos = this->impl->spellName.pos;
+        g_SpriteEngine->DrawUnrotated(&this->impl->spellNameBar);
+        g_SpriteEngine->Draw(&this->impl->spellName);
+        g_SpriteEngine->DrawUnrotated(&this->impl->unk_7774);
+        score = g_Unknown12fe0cc + g_Unknown12fe0d0;
+        div2 = 10000000;
+        shown = 0;
+        catks = &g_Unknown626270.catks[g_Unknown12fe0d8];
+        if (g_Unknown12fe0c4 == 0)
+        {
+            score = 0;
+        }
+        this->impl->unk_7528.pos = this->impl->unk_7774.pos;
+        this->impl->unk_7528.pos.x -= 40.0f;
+        for (iVal = 0; iVal < 8; iVal++)
+        {
+            digit = score / div2;
+            if (digit != 0)
+            {
+                shown = 1;
+            }
+            if (shown || div2 == 1)
+            {
+                this->impl->unk_7528.spriteData = GetSpriteData(digit + 0x84);
+                g_SpriteEngine->DrawUnrotated(&this->impl->unk_7528);
+            }
+            this->impl->unk_7528.pos.x += 7.0f;
+            score %= div2;
+            div2 /= 10;
+        }
+        digit = catks->captures[g_Unknown626270.unk_93d7];
+        if (digit > 99)
+        {
+            digit = 99;
+        }
+        this->impl->unk_7528.pos.x += 36.0f;
+        if (digit / 10 != 0)
+        {
+            this->impl->unk_7528.spriteData = GetSpriteData(digit / 10 + 0x84);
+            g_SpriteEngine->DrawUnrotated(&this->impl->unk_7528);
+        }
+        this->impl->unk_7528.pos.x += 7.0f;
+        this->impl->unk_7528.spriteData = GetSpriteData(digit % 10 + 0x84);
+        g_SpriteEngine->DrawUnrotated(&this->impl->unk_7528);
+        digit = catks->attempts[g_Unknown626270.unk_93d7];
+        if (digit > 99)
+        {
+            digit = 99;
+        }
+        this->impl->unk_7528.pos.x += 14.0f;
+        if (digit / 10 != 0)
+        {
+            this->impl->unk_7528.spriteData = GetSpriteData(digit / 10 + 0x84);
+            g_SpriteEngine->DrawUnrotated(&this->impl->unk_7528);
+        }
+        this->impl->unk_7528.pos.x += 7.0f;
+        this->impl->unk_7528.spriteData = GetSpriteData(digit % 10 + 0x84);
+        g_SpriteEngine->DrawUnrotated(&this->impl->unk_7528);
+    }
+    if (this->impl->unk_6e44.spriteIndex >= 0)
+    {
+        g_SpriteEngine->DrawUnrotated(&this->impl->unk_6e44);
+        g_SpriteEngine->DrawUnrotated(&this->impl->unk_72dc);
+        if (this->impl->unk_7090.spriteIndex >= 0)
+        {
+            this->impl->unk_7090.pos = D3DXVECTOR3(304.0f, 448.0f, 0.0f);
+            g_SpriteEngine->DrawUnrotated(&this->impl->unk_7090);
+        }
+    }
+    if (this->impl->unk_1fba0 != 0)
+    {
+        for (iVal = 0; iVal < 0xa8; iVal++)
+        {
+            g_SpriteEngine->DrawProjected3D(&this->impl->unk_79c0[iVal]);
+            g_SpriteEngine->ClearSpriteData();
+        }
+    }
+    if (this->impl->msg.scriptIndex < 0 && this->bossPresent + this->impl->bossBarState > 0)
+    {
+        r2[0] = 64.0f;
+        r2[1] = 19.0f;
+        r2[2] = this->bossHealthShown * 320.0f + 64.0f;
+        r2[3] = 23.0f;
+        colorA2 = this->bossBarAlpha << 24 | 0xffffff;
+        dark = this->bossBarAlpha << 24 | 0x202060;
+        pos.x = 48.0f;
+        pos.y = 16.0f;
+        pos.z = 0.0f;
+        DrawGradientRect(r2, colorA2, colorA2, dark, dark);
+        for (index2 = 0; index2 < 8; index2++)
+        {
+            if (this->unk_34[index2] == 0.0f)
+            {
+                continue;
+            }
+            if (this->unk_54[index2] >= this->bossHealthShown)
+            {
+                continue;
+            }
+            end = this->unk_34[index2];
+            if (this->bossHealthShown < end)
+            {
+                end = this->bossHealthShown;
+            }
+            r2[0] = this->unk_54[index2] * 320.0f + 64.0f;
+            r2[1] = 19.0f;
+            r2[2] = end * 320.0f + 64.0f;
+            r2[3] = 23.0f;
+            colorA2 = this->bossBarAlpha << 24 | (this->unk_74[index2] & 0xffffff);
+            dark = this->bossBarAlpha << 24 | (this->unk_74[index2] >> 2 & 0x3f3f3f);
+            DrawGradientRect(r2, colorA2, colorA2, dark, dark);
+        }
+        g_SpriteEngine->DrawUnrotated(&this->impl->sprites[11]);
+        r2[0] = 33.0f;
+        r2[1] = 19.0f;
+        r2[2] = r2[0] + 3.0f;
+        r2[3] = r2[1] + 4.0f;
+        total = this->unk_18;
+        shrink = this->unk_18 <= 5 ? 2 : 1;
+        for (index2 = 0; index2 < total; index2++)
+        {
+            r2[0] = index2 * 26.0f / total + 35.0f;
+            r2[2] = (index2 + 1) * 26.0f / total + 35.0f - shrink;
+            colorA2 = this->bossBarAlpha << 24 | (0xffffff - index2 * 0xff / 9);
+            dark = this->bossBarAlpha << 24 | 0x202020;
+            DrawGradientRect(r2, colorA2, colorA2, dark, dark);
+        }
+        pos = D3DXVECTOR3(384.0f, 16.0f, 0.0f);
+        if (this->bossTimer >= 20)
+        {
+            timerColor = g_BossTimerColors[0];
+        }
+        else if (this->bossTimer >= 10)
+        {
+            timerColor = g_BossTimerColors[1];
+        }
+        else if (this->bossTimer >= 5)
+        {
+            timerColor = g_BossTimerColors[2];
+        }
+        else
+        {
+            timerColor = g_BossTimerColors[3];
+        }
+        g_AsciiText.SetColor(this->bossBarAlpha << 24 | timerColor);
+        total = this->bossTimer > 99 ? 99 : this->bossTimer;
+        if (total < 10 && this->unk_20 != this->bossTimer)
+        {
+            g_SoundPlayer.QueueSound(0x1d, 0);
+        }
+        g_AsciiText.AddFormat(&pos, "%.2d", total);
+        g_AsciiText.color = 0xffffffff;
+        this->unk_20 = this->bossTimer;
+    }
+}
