@@ -204,3 +204,54 @@ Enemy *Unknown9a9b00::SpawnWithVars(short sub, D3DXVECTOR3 *pos, int life, char 
     }
     return enemy;
 }
+
+int Enemy::CheckLifeCallback()
+{
+    Enemy *it = g_Unknown9a9b00.enemies;
+    int i;
+    int j;
+
+    for (i = 0; i < 4; i++)
+    {
+        if (this->lifeCallbackLife[i] < 0)
+        {
+            continue;
+        }
+        if (this->life < this->lifeCallbackLife[i])
+        {
+            this->life = this->lifeCallbackLife[i];
+            g_Unknown1347938.StartSub(&this->ctx, this->lifeCallbackSub[i]);
+            this->lifeCallbackLife[i] = -1;
+            this->timerCallbackTime = -1;
+            this->unk_2ee4 = -1;
+            this->rankSpeedLow = -0.5f;
+            this->rankSpeedHigh = 0.5f;
+            this->rankCount1Low = 0;
+            this->rankCount1High = 0;
+            this->rankCount2Low = 0;
+            this->rankCount2High = 0;
+            this->stackDepth = 0;
+            this->shooter = g_Unknown9a9b00.enemyTemplate.shooter;
+            this->shootInterval = 0;
+            for (j = 0; j < 0x1e0; j++, it++)
+            {
+                if (!it->flags.active)
+                {
+                    continue;
+                }
+                if (it->flags.isBoss)
+                {
+                    continue;
+                }
+                it->life = 0;
+                if (!it->flags.shootable && it->deathSub >= 0)
+                {
+                    g_Unknown1347938.StartSub(&it->ctx, it->deathSub);
+                    it->deathSub = -1;
+                }
+            }
+            return 1;
+        }
+    }
+    return 0;
+}

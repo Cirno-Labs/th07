@@ -72,6 +72,12 @@ struct Enemy
     // flags.mirrored, as th06's; first keeps the last move in posDelta
     // and the position in prevPos.
     void Move();
+    // Once the life falls below one of lifeCallbackLife: sets it to
+    // that, starts the matching lifeCallbackSub, drops the timer
+    // callback, resets the rank values, the call stack and the shooter
+    // from the template's, and clears the other enemies, as th06's.
+    // Returns 1 then, else 0.
+    int CheckLifeCallback();
 
     Sprite sprite;
     Sprite sprites[2];
