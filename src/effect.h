@@ -111,6 +111,9 @@ int EffectUpdateDivergeLinear(Effect *effect);
 // Moves unk_27c of every started effect of type 20 or 31 by `offset`.
 void OffsetPetalEffects(D3DXVECTOR3 *offset);
 
+// Sets the z acceleration of every started effect of type 30 to -0.01.
+void StartPetalsFalling();
+
 // The effects, at 0x12fe250: 400 started in turn, 8 reserved slots and
 // a spare.
 class EffectManager

@@ -168,6 +168,20 @@ void OffsetPetalEffects(D3DXVECTOR3 *offset)
     }
 }
 
+void StartPetalsFalling()
+{
+    Effect *eff = g_EffectManager.effects;
+    int i;
+
+    for (i = 0; i < 400; i++, eff++)
+    {
+        if (eff->type == 30)
+        {
+            eff->acceleration.z = -0.01f;
+        }
+    }
+}
+
 Effect *EffectManager::SpawnEffect(int type, D3DXVECTOR3 *pos, int count, D3DCOLOR color)
 {
     Effect *effect;

@@ -132,7 +132,7 @@ address,size,name,symbol
 0x0041ac30,217,EffectUpdateConvergeSlow,?EffectUpdateConvergeSlow@@YIHPAUEffect@@@Z
 0x0041ad10,211,EffectUpdateDivergeLinear,?EffectUpdateDivergeLinear@@YIHPAUEffect@@@Z
 0x0041adf0,153,OffsetPetalEffects,?OffsetPetalEffects@@YIXPAUD3DXVECTOR3@@@Z
-0x0041ae90,86,Func41ae90,
+0x0041ae90,86,StartPetalsFalling,?StartPetalsFalling@@YIXXZ
 0x0041aef0,436,Func41aef0,
 0x0041b0b0,997,Func41b0b0,
 0x0041b4a0,710,Func41b4a0,
