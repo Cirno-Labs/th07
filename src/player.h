@@ -279,6 +279,9 @@ public:
     static int OnUpdate(Player *player);
     static int OnDraw(Player *player);
     static int AddedCallback(Player *player);
+    // Unless the scene is 3, 0xb or 0xc, releases ANM 10 and sets
+    // AsciiText's sprite interrupts (99) and unk_74d4; frees the shot
+    // type data. Returns 0.
     static int DeletedCallback(Player *player);
     static void RemoveChain();
 

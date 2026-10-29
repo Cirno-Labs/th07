@@ -5,6 +5,8 @@
 #include <d3d8.h>
 #include <d3dx8math.h>
 
+#include "sprite.h"
+
 class AsciiText
 {
 public:
@@ -26,8 +28,20 @@ public:
     {
         this->highlight = highlight;
     }
+    // Sends unk_b7c[idx] interrupt 99. Must be an inline: under /Od only
+    // an inline's constant argument leaves the index multiplied out at
+    // run time, as Player::DeletedCallback does.
+    void InterruptUnkB7c(int idx)
+    {
+        this->unk_b7c[idx].pendingInterrupt = 99;
+    }
 
-    unsigned char unk_0[0x74c0];
+    unsigned char unk_0[0x498];
+    // Player::DeletedCallback sends these interrupt 99.
+    Sprite unk_498;
+    unsigned char unk_6e4[0x498];
+    Sprite unk_b7c[3];
+    unsigned char unk_1260[0x6260];
     // The color text is queued with.
     D3DCOLOR color;
     // The scale of the characters added next.
@@ -36,5 +50,7 @@ public:
     unsigned char unk_74cc[0x4];
     // Drawn with the second glyph set, as in th06.
     int highlight;
+    // Player::DeletedCallback sets it to 99.
+    int unk_74d4;
 };
 extern AsciiText g_AsciiText;

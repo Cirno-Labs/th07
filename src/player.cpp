@@ -3,6 +3,7 @@
 
 #include <math.h>
 
+#include "ascii.h"
 #include "effect.h"
 #include "player.h"
 #include "unsorted.h"
@@ -800,6 +801,30 @@ int Player::RegisterChain(int unk)
     }
     g_Chain.AddToDrawChain(player->drawChain, 6);
     g_Chain.AddToDrawChain(player->drawChain2, 8);
+    return 0;
+}
+
+int Player::DeletedCallback(Player *player)
+{
+    if ((g_App.scene != 3 && g_App.scene != 0xb && g_App.scene != 0xc) != 0)
+    {
+        g_SpriteEngine->ReleaseAnm(10);
+        g_AsciiText.unk_498.pendingInterrupt = 99;
+        g_AsciiText.unk_74d4 = 99;
+        g_AsciiText.InterruptUnkB7c(0);
+        g_AsciiText.InterruptUnkB7c(1);
+        g_AsciiText.InterruptUnkB7c(2);
+    }
+    if (g_Player.shotType != NULL)
+    {
+        MemFree(g_Player.shotType);
+        g_Player.shotType = NULL;
+    }
+    if (g_Player.shotTypeFocused != NULL)
+    {
+        MemFree(g_Player.shotTypeFocused);
+        g_Player.shotTypeFocused = NULL;
+    }
     return 0;
 }
 
