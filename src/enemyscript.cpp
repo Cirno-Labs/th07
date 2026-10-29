@@ -902,6 +902,32 @@ void NoOp(Enemy *enemy, EnemyScriptInstr *instr)
 {
 }
 
+void ReplaceTallBulletWithEffect(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    int variant;
+    Bullet *bullet = g_BulletManager.bullets;
+    int i;
+    BulletShooter shooter;
+
+    variant = instr->args[1].i;
+    enemy->ctx.vars.floats[0] = -999.0f;
+    for (i = 0; i < 0x400; i++, bullet++)
+    {
+        if (bullet->state == 0 || bullet->state == 5)
+        {
+            continue;
+        }
+        if (bullet->sprites.sprite0.spriteData->height >= 60.0f)
+        {
+            enemy->ctx.vars.floats[0] = bullet->pos.x;
+            enemy->ctx.vars.floats[1] = bullet->pos.y;
+            g_EffectManager.SpawnEffect(2, &bullet->pos, 1, 0xffffffff);
+            bullet->FreeBullet();
+            break;
+        }
+    }
+}
+
 // As in bullet.cpp: defined after its callers, so they call the copy.
 inline void Bullet::FreeBullet()
 {

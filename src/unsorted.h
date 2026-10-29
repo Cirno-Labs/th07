@@ -1561,6 +1561,10 @@ void ShakeAndSpinBullets(Enemy *enemy, EnemyScriptInstr *instr);
 void SpawnFansFromNearbyBullets(Enemy *enemy, EnemyScriptInstr *instr);
 // Does nothing.
 void NoOp(Enemy *enemy, EnemyScriptInstr *instr);
+// Finds the first flying bullet with a sprite at least 60 high, keeps
+// its position in floats[0] and [1] (floats[0] is -999 if none),
+// starts effect 2 there and removes the bullet.
+void ReplaceTallBulletWithEffect(Enemy *enemy, EnemyScriptInstr *instr);
 
 // Set to 9 as the dialogue of stages 6 to 8 starts.
 extern int g_Unknown9a9ab8;
