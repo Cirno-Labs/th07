@@ -1240,7 +1240,10 @@ public:
     // Shows `bonus` in bonusPopup, at (416, 48), and sets
     // g_App.redrawFrames to 2.
     void ShowBonusPopup(int bonus);
-    // Player::EndBombState calls it with the points it scores and 4.
+    // th06's ShowFullPowerPopup: shows `points` in impl->unk_209e0, at
+    // (416, 168), with `unk` as its shown value, and sets
+    // g_App.redrawFrames to 2. Player::EndBombState calls it with the
+    // points it scores and 4.
     void Func427c81(int points, int unk);
 
     unsigned char unk_0[0x4];

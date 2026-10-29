@@ -38,3 +38,12 @@ void Unknown49fbf0::ShowBonusPopup(int bonus)
     this->impl->bonusPopup.value = bonus;
     g_App.redrawFrames = 2;
 }
+
+void Unknown49fbf0::Func427c81(int points, int unk)
+{
+    this->impl->unk_209e0.pos = D3DXVECTOR3(416.0f, 168.0f, 0.0f);
+    this->impl->unk_209e0.shown = unk;
+    this->impl->unk_209e0.timer.Set(0);
+    this->impl->unk_209e0.value = points;
+    g_App.redrawFrames = 2;
+}
