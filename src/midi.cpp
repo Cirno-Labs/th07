@@ -649,7 +649,7 @@ void MidiPlayer::ProcessEvent(MidiTrack *track)
 
 void MidiTimer::OnTimer()
 {
-    QueryPerformanceCounter(&g_Unknown135e210);
+    QueryPerformanceCounter(&g_MidiTimerLastCounter);
 }
 
 void MidiTimer::StartTimer()

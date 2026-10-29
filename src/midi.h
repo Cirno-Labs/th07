@@ -244,10 +244,10 @@ public:
 ASSERT_SIZE(MidiPlayer, 0x300);
 
 // The performance counter at the last tick of MidiTimer's timer.
-extern LARGE_INTEGER g_Unknown135e210;
+extern LARGE_INTEGER g_MidiTimerLastCounter;
 
 // A 6 ms MmTimer that keeps the performance counter of its last tick in
-// g_Unknown135e210. Not in th06.
+// g_MidiTimerLastCounter. Not in th06.
 class MidiTimer : public MmTimer
 {
 public:

@@ -236,7 +236,7 @@ int UpdateFiring(Player *player);
 // while respawning or when UpdateDyingState returns nonzero.
 //
 // th06's HandleInput: moves the player by the buttons the game plays by
-// (g_Unknown4b9e50) at the shot type's speeds, within
+// (g_GameButtons) at the shot type's speeds, within
 // GameManager::unk_9604, sets the boxes and moves the options in and
 // out while focused, with effect 0x18 (unk_9d8) on the way in. Sakuya B
 // (character 2, shot type 1) fans her options around unk_b7e58
@@ -467,7 +467,7 @@ public:
     // Scores a graze of the bullet at `pos`, as th06's: counts it
     // unless a bomb runs, bursts effect 8 halfway to it (three red ones
     // while unk_240d is 1 and not focused), adds 6 hundredths to the
-    // rank, plays sound 0x1e, adds to g_Unknown12fe0d0 and 2000 points,
+    // rank, plays sound 0x1e, adds to g_SpellCardGrazeBonus and 2000 points,
     // and while unk_240d is 1 calls GameManager's IncreaseBonusCap and
     // AddBonusPointsCapped with 30 (focused) or 80.
     void Graze(D3DXVECTOR3 *pos);

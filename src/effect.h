@@ -117,12 +117,12 @@ void StartPetalsFalling();
 // An effect update for the falling petals (types 20, 26, 27, 30 and
 // 31): moves unk_27c by step, which changes by acceleration, and draws
 // the effect there, turning it by its x rotation. Ends it (returns 0)
-// once it is out of the view along g_Unknown134cd1c from
-// g_Unknown134ccf8, or at z 0 and above; otherwise returns 1.
+// once it is out of the view along g_CameraDir from
+// g_CameraEye, or at z 0 and above; otherwise returns 1.
 int EffectUpdatePetal(Effect *effect);
 
-// An effect init for petal type 20: starts unk_27c at g_Unknown134ccf8
-// plus half of g_Unknown134cd04, scattered at random, with a random
+// An effect init for petal type 20: starts unk_27c at g_CameraEye
+// plus half of g_CameraAt, scattered at random, with a random
 // step on top of velocity and a little acceleration, both scaled by
 // App::unk_178, and a random spin; puts it in the second draw list. The
 // fuller unk_961c is (above stats->unk_88, out of unk_9618), the
@@ -130,7 +130,7 @@ int EffectUpdatePetal(Effect *effect);
 int EffectInitPetal20(Effect *effect);
 
 // An effect init for petal type 26: starts unk_27c at random around
-// g_Unknown134ccf8 plus half of g_Unknown134cd04, with an x/y step
+// g_CameraEye plus half of g_CameraAt, with an x/y step
 // across its offset from there (turned a quarter, over velocity.x) and
 // a z step of 0.09 to 0.19, scaled by App::unk_178, and no
 // acceleration; a random spin and the second draw list. Shown as
@@ -142,14 +142,14 @@ int EffectInitPetal26(Effect *effect);
 int EffectInitPetal27(Effect *effect);
 
 // An effect init for petal type 30: starts unk_27c at random around
-// g_Unknown134ccf8 plus half of g_Unknown134cd04, with a small random
+// g_CameraEye plus half of g_CameraAt, with a small random
 // step on top of velocity (not scaled by App::unk_178) and no
 // acceleration; a random spin, the second draw list and sprite 0x2d8
 // in white. Returns 0.
 int EffectInitPetal30(Effect *effect);
 
 // An effect init for petal type 31: starts unk_27c at random around
-// g_Unknown134ccf8 plus half of g_Unknown134cd04, with a random step
+// g_CameraEye plus half of g_CameraAt, with a random step
 // on top of velocity, scaled by App::unk_178, and a z acceleration of
 // -0.015; a random spin, the second draw list and sprite 0x2d8 in
 // white, its unk_14 doubled. Returns 0.
@@ -164,8 +164,8 @@ int EffectInitDiverge(Effect *effect);
 // axis, easing out to 128 axis lengths at frame 90, at z 0. Returns 1.
 int EffectUpdateDivergeEased(Effect *effect);
 
-// An effect update for type 23: keeps the effect at g_Unknown134ccf8
-// plus g_Unknown134cd04 (at z 0), in the second draw list. Returns 1.
+// An effect update for type 23: keeps the effect at g_CameraEye
+// plus g_CameraAt (at z 0), in the second draw list. Returns 1.
 int EffectUpdateFixedPos(Effect *effect);
 
 // The effects, at 0x12fe250: 400 started in turn, 8 reserved slots and
@@ -244,7 +244,7 @@ extern int g_Unknown1348024;
 
 // Probably the 3D camera: where it is, and the direction it looks in
 // (normalized). Not declared as part of a struct yet.
-extern D3DXVECTOR3 g_Unknown134ccf8;
-// The offset from g_Unknown134ccf8 that the petals start around.
-extern D3DXVECTOR3 g_Unknown134cd04;
-extern D3DXVECTOR3 g_Unknown134cd1c;
+extern D3DXVECTOR3 g_CameraEye;
+// The offset from g_CameraEye that the petals start around.
+extern D3DXVECTOR3 g_CameraAt;
+extern D3DXVECTOR3 g_CameraDir;

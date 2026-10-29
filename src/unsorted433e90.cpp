@@ -746,7 +746,7 @@ void SetDefaultRenderStates()
         g_SpriteEngine->ClearTexture();
         g_SpriteEngine->ClearUnk2e4d4();
     }
-    g_Unknown1348010 = 1;
+    g_FogColorChanged = 1;
 }
 
 int CheckSingleInstance(HINSTANCE instance)

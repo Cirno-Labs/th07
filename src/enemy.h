@@ -426,7 +426,7 @@ public:
     // The active enemies, counted by OnUpdate.
     int enemyCount;
     unsigned char pad_9545c0[0x8];
-    // th06's spellCardActive; other code reaches it as g_Unknown12fe0c8.
+    // th06's spellCardActive; other code reaches it as g_SpellCardActive.
     int spellCardActive;
     unsigned char pad_9545cc[0x10];
     // While a spell card runs, a bomb's damage counts (divided by 2.5)

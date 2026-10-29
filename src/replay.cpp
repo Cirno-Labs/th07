@@ -30,8 +30,8 @@ int ReplayManager::RecordOnUpdate(ReplayManager *replay)
     {
         return 1;
     }
-    g_Unknown4b9e58 = g_Unknown4b9e50;
-    g_Unknown4b9e50 = g_Buttons;
+    g_PrevGameButtons = g_GameButtons;
+    g_GameButtons = g_Buttons;
     if (g_GameManager.unk_4->scoreDisabled != 0)
     {
         return 1;
@@ -46,7 +46,7 @@ int ReplayManager::RecordOnUpdate(ReplayManager *replay)
         idx = 6;
     }
     buttons = g_Buttons;
-    g_Unknown4b9e50 = buttons;
+    g_GameButtons = buttons;
     replay->cursor++;
     replay->stageEnds[idx] = replay->cursor + 1;
     replay->cursor->input = buttons;
@@ -92,11 +92,11 @@ int ReplayManager::PlayOnUpdate(ReplayManager *replay)
         return 1;
     }
     unused = 0;
-    g_Unknown4b9e58 = g_Unknown4b9e50;
-    g_Unknown4b9e50 = replay->cursor->input;
+    g_PrevGameButtons = g_GameButtons;
+    g_GameButtons = replay->cursor->input;
     replay->cursor++;
     g_ButtonRepeat = 0;
-    if (g_Unknown4b9e58 == g_Unknown4b9e50)
+    if (g_PrevGameButtons == g_GameButtons)
     {
         if (g_ButtonFrames >= 30)
         {
@@ -391,8 +391,8 @@ int ReplayManager::RegisterChain(int mode, char *path)
 {
     ReplayManager *replay;
 
-    g_Unknown4b9e58 = 0;
-    g_Unknown4b9e50 = 0;
+    g_PrevGameButtons = 0;
+    g_GameButtons = 0;
     if (g_ReplayManager == NULL)
     {
         replay = new ReplayManager;

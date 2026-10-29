@@ -613,12 +613,12 @@ void StartSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
     {
         g_SpriteEngine->StartScript(&g_Stage.dialogueSprites[i], i + g_Stage.dialogueScriptOffset + 0x2dc);
     }
-    g_Unknown12fe0c8 = 1;
-    g_Unknown12fe0c4 = 1;
-    g_Unknown12fe0d8 = *((WORD *)&instr->args[0] + 1);
-    g_Unknown12fe0cc = g_SpellCardBonuses[g_Unknown12fe0d8];
-    g_Unknown12fe0d0 = 0;
-    g_Unknown12fe0d4 = g_Unknown12fe0cc / (enemy->timerCallbackTime / 60 + 10);
+    g_SpellCardActive = 1;
+    g_SpellCardCapture = 1;
+    g_SpellCardNumber = *((WORD *)&instr->args[0] + 1);
+    g_SpellCardBonus = g_SpellCardBonuses[g_SpellCardNumber];
+    g_SpellCardGrazeBonus = 0;
+    g_SpellCardBonusStep = g_SpellCardBonus / (enemy->timerCallbackTime / 60 + 10);
     g_EnemyManager.spellCardBonusTimer.Set(0);
     enemy->rankSpeedLow = -0.5f;
     enemy->rankSpeedHigh = 0.5f;
@@ -637,7 +637,7 @@ void StartSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
     enemy->flags.unk_19 = 0;
     if (!g_GameManager.unk_93d8Bit3)
     {
-        rec = &g_GameManager.catks[g_Unknown12fe0d8];
+        rec = &g_GameManager.catks[g_SpellCardNumber];
         sum = 0;
         strcpy(rec->name, (char *)cardName.text);
         len = strlen(rec->name);
@@ -690,10 +690,10 @@ void EndSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
     Catk *rec;
     int bonus;
 
-    if (g_Unknown12fe0c8 != 0)
+    if (g_SpellCardActive != 0)
     {
         g_Gui.EndSpellCardName();
-        if (g_Unknown12fe0c8 == 1)
+        if (g_SpellCardActive == 1)
         {
             bonus = g_BulletManager.ClearAllWithBonus(8000, 1);
             bonus = g_EnemyManager.ClearEnemiesForBonus(8000, bonus);
@@ -702,10 +702,10 @@ void EndSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
                 g_GameManager.AddScore(bonus);
                 g_Gui.ShowBonusPopup(bonus);
             }
-            if (g_Unknown12fe0c4 != 0)
+            if (g_SpellCardCapture != 0)
             {
-                rec = &g_GameManager.catks[g_Unknown12fe0d8];
-                bonus = g_Unknown12fe0cc + g_Unknown12fe0d0;
+                rec = &g_GameManager.catks[g_SpellCardNumber];
+                bonus = g_SpellCardBonus + g_SpellCardGrazeBonus;
                 g_Gui.ShowSpellCardBonus(bonus);
                 g_GameManager.AddScore(bonus);
                 if (!g_GameManager.unk_93d8Bit3)
@@ -761,7 +761,7 @@ void EndSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
                 g_GameManager.stats->spellCardsCaptured++;
             }
         }
-        g_Unknown12fe0c8 = 0;
+        g_SpellCardActive = 0;
         for (bossIdx = 0; bossIdx < 8; bossIdx++)
         {
             if (g_EnemyManager.bosses[bossIdx] != NULL && g_EnemyManager.bosses[bossIdx]->effects[24] != NULL)
@@ -1160,7 +1160,7 @@ loop:
             bs->speed1 = FLOAT_OP(bulletArgs[3].f, 0x10);
             bs->angle2 = FLOAT_OP(bulletArgs[6].f, 0x80);
             bs->speed2 = FLOAT_OP(bulletArgs[4].f, 0x20);
-            if (!g_Unknown12fe0c8)
+            if (!g_SpellCardActive)
             {
                 bs->count1 += RankLerp(enemy->rankCount1Low, enemy->rankCount1High);
                 if (bs->count1 <= 0)
@@ -2077,19 +2077,19 @@ done:
     }
     enemy->ctx.code = instr;
     enemy->ctx.timer.Tick();
-    if (enemy->flags.isBoss && !enemy->bossIndex && g_Unknown12fe0c8 && g_Unknown12fe0c4)
+    if (enemy->flags.isBoss && !enemy->bossIndex && g_SpellCardActive && g_SpellCardCapture)
     {
         if (!enemy->flags.keepSpellCard)
         {
-            g_Unknown12fe0cc = g_SpellCardBonuses[g_Unknown12fe0d8] -
-                               g_Unknown12fe0d4 * g_EnemyManager.spellCardBonusTimer.AsFloat() / 60.0f;
-            g_Unknown12fe0cc -= g_Unknown12fe0cc % 10;
+            g_SpellCardBonus = g_SpellCardBonuses[g_SpellCardNumber] -
+                               g_SpellCardBonusStep * g_EnemyManager.spellCardBonusTimer.AsFloat() / 60.0f;
+            g_SpellCardBonus -= g_SpellCardBonus % 10;
         }
         g_EnemyManager.spellCardBonusTimer.Tick();
     }
     if (enemy->flags.isBoss && g_GameManager.stage >= 7)
     {
-        if (g_Player.bomb.running && g_Unknown12fe0c8 && g_Unknown12fe0d8 >= 0x76)
+        if (g_Player.bomb.running && g_SpellCardActive && g_SpellCardNumber >= 0x76)
         {
             enemy->flags.unk_1a = 1;
             enemy->unk_2e2c = 1;

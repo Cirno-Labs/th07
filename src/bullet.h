@@ -278,7 +278,7 @@ public:
     Bullet *drawLists[6];
     // Where SpawnBullet looks for a free bullet first.
     Bullet *nextBullet;
-    // The item type cleared bullets turn into (g_Unknown9a9ab8).
+    // The item type cleared bullets turn into (g_ClearedBulletItem).
     int clearItemType;
 };
 ASSERT_SIZE(BulletManager, 0x37a164);

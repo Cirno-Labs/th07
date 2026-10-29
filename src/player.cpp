@@ -1009,7 +1009,7 @@ void Player::Graze(D3DXVECTOR3 *pos)
     g_GameManager.AddSubRank(6);
     g_Gui.grazeChanged = 2;
     g_SoundPlayer.QueueSound(0x1e, 0);
-    g_Unknown12fe0d0 += 2500 + (g_GameManager.bonusPoints - g_GameManager.stats->grazeCount) / 1500 * 20;
+    g_SpellCardGrazeBonus += 2500 + (g_GameManager.bonusPoints - g_GameManager.stats->grazeCount) / 1500 * 20;
     g_GameManager.AddScore(2000);
     if (this->bombState == 1)
     {
@@ -1052,42 +1052,42 @@ int HandleInput(Player *player)
     deltaY = 0.0f;
     previous = player->direction;
     player->direction = 0;
-    if (g_Unknown4b9e50 & 0x10)
+    if (g_GameButtons & 0x10)
     {
         player->direction = 1;
-        if (g_Unknown4b9e50 & 0x40)
+        if (g_GameButtons & 0x40)
         {
             player->direction = 5;
         }
-        if (g_Unknown4b9e50 & 0x80)
+        if (g_GameButtons & 0x80)
         {
             player->direction = 6;
         }
     }
-    else if (g_Unknown4b9e50 & 0x20)
+    else if (g_GameButtons & 0x20)
     {
         player->direction = 2;
-        if (g_Unknown4b9e50 & 0x40)
+        if (g_GameButtons & 0x40)
         {
             player->direction = 7;
         }
-        if (g_Unknown4b9e50 & 0x80)
+        if (g_GameButtons & 0x80)
         {
             player->direction = 8;
         }
     }
     else
     {
-        if (g_Unknown4b9e50 & 0x40)
+        if (g_GameButtons & 0x40)
         {
             player->direction = 3;
         }
-        if (g_Unknown4b9e50 & 0x80)
+        if (g_GameButtons & 0x80)
         {
             player->direction = 4;
         }
     }
-    if (g_Unknown4b9e50 & 4)
+    if (g_GameButtons & 4)
     {
         player->focused = 1;
         switch (player->direction)
@@ -1398,13 +1398,13 @@ int HandleInput(Player *player)
             break;
         }
     }
-    if ((g_Unknown4b9e50 & 1) && !g_Gui.IsMsgRunning())
+    if ((g_GameButtons & 1) && !g_Gui.IsMsgRunning())
     {
         if (!g_GameManager.ChecksumMismatch())
         {
             Player::StartFiring(player);
         }
-        if (!(g_Unknown4b9e50 & 4))
+        if (!(g_GameButtons & 4))
         {
             if (player->moveDeltaX != 0.0f)
             {
@@ -1461,7 +1461,7 @@ void UpdateHitboxAreas(Player *player)
 
 void UpdateBombState(Player *player)
 {
-    if (player->bombState && !player->bomb.running && (g_Unknown4b9e50 & 2))
+    if (player->bombState && !player->bomb.running && (g_GameButtons & 2))
     {
         player->StopBombState(1);
         player->bombJustStarted = 0;
@@ -1494,7 +1494,7 @@ void UpdateBombState(Player *player)
         return;
     }
     if (!g_GameManager.ChecksumMismatch() && !g_Gui.IsMsgRunning() && player->deathbombFrames != 0 &&
-        (int)g_GameManager.stats->bombs > 0 && player->bombCooldown == 0 && (g_Unknown4b9e50 & 2))
+        (int)g_GameManager.stats->bombs > 0 && player->bombCooldown == 0 && (g_GameButtons & 2))
     {
         g_ReplayManager->frameEvents |= 1;
         g_GameManager.AddBombsUsed(1);
@@ -1513,10 +1513,10 @@ void UpdateBombState(Player *player)
         {
             player->bomb.updateFocused(player);
         }
-        g_Unknown12fe0cc = 0;
-        g_Unknown12fe0c4 = 0;
+        g_SpellCardBonus = 0;
+        g_SpellCardCapture = 0;
         g_GameManager.SubSubRank(200);
-        g_Unknown12fe0dc = g_Unknown12fe0c8;
+        g_SpellCardActiveAtBomb = g_SpellCardActive;
         player->deathbombFrames += 6;
         if (player->deathbombFrames > g_Player.shotType->deathbombFrames)
         {
@@ -1546,8 +1546,8 @@ int UpdateDyingState(Player *player)
         {
             g_ReplayManager->frameEvents |= 4;
             g_GameManager.powerItemCombo = 0;
-            g_Unknown12fe0cc = 0;
-            g_Unknown12fe0c4 = 0;
+            g_SpellCardBonus = 0;
+            g_SpellCardCapture = 0;
             g_GameManager.AddDeaths(1);
             if ((int)g_GameManager.stats->lives > 0)
             {
@@ -1907,8 +1907,8 @@ void Player::StopBombState(int unk)
     ((BYTE *)&eff->sprite.colorTween.z)[3] = 0;
     eff->sprite.scriptVar0 = 30;
     this->bombInvulnerabilityEffect = eff;
-    g_Unknown12fe0cc = 0;
-    g_Unknown12fe0c4 = 0;
+    g_SpellCardBonus = 0;
+    g_SpellCardCapture = 0;
     this->bombState = 0;
     this->playerState = 3;
     this->stateTimer.Set(40);

@@ -224,7 +224,7 @@ void ItemManager::UpdateItems()
                     {
                         g_GameManager.stats->power = 128.0f;
                         g_GameManager.RerollChecksumKeys();
-                        if (!g_Unknown12fe0c8)
+                        if (!g_SpellCardActive)
                         {
                             g_BulletManager.ClearAll(1);
                         }
@@ -348,7 +348,7 @@ void ItemManager::UpdateItems()
                     {
                         g_GameManager.stats->power = 128.0f;
                         g_GameManager.RerollChecksumKeys();
-                        if (!g_Unknown12fe0c8)
+                        if (!g_SpellCardActive)
                         {
                             g_BulletManager.ClearAll(1);
                         }

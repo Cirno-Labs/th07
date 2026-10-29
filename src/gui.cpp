@@ -656,18 +656,18 @@ void GuiImpl::StartMsgScript(int index)
         case 6:
             CopySpriteToTexture(0x619);
             g_Stage.dialogueScriptOffset = 2;
-            g_Unknown9a9ab8 = 9;
+            g_ClearedBulletItem = 9;
             break;
         case 7:
             CopySpriteToTexture(0x61b);
             g_Stage.dialogueScriptOffset = 1;
             g_Stage.dialogueSpriteCount = 2;
-            g_Unknown9a9ab8 = 9;
+            g_ClearedBulletItem = 9;
             break;
         case 8:
             CopySpriteToTexture(0x61d);
             g_Stage.dialogueScriptOffset = 2;
-            g_Unknown9a9ab8 = 9;
+            g_ClearedBulletItem = 9;
             break;
         }
     }
@@ -685,7 +685,7 @@ int GuiImpl::RunMsg()
     {
         this->msg.timelineRelease--;
     }
-    if (this->msg.skippable && (g_Unknown4b9e50 & 0x100))
+    if (this->msg.skippable && (g_GameButtons & 0x100))
     {
         this->msg.timer.Set(this->msg.instr->time);
     }
@@ -749,8 +749,8 @@ int GuiImpl::RunMsg()
             this->msg.waitFrames = 0;
             break;
         case 4:
-            if ((!this->msg.skippable || !(g_Unknown4b9e50 & 0x100)) &&
-                (!(g_Unknown4b9e50 & 1) || (g_Unknown4b9e50 & 1) == (g_Unknown4b9e58 & 1) || this->msg.waitFrames < 12))
+            if ((!this->msg.skippable || !(g_GameButtons & 0x100)) &&
+                (!(g_GameButtons & 1) || (g_GameButtons & 1) == (g_PrevGameButtons & 1) || this->msg.waitFrames < 12))
             {
                 if (this->msg.waitFrames >= this->msg.instr->i)
                 {
@@ -888,7 +888,7 @@ stepSprites:
     g_SpriteEngine->Step(&this->msg.text[1]);
     g_SpriteEngine->Step(&this->msg.nameplates[0]);
     g_SpriteEngine->Step(&this->msg.nameplates[1]);
-    if (this->msg.timer < 60 && this->msg.skippable && (g_Unknown4b9e50 & 0x100))
+    if (this->msg.timer < 60 && this->msg.skippable && (g_GameButtons & 0x100))
     {
         this->msg.timer.Set(60);
     }
@@ -1531,11 +1531,11 @@ void Gui::DrawBanners()
         g_SpriteEngine->DrawUnrotated(&this->impl->spellNameBar);
         g_SpriteEngine->Draw(&this->impl->spellName);
         g_SpriteEngine->DrawUnrotated(&this->impl->unk_7774);
-        score = g_Unknown12fe0cc + g_Unknown12fe0d0;
+        score = g_SpellCardBonus + g_SpellCardGrazeBonus;
         div2 = 10000000;
         shown = 0;
-        catks = &g_GameManager.catks[g_Unknown12fe0d8];
-        if (g_Unknown12fe0c4 == 0)
+        catks = &g_GameManager.catks[g_SpellCardNumber];
+        if (g_SpellCardCapture == 0)
         {
             score = 0;
         }

@@ -429,7 +429,7 @@ void FormatCapsReport(D3DCAPS8 *caps, char *buffer);
 void SetDefaultRenderStates();
 // Set by SetDefaultRenderStates; th06 sets g_Stage.fogColorChanged
 // there.
-extern BYTE g_Unknown1348010;
+extern BYTE g_FogColorChanged;
 // Creates g_AppMutex and returns -1 if another instance holds it, as
 // th06's CheckSingleInstance. Also sets g_GameWindow.unk_1c when the
 // game was started through a shortcut or a path other than its own.
@@ -674,9 +674,9 @@ void DrawLoadingScreen();
 extern WORD g_Buttons;
 extern WORD g_PrevButtons;
 // The buttons the game plays by this frame: g_Buttons, or a replay's.
-extern WORD g_Unknown4b9e50;
-// g_Unknown4b9e50 the frame before.
-extern WORD g_Unknown4b9e58;
+extern WORD g_GameButtons;
+// g_GameButtons the frame before.
+extern WORD g_PrevGameButtons;
 // 1 on every 8th frame once the buttons have been held unchanged for 30
 // frames, for key repeat.
 extern WORD g_ButtonRepeat;
@@ -1529,18 +1529,18 @@ void CopySpriteToTexture(int sprite);
 
 // Grows by 2500 plus 20 for every 1500 of GameManager::unk_961c above
 // stats->unk_88 with each graze. Probably a field of a larger object.
-extern int g_Unknown12fe0d0;
-// Cleared by Player::StopBombState, next to g_Unknown12fe0d0.
-extern int g_Unknown12fe0c4;
-extern int g_Unknown12fe0cc;
+extern int g_SpellCardGrazeBonus;
+// Cleared by Player::StopBombState, next to g_SpellCardGrazeBonus.
+extern int g_SpellCardCapture;
+extern int g_SpellCardBonus;
 // Player's UpdateBombState copies the first into the second when a bomb
 // starts.
-extern int g_Unknown12fe0c8;
-extern int g_Unknown12fe0dc;
+extern int g_SpellCardActive;
+extern int g_SpellCardActiveAtBomb;
 // Set as a spell card starts: the card's number, and its bonus over
 // ten plus its seconds.
-extern int g_Unknown12fe0d8;
-extern int g_Unknown12fe0d4;
+extern int g_SpellCardNumber;
+extern int g_SpellCardBonusStep;
 // The bonus of each spell card, by number.
 extern int g_SpellCardBonuses[];
 
@@ -1792,7 +1792,7 @@ int PointInRotatedBox(D3DXVECTOR3 *point, D3DXVECTOR3 *center, D3DXVECTOR3 *size
                float sinAngle, float cosAngle);
 
 // Set to 9 as the dialogue of stages 6 to 8 starts.
-extern int g_Unknown9a9ab8;
+extern int g_ClearedBulletItem;
 
 // A run of quads in the stage data, ended by one with a negative type,
 // as th06's.

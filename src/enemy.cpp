@@ -466,11 +466,11 @@ int Enemy::CheckTimerCallback()
         this->callbackTimer.Set(0);
         if (!this->flags.keepSpellCard)
         {
-            g_Unknown12fe0cc = 0;
-            g_Unknown12fe0c4 = 0;
-            if (g_Unknown12fe0c8 != 0)
+            g_SpellCardBonus = 0;
+            g_SpellCardCapture = 0;
+            if (g_SpellCardActive != 0)
             {
-                g_Unknown12fe0c8++;
+                g_SpellCardActive++;
             }
             g_BulletManager.ClearAll(10);
             lost = (g_GameManager.bonusPoints - g_GameManager.stats->grazeCount) * 0.25f;
@@ -958,7 +958,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                     }
                     mgr->dropCounter++;
                 }
-                if (enemy->flags.isBoss && !g_Unknown12fe0c8)
+                if (enemy->flags.isBoss && !g_SpellCardActive)
                 {
                     int bonus;
 
