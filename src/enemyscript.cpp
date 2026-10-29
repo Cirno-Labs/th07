@@ -1336,7 +1336,7 @@ loop:
             {
                 enemy->lasers[value]->state = 2;
                 enemy->lasers[value]->timer.Set(0);
-                enemy->lasers[value]->width = enemy->lasers[value]->unk_4b8;
+                enemy->lasers[value]->width = enemy->lasers[value]->baseWidth;
             }
             break;
         case 134:

@@ -191,7 +191,7 @@ struct Laser
     float endOffset;
     float maxLength;
     float width;
-    float unk_4b8;
+    float baseWidth;
     float speed;
     int startFrames;
     int hitStartFrame;

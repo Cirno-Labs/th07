@@ -502,7 +502,7 @@ void BulletManager::ClearAll(int mode)
         {
             beam->state = 2;
             beam->timer.Set(0);
-            beam->width = beam->unk_4b8;
+            beam->width = beam->baseWidth;
             if (mode != 0 && mode < 9)
             {
                 t = beam->startOffset;
@@ -574,7 +574,7 @@ int BulletManager::ClearAllWithBonus(int maxBonus, int toItems)
         {
             beam->state = 2;
             beam->timer.Set(0);
-            beam->width = beam->unk_4b8;
+            beam->width = beam->baseWidth;
             if (toItems)
             {
                 g_ItemManager.SpawnItem(&beam->pos, this->clearItemType, 1);
@@ -1098,7 +1098,7 @@ int BulletManager::OnUpdate(BulletManager *mgr)
                 {
                     scale3 = 1.2f;
                 }
-                las->unk_4b8 = scale3;
+                las->baseWidth = scale3;
                 las->sprite0.scaleY = scale3 / 16.0f;
                 extent5.x = scale3 / 2.0f;
             }
@@ -1112,7 +1112,7 @@ int BulletManager::OnUpdate(BulletManager *mgr)
             }
             las->timer.Set(0);
             las->state++;
-            las->unk_4b8 = las->width;
+            las->baseWidth = las->width;
         case 1:
             g_Player.CheckLaserHit(&center2, &extent5, &las->pos, las->angle, las->timer.AsFrames() % 12 == 0);
             if (las->timer < las->durationFrames)
