@@ -1,5 +1,5 @@
 // cflags: /Os
-// The /Os file with Unknown49fbf0, th06's Gui, from 0x427b21 to
+// The /Os file with Gui, th06's Gui, from 0x427b21 to
 // GameManager at 0x42d560.
 
 #include <stdio.h>
@@ -12,20 +12,20 @@
 #include "replay.h"
 #include "unsorted.h"
 
-void Unknown49fbf0::EndBombName()
+void Gui::EndBombName()
 {
     this->impl->bombName.pendingInterrupt = 1;
     this->impl->bombNameBar.SetPendingInterrupt(2);
 }
 
-void Unknown49fbf0::EndSpellCardName()
+void Gui::EndSpellCardName()
 {
     this->impl->spellName.pendingInterrupt = 1;
     this->impl->spellNameBar.SetPendingInterrupt(2);
     this->impl->unk_7774.SetPendingInterrupt(2);
 }
 
-void Unknown49fbf0::HideInterface()
+void Gui::HideInterface()
 {
     this->impl->unk_6e44.spriteIndex = -1;
     this->impl->unk_7090.spriteIndex = -1;
@@ -33,12 +33,12 @@ void Unknown49fbf0::HideInterface()
     this->impl->unk_1fba0 = 0;
 }
 
-int Unknown49fbf0::Func427be2()
+int Gui::Func427be2()
 {
     return this->impl->msg.skippable;
 }
 
-void Unknown49fbf0::ShowBonusPopup(int bonus)
+void Gui::ShowBonusPopup(int bonus)
 {
     this->impl->bonusPopup.pos = D3DXVECTOR3(416.0f, 48.0f, 0.0f);
     this->impl->bonusPopup.shown = 1;
@@ -47,7 +47,7 @@ void Unknown49fbf0::ShowBonusPopup(int bonus)
     g_App.redrawFrames = 2;
 }
 
-void Unknown49fbf0::Func427c81(int points, int unk)
+void Gui::Func427c81(int points, int unk)
 {
     this->impl->unk_209e0.pos = D3DXVECTOR3(416.0f, 168.0f, 0.0f);
     this->impl->unk_209e0.shown = unk;
@@ -56,7 +56,7 @@ void Unknown49fbf0::Func427c81(int points, int unk)
     g_App.redrawFrames = 2;
 }
 
-void Unknown49fbf0::ShowSpellCardBonus(int value)
+void Gui::ShowSpellCardBonus(int value)
 {
     this->impl->spellBonusPopup.pos = D3DXVECTOR3(224.0f, 16.0f, 0.0f);
     this->impl->spellBonusPopup.shown = 1;
@@ -84,7 +84,7 @@ void CopySpriteToTexture(int sprite)
     g_SpriteEngine->CopyTextureRect(0x15, 0x16, &dstRect, &spriteRect);
 }
 
-int Unknown49fbf0::OnUpdate(Unknown49fbf0 *gui)
+int Gui::OnUpdate(Gui *gui)
 {
     if (g_Unknown626270.isFrozen)
     {
@@ -109,7 +109,7 @@ int Unknown49fbf0::OnUpdate(Unknown49fbf0 *gui)
     return 1;
 }
 
-int Unknown49fbf0::OnDraw(Unknown49fbf0 *gui)
+int Gui::OnDraw(Gui *gui)
 {
     D3DXVECTOR3 cursor;
     char buf[32];
@@ -268,7 +268,7 @@ int Unknown49fbf0::OnDraw(Unknown49fbf0 *gui)
     return 1;
 }
 
-void Unknown49fbf0::ShowBombName(int sprite, char *name)
+void Gui::ShowBombName(int sprite, char *name)
 {
     g_SpriteEngine->StartScript(&this->impl->bombPortrait, 0x4a1);
     g_SpriteEngine->SetSprite(&this->impl->bombPortrait, sprite);
@@ -284,7 +284,7 @@ void Unknown49fbf0::ShowBombName(int sprite, char *name)
     g_App.redrawFrames = 2;
 }
 
-void Unknown49fbf0::ShowSpellCardName(int sprite, char *text)
+void Gui::ShowSpellCardName(int sprite, char *text)
 {
     if (sprite >= 0)
     {
@@ -316,7 +316,7 @@ void Unknown49fbf0::ShowSpellCardName(int sprite, char *text)
     g_App.redrawFrames = 2;
 }
 
-int Unknown49fbf0::LoadMsg(char *path)
+int Gui::LoadMsg(char *path)
 {
     int i;
 
@@ -336,7 +336,7 @@ int Unknown49fbf0::LoadMsg(char *path)
     return 0;
 }
 
-void Unknown49fbf0::FreeMsgFile()
+void Gui::FreeMsgFile()
 {
     if (this->impl->msg.msgFile != NULL)
     {
@@ -345,7 +345,7 @@ void Unknown49fbf0::FreeMsgFile()
     }
 }
 
-void Unknown49fbf0::StartMsg(int index)
+void Gui::StartMsg(int index)
 {
     this->impl->StartMsgScript(index);
 }
@@ -413,7 +413,7 @@ void GuiImpl::StartMsgScript(int index)
     }
 }
 
-BOOL Unknown49fbf0::MsgHoldsTimeline()
+BOOL Gui::MsgHoldsTimeline()
 {
     if (this->impl == NULL)
     {
@@ -426,7 +426,7 @@ BOOL Unknown49fbf0::MsgHoldsTimeline()
     return this->impl->msg.scriptIndex >= 0;
 }
 
-int Unknown49fbf0::Func42ad66()
+int Gui::Func42ad66()
 {
     if (this->impl == NULL)
     {
@@ -435,12 +435,12 @@ int Unknown49fbf0::Func42ad66()
     return this->impl->msg.scriptIndex >= 0 || this->impl->msg.scriptIndex == -2 ? 1 : 0;
 }
 
-int Unknown49fbf0::AddedCallback(Unknown49fbf0 *gui)
+int Gui::AddedCallback(Gui *gui)
 {
     return gui->LoadResources();
 }
 
-int Unknown49fbf0::DeletedCallback(Unknown49fbf0 *gui)
+int Gui::DeletedCallback(Gui *gui)
 {
     g_SpriteEngine->ReleaseAnm(0x18);
     g_SpriteEngine->ReleaseAnm(0x1c);
@@ -462,30 +462,30 @@ int Unknown49fbf0::DeletedCallback(Unknown49fbf0 *gui)
     return 0;
 }
 
-int Unknown49fbf0::RegisterChain()
+int Gui::RegisterChain()
 {
-    Unknown49fbf0 *gui = &g_Unknown49fbf0;
+    Gui *gui = &g_Unknown49fbf0;
 
     if ((g_App.scene != 3 && g_App.scene != 0xb && g_App.scene != 0xc) != 0)
     {
-        memset(gui, 0, sizeof(Unknown49fbf0));
+        memset(gui, 0, sizeof(Gui));
         gui->impl = new GuiImpl;
     }
-    g_Unknown49fbf0CalcChain.SetCallback((ChainCallback)Unknown49fbf0::OnUpdate);
-    g_Unknown49fbf0CalcChain.addedCallback = (ChainCallback)Unknown49fbf0::AddedCallback;
-    g_Unknown49fbf0CalcChain.deletedCallback = (ChainCallback)Unknown49fbf0::DeletedCallback;
+    g_Unknown49fbf0CalcChain.SetCallback((ChainCallback)Gui::OnUpdate);
+    g_Unknown49fbf0CalcChain.addedCallback = (ChainCallback)Gui::AddedCallback;
+    g_Unknown49fbf0CalcChain.deletedCallback = (ChainCallback)Gui::DeletedCallback;
     g_Unknown49fbf0CalcChain.arg = gui;
     if (g_Chain.AddToCalcChain(&g_Unknown49fbf0CalcChain, 13) != 0)
     {
         return -1;
     }
-    g_Unknown49fbf0DrawChain.SetCallback((ChainCallback)Unknown49fbf0::OnDraw);
+    g_Unknown49fbf0DrawChain.SetCallback((ChainCallback)Gui::OnDraw);
     g_Unknown49fbf0DrawChain.arg = gui;
     g_Chain.AddToDrawChain(&g_Unknown49fbf0DrawChain, 12);
     return 0;
 }
 
-void Unknown49fbf0::RemoveChain()
+void Gui::RemoveChain()
 {
     g_Chain.Remove(&g_Unknown49fbf0CalcChain);
     g_Chain.Remove(&g_Unknown49fbf0DrawChain);
@@ -557,7 +557,7 @@ int GuiImpl::DrawMsg()
     return 0;
 }
 
-void Unknown49fbf0::UpdateInterface()
+void Gui::UpdateInterface()
 {
     int i;
     int count;

@@ -980,7 +980,7 @@ public:
     // Adds `amount` to unk_961c, up to unk_9618. A gain outside
     // Player::unk_240d also adds to unk_9620 and, once that reaches
     // stats->unk_88 + 50000, caps it there and calls StartBombState. When
-    // unk_961c reaches unk_9618 and changed, calls Unknown49fbf0's
+    // unk_961c reaches unk_9618 and changed, calls Gui's
     // Func427c81 with unk_961c less stats->unk_88 and 3.
     void AddBonusPoints(int amount);
     // The same without unk_9620.
@@ -1214,7 +1214,7 @@ struct GuiMsg
 };
 ASSERT_SIZE(GuiMsg, 0xe10);
 
-// A message Unknown49fbf0 shows for a while at a fixed place, with a
+// A message Gui shows for a while at a fixed place, with a
 // number, as th06's GuiPopup.
 struct GuiPopup
 {
@@ -1225,7 +1225,7 @@ struct GuiPopup
     Timer timer;
 };
 
-// The bulk of Unknown49fbf0 (th06's GuiImpl), 0x20a30 bytes. Only what
+// The bulk of Gui (th06's GuiImpl), 0x20a30 bytes. Only what
 // is known so far.
 struct GuiImpl
 {
@@ -1282,7 +1282,7 @@ ASSERT_SIZE(GuiImpl, 0x20a30);
 
 // The object at 0x49fbf0, th06's Gui. Placeholder name; only what is
 // known so far.
-class Unknown49fbf0
+class Gui
 {
 public:
     // The update element's callback: unless g_Unknown626270.isFrozen is
@@ -1290,11 +1290,11 @@ public:
     // UpdateInterface and impl->RunMsg and counts unk_0 up; plays MIDI
     // slot 0 on frame 300 of stage 6, and holds g_App.redrawFrames at 8
     // or more while button 0x100 is held. Returns 1.
-    static int OnUpdate(Unknown49fbf0 *gui);
+    static int OnUpdate(Gui *gui);
     // The draw element's callback: stops the screen shake, then draws the
     // stage clear bonus once impl->stageClearShown is set, the dialogue,
     // DrawBanners, DrawHud and the popups. Returns 1.
-    static int OnDraw(Unknown49fbf0 *gui);
+    static int OnDraw(Gui *gui);
     // Shows the player's bomb, spell card `name`, with sprite `sprite`
     // in bombPortrait (script 0x4a1), scripts 0x4a4 and 0x4a6 with
     // sprite 0x4ac, and bombName (script 0x704); sends bombNameBar
@@ -1335,11 +1335,11 @@ public:
     // messages, as th06's.
     int LoadResources();
     // The update element's added callback: runs LoadResources.
-    static int AddedCallback(Unknown49fbf0 *gui);
+    static int AddedCallback(Gui *gui);
     // Frees ANM slots 0x18 and 0x1c to 0x1f and the message file and,
     // unless the scene is 3, 0xb or 0xc, slots 0x15 to 0x17 and 0x19 to
     // 0x1b and impl. Returns 0.
-    static int DeletedCallback(Unknown49fbf0 *gui);
+    static int DeletedCallback(Gui *gui);
     // Unless the scene is 3, 0xb or 0xc, zeroes the interface and
     // allocates impl; then adds the update element (priority 13) and the
     // draw element (priority 12). Returns 0, or -1 if adding fails.
@@ -1410,8 +1410,8 @@ public:
     float bossHealthShown;
     unsigned char unk_30[0x64];
 };
-ASSERT_SIZE(Unknown49fbf0, 0x94);
-extern Unknown49fbf0 g_Unknown49fbf0;
+ASSERT_SIZE(Gui, 0x94);
+extern Gui g_Unknown49fbf0;
 extern ChainElem g_Unknown49fbf0CalcChain;
 extern ChainElem g_Unknown49fbf0DrawChain;
 // Copies the rectangle of sprite `sprite` in texture 0x16 into sprite

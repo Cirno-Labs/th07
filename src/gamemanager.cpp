@@ -277,7 +277,7 @@ int GameManager::DeletedCallback(GameManager *mgr)
     Unknown9a9b00::RemoveChain();
     g_Unknown1347938.Release();
     EffectManager::RemoveChain();
-    Unknown49fbf0::RemoveChain();
+    Gui::RemoveChain();
     ReplayManager::EndStage();
     if (!g_Unknown626270.unk_93d8Bit3)
     {

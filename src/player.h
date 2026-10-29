@@ -259,7 +259,7 @@ int UpdateDyingState(Player *player);
 // StopBombState(0). Otherwise starts playerState 4 for 540 frames of
 // stateTimer (kept in unk_16a0c), with unk_240d 1: ends unk_b7e68 (and
 // lets unk_b7e6c end), starts effect 0x1c in slot 4 to follow the
-// player in unk_b7e6c, calls Unknown49fbf0's Func427c81(0, 2), plays
+// player in unk_b7e6c, calls Gui's Func427c81(0, 2), plays
 // sounds 0x20 and 0x24 and marks bit 8 of g_ReplayManager->unk_d6.
 void StartBombState(Player *player);
 // OnUpdate's respawning step, as th06's: for 60 frames clears bullets
@@ -440,7 +440,7 @@ public:
     void StopBombState(int unk);
     // Ends playerState 4 (UpdateInvulnerability calls it when it runs out): calls
     // GameManager's IncreaseBonusCap and AddBonusPointsCapped with 10000, scores ten
-    // times unk_961c over stats->unk_88 (shown through Unknown49fbf0's
+    // times unk_961c over stats->unk_88 (shown through Gui's
     // Func427c81), resets unk_9620, plays sound 0x21, finishes a respawn
     // if one runs, then makes the player invulnerable (playerState 3)
     // for 40 frames, with unk_23fc 40 and unk_240d 0, and ends the
