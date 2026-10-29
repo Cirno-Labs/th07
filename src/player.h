@@ -189,7 +189,11 @@ void Func4409f0(Player *player);
 int Func440cf0(Player *player);
 void Func4411c0(Player *player);
 void Func441330(Player *player);
-void Func441e80(Player *player);
+// OnUpdate's last step: clears unk_2428, homingTarget and unk_2440 for
+// the next frame, then sets AsciiText's unk_74d4 to 2 while the player
+// is in the bottom left (y at least 400, x below 160) and back to 3
+// once it leaves.
+void ResetHomingAndText(Player *player);
 
 // One of the 0x70 entries at Player+0x9dc, probably th06's bomb
 // hitboxes (bombHitPos, bombHitSize, ...) as one struct.
@@ -322,7 +326,8 @@ public:
     // What the homing shots aim at; x is -100 or less when there is
     // nothing.
     D3DXVECTOR3 homingTarget;
-    unsigned char unk_2440[0x4];
+    // Cleared every frame by ResetHomingAndText.
+    int unk_2440;
     PlayerBullet bullets[0x60];
     PlayerLaser lasers[3];
     // Runs while firing, as th06's: -1 when idle, stopped after 30

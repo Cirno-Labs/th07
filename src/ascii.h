@@ -35,6 +35,17 @@ public:
     {
         this->unk_b7c[idx].pendingInterrupt = 99;
     }
+    // unk_74d4, and setting it while sending unk_498 the same
+    // interrupt. Inlines: each read takes a temporary in ResetHomingAndText.
+    int GetUnk74d4()
+    {
+        return this->unk_74d4;
+    }
+    void SetUnk74d4(int value)
+    {
+        this->unk_498.pendingInterrupt = value;
+        this->unk_74d4 = value;
+    }
 
     unsigned char unk_0[0x498];
     // Player::DeletedCallback sends these interrupt 99.

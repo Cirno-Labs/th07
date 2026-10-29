@@ -469,7 +469,7 @@ address,size,name,symbol
 0x004418b0,162,Player::AddHitboxAreaCircle,?AddHitboxAreaCircle@Player@@QAEPAUPlayerArea@@PAUD3DXVECTOR3@@MMHH@Z
 0x00441960,612,Func441960,
 0x00441bd0,680,Func441bd0,
-0x00441e80,290,Func441e80,?Func441e80@@YIXPAVPlayer@@@Z
+0x00441e80,290,ResetHomingAndText,?ResetHomingAndText@@YIXPAVPlayer@@@Z
 0x00441fb0,247,Player::OnUpdate,?OnUpdate@Player@@SIHPAV1@@Z
 0x004420b0,665,Player::OnDraw,?OnDraw@Player@@SIHPAV1@@Z
 0x00442350,24,Player::OnDraw2,?OnDraw2@Player@@SIHPAV1@@Z

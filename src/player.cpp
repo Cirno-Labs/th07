@@ -748,6 +748,28 @@ PlayerArea *Player::AddHitboxAreaCircle(D3DXVECTOR3 *pos, float unk_10, float un
     return area;
 }
 
+void ResetHomingAndText(Player *player)
+{
+    player->unk_2428 = D3DXVECTOR3(-999.0f, -999.0f, 0.0f);
+    player->homingTarget = D3DXVECTOR3(-999.0f, -999.0f, 0.0f);
+    player->unk_2440 = 0;
+    if (player->position.y >= 400.0f)
+    {
+        if (g_AsciiText.GetUnk74d4() != 2 && player->position.x < 160.0f)
+        {
+            g_AsciiText.SetUnk74d4(2);
+        }
+        else if (g_AsciiText.GetUnk74d4() == 2 && player->position.x > 160.0f)
+        {
+            g_AsciiText.SetUnk74d4(3);
+        }
+    }
+    else if (g_AsciiText.GetUnk74d4() == 2)
+    {
+        g_AsciiText.SetUnk74d4(3);
+    }
+}
+
 int Player::OnUpdate(Player *player)
 {
     if (g_Unknown626270.isFrozen)
@@ -781,7 +803,7 @@ int Player::OnUpdate(Player *player)
     }
     UpdateBullets(player);
     UpdateFiring(player);
-    Func441e80(player);
+    ResetHomingAndText(player);
     return 1;
 }
 
