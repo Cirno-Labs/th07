@@ -645,3 +645,90 @@ void DrawMarisaABomb(Player *player)
         curSprite++;
     }
 }
+
+void UpdateMarisaABombFocused(Player *player)
+{
+    PlayerBombPart *orb;
+    int i;
+    Sprite *sprite;
+    int k;
+    D3DXVECTOR3 unused;
+    float theta;
+
+    if (player->bomb.timer >= player->bomb.duration)
+    {
+        g_Unknown49fbf0.EndBombName();
+        player->bomb.running = 0;
+        player->moveScaleY = 1.0f;
+        player->moveScaleX = 1.0f;
+        return;
+    }
+    if (player->bomb.timer.HasTicked() && player->bomb.timer == 0)
+    {
+        g_ItemManager.CollectAll();
+        g_Unknown49fbf0.ShowBombName(0x4a2, "魔符「ミルキーウェイ」");
+        player->bomb.duration = 260;
+        player->stateTimer.Set(310);
+        SpawnBombAura(player);
+        for (i = 0; i < 24; i++)
+        {
+            player->bomb.parts[i].state = 0;
+        }
+        SetBombDrain(player, 9000, 0.33f);
+        player->moveScaleY = 0.4f;
+        player->moveScaleX = 0.4f;
+    }
+    if (player->bomb.timer.HasTicked() && player->bomb.timer.current % 6 == 0)
+    {
+        i = player->bomb.timer.AsFrames() / 6;
+        if (i < 24)
+        {
+            sprite = player->bomb.parts[i].sprites;
+            g_SpriteEngine->StartScriptAtOrigin(sprite, i % 3 + 0x405);
+            player->bomb.parts[i].pos = player->position;
+            for (k = 0; k < 8; k++)
+            {
+                player->bomb.parts[i].trail[k] = player->position;
+            }
+            player->bomb.parts[i].state = 1;
+            theta = g_Rng.GetRandomF32ZeroToOne() * 0.3926991f - 0.19634955f - 1.5707964f;
+            ((Vector2 *)&player->bomb.parts[i].velocity)->SetPolar(theta, -5.0f);
+            player->bomb.parts[i].velocity.z = 0.0f;
+            theta = g_Rng.GetRandomF32ZeroToOne() * 0.3926991f - 0.19634955f - 1.5707964f;
+            ((Vector2 *)&player->bomb.parts[i].acceleration)->SetPolar(theta, 0.24f);
+            player->bomb.parts[i].acceleration.z = 0.0f;
+            g_SoundPlayer.QueueSound(7, 0);
+            ScreenEffect::StartEffect(1, 120, 4, 1, 0);
+            player->unk_9dc[i].unk_1c = 0;
+        }
+    }
+    for (orb = player->bomb.parts, i = 0; i < 24; i++, orb++)
+    {
+        if (orb->state == 0)
+        {
+            continue;
+        }
+        for (k = 7; k > 0; k--)
+        {
+            orb->trail[k] = orb->trail[k - 1];
+        }
+        orb->trail[0] = orb->pos;
+        orb->pos += orb->velocity * g_App.unk_178;
+        orb->velocity += orb->acceleration * g_App.unk_178;
+        if (orb->pos.y < -256.0f)
+        {
+            orb->state = 0;
+        }
+        player->AddHitboxAreaCircle(&orb->pos, 96.0f, 0.0f, 0, 6);
+        if (player->unk_9dc[i].unk_1c < 80)
+        {
+            player->unk_9dc[i].size.x = 128.0f;
+            player->unk_9dc[i].size.y = 128.0f;
+            player->unk_9dc[i].pos = orb->pos;
+            player->unk_9dc[i].unk_18 = 12;
+        }
+        g_SpriteEngine->Step(orb->sprites);
+    }
+    player->playerState = 3;
+    player->bomb.timer.Tick();
+}

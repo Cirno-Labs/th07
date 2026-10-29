@@ -322,9 +322,10 @@ struct PlayerBombPart
     float speed;
     float angle;
     D3DXVECTOR3 pos;
-    D3DXVECTOR3 unk_20[0x20];
+    // Marisa A focused: the star's last positions, newest first.
+    D3DXVECTOR3 trail[0x20];
     D3DXVECTOR3 velocity;
-    unsigned char unk_1ac[0xc];
+    D3DXVECTOR3 acceleration;
     Sprite sprites[8];
     unsigned char unk_1418[0x4];
     Timer timer;
@@ -652,3 +653,11 @@ void UpdateMarisaABomb(Player *player);
 // Draws Marisa A's bomb, as th06's DrawMarisaABomb: the stage tint,
 // then each star three times, at shrinking sizes along its trail.
 void DrawMarisaABomb(Player *player);
+
+// Marisa A's focused bomb: 260 frames with stateTimer at 310, an aura
+// and the player slowed to 0.4; a star every 6 frames (24) shot
+// upwards from the player at a slightly random angle and accelerating,
+// keeping a trail of its last 8 positions, each an area
+// (AddHitboxAreaCircle, 96) and, until it has hit 80 times, a 128 box
+// of 12 damage. A star ends once its y is below -256.
+void UpdateMarisaABombFocused(Player *player);
