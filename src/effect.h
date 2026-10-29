@@ -98,6 +98,8 @@ public:
     // eff08.anm, from one to two files a stage. Returns 0, or -1 on
     // failure.
     static int AddedCallback(EffectManager *mgr);
+    // Frees the effect sprites. Returns 0.
+    static int DeletedCallback(EffectManager *mgr);
 
     // Where SpawnEffect looks for a free effect next.
     int next;

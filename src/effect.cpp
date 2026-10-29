@@ -394,3 +394,12 @@ int EffectManager::AddedCallback(EffectManager *mgr)
     }
     return 0;
 }
+
+int EffectManager::DeletedCallback(EffectManager *mgr)
+{
+    g_SpriteEngine->ReleaseAnm(0x11);
+    g_SpriteEngine->ReleaseAnm(0x12);
+    g_SpriteEngine->ReleaseAnm(0x13);
+    g_SpriteEngine->ReleaseAnm(0x14);
+    return 0;
+}

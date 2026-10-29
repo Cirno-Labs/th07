@@ -150,7 +150,7 @@ address,size,name,symbol
 0x0041ca10,354,EffectManager::OnDraw,?OnDraw@EffectManager@@SIHPAV1@@Z
 0x0041cb80,596,EffectManager::OnDraw2,?OnDraw2@EffectManager@@QAEHXZ
 0x0041cde0,581,EffectManager::AddedCallback,?AddedCallback@EffectManager@@SIHPAV1@@Z
-0x0041d050,65,Func41d050,
+0x0041d050,65,EffectManager::DeletedCallback,?DeletedCallback@EffectManager@@SIHPAV1@@Z
 0x0041d0a0,165,Func41d0a0,
 0x0041d150,35,Func41d150,?Func41d150@@YIXXZ
 0x0041d180,357,Ending::Ending,??0Ending@@QAE@XZ
