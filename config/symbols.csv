@@ -549,7 +549,7 @@ address,size,name,symbol
 0x0044c930,133,SoundPlayer::QueueSound,?QueueSound@SoundPlayer@@QAEXHH@Z
 0x0044c9c0,2073,SoundPlayer::PlayQueuedSounds,?PlayQueuedSounds@SoundPlayer@@QAEHXZ
 0x0044d200,226,BgmNotificationProc,?BgmNotificationProc@@YGKPAX@Z
-0x0044d2f0,225,SoundPlayer::Func44d2f0,?Func44d2f0@SoundPlayer@@QAEXHHPAD@Z
+0x0044d2f0,225,SoundPlayer::QueueSoundCommand,?QueueSoundCommand@SoundPlayer@@QAEXHHPAD@Z
 0x0044d3e0,573,SpriteEngine::SpriteEngine,??0SpriteEngine@@QAE@XZ
 0x0044d620,11,MmTimer::OnTimer,?OnTimer@MmTimer@@UAEXXZ ??1SpriteEngine@@QAE@XZ
 0x0044d630,700,SpriteEngine::CreateQuad,?CreateQuad@SpriteEngine@@QAEXXZ

@@ -707,7 +707,7 @@ int App::DeletedCallback(App *arg)
     g_SpriteEngine->ReleaseVertexBuffer();
     g_SpriteEngine->ReleaseAnm(0);
     AsciiText::RemoveChain();
-    g_SoundPlayer.Func44d2f0(4, 0, "dummy");
+    g_SoundPlayer.QueueSoundCommand(4, 0, "dummy");
     if (arg->midi != NULL)
     {
         arg->midi->Stop();
@@ -1237,7 +1237,7 @@ int App::LoadMidi(int slot, char *path)
         dot[1] = 'w';
         dot[2] = 'a';
         dot[3] = 'v';
-        g_SoundPlayer.Func44d2f0(1, slot, wavFile);
+        g_SoundPlayer.QueueSoundCommand(1, slot, wavFile);
     }
     return 1;
 }
@@ -1259,9 +1259,9 @@ int App::PlayMidi(int slot)
     {
         if (g_App.flags.preloadBgm)
         {
-            g_SoundPlayer.Func44d2f0(4, 0, "dummy");
+            g_SoundPlayer.QueueSoundCommand(4, 0, "dummy");
         }
-        g_SoundPlayer.Func44d2f0(2, slot, "dummy");
+        g_SoundPlayer.QueueSoundCommand(2, slot, "dummy");
     }
     return 0;
 }
@@ -1288,7 +1288,7 @@ int App::PlayMusic(char *path)
         dot[1] = 'w';
         dot[2] = 'a';
         dot[3] = 'v';
-        g_SoundPlayer.Func44d2f0(2, -1, wavFile);
+        g_SoundPlayer.QueueSoundCommand(2, -1, wavFile);
     }
     else
     {
@@ -1310,11 +1310,11 @@ int App::StopMusic()
     {
         if (g_App.flags.preloadBgm)
         {
-            g_SoundPlayer.Func44d2f0(4, 0, "dummy");
+            g_SoundPlayer.QueueSoundCommand(4, 0, "dummy");
         }
         else
         {
-            g_SoundPlayer.Func44d2f0(3, 0, "dummy");
+            g_SoundPlayer.QueueSoundCommand(3, 0, "dummy");
         }
     }
     else
@@ -1351,7 +1351,7 @@ int App::FadeOutMusic(float seconds)
         {
             duration = seconds / this->unk_178;
         }
-        g_SoundPlayer.Func44d2f0(5, duration, "");
+        g_SoundPlayer.QueueSoundCommand(5, duration, "");
     }
     else
     {

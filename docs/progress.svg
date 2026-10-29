@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">56.63% (393)</tspan> · <tspan class="decompiled">1.59% (11)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">41.64% (289)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">56.77% (394)</tspan> · <tspan class="decompiled">1.59% (11)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">41.50% (288)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="423.01" height="6" x="0" y="0" class="named"/>
-<rect width="11.84" height="6" x="423.01" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="434.85" y="0" class="nonmatching"/>
-<rect width="311.07" height="6" x="435.93" y="0" class="todo"/>
+<rect width="424.09" height="6" x="0" y="0" class="named"/>
+<rect width="11.84" height="6" x="424.09" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="435.93" y="0" class="nonmatching"/>
+<rect width="309.99" height="6" x="437.01" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (173 bytes)</title></rect>
@@ -619,7 +619,7 @@
 <rect width="12" height="12" x="705" y="150" class="named"><title>0x0044c930 SoundPlayer::QueueSound (133 bytes)</title></rect>
 <rect width="12" height="12" x="720" y="150" class="named"><title>0x0044c9c0 SoundPlayer::PlayQueuedSounds (2073 bytes)</title></rect>
 <rect width="12" height="12" x="735" y="150" class="named"><title>0x0044d200 BgmNotificationProc (226 bytes)</title></rect>
-<rect width="12" height="12" x="0" y="165" class="todo"><title>0x0044d2f0 SoundPlayer::Func44d2f0 (225 bytes)</title></rect>
+<rect width="12" height="12" x="0" y="165" class="named"><title>0x0044d2f0 SoundPlayer::QueueSoundCommand (225 bytes)</title></rect>
 <rect width="12" height="12" x="15" y="165" class="todo"><title>0x0044d3e0 SpriteEngine::SpriteEngine (573 bytes)</title></rect>
 <rect width="12" height="12" x="30" y="165" class="named"><title>0x0044d620 MmTimer::OnTimer (11 bytes)</title></rect>
 <rect width="12" height="12" x="45" y="165" class="named"><title>0x0044d630 SpriteEngine::CreateQuad (700 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">44.20%</tspan> · <tspan class="decompiled">0.21%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">55.50%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">44.26%</tspan> · <tspan class="decompiled">0.21%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">55.44%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="330.19" height="6" x="0" y="0" class="named"/>
-<rect width="1.55" height="6" x="330.19" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="331.74" y="0" class="nonmatching"/>
-<rect width="414.60" height="6" x="332.40" y="0" class="todo"/>
+<rect width="330.63" height="6" x="0" y="0" class="named"/>
+<rect width="1.55" height="6" x="330.63" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="332.18" y="0" class="nonmatching"/>
+<rect width="414.16" height="6" x="332.84" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1127,7 +1127,7 @@
 <rect width="6.64" height="6.83" x="692.55" y="86.33" class="named"><title>0x0044d200 BgmNotificationProc (226 bytes)</title></rect>
 <rect width="6.60" height="6.83" x="702.19" y="86.33" class="todo"><title>0x00423420 Func423420 (225 bytes)</title></rect>
 <rect width="6.60" height="6.83" x="711.78" y="86.33" class="todo"><title>0x0042f2e4 Func42f2e4 (225 bytes)</title></rect>
-<rect width="6.60" height="6.83" x="721.38" y="86.33" class="todo"><title>0x0044d2f0 SoundPlayer::Func44d2f0 (225 bytes)</title></rect>
+<rect width="6.60" height="6.83" x="721.38" y="86.33" class="named"><title>0x0044d2f0 SoundPlayer::QueueSoundCommand (225 bytes)</title></rect>
 <rect width="6.51" height="6.83" x="730.98" y="86.33" class="todo"><title>0x00424d20 Func424d20 (223 bytes)</title></rect>
 <rect width="6.51" height="6.83" x="740.49" y="86.33" class="named"><title>0x0043b4db MusicScreen::RegisterChain (223 bytes)</title></rect>
 <rect width="6.33" height="7.02" x="623.88" y="96.15" class="named"><title>0x0044df90 SpriteEngine::LoadAnm (223 bytes)</title></rect>

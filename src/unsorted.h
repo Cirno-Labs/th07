@@ -530,7 +530,7 @@ public:
     void QueueSound(int idx, int unk);
     // Queues a command of `type` with `arg` and `path` in the first free
     // entry of `commands`. Not in th06.
-    void Func44d2f0(int type, int arg, char *path);
+    void QueueSoundCommand(int type, int arg, char *path);
 
     IDirectSound8 *dsound;
     DWORD unk_004;
