@@ -576,7 +576,7 @@ address,size,name,symbol
 0x0044fc10,487,SpriteEngine::DrawNoRound,?DrawNoRound@SpriteEngine@@QAEHPAVSprite@@@Z
 0x0044fe00,805,SpriteEngine::ProjectSprite,?ProjectSprite@SpriteEngine@@QAEHPAVSprite@@@Z
 0x00450130,111,SpriteEngine::DrawProjected,?DrawProjected@SpriteEngine@@QAEHPAVSprite@@@Z
-0x004501a0,782,Func4501a0,
+0x004501a0,782,SpriteEngine::ProjectSprite3D,?ProjectSprite3D@SpriteEngine@@QAEXPAVSprite@@@Z
 0x004504b0,102,Func4504b0,
 0x00450520,1316,Func450520,
 0x00450a50,166,Func450a50,
@@ -696,10 +696,10 @@ address,size,name,symbol
 0x00461a90,,DirectInput8Create,_DirectInput8Create@20
 0x00461a96,,DirectSoundCreate8,_DirectSoundCreate8@12
 0x00461a9c,,Direct3DCreate8,_Direct3DCreate8@4
-0x00461aa2,227,Func461aa2,
-0x00461b85,122,Func461b85,
-0x00461bff,123,Func461bff,
-0x00461c7a,124,Func461c7a,
+0x00461aa2,227,D3DXMatrixMultiply,_D3DXMatrixMultiply@12
+0x00461b85,122,D3DXMatrixRotationX,_D3DXMatrixRotationX@8
+0x00461bff,123,D3DXMatrixRotationY,_D3DXMatrixRotationY@8
+0x00461c7a,124,D3DXMatrixRotationZ,_D3DXMatrixRotationZ@8
 0x00461cf6,226,Func461cf6,
 0x00461dd8,148,D3DXMatrixPerspectiveFovLH,_D3DXMatrixPerspectiveFovLH@20
 0x00461e6c,76,Func461e6c,

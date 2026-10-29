@@ -46,8 +46,9 @@ struct AnmInstr;
 // constructs the Timers; Sprite's calls it rather than expanding it.
 struct SpriteBase
 {
-    unsigned char unk_0[0x8];
-    // The sprite's rotation about z.
+    // The sprite's rotations about x, y and z.
+    float rotationX;
+    float rotationY;
     float rotationZ;
     unsigned char unk_c[0x8];
     // Player's StartBombState negates it on its effect.
@@ -287,6 +288,11 @@ public:
     // Draws `vm` at its 3D position projected to the screen with
     // ProjectSprite. Not in th06.
     int DrawProjected(Sprite *vm);
+    // Sets g_DiffuseQuad to the vertex buffer's quad transformed by
+    // `vm`'s matrix at +0x138 and its position, projected to the screen.
+    // Remakes that matrix first from matrix, the scale and the rotations
+    // while flag 3 or 2 is set and flag 15 is not. Not in th06.
+    void ProjectSprite3D(Sprite *vm);
     // Copies surface `surface` to the back buffer at (`left`, `top`),
     // as in th06.
     void CopySurfaceToBackBuffer(int surface, int left, int top, int x, int y);
@@ -473,7 +479,8 @@ public:
     // How far the screen is shaken, set by ScreenEffect's shake.
     float shakeX;
     float shakeY;
-    unsigned char unk_20[0x40];
+    // The world matrix ProjectSprite3D last projected with.
+    D3DXMATRIX unk_20;
     SpriteData sprites[0xa00];
     unsigned char unk_28060[0x24c];
     // The textures of the loaded ANM files, by slot.
