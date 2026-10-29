@@ -146,3 +146,10 @@ void BulletShooter::SetShooterAccelerateCommand(int idx, int unk_14, int unk_8, 
     cmd->unk_0 = unk_0;
     cmd->unk_4 = unk_4;
 }
+
+void BulletShooter::SetHiddenCommand(int idx, int unk_14, int unk_8)
+{
+    BulletCommand *cmd = this->StartCommand(idx, unk_14, 0x2000);
+
+    cmd->unk_8 = unk_8;
+}

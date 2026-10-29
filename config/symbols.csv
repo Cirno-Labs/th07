@@ -224,7 +224,7 @@ address,size,name,symbol
 0x004279e0,62,BulletShooter::SetShooterTurnCommand,?SetShooterTurnCommand@BulletShooter@@QAEXHHHMM@Z
 0x00427a20,74,BulletShooter::SetStopTurnCommand,?SetStopTurnCommand@BulletShooter@@QAEXHHHHMM@Z
 0x00427a70,62,BulletShooter::SetShooterAccelerateCommand,?SetShooterAccelerateCommand@BulletShooter@@QAEXHHHMM@Z
-0x00427ab0,48,Func427ab0,
+0x00427ab0,48,BulletShooter::SetHiddenCommand,?SetHiddenCommand@BulletShooter@@QAEXHHH@Z
 0x00427ae0,65,Unknown49fbf0::IsLoadingShown,?IsLoadingShown@Unknown49fbf0@@QAEHXZ
 0x00427b21,51,Unknown49fbf0::EndBombName,?EndBombName@Unknown49fbf0@@QAEXXZ
 0x00427b54,78,Unknown49fbf0::EndSpellCardName,?EndSpellCardName@Unknown49fbf0@@QAEXXZ

@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">74.21% (515)</tspan> · <tspan class="decompiled">7.93% (55)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">17.72% (123)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">74.35% (516)</tspan> · <tspan class="decompiled">7.93% (55)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">17.58% (122)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="554.33" height="6" x="0" y="0" class="named"/>
-<rect width="59.20" height="6" x="554.33" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="613.53" y="0" class="nonmatching"/>
-<rect width="132.39" height="6" x="614.61" y="0" class="todo"/>
+<rect width="555.41" height="6" x="0" y="0" class="named"/>
+<rect width="59.20" height="6" x="555.41" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="614.61" y="0" class="nonmatching"/>
+<rect width="131.32" height="6" x="615.68" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="named"><title>0x00401000 D3DXMatrixIdentity (173 bytes)</title></rect>
@@ -294,7 +294,7 @@
 <rect width="12" height="12" x="330" y="60" class="named"><title>0x004279e0 BulletShooter::SetShooterTurnCommand (62 bytes)</title></rect>
 <rect width="12" height="12" x="345" y="60" class="named"><title>0x00427a20 BulletShooter::SetStopTurnCommand (74 bytes)</title></rect>
 <rect width="12" height="12" x="360" y="60" class="named"><title>0x00427a70 BulletShooter::SetShooterAccelerateCommand (62 bytes)</title></rect>
-<rect width="12" height="12" x="375" y="60" class="todo"><title>0x00427ab0 Func427ab0 (48 bytes)</title></rect>
+<rect width="12" height="12" x="375" y="60" class="named"><title>0x00427ab0 BulletShooter::SetHiddenCommand (48 bytes)</title></rect>
 <rect width="12" height="12" x="390" y="60" class="todo"><title>0x00427ae0 Unknown49fbf0::IsLoadingShown (65 bytes)</title></rect>
 <rect width="12" height="12" x="405" y="60" class="decompiled"><title>0x00427b21 Unknown49fbf0::EndBombName (51 bytes)</title></rect>
 <rect width="12" height="12" x="420" y="60" class="decompiled"><title>0x00427b54 Unknown49fbf0::EndSpellCardName (78 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">56.43%</tspan> · <tspan class="decompiled">2.83%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">40.65%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">56.44%</tspan> · <tspan class="decompiled">2.83%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">40.64%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="421.52" height="6" x="0" y="0" class="named"/>
-<rect width="21.15" height="6" x="421.52" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="442.67" y="0" class="nonmatching"/>
-<rect width="303.66" height="6" x="443.34" y="0" class="todo"/>
+<rect width="421.61" height="6" x="0" y="0" class="named"/>
+<rect width="21.15" height="6" x="421.61" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="442.77" y="0" class="nonmatching"/>
+<rect width="303.57" height="6" x="443.43" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1404,7 +1404,7 @@
 <rect width="1.27" height="1.91" x="745.73" y="178.61" class="todo"><title>0x0040e4f0 Unknown1347938::Func40e4f0 (50 bytes)</title></rect>
 <rect width="1.82" height="1.35" x="719.79" y="183.52" class="todo"><title>0x00423050 Func423050 (50 bytes)</title></rect>
 <rect width="1.82" height="1.26" x="719.79" y="187.87" class="named"><title>0x0043a24e App::SetRenderState (49 bytes)</title></rect>
-<rect width="1.82" height="1.17" x="719.79" y="192.13" class="todo"><title>0x00427ab0 Func427ab0 (48 bytes)</title></rect>
+<rect width="1.82" height="1.17" x="719.79" y="192.13" class="named"><title>0x00427ab0 BulletShooter::SetHiddenCommand (48 bytes)</title></rect>
 <rect width="1.82" height="1.17" x="719.79" y="196.30" class="named"><title>0x004362a0 MmTimer::MmTimer (48 bytes)</title></rect>
 <rect width="1.82" height="1.17" x="719.79" y="200.48" class="named"><title>0x0043a18d App::IsScoreDisabled (48 bytes)</title></rect>
 <rect width="1.82" height="1.17" x="719.79" y="204.65" class="named"><title>0x004454fc ReleaseScoreDat (48 bytes)</title></rect>
