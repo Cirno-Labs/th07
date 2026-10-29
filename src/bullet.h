@@ -203,7 +203,7 @@ struct Laser
     WORD flags;
     short color;
     BYTE state;
-    BYTE unk_4e9;
+    BYTE drawDelayFlag;
     unsigned char pad_4ea[0x2];
 };
 ASSERT_SIZE(Laser, 0x4ec);

@@ -439,7 +439,7 @@ Laser *BulletManager::SpawnLaser(BulletShooter *shooter)
         laser->endFrames = shooter->exInts[2];
         laser->hitStartFrame = shooter->exInts[3];
         laser->endHitFrames = shooter->laserEndHitFrames;
-        laser->unk_4e9 = 0;
+        laser->drawDelayFlag = 0;
         if (laser->startFrames == 0)
         {
             laser->state = 1;
@@ -1232,7 +1232,7 @@ int BulletManager::OnDraw(BulletManager *mgr)
         laser->sprite0.pos.x = g_GameManager.arena[0] + laser->sprite0.pos.x;
         laser->sprite0.pos.y = g_GameManager.arena[1] + laser->sprite0.pos.y;
         g_SpriteEngine->Draw(&laser->sprite0);
-        if ((laser->startOffset < 16.0f || laser->speed == 0.0f) && (laser->unk_4e9 == 0 || laser->state != 0))
+        if ((laser->startOffset < 16.0f || laser->speed == 0.0f) && (laser->drawDelayFlag == 0 || laser->state != 0))
         {
             laser->sprite1.pos.x = ca * laser->startOffset + laser->pos.x;
             laser->sprite1.pos.y = s * laser->startOffset + laser->pos.y;

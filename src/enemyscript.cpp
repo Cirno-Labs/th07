@@ -1316,7 +1316,7 @@ loop:
             value = INT_ARG(0);
             if (enemy->lasers[value] != NULL)
             {
-                enemy->lasers[value]->unk_4e9 = INT_ARG(1);
+                enemy->lasers[value]->drawDelayFlag = INT_ARG(1);
             }
             break;
         case 88:
