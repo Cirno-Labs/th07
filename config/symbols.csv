@@ -48,8 +48,8 @@ address,size,name,symbol
 0x00407610,474,Func407610,
 0x004077f0,263,Func4077f0,
 0x00407900,2167,Func407900,
-0x00408180,304,Func408180,
-0x004082b0,315,Func4082b0,
+0x00408180,304,Unknown1347b00::Func408180,?Func408180@Unknown1347b00@@QAEXXZ
+0x004082b0,315,Unknown1347b00::Func4082b0,?Func4082b0@Unknown1347b00@@QAEXXZ
 0x004083f0,243,Func4083f0,
 0x004084f0,286,Func4084f0,
 0x00408610,234,Func408610,
@@ -1776,6 +1776,7 @@ address,size,name,symbol
 0x004b9e5c,,g_ButtonRepeat,?g_ButtonRepeat@@3GA
 0x004b9e60,,g_ButtonFrames,?g_ButtonFrames@@3GA
 0x004b9e64,,g_FileSize,?g_FileSize@@3HA
+0x004b9fa8,,g_DiffuseQuad,?g_DiffuseQuad@@3PAUVertexTex1DiffuseXyzrwh@@A
 0x004ba078,,g_DiffuseQuadXyz,?g_DiffuseQuadXyz@@3PAUVertexTex1DiffuseXyz@@A
 0x004ba0d8,,g_SoundPlayer,?g_SoundPlayer@@3VSoundPlayer@@A
 0x004bdad8,,g_Player,?g_Player@@3VPlayer@@A

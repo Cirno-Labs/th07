@@ -1107,5 +1107,9 @@ public:
     // Sets the color at +0x52ac to `color`, or to the average of the two
     // while its alpha byte is set.
     void Func406930(D3DCOLOR color);
+    // One of the two set-ups SetRenderStateForSprite switches between
+    // on flag bit 14, before it sets the viewport.
+    void Func408180();
+    void Func4082b0();
 };
 extern Unknown1347b00 g_Unknown1347b00;

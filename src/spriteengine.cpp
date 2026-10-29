@@ -530,6 +530,98 @@ void SpriteEngine::SetScript(Sprite *vm, void *script)
     }
 }
 
+// Scales byte `i` of `color` by byte `i` of `factor`, 0x80 for 1, up to
+// 0xff.
+#define MODULATE_CHANNEL(color, factor, i)                                          \
+    {                                                                               \
+        DWORD channel = (DWORD)((BYTE *)&(color))[i] * ((BYTE *)&(factor))[i] >> 7; \
+        if (channel >= 0x100)                                                       \
+        {                                                                           \
+            channel = 0xff;                                                         \
+        }                                                                           \
+        ((BYTE *)&(color))[i] = channel;                                            \
+    }
+
+void SpriteEngine::SetRenderStateForSprite(Sprite *vm)
+{
+    D3DCOLOR color;
+
+    if (this->blendMode != (vm->flags >> 4 & 1))
+    {
+        this->blendMode = vm->flags >> 4 & 1;
+        if (this->blendMode == 0)
+        {
+            g_App.d3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+        }
+        else
+        {
+            g_App.d3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
+        }
+    }
+    color = (vm->flags >> 16 & 1) ? vm->color2 : vm->color;
+    if (!g_App.flags.noVertexBuffer)
+    {
+        if (this->unk_4 != 0)
+        {
+            MODULATE_CHANNEL(color, this->unk_0, 2);
+            MODULATE_CHANNEL(color, this->unk_0, 1);
+            MODULATE_CHANNEL(color, this->unk_0, 0);
+            MODULATE_CHANNEL(color, this->unk_0, 3);
+        }
+        if (this->currentColor != color)
+        {
+            this->currentColor = color;
+            g_App.d3dDevice->SetRenderState(D3DRS_TEXTUREFACTOR, this->currentColor);
+        }
+    }
+    else
+    {
+        if (this->unk_4 != 0)
+        {
+            MODULATE_CHANNEL(color, this->unk_0, 2);
+            MODULATE_CHANNEL(color, this->unk_0, 1);
+            MODULATE_CHANNEL(color, this->unk_0, 0);
+            MODULATE_CHANNEL(color, this->unk_0, 3);
+        }
+        g_DiffuseQuad[0].diffuse = color;
+        g_DiffuseQuad[1].diffuse = color;
+        g_DiffuseQuad[2].diffuse = color;
+        g_DiffuseQuad[3].diffuse = color;
+        g_DiffuseQuadXyz[0].diffuse = color;
+        g_DiffuseQuadXyz[1].diffuse = color;
+        g_DiffuseQuadXyz[2].diffuse = color;
+        g_DiffuseQuadXyz[3].diffuse = color;
+    }
+    if (!g_App.flags.noDepthTest && this->zWriteDisabled != (vm->flags >> 12 & 1))
+    {
+        this->zWriteDisabled = vm->flags >> 12 & 1;
+        if (this->zWriteDisabled == 0)
+        {
+            g_App.d3dDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+        }
+        else
+        {
+            g_App.d3dDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+        }
+    }
+    if (this->unk_2e4d4 != (vm->flags >> 14 & 1))
+    {
+        g_SpriteEngine->Func44f5c0();
+        this->unk_2e4d4 = vm->flags >> 14 & 1;
+        if (this->unk_2e4d4 == 0)
+        {
+            g_Unknown1347b00.Func408180();
+            g_App.d3dDevice->SetViewport(&g_App.viewport);
+        }
+        else
+        {
+            g_Unknown1347b00.Func4082b0();
+            g_App.d3dDevice->SetViewport(&g_App.viewport);
+        }
+    }
+    this->unk_10++;
+}
+
 void SpriteEngine::RenderTextToTextureIndex(int textureIndex, int x, int y, int width, int unk4, int fontHeight,
                                             int unk6, D3DCOLOR textColor, D3DCOLOR shadowColor, char *text,
                                             float scaleX, float scaleY)

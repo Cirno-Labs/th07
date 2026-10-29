@@ -88,7 +88,8 @@ struct SpriteBase
             BYTE alpha;
         };
     };
-    unsigned char unk_1bc[0x4];
+    // The color drawn instead of color while flag bit 16 is set.
+    D3DCOLOR color2;
     // Bit 0x1000 is set on items as they spawn.
     DWORD flags;
     // Whether the bullets' draw functions turn it along their angle, as
@@ -435,11 +436,14 @@ public:
         this->SetScript(vm, this->scripts[script]);
     }
 
+    // The color sprites are modulated by while unk_4 is set, 0x80 per
+    // channel for 1.
     D3DCOLOR unk_0;
     DWORD unk_4;
     // Counts the scripts SetScript started.
     DWORD unk_8;
     DWORD unk_c;
+    // Counts SetRenderStateForSprite's calls.
     DWORD unk_10;
     DWORD unk_14;
     // How far the screen is shaken, set by ScreenEffect's shake.
@@ -468,7 +472,8 @@ public:
     IDirect3DSurface8 *surfacesBackup[0x20];
     // The images' sizes and formats.
     D3DXIMAGE_INFO surfaceInfos[0x20];
-    unsigned char unk_2e4c8[0x4];
+    // The texture factor last set on the device.
+    D3DCOLOR currentColor;
     // The texture last set on the device.
     IDirect3DTexture8 *currentTexture;
     // The states Draw last set, 0xff when unknown.
@@ -476,6 +481,8 @@ public:
     BYTE colorOp;
     BYTE vertexFormat;
     BYTE zWriteDisabled;
+    // Flag bit 14 of the sprite last drawn: which of
+    // g_Unknown1347b00's two set-ups the device has.
     BYTE unk_2e4d4;
     unsigned char unk_2e4d5[0x3];
     // The sprite data Draw last used, NULL when unknown.
@@ -501,6 +508,8 @@ public:
 };
 ASSERT_SIZE(SpriteEngine, 0x17e560);
 extern SpriteEngine *g_SpriteEngine;
+// The quad Draw draws with a color, without the vertex buffer.
+extern VertexTex1DiffuseXyzrwh g_DiffuseQuad[4];
 // CreateQuad's quad with a color, for drawing without the vertex
 // buffer.
 extern VertexTex1DiffuseXyz g_DiffuseQuadXyz[4];
