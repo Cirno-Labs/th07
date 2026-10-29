@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">70.89% (492)</tspan> · <tspan class="decompiled">7.93% (55)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">21.04% (146)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">71.04% (493)</tspan> · <tspan class="decompiled">7.93% (55)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">20.89% (145)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="529.57" height="6" x="0" y="0" class="named"/>
-<rect width="59.20" height="6" x="529.57" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="588.77" y="0" class="nonmatching"/>
-<rect width="157.15" height="6" x="589.85" y="0" class="todo"/>
+<rect width="530.65" height="6" x="0" y="0" class="named"/>
+<rect width="59.20" height="6" x="530.65" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="589.85" y="0" class="nonmatching"/>
+<rect width="156.07" height="6" x="590.93" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="named"><title>0x00401000 D3DXMatrixIdentity (173 bytes)</title></rect>
@@ -118,7 +118,7 @@
 <rect width="12" height="12" x="690" y="0" class="named"><title>0x00407610 Unknown1347b00::Load (474 bytes)</title></rect>
 <rect width="12" height="12" x="705" y="0" class="named"><title>0x004077f0 Unknown1347b00::StepObjects (263 bytes)</title></rect>
 <rect width="12" height="12" x="720" y="0" class="todo"><title>0x00407900 Func407900 (2167 bytes)</title></rect>
-<rect width="12" height="12" x="735" y="0" class="todo"><title>0x00408180 Unknown1347b00::Func408180 (304 bytes)</title></rect>
+<rect width="12" height="12" x="735" y="0" class="named"><title>0x00408180 Unknown1347b00::SetupFixedCamera (304 bytes)</title></rect>
 <rect width="12" height="12" x="0" y="15" class="todo"><title>0x004082b0 Unknown1347b00::Func4082b0 (315 bytes)</title></rect>
 <rect width="12" height="12" x="15" y="15" class="todo"><title>0x004083f0 Func4083f0 (243 bytes)</title></rect>
 <rect width="12" height="12" x="30" y="15" class="todo"><title>0x004084f0 Func4084f0 (286 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">53.52%</tspan> · <tspan class="decompiled">2.83%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">43.56%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">53.60%</tspan> · <tspan class="decompiled">2.83%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">43.48%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="399.81" height="6" x="0" y="0" class="named"/>
-<rect width="21.15" height="6" x="399.81" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="420.97" y="0" class="nonmatching"/>
-<rect width="325.37" height="6" x="421.63" y="0" class="todo"/>
+<rect width="400.41" height="6" x="0" y="0" class="named"/>
+<rect width="21.15" height="6" x="400.41" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="421.56" y="0" class="nonmatching"/>
+<rect width="324.77" height="6" x="422.23" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1050,7 +1050,7 @@
 <rect width="8.59" height="8.21" x="591.09" y="168.61" class="named"><title>0x00403a20 PauseMenu::DrawPauseMenu (310 bytes)</title></rect>
 <rect width="8.59" height="8.13" x="591.09" y="179.81" class="named"><title>0x0044e8e0 SpriteEngine::SetSprite (308 bytes)</title></rect>
 <rect width="8.59" height="8.06" x="591.09" y="190.95" class="named"><title>0x0043a569 App::CheckVersionFile (306 bytes)</title></rect>
-<rect width="8.59" height="7.99" x="591.09" y="202.01" class="todo"><title>0x00408180 Unknown1347b00::Func408180 (304 bytes)</title></rect>
+<rect width="8.59" height="7.99" x="591.09" y="202.01" class="named"><title>0x00408180 Unknown1347b00::SetupFixedCamera (304 bytes)</title></rect>
 <rect width="8.57" height="7.90" x="602.68" y="54.84" class="todo"><title>0x004194e0 Func4194e0 (301 bytes)</title></rect>
 <rect width="8.57" height="7.90" x="614.25" y="54.84" class="named"><title>0x0041bfd0 EffectUpdateDivergeEased (301 bytes)</title></rect>
 <rect width="8.50" height="7.90" x="625.83" y="54.84" class="named"><title>0x0043ccb0 DrawTrailLaserBullet (299 bytes)</title></rect>

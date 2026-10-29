@@ -648,7 +648,7 @@ void SpriteEngine::SetRenderStateForSprite(Sprite *vm)
         this->unk_2e4d4 = vm->flags >> 14 & 1;
         if (this->unk_2e4d4 == 0)
         {
-            g_Unknown1347b00.Func408180();
+            g_Unknown1347b00.SetupFixedCamera();
             g_App.d3dDevice->SetViewport(&g_App.viewport);
         }
         else

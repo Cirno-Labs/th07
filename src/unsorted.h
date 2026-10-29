@@ -1558,8 +1558,11 @@ public:
     // while its alpha byte is set.
     void SetTintColor(D3DCOLOR color);
     // One of the two set-ups SetRenderStateForSprite switches between
-    // on flag bit 14, before it sets the viewport.
-    void Func408180();
+    // on flag bit 14, before it sets the viewport. This one is th06's
+    // SetupFixedCamera without the camera globals: it looks at the
+    // viewport's centre along z, with y down, a field of view of pi / 10
+    // and planes at 1 and 10000.
+    void SetupFixedCamera();
     void Func4082b0();
 
     // One Sprite per object sprite in the data, malloc'd.

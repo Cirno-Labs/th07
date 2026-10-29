@@ -1,6 +1,7 @@
 // The file with Unknown1347b00, th06's Stage, from 0x404fe0, as th06's
 // stage.cpp.
 
+#include <math.h>
 #include <string.h>
 
 #include "unsorted.h"
@@ -342,4 +343,28 @@ int Unknown1347b00::StepObjects()
         }
     }
     return 0;
+}
+
+void Unknown1347b00::SetupFixedCamera()
+{
+    float midX;
+    float halfHeight;
+    float aspectXY;
+    float fovAngle;
+    float zDist;
+
+    midX = (float)g_App.viewport.Width / 2.0f;
+    halfHeight = (float)g_App.viewport.Height / 2.0f;
+    aspectXY = (float)g_App.viewport.Width / (float)g_App.viewport.Height;
+    fovAngle = 0.31415927f;
+    zDist = halfHeight / tanf(fovAngle / 2.0f);
+    {
+        D3DXVECTOR3 up(0.0f, -1.0f, 0.0f);
+        D3DXVECTOR3 lookAt(midX, halfHeight, 0.0f);
+        D3DXVECTOR3 from(midX, halfHeight, zDist);
+        D3DXMatrixLookAtLH(&g_App.viewMatrix, &from, &lookAt, &up);
+        D3DXMatrixPerspectiveFovLH(&g_App.projectionMatrix, fovAngle, aspectXY, 1.0f, 10000.0f);
+        g_App.d3dDevice->SetTransform(D3DTS_VIEW, &g_App.viewMatrix);
+        g_App.d3dDevice->SetTransform(D3DTS_PROJECTION, &g_App.projectionMatrix);
+    }
 }
