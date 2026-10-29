@@ -523,16 +523,16 @@ int Stage::OnDraw(Stage *stage)
         g_App.d3dDevice->Clear(0, NULL, D3DCLEAR_ZBUFFER, stage->unk_4d8, 1.0f, 0);
     }
     g_App.SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
-    if (g_SpriteEngine->unk_4 == 0)
+    if (g_SpriteEngine->modulateColorEnabled == 0)
     {
         g_App.SetRenderState(D3DRS_FOGCOLOR, stage->fog.color);
     }
     else
     {
         fogColor = stage->fog.color;
-        MODULATE_CHANNEL(fogColor, g_SpriteEngine->unk_0, 2);
-        MODULATE_CHANNEL(fogColor, g_SpriteEngine->unk_0, 1);
-        MODULATE_CHANNEL(fogColor, g_SpriteEngine->unk_0, 0);
+        MODULATE_CHANNEL(fogColor, g_SpriteEngine->modulateColor, 2);
+        MODULATE_CHANNEL(fogColor, g_SpriteEngine->modulateColor, 1);
+        MODULATE_CHANNEL(fogColor, g_SpriteEngine->modulateColor, 0);
         g_App.SetRenderState(D3DRS_FOGCOLOR, fogColor);
     }
     g_App.SetRenderState(D3DRS_FOGSTART, *(DWORD *)&stage->fog.nearPlane);

@@ -41,7 +41,7 @@ SpriteEngine::SpriteEngine()
     this->colorOp = 0;
     this->currentColor = 1;
     this->vertexFormat = 0;
-    this->unk_2e4d4 = 0xff;
+    this->lastCameraSetupFlag = 0xff;
     this->zWriteDisabled = 0;
     this->pendingCopyTexture = -1;
 }
@@ -565,7 +565,7 @@ void SpriteEngine::SetScript(Sprite *vm, void *script)
         vm->unk_30.Set(0);
         vm->flags &= ~1;
         this->Step(vm);
-        this->unk_8++;
+        this->scriptStartCount++;
     }
 }
 
@@ -600,12 +600,12 @@ void SpriteEngine::SetRenderStateForSprite(Sprite *vm)
     color = (vm->flags >> 16 & 1) ? vm->color2 : vm->color;
     if (!g_App.flags.noVertexBuffer)
     {
-        if (this->unk_4 != 0)
+        if (this->modulateColorEnabled != 0)
         {
-            MODULATE_CHANNEL(color, this->unk_0, 2);
-            MODULATE_CHANNEL(color, this->unk_0, 1);
-            MODULATE_CHANNEL(color, this->unk_0, 0);
-            MODULATE_CHANNEL(color, this->unk_0, 3);
+            MODULATE_CHANNEL(color, this->modulateColor, 2);
+            MODULATE_CHANNEL(color, this->modulateColor, 1);
+            MODULATE_CHANNEL(color, this->modulateColor, 0);
+            MODULATE_CHANNEL(color, this->modulateColor, 3);
         }
         if (this->currentColor != color)
         {
@@ -615,12 +615,12 @@ void SpriteEngine::SetRenderStateForSprite(Sprite *vm)
     }
     else
     {
-        if (this->unk_4 != 0)
+        if (this->modulateColorEnabled != 0)
         {
-            MODULATE_CHANNEL(color, this->unk_0, 2);
-            MODULATE_CHANNEL(color, this->unk_0, 1);
-            MODULATE_CHANNEL(color, this->unk_0, 0);
-            MODULATE_CHANNEL(color, this->unk_0, 3);
+            MODULATE_CHANNEL(color, this->modulateColor, 2);
+            MODULATE_CHANNEL(color, this->modulateColor, 1);
+            MODULATE_CHANNEL(color, this->modulateColor, 0);
+            MODULATE_CHANNEL(color, this->modulateColor, 3);
         }
         g_DiffuseQuad[0].diffuse = color;
         g_DiffuseQuad[1].diffuse = color;
@@ -643,11 +643,11 @@ void SpriteEngine::SetRenderStateForSprite(Sprite *vm)
             g_App.d3dDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
         }
     }
-    if (this->unk_2e4d4 != (vm->flags >> 14 & 1))
+    if (this->lastCameraSetupFlag != (vm->flags >> 14 & 1))
     {
         g_SpriteEngine->FlushQuadBatch();
-        this->unk_2e4d4 = vm->flags >> 14 & 1;
-        if (this->unk_2e4d4 == 0)
+        this->lastCameraSetupFlag = vm->flags >> 14 & 1;
+        if (this->lastCameraSetupFlag == 0)
         {
             g_Unknown1347b00.SetupFixedCamera();
             g_App.d3dDevice->SetViewport(&g_App.viewport);
@@ -658,7 +658,7 @@ void SpriteEngine::SetRenderStateForSprite(Sprite *vm)
             g_App.d3dDevice->SetViewport(&g_App.viewport);
         }
     }
-    this->unk_10++;
+    this->renderStateSetCount++;
 }
 
 void SpriteEngine::SetBlendModeForSprite(Sprite *vm)
@@ -687,7 +687,7 @@ void SpriteEngine::SetBlendModeForSprite(Sprite *vm)
             g_App.SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
         }
     }
-    this->unk_10++;
+    this->renderStateSetCount++;
 }
 
 int SpriteEngine::DrawQuad(Sprite *vm, int flags)
@@ -767,12 +767,12 @@ int SpriteEngine::DrawQuad(Sprite *vm, int flags)
     if ((flags & 2) == 0)
     {
         diffuse = (vm->flags >> 16 & 1) ? vm->color2 : vm->color;
-        if (this->unk_4 != 0)
+        if (this->modulateColorEnabled != 0)
         {
-            MODULATE_CHANNEL(diffuse, this->unk_0, 2);
-            MODULATE_CHANNEL(diffuse, this->unk_0, 1);
-            MODULATE_CHANNEL(diffuse, this->unk_0, 0);
-            MODULATE_CHANNEL(diffuse, this->unk_0, 3);
+            MODULATE_CHANNEL(diffuse, this->modulateColor, 2);
+            MODULATE_CHANNEL(diffuse, this->modulateColor, 1);
+            MODULATE_CHANNEL(diffuse, this->modulateColor, 0);
+            MODULATE_CHANNEL(diffuse, this->modulateColor, 3);
         }
         g_DiffuseQuad[0].diffuse = diffuse;
         g_DiffuseQuad[1].diffuse = diffuse;
@@ -804,7 +804,7 @@ void SpriteEngine::FlushQuadBatch()
                                      sizeof(VertexTex1DiffuseXyzrwh));
     this->batchStart = this->batchCursor;
     this->batchQuadCount = 0;
-    this->unk_14++;
+    this->batchDrawCount++;
 }
 
 int SpriteEngine::AddQuadToBatch(VertexTex1DiffuseXyzrwh *quad)
@@ -1111,7 +1111,7 @@ void SpriteEngine::ProjectSprite3D(Sprite *vm)
                     &g_App.viewMatrix, &worldMatrix);
     D3DXVec3Project(&g_DiffuseQuad[3].pos, &this->quad[3].pos, &g_App.viewport, &g_App.projectionMatrix,
                     &g_App.viewMatrix, &worldMatrix);
-    this->unk_20 = worldMatrix;
+    this->lastWorldMatrix = worldMatrix;
 }
 
 int SpriteEngine::DrawProjected3D(Sprite *vm)
@@ -1922,7 +1922,7 @@ done:
         vm->uvScrollY += 1.0f;
     }
     vm->unk_30.Tick();
-    this->unk_c++;
+    this->stepCount++;
     return 0;
 }
 

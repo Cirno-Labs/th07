@@ -522,29 +522,29 @@ public:
     }
     void ClearUnk2e4d4()
     {
-        this->unk_2e4d4 = 0xff;
+        this->lastCameraSetupFlag = 0xff;
     }
     void ClearUnk8()
     {
-        this->unk_c = 0;
-        this->unk_10 = 0;
-        this->unk_8 = 0;
-        this->unk_14 = 0;
+        this->stepCount = 0;
+        this->renderStateSetCount = 0;
+        this->scriptStartCount = 0;
+        this->batchDrawCount = 0;
     }
     void ResetUnk0()
     {
-        this->unk_4 = 0;
-        this->unk_0 = 0x80808080;
+        this->modulateColorEnabled = 0;
+        this->modulateColor = 0x80808080;
     }
     // Modulates sprites by `color` (sets unk_4).
     void SetUnk0(D3DCOLOR color)
     {
-        this->unk_4 = 1;
-        this->unk_0 = color;
+        this->modulateColorEnabled = 1;
+        this->modulateColor = color;
     }
     void SetUnk2e4d4(int value)
     {
-        this->unk_2e4d4 = value;
+        this->lastCameraSetupFlag = value;
     }
     // Draws `vm`, then the batched quads.
     void DrawAndFlush(Sprite *vm)
@@ -603,20 +603,20 @@ public:
 
     // The color sprites are modulated by while unk_4 is set, 0x80 per
     // channel for 1.
-    D3DCOLOR unk_0;
-    DWORD unk_4;
+    D3DCOLOR modulateColor;
+    DWORD modulateColorEnabled;
     // Counts the scripts SetScript started.
-    DWORD unk_8;
-    DWORD unk_c;
+    DWORD scriptStartCount;
+    DWORD stepCount;
     // Counts SetRenderStateForSprite's calls.
-    DWORD unk_10;
+    DWORD renderStateSetCount;
     // Counts the batches FlushQuadBatch drew.
-    DWORD unk_14;
+    DWORD batchDrawCount;
     // How far the screen is shaken, set by ScreenEffect's shake.
     float shakeX;
     float shakeY;
     // The world matrix ProjectSprite3D last projected with.
-    D3DXMATRIX unk_20;
+    D3DXMATRIX lastWorldMatrix;
     SpriteData sprites[0xa00];
     Sprite unk_28060;
     // The textures of the loaded ANM files, by slot.
@@ -650,7 +650,7 @@ public:
     BYTE zWriteDisabled;
     // Flag bit 14 of the sprite last drawn: which of
     // g_Unknown1347b00's two set-ups the device has.
-    BYTE unk_2e4d4;
+    BYTE lastCameraSetupFlag;
     unsigned char unk_2e4d5[0x3];
     // The sprite data Draw last used, NULL when unknown.
     void *currentSpriteData;
