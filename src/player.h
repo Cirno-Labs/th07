@@ -228,6 +228,9 @@ public:
     // Empty, and defined out of line: constructs the members (0x43b7f0).
     Player();
 
+    // Starts fireTimer from 0 unless it already runs, as th06's.
+    static void StartFiring(Player *player);
+
     Sprite sprite;
     Sprite optionSprites[3];
     D3DXVECTOR3 position;
