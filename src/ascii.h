@@ -5,6 +5,7 @@
 #include <d3d8.h>
 #include <d3dx8math.h>
 
+#include "chain.h"
 #include "sprite.h"
 
 // A string queued by AsciiText::AddString, as in th06.
@@ -75,7 +76,9 @@ ASSERT_SIZE(AsciiPopup, 0x28);
 class AsciiText
 {
 public:
-    // Adds the text's chain elements. Returns 0, or nonzero on failure.
+    // Adds AsciiText's update element (priority 1) and its draw
+    // elements (0x10 and 0xb), as th06's. Returns 0, or -1 if adding
+    // the update element fails.
     static int RegisterChain();
     // Removes them.
     static void RemoveChain();
@@ -189,3 +192,9 @@ public:
 };
 ASSERT_SIZE(AsciiText, 0x11194);
 extern AsciiText g_AsciiText;
+
+// AsciiText's chain elements, statically allocated as in th06: the
+// update element and the two draw elements.
+extern ChainElem g_AsciiCalcChain;
+extern ChainElem g_AsciiDrawChain;
+extern ChainElem g_AsciiDrawChain2;

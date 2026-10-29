@@ -140,3 +140,24 @@ int AsciiText::DeletedCallback(AsciiText *text)
     g_SpriteEngine->ReleaseAnm(3);
     return 0;
 }
+
+int AsciiText::RegisterChain()
+{
+    AsciiText *text = &g_AsciiText;
+
+    g_AsciiCalcChain.SetCallback((ChainCallback)AsciiText::OnUpdate);
+    g_AsciiCalcChain.addedCallback = (ChainCallback)AsciiText::AddedCallback;
+    g_AsciiCalcChain.deletedCallback = (ChainCallback)AsciiText::DeletedCallback;
+    g_AsciiCalcChain.arg = text;
+    if (g_Chain.AddToCalcChain(&g_AsciiCalcChain, 1) != 0)
+    {
+        return -1;
+    }
+    g_AsciiDrawChain.SetCallback((ChainCallback)AsciiText::OnDraw);
+    g_AsciiDrawChain.arg = text;
+    g_Chain.AddToDrawChain(&g_AsciiDrawChain, 0x10);
+    g_AsciiDrawChain2.SetCallback((ChainCallback)AsciiText::OnDraw2);
+    g_AsciiDrawChain2.arg = text;
+    g_Chain.AddToDrawChain(&g_AsciiDrawChain2, 0xb);
+    return 0;
+}
