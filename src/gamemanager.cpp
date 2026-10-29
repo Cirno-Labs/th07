@@ -283,7 +283,7 @@ int Unknown626270::DeletedCallback(Unknown626270 *mgr)
     g_App.unk_194 = 0;
     g_App.AddPlayTime();
     mgr->unk_93d8 &= ~4;
-    g_AsciiText.Func401a00();
+    g_AsciiText.Initialize();
     g_Unknown626270.unk_d = 0;
     g_Unknown626270.unk_95e8 = 0;
     return 0;

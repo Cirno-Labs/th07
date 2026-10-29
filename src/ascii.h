@@ -7,6 +7,21 @@
 
 #include "sprite.h"
 
+// A string queued by AsciiText::AddString, as in th06.
+struct AsciiString
+{
+    char text[0x40];
+    D3DXVECTOR3 pos;
+    D3DCOLOR color;
+    float scaleX;
+    float scaleY;
+    // Drawn with the second glyph set, in white.
+    int highlight;
+    // Drawn inside the play area's viewport.
+    int inArena;
+};
+ASSERT_SIZE(AsciiString, 0x60);
+
 // The pause menu, AsciiText's at 0x74e8. th06 had one class for both
 // menus; th07's two differ in size.
 class PauseMenu
@@ -64,8 +79,11 @@ public:
     static int RegisterChain();
     // Removes them.
     static void RemoveChain();
-    // Not named yet; called where th06 calls AsciiText::Initialize.
-    void Func401a00();
+    // Initializes everything, where th06 calls AsciiText::Initialize:
+    // zeroes the sprites, strings, menus and popups, sets the color to
+    // white, the scale to 1, unk_74d8 to 14, and the sprites up, digit
+    // anchored, then sends unk_498 interrupt unk_74d4.
+    void Initialize();
     // Runs the scripts of unk_498, unk_6e4, unk_b7c[] and unk_930 for a
     // frame.
     void RunScripts();
@@ -123,13 +141,17 @@ public:
         this->unk_74d4 = value;
     }
 
-    unsigned char unk_0[0x498];
+    // The glyph DrawStrings draws each character with.
+    Sprite glyph;
+    // The digit the popups are drawn with.
+    Sprite digit;
     // Player::DeletedCallback sends these interrupt 99.
     Sprite unk_498;
     Sprite unk_6e4;
     Sprite unk_930;
     Sprite unk_b7c[4];
-    unsigned char unk_14ac[0x6010];
+    unsigned char unk_14ac[0x10];
+    AsciiString strings[0x100];
     // How many strings are queued.
     int stringCount;
     // The color text is queued with.
@@ -137,12 +159,18 @@ public:
     // The scale of the characters added next.
     float scaleX;
     float scaleY;
-    unsigned char unk_74cc[0x4];
+    // The strings queued next are drawn inside the play area.
+    int inArena;
     // Drawn with the second glyph set, as in th06.
     int highlight;
     // Player::DeletedCallback sets it to 99.
     int unk_74d4;
-    unsigned char unk_74d8[0x10];
+    // The width DrawStrings gives each glyph: 14, as in th06.
+    int unk_74d8;
+    // As th06's nextPopup and nextPopup2.
+    int unk_74dc;
+    int unk_74e0;
+    int unk_74e4;
     PauseMenu pauseMenu;
     ContinueMenu continueMenu;
     Sprite unk_9e50;

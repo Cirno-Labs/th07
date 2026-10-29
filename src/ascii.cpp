@@ -78,3 +78,29 @@ int AsciiText::OnDraw2(AsciiText *text)
     text->DrawPopups();
     return 1;
 }
+
+void AsciiText::Initialize()
+{
+    memset(&this->digit, 0, sizeof(this->digit));
+    memset(&this->glyph, 0, sizeof(this->glyph));
+    memset(this->strings, 0, sizeof(this->strings));
+    memset(&this->pauseMenu, 0, sizeof(this->pauseMenu));
+    memset(&this->continueMenu, 0, sizeof(this->continueMenu));
+    memset(this->popups, 0, sizeof(this->popups));
+    this->stringCount = 0;
+    this->inArena = 0;
+    this->highlight = 0;
+    this->unk_74dc = 0;
+    this->unk_74e0 = 0;
+    this->unk_74e4 = 0;
+    this->color = 0xffffffff;
+    this->scaleX = 1.0f;
+    this->scaleY = 1.0f;
+    this->digit.flags |= 0xc00;
+    g_SpriteEngine->InitSprite(&this->digit, 0);
+    g_SpriteEngine->InitSprite(&this->glyph, 0x20);
+    this->digit.pos.z = 0.1f;
+    this->highlight = 0;
+    this->unk_74d8 = 14;
+    this->SetUnk74d4(this->unk_74d4);
+}

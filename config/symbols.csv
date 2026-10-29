@@ -14,7 +14,7 @@ address,size,name,symbol
 0x004017e0,391,AsciiText::OnUpdate,?OnUpdate@AsciiText@@SIHPAV1@@Z
 0x00401970,99,AsciiText::OnDraw,?OnDraw@AsciiText@@SIHPAV1@@Z
 0x004019e0,24,AsciiText::OnDraw2,?OnDraw2@AsciiText@@SIHPAV1@@Z
-0x00401a00,407,AsciiText::Func401a00,?Func401a00@AsciiText@@QAEXXZ
+0x00401a00,407,AsciiText::Initialize,?Initialize@AsciiText@@QAEXXZ
 0x00401ba0,456,Func401ba0,
 0x00401d70,104,Func401d70,
 0x00401de0,65,Func401de0,
