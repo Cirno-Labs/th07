@@ -1515,6 +1515,9 @@ void ScriptMovePos(Enemy *enemy, EnemyScriptInstr *instr);
 // Sets the float variable argument 8 names to argument 4 eased
 // linearly towards argument 5 by `t`, 0 to 1.
 void ScriptMoveLinear(Enemy *enemy, EnemyScriptInstr *instr, float t);
+// ScriptMoveLinear along a cubic Hermite curve from argument 4 to argument
+// 5, with tangents arguments 6 and 7.
+void ScriptMoveHermite(Enemy *enemy, EnemyScriptInstr *instr, float t);
 
 // Set to 9 as the dialogue of stages 6 to 8 starts.
 extern int g_Unknown9a9ab8;

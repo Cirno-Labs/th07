@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">79.97% (555)</tspan> · <tspan class="decompiled">9.65% (67)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">10.23% (71)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">80.12% (556)</tspan> · <tspan class="decompiled">9.65% (67)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">10.09% (70)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="597.38" height="6" x="0" y="0" class="named"/>
-<rect width="72.12" height="6" x="597.38" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="669.50" y="0" class="nonmatching"/>
-<rect width="76.42" height="6" x="670.58" y="0" class="todo"/>
+<rect width="598.46" height="6" x="0" y="0" class="named"/>
+<rect width="72.12" height="6" x="598.46" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="670.58" y="0" class="nonmatching"/>
+<rect width="75.35" height="6" x="671.65" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="named"><title>0x00401000 D3DXMatrixIdentity (173 bytes)</title></rect>
@@ -157,7 +157,7 @@
 <rect width="12" height="12" x="525" y="15" class="named"><title>0x0040f6b0 ScriptMoveAngle (575 bytes)</title></rect>
 <rect width="12" height="12" x="540" y="15" class="named"><title>0x0040f8f0 ScriptMovePos (566 bytes)</title></rect>
 <rect width="12" height="12" x="555" y="15" class="named"><title>0x0040fb30 ScriptMoveLinear (89 bytes)</title></rect>
-<rect width="12" height="12" x="570" y="15" class="todo"><title>0x0040fb90 Func40fb90 (256 bytes)</title></rect>
+<rect width="12" height="12" x="570" y="15" class="named"><title>0x0040fb90 ScriptMoveHermite (256 bytes)</title></rect>
 <rect width="12" height="12" x="585" y="15" class="todo"><title>0x0040fc90 Func40fc90 (1285 bytes)</title></rect>
 <rect width="12" height="12" x="600" y="15" class="todo"><title>0x004101a0 Func4101a0 (889 bytes)</title></rect>
 <rect width="12" height="12" x="615" y="15" class="todo"><title>0x00410520 Unknown1347938::RunEnemy (29464 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">62.80%</tspan> · <tspan class="decompiled">3.75%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">33.37%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">62.86%</tspan> · <tspan class="decompiled">3.75%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">33.30%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="469.09" height="6" x="0" y="0" class="named"/>
-<rect width="28" height="6" x="469.09" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="497.09" y="0" class="nonmatching"/>
-<rect width="249.25" height="6" x="497.75" y="0" class="todo"/>
+<rect width="469.59" height="6" x="0" y="0" class="named"/>
+<rect width="28" height="6" x="469.59" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="497.59" y="0" class="nonmatching"/>
+<rect width="248.75" height="6" x="498.25" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Unknown1347938::RunEnemy (29464 bytes)</title></rect>
@@ -1090,7 +1090,7 @@
 <rect width="7.45" height="7.51" x="708.57" y="65.73" class="todo"><title>0x00418eb0 Func418eb0 (262 bytes)</title></rect>
 <rect width="7.41" height="7.51" x="719.02" y="65.73" class="decompiled"><title>0x0042f94c Unknown626270::IsPhantasmOpen (261 bytes)</title></rect>
 <rect width="7.37" height="7.51" x="729.42" y="65.73" class="todo"><title>0x0040d3b0 Func40d3b0 (260 bytes)</title></rect>
-<rect width="7.21" height="7.51" x="739.79" y="65.73" class="todo"><title>0x0040fb90 Func40fb90 (256 bytes)</title></rect>
+<rect width="7.21" height="7.51" x="739.79" y="65.73" class="named"><title>0x0040fb90 ScriptMoveHermite (256 bytes)</title></rect>
 <rect width="7.64" height="7.08" x="613.66" y="76.24" class="decompiled"><title>0x0041ee70 Unknown9a9b00::Unknown9a9b00 (256 bytes)</title></rect>
 <rect width="7.64" height="7.08" x="624.30" y="76.24" class="named"><title>0x0043d690 DrawBullets (256 bytes)</title></rect>
 <rect width="7.60" height="7.08" x="634.94" y="76.24" class="named"><title>0x00435ec0 ChecksumExecutable (255 bytes)</title></rect>

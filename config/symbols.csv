@@ -87,7 +87,7 @@ address,size,name,symbol
 0x0040f6b0,575,ScriptMoveAngle,?ScriptMoveAngle@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x0040f8f0,566,ScriptMovePos,?ScriptMovePos@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x0040fb30,89,ScriptMoveLinear,?ScriptMoveLinear@@YIXPAUEnemy@@PAUEnemyScriptInstr@@M@Z
-0x0040fb90,256,Func40fb90,
+0x0040fb90,256,ScriptMoveHermite,?ScriptMoveHermite@@YIXPAUEnemy@@PAUEnemyScriptInstr@@M@Z
 0x0040fc90,1285,Func40fc90,
 0x004101a0,889,Func4101a0,
 0x00410520,29464,Unknown1347938::RunEnemy,?RunEnemy@Unknown1347938@@QAEHPAUEnemy@@@Z
