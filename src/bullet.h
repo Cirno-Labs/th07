@@ -111,6 +111,8 @@ struct BulletShooter
     BulletCommand *StartCommand(int idx, int unk_14, DWORD flag);
     // Sets command `idx` up for flag 0x20.
     void SetShooterTurnCommand(int idx, int unk_14, int unk_8, float unk_4, float unk_0);
+    // Sets command `idx` up for flag 0x80.
+    void SetStopTurnCommand(int idx, int unk_14, int unk_8, int unk_c, float unk_0, float unk_4);
 
     // The bullet type, and its color.
     short sprite;
