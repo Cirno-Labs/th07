@@ -123,6 +123,10 @@ struct BulletShooter
     void SetShooterAccelerateCommand(int idx, int unk_14, int unk_8, float unk_0, float unk_4);
     // Sets command `idx` up for flag 0x2000.
     void SetHiddenCommand(int idx, int unk_14, int unk_8);
+    // A random angle from angle2 up to angle1, and a random speed from
+    // speed2 up to speed1. Inline, defined in bullet.cpp.
+    float RandomAngle();
+    float RandomSpeed();
 
     // The bullet type, and its color.
     short sprite;

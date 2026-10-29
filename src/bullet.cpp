@@ -33,6 +33,194 @@ void ShowSpawnSprite(Sprite *dst, Sprite *src, Bullet *bullet, int color)
     }
 }
 
+// Copies `src` over `dst` unless `dst` already runs the same script and
+// `src` has not started one.
+inline void CopyBulletSprite(Sprite *dst, Sprite *src)
+{
+    if (dst->scriptIndex != src->scriptIndex || src->scriptPos != NULL)
+    {
+        *dst = *src;
+    }
+}
+
+inline float BulletShooter::RandomAngle()
+{
+    float range = this->angle1 - this->angle2;
+    return g_Rng.GetRandomF32ZeroToOne() * range + this->angle2;
+}
+
+inline float BulletShooter::RandomSpeed()
+{
+    float range = this->speed1 - this->speed2;
+    return g_Rng.GetRandomF32ZeroToOne() * range + this->speed2;
+}
+
+int BulletManager::SpawnBullet(BulletShooter *shooter, int col, int row, float aimAngle)
+{
+    float v;
+    int i = 0;
+    Bullet *cur;
+    float angle;
+    // Set and never read.
+    int bulletFlags;
+
+    cur = this->nextBullet;
+    for (i = 0; i < 0x400; i++)
+    {
+        if (cur->state == 0)
+        {
+            break;
+        }
+        cur++;
+        if (cur->state == 6)
+        {
+            cur = this->bullets;
+        }
+    }
+    if (i >= 0x400)
+    {
+        return 1;
+    }
+    angle = 0.0f;
+    if (shooter->count2 > 1)
+    {
+        v = shooter->speed1 - (shooter->speed1 - shooter->speed2) * row / shooter->count2;
+    }
+    else
+    {
+        v = shooter->speed1;
+    }
+    switch (shooter->aimMode)
+    {
+    case 0:
+    case 1:
+        if (shooter->count1 & 1)
+        {
+            angle += (col + 1) / 2 * shooter->angle2;
+        }
+        else
+        {
+            angle += col / 2 * shooter->angle2 + shooter->angle2 * 0.5f;
+        }
+        if (col & 1)
+        {
+            angle *= -1.0f;
+        }
+        if (shooter->aimMode == 0)
+        {
+            angle += aimAngle;
+        }
+        angle += shooter->angle1;
+        break;
+    case 2:
+        angle += aimAngle;
+    case 3:
+        angle += col * 6.2831855f / shooter->count1;
+        angle += row * shooter->angle2 + shooter->angle1;
+        break;
+    case 4:
+        angle += aimAngle;
+    case 5:
+        angle += 3.1415927f / shooter->count1;
+        angle += col * 6.2831855f / shooter->count1;
+        angle += shooter->angle1;
+        break;
+    case 6:
+        angle = shooter->RandomAngle();
+        break;
+    case 7:
+        v = shooter->RandomSpeed();
+        angle += col * 6.2831855f / shooter->count1;
+        angle += row * shooter->angle2 + shooter->angle1;
+        break;
+    case 8:
+        angle = shooter->RandomAngle();
+        v = shooter->RandomSpeed();
+        break;
+    }
+    cur->state = 1;
+    cur->unk_c00 = 1;
+    cur->grazed = 0;
+    cur->timer.Set(0);
+    cur->unk_bd4.Set(0);
+    cur->speed = v;
+    cur->angle = AddNormalizeAngle(angle, 0.0f);
+    cur->pos = shooter->pos;
+    cur->pos.z = 0.1f;
+    ((Unknown4325c0 *)&cur->velocity)->SetPolar(angle, v * g_App.unk_178);
+    cur->activeFlags = shooter->flags;
+    cur->color = shooter->color;
+    cur->unk_c08 = 0;
+    CopyBulletSprite(&cur->sprites.sprite0, &shooter->typeSprites->sprite0);
+    CopyBulletSprite(&cur->sprites.sprite4, &shooter->typeSprites->sprite4);
+    cur->sprites.hitboxSize = shooter->typeSprites->hitboxSize;
+    cur->sprites.unk_b88 = shooter->typeSprites->unk_b88;
+    cur->sprites.height = shooter->typeSprites->height;
+    cur->sprites.unk_b8a = shooter->typeSprites->unk_b8a;
+    cur->sound = shooter->unk_cc;
+    cur->unk_bf0 = 0;
+    if (cur->sprites.sprite0.spriteIndex != shooter->typeSprites->sprite0.spriteIndex + shooter->color)
+    {
+        g_SpriteEngine->SetSprite(&cur->sprites.sprite0, shooter->typeSprites->sprite0.spriteIndex + shooter->color);
+    }
+    if (cur->sprites.sprite4.spriteIndex != shooter->typeSprites->sprite4.spriteIndex + shooter->color)
+    {
+        if (cur->sprites.sprite0.spriteData->height <= 16.0f)
+        {
+            g_SpriteEngine->SetSprite(&cur->sprites.sprite4, shooter->typeSprites->sprite4.spriteIndex + g_BulletColorOffsets16[shooter->color]);
+        }
+        else if (cur->sprites.sprite0.spriteData->height <= 32.0f)
+        {
+            g_SpriteEngine->SetSprite(&cur->sprites.sprite4, shooter->typeSprites->sprite4.spriteIndex + g_BulletColorOffsets32[shooter->color]);
+        }
+        else
+        {
+            g_SpriteEngine->SetSprite(&cur->sprites.sprite4, shooter->typeSprites->sprite4.spriteIndex + shooter->color);
+        }
+    }
+    bulletFlags = shooter->flags;
+    if (shooter->flags & 2)
+    {
+        CopyBulletSprite(&cur->sprites.sprite1, &shooter->typeSprites->sprite1);
+        ShowSpawnSprite(&cur->sprites.sprite1, &shooter->typeSprites->sprite1, cur, shooter->color);
+        cur->state = 2;
+        cur->pos -= cur->velocity * 4.0f;
+    }
+    else if (shooter->flags & 4)
+    {
+        CopyBulletSprite(&cur->sprites.sprite2, &shooter->typeSprites->sprite2);
+        ShowSpawnSprite(&cur->sprites.sprite2, &shooter->typeSprites->sprite2, cur, shooter->color);
+        cur->state = 3;
+        cur->pos -= cur->velocity * 4.0f;
+    }
+    else if (shooter->flags & 8)
+    {
+        CopyBulletSprite(&cur->sprites.sprite3, &shooter->typeSprites->sprite3);
+        ShowSpawnSprite(&cur->sprites.sprite3, &shooter->typeSprites->sprite3, cur, shooter->color);
+        cur->state = 4;
+        cur->pos -= cur->velocity * 4.0f;
+    }
+    memcpy(cur->commands, shooter->commands, sizeof(cur->commands));
+    cur->flags = shooter->flags;
+    cur->activeFlags = 0;
+    cur->commandIndex = 0;
+    RunBulletCommands(cur);
+    if (this->unk_37a12c != 0 && !(cur->flags & 0x1000))
+    {
+        cur->state = 5;
+    }
+    cur++;
+    if (cur->state == 6)
+    {
+        this->nextBullet = this->bullets;
+    }
+    else
+    {
+        this->nextBullet = cur;
+    }
+    return 0;
+}
+
 void BulletManager::Reset()
 {
     memset(this, 0, sizeof(BulletManager));
