@@ -1563,7 +1563,7 @@ struct EnemyScriptInstr
     short opcode;
     // The size of the instruction, arguments included.
     short size;
-    BYTE unk_8;
+    BYTE unusedByte8;
     BYTE difficultyMask;
     // Bit n: argument n names a variable.
     WORD paramMask;
