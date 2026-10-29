@@ -165,6 +165,9 @@ public:
     // Copies surface `surface` to the back buffer at (`left`, `top`),
     // as in th06.
     void CopySurfaceToBackBuffer(int surface, int left, int top, int x, int y);
+    // Copies the `width` by `height` rectangle at (`left`, `top`) of
+    // surface `surface` to the back buffer at (`x`, `y`), as in th06.
+    void CopySurfaceRectToBackBuffer(int surface, int x, int y, int left, int top, int width, int height);
     // Runs `vm`'s script for one frame.
     int Step(Sprite *vm);
     // Steps the `count` sprites from `vms` that run a script. Not in
