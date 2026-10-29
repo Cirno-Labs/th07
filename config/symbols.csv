@@ -566,7 +566,7 @@ address,size,name,symbol
 0x0044ea20,188,SpriteEngine::SetScript,?SetScript@SpriteEngine@@QAEXPAVSprite@@PAX@Z
 0x0044eae0,992,SpriteEngine::SetRenderStateForSprite,?SetRenderStateForSprite@SpriteEngine@@QAEXPAVSprite@@@Z
 0x0044eec0,237,SpriteEngine::SetBlendModeForSprite,?SetBlendModeForSprite@SpriteEngine@@QAEXPAVSprite@@@Z
-0x0044efb0,1481,Func44efb0,
+0x0044efb0,1481,SpriteEngine::DrawQuad,?DrawQuad@SpriteEngine@@QAEHPAVSprite@@H@Z
 0x0044f580,60,SpriteEngine::BeginQuadBatch,?BeginQuadBatch@SpriteEngine@@QAEXXZ
 0x0044f5c0,198,SpriteEngine::FlushQuadBatch,?FlushQuadBatch@SpriteEngine@@QAEXXZ
 0x0044f690,211,SpriteEngine::AddQuadToBatch,?AddQuadToBatch@SpriteEngine@@QAEHPAUVertexTex1DiffuseXyzrwh@@@Z
@@ -1734,6 +1734,7 @@ address,size,name,symbol
 0x00495290,4,CSound::`vftable',??_7CSound@@6B@
 0x004964f4,,g_DifficultyRatings,?g_DifficultyRatings@@3PAMA
 0x00496c0c,4,Unknown4378b0::`vftable',??_7Unknown4378b0@@6B@
+0x00498a50,,g_Half,?g_Half@@3MA
 0x0049ea70,,g_FileModes,?g_FileModes@@3PAPADA
 0x0049ea7c,,g_DemoReplayPaths,?g_DemoReplayPaths@@3PAPADA
 0x0049ea88,,g_SoundInfos,?g_SoundInfos@@3PAUSoundInfo@@A

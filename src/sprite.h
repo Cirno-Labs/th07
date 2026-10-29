@@ -317,6 +317,10 @@ public:
     // `vm`'s texture and render states, after the pending batch. Returns
     // 0, or -1 when `vm` is hidden or transparent. Not in th06.
     int DrawVertexStrip(Sprite *vm, VertexTex1DiffuseXyzrwh *vertices, int count);
+    // Adds g_DiffuseQuad to the batch with `vm`'s texture coordinates,
+    // shaken, rounded to pixels with flag 1, with `vm`'s color unless
+    // flag 2 is set, unless it is outside the viewport. Returns 0.
+    int DrawQuad(Sprite *vm, int flags);
     // Sets the render states `vm` wants on the device, as in th06.
     void SetRenderStateForSprite(Sprite *vm);
     // Sets the blend mode and z writes `vm` wants through
@@ -521,6 +525,8 @@ ASSERT_SIZE(SpriteEngine, 0x17e560);
 extern SpriteEngine *g_SpriteEngine;
 // The quad Draw draws with a color, without the vertex buffer.
 extern VertexTex1DiffuseXyzrwh g_DiffuseQuad[4];
+// 0.5, for DrawQuad's rounding.
+extern float g_Half;
 // CreateQuad's quad with a color, for drawing without the vertex
 // buffer.
 extern VertexTex1DiffuseXyz g_DiffuseQuadXyz[4];
