@@ -91,7 +91,7 @@ address,size,name,symbol
 0x0040fc90,1285,Func40fc90,
 0x004101a0,889,Func4101a0,
 0x00410520,29464,Func410520,
-0x00417af0,33,Func417af0,
+0x00417af0,33,SinCos,?SinCos@@YIXPAM0M@Z
 0x00417b20,107,Bullet::FreeBullet,?FreeBullet@Bullet@@QAEXXZ
 0x00417b90,151,Func417b90,
 0x00417c30,533,Func417c30,
