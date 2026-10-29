@@ -1164,11 +1164,28 @@ int LoadScoreFile();
 // 999999 as `max`, which it ignores.
 void IncrementStatCounter(DWORD *count, DWORD max);
 
+// A loaded message file: a count, then the offsets of its scripts, made
+// pointers once loaded, as th06's.
+struct MsgFile
+{
+    int count;
+    void *scripts[1];
+};
+
+// One instruction of a message script.
+struct MsgInstr;
+
 // The dialogue (th06's GuiMsg), GuiImpl+0x1fba4, 0xe10 bytes. Only what
 // is known so far.
 struct GuiMsg
 {
-    unsigned char unk_0[0xe0c];
+    // The message file loaded.
+    MsgFile *msgFile;
+    // The next instruction of the running script.
+    MsgInstr *instr;
+    // The running script; negative when none runs.
+    int scriptIndex;
+    unsigned char unk_c[0xe00];
     // Lets the skip button fast-forward the script, as th06's.
     BYTE skippable;
     unsigned char unk_e0d[0x3];
@@ -1263,6 +1280,12 @@ public:
     // spellNameBar and unk_7774 interrupt 1, plays sound 14 and sets
     // g_App.redrawFrames to 2.
     void ShowSpellCardName(int sprite, char *text);
+    // Loads the message file at `path` into impl->msg.msgFile, turning
+    // its offsets into pointers. Returns 0, or -1 after logging
+    // "メッセージファイル %s が読み込めませんでした".
+    int LoadMsg(char *path);
+    // Frees impl->msg.msgFile, if there is one.
+    void FreeMsgFile();
     // As th06's DrawBanners and DrawHud.
     void DrawBanners();
     void DrawHud();

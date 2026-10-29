@@ -312,3 +312,23 @@ void Unknown49fbf0::ShowSpellCardName(int sprite, char *text)
     g_SoundPlayer.QueueSound(14, 0);
     g_App.redrawFrames = 2;
 }
+
+int Unknown49fbf0::LoadMsg(char *path)
+{
+    int i;
+
+    this->FreeMsgFile();
+    this->impl->msg.msgFile = (MsgFile *)LoadFileData(path, 0);
+    if (this->impl->msg.msgFile == NULL)
+    {
+        LogPrintf(&g_Log, "error : メッセージファイル %s が読み込めませんでした\r\n", path);
+        return -1;
+    }
+    this->impl->msg.scriptIndex = -1;
+    this->impl->msg.instr = NULL;
+    for (i = 0; i < this->impl->msg.msgFile->count; i++)
+    {
+        this->impl->msg.msgFile->scripts[i] = (char *)this->impl->msg.msgFile->scripts[i] + (int)this->impl->msg.msgFile;
+    }
+    return 0;
+}

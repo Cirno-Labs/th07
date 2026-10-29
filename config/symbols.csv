@@ -239,8 +239,8 @@ address,size,name,symbol
 0x0042868d,506,Unknown49fbf0::ShowBombName,?ShowBombName@Unknown49fbf0@@QAEXHPAD@Z
 0x00428887,658,Unknown49fbf0::ShowSpellCardName,?ShowSpellCardName@Unknown49fbf0@@QAEXHPAD@Z
 0x00428b19,3580,Func428b19,
-0x00429935,195,Func429935,
-0x004299f8,62,Func4299f8,
+0x00429935,195,Unknown49fbf0::LoadMsg,?LoadMsg@Unknown49fbf0@@QAEHPAD@Z
+0x004299f8,62,Unknown49fbf0::FreeMsgFile,?FreeMsgFile@Unknown49fbf0@@QAEXXZ
 0x00429a36,25,Func429a36,
 0x00429a4f,467,Func429a4f,
 0x00429c42,3064,GuiImpl::RunMsg,?RunMsg@GuiImpl@@QAEHXZ
