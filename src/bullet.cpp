@@ -25,6 +25,33 @@ const int g_BulletTypeScripts[11][5] = {
     {521, 536, 536, 536, 529},
     {680, 682, 682, 682, 681},
 };
+// The colors g_EffectColors points at until BulletManager::RegisterChain
+// switches it to g_EffectColorsFull.
+DWORD g_EffectColorsSolid[0x1c] = {
+    0xff000000, 0xff303030, 0xff606060, 0xff500000,
+    0xff900000, 0xffff2020, 0xff400040, 0xff800080,
+    0xffff30ff, 0xff000050, 0xff000090, 0xff2020ff,
+    0xff203060, 0xff304090, 0xff3080ff, 0xff005000,
+    0xff009000, 0xff20ff20, 0xff206000, 0xff409010,
+    0xff80ff20, 0xff505000, 0xff909000, 0xffffff20,
+    0xff603000, 0xff904010, 0xfff08020, 0xffffffff,
+};
+DWORD g_EffectColorsFull[0x1c] = {
+    0xfff0f0f0, 0xfff0f0f0, 0xffffffff, 0xffffe0e0,
+    0xffffe0e0, 0xffffe0e0, 0xffffe0ff, 0xffffe0ff,
+    0xffffe0ff, 0xffe0e0ff, 0xffe0e0ff, 0xffe0e0ff,
+    0xffe0ffff, 0xffe0ffff, 0xffe0ffff, 0xffe0ffe0,
+    0xffe0ffe0, 0xffe0ffe0, 0xffe0ffe0, 0xffe0ffe0,
+    0xffe0ffe0, 0xffffffe0, 0xffffffe0, 0xffffffe0,
+    0xffffe0e0, 0xffffe0e0, 0xffffe0e0, 0xffffffff,
+};
+DWORD *g_EffectColors = g_EffectColorsSolid;
+int g_BulletColorOffsets16[16] = {
+    0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 0,
+};
+int g_BulletColorOffsets32[8] = {
+    0, 1, 1, 2, 2, 3, 4, 0,
+};
 #endif // TH07_EXE
 
 void BulletManager::Reset()

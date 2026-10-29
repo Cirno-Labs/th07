@@ -1736,7 +1736,7 @@ address,size,name,symbol
 0x00495290,4,CSound::`vftable',??_7CSound@@6B@
 0x004964f4,,g_DifficultyRatings,?g_DifficultyRatings@@3PAMA
 0x00496c0c,4,MidiTimer::`vftable',??_7MidiTimer@@6B@
-0x00498a50,,g_Half,?g_Half@@3MA
+0x00498a50,,g_Half,?g_Half@@3MB
 0x0049ea70,,g_FileModes,?g_FileModes@@3PAPADA
 0x0049ea7c,,g_DemoReplayPaths,?g_DemoReplayPaths@@3PAPADA
 0x0049ea88,,g_SoundInfos,?g_SoundInfos@@3PAUSoundInfo@@A

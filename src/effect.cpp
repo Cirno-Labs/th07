@@ -7,6 +7,47 @@
 #include "replay.h"
 #include "unsorted.h"
 
+// The game's data, as the original defines it here. The DLL build uses
+// the original's copies instead.
+#ifdef TH07_EXE
+EffectInfo g_EffectInfos[34] = {
+    {0x000002ab, NULL, NULL},
+    {0x000002ac, NULL, NULL},
+    {0x000002ad, NULL, NULL},
+    {0x000002ae, EffectUpdateMove, EffectInitDriftFast},
+    {0x000002b3, EffectUpdateMove, EffectInitDrift},
+    {0x000002b4, EffectUpdateMove, EffectInitDrift},
+    {0x000002b5, EffectUpdateMove, EffectInitDrift},
+    {0x000002b6, EffectUpdateMove, EffectInitDrift},
+    {0x000002b7, EffectUpdateMove, EffectInitDrift},
+    {0x000002b8, EffectUpdateMove, EffectInitDrift},
+    {0x000002b9, EffectUpdateMove, EffectInitDrift},
+    {0x000002ba, EffectUpdateMove, EffectInitDrift},
+    {0x000002bb, NULL, NULL},
+    {0x000002bc, EffectUpdateOrbit, EffectInitForeground},
+    {0x000002bc, EffectUpdateOrbit, EffectInitForeground},
+    {0x000002bc, EffectUpdateOrbit, EffectInitForeground},
+    {0x000002dc, NULL, NULL},
+    {0x000002af, EffectUpdateConverge, EffectInitConverge},
+    {0x000002b0, EffectUpdateConvergeSlow, EffectInitConverge},
+    {0x000002bd, EffectUpdateNone, NULL},
+    {0x000002bf, EffectUpdatePetal, EffectInitPetal20},
+    {0x000002c3, NULL, NULL},
+    {0x000002c0, EffectUpdateDivergeEased, EffectInitDiverge},
+    {0x00000304, EffectUpdateFixedPos, NULL},
+    {0x000002c2, EffectUpdateFollowPlayer, NULL},
+    {0x000002da, EffectUpdateNone, NULL},
+    {0x000002bf, EffectUpdatePetal, EffectInitPetal26},
+    {0x000002bf, EffectUpdatePetal, EffectInitPetal27},
+    {0x000002db, EffectUpdateNone, NULL},
+    {0x000002b2, EffectUpdateDivergeLinear, EffectInitConverge},
+    {0x000002bf, EffectUpdatePetal, EffectInitPetal30},
+    {0x000002bf, EffectUpdatePetal, EffectInitPetal31},
+    {0x000002c1, EffectUpdateDivergeEased, EffectInitDiverge},
+    {0x000002b1, EffectUpdateConverge, EffectInitConverge},
+};
+#endif // TH07_EXE
+
 EffectManager::EffectManager()
 {
     this->Reset();

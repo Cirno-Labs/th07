@@ -2,6 +2,16 @@
 
 #include "archive.h"
 
+// The game's data, as the original defines it here. The DLL build uses
+// the original's copies instead.
+#ifdef TH07_EXE
+char *g_FileModes[3] = {
+    "r",
+    "w",
+    "a",
+};
+#endif // TH07_EXE
+
 File::File()
 {
     this->handle = INVALID_HANDLE_VALUE;

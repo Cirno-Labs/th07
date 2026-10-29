@@ -4,6 +4,83 @@
 #include "dsutil.h"
 #include "unsorted.h"
 
+// The game's data, as the original defines it here. The DLL build uses
+// the original's copies instead.
+#ifdef TH07_EXE
+SoundInfo g_SoundInfos[0x26] = {
+    {0, -2000, 0},
+    {0, -2500, 0},
+    {1, -1200, 5},
+    {1, -1500, 5},
+    {2, -1000, 100},
+    {3, -400, 100},
+    {4, -400, 100},
+    {5, -1500, 50},
+    {6, -1700, 50},
+    {7, -1900, 50},
+    {8, -1000, 100},
+    {9, -1000, 100},
+    {10, -1700, 10},
+    {11, -1200, 10},
+    {12, -900, 100},
+    {5, -1500, 50},
+    {13, -900, 50},
+    {14, -900, 50},
+    {15, -900, 100},
+    {16, -200, 100},
+    {17, -1400, 0},
+    {18, -1300, 0},
+    {5, -100, 20},
+    {6, -1800, 20},
+    {7, -1800, 20},
+    {19, -800, 50},
+    {20, -1000, 50},
+    {21, -1300, 50},
+    {22, -300, 140},
+    {23, -900, 100},
+    {24, -900, 20},
+    {25, -500, 90},
+    {26, -300, 100},
+    {27, -300, 100},
+    {24, -300, 20},
+    {19, 0, 50},
+    {28, -300, 100},
+    {29, -300, 100},
+};
+char *g_SoundPaths[30] = {
+    "data/wav/se_plst00.wav",
+    "data/wav/se_enep00.wav",
+    "data/wav/se_pldead00.wav",
+    "data/wav/se_power0.wav",
+    "data/wav/se_power1.wav",
+    "data/wav/se_tan00.wav",
+    "data/wav/se_tan01.wav",
+    "data/wav/se_tan02.wav",
+    "data/wav/se_ok00.wav",
+    "data/wav/se_cancel00.wav",
+    "data/wav/se_select00.wav",
+    "data/wav/se_gun00.wav",
+    "data/wav/se_cat00.wav",
+    "data/wav/se_lazer00.wav",
+    "data/wav/se_lazer01.wav",
+    "data/wav/se_enep01.wav",
+    "data/wav/se_nep00.wav",
+    "data/wav/se_damage00.wav",
+    "data/wav/se_item00.wav",
+    "data/wav/se_kira00.wav",
+    "data/wav/se_kira01.wav",
+    "data/wav/se_kira02.wav",
+    "data/wav/se_extend.wav",
+    "data/wav/se_timeout.wav",
+    "data/wav/se_graze.wav",
+    "data/wav/se_powerup.wav",
+    "data/wav/se_border.wav",
+    "data/wav/se_bonus.wav",
+    "data/wav/se_bonus2.wav",
+    "data/wav/se_pause.wav",
+};
+#endif // TH07_EXE
+
 char *FindRiffChunk(char *data, char *name, int *chunkSize, unsigned int size);
 
 SoundPlayer::SoundPlayer()

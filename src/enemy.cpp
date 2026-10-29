@@ -10,6 +10,15 @@
 #include "replay.h"
 #include "unsorted.h"
 
+// The game's data, as the original defines it here. The DLL build uses
+// the original's copies instead.
+#ifdef TH07_EXE
+BYTE g_EnemyItemDrops[0x20] = {
+    0, 0, 1, 0, 1, 0, 0, 7, 1, 1, 0, 0, 7, 1, 1, 0,
+    1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 7, 1, 1, 1, 0, 2,
+};
+#endif // TH07_EXE
+
 inline void Enemy::Move()
 {
     this->posDelta = this->pos - this->prevPos;

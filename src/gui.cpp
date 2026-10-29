@@ -1427,6 +1427,11 @@ inline SpriteData *GetSpriteData(int sprite)
 
 void Gui::DrawBanners()
 {
+#ifdef TH07_EXE
+    static D3DCOLOR g_BossTimerColors[4] = {
+        0x00a0d0ff, 0x00a080ff, 0x00e080c0, 0x00ff4040,
+    };
+#endif // TH07_EXE
     Catk *catks;
     int score;
     D3DXVECTOR3 oldPos2;

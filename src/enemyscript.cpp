@@ -13,6 +13,67 @@
 #include "screeneffect.h"
 #include "unsorted.h"
 
+// The game's data, as the original defines it here. The DLL build uses
+// the original's copies instead.
+#ifdef TH07_EXE
+EnemyScriptFunc g_EnemyScriptFuncs[24] = {
+    WarpToBoss,
+    ShakeAndSpinBullets,
+    SpawnFansFromNearbyBullets,
+    NoOp,
+    ReplaceTallBulletWithEffect,
+    CopyBossMoveStart,
+    FireBackwardFans,
+    UpdateLaserEdgeBullets,
+    DeflectBulletsOffLasers,
+    ShakeAndStartFallingPetals,
+    StartSlowdown,
+    EndSlowdown,
+    BurstBulletsByDifficulty,
+    TurnNearbyBullets,
+    AimTurnedBulletsAtPlayer,
+    FlashScreen,
+    FireBackFromUnturned,
+    ReplaceBulletsWithEnemies,
+    CountUnturnedBullets,
+    ScriptFadeOutMusic,
+    ScriptPlayMusic,
+    BurstBulletsFixedCount,
+    FireAimedBulletPattern1,
+    FireAimedBulletPattern2,
+};
+int g_SpellCardBonuses[141] = {
+    2000000, 2000000, 2200000, 2200000, 2400000, 2400000, 2400000, 2400000,
+    2400000, 2400000, 2600000, 2600000, 2600000, 2600000, 2600000, 2600000,
+    2600000, 2600000, 2600000, 2600000, 2600000, 2600000, 2600000, 2600000,
+    2600000, 2600000, 3000000, 3000000, 3000000, 3000000, 3000000, 3000000,
+    3000000, 3000000, 3000000, 3000000, 3000000, 3000000, 3000000, 3000000,
+    3000000, 3000000, 3000000, 3000000, 3500000, 3500000, 3500000, 3500000,
+    3500000, 3500000, 3500000, 3500000, 3500000, 3500000, 3500000, 3500000,
+    3500000, 3500000, 3500000, 3500000, 3500000, 3500000, 3500000, 3500000,
+    3500000, 3500000, 3500000, 3500000, 4000000, 4000000, 4000000, 4000000,
+    4000000, 4000000, 4000000, 4000000, 4000000, 4000000, 4000000, 4000000,
+    4000000, 4000000, 4000000, 4000000, 4000000, 4000000, 4000000, 4000000,
+    5000000, 5000000, 5000000, 5000000, 5000000, 5000000, 5000000, 5000000,
+    5000000, 5000000, 5000000, 5000000, 5000000, 5000000, 5000000, 5000000,
+    5000000, 5000000, 5000000, 5000000, 5000000, 5000000, 5000000, 5000000,
+    3000000, 3000000, 3000000, 3000000, 6000000, 6000000, 7000000, 7000000,
+    7000000, 7000000, 7000000, 7000000, 7000000, 7000000, 4000000, 7000000,
+    7000000, 7000000, 8000000, 8000000, 8000000, 8000000, 8000000, 8000000,
+    8000000, 8000000, 4000000, 8000000, 4000000,
+};
+EnemyScriptInterp g_EnemyScriptInterps[8] = {
+    ScriptMoveLinear,
+    ScriptMoveLinear,
+    ScriptMoveLinear,
+    ScriptMoveLinear,
+    ScriptMoveLinear,
+    ScriptMoveLinear,
+    ScriptMoveLinear,
+    ScriptMoveHermite,
+};
+#endif // TH07_EXE
+
 // Argument `n` of `instr`, or the value of the variable it names.
 #define INT_ARG(n) \
     ((instr->paramMask & (1 << (n))) ? GetIntOperand(enemy, instr->args[n].i) : instr->args[n].i)

@@ -12,6 +12,21 @@
 #include "resultscreen.h"
 #include "unsorted.h"
 
+// The game's data, as the original defines it here. The DLL build uses
+// the original's copies instead.
+#ifdef TH07_EXE
+char *g_NameAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ.,:;_@abcdefghijklmnopqrstuvwxyz+-/*=%0123456789#!?'\"$(){}[]<>&\\|~^ --";
+char *g_ShotNames[7] = {
+    "博麗 霊夢 (霊)　",
+    "博麗 霊夢 (夢)　",
+    "霧雨 魔理沙 (魔)",
+    "霧雨 魔理沙 (恋)",
+    "十六夜 咲夜 (幻)",
+    "十六夜 咲夜 (時)",
+    "全主人公合計  　",
+};
+#endif // TH07_EXE
+
 int InsertScore(ListNode *head, Hscr *entry)
 {
     int index = 0;
@@ -1742,6 +1757,17 @@ int ResultScreen::DrawStatistics()
     static const float g_DifficultyRatings[5] = {
         -30.0f, -10.0f, 20.0f, 30.0f, 30.0f,
     };
+    static char *g_DifficultyNames[6] = {
+        "      Easy",
+        "    Normal",
+        "      Hard",
+        "   Lunatic",
+        "     Extra",
+        "  Phantasm",
+    };
+    static float g_SpellCardRatings[5] = {
+        1.0f, 1.5f, 1.5f, 2.0f, 2.5f,
+    };
 #endif // TH07_EXE
     Sprite *spr;
     D3DXVECTOR3 cursorPos;
@@ -1858,6 +1884,16 @@ int ResultScreen::DrawStatistics()
 
 int ResultScreen::OnDraw(ResultScreen *screen)
 {
+#ifdef TH07_EXE
+    static char *g_ShotTypeNames[6] = {
+        "ReimuA ",
+        "ReimuB ",
+        "MarisaA",
+        "MarisaB",
+        "SakuyaA",
+        "SakuyaB",
+    };
+#endif // TH07_EXE
     char str[2];
     D3DXVECTOR3 unused_;
     float shift;

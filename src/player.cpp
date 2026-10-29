@@ -11,6 +11,45 @@
 #include "replay.h"
 #include "unsorted.h"
 
+// The game's data, as the original defines it here. The DLL build uses
+// the original's copies instead.
+#ifdef TH07_EXE
+BombData g_Bombs[6] = {
+    {UpdateReimuABomb, DrawReimuABomb, UpdateReimuABombFocused, DrawReimuABombFocused},
+    {UpdateReimuBBomb, DrawReimuBBomb, UpdateReimuBBombFocused, DrawReimuBBombFocused},
+    {UpdateMarisaABomb, DrawMarisaABomb, UpdateMarisaABombFocused, DrawMarisaABombFocused},
+    {UpdateMarisaBBomb, DrawMarisaBBomb, UpdateMarisaBBombFocused, DrawMarisaBBombFocused},
+    {UpdateSakuyaABomb, DrawSakuyaABomb, UpdateSakuyaABombFocused, DrawSakuyaABombFocused},
+    {UpdateSakuyaBBomb, DrawSakuyaBBomb, UpdateSakuyaBBombFocused, DrawSakuyaBBombFocused},
+};
+ShotFireFunc g_ShotFireFuncs[6] = {
+    NULL,
+    TryFireShot,
+    FireLaser,
+    FireTrailLaser,
+    FireHomingShot,
+    FireAimedShot,
+};
+ShotUpdateFunc g_ShotUpdateFuncs[6] = {
+    NULL,
+    UpdateHomingOrb,
+    UpdateHomingOrbFast,
+    UpdateAcceleratingBullet,
+    UpdateLaserBullet,
+    UpdateTrailLaserBullet,
+};
+ShotUpdateFunc g_ShotDrawFuncs[2] = {
+    NULL,
+    DrawTrailLaserBullet,
+};
+ShotHitFunc g_ShotHitFuncs[4] = {
+    NULL,
+    UpdateBombShot,
+    BurstHitEffect,
+    (ShotHitFunc)1,
+};
+#endif // TH07_EXE
+
 void GameManager::RerollLifeChecksumKeys()
 {
     this->stats->lifeChecksumKeys[0] = g_Rng.GetRandomU32InRange(100000) + 6543;
@@ -2076,6 +2115,24 @@ float Player::AngleFrom(D3DXVECTOR3 *pos)
 
 int Player::AddedCallback(Player *player)
 {
+#ifdef TH07_EXE
+    static char *g_ShotFiles[6] = {
+        "data/ply00a.sht",
+        "data/ply00b.sht",
+        "data/ply01a.sht",
+        "data/ply01b.sht",
+        "data/ply02a.sht",
+        "data/ply02b.sht",
+    };
+    static char *g_ShotFilesFocused[6] = {
+        "data/ply00as.sht",
+        "data/ply00bs.sht",
+        "data/ply01as.sht",
+        "data/ply01bs.sht",
+        "data/ply02as.sht",
+        "data/ply02bs.sht",
+    };
+#endif // TH07_EXE
     int i;
     PlayerBullet *bullet;
 

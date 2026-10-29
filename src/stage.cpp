@@ -611,6 +611,19 @@ int Stage::OnDraw2(Stage *stage)
 
 int Stage::AddedCallback(Stage *stage)
 {
+#ifdef TH07_EXE
+    static char *g_StageDataFiles[9] = {
+        "dummy",
+        "data/stage1.std",
+        "data/stage2.std",
+        "data/stage3.std",
+        "data/stage4.std",
+        "data/stage5.std",
+        "data/stage6.std",
+        "data/stage7.std",
+        "data/stage8.std",
+    };
+#endif // TH07_EXE
     int i;
 
     stage->scriptTime.Set(0);

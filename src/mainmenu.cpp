@@ -12,6 +12,16 @@
 #include "screeneffect.h"
 #include "unsorted.h"
 
+// The game's data, as the original defines it here. The DLL build uses
+// the original's copies instead.
+#ifdef TH07_EXE
+char *g_DemoReplayPaths[3] = {
+    "data/demo/demorpy0.rpy",
+    "data/demo/demorpy1.rpy",
+    "data/demo/demorpy2.rpy",
+};
+#endif // TH07_EXE
+
 void App::ResetClockDriftCounters()
 {
     this->fastClockStreak = 0;
@@ -83,6 +93,18 @@ int MainMenu::OnUpdate(MainMenu *menu)
 
 int MainMenu::StartTitle()
 {
+#ifdef TH07_EXE
+    static char *g_TitleHelpTexts[8] = {
+        "ゲームを開始します",
+        "エキストラステージを開始します",
+        "ステージを選択し、練習を開始します",
+        "リプレイを鑑賞できます",
+        "過去のスコアやスペルカードの取得歴を見られます",
+        "音楽を聴けます",
+        "各種設定できます",
+        "いろいろと終了します",
+    };
+#endif // TH07_EXE
     int i;
 
     switch (this->subState)
@@ -310,6 +332,19 @@ int MainMenu::StartTitle()
 
 int MainMenu::UpdateOptions()
 {
+#ifdef TH07_EXE
+    static char *g_OptionsHelpTexts[9] = {
+        "プレイヤーの初期数を変更します。（初期設定　３）",
+        "画面の色数を変更します。３２ＢＩＴだと最も綺麗に表示されます。",
+        "ＢＧＭの再生方法を変更します。（初期設定　ＷＡＶ）",
+        "効果音を再生するか選択します",
+        "ウィンドウかフルスクリーンか選択します",
+        "弾が多い場面でわざと処理落ちさせます(スコア、リプレイ記録不可)",
+        "全て初期設定にします",
+        "パッド操作のボタン配置を変更します",
+        "おいそれと終了します",
+    };
+#endif // TH07_EXE
     int i;
 
     switch (this->subState)
@@ -649,6 +684,23 @@ void MainMenu::ReassignButton(short button, short replacement, int unused)
 
 int MainMenu::UpdateKeyConfig()
 {
+#ifdef TH07_EXE
+    static char *g_KeyConfigHelpTexts[12] = {
+        "ショット、決定ボタンを設定します",
+        "ボム、キャンセルボタンを設定します",
+        "低速移動ボタンを設定します",
+        "メッセージスキップボタンを設定します",
+        "ポーズボタンを設定します",
+        "上移動ボタンを設定します",
+        "下移動ボタンを設定します",
+        "左移動ボタンを設定します",
+        "右移動ボタンを設定します",
+        "ショット押しっぱなしで低速移動になるようにします",
+        "初期設定に戻します",
+        "おおよそ終了します",
+    };
+    static short g_LastPressedKey = 32;
+#endif // TH07_EXE
     Sprite *digit;
     int i;
     short key;
@@ -1886,6 +1938,34 @@ int MainMenu::UpdateReplayMenu()
 
 int MainMenu::DrawReplayMenu()
 {
+#ifdef TH07_EXE
+    static char *g_MenuStageNames[8] = {
+        "Stage1  ",
+        "Stage2  ",
+        "Stage3  ",
+        "Stage4  ",
+        "Stage5  ",
+        "Stage6  ",
+        "Extra   ",
+        "Phantasm",
+    };
+    static char *g_MenuDifficultyNames[6] = {
+        "Easy    ",
+        "Normal  ",
+        "Hard    ",
+        "Lunatic ",
+        "Extra   ",
+        "Phantasm",
+    };
+    static char *g_MenuShotTypeNames[6] = {
+        "ReimuA ",
+        "ReimuB ",
+        "MarisaA",
+        "MarisaB",
+        "SakuyaA",
+        "SakuyaB",
+    };
+#endif // TH07_EXE
     Sprite *text;
     int top;
     int j;
@@ -1981,6 +2061,16 @@ int MainMenu::DrawReplayMenu()
 
 int MainMenu::DrawPracticeScores()
 {
+#ifdef TH07_EXE
+    static char *g_PracticeStageNames[6] = {
+        "Stage1",
+        "Stage2",
+        "Stage3",
+        "Stage4",
+        "Stage5",
+        "Stage6",
+    };
+#endif // TH07_EXE
     Sprite *text;
     int i;
     int cleared;

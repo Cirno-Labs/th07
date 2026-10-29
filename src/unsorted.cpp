@@ -4,6 +4,14 @@
 
 #include "unsorted.h"
 
+// The game's data, as the original defines it here. The DLL build uses
+// the original's copies instead.
+#ifdef TH07_EXE
+ControllerMapping g_DefaultControllerMapping = {
+    0, 1, 2, 4, -1, -1, -1, -1, 3,
+};
+#endif // TH07_EXE
+
 WORD InitJoystick()
 {
     JOYINFOEX joyInfo;

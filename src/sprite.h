@@ -684,7 +684,7 @@ extern VertexTex1DiffuseXyzrwh g_DiffuseQuad[4];
 // A transformed quad without a color, as in th06.
 extern VertexTex1Xyzrwh g_Quad[4];
 // 0.5, for DrawQuad's rounding.
-extern float g_Half;
+extern const float g_Half;
 // The offset from a sprite's position whose projection sets the size
 // ProjectSprite draws it at.
 extern D3DXVECTOR3 g_CameraSizeOffset;

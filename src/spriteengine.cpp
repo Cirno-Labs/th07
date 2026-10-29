@@ -18,6 +18,7 @@ const D3DFORMAT g_TextureFormats[6] = {
 const int g_TextureFormatSizes[7] = {
     4, 4, 2, 2, 3, 2, 0,
 };
+const float g_Half = 0.5f;
 #endif // TH07_EXE
 
 SpriteEngine::SpriteEngine()

@@ -340,6 +340,16 @@ void DrawLoadingScreen()
 
 void GameManager::SetRankForDifficulty()
 {
+#ifdef TH07_EXE
+    static RankSettings g_Ranks[6] = {
+        {16, 12, 20},
+        {16, 10, 32},
+        {16, 10, 32},
+        {16, 10, 32},
+        {16, 15, 16},
+        {16, 15, 16},
+    };
+#endif // TH07_EXE
     this->rank = g_Ranks[g_GameManager.difficulty].rank;
     this->minRank = g_Ranks[g_GameManager.difficulty].minRank;
     this->maxRank = g_Ranks[g_GameManager.difficulty].maxRank;
@@ -440,6 +450,31 @@ void IncrementStatCounter(DWORD *count, DWORD max)
 
 int GameManager::AddedCallback(GameManager *mgr)
 {
+#ifdef TH07_EXE
+    static EnemyAnmPaths g_EnemyAnmPaths[9] = {
+        {"dummy", "dummy"},
+        {"data/stg1enm.anm", NULL},
+        {"data/stg2enm.anm", NULL},
+        {"data/stg3enm.anm", NULL},
+        {"data/stg4enm.anm", NULL},
+        {"data/stg5enm.anm", NULL},
+        {"data/stg6enm.anm", NULL},
+        {"data/stg7enm.anm", NULL},
+        {"data/stg8enm.anm", NULL},
+    };
+    static char *g_EclPaths[10] = {
+        "dummy",
+        "data/ecldata1.ecl",
+        "data/ecldata2.ecl",
+        "data/ecldata3.ecl",
+        "data/ecldata4.ecl",
+        "data/ecldata5.ecl",
+        "data/ecldata6.ecl",
+        "data/ecldata7.ecl",
+        "data/ecldata8.ecl",
+        NULL,
+    };
+#endif // TH07_EXE
     int size;
     int shot;
     WORD seed;

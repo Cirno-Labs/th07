@@ -61,7 +61,7 @@ ASSERT_SIZE(File, 0xc);
 // FILE_BEGIN, FILE_CURRENT and FILE_END, in .rdata. Only the first is used.
 extern const DWORD g_SeekOrigins[3];
 // "r" and "w", the modes for File::Open. Only the first is used.
-extern char *g_FileModes[2];
+extern char *g_FileModes[3];
 
 // Writes `path` to `dst` (MAX_PATH bytes) as a full path: in the game's
 // directory unless it has a drive. Not in th06.

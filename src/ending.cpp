@@ -367,6 +367,21 @@ int Ending::Load(char *path)
 
 int Ending::AddedCallback(Ending *ending)
 {
+#ifdef TH07_EXE
+    static char *g_BadEndingFiles[3] = {
+        "data/end00b.end",
+        "data/end10b.end",
+        "data/end20b.end",
+    };
+    static char *g_EndingFiles[6] = {
+        "data/end00.end",
+        "data/end01.end",
+        "data/end10.end",
+        "data/end11.end",
+        "data/end20.end",
+        "data/end21.end",
+    };
+#endif // TH07_EXE
     char *script;
     int j;
     int si;
