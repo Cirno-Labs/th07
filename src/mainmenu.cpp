@@ -68,7 +68,7 @@ int MainMenu::OnUpdate(MainMenu *menu)
         status = menu->UpdateGameStartMenu();
         break;
     }
-    g_SpriteEngine->Func4550c0(menu->sprites, menu->spriteCount);
+    g_SpriteEngine->StepSprites(menu->sprites, menu->spriteCount);
     if (menu->unk_b0c8 != NULL)
     {
         g_SpriteEngine->Step(menu->unk_b0c8);

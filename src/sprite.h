@@ -172,7 +172,7 @@ public:
     int Step(Sprite *vm);
     // Steps the `count` sprites from `vms` that run a script. Not in
     // th06.
-    void Func4550c0(Sprite *vms, int count);
+    void StepSprites(Sprite *vms, int count);
     // Starts script `script` + n on sprite n of the `count` sprites from
     // `vms`, and makes their sprites their base sprites. Not in th06.
     void Func455110(Sprite *vms, int script, int count);
