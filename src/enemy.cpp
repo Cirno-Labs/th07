@@ -681,11 +681,11 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
             for (seg = enemy->trailSegmentCount - 1; seg > 0; seg--)
             {
                 enemy->trailBoxes[seg].pos = enemy->trailBoxes[seg - 1].pos;
-                enemy->trailBoxes[seg].unk_c = enemy->trailBoxes[seg - 1].unk_c;
+                enemy->trailBoxes[seg].velocity = enemy->trailBoxes[seg - 1].velocity;
                 enemy->trailBoxes[seg].angle = enemy->trailBoxes[seg - 1].angle;
             }
             enemy->trailBoxes[0].pos = enemy->pos;
-            enemy->trailBoxes[0].unk_c = enemy->velocity;
+            enemy->trailBoxes[0].velocity = enemy->velocity;
             enemy->trailBoxes[0].angle = enemy->angle;
         }
         if (enemy->sprite.spriteData == NULL)

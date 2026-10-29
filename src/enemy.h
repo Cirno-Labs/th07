@@ -131,7 +131,7 @@ struct EnemyBox
 {
     D3DXVECTOR3 pos;
     // The enemy's velocity there.
-    D3DXVECTOR3 unk_c;
+    D3DXVECTOR3 velocity;
     float angle;
 };
 ASSERT_SIZE(EnemyBox, 0x1c);
