@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "bullet.h"
+#include "item.h"
 #include "player.h"
 #include "unsorted.h"
 
@@ -256,4 +257,80 @@ Laser *BulletManager::SpawnLaser(BulletShooter *shooter)
         break;
     }
     return laser;
+}
+
+void BulletManager::ClearAll(int mode)
+{
+    D3DXVECTOR3 p;
+    int i;
+    float s;
+    Bullet *curBullet;
+    Laser *beam;
+    float c;
+    float t;
+
+    curBullet = g_BulletManager.bullets;
+    for (i = 0; i < 0x400; i++, curBullet++)
+    {
+        if (curBullet->state == 0 || curBullet->state == 5)
+        {
+            continue;
+        }
+        if (mode != 0 && mode < 9)
+        {
+            if (mode < 3)
+            {
+                g_ItemManager.SpawnItem(&curBullet->pos, this->unk_37a160, mode);
+            }
+            else
+            {
+                g_ItemManager.SpawnItem(&curBullet->pos, 8, 1);
+            }
+            memset(curBullet, 0, sizeof(Bullet));
+        }
+        else
+        {
+            curBullet->state = 5;
+        }
+    }
+    beam = this->lasers;
+    for (i = 0; i < 0x40; i++, beam++)
+    {
+        if (!beam->active)
+        {
+            continue;
+        }
+        if ((beam->flags & 4) && mode != 10)
+        {
+            continue;
+        }
+        if (beam->state < 2)
+        {
+            beam->state = 2;
+            beam->timer.Set(0);
+            beam->width = beam->unk_4b8;
+            if (mode != 0 && mode < 9)
+            {
+                t = beam->startOffset;
+                SinCos(&s, &c, beam->angle);
+                while (beam->endOffset > t)
+                {
+                    p.x = c * t + beam->pos.x;
+                    p.y = s * t + beam->pos.y;
+                    p.z = 0.0f;
+                    if (mode < 3)
+                    {
+                        g_ItemManager.SpawnItem(&p, this->unk_37a160, mode);
+                    }
+                    else
+                    {
+                        g_ItemManager.SpawnItem(&p, 8, 1);
+                    }
+                    t += 32.0f;
+                }
+            }
+        }
+        beam->endHitFrames = 0;
+    }
+    this->unk_37a12c = 10;
 }

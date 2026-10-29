@@ -742,6 +742,20 @@ float AddNormalizeAngle(float a, float b);
 // Rotates `in` by `angle` radians in the xy plane into `out` (z is left
 // alone).
 void Rotate2D(D3DXVECTOR3 *out, D3DXVECTOR3 *in, float angle);
+// Sets *sinOut and *cosOut to the sine and cosine of `angle`, with one
+// fsincos, as th06's. The compiler keeps an out-of-line copy (0x417af0).
+inline void SinCos(float *sinOut, float *cosOut, float angle)
+{
+    __asm
+    {
+        fld angle
+        fsincos
+        mov eax, cosOut
+        fstp [eax]
+        mov eax, sinOut
+        fstp [eax]
+    }
+}
 
 // How a D3DFORMAT's pixels are laid out, for a DIB section.
 struct FormatInfo

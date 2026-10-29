@@ -181,8 +181,12 @@ public:
 
     // Zeroes everything and marks the spare bullet.
     void Reset();
-    // Removes the bullets (Player's respawn step calls it with 0).
-    void ClearAll(int unk);
+    // Ends every bullet, and every laser without flag 4 (all of them
+    // for `mode` 10): with `mode` 0 or over 8 they fade out; with 1 or 2
+    // bullets, and points every 32 along each laser, turn into
+    // `mode` items of type unk_37a160, with 3 to 8 into one item of
+    // type 8. Then sets unk_37a12c to 10.
+    void ClearAll(int mode);
     // Spawns bullet (`col`, `row`) of `shooter`'s pattern, aimed at
     // `aimAngle` by the aiming modes that use it. Returns 0, or 1 if no
     // bullet is free.
