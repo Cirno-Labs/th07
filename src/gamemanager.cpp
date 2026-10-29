@@ -200,3 +200,48 @@ void RerollStatsChecksumKeys()
     g_Unknown626270.stats->unk_b0 = sum;
     g_Unknown626270.unk_9614 = (float)sum + g_Unknown626270.stats->unk_8c[3];
 }
+
+int LoadScoreFile()
+{
+    Catk *catks;
+    int i;
+    ScoreDat *data;
+    int j;
+
+    catks = g_Unknown626270.catks;
+    ResultScreen::RegisterChain(2);
+    memset(g_Unknown626270.catks, 0, sizeof(g_Unknown626270.catks));
+    for (i = 0; i < 0x8d; i++, catks++)
+    {
+        catks->magic = 0x4b544143;
+        catks->size2 = sizeof(Catk);
+        catks->size = sizeof(Catk);
+        catks->version = 1;
+        catks->index = i;
+        for (j = 0; j < 7; j++)
+        {
+            catks->attempts[j] = 0;
+            catks->captures[j] = 0;
+            catks->maxBonus[j] = 0;
+        }
+    }
+    data = LoadScoreDat("score.dat");
+    if (data == NULL)
+    {
+        LogPrintf(&g_Log, "error : スコアファイルの読み取りに失敗しました\r\n");
+        return -1;
+    }
+    g_Unknown626270.stats->highScore = LoadHighScores(data, NULL, g_Unknown626270.unk_93d7, g_Unknown626270.difficulty, &g_Unknown626270.stats->unk_10);
+    LoadSpellCards(data, g_Unknown626270.catks);
+    LoadClears(data, g_Unknown626270.clrds);
+    LoadPracticeScores(data, &g_Unknown626270.pscrs[0][0][0]);
+    if (g_Unknown626270.unk_93d8 & 1)
+    {
+        g_Unknown626270.stats->highScore = g_Unknown626270.pscrs[g_Unknown626270.unk_93d7][g_Unknown626270.stage][g_Unknown626270.difficulty].score;
+        g_Unknown626270.pscrs[g_Unknown626270.unk_93d7][g_Unknown626270.stage][g_Unknown626270.difficulty].unk_0c++;
+        g_Unknown626270.stats->unk_10 = 0;
+    }
+    ReleaseScoreDat(data);
+    memcpy(g_Unknown626270.savedCatks, g_Unknown626270.catks, sizeof(g_Unknown626270.catks));
+    return 0;
+}

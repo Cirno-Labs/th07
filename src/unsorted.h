@@ -854,7 +854,13 @@ struct Unknown626270Stats
     // The score shown, and the score.
     DWORD guiScore;
     DWORD score;
-    unsigned char unk_8[0xc];
+    unsigned char unk_8[0x4];
+    // The high score to beat, from the score file.
+    DWORD highScore;
+    // What LoadHighScores stores from the best entry; cleared in a
+    // practice.
+    BYTE unk_10;
+    unsigned char unk_11[0x3];
     // The stage's grazes, up to 9999, and the game's, up to 999999.
     int graze;
     int grazeTotal;
@@ -1107,6 +1113,14 @@ int ChecksumBytes(BYTE *data, int size);
 // Fills the checksum keys in g_Unknown626270.stats with random numbers
 // from 6543 up, then stores the checksum. Not in th06.
 void RerollStatsChecksumKeys();
+// th06's score loading from GameManager::AddedCallback: saves the score
+// file (ResultScreen::RegisterChain(2)), resets the spell cards, then
+// loads the high score, the spell cards, the clears and the practice
+// scores from "score.dat" (a practice takes its high score from the
+// practice scores and adds one to its unk_0c) and keeps a copy of the
+// spell cards in savedCatks. Returns 0, or -1 if the file cannot be
+// read. Not in th06 as a function of its own.
+int LoadScoreFile();
 
 // The object at 0x49fbf0. Placeholder name; only what is known so far.
 class Unknown49fbf0
