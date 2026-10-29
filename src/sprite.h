@@ -82,19 +82,19 @@ struct SpriteBase
     // Added to the sprite's texture coordinates, as in th06.
     float uvScrollX;
     float uvScrollY;
-    Timer unk_30;
-    Timer unk_3c;
+    Timer scriptTime;
+    Timer waitTimer;
     Timer interpDuration[5];
     Timer interpFrame[5];
     // How Step eases each of the five interpolations (position, color,
     // alpha, rotation, scale) that unk_48 and unk_84 time.
     BYTE interpEasing;
-    BYTE unk_c1;
+    BYTE colorInterpEasing;
     // Player's StopBombState sets it on its effect.
-    BYTE unk_c2;
-    BYTE unk_c3;
+    BYTE alphaInterpEasing;
+    BYTE rotationInterpEasing;
     // Player's StartBombState sets these on its effect.
-    BYTE unk_c4;
+    BYTE scaleInterpEasing;
     unsigned char pad_c5[0x3];
     // The script's variables: an argument of 10000 to 10009 stands for
     // one of them. 10000-10003 and 10008-10009 are ints, 10004-10007
@@ -123,7 +123,7 @@ struct SpriteBase
         D3DCOLOR color;
         struct
         {
-            BYTE unk_rgb[3];
+            BYTE colorRgb[3];
             // The alpha byte of color.
             BYTE alpha;
         };
@@ -139,11 +139,11 @@ struct SpriteBase
             // Bits 0 and 1, for bitfield stores.
             DWORD shown : 1;
             DWORD visible : 1;
-            DWORD unk_2 : 1;
-            DWORD unk_3 : 1;
+            DWORD unusedFlag2 : 1;
+            DWORD unusedFlag3 : 1;
             DWORD blendMode : 1;
-            DWORD unk_5 : 1;
-            DWORD unk_6 : 1;
+            DWORD unusedFlag5 : 1;
+            DWORD unusedFlag6 : 1;
             // Step's position instructions move posOffset instead of
             // pos.
             DWORD usePosOffset : 1;
@@ -153,7 +153,7 @@ struct SpriteBase
             // Set while the script waits for an interrupt.
             DWORD stopped : 1;
             // Bit 14, which Step's instruction 31 sets.
-            DWORD unk_14b : 1;
+            DWORD scriptBit14 : 1;
         };
     };
     // Whether the bullets' draw functions turn it along their angle, as
@@ -184,7 +184,7 @@ public:
         this->color = 0xffffffff;
         D3DXMatrixIdentity(&this->matrix);
         *(WORD *)&this->flags = 7;
-        this->unk_30.Initialize();
+        this->scriptTime.Initialize();
     }
     // Whether the sprite shows a sprite whose texture is loaded. Defined
     // after SpriteEngine.

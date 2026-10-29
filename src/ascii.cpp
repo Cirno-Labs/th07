@@ -337,15 +337,15 @@ void AsciiText::DrawStrings()
             if (this->nearbyLabelDimmed[idx])
             {
                 this->nearbyLabels[idx].alpha = 0x80;
-                this->nearbyLabels[idx].unk_rgb[2] = 0x40;
-                this->nearbyLabels[idx].unk_rgb[1] = 0x40;
-                this->nearbyLabels[idx].unk_rgb[0] = 0xff;
+                this->nearbyLabels[idx].colorRgb[2] = 0x40;
+                this->nearbyLabels[idx].colorRgb[1] = 0x40;
+                this->nearbyLabels[idx].colorRgb[0] = 0xff;
             }
             else
             {
-                this->nearbyLabels[idx].unk_rgb[2] = 0xff;
-                this->nearbyLabels[idx].unk_rgb[1] = 0xff;
-                this->nearbyLabels[idx].unk_rgb[0] = 0xff;
+                this->nearbyLabels[idx].colorRgb[2] = 0xff;
+                this->nearbyLabels[idx].colorRgb[1] = 0xff;
+                this->nearbyLabels[idx].colorRgb[0] = 0xff;
             }
             g_SpriteEngine->DrawUnrotated(&this->nearbyLabels[idx]);
         }
@@ -1091,21 +1091,21 @@ void AsciiText::DrawPopups()
         this->summaryDigit.alpha = this->summaryPopup.alpha;
         if ((g_GameManager.bonusPoints >= g_GameManager.bonusPointsCap) != 0)
         {
-            this->summaryDigit.unk_rgb[2] = 0xff;
-            this->summaryDigit.unk_rgb[1] = 0xd0;
-            this->summaryDigit.unk_rgb[0] = 0x80;
+            this->summaryDigit.colorRgb[2] = 0xff;
+            this->summaryDigit.colorRgb[1] = 0xd0;
+            this->summaryDigit.colorRgb[0] = 0x80;
         }
         else if (amount >= 50000)
         {
-            this->summaryDigit.unk_rgb[2] = 0xff;
-            this->summaryDigit.unk_rgb[1] = 0xff;
-            this->summaryDigit.unk_rgb[0] = 0x80;
+            this->summaryDigit.colorRgb[2] = 0xff;
+            this->summaryDigit.colorRgb[1] = 0xff;
+            this->summaryDigit.colorRgb[0] = 0x80;
         }
         else
         {
-            this->summaryDigit.unk_rgb[2] = 0xff;
-            this->summaryDigit.unk_rgb[1] = 0xff;
-            this->summaryDigit.unk_rgb[0] = 0xff;
+            this->summaryDigit.colorRgb[2] = 0xff;
+            this->summaryDigit.colorRgb[1] = 0xff;
+            this->summaryDigit.colorRgb[0] = 0xff;
         }
         for (i = 0; i < 6; i++, div /= 10)
         {
@@ -1124,9 +1124,9 @@ void AsciiText::DrawPopups()
         }
         nonzero = 0;
         amount = g_GameManager.bonusPointsCap - g_GameManager.stats->grazeCount;
-        this->summaryDigit.unk_rgb[2] = 0xf0;
-        this->summaryDigit.unk_rgb[1] = 0xd0;
-        this->summaryDigit.unk_rgb[0] = 0xe0;
+        this->summaryDigit.colorRgb[2] = 0xf0;
+        this->summaryDigit.colorRgb[1] = 0xd0;
+        this->summaryDigit.colorRgb[0] = 0xe0;
         this->summaryDigit.pos.x += 9.0f;
         if (amount < 1000000)
         {
@@ -1161,14 +1161,14 @@ void AsciiText::DrawPopups()
         amount = g_GameManager.invulnerabilityBonus - g_GameManager.stats->grazeCount;
         if (g_Player.bombState)
         {
-            this->summaryDigit.unk_rgb[2] = 0xff;
+            this->summaryDigit.colorRgb[2] = 0xff;
             div = amount % 4000;
             if (div >= 2000)
             {
                 div = 4000 - div;
             }
-            this->summaryDigit.unk_rgb[1] = amount * 0xc0 / 50000 + div * 0x40 / 2000;
-            this->summaryDigit.unk_rgb[0] = amount * 0xc0 / 50000 + div * 0x40 / 2000;
+            this->summaryDigit.colorRgb[1] = amount * 0xc0 / 50000 + div * 0x40 / 2000;
+            this->summaryDigit.colorRgb[0] = amount * 0xc0 / 50000 + div * 0x40 / 2000;
             this->summaryDigit.scaleY = 1.41f;
             this->summaryDigit.scaleX = 1.41f;
             step = 10;
@@ -1177,9 +1177,9 @@ void AsciiText::DrawPopups()
         }
         else
         {
-            this->summaryDigit.unk_rgb[2] = 0xc0;
-            this->summaryDigit.unk_rgb[1] = 0x80;
-            this->summaryDigit.unk_rgb[0] = 0xb0;
+            this->summaryDigit.colorRgb[2] = 0xc0;
+            this->summaryDigit.colorRgb[1] = 0x80;
+            this->summaryDigit.colorRgb[0] = 0xb0;
             step = 7;
         }
         div = 10000;

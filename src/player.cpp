@@ -1791,7 +1791,7 @@ void StartBombState(Player *player)
     effect = g_EffectManager.SpawnReservedEffect(0x1c, &player->position, 4, 1, 0xffffffff);
     effect->sprite.interpDuration[4].Set(0);
     effect->sprite.interpFrame[4].Set(player->stateTimer.AsFrames());
-    effect->sprite.unk_c4 = 0;
+    effect->sprite.scaleInterpEasing = 0;
     effect->sprite.scaleTween.y = 1.0f;
     effect->sprite.scaleTween.x = 1.0f;
     effect->sprite.scaleTween.z = 0.25f;
@@ -1893,14 +1893,14 @@ void Player::StopBombState(int unk)
     eff = g_EffectManager.SpawnReservedEffect(0x1c, &this->position, 4, 1, 0xffffffff);
     eff->sprite.interpDuration[4].Set(0);
     eff->sprite.interpFrame[4].Set(30);
-    eff->sprite.unk_c4 = 0;
+    eff->sprite.scaleInterpEasing = 0;
     eff->sprite.scaleTween.x = 0.0625f;
     eff->sprite.scaleTween.y = 0.0625f;
     eff->sprite.scaleTween.z = 1.3f;
     eff->sprite.colorTween.x = 1.3f;
     eff->sprite.interpDuration[2].Set(0);
     eff->sprite.interpFrame[2].Set(30);
-    eff->sprite.unk_c2 = 1;
+    eff->sprite.alphaInterpEasing = 1;
     // Bytes 0x22b and 0x22f, probably the alphas of two colors over
     // unk_224.y and .z (the vector type keeps Sprite's inline budget).
     ((BYTE *)&eff->sprite.colorTween.y)[3] = eff->sprite.alpha;

@@ -230,9 +230,9 @@ int EffectInitPetal20(Effect *effect)
     if (percent >= g_Rng.GetRandomU32InRange(100))
     {
         g_SpriteEngine->SetSprite(&effect->sprite, 0x2d8);
-        effect->sprite.unk_rgb[2] = 0xff;
-        effect->sprite.unk_rgb[1] = 0xff;
-        effect->sprite.unk_rgb[0] = 0xff;
+        effect->sprite.colorRgb[2] = 0xff;
+        effect->sprite.colorRgb[1] = 0xff;
+        effect->sprite.colorRgb[0] = 0xff;
     }
     return 0;
 }
@@ -257,9 +257,9 @@ int EffectInitPetal26(Effect *effect)
     if (percent >= g_Rng.GetRandomU32InRange(100))
     {
         g_SpriteEngine->SetSprite(&effect->sprite, 0x2d8);
-        effect->sprite.unk_rgb[2] = 0xff;
-        effect->sprite.unk_rgb[1] = 0xff;
-        effect->sprite.unk_rgb[0] = 0xff;
+        effect->sprite.colorRgb[2] = 0xff;
+        effect->sprite.colorRgb[1] = 0xff;
+        effect->sprite.colorRgb[0] = 0xff;
     }
     effect->acceleration.x = 0.0f;
     effect->acceleration.y = 0.0f;
@@ -281,9 +281,9 @@ int EffectInitPetal27(Effect *effect)
     effect->sprite.rotationZ = g_Rng.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
     effect->sprite.rotationX = g_Rng.GetRandomF32ZeroToOne() * 0.06283186f - 0.031415928f;
     g_SpriteEngine->SetSprite(&effect->sprite, 0x2d8);
-    effect->sprite.unk_rgb[2] = 0xff;
-    effect->sprite.unk_rgb[1] = 0xff;
-    effect->sprite.unk_rgb[0] = 0xff;
+    effect->sprite.colorRgb[2] = 0xff;
+    effect->sprite.colorRgb[1] = 0xff;
+    effect->sprite.colorRgb[0] = 0xff;
     effect->acceleration.x = 0.0f;
     effect->acceleration.y = 0.0f;
     effect->acceleration.z = 0.0f;
@@ -303,9 +303,9 @@ int EffectInitPetal30(Effect *effect)
     effect->sprite.rotationZ = g_Rng.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
     effect->sprite.rotationX = g_Rng.GetRandomF32ZeroToOne() * 0.06283186f - 0.031415928f;
     g_SpriteEngine->SetSprite(&effect->sprite, 0x2d8);
-    effect->sprite.unk_rgb[2] = 0xff;
-    effect->sprite.unk_rgb[1] = 0xff;
-    effect->sprite.unk_rgb[0] = 0xff;
+    effect->sprite.colorRgb[2] = 0xff;
+    effect->sprite.colorRgb[1] = 0xff;
+    effect->sprite.colorRgb[0] = 0xff;
     effect->acceleration.x = 0.0f;
     effect->acceleration.y = 0.0f;
     effect->acceleration.z = 0.0f;
@@ -327,9 +327,9 @@ int EffectInitPetal31(Effect *effect)
     effect->sprite.rotationX = g_Rng.GetRandomF32ZeroToOne() * 0.06283186f - 0.031415928f;
     g_SpriteEngine->SetSprite(&effect->sprite, 0x2d8);
     effect->sprite.rotationSpeedZ *= 2.0f;
-    effect->sprite.unk_rgb[2] = 0xff;
-    effect->sprite.unk_rgb[1] = 0xff;
-    effect->sprite.unk_rgb[0] = 0xff;
+    effect->sprite.colorRgb[2] = 0xff;
+    effect->sprite.colorRgb[1] = 0xff;
+    effect->sprite.colorRgb[0] = 0xff;
     effect->acceleration.x = 0.0f;
     effect->acceleration.y = 0.0f;
     effect->acceleration.z = -0.015f;
@@ -637,16 +637,16 @@ int EffectManager::OnDraw2()
         }
         if (eff->type == 20)
         {
-            r = eff->sprite.unk_rgb[2];
-            g = eff->sprite.unk_rgb[1];
-            b = eff->sprite.unk_rgb[0];
+            r = eff->sprite.colorRgb[2];
+            g = eff->sprite.colorRgb[1];
+            b = eff->sprite.colorRgb[0];
             a = eff->sprite.alpha;
             t = r * this->colorScale[0];
-            eff->sprite.unk_rgb[2] = t > 0xff ? 0xff : t;
+            eff->sprite.colorRgb[2] = t > 0xff ? 0xff : t;
             t = g * this->colorScale[1];
-            eff->sprite.unk_rgb[1] = t > 0xff ? 0xff : t;
+            eff->sprite.colorRgb[1] = t > 0xff ? 0xff : t;
             t = b * this->colorScale[2];
-            eff->sprite.unk_rgb[0] = t > 0xff ? 0xff : t;
+            eff->sprite.colorRgb[0] = t > 0xff ? 0xff : t;
             t = a * this->colorScale[3];
             eff->sprite.alpha = t > 0xff ? 0xff : t;
         }
@@ -661,9 +661,9 @@ int EffectManager::OnDraw2()
         }
         if (eff->type == 20)
         {
-            eff->sprite.unk_rgb[2] = r;
-            eff->sprite.unk_rgb[1] = g;
-            eff->sprite.unk_rgb[0] = b;
+            eff->sprite.colorRgb[2] = r;
+            eff->sprite.colorRgb[1] = g;
+            eff->sprite.colorRgb[0] = b;
             eff->sprite.alpha = a;
         }
         eff = eff->next;

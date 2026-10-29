@@ -562,7 +562,7 @@ void SpriteEngine::SetScript(Sprite *vm, void *script)
         vm->Initialize();
         vm->scriptStart = (AnmInstr *)script;
         vm->scriptPos = vm->scriptStart;
-        vm->unk_30.Set(0);
+        vm->scriptTime.Set(0);
         vm->flags &= ~1;
         this->Step(vm);
         this->scriptStartCount++;
@@ -1360,7 +1360,7 @@ int SpriteEngine::Step(Sprite *vm)
     {
         goto interrupt;
     }
-    while (curInstr = vm->scriptPos, curInstr->time <= vm->unk_30.AsFrames())
+    while (curInstr = vm->scriptPos, curInstr->time <= vm->scriptTime.AsFrames())
     {
         switch (curInstr->opcode)
         {
@@ -1373,7 +1373,7 @@ int SpriteEngine::Step(Sprite *vm)
         case 3:
             vm->shown = 1;
             this->SetSprite(vm, ANM_INT_ARG(0) + this->scriptSpriteOffsets[vm->scriptIndex]);
-            vm->spriteTime = vm->unk_30.AsFrames();
+            vm->spriteTime = vm->scriptTime.AsFrames();
             break;
         case 7:
             vm->scaleY = ANM_FLOAT_ARG(0);
@@ -1387,14 +1387,14 @@ int SpriteEngine::Step(Sprite *vm)
             vm->color = vm->color & 0xff000000 | curInstr->args[0].i & 0xffffff;
             break;
         case 4:
-            vm->unk_30.Set(curInstr->args[1].i);
+            vm->scriptTime.Set(curInstr->args[1].i);
             vm->scriptPos = (AnmInstr *)((BYTE *)vm->scriptStart + curInstr->args[0].i);
             continue;
         case 5:
             ANM_INT_VAR(0)--;
             if (ANM_INT_ARG(0) > 0)
             {
-                vm->unk_30.Set(curInstr->args[2].i);
+                vm->scriptTime.Set(curInstr->args[2].i);
                 vm->scriptPos = (AnmInstr *)((BYTE *)vm->scriptStart + curInstr->args[1].i);
                 continue;
             }
@@ -1431,7 +1431,7 @@ int SpriteEngine::Step(Sprite *vm)
         case 29:
             vm->interpDuration[4].Set(0);
             vm->interpFrame[4].Set(ANM_INT_ARG(2));
-            vm->unk_c4 = 0;
+            vm->scaleInterpEasing = 0;
             *(D3DXVECTOR2 *)&vm->scaleTween = *(D3DXVECTOR2 *)&vm->scaleY;
             vm->scaleTween.z = ANM_FLOAT_ARG(0);
             vm->colorTween.x = ANM_FLOAT_ARG(1);
@@ -1441,7 +1441,7 @@ int SpriteEngine::Step(Sprite *vm)
             ((BYTE *)&vm->colorTween.z)[3] = curInstr->args[0].i;
             vm->interpDuration[2].Set(0);
             vm->interpFrame[2].Set(ANM_INT_ARG(1));
-            vm->unk_c2 = 0;
+            vm->alphaInterpEasing = 0;
             break;
         case 16:
             vm->blendMode = curInstr->args[0].i;
@@ -1478,20 +1478,20 @@ int SpriteEngine::Step(Sprite *vm)
             vm->interpDuration[0].Set(0);
             break;
         case 79:
-            if (vm->unk_3c == 0)
+            if (vm->waitTimer == 0)
             {
-                vm->unk_3c.Set(ANM_INT_ARG(0));
+                vm->waitTimer.Set(ANM_INT_ARG(0));
             }
             else
             {
-                vm->unk_3c.Sub(1);
+                vm->waitTimer.Sub(1);
             }
-            if (vm->unk_3c <= 0)
+            if (vm->waitTimer <= 0)
             {
-                vm->unk_3c.Set(0);
+                vm->waitTimer.Set(0);
                 break;
             }
-            vm->unk_30.Sub(1);
+            vm->scriptTime.Sub(1);
             goto done;
         case 23:
             vm->shown = 0;
@@ -1499,7 +1499,7 @@ int SpriteEngine::Step(Sprite *vm)
             if (vm->pendingInterrupt == 0)
             {
                 vm->stopped = 1;
-                vm->unk_30.Sub(1);
+                vm->scriptTime.Sub(1);
                 goto done;
             }
         interrupt:
@@ -1520,14 +1520,14 @@ int SpriteEngine::Step(Sprite *vm)
             {
                 if (fallback == NULL)
                 {
-                    vm->unk_30.Sub(1);
+                    vm->scriptTime.Sub(1);
                     goto done;
                 }
                 curInstr = fallback;
             }
             curInstr = (AnmInstr *)((BYTE *)curInstr + curInstr->size);
             vm->scriptPos = curInstr;
-            vm->unk_30.Set(vm->scriptPos->time);
+            vm->scriptTime.Set(vm->scriptPos->time);
             vm->shown = 1;
             continue;
         case 28:
@@ -1571,7 +1571,7 @@ int SpriteEngine::Step(Sprite *vm)
             vm->zWriteDisabled = curInstr->args[0].i;
             break;
         case 31:
-            vm->unk_14b = curInstr->args[0].i;
+            vm->scriptBit14 = curInstr->args[0].i;
             break;
         case 32:
             vm->interpDuration[0].Set(0);
@@ -1592,10 +1592,10 @@ int SpriteEngine::Step(Sprite *vm)
         case 33:
             vm->interpDuration[1].Set(0);
             vm->interpFrame[1].Set(ANM_INT_ARG(0));
-            vm->unk_c1 = curInstr->args[1].i;
-            ((BYTE *)&vm->colorTween.y)[2] = vm->unk_rgb[2];
-            ((BYTE *)&vm->colorTween.y)[1] = vm->unk_rgb[1];
-            ((BYTE *)&vm->colorTween.y)[0] = vm->unk_rgb[0];
+            vm->colorInterpEasing = curInstr->args[1].i;
+            ((BYTE *)&vm->colorTween.y)[2] = vm->colorRgb[2];
+            ((BYTE *)&vm->colorTween.y)[1] = vm->colorRgb[1];
+            ((BYTE *)&vm->colorTween.y)[0] = vm->colorRgb[0];
             ((BYTE *)&vm->colorTween.z)[2] = curInstr->args[2].b[0];
             ((BYTE *)&vm->colorTween.z)[1] = curInstr->args[2].b[1];
             ((BYTE *)&vm->colorTween.z)[0] = curInstr->args[2].b[2];
@@ -1603,14 +1603,14 @@ int SpriteEngine::Step(Sprite *vm)
         case 34:
             vm->interpDuration[2].Set(0);
             vm->interpFrame[2].Set(ANM_INT_ARG(0));
-            vm->unk_c2 = curInstr->args[1].i;
+            vm->alphaInterpEasing = curInstr->args[1].i;
             ((BYTE *)&vm->colorTween.y)[3] = vm->alpha;
             ((BYTE *)&vm->colorTween.z)[3] = curInstr->args[2].i;
             break;
         case 35:
             vm->interpDuration[3].Set(0);
             vm->interpFrame[3].Set(ANM_INT_ARG(0));
-            vm->unk_c3 = curInstr->args[1].i;
+            vm->rotationInterpEasing = curInstr->args[1].i;
             vm->rotateStart = *(D3DXVECTOR3 *)&vm->rotationX;
             vm->rotateEnd.x = ANM_FLOAT_ARG(2);
             vm->rotateEnd.y = ANM_FLOAT_ARG(3);
@@ -1620,7 +1620,7 @@ int SpriteEngine::Step(Sprite *vm)
         case 36:
             vm->interpDuration[4].Set(0);
             vm->interpFrame[4].Set(ANM_INT_ARG(0));
-            vm->unk_c4 = curInstr->args[1].i;
+            vm->scaleInterpEasing = curInstr->args[1].i;
             *(D3DXVECTOR2 *)&vm->scaleTween = *(D3DXVECTOR2 *)&vm->scaleY;
             vm->scaleTween.z = ANM_FLOAT_ARG(2);
             vm->colorTween.x = ANM_FLOAT_ARG(3);
@@ -1789,7 +1789,7 @@ int SpriteEngine::Step(Sprite *vm)
             }
             break;
         jump:
-            vm->unk_30.Set(curInstr->args[3].i);
+            vm->scriptTime.Set(curInstr->args[3].i);
             vm->scriptPos = (AnmInstr *)((BYTE *)vm->scriptStart + curInstr->args[2].i);
             continue;
         }
@@ -1867,11 +1867,11 @@ done:
                 }
                 break;
             case 1:
-                vm->unk_rgb[2] = (((BYTE *)&vm->colorTween.z)[2] - ((BYTE *)&vm->colorTween.y)[2]) * t +
+                vm->colorRgb[2] = (((BYTE *)&vm->colorTween.z)[2] - ((BYTE *)&vm->colorTween.y)[2]) * t +
                                  ((BYTE *)&vm->colorTween.y)[2];
-                vm->unk_rgb[1] = (((BYTE *)&vm->colorTween.z)[1] - ((BYTE *)&vm->colorTween.y)[1]) * t +
+                vm->colorRgb[1] = (((BYTE *)&vm->colorTween.z)[1] - ((BYTE *)&vm->colorTween.y)[1]) * t +
                                  ((BYTE *)&vm->colorTween.y)[1];
-                vm->unk_rgb[0] = (((BYTE *)&vm->colorTween.z)[0] - ((BYTE *)&vm->colorTween.y)[0]) * t +
+                vm->colorRgb[0] = (((BYTE *)&vm->colorTween.z)[0] - ((BYTE *)&vm->colorTween.y)[0]) * t +
                                  ((BYTE *)&vm->colorTween.y)[0];
                 break;
             case 2:
@@ -1921,7 +1921,7 @@ done:
     {
         vm->uvScrollY += 1.0f;
     }
-    vm->unk_30.Tick();
+    vm->scriptTime.Tick();
     this->stepCount++;
     return 0;
 }
