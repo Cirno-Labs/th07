@@ -489,6 +489,28 @@ void SpriteEngine::LoadSprite(int index, SpriteData *sprite)
     this->sprites[index].height = (this->sprites[index].endY - this->sprites[index].startY) / sprite->scaleY;
 }
 
+int SpriteEngine::SetSprite(Sprite *vm, int sprite)
+{
+    if (this->sprites[sprite].sourceFileIndex < 0)
+    {
+        return -1;
+    }
+    vm->spriteIndex = sprite;
+    vm->spriteData = &this->sprites[sprite];
+    D3DXMatrixIdentity(&vm->matrix);
+    D3DXMatrixIdentity(&vm->unk_178);
+    if (vm->spriteData->scaleX < 1.0f)
+    {
+        sprite = 0;
+    }
+    vm->matrix.m[0][0] = vm->spriteData->width / 256.0f;
+    vm->matrix.m[1][1] = vm->spriteData->height / 256.0f;
+    vm->unk_178.m[0][0] = vm->spriteData->width / vm->spriteData->textureWidth * vm->spriteData->scaleX;
+    vm->unk_178.m[1][1] = vm->spriteData->height / vm->spriteData->textureHeight * vm->spriteData->scaleY;
+    vm->unk_138 = vm->matrix;
+    return 0;
+}
+
 void SpriteEngine::RenderTextToTextureIndex(int textureIndex, int x, int y, int width, int unk4, int fontHeight,
                                             int unk6, D3DCOLOR textColor, D3DCOLOR shadowColor, char *text,
                                             float scaleX, float scaleY)

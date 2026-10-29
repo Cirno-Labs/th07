@@ -70,10 +70,11 @@ struct SpriteBase
     int unk_c8;
     unsigned char unk_cc[0x2c];
     D3DXMATRIX matrix;
-    D3DXVECTOR3 unk_138;
-    D3DXVECTOR3 unk_144;
-    D3DXVECTOR3 unk_150;
-    unsigned char unk_15c[0x5c];
+    // A copy of matrix, made by SetSprite.
+    D3DXMATRIX unk_138;
+    // The sprite's size relative to its texture, scaled by the sprite
+    // data's scale, set by SetSprite.
+    D3DXMATRIX unk_178;
     union
     {
         D3DCOLOR color;
