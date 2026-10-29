@@ -1121,6 +1121,9 @@ void RerollStatsChecksumKeys();
 // spell cards in savedCatks. Returns 0, or -1 if the file cannot be
 // read. Not in th06 as a function of its own.
 int LoadScoreFile();
+// Adds one to `*count` while it is under 999999. Its callers pass
+// 999999 as `max`, which it ignores.
+void IncrementStatCounter(DWORD *count, DWORD max);
 
 // The object at 0x49fbf0. Placeholder name; only what is known so far.
 class Unknown49fbf0

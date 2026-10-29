@@ -245,3 +245,11 @@ int LoadScoreFile()
     memcpy(g_Unknown626270.savedCatks, g_Unknown626270.catks, sizeof(g_Unknown626270.catks));
     return 0;
 }
+
+void IncrementStatCounter(DWORD *count, DWORD max)
+{
+    if (*count < 999999)
+    {
+        (*count)++;
+    }
+}
