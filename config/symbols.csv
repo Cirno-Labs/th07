@@ -194,7 +194,7 @@ address,size,name,symbol
 0x00423420,225,Func423420,
 0x00423510,186,Bullet::Bullet,??0Bullet@@QAE@XZ
 0x004235d0,134,Laser::Laser,??0Laser@@QAE@XZ
-0x00423660,204,Func423660,
+0x00423660,204,ShowSpawnSprite,?ShowSpawnSprite@@YIXPAVSprite@@0PAUBullet@@H@Z
 0x00423730,2875,Func423730,
 0x00424290,1113,Func424290,
 0x00424740,600,BulletManager::ClearAll,?ClearAll@BulletManager@@QAEXH@Z
@@ -1751,6 +1751,8 @@ address,size,name,symbol
 0x0049ee40,,g_DefaultControllerMapping,?g_DefaultControllerMapping@@3UControllerMapping@@A
 0x0049eec8,,g_EffectColorsFull,?g_EffectColorsFull@@3PAKA
 0x0049ef38,,g_EffectColors,?g_EffectColors@@3PAKA
+0x0049ef40,,g_BulletColorOffsets16,?g_BulletColorOffsets16@@3PAHA
+0x0049ef80,,g_BulletColorOffsets32,?g_BulletColorOffsets32@@3PAHA
 0x0049efc0,,g_EffectInfos,?g_EffectInfos@@3PAUEffectInfo@@A
 0x0049f40c,,g_PracticeStageNames,?g_PracticeStageNames@@3PAPADA
 0x0049f424,,g_MenuStageNames,?g_MenuStageNames@@3PAPADA

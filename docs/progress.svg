@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">74.35% (516)</tspan> · <tspan class="decompiled">7.93% (55)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">17.58% (122)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">74.50% (517)</tspan> · <tspan class="decompiled">7.93% (55)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">17.44% (121)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="555.41" height="6" x="0" y="0" class="named"/>
-<rect width="59.20" height="6" x="555.41" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="614.61" y="0" class="nonmatching"/>
-<rect width="131.32" height="6" x="615.68" y="0" class="todo"/>
+<rect width="556.48" height="6" x="0" y="0" class="named"/>
+<rect width="59.20" height="6" x="556.48" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="615.68" y="0" class="nonmatching"/>
+<rect width="130.24" height="6" x="616.76" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="named"><title>0x00401000 D3DXMatrixIdentity (173 bytes)</title></rect>
@@ -264,7 +264,7 @@
 <rect width="12" height="12" x="630" y="45" class="todo"><title>0x00423420 Func423420 (225 bytes)</title></rect>
 <rect width="12" height="12" x="645" y="45" class="named"><title>0x00423510 Bullet::Bullet (186 bytes)</title></rect>
 <rect width="12" height="12" x="660" y="45" class="named"><title>0x004235d0 Laser::Laser (134 bytes)</title></rect>
-<rect width="12" height="12" x="675" y="45" class="todo"><title>0x00423660 Func423660 (204 bytes)</title></rect>
+<rect width="12" height="12" x="675" y="45" class="named"><title>0x00423660 ShowSpawnSprite (204 bytes)</title></rect>
 <rect width="12" height="12" x="690" y="45" class="todo"><title>0x00423730 Func423730 (2875 bytes)</title></rect>
 <rect width="12" height="12" x="705" y="45" class="todo"><title>0x00424290 Func424290 (1113 bytes)</title></rect>
 <rect width="12" height="12" x="720" y="45" class="todo"><title>0x00424740 BulletManager::ClearAll (600 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">56.44%</tspan> · <tspan class="decompiled">2.83%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">40.64%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">56.49%</tspan> · <tspan class="decompiled">2.83%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">40.59%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="421.61" height="6" x="0" y="0" class="named"/>
-<rect width="21.15" height="6" x="421.61" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="442.77" y="0" class="nonmatching"/>
-<rect width="303.57" height="6" x="443.43" y="0" class="todo"/>
+<rect width="422.01" height="6" x="0" y="0" class="named"/>
+<rect width="21.15" height="6" x="422.01" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="443.17" y="0" class="nonmatching"/>
+<rect width="303.17" height="6" x="443.83" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1147,7 +1147,7 @@
 <rect width="6.29" height="6.52" x="651.83" y="96.15" class="named"><title>0x0044f690 SpriteEngine::AddQuadToBatch (211 bytes)</title></rect>
 <rect width="6.25" height="6.52" x="661.12" y="96.15" class="todo"><title>0x004202d0 Func4202d0 (210 bytes)</title></rect>
 <rect width="6.25" height="6.52" x="670.36" y="96.15" class="named"><title>0x0045e8f0 File::ReadAll (210 bytes)</title></rect>
-<rect width="5.98" height="6.52" x="679.61" y="96.15" class="todo"><title>0x00423660 Func423660 (204 bytes)</title></rect>
+<rect width="5.98" height="6.52" x="679.61" y="96.15" class="named"><title>0x00423660 ShowSpawnSprite (204 bytes)</title></rect>
 <rect width="5.94" height="6.52" x="688.59" y="96.15" class="named"><title>0x00436a00 MidiPlayer::Rewind (203 bytes)</title></rect>
 <rect width="5.80" height="6.52" x="697.52" y="96.15" class="named"><title>0x00447fd0 ResultScreen::WaitAfterNameEntry (200 bytes)</title></rect>
 <rect width="5.76" height="6.52" x="706.33" y="96.15" class="named"><title>0x00436bc0 MidiPlayer::ReleaseHeader (199 bytes)</title></rect>

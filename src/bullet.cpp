@@ -10,6 +10,25 @@ BulletManager::BulletManager()
     this->Reset();
 }
 
+void ShowSpawnSprite(Sprite *dst, Sprite *src, Bullet *bullet, int color)
+{
+    if (dst->spriteIndex != src->spriteIndex + color)
+    {
+        if (bullet->sprites.sprite0.spriteData->height <= 16.0f)
+        {
+            g_SpriteEngine->SetSprite(dst, src->spriteIndex + g_BulletColorOffsets16[color]);
+        }
+        else if (bullet->sprites.sprite0.spriteData->height <= 32.0f)
+        {
+            g_SpriteEngine->SetSprite(dst, src->spriteIndex + g_BulletColorOffsets32[color]);
+        }
+        else
+        {
+            g_SpriteEngine->SetSprite(dst, src->spriteIndex + color);
+        }
+    }
+}
+
 void BulletManager::Reset()
 {
     memset(this, 0, sizeof(BulletManager));

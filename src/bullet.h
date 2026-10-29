@@ -221,6 +221,16 @@ public:
 ASSERT_SIZE(BulletManager, 0x37a164);
 extern BulletManager g_BulletManager;
 
+// Sprite offsets by color, for bullets up to 16 and up to 32 high, as
+// th06's.
+extern int g_BulletColorOffsets16[16];
+extern int g_BulletColorOffsets32[16];
+
+// Shows sprite `src` in `color` on `dst`, by the size of `bullet`'s
+// sprite, unless `dst` shows it already: th06's SET_BULLET_SPRITE macro
+// for the spawning sprites, out of line and without its 0x207 case.
+void ShowSpawnSprite(Sprite *dst, Sprite *src, Bullet *bullet, int color);
+
 // The colors of effect 0xd by index, as th06's; RegisterChain points
 // g_EffectColors at them.
 extern DWORD g_EffectColorsFull[0x1c];
