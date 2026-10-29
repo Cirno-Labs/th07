@@ -4,6 +4,7 @@
 
 #include "bullet.h"
 #include "enemy.h"
+#include "replay.h"
 #include "unsorted.h"
 
 void MoveEnemyEffects(Enemy *enemy)
@@ -340,4 +341,29 @@ int Enemy::CheckTimerCallback()
     {
         return 0;
     }
+}
+
+void Enemy::Despawn()
+{
+    if (this->flags.deathMode == 0)
+    {
+        this->flags.active = 0;
+    }
+    else
+    {
+        this->flags.shootable = 0;
+    }
+    if (this->flags.isBoss && this->bossIndex < 4)
+    {
+        g_Unknown49fbf0.bossPresent = 0;
+    }
+    if (this->effectCount != 0)
+    {
+        ReleaseEnemyEffects(this);
+    }
+    if (this->flags.isBoss)
+    {
+        g_Unknown9a9b00.bosses[this->bossIndex] = NULL;
+    }
+    g_ReplayManager->unk_d6 |= 0x20;
 }

@@ -91,6 +91,12 @@ struct Enemy
     // it is boss 0, shows the seconds left first. Returns 1 then, else
     // 0.
     int CheckTimerCallback();
+    // After the enemy leaves the play area or its script ends: frees it
+    // (flags.deathMode 0) or makes it unshootable, hides the boss bar
+    // for bosses 0 to 3 and releases its effects, as th06's. A boss
+    // also leaves Unknown9a9b00::bosses. Marks the replay frame with
+    // 0x20.
+    void Despawn();
 
     Sprite sprite;
     Sprite sprites[2];
@@ -229,7 +235,9 @@ public:
     // The template new enemies start from, and the enemies.
     Enemy enemyTemplate;
     Enemy enemies[0x1e1];
-    unsigned char unk_954598[0x178];
+    // The bosses, by Enemy::bossIndex.
+    Enemy *bosses[8];
+    unsigned char unk_9545b8[0x158];
 };
 ASSERT_SIZE(Unknown9a9b00, 0x954710);
 extern Unknown9a9b00 g_Unknown9a9b00;
