@@ -313,9 +313,17 @@ ASSERT_SIZE(PlayerArea, 0x20);
 // One of PlayerBomb's 0x80 parts. Its implicit constructor is 0x43bb10.
 struct PlayerBombPart
 {
-    unsigned char unk_0[0x20];
+    // Reimu A: 0 unused, 1 flying, 2 and up after it bursts, while
+    // unk_4 counts to 30.
+    int state;
+    int unk_4;
+    unsigned char unk_8[0x4];
+    float speed;
+    float angle;
+    D3DXVECTOR3 pos;
     D3DXVECTOR3 unk_20[0x20];
-    unsigned char unk_1a0[0x18];
+    D3DXVECTOR3 velocity;
+    unsigned char unk_1ac[0xc];
     Sprite sprites[8];
     unsigned char unk_1418[0x4];
     Timer timer;
@@ -342,8 +350,10 @@ struct PlayerBomb
     void (*updateFocused)(Player *player);
     void (*drawFocused)(Player *player);
     PlayerBombPart parts[0x80];
+    // Where the player was when the bomb started (Reimu A).
+    D3DXVECTOR3 startPos;
 };
-ASSERT_SIZE(PlayerBomb, 0xa142c);
+ASSERT_SIZE(PlayerBomb, 0xa1438);
 
 // One of the player's lasers, th06's laserTimers grown: its clock and
 // its bullet, NULL when none flies.
@@ -549,7 +559,6 @@ public:
     Timer unk_16a0c;
     unsigned char unk_16a18[0x8];
     PlayerBomb bomb;
-    unsigned char unk_b7e4c[0xc];
     // The angle FireAimedShot's shots fly at, turned by sd->angle + pi / 2.
     float unk_b7e58;
     // The update element and the two draw elements, as in th06
@@ -586,3 +595,12 @@ void SpawnBombAura(Player *player);
 // the bomb's duration, but at least `minimum` spread the same way,
 // both rounded down to tens.
 void SetBombDrain(Player *player, int minimum, float share);
+
+// Reimu A's bomb, th06's UpdateReimuABomb reworked: 140 frames with
+// stateTimer at 200, an aura (SpawnBombAura), all items collected and
+// an area (AddHitboxAreaCircle); from frame 8 one orb every 6 frames (8), fanned
+// out by startPos's side of the play area. Each one slows down by 0.4
+// a frame, flies off backwards and bursts once its speed is below -10
+// (a 256 box of 400 damage, an area, sound 0xf and a shake), then stays
+// a 256 box of 2 damage for 30 frames. Stops at the end.
+void UpdateReimuABomb(Player *player);
