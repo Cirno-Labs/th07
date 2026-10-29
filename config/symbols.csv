@@ -159,7 +159,7 @@ address,size,name,symbol
 0x0041d410,115,Ending::ReadInt,?ReadInt@Ending@@QAEHXZ
 0x0041d490,591,Ending::DrawFade,?DrawFade@Ending@@QAEXXZ
 0x0041d700,3268,Func41d700,
-0x0041e4b0,216,Func41e4b0,
+0x0041e4b0,216,Ending::Load,?Load@Ending@@QAEHPAD@Z
 0x0041e590,508,Func41e590,
 0x0041e790,137,Func41e790,
 0x0041e820,245,Func41e820,?Func41e820@@YIHXZ

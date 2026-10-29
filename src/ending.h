@@ -18,6 +18,9 @@ public:
     int ReadInt();
     // Steps the fade and draws it over the screen.
     void DrawFade();
+    // Loads the script at `path` and starts it. Returns 0, or -1 after
+    // logging an error.
+    int Load(char *path);
 
     ChainElem *calcChain;
     ChainElem *drawChain;

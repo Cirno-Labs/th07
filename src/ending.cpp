@@ -84,3 +84,25 @@ void Ending::DrawFade()
         DrawColorRect(rect, this->fadeColor);
     }
 }
+
+int Ending::Load(char *path)
+{
+    char *oldFile;
+
+    oldFile = this->file;
+    this->file = (char *)LoadFileData(path, 0);
+    if (this->file == NULL)
+    {
+        LogPrintf(&g_Log, "error : エンディングファイルが読み込めない、ファイルが破壊されています\r\n");
+        return -1;
+    }
+    this->cursor = this->file;
+    this->lineDelay = 8;
+    this->lineTimer.Set(0);
+    this->timer.Set(0);
+    if (oldFile != NULL)
+    {
+        free(oldFile);
+    }
+    return 0;
+}

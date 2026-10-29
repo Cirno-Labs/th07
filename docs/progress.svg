@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">62.97% (437)</tspan> · <tspan class="decompiled">7.78% (54)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">29.11% (202)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">63.11% (438)</tspan> · <tspan class="decompiled">7.78% (54)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">28.96% (201)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="470.37" height="6" x="0" y="0" class="named"/>
-<rect width="58.12" height="6" x="470.37" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="528.50" y="0" class="nonmatching"/>
-<rect width="217.43" height="6" x="529.57" y="0" class="todo"/>
+<rect width="471.45" height="6" x="0" y="0" class="named"/>
+<rect width="58.12" height="6" x="471.45" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="529.57" y="0" class="nonmatching"/>
+<rect width="216.35" height="6" x="530.65" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="named"><title>0x00401000 D3DXMatrixIdentity (173 bytes)</title></rect>
@@ -229,7 +229,7 @@
 <rect width="12" height="12" x="105" y="45" class="named"><title>0x0041d410 Ending::ReadInt (115 bytes)</title></rect>
 <rect width="12" height="12" x="120" y="45" class="named"><title>0x0041d490 Ending::DrawFade (591 bytes)</title></rect>
 <rect width="12" height="12" x="135" y="45" class="todo"><title>0x0041d700 Func41d700 (3268 bytes)</title></rect>
-<rect width="12" height="12" x="150" y="45" class="todo"><title>0x0041e4b0 Func41e4b0 (216 bytes)</title></rect>
+<rect width="12" height="12" x="150" y="45" class="named"><title>0x0041e4b0 Ending::Load (216 bytes)</title></rect>
 <rect width="12" height="12" x="165" y="45" class="todo"><title>0x0041e590 Func41e590 (508 bytes)</title></rect>
 <rect width="12" height="12" x="180" y="45" class="todo"><title>0x0041e790 Func41e790 (137 bytes)</title></rect>
 <rect width="12" height="12" x="195" y="45" class="todo"><title>0x0041e820 Func41e820 (245 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">47.92%</tspan> · <tspan class="decompiled">2.79%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">49.19%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">47.98%</tspan> · <tspan class="decompiled">2.79%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">49.14%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="357.99" height="6" x="0" y="0" class="named"/>
-<rect width="20.87" height="6" x="357.99" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="378.86" y="0" class="nonmatching"/>
-<rect width="367.48" height="6" x="379.52" y="0" class="todo"/>
+<rect width="358.41" height="6" x="0" y="0" class="named"/>
+<rect width="20.87" height="6" x="358.41" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="379.28" y="0" class="nonmatching"/>
+<rect width="367.05" height="6" x="379.95" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1136,7 +1136,7 @@
 <rect width="6.33" height="6.80" x="623.88" y="126.08" class="todo"><title>0x0041a210 Func41a210 (218 bytes)</title></rect>
 <rect width="6.33" height="6.75" x="623.88" y="135.88" class="todo"><title>0x0041ac30 Func41ac30 (217 bytes)</title></rect>
 <rect width="6.33" height="6.71" x="623.88" y="145.63" class="todo"><title>0x0040d9a0 Func40d9a0 (216 bytes)</title></rect>
-<rect width="6.33" height="6.71" x="623.88" y="155.34" class="todo"><title>0x0041e4b0 Func41e4b0 (216 bytes)</title></rect>
+<rect width="6.33" height="6.71" x="623.88" y="155.34" class="named"><title>0x0041e4b0 Ending::Load (216 bytes)</title></rect>
 <rect width="6.33" height="6.71" x="623.88" y="165.05" class="named"><title>0x0042d465 GuiMsg::GuiMsg (216 bytes)</title></rect>
 <rect width="6.33" height="6.57" x="623.88" y="174.75" class="named"><title>0x00401e30 AsciiText::RegisterChain (213 bytes)</title></rect>
 <rect width="6.33" height="6.57" x="623.88" y="184.33" class="todo"><title>0x0040c970 Func40c970 (213 bytes)</title></rect>
