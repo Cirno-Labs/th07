@@ -2014,20 +2014,6 @@ void SpriteEngine::RenderTextCentered(Sprite *vm, D3DCOLOR color, D3DCOLOR shado
     vm->flags |= 1;
 }
 
-void SpriteEngine::ReleaseSurface(int surface)
-{
-    if (this->surfaces[surface] != NULL)
-    {
-        this->surfaces[surface]->Release();
-        this->surfaces[surface] = NULL;
-    }
-    if (this->surfacesBackup[surface] != NULL)
-    {
-        this->surfacesBackup[surface]->Release();
-        this->surfacesBackup[surface] = NULL;
-    }
-}
-
 int SpriteEngine::LoadSurface(int surface, char *path)
 {
     IDirect3DSurface8 *srcSurface;
@@ -2093,6 +2079,20 @@ fail:
     }
     free(fileData);
     return -1;
+}
+
+void SpriteEngine::ReleaseSurface(int surface)
+{
+    if (this->surfaces[surface] != NULL)
+    {
+        this->surfaces[surface]->Release();
+        this->surfaces[surface] = NULL;
+    }
+    if (this->surfacesBackup[surface] != NULL)
+    {
+        this->surfacesBackup[surface]->Release();
+        this->surfacesBackup[surface] = NULL;
+    }
 }
 
 void SpriteEngine::CopySurfaceToBackBuffer(int surface, int left, int top, int x, int y)
