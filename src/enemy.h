@@ -68,12 +68,37 @@ struct EnemyScriptVars
 };
 ASSERT_SIZE(EnemyScriptVars, 0x68);
 
-// One of EnemyScriptState's eight unk_8c.
+struct Enemy;
+struct EnemyScriptInstr;
+
+// A function of g_EnemyScriptFuncs: runs with the instruction that
+// started it, or with NULL each frame from RunEnemy.
+typedef void (*EnemyScriptFunc)(Enemy *enemy, EnemyScriptInstr *instr);
+// Moves a variable along a curve: g_EnemyScriptInterps.
+typedef void (*EnemyScriptInterp)(Enemy *enemy, EnemyScriptInstr *instr, float t);
+
+// The functions script opcodes 121 and 122 run, th06's
+// g_EnemyScriptFuncs.
+extern EnemyScriptFunc g_EnemyScriptFuncs[24];
+// How opcode 27 moves a variable, by its kind: ScriptMoveLinear for 0
+// to 6, ScriptMoveHermite for 7.
+extern EnemyScriptInterp g_EnemyScriptInterps[8];
+
+// One of EnemyScriptState's eight interpolations of a variable. Laid
+// out as an instruction (arguments 4 to 8 at +0x1c) for the
+// EnemyScriptInterp it runs.
 struct EnemyScriptLoop
 {
-    int unk_0;
+    EnemyScriptInterp func;
     Timer timer;
-    unsigned char unk_10[0x20];
+    // Its length in frames, its kind (picks func) and easing.
+    int duration;
+    int type;
+    int mode;
+    // The start and end values, and the curve's tangents.
+    float args[4];
+    // The variable it sets.
+    float target;
 };
 ASSERT_SIZE(EnemyScriptLoop, 0x30);
 
@@ -83,11 +108,18 @@ struct EnemyScriptState
 {
     void *code;
     Timer timer;
-    unsigned char unk_10[0x8];
+    // Runs each frame with funcInstr, from opcode 122.
+    EnemyScriptFunc func;
+    EnemyScriptInstr *funcInstr;
     EnemyScriptVars vars;
+    // While above 0 the script waits, holding timer back.
     Timer unk_80;
     EnemyScriptLoop unk_8c[8];
-    unsigned char unk_20c[0x8];
+    // The result of the last laser test, as th06's compareResult.
+    int compareResult;
+    // Set by the timed call of opcode 144: returning from it copies the
+    // variables back into Enemy::unk_2ee8.
+    int unk_210;
     short sub;
     short unk_216;
 };
@@ -172,7 +204,7 @@ struct Enemy
     float speed;
     float acceleration;
     float unk_2b6c;
-    unsigned char unk_2b70[0x4];
+    float unk_2b70;
     // Where shots start, from the position.
     D3DXVECTOR3 shootOffset;
     // A timed move, as th06's: the distance, where it starts, and its
@@ -211,7 +243,10 @@ struct Enemy
     unsigned char unk_2e19[0x3];
     Timer unk_2e1c;
     EnemyFlags flags;
-    unsigned char unk_2e2c[0x3];
+    WORD unk_2e2c;
+    // The turning sprite script last started, as th06's
+    // flags.spriteDirection: 0 still, 1 left, 2 right, 0xff none yet.
+    BYTE spriteDirection;
     // The draw list (EnemyManager::unk_954700) OnUpdate puts it in.
     BYTE unk_2e2f;
     // The sprite scripts for turning, as th06's.
@@ -239,7 +274,7 @@ struct Enemy
     int timerCallbackTime;
     int timerCallbackSub;
     int unk_2ee4;
-    unsigned char unk_2ee8[0x68];
+    EnemyScriptVars unk_2ee8;
     Timer unk_2f50;
     Timer unk_2f5c;
     int unk_2f68;
@@ -324,7 +359,7 @@ public:
     Enemy *Spawn(int sub, D3DXVECTOR3 *pos, int life, int item, int score, BYTE mirrored);
     // Spawn without the mirroring, with the script's variables from
     // `vars` once the subroutine starts.
-    Enemy *SpawnWithVars(short sub, D3DXVECTOR3 *pos, int life, char item, int score,
+    Enemy *SpawnWithVars(int sub, D3DXVECTOR3 *pos, int life, int item, int score,
                       EnemyScriptVars *vars);
     // Kills every enemy but the bosses, as th06's spell card ends do.
     // Those with flags.unk_d, and their first unk_4f32 boxes (every
@@ -398,7 +433,9 @@ public:
     // only while it is set, as th06's spellCardBombed.
     int unk_9545dc;
     Timer unk_9545e0;
-    unsigned char unk_9545ec[0x8];
+    int unk_9545ec;
+    // Set by script opcode 147.
+    int unk_9545f0;
     EnemyTimeline unk_9545f4[16];
     Timer unk_9546f4;
     Enemy *unk_954700[4];

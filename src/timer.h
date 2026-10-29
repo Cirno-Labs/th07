@@ -36,6 +36,11 @@ struct Timer
     void Add(int frames);
     // The same backwards.
     void Sub(int frames);
+    // Add, as th06's operator+=.
+    void operator+=(int frames)
+    {
+        this->Add(frames);
+    }
     // Advances by one frame through App::TickTimer. Inline; defined in
     // unsorted.h.
     void Tick();

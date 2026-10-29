@@ -173,7 +173,7 @@ Enemy *EnemyManager::Spawn(int sub, D3DXVECTOR3 *pos, int life, int item, int sc
     return enemy;
 }
 
-Enemy *EnemyManager::SpawnWithVars(short sub, D3DXVECTOR3 *pos, int life, char item, int score,
+Enemy *EnemyManager::SpawnWithVars(int sub, D3DXVECTOR3 *pos, int life, int item, int score,
                                  EnemyScriptVars *vars)
 {
     Enemy *enemy;
@@ -200,7 +200,7 @@ Enemy *EnemyManager::SpawnWithVars(short sub, D3DXVECTOR3 *pos, int life, char i
             break;
         }
         enemy->color = enemy->sprite.color;
-        enemy->item = item;
+        enemy->item = (char)item;
         if (life >= 0)
         {
             enemy->life = life;

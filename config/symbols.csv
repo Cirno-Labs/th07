@@ -169,7 +169,7 @@ address,size,name,symbol
 0x0041ef70,684,Enemy::Enemy,??0Enemy@@QAE@XZ
 0x0041f220,185,EnemyScriptState::EnemyScriptState,??0EnemyScriptState@@QAE@XZ
 0x0041f2e0,327,EnemyManager::Spawn,?Spawn@EnemyManager@@QAEPAUEnemy@@HPAUD3DXVECTOR3@@HHHE@Z
-0x0041f430,332,EnemyManager::SpawnWithVars,?SpawnWithVars@EnemyManager@@QAEPAUEnemy@@FPAUD3DXVECTOR3@@HDHPAUEnemyScriptVars@@@Z
+0x0041f430,332,EnemyManager::SpawnWithVars,?SpawnWithVars@EnemyManager@@QAEPAUEnemy@@HPAUD3DXVECTOR3@@HHHPAUEnemyScriptVars@@@Z
 0x0041f580,240,MoveEnemyEffects,?MoveEnemyEffects@@YIXPAUEnemy@@@Z
 0x0041f670,115,ReleaseEnemyEffects,?ReleaseEnemyEffects@@YIXPAUEnemy@@@Z
 0x0041f6f0,1599,EnemyTimeline::RunTimeline,?RunTimeline@EnemyTimeline@@QAEXXZ
@@ -1758,7 +1758,9 @@ address,size,name,symbol
 0x0049ef80,,g_BulletColorOffsets32,?g_BulletColorOffsets32@@3PAHA
 0x0049efa0,,g_EnemyItemDrops,?g_EnemyItemDrops@@3PAEA
 0x0049efc0,,g_EffectInfos,?g_EffectInfos@@3PAUEffectInfo@@A
+0x0049f158,,g_EnemyScriptFuncs,?g_EnemyScriptFuncs@@3PAP6IXPAUEnemy@@PAUEnemyScriptInstr@@@ZA
 0x0049f1b8,,g_SpellCardBonuses,?g_SpellCardBonuses@@3PAHA
+0x0049f3ec,,g_EnemyScriptInterps,?g_EnemyScriptInterps@@3PAP6IXPAUEnemy@@PAUEnemyScriptInstr@@M@ZA
 0x0049f40c,,g_PracticeStageNames,?g_PracticeStageNames@@3PAPADA
 0x0049f424,,g_MenuStageNames,?g_MenuStageNames@@3PAPADA
 0x0049f444,,g_MenuDifficultyNames,?g_MenuDifficultyNames@@3PAPADA

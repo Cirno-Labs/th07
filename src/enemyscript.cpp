@@ -8,6 +8,7 @@
 #include "bullet.h"
 #include "effect.h"
 #include "enemy.h"
+#include "item.h"
 #include "player.h"
 #include "screeneffect.h"
 #include "unsorted.h"
@@ -772,6 +773,1337 @@ void EndSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
         g_SoundPlayer.QueueSound(0xf, 0);
     }
     g_Unknown1347b00.spellCardState = 0;
+}
+
+// Moves `lo` towards `hi` with the rank: lo at rank 0, hi at rank 32, as
+// th06's.
+inline int RankLerp(int lo, int hi)
+{
+    return g_Unknown626270.unk_9634 * (hi - lo) / 32 + lo;
+}
+
+inline float RankLerpF(float lo, float hi)
+{
+    return g_Unknown626270.unk_9634 * (hi - lo) / 32.0f + lo;
+}
+
+// The variable argument `n` of `instr` names, through ResolveOperand.
+#define INT_VAR(n) (*ResolveOperand(enemy, &instr->args[n].i, instr->paramMask, (n)))
+#define FLOAT_VAR(n) (*ResolveFloatOperand(enemy, &instr->args[n].f, instr->paramMask, (n)))
+// INT_ARG and FLOAT_ARG for a value `v` whose variable bit is `bit`.
+// `v` must stay unparenthesized: a parenthesized float is loaded onto
+// the FPU instead of being copied through an integer register.
+#define INT_OP(v, bit) ((instr->paramMask & (bit)) ? GetIntOperand(enemy, v) : v)
+#define FLOAT_OP(v, bit) ((instr->paramMask & (bit)) ? GetFloatOperand(enemy, v) : v)
+
+int EnemyScripts::RunEnemy(Enemy *enemy)
+{
+    int value;
+    EnemyScriptInstr *instr;
+
+restart:
+    instr = (EnemyScriptInstr *)enemy->ctx.code;
+    if (enemy->pendingInterrupt >= 0)
+    {
+        goto interrupt;
+    }
+    if (enemy->unk_2ee4 >= 0)
+    {
+        enemy->unk_2f5c.Tick();
+        if (enemy->unk_2f5c.AsFrames() >= enemy->unk_2f50.AsFrames())
+        {
+            enemy->unk_2f5c.Set(0);
+            enemy->savedCtx[enemy->stackDepth] = enemy->ctx;
+            enemy->ctx.vars = enemy->unk_2ee8;
+            g_Unknown1347938.StartSub(&enemy->ctx, enemy->unk_2ee4);
+            if (enemy->stackDepth < 15)
+            {
+                enemy->stackDepth++;
+            }
+            instr = (EnemyScriptInstr *)enemy->ctx.code;
+            enemy->ctx.unk_210 = 1;
+        }
+    }
+loop:
+    if (enemy->ctx.unk_80.AsFrames() > 0)
+    {
+        enemy->ctx.unk_80.Sub(1);
+        enemy->ctx.timer.Sub(1);
+        goto done;
+    }
+    if (enemy->ctx.timer == instr->time)
+    {
+        if ((instr->unk_9 & g_Unknown626270.unk_14) == 0)
+        {
+            goto next;
+        }
+        switch (instr->opcode)
+        {
+        case 1:
+            return -1;
+        case 45:
+            enemy->ctx.unk_80.Set(INT_ARG(0));
+            break;
+        case 3:
+            (*ResolveOperand(enemy, &instr->args[2].i, instr->paramMask, 2))--;
+            if (INT_ARG(2) <= 0)
+            {
+                break;
+            }
+        case 2:
+        jump:
+            enemy->ctx.timer.current = instr->args[0].i;
+            instr = (EnemyScriptInstr *)((char *)instr + instr->args[1].i);
+            goto loop;
+        case 4:
+            INT_VAR(0) = INT_ARG(1);
+            break;
+        case 5:
+            FLOAT_VAR(0) = FLOAT_ARG(1);
+            break;
+        case 40:
+            FLOAT_VAR(0) = AddNormalizeAngle(FLOAT_ARG(0), 0.0f);
+            break;
+        case 6:
+            INT_VAR(0) = g_Rng.GetRandomU32InRange(INT_ARG(1));
+            break;
+        case 7:
+            INT_VAR(0) = g_Rng.GetRandomU32InRange(INT_ARG(1)) + INT_ARG(2);
+            break;
+        case 8:
+            FLOAT_VAR(0) = g_Rng.GetRandomF32InRange(FLOAT_ARG(1));
+            break;
+        case 9:
+            FLOAT_VAR(0) = g_Rng.GetRandomF32InRange(FLOAT_ARG(1)) + FLOAT_ARG(2);
+            break;
+        case 10:
+            INT_VAR(0) = (g_Rng.GetRandomU16() & 1 ? 1 : -1) * INT_ARG(1);
+            break;
+        case 11:
+            FLOAT_VAR(0) = (g_Rng.GetRandomU16() & 1 ? 1.0f : -1.0f) * FLOAT_ARG(1);
+            break;
+        case 17:
+            INT_VAR(0)++;
+            break;
+        case 18:
+            INT_VAR(0)--;
+            break;
+        case 43:
+            INT_VAR(0) = (instr->paramMask & 2) ? GetIntOperand(g_Unknown9a9b00.bosses[INT_ARG(2)], instr->args[1].i)
+                                                : instr->args[1].i;
+            break;
+        case 44:
+            FLOAT_VAR(0) = (instr->paramMask & 2)
+                               ? GetFloatOperand(g_Unknown9a9b00.bosses[INT_ARG(2)], instr->args[1].f)
+                               : instr->args[1].f;
+            break;
+        case 12:
+            INT_VAR(0) = INT_ARG(1) + INT_ARG(2);
+            break;
+        case 19:
+            FLOAT_VAR(0) = FLOAT_ARG(1) + FLOAT_ARG(2);
+            break;
+        case 13:
+            INT_VAR(0) = INT_ARG(1) - INT_ARG(2);
+            break;
+        case 20:
+            FLOAT_VAR(0) = FLOAT_ARG(1) - FLOAT_ARG(2);
+            break;
+        case 14:
+            INT_VAR(0) = INT_ARG(1) * INT_ARG(2);
+            break;
+        case 21:
+            FLOAT_VAR(0) = FLOAT_ARG(1) * FLOAT_ARG(2);
+            break;
+        case 15:
+            INT_VAR(0) = INT_ARG(1) / INT_ARG(2);
+            break;
+        case 22:
+            FLOAT_VAR(0) = FLOAT_ARG(1) / FLOAT_ARG(2);
+            break;
+        case 16:
+            INT_VAR(0) = INT_ARG(1) % INT_ARG(2);
+            break;
+        case 23:
+            FLOAT_VAR(0) = fmodf(FLOAT_ARG(1), FLOAT_ARG(2));
+            break;
+        case 24:
+            FLOAT_VAR(0) = sinf(FLOAT_ARG(1));
+            break;
+        case 25:
+            FLOAT_VAR(0) = cosf(FLOAT_ARG(1));
+            break;
+        case 26:
+            FLOAT_VAR(0) = atan2f(FLOAT_ARG(4) - FLOAT_ARG(2), FLOAT_ARG(3) - FLOAT_ARG(1));
+            break;
+        case 159:
+        {
+            float scale;
+
+            scale = FLOAT_ARG(1) - FLOAT_ARG(2);
+            FLOAT_VAR(0) = scale * FLOAT_ARG(3) + FLOAT_ARG(2);
+            break;
+        }
+        case 27:
+        {
+            int i;
+            EnemyScriptLoop *loop;
+
+            for (loop = enemy->ctx.unk_8c, i = 0; i < 8; i++, loop++)
+            {
+                if (loop->func != NULL && loop->target != instr->args[0].f)
+                {
+                    continue;
+                }
+                loop->timer.Set(0);
+                loop->target = instr->args[0].f;
+                loop->duration = INT_ARG(1);
+                loop->type = INT_ARG(2);
+                loop->mode = INT_ARG(3);
+                loop->func = g_EnemyScriptInterps[loop->type];
+                loop->args[0] = FLOAT_ARG(4);
+                loop->args[1] = FLOAT_ARG(5);
+                loop->args[2] = FLOAT_ARG(6);
+                loop->args[3] = FLOAT_ARG(7);
+                break;
+            }
+            break;
+        }
+        case 28:
+            if (INT_ARG(0) == INT_ARG(1))
+            {
+                goto jumpIf;
+            }
+            break;
+        case 29:
+            if (FLOAT_ARG(0) == FLOAT_ARG(1))
+            {
+                goto jumpIf;
+            }
+            break;
+        case 30:
+            if (INT_ARG(0) != INT_ARG(1))
+            {
+                goto jumpIf;
+            }
+            break;
+        case 31:
+            if (FLOAT_ARG(0) != FLOAT_ARG(1))
+            {
+                goto jumpIf;
+            }
+            break;
+        case 32:
+            if (INT_ARG(0) < INT_ARG(1))
+            {
+                goto jumpIf;
+            }
+            break;
+        case 33:
+            if (FLOAT_ARG(0) < FLOAT_ARG(1))
+            {
+                goto jumpIf;
+            }
+            break;
+        case 34:
+            if (INT_ARG(0) <= INT_ARG(1))
+            {
+                goto jumpIf;
+            }
+            break;
+        case 35:
+            if (FLOAT_ARG(0) <= FLOAT_ARG(1))
+            {
+                goto jumpIf;
+            }
+            break;
+        case 36:
+            if (INT_ARG(0) > INT_ARG(1))
+            {
+                goto jumpIf;
+            }
+            break;
+        case 37:
+            if (FLOAT_ARG(0) > FLOAT_ARG(1))
+            {
+                goto jumpIf;
+            }
+            break;
+        case 38:
+            if (INT_ARG(0) >= INT_ARG(1))
+            {
+                goto jumpIf;
+            }
+            break;
+        case 39:
+            if (FLOAT_ARG(0) >= FLOAT_ARG(1))
+            {
+                goto jumpIf;
+            }
+            break;
+        jumpIf:
+            enemy->ctx.timer.current = instr->args[2].i;
+            instr = (EnemyScriptInstr *)((char *)instr + instr->args[3].i);
+            goto loop;
+        case 41:
+            value = instr->args[0].i;
+            enemy->ctx.code = (char *)instr + instr->size;
+            if (!enemy->flags.unk_15)
+            {
+                enemy->savedCtx[enemy->stackDepth] = enemy->ctx;
+            }
+            g_Unknown1347938.StartSub(&enemy->ctx, value);
+            memcpy(enemy->ctx.vars.ints3, g_Unknown1347938.globalInts, sizeof(int) * 8);
+            if (!enemy->flags.unk_15 && enemy->stackDepth < 15)
+            {
+                enemy->stackDepth++;
+            }
+            goto restart;
+        case 42:
+            if (enemy->flags.unk_15)
+            {
+                DebugPrint("error : no Stack Ret\r\n");
+            }
+            enemy->stackDepth--;
+            if (enemy->ctx.unk_210)
+            {
+                enemy->unk_2ee8 = enemy->ctx.vars;
+                enemy->ctx.unk_210 = 0;
+            }
+            enemy->ctx = enemy->savedCtx[enemy->stackDepth];
+            goto restart;
+        case 95:
+            g_SpriteEngine->StartScript(&enemy->sprite, INT_ARG(0) + 0x900);
+            break;
+        case 97:
+            if (INT_ARG(0) >= 2)
+            {
+                DebugPrint("error : sub anim overflow\r\n");
+            }
+            if (INT_ARG(1) >= 0)
+            {
+                g_SpriteEngine->StartScript(&enemy->sprites[INT_ARG(0)], INT_ARG(1) + 0x900);
+            }
+            else
+            {
+                enemy->sprites[INT_ARG(0)].scriptIndex = -1;
+            }
+            break;
+        case 46:
+            enemy->pos.x = FLOAT_ARG(0);
+            enemy->pos.y = FLOAT_ARG(1);
+            enemy->pos.z = FLOAT_ARG(2);
+            enemy->ClampPos();
+            break;
+        case 47:
+            enemy->velocity.x = FLOAT_ARG(0);
+            enemy->velocity.y = FLOAT_ARG(1);
+            enemy->velocity.z = FLOAT_ARG(2);
+            enemy->angle = atan2f(enemy->velocity.y, enemy->velocity.x);
+            enemy->flags.moveMode = 0;
+            break;
+        case 48:
+            enemy->angularVelocity = FLOAT_ARG(0);
+            enemy->flags.moveMode = 1;
+            break;
+        case 53:
+            enemy->angle = g_Player.AngleFrom(&enemy->pos) + FLOAT_ARG(0);
+            enemy->speed = FLOAT_ARG(1);
+            enemy->flags.moveMode = 1;
+            break;
+        case 49:
+            enemy->speed = FLOAT_ARG(0);
+            enemy->flags.moveMode = 1;
+            break;
+        case 50:
+            enemy->acceleration = FLOAT_ARG(0);
+            enemy->flags.moveMode = 1;
+            break;
+        case 59:
+            enemy->flags.moveMode = 1;
+            enemy->moveTimer.Set(enemy->moveDuration = INT_ARG(0));
+            break;
+        case 60:
+            enemy->flags.moveMode = 3;
+            enemy->moveTimer.Set(enemy->moveDuration = INT_ARG(0));
+            break;
+        case 61:
+            enemy->flags.moveMode = 2;
+            enemy->moveTimer.Set(enemy->moveDuration = INT_ARG(0));
+            break;
+        case 64:
+        case 65:
+        case 66:
+        case 67:
+        case 68:
+        case 69:
+        case 70:
+        case 71:
+        case 72:
+        {
+            EnemyScriptArg *bulletArgs;
+            BulletShooter *bs;
+
+            if (enemy->life <= 0)
+            {
+                break;
+            }
+            bulletArgs = instr->args;
+            bs = &enemy->shooter;
+            value = *(short *)&bulletArgs[0];
+            bs->sprite = INT_OP(value, 1);
+            bs->aimMode = instr->opcode - 64;
+            bs->count1 = INT_OP(bulletArgs[1].i, 4);
+            bs->count2 = INT_OP(bulletArgs[2].i, 8);
+            bs->pos = enemy->pos + enemy->shootOffset;
+            bs->angle1 = FLOAT_OP(bulletArgs[5].f, 0x40);
+            bs->speed1 = FLOAT_OP(bulletArgs[3].f, 0x10);
+            bs->angle2 = FLOAT_OP(bulletArgs[6].f, 0x80);
+            bs->speed2 = FLOAT_OP(bulletArgs[4].f, 0x20);
+            if (!g_Unknown12fe0c8)
+            {
+                bs->count1 += RankLerp(enemy->rankCount1Low, enemy->rankCount1High);
+                if (bs->count1 <= 0)
+                {
+                    bs->count1 = 1;
+                }
+                bs->count2 += RankLerp(enemy->rankCount2Low, enemy->rankCount2High);
+                if (bs->count2 <= 0)
+                {
+                    bs->count2 = 1;
+                }
+                if (bs->speed1 != 0.0f)
+                {
+                    bs->speed1 += RankLerpF(enemy->rankSpeedLow, enemy->rankSpeedHigh);
+                    if (bs->speed1 < 0.3f)
+                    {
+                        bs->speed1 = 0.3f;
+                    }
+                }
+                bs->speed2 += RankLerpF(enemy->rankSpeedLow, enemy->rankSpeedHigh) / 2.0f;
+                if (bs->speed2 < 0.3f)
+                {
+                    bs->speed2 = 0.3f;
+                }
+            }
+            bs->unk_c2 = 0;
+            bs->flags = bulletArgs[7].i;
+            value = ((short *)bulletArgs)[1];
+            bs->color = INT_OP(value, 2);
+            if (!enemy->flags.holdFire)
+            {
+                g_BulletManager.FirePattern(bs);
+            }
+            break;
+        }
+        case 79:
+        {
+            BulletCommand *cmd;
+
+            cmd = &enemy->shooter.commands[INT_ARG(0)];
+            cmd->flag = INT_ARG(1);
+            cmd->unk_14 = INT_ARG(2);
+            cmd->unk_8 = INT_ARG(3);
+            cmd->unk_c = INT_ARG(4);
+            cmd->unk_0 = FLOAT_ARG(5);
+            cmd->unk_4 = FLOAT_ARG(6);
+            break;
+        }
+        case 98:
+            enemy->deathEffect = *(char *)instr->args;
+            enemy->unk_2e15 = ((BYTE *)instr->args)[1];
+            enemy->unk_2e16 = ((BYTE *)instr->args)[2];
+            break;
+        case 73:
+            enemy->shootInterval = INT_ARG(0);
+            if (enemy->shootInterval != 0)
+            {
+                enemy->shootInterval += RankLerp(enemy->shootInterval / 5, -enemy->shootInterval / 5);
+                enemy->shootTimer.Set(0);
+            }
+            break;
+        case 74:
+            enemy->shootInterval = INT_ARG(0);
+            if (enemy->shootInterval != 0)
+            {
+                enemy->shootInterval += RankLerp(enemy->shootInterval / 5, -enemy->shootInterval / 5);
+                enemy->shootTimer.Set(g_Rng.GetRandomU32InRange(enemy->shootInterval));
+            }
+            break;
+        case 75:
+            enemy->flags.holdFire = 1;
+            break;
+        case 76:
+            enemy->flags.holdFire = 0;
+            break;
+        case 77:
+            enemy->shooter.pos = enemy->pos + enemy->shootOffset;
+            g_BulletManager.FirePattern(&enemy->shooter);
+            break;
+        case 78:
+            enemy->shootOffset.x = FLOAT_ARG(0);
+            enemy->shootOffset.y = FLOAT_ARG(1);
+            enemy->shootOffset.z = FLOAT_ARG(2);
+            break;
+        case 82:
+        case 83:
+        {
+            EnemyScriptArg *laserArgs;
+            BulletShooter *shooter;
+
+            laserArgs = instr->args;
+            shooter = &enemy->laserShooter;
+            shooter->pos = enemy->pos + enemy->shootOffset;
+            shooter->sprite = *(short *)&laserArgs[0];
+            shooter->color = INT_OP(((short *)laserArgs)[1], 2);
+            shooter->angle1 = FLOAT_OP(laserArgs[1].f, 4);
+            shooter->speed1 = FLOAT_OP(laserArgs[2].f, 8);
+            shooter->exFloats[0] = FLOAT_OP(laserArgs[3].f, 0x10);
+            shooter->exFloats[1] = FLOAT_OP(laserArgs[4].f, 0x20);
+            shooter->exFloats[2] = FLOAT_OP(laserArgs[5].f, 0x40);
+            shooter->exFloats[3] = laserArgs[6].f;
+            shooter->exInts[0] = laserArgs[7].i;
+            shooter->exInts[1] = laserArgs[8].i;
+            shooter->exInts[2] = laserArgs[9].i;
+            shooter->exInts[3] = laserArgs[10].i;
+            shooter->laserEndHitFrames = laserArgs[11].i;
+            shooter->flags = laserArgs[12].i;
+            if (instr->opcode == 83)
+            {
+                shooter->aimMode = 0;
+            }
+            else
+            {
+                shooter->aimMode = 1;
+            }
+            enemy->lasers[enemy->laserIndex] = g_BulletManager.SpawnLaser(shooter);
+            break;
+        }
+        case 84:
+            enemy->laserIndex = INT_ARG(0);
+            break;
+        case 85:
+            value = INT_ARG(0);
+            if (enemy->lasers[value] != NULL)
+            {
+                enemy->lasers[value]->angle = AddNormalizeAngle(enemy->lasers[value]->angle, FLOAT_ARG(1));
+            }
+            break;
+        case 152:
+            value = INT_ARG(0);
+            if (enemy->lasers[value] != NULL)
+            {
+                enemy->lasers[value]->angle = FLOAT_ARG(1);
+            }
+            break;
+        case 86:
+            value = INT_ARG(0);
+            if (enemy->lasers[value] != NULL)
+            {
+                enemy->lasers[value]->angle = g_Player.AngleFrom(&enemy->lasers[value]->pos) + FLOAT_ARG(1);
+            }
+            break;
+        case 87:
+            value = INT_ARG(0);
+            if (enemy->lasers[value] != NULL)
+            {
+                enemy->lasers[value]->pos.x = FLOAT_ARG(1) + enemy->pos.x;
+                enemy->lasers[value]->pos.y = FLOAT_ARG(2) + enemy->pos.y;
+                enemy->lasers[value]->pos.z = FLOAT_ARG(3) + enemy->pos.z;
+            }
+            break;
+        case 156:
+            value = INT_ARG(0);
+            if (enemy->lasers[value] != NULL)
+            {
+                enemy->lasers[value]->unk_4e9 = INT_ARG(1);
+            }
+            break;
+        case 88:
+            value = INT_ARG(0);
+            if (enemy->lasers[value] != NULL && enemy->lasers[value]->active)
+            {
+                enemy->ctx.compareResult = 0;
+            }
+            else
+            {
+                enemy->ctx.compareResult = 1;
+            }
+            break;
+        case 89:
+            value = INT_ARG(0);
+            if (enemy->lasers[value] != NULL && enemy->lasers[value]->active && enemy->lasers[value]->state < 2)
+            {
+                enemy->lasers[value]->state = 2;
+                enemy->lasers[value]->timer.Set(0);
+                enemy->lasers[value]->width = enemy->lasers[value]->unk_4b8;
+            }
+            break;
+        case 134:
+        {
+            int i;
+
+            for (i = 0; i < 0x20; i++)
+            {
+                enemy->lasers[i] = NULL;
+            }
+            break;
+        }
+        case 157:
+            value = INT_ARG(0);
+            if (enemy->lasers[value] != NULL)
+            {
+                enemy->lasers[value]->maxLength = FLOAT_ARG(1);
+            }
+            break;
+        case 158:
+            value = INT_ARG(0);
+            if (enemy->lasers[value] != NULL)
+            {
+                enemy->lasers[value]->startOffset = FLOAT_ARG(1);
+                enemy->lasers[value]->endOffset = FLOAT_ARG(2);
+            }
+            break;
+        case 147:
+            g_Unknown9a9b00.unk_9545f0 = INT_ARG(0);
+            break;
+        case 99:
+            if (INT_ARG(0) >= 0)
+            {
+                g_Unknown9a9b00.bosses[INT_ARG(0)] = enemy;
+                g_Unknown49fbf0.bossPresent = 1;
+                g_Unknown49fbf0.bossHealth = 1.0f;
+                enemy->flags.isBoss = 1;
+                enemy->bossIndex = INT_ARG(0);
+                g_AsciiText.SetUnkB7cInterrupt(enemy->bossIndex, 1);
+            }
+            else
+            {
+                if (enemy->bossIndex < 4)
+                {
+                    g_Unknown49fbf0.bossPresent = 0;
+                }
+                g_Unknown9a9b00.bosses[enemy->bossIndex] = NULL;
+                enemy->flags.isBoss = 0;
+                g_AsciiText.SetUnkB7cInterrupt(enemy->bossIndex, 2);
+                ReleaseEnemyEffects(enemy);
+            }
+            break;
+        case 100:
+        {
+            EnemyScriptArg *effectArgs;
+
+            effectArgs = instr->args;
+            enemy->effects[enemy->effectCount] =
+                g_EffectManager.SpawnEffect(0xd, &enemy->pos, 1, g_EffectColors[effectArgs[0].i]);
+            enemy->effects[enemy->effectCount]->axis = *(D3DXVECTOR3 *)&effectArgs[1];
+            enemy->effectRadius = effectArgs[4].f;
+            enemy->effectCount++;
+            break;
+        }
+        case 54:
+            if (INT_ARG(0) <= 0)
+            {
+                enemy->angle = AddNormalizeAngle(FLOAT_ARG(2), 0.0f);
+                enemy->speed = FLOAT_ARG(3);
+                enemy->flags.moveMode = 1;
+                enemy->moveTimer.Set(enemy->moveDuration = INT_ARG(0));
+            }
+            else
+            {
+                ScriptMoveAngle(enemy, instr);
+            }
+            break;
+        case 55:
+            ScriptMovePos(enemy, instr);
+            break;
+        case 56:
+            enemy->moveTimer.Set(enemy->moveDuration = INT_ARG(0));
+            enemy->moveStart.x = FLOAT_ARG(1);
+            enemy->moveStart.y = FLOAT_ARG(2);
+            enemy->moveStart.z = FLOAT_ARG(3);
+            enemy->unk_2b5c = FLOAT_ARG(4);
+            enemy->unk_2b60 = FLOAT_ARG(5);
+            enemy->unk_2b6c = FLOAT_ARG(6);
+            enemy->unk_2b70 = FLOAT_ARG(7);
+            enemy->flags.moveMode = 3;
+            break;
+        case 57:
+            enemy->unk_2b6c = FLOAT_ARG(0);
+            enemy->unk_2b70 = FLOAT_ARG(1);
+            break;
+        case 58:
+            enemy->unk_2b5c = FLOAT_ARG(0);
+            enemy->unk_2b60 = FLOAT_ARG(1);
+            break;
+        case 62:
+            enemy->lowerBound[0] = FLOAT_ARG(0);
+            enemy->lowerBound[1] = FLOAT_ARG(1);
+            enemy->upperBound[0] = FLOAT_ARG(2);
+            enemy->upperBound[1] = FLOAT_ARG(3);
+            enemy->flags.clampPos = 1;
+            break;
+        case 63:
+            enemy->flags.clampPos = 0;
+            break;
+        case 51:
+            FLOAT_VAR(0) = g_Rng.GetRandomF32InRange(FLOAT_ARG(2) - FLOAT_ARG(1)) + FLOAT_ARG(1);
+            break;
+        case 52:
+        {
+            float angle;
+
+            if (g_Player.position.x < enemy->pos.x)
+            {
+                angle = AddNormalizeAngle(g_Rng.GetRandomF32InRange(1.5707964f) + 2.3561945f, 0.0f);
+            }
+            else
+            {
+                angle = g_Rng.GetRandomF32InRange(1.5707964f) - 0.7853982f;
+            }
+            if (enemy->lowerBound[0] + 96.0f > enemy->pos.x)
+            {
+                if (angle > 1.5707964f)
+                {
+                    angle = 3.1415927f - angle;
+                }
+                else if (angle < -1.5707964f)
+                {
+                    angle = -3.1415927f - angle;
+                }
+            }
+            if (enemy->upperBound[0] - 96.0f < enemy->pos.x)
+            {
+                if (angle < 1.5707964f && angle >= 0.0f)
+                {
+                    angle = 3.1415927f - enemy->angle;
+                }
+                else if (angle > -1.5707964f && angle <= 0.0f)
+                {
+                    angle = -3.1415927f - angle;
+                }
+            }
+            if (enemy->lowerBound[1] + 48.0f > enemy->pos.y && angle < 0.0f)
+            {
+                angle = -angle;
+            }
+            if (enemy->upperBound[1] - 48.0f < enemy->pos.y && angle > 0.0f)
+            {
+                angle = -angle;
+            }
+            FLOAT_VAR(0) = angle;
+            break;
+        }
+        case 96:
+            enemy->turnStill = ((short *)instr->args)[0];
+            enemy->turnStillFromLeft = ((short *)instr->args)[1];
+            enemy->turnStillFromRight = ((short *)instr->args)[2];
+            enemy->turnLeft = ((short *)instr->args)[3];
+            enemy->turnRight = ((short *)instr->args)[4];
+            enemy->spriteDirection = 0xff;
+            break;
+        case 101:
+            enemy->hitboxSize.x = FLOAT_ARG(0);
+            enemy->hitboxSize.y = FLOAT_ARG(1);
+            enemy->hitboxSize.z = FLOAT_ARG(2);
+            break;
+        case 153:
+            enemy->unk_2b48.x = FLOAT_ARG(0);
+            enemy->unk_2b48.y = FLOAT_ARG(1);
+            enemy->unk_2b48.z = FLOAT_ARG(2);
+            break;
+        case 102:
+            enemy->flags.unk_9 = instr->args[0].i;
+            break;
+        case 103:
+            enemy->flags.unk_a = instr->args[0].i;
+            break;
+        case 104:
+            enemy->flags.unk_c = instr->args[0].i;
+            break;
+        case 105:
+            g_SoundPlayer.QueueSound(INT_ARG(0), 0);
+            break;
+        case 106:
+            enemy->flags.deathMode = instr->args[0].i;
+            break;
+        case 107:
+            enemy->deathSub = *(BYTE *)instr->args;
+            break;
+        case 108:
+            enemy->interrupts[INT_ARG(1)] = INT_ARG(0);
+            break;
+        case 109:
+            enemy->pendingInterrupt = INT_ARG(0);
+        interrupt:
+            enemy->ctx.code = (char *)instr + instr->size;
+            if (!enemy->flags.unk_15)
+            {
+                enemy->savedCtx[enemy->stackDepth] = enemy->ctx;
+            }
+            g_Unknown1347938.StartSub(&enemy->ctx, enemy->interrupts[enemy->pendingInterrupt]);
+            if (enemy->stackDepth < 15)
+            {
+                enemy->stackDepth++;
+            }
+            enemy->pendingInterrupt = -1;
+            goto restart;
+        case 110:
+        {
+            int i;
+
+            enemy->life = enemy->maxLife = INT_ARG(0);
+            if (!enemy->bossIndex && enemy->flags.isBoss)
+            {
+                for (i = 0; i < 8; i++)
+                {
+                    g_Unknown49fbf0.unk_54[i] = 0.0f;
+                    g_Unknown49fbf0.unk_34[i] = 0.0f;
+                }
+            }
+            break;
+        }
+        case 139:
+        {
+            int idx;
+
+            idx = INT_ARG(0);
+            g_Unknown49fbf0.SetBossSection(idx, INT_ARG(1) / (float)enemy->maxLife,
+                                           INT_ARG(2) / (float)enemy->maxLife);
+            g_Unknown49fbf0.SetBossSectionColor(idx, INT_ARG(3));
+            break;
+        }
+        case 90:
+            StartSpellCard(enemy, instr);
+            break;
+        case 91:
+            EndSpellCard(enemy, instr);
+            break;
+        case 111:
+            enemy->callbackTimer.Set(INT_ARG(0));
+            break;
+        case 112:
+            enemy->lifeCallbackLife[0] = INT_ARG(0);
+            break;
+        case 113:
+            enemy->lifeCallbackSub[0] = INT_ARG(0);
+            break;
+        case 148:
+            enemy->lifeCallbackLife[INT_ARG(0)] = INT_ARG(1);
+            enemy->lifeCallbackSub[INT_ARG(0)] = INT_ARG(2);
+            break;
+        case 114:
+            enemy->timerCallbackTime = INT_ARG(0);
+            enemy->callbackTimer.Set(0);
+            break;
+        case 115:
+            enemy->timerCallbackSub = INT_ARG(0);
+            break;
+        case 144:
+            enemy->unk_2f50.Set(INT_ARG(0));
+            enemy->unk_2ee4 = INT_ARG(1);
+            enemy->unk_2f5c.Set(0);
+            enemy->unk_2ee8 = enemy->ctx.vars;
+            break;
+        case 116:
+            enemy->flags.shootable = instr->args[0].i;
+            break;
+        case 117:
+            g_EffectManager.SpawnEffect(INT_ARG(0), &enemy->pos, INT_ARG(1), INT_VAR(2));
+            break;
+        case 118:
+        {
+            D3DXVECTOR3 velocity;
+
+            velocity.x = FLOAT_ARG(3);
+            velocity.y = FLOAT_ARG(4);
+            velocity.z = FLOAT_ARG(5);
+            g_EffectManager.SpawnEffectWithVelocity(INT_ARG(0), &enemy->pos, &velocity, INT_ARG(1), INT_VAR(2));
+            break;
+        }
+        case 119:
+        {
+            int count;
+            int i;
+            D3DXVECTOR3 pos;
+
+            count = INT_ARG(0);
+            for (i = 0; i < count; i++)
+            {
+                pos = enemy->pos;
+                pos[0] += g_Rng.GetRandomF32InRange(128.0f) - 64.0f;
+                pos[1] += g_Rng.GetRandomF32InRange(128.0f) - 64.0f;
+                if ((int)g_Unknown626270.stats->power < 0x80)
+                {
+                    g_ItemManager.SpawnItem(&pos, i == 0 ? 2 : 0, 0);
+                }
+                else
+                {
+                    g_ItemManager.SpawnItem(&pos, 1, 0);
+                }
+            }
+            break;
+        }
+        case 154:
+        {
+            int count;
+            int i;
+            D3DXVECTOR3 pos;
+
+            count = INT_ARG(0);
+            for (i = 0; i < count; i++)
+            {
+                pos = enemy->pos;
+                pos[0] += g_Rng.GetRandomF32InRange(128.0f) - 64.0f;
+                pos[1] += g_Rng.GetRandomF32InRange(128.0f) - 64.0f;
+                g_ItemManager.SpawnItem(&pos, 1, 0);
+            }
+            break;
+        }
+        case 120:
+            enemy->flags.rotateSprite = instr->args[0].i;
+            break;
+        case 121:
+            g_EnemyScriptFuncs[INT_ARG(0)](enemy, instr);
+            break;
+        case 122:
+            if (INT_ARG(0) >= 0)
+            {
+                enemy->ctx.func = g_EnemyScriptFuncs[INT_ARG(0)];
+                enemy->ctx.funcInstr = instr;
+            }
+            else
+            {
+                enemy->ctx.func = NULL;
+            }
+            break;
+        case 123:
+            enemy->ctx.timer += INT_ARG(0);
+            break;
+        case 124:
+            g_ItemManager.SpawnItem(&enemy->pos, INT_ARG(0), 0);
+            break;
+        case 125:
+            g_Unknown1347b00.unk_50f4 = INT_ARG(0);
+            break;
+        case 126:
+            g_Unknown49fbf0.SetBossLives(INT_ARG(0));
+            g_Unknown626270.progressFrames += 1800;
+            break;
+        case 92:
+        {
+            Enemy *child;
+            EnemySpawnArgs spawn;
+            D3DXVECTOR3 pos;
+
+            if (enemy->life > 0)
+            {
+                spawn = *(EnemySpawnArgs *)instr->args;
+                pos.x = FLOAT_OP(spawn.pos.x, 2);
+                pos.y = FLOAT_OP(spawn.pos.y, 4);
+                pos.z = FLOAT_OP(spawn.pos.z, 8);
+                child = g_Unknown9a9b00.SpawnWithVars(spawn.sub, &pos, INT_ARG(4), INT_ARG(5), INT_ARG(6),
+                                                        &enemy->ctx.vars);
+            }
+            break;
+        }
+        case 93:
+        {
+            Enemy *child;
+            EnemySpawnArgs spawn;
+            D3DXVECTOR3 pos;
+
+            if (enemy->life > 0)
+            {
+                spawn = *(EnemySpawnArgs *)instr->args;
+                pos.x = FLOAT_OP(spawn.pos.x, 2);
+                pos.y = FLOAT_OP(spawn.pos.y, 4);
+                pos.z = FLOAT_OP(spawn.pos.z, 8);
+                pos += enemy->pos;
+                child = g_Unknown9a9b00.SpawnWithVars(spawn.sub, &pos, INT_ARG(4), INT_ARG(5), INT_ARG(6),
+                                                         &enemy->ctx.vars);
+            }
+            break;
+        }
+        case 94:
+            g_Unknown9a9b00.ClearEnemiesForBonus(8000, 0);
+            break;
+        case 128:
+            enemy->sprite.pendingInterrupt = INT_ARG(0);
+            break;
+        case 129:
+            enemy->sprites[instr->args[0].i].pendingInterrupt = instr->args[1].i;
+            break;
+        case 80:
+            g_BulletManager.ClearAll(1);
+            break;
+        case 81:
+            if (INT_ARG(0) >= 0)
+            {
+                enemy->shooter.sound = INT_ARG(0);
+                enemy->shooter.flags |= 0x200;
+            }
+            else
+            {
+                enemy->shooter.flags &= ~0x200;
+            }
+            enemy->shooter.unk_cc = INT_ARG(1);
+            break;
+        case 130:
+            enemy->flags.unk_15 = instr->args[0].i;
+            break;
+        case 131:
+            enemy->rankSpeedLow = FLOAT_ARG(0);
+            enemy->rankSpeedHigh = FLOAT_ARG(1);
+            enemy->rankCount1Low = INT_ARG(2);
+            enemy->rankCount1High = INT_ARG(3);
+            enemy->rankCount2Low = INT_ARG(4);
+            enemy->rankCount2High = INT_ARG(5);
+            break;
+        case 132:
+            enemy->flags.unk_b = instr->args[0].i;
+            break;
+        case 133:
+            enemy->timerCallbackSub = enemy->deathSub;
+            enemy->callbackTimer.Set(0);
+            break;
+        case 135:
+            enemy->flags.keepSpellCard = instr->args[0].i;
+            break;
+        case 136:
+            enemy->flags.unk_d = instr->args[0].i;
+            enemy->unk_2e2f = 2;
+            break;
+        case 137:
+            enemy->flags.unk_17 = instr->args[0].i;
+            break;
+        case 138:
+            enemy->unk_4f30 = instr->args[0].i;
+            enemy->unk_4f32 = INT_ARG(1);
+            enemy->unk_4f34 = INT_ARG(2);
+            enemy->unk_4f36 = INT_ARG(3);
+            if (enemy->unk_4f30 & 8)
+            {
+                g_SpriteEngine->FillSpriteStripVertices(&enemy->sprite, (VertexTex1DiffuseXyzrwh *)enemy->unk_39f8,
+                                                        enemy->unk_4f32 / enemy->unk_4f36 * 2);
+            }
+            break;
+        case 140:
+            g_EffectManager.colorScale[0] = FLOAT_ARG(0);
+            g_EffectManager.colorScale[1] = FLOAT_ARG(1);
+            g_EffectManager.colorScale[2] = FLOAT_ARG(2);
+            g_EffectManager.colorScale[3] = FLOAT_ARG(3);
+            break;
+        case 142:
+            enemy->unk_4f38.Set(INT_ARG(0));
+            break;
+        case 143:
+            g_BulletManager.ConvertBulletsToItems(&enemy->pos, FLOAT_ARG(0));
+            break;
+        case 145:
+            if (g_Unknown9a9b00.bosses[INT_ARG(0)] != NULL)
+            {
+                g_Unknown9a9b00.bosses[INT_ARG(0)]->pendingInterrupt = INT_ARG(1);
+            }
+            break;
+        case 146:
+            g_BulletManager.ClearAll(0);
+            break;
+        case 149:
+            enemy->flags.unk_19 = INT_ARG(0);
+            if (!enemy->flags.unk_19)
+            {
+                enemy->effects[24]->pos.x = FLOAT_ARG(1);
+                enemy->effects[24]->pos.y = FLOAT_ARG(2);
+                enemy->effects[24]->pos.z = FLOAT_ARG(3);
+            }
+            break;
+        case 150:
+            enemy->sprite.rotationZ = FLOAT_ARG(0);
+            break;
+        case 151:
+            *ResolveFloatOperand(enemy, &instr->args[1].f, instr->paramMask, 1) = sinf(FLOAT_ARG(2)) * FLOAT_ARG(3);
+            FLOAT_VAR(0) = cosf(FLOAT_ARG(2)) * FLOAT_ARG(3);
+            break;
+        case 155:
+            if ((g_Player.position.x < enemy->pos.x && enemy->pos.x > 96.0f) || enemy->pos.x > 288.0f)
+            {
+                FLOAT_VAR(0) = AddNormalizeAngle(g_Rng.GetRandomF32InRange(1.5707964f) + 2.3561945f, 0.0f);
+            }
+            else
+            {
+                FLOAT_VAR(0) = g_Rng.GetRandomF32InRange(1.5707964f) - 0.7853982f;
+            }
+            break;
+        case 160:
+            g_Unknown626270.AddBonusPoints(INT_ARG(0));
+            break;
+        case 161:
+            enemy->flags.unk_1b = INT_ARG(0);
+            break;
+        }
+    next:
+        instr = (EnemyScriptInstr *)((char *)instr + instr->size);
+        goto loop;
+    }
+done:
+    switch (enemy->flags.moveMode)
+    {
+    case 3:
+    {
+        // Unused, but they take their slots.
+        float radius;
+        Vector2 polar;
+
+        enemy->unk_2b5c = AddNormalizeAngle(enemy->unk_2b5c, g_App.unk_178 * enemy->unk_2b60);
+        enemy->unk_2b6c = g_App.unk_178 * enemy->unk_2b70 + enemy->unk_2b6c;
+        polar.SetPolar(enemy->unk_2b5c, enemy->unk_2b6c);
+        enemy->velocity.x = polar.x + enemy->moveStart.x - enemy->pos.x;
+        enemy->velocity.y = polar.y + enemy->moveStart.y - enemy->pos.y;
+        enemy->angle = atan2f(enemy->velocity.y, enemy->velocity.x);
+        if (enemy->moveDuration > 0)
+        {
+            enemy->moveTimer.Sub(1);
+            if (enemy->moveTimer <= 0)
+            {
+                enemy->flags.moveMode = 0;
+            }
+        }
+        break;
+    }
+    case 1:
+    {
+        // Unused, as th06's vec.
+        D3DXVECTOR3 vec;
+
+        enemy->angle = AddNormalizeAngle(enemy->angle, g_App.unk_178 * enemy->angularVelocity);
+        enemy->speed = g_App.unk_178 * enemy->acceleration + enemy->speed;
+        ((Vector2 *)&enemy->velocity)->SetPolar(enemy->angle, enemy->speed);
+        enemy->velocity.z = 0.0f;
+        if (enemy->moveDuration > 0)
+        {
+            enemy->moveTimer.Sub(1);
+            if (enemy->moveTimer <= 0)
+            {
+                enemy->flags.moveMode = 0;
+            }
+        }
+        break;
+    }
+    case 2:
+    {
+        float t;
+
+        enemy->moveTimer.Sub(1);
+        t = 1.0f - enemy->moveTimer.AsFloat() / enemy->moveDuration;
+        if (t < 0.0f)
+        {
+            t = 0.0f;
+        }
+        switch (enemy->flags.moveEasing)
+        {
+        case 1:
+            t = t * t;
+            break;
+        case 2:
+            t = t * t * t;
+            break;
+        case 3:
+            t = t * t * t * t;
+            break;
+        case 4:
+            t = (t = 1.0f - t) * t;
+            t = 1.0f - t;
+            break;
+        case 5:
+            t = (t = 1.0f - t) * t * t;
+            t = 1.0f - t;
+            break;
+        case 6:
+            t = (t = 1.0f - t) * t * t * t;
+            t = 1.0f - t;
+            break;
+        }
+        enemy->velocity = t * enemy->moveDelta + enemy->moveStart - enemy->pos;
+        if (enemy->flags.mirrored)
+        {
+            enemy->velocity.x = -enemy->velocity.x;
+        }
+        enemy->angle = atan2f(enemy->velocity.y, enemy->velocity.x);
+        if (enemy->moveTimer <= 0)
+        {
+            enemy->flags.moveMode = 0;
+            enemy->pos = enemy->moveStart + enemy->moveDelta;
+            enemy->velocity = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+        }
+        break;
+    }
+    }
+    if (enemy->life > 0)
+    {
+        if (enemy->shootInterval > 0)
+        {
+            enemy->shootTimer.Tick();
+            if (enemy->shootTimer >= enemy->shootInterval)
+            {
+                enemy->shooter.pos = enemy->pos + enemy->shootOffset;
+                g_BulletManager.FirePattern(&enemy->shooter);
+                enemy->shootTimer.Set(0);
+            }
+        }
+        if (enemy->turnLeft >= 0)
+        {
+            int dir;
+
+            dir = 0;
+            if (!enemy->flags.mirrored)
+            {
+                if (enemy->velocity.x < -0.01f)
+                {
+                    dir = 1;
+                }
+                else if (enemy->velocity.x > 0.01f)
+                {
+                    dir = 2;
+                }
+            }
+            else
+            {
+                if (enemy->velocity.x < -0.01f)
+                {
+                    dir = 2;
+                }
+                else if (enemy->velocity.x > 0.01f)
+                {
+                    dir = 1;
+                }
+            }
+            if (enemy->spriteDirection != dir)
+            {
+                switch (dir)
+                {
+                case 0:
+                    if (enemy->spriteDirection == 0xff)
+                    {
+                        g_SpriteEngine->StartScript(&enemy->sprite, enemy->turnStill + 0x900);
+                    }
+                    else if (enemy->spriteDirection == 1)
+                    {
+                        g_SpriteEngine->StartScript(&enemy->sprite, enemy->turnStillFromLeft + 0x900);
+                    }
+                    else
+                    {
+                        g_SpriteEngine->StartScript(&enemy->sprite, enemy->turnStillFromRight + 0x900);
+                    }
+                    break;
+                case 1:
+                    g_SpriteEngine->StartScript(&enemy->sprite, enemy->turnLeft + 0x900);
+                    break;
+                case 2:
+                    g_SpriteEngine->StartScript(&enemy->sprite, enemy->turnRight + 0x900);
+                    break;
+                }
+                enemy->spriteDirection = dir;
+            }
+        }
+        if (enemy->ctx.func != NULL)
+        {
+            enemy->ctx.func(enemy, enemy->ctx.funcInstr);
+        }
+        {
+            int i;
+            BOOL moved;
+            float time;
+            EnemyScriptLoop *l;
+            D3DXVECTOR3 savedPos;
+
+            moved = FALSE;
+            l = enemy->ctx.unk_8c;
+            savedPos = enemy->pos;
+            for (i = 0; i < 8; i++, l++)
+            {
+                if (l->func != NULL)
+                {
+                    l->timer.Tick();
+                    if (l->timer >= l->duration)
+                    {
+                        l->timer.Set(l->duration);
+                    }
+                    time = l->timer.AsFloat() / l->duration;
+                    switch (l->mode)
+                    {
+                    case 1:
+                        time = time * time;
+                        break;
+                    case 2:
+                        time = time * time * time;
+                        break;
+                    case 3:
+                        time = time * time * time * time;
+                        break;
+                    case 4:
+                        time = (time = 1.0f - time) * time;
+                        time = 1.0f - time;
+                        break;
+                    case 5:
+                        time = (time = 1.0f - time) * time * time;
+                        time = 1.0f - time;
+                        break;
+                    case 6:
+                        time = (time = 1.0f - time) * time * time * time;
+                        time = 1.0f - time;
+                        break;
+                    }
+                    l->func(enemy, (EnemyScriptInstr *)l, time);
+                    if (l->timer >= l->duration)
+                    {
+                        l->func = NULL;
+                    }
+                    // A position variable: the move becomes a velocity below.
+                    if (l->target == 10018.0f || l->target == 10019.0f || l->target == 10020.0f)
+                    {
+                        moved = TRUE;
+                    }
+                }
+            }
+            if (moved)
+            {
+                enemy->velocity.x = enemy->pos.x - savedPos.x;
+                enemy->velocity.y = enemy->pos.y - savedPos.y;
+                enemy->angle = atan2f(enemy->velocity.y, enemy->velocity.x);
+                enemy->pos = savedPos;
+            }
+        }
+    }
+    enemy->ctx.code = instr;
+    enemy->ctx.timer.Tick();
+    if (enemy->flags.isBoss && !enemy->bossIndex && g_Unknown12fe0c8 && g_Unknown12fe0c4)
+    {
+        if (!enemy->flags.keepSpellCard)
+        {
+            g_Unknown12fe0cc = g_SpellCardBonuses[g_Unknown12fe0d8] -
+                               g_Unknown12fe0d4 * g_Unknown9a9b00.unk_9545e0.AsFloat() / 60.0f;
+            g_Unknown12fe0cc -= g_Unknown12fe0cc % 10;
+        }
+        g_Unknown9a9b00.unk_9545e0.Tick();
+    }
+    if (enemy->flags.isBoss && g_Unknown626270.stage >= 7)
+    {
+        if (g_Player.bomb.running && g_Unknown12fe0c8 && g_Unknown12fe0d8 >= 0x76)
+        {
+            enemy->flags.unk_1a = 1;
+            enemy->unk_2e2c = 1;
+        }
+        else if (enemy->unk_2e2c > 0)
+        {
+            enemy->unk_2e2c--;
+        }
+        else
+        {
+            enemy->flags.unk_1a = 0;
+        }
+    }
+    return 0;
 }
 
 void WarpToBoss(Enemy *enemy, EnemyScriptInstr *instr)

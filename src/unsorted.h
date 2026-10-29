@@ -1456,6 +1456,23 @@ public:
     {
         this->bossTimer = seconds;
     }
+    // Sets boss bar section `idx` to end at `end` and start at `start`.
+    void SetBossSection(int idx, float end, float start)
+    {
+        this->unk_54[idx] = end;
+        this->unk_34[idx] = start;
+    }
+    // Sets the color of boss bar section `idx`.
+    void SetBossSectionColor(int idx, int color)
+    {
+        this->unk_74[idx] = color;
+    }
+    // Sets unk_18, the boss lives marked beside the bar, as th06's
+    // SetBossLives.
+    void SetBossLives(int lives)
+    {
+        this->unk_18 = lives;
+    }
     // Sets bossHealth, as th06's SetBossHealth.
     void SetBossHealth(float health)
     {
@@ -1562,6 +1579,16 @@ struct EnemyScriptHeader
     void *timelines[16];
 };
 
+// The arguments of the spawning opcodes (92 and 93), as th06's.
+struct EnemySpawnArgs
+{
+    int sub;
+    D3DXVECTOR3 pos;
+    int life;
+    int item;
+    int score;
+};
+
 struct EnemyTimelineEntry;
 
 // The object at 0x1347938, where th06 has its EnemyScripts.
@@ -1575,8 +1602,13 @@ public:
     // Starts subroutine `sub` in `ctx`, from its first instruction with
     // both timers at 0, as th06's StartSub. Returns 0.
     int StartSub(EnemyScriptState *ctx, short sub);
-    // Runs `enemy`'s script for a frame, as th06's RunEnemy: -1 once
-    // it ends.
+    // Runs `enemy`'s script for a frame, as th06's RunEnemy, grown to
+    // 161 opcodes: first a pending interrupt, or the timed call that
+    // opcode 144 set up; then the instructions due this frame unless
+    // the wait of opcode 45 holds them; then the movement (modes 1 to 3,
+    // with six easings), the shooting, the turning sprite scripts, the
+    // function of opcode 122, the interpolations of opcode 27, and boss
+    // 0's spell card bonus. Returns -1 once the script ends, else 0.
     int RunEnemy(Enemy *enemy);
     // Frees the script file, as th06's Release.
     void Release();
