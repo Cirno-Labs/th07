@@ -422,7 +422,7 @@ int LoadScoreFile()
     if (g_Unknown626270.unk_93d8 & 1)
     {
         g_Unknown626270.stats->highScore = g_Unknown626270.pscrs[g_Unknown626270.shotIndex][g_Unknown626270.stage][g_Unknown626270.difficulty].score;
-        g_Unknown626270.pscrs[g_Unknown626270.shotIndex][g_Unknown626270.stage][g_Unknown626270.difficulty].unk_0c++;
+        g_Unknown626270.pscrs[g_Unknown626270.shotIndex][g_Unknown626270.stage][g_Unknown626270.difficulty].playCount++;
         g_Unknown626270.stats->unk_10 = 0;
     }
     ReleaseScoreDat(data);

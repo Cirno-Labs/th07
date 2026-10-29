@@ -2011,7 +2011,7 @@ int MainMenu::DrawPracticeScores()
         g_AsciiText.AddFormat(
             &pos, "%s %9d0 (%3d)", g_PracticeStageNames[i],
             g_Unknown626270.pscrs[g_Unknown626270.character * 2 + g_Unknown626270.shotType][i][g_App.defaultDifficulty].score,
-            g_Unknown626270.pscrs[g_Unknown626270.character * 2 + g_Unknown626270.shotType][i][g_App.defaultDifficulty].unk_0c);
+            g_Unknown626270.pscrs[g_Unknown626270.character * 2 + g_Unknown626270.shotType][i][g_App.defaultDifficulty].playCount);
         pos.y += 16.0f;
     }
     g_AsciiText.SetColor(0xffffffff);

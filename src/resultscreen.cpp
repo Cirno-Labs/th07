@@ -328,7 +328,7 @@ int LoadPracticeScores(void *scoreDat, Pscr *pscrs)
                 p->shot = i3;
                 p->difficulty = k1;
                 p->stage = j0;
-                p->unk_0c = 0;
+                p->playCount = 0;
             }
         }
     }

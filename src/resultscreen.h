@@ -128,7 +128,7 @@ struct Pscr
     WORD size2;
     BYTE version;
     BYTE unk_09[0x3];
-    DWORD unk_0c;
+    DWORD playCount;
     DWORD score;
     BYTE shot;
     BYTE difficulty;
