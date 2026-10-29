@@ -670,6 +670,8 @@ extern WORD g_Buttons;
 extern WORD g_PrevButtons;
 // The buttons the game plays by this frame: g_Buttons, or a replay's.
 extern WORD g_Unknown4b9e50;
+// g_Unknown4b9e50 the frame before.
+extern WORD g_Unknown4b9e58;
 // 1 on every 8th frame once the buttons have been held unchanged for 30
 // frames, for key repeat.
 extern WORD g_ButtonRepeat;

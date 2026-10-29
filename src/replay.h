@@ -13,6 +13,15 @@ struct ReplayStage
     int score;
 };
 
+// One frame of a replay.
+struct ReplayFrame
+{
+    // The buttons held.
+    WORD input;
+    // ReplayManager::unk_d6 for the frame.
+    WORD events;
+};
+
 // The start of a replay file. Only the fields known so far.
 struct ReplayHeader
 {
@@ -55,8 +64,24 @@ public:
     // set, which it clears), keeps the random seed in unk_d4 and clears
     // the count of random numbers. Returns 1. Not in th06.
     static int RecordOnUpdate2(ReplayManager *replay);
+    // The update callback while recording: while bit 2 of
+    // Unknown626270::unk_93d8 is set, plays by g_Buttons and, unless the
+    // config's unk_25 or bit 3 of App::unk_18c is set, records them with
+    // unk_d6, and every 30 frames the frame rate (0x80 set while
+    // App::unk_2a4 is), then counts the frame. Returns 1.
+    static int RecordOnUpdate(ReplayManager *replay);
 
-    unsigned char unk_0[0xd4];
+    // The current frame.
+    int frame;
+    unsigned char unk_4[0x80];
+    // The last frame recorded or played; [stage - 1] is where that
+    // stage's frames end (stages past 7 share the last).
+    ReplayFrame *cursor;
+    ReplayFrame *stageEnds[7];
+    // The same for the frame rates kept every 30 frames.
+    BYTE *extraCursor;
+    BYTE *extraEnds[7];
+    unsigned char unk_c4[0x10];
     // The random seed at the start of the frame.
     WORD unk_d4;
     // Bits set during a frame: 2 when the player is hit.
