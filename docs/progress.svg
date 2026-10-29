@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">70.61% (490)</tspan> · <tspan class="decompiled">7.93% (55)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">21.33% (148)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">70.75% (491)</tspan> · <tspan class="decompiled">7.93% (55)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">21.18% (147)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="527.42" height="6" x="0" y="0" class="named"/>
-<rect width="59.20" height="6" x="527.42" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="586.62" y="0" class="nonmatching"/>
-<rect width="159.30" height="6" x="587.70" y="0" class="todo"/>
+<rect width="528.50" height="6" x="0" y="0" class="named"/>
+<rect width="59.20" height="6" x="528.50" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="587.70" y="0" class="nonmatching"/>
+<rect width="158.23" height="6" x="588.77" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="named"><title>0x00401000 D3DXMatrixIdentity (173 bytes)</title></rect>
@@ -116,7 +116,7 @@
 <rect width="12" height="12" x="660" y="0" class="named"><title>0x004074c0 Unknown1347b00::RegisterChain (270 bytes)</title></rect>
 <rect width="12" height="12" x="675" y="0" class="named"><title>0x004075d0 Unknown1347b00::RemoveChain (50 bytes)</title></rect>
 <rect width="12" height="12" x="690" y="0" class="named"><title>0x00407610 Unknown1347b00::Load (474 bytes)</title></rect>
-<rect width="12" height="12" x="705" y="0" class="todo"><title>0x004077f0 Func4077f0 (263 bytes)</title></rect>
+<rect width="12" height="12" x="705" y="0" class="named"><title>0x004077f0 Unknown1347b00::StepObjects (263 bytes)</title></rect>
 <rect width="12" height="12" x="720" y="0" class="todo"><title>0x00407900 Func407900 (2167 bytes)</title></rect>
 <rect width="12" height="12" x="735" y="0" class="todo"><title>0x00408180 Unknown1347b00::Func408180 (304 bytes)</title></rect>
 <rect width="12" height="12" x="0" y="15" class="todo"><title>0x004082b0 Unknown1347b00::Func4082b0 (315 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">53.19%</tspan> · <tspan class="decompiled">2.83%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">43.89%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">53.26%</tspan> · <tspan class="decompiled">2.83%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">43.82%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="397.34" height="6" x="0" y="0" class="named"/>
-<rect width="21.15" height="6" x="397.34" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="418.49" y="0" class="nonmatching"/>
-<rect width="327.85" height="6" x="419.15" y="0" class="todo"/>
+<rect width="397.85" height="6" x="0" y="0" class="named"/>
+<rect width="21.15" height="6" x="397.85" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="419.01" y="0" class="nonmatching"/>
+<rect width="327.33" height="6" x="419.67" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1084,7 +1084,7 @@
 <rect width="7.57" height="7.51" x="645.48" y="65.73" class="named"><title>0x0045bc63 MainMenu::MoveMenuCursorLR (265 bytes)</title></rect>
 <rect width="7.57" height="7.51" x="656.05" y="65.73" class="named"><title>0x0045c7d0 CSoundManager::SetPrimaryBufferFormat (265 bytes)</title></rect>
 <rect width="7.53" height="7.51" x="666.62" y="65.73" class="named"><title>0x0043d880 UpdateFiring (264 bytes)</title></rect>
-<rect width="7.49" height="7.51" x="677.15" y="65.73" class="todo"><title>0x004077f0 Func4077f0 (263 bytes)</title></rect>
+<rect width="7.49" height="7.51" x="677.15" y="65.73" class="named"><title>0x004077f0 Unknown1347b00::StepObjects (263 bytes)</title></rect>
 <rect width="7.49" height="7.51" x="687.63" y="65.73" class="named"><title>0x0041bec0 EffectInitDiverge (263 bytes)</title></rect>
 <rect width="7.45" height="7.51" x="698.12" y="65.73" class="todo"><title>0x0040a6b0 Func40a6b0 (262 bytes)</title></rect>
 <rect width="7.45" height="7.51" x="708.57" y="65.73" class="todo"><title>0x00418eb0 Func418eb0 (262 bytes)</title></rect>

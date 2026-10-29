@@ -1544,6 +1544,9 @@ public:
     // sprites' scripts, as th06's (the ANMs are loaded by AddedCallback
     // here). Returns 0, or -1 on failure.
     int Load(char *dataPath);
+    // Runs one frame of the scripts of each animated object's sprites,
+    // as th06's. Returns 0.
+    int StepObjects();
     // Releases the background ANMs (slots 5 to 9) and frees the sprites
     // and the data. Returns 0.
     static int DeletedCallback(Unknown1347b00 *stage);

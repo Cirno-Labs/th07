@@ -199,3 +199,47 @@ int Unknown1347b00::Load(char *dataPath)
     }
     return 0;
 }
+
+int Unknown1347b00::StepObjects()
+{
+    StageQuad *altQuad;
+    int busy;
+    int i;
+    Sprite *sprite;
+    StageObject *obj;
+    StageQuad *piece;
+
+    for (i = 0; i < this->objectCount; i++)
+    {
+        obj = this->objects[i];
+        if (obj->flags & 1)
+        {
+            busy = 0;
+            piece = obj->quads;
+            while (piece->type >= 0)
+            {
+                sprite = &this->sprites[piece->spriteIndex];
+                switch (piece->type)
+                {
+                case 0:
+                    g_SpriteEngine->Step(sprite);
+                    break;
+                case 1:
+                    altQuad = piece;
+                    g_SpriteEngine->Step(sprite);
+                    break;
+                }
+                if (sprite->scriptPos != NULL)
+                {
+                    busy++;
+                }
+                piece = (StageQuad *)((char *)piece + piece->size);
+            }
+            if (busy == 0)
+            {
+                obj->flags &= ~1;
+            }
+        }
+    }
+    return 0;
+}
