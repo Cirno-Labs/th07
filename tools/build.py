@@ -10,7 +10,11 @@ calls and reads the original game.
 
 The standalone exe links src/ without src/dll/ but with src/exe/ (the
 game's data and global objects, which the DLL takes from the original)
-against the real libraries, plus the original's resources.
+against the real libraries, plus the original's resources. Like the
+original, its objects are compiled with /GL and linked with /LTCG, which
+puts each object's inline functions first. Those objects hold no machine
+code, so the exe's are compiled again into build/obj_gl; the DLL and
+compare.py keep reading build/obj.
 """
 import collections, csv, glob, json, os, struct, subprocess, sys
 from concurrent.futures import ThreadPoolExecutor
@@ -19,12 +23,14 @@ import coff
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OBJ = "build/obj"
+OBJ_GL = "build/obj_gl"  # the standalone exe's /GL objects
 SJIS = "build/src"  # src/ converted to Shift-JIS
 DLL = "build/th07.dll"
 EXE = "build/th07.exe"
 EXE_MAP = "build/th07_exe.map"  # the DLL's map is build/th07.map
 ORIGINAL = "build/th07_100b.exe"
 CFLAGS = ["/Od", "/Ob1", "/Gr", "/GX", "/Oi", "/Gy", "/GF"]
+GL_CFLAGS = CFLAGS + ["/GL"]  # the exe's; a file opts out with `-/GL`
 GLUE_PREFIX = "dll_"  # objects from src/dll/, the DLL's own code
 DLL_ONLY, EXE_ONLY = "dll", "exe"  # subdirectories of src/ only one target builds
 TIMEOUT = 60  # cl spins forever after a fatal error
@@ -86,15 +92,17 @@ def to_sjis(text):
     return bytes(out)
 
 
-def compile_all(target=DLL):
-    """Compiles src/ from a Shift-JIS copy in build/src/.
+def compile_all(target=DLL, gl=False):
+    """Compiles src/ from a Shift-JIS copy in build/src/, into build/obj or,
+    with `gl`, with GL_CFLAGS into build/obj_gl.
 
     Sources are UTF-8, but the game's strings are Shift-JIS and MSVC 7
     copies string bytes as they are, so each file is converted first.
     An object is rebuilt when its source or any header is newer, or when
-    its flags changed: build/obj/flags.json records them.
+    its flags changed: each directory's flags.json records them.
     """
-    os.makedirs(OBJ, exist_ok=True)
+    obj_dir, base = (OBJ_GL, GL_CFLAGS) if gl else (OBJ, CFLAGS)
+    os.makedirs(obj_dir, exist_ok=True)
     for src in glob.glob("src/**/*.*", recursive=True):
         copy = os.path.join(SJIS, os.path.relpath(src, "src"))
         if not os.path.exists(copy) or os.path.getmtime(copy) < os.path.getmtime(src):
@@ -104,16 +112,16 @@ def compile_all(target=DLL):
             with open(copy, "wb") as f:
                 f.write(to_sjis(text))
     headers = max((os.path.getmtime(h) for h in glob.glob("src/**/*.h", recursive=True)), default=0)
-    record = os.path.join(OBJ, "flags.json")
+    record = os.path.join(obj_dir, "flags.json")
     try:
         with open(record) as f:
             built = json.load(f)
     except (OSError, ValueError):
         built = {}
     objs, stale = [], []
-    for src, obj in sources(target):
+    for src, obj in sources(target, obj_dir):
         objs.append(obj)
-        flags = file_flags(src)
+        flags = file_flags(src, base)
         if not (os.path.exists(obj) and os.path.getmtime(obj) > max(os.path.getmtime(src), headers)
                 and built.get(obj) == flags):
             stale.append((src, obj, flags))
@@ -142,23 +150,23 @@ def compile_all(target=DLL):
     return objs
 
 
-def sources(target=DLL):
+def sources(target=DLL, obj_dir=OBJ):
     """Yields (source, object) for each .cpp in src/ that `target` builds."""
     skip = EXE_ONLY if target == DLL else DLL_ONLY
     for src in sorted(glob.glob(os.path.join(ROOT, "src/**/*.cpp"), recursive=True)):
         rel = os.path.relpath(src, os.path.join(ROOT, "src"))
         if rel.split(os.sep)[0] == skip:
             continue
-        yield os.path.relpath(src, ROOT), os.path.join(OBJ, rel.replace("/", "_")[:-4] + ".obj")
+        yield os.path.relpath(src, ROOT), os.path.join(obj_dir, rel.replace("/", "_")[:-4] + ".obj")
 
 
-def file_flags(src):
-    """The flags for one file: CFLAGS, changed by a `// cflags: ...` first
+def file_flags(src, base=CFLAGS):
+    """The flags for one file: `base`, changed by a `// cflags: ...` first
     line. `/X` adds a flag, `-/X` removes a default one."""
     with open(src) as f:
         first = f.readline()
     changes = first.split(":", 1)[1].split() if first.startswith("// cflags:") else []
-    flags = [f for f in CFLAGS if "-" + f not in changes]
+    flags = [f for f in base if "-" + f not in changes]
     return flags + [c for c in changes if not c.startswith("-")]
 
 
@@ -236,17 +244,20 @@ def link_order(objs, symbols):
     return sorted(objs, key=median)
 
 
-def link_exe(objs):
-    """Links the standalone game with the libraries the original was built
-    with: the static multithreaded CRT, D3DX8 and the import libraries."""
+def link_exe(objs, gl_objs):
+    """Links the standalone game from the /GL objects `gl_objs` with the
+    libraries the original was built with: the static multithreaded CRT,
+    D3DX8 and the import libraries. `objs` are the same files' plain
+    objects, which give the link order."""
     import rsrc
-    res = os.path.join(OBJ, "th07.res")
+    res = os.path.join(OBJ_GL, "th07.res")
     rsrc.write_res(res, rsrc.resources(ORIGINAL))
     # Objects and libraries in the original's order: its import table
     # lists DINPUT8, DSOUND and d3d8 first and ole32 last, D3DX8 follows
     # the game code and the CRT comes last.
-    objs = link_order(objs, read_symbols())
-    tool("link", "/SUBSYSTEM:WINDOWS", "/FIXED", "/OPT:NOWIN98", "/NODEFAULTLIB:libc.lib",
+    gl = dict(zip(objs, gl_objs))
+    objs = [gl[o] for o in link_order(objs, read_symbols())]
+    tool("link", "/LTCG", "/SUBSYSTEM:WINDOWS", "/FIXED", "/OPT:NOWIN98", "/NODEFAULTLIB:libc.lib",
          "/MAP:" + win(EXE_MAP), "/OUT:" + win(EXE), *map(win, objs), win(res),
          "dinput8.lib", "dsound.lib", "d3d8.lib", "d3dx8.lib", "dxguid.lib", "winmm.lib",
          "kernel32.lib", "user32.lib", "gdi32.lib", "ole32.lib", "libcmt.lib")
@@ -270,7 +281,7 @@ def copy_header_fields(src, dst):
 def main():
     os.chdir(ROOT)
     if sys.argv[1:] == ["exe"]:
-        link_exe(compile_all(EXE))
+        link_exe(compile_all(EXE), compile_all(EXE, gl=True))
         return
     objs = compile_all()
     hooks = write_hooks(objs, read_symbols())

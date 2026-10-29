@@ -68,7 +68,9 @@ This is the th06 toolchain: Visual C++ .NET 2002 (MSVC 7.0, `cl`
 13.00.9466) with the DirectX 8 SDK. The difference is that most C++
 objects were compiled with `/GL` (product id 44, confirmed by linking a
 test object with `/GL` and `/LTCG`). So far that does not show in the
-code: functions match when compiled without it. `/GL` needs
+code: functions match when compiled without it. It shows in the layout:
+link-time code generation puts each object's inline functions first, so
+the standalone exe is built with `/GL` and `/LTCG`. `/GL` needs
 `msobj10.dll` from the Visual Studio CD in the compiler's directory.
 
 ## Workflow
@@ -96,10 +98,13 @@ Everything runs headless, so it works over SSH. `just` lists the recipes.
    well as matching. Steps drive it and take screenshots, e.g.
    `just run wait:12 key:Escape key:z wait:2 shot:menu` writes
    `build/shots/menu.png`.
-6. Standalone (`just exe`): links the same objects, without the hook
+6. Standalone (`just exe`): compiles the same sources again with `/GL`
+   into `build/obj_gl/` and links them with `/LTCG`, without the hook
    DLL, into `build/th07.exe`, a game that needs nothing from the
-   original executable. It needs the game's data and global objects in
-   `src/exe/`. `just exe STEPS` runs it like `just run`.
+   original executable. `/GL` objects hold no machine code, so the DLL
+   and `just compare` keep using the plain objects in `build/obj/`. It
+   needs the game's data and global objects in `src/exe/`.
+   `just exe STEPS` runs it like `just run`.
 
 ### Hooking
 
