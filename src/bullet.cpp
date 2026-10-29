@@ -137,3 +137,12 @@ void BulletShooter::SetStopTurnCommand(int idx, int unk_14, int unk_8, int unk_c
     cmd->unk_0 = unk_0;
     cmd->unk_4 = unk_4;
 }
+
+void BulletShooter::SetShooterAccelerateCommand(int idx, int unk_14, int unk_8, float unk_0, float unk_4)
+{
+    BulletCommand *cmd = this->StartCommand(idx, unk_14, 0x10);
+
+    cmd->unk_8 = unk_8;
+    cmd->unk_0 = unk_0;
+    cmd->unk_4 = unk_4;
+}
