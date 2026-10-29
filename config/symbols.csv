@@ -565,7 +565,7 @@ address,size,name,symbol
 0x0044e8e0,308,SpriteEngine::SetSprite,?SetSprite@SpriteEngine@@QAEHPAVSprite@@H@Z
 0x0044ea20,188,SpriteEngine::SetScript,?SetScript@SpriteEngine@@QAEXPAVSprite@@PAX@Z
 0x0044eae0,992,SpriteEngine::SetRenderStateForSprite,?SetRenderStateForSprite@SpriteEngine@@QAEXPAVSprite@@@Z
-0x0044eec0,237,Func44eec0,
+0x0044eec0,237,SpriteEngine::SetBlendModeForSprite,?SetBlendModeForSprite@SpriteEngine@@QAEXPAVSprite@@@Z
 0x0044efb0,1481,Func44efb0,
 0x0044f580,60,SpriteEngine::Func44f580,?Func44f580@SpriteEngine@@QAEXXZ
 0x0044f5c0,198,SpriteEngine::Func44f5c0,?Func44f5c0@SpriteEngine@@QAEXXZ

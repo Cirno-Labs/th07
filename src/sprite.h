@@ -319,6 +319,9 @@ public:
     int DrawVertexStrip(Sprite *vm, VertexTex1DiffuseXyzrwh *vertices, int count);
     // Sets the render states `vm` wants on the device, as in th06.
     void SetRenderStateForSprite(Sprite *vm);
+    // Sets the blend mode and z writes `vm` wants through
+    // App::SetRenderState, which flushes the batch first. Not in th06.
+    void SetBlendModeForSprite(Sprite *vm);
     // Creates texture `index` from the image file at `path`, in the format
     // g_TextureFormats[`format`] (16 bits when forced), with `colorKey`
     // transparent, and keeps the file. Returns 0, or -1 on failure.

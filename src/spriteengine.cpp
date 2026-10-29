@@ -622,6 +622,35 @@ void SpriteEngine::SetRenderStateForSprite(Sprite *vm)
     this->unk_10++;
 }
 
+void SpriteEngine::SetBlendModeForSprite(Sprite *vm)
+{
+    if (this->blendMode != (vm->flags >> 4 & 1))
+    {
+        this->blendMode = vm->flags >> 4 & 1;
+        if (this->blendMode == 0)
+        {
+            g_App.SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+        }
+        else
+        {
+            g_App.SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
+        }
+    }
+    if (!g_App.flags.noDepthTest && this->zWriteDisabled != (vm->flags >> 12 & 1))
+    {
+        this->zWriteDisabled = vm->flags >> 12 & 1;
+        if (this->zWriteDisabled == 0)
+        {
+            g_App.SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+        }
+        else
+        {
+            g_App.SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+        }
+    }
+    this->unk_10++;
+}
+
 void SpriteEngine::RenderTextToTextureIndex(int textureIndex, int x, int y, int width, int unk4, int fontHeight,
                                             int unk6, D3DCOLOR textColor, D3DCOLOR shadowColor, char *text,
                                             float scaleX, float scaleY)
