@@ -104,6 +104,9 @@ public:
     // then initializes and starts the sprites' scripts. Returns 0, or -1
     // if loading fails.
     static int AddedCallback(AsciiText *text);
+    // The update element's deleted callback: frees the ANM files of
+    // slots 1 to 4. Returns 0.
+    static int DeletedCallback(AsciiText *text);
     // Draws the queued strings, as th06's.
     void DrawStrings();
     // The second draw element's callback: draws the popups. th06 picked

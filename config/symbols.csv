@@ -17,7 +17,7 @@ address,size,name,symbol
 0x00401a00,407,AsciiText::Initialize,?Initialize@AsciiText@@QAEXXZ
 0x00401ba0,456,AsciiText::StartScripts,?StartScripts@AsciiText@@QAEXXZ
 0x00401d70,104,AsciiText::AddedCallback,?AddedCallback@AsciiText@@SIHPAV1@@Z
-0x00401de0,65,Func401de0,
+0x00401de0,65,AsciiText::DeletedCallback,?DeletedCallback@AsciiText@@SIHPAV1@@Z
 0x00401e30,213,AsciiText::RegisterChain,?RegisterChain@AsciiText@@SIHXZ
 0x00401f10,35,AsciiText::RemoveChain,?RemoveChain@AsciiText@@SIXXZ
 0x00401f40,277,AsciiText::AddString,?AddString@AsciiText@@QAEXPAUD3DXVECTOR3@@PAD@Z

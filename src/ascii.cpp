@@ -131,3 +131,12 @@ int AsciiText::AddedCallback(AsciiText *text)
     text->StartScripts();
     return 0;
 }
+
+int AsciiText::DeletedCallback(AsciiText *text)
+{
+    g_SpriteEngine->ReleaseAnm(1);
+    g_SpriteEngine->ReleaseAnm(2);
+    g_SpriteEngine->ReleaseAnm(4);
+    g_SpriteEngine->ReleaseAnm(3);
+    return 0;
+}
