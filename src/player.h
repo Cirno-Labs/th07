@@ -729,3 +729,7 @@ void DrawSakuyaABombFocused(Player *player);
 // area's middle and, every fourth frame, a box of 3 damage over most
 // of it. Ends with an area (AddHitboxAreaCircle, 800) at the player.
 void UpdateSakuyaBBomb(Player *player);
+
+// Draws Sakuya B's bomb: the stage tint, then each of the four sprites,
+// moved into the play area for the draw and back.
+void DrawSakuyaBBomb(Player *player);

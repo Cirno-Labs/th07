@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">96.54% (670)</tspan> · <tspan class="decompiled">0.43% (3)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">2.88% (20)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">96.69% (671)</tspan> · <tspan class="decompiled">0.43% (3)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">2.74% (19)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="721.17" height="6" x="0" y="0" class="named"/>
-<rect width="3.23" height="6" x="721.17" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="724.40" y="0" class="nonmatching"/>
-<rect width="21.53" height="6" x="725.47" y="0" class="todo"/>
+<rect width="722.24" height="6" x="0" y="0" class="named"/>
+<rect width="3.23" height="6" x="722.24" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="725.47" y="0" class="nonmatching"/>
+<rect width="20.45" height="6" x="726.55" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="named"><title>0x00401000 D3DXMatrixIdentity (173 bytes)</title></rect>
@@ -144,7 +144,7 @@
 <rect width="12" height="12" x="330" y="15" class="named"><title>0x0040ca50 UpdateSakuyaABombFocused (2390 bytes)</title></rect>
 <rect width="12" height="12" x="345" y="15" class="named"><title>0x0040d3b0 DrawSakuyaABombFocused (260 bytes)</title></rect>
 <rect width="12" height="12" x="360" y="15" class="named"><title>0x0040d4c0 UpdateSakuyaBBomb (1242 bytes)</title></rect>
-<rect width="12" height="12" x="375" y="15" class="todo"><title>0x0040d9a0 Func40d9a0 (216 bytes)</title></rect>
+<rect width="12" height="12" x="375" y="15" class="named"><title>0x0040d9a0 DrawSakuyaBBomb (216 bytes)</title></rect>
 <rect width="12" height="12" x="390" y="15" class="todo"><title>0x0040da80 Func40da80 (2048 bytes)</title></rect>
 <rect width="12" height="12" x="405" y="15" class="todo"><title>0x0040e280 Func40e280 (406 bytes)</title></rect>
 <rect width="12" height="12" x="420" y="15" class="named"><title>0x0040e420 EnemyScripts::Load (197 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">75.09%</tspan> · <tspan class="decompiled">0.06%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">24.76%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">75.15%</tspan> · <tspan class="decompiled">0.06%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">24.70%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="560.95" height="6" x="0" y="0" class="named"/>
-<rect width="0.44" height="6" x="560.95" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="561.40" y="0" class="nonmatching"/>
-<rect width="184.94" height="6" x="562.06" y="0" class="todo"/>
+<rect width="561.38" height="6" x="0" y="0" class="named"/>
+<rect width="0.44" height="6" x="561.38" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="561.82" y="0" class="nonmatching"/>
+<rect width="184.51" height="6" x="562.49" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 EnemyScripts::RunEnemy (29464 bytes)</title></rect>
@@ -1135,7 +1135,7 @@
 <rect width="6.33" height="6.93" x="623.88" y="116.15" class="named"><title>0x0045cf50 CSound::CSound (221 bytes)</title></rect>
 <rect width="6.33" height="6.80" x="623.88" y="126.08" class="named"><title>0x0041a210 EffectManager::EffectManager (218 bytes)</title></rect>
 <rect width="6.33" height="6.75" x="623.88" y="135.88" class="named"><title>0x0041ac30 EffectUpdateConvergeSlow (217 bytes)</title></rect>
-<rect width="6.33" height="6.71" x="623.88" y="145.63" class="todo"><title>0x0040d9a0 Func40d9a0 (216 bytes)</title></rect>
+<rect width="6.33" height="6.71" x="623.88" y="145.63" class="named"><title>0x0040d9a0 DrawSakuyaBBomb (216 bytes)</title></rect>
 <rect width="6.33" height="6.71" x="623.88" y="155.34" class="named"><title>0x0041e4b0 Ending::Load (216 bytes)</title></rect>
 <rect width="6.33" height="6.71" x="623.88" y="165.05" class="named"><title>0x0042d465 GuiMsg::GuiMsg (216 bytes)</title></rect>
 <rect width="6.33" height="6.57" x="623.88" y="174.75" class="named"><title>0x00401e30 AsciiText::RegisterChain (213 bytes)</title></rect>
