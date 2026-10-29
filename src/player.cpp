@@ -1751,60 +1751,6 @@ void UpdateInvulnerability(Player *player)
     }
 }
 
-void StartBombState(Player *player)
-{
-    Effect *effect;
-
-    if (player->bomb.running || g_Gui.IsMsgRunning())
-    {
-        player->bombState = 2;
-        return;
-    }
-    switch (player->playerState)
-    {
-    case 1:
-    case 3:
-        player->bombState = 2;
-        return;
-    case 2:
-        if (player->deathbombFrames != 0)
-        {
-            player->StopBombState(0);
-            return;
-        }
-        player->bombState = 2;
-        return;
-    }
-    player->stateTimer.Set(540);
-    player->bombStateTimerSnapshot = player->stateTimer;
-    player->bombState = 1;
-    player->playerState = 4;
-    if (player->bombInvulnerabilityEffect != NULL)
-    {
-        player->bombInvulnerabilityEffect->active = 0;
-    }
-    if (player->invulnerabilityEffect != NULL)
-    {
-        player->invulnerabilityEffect->active = 0;
-        player->invulnerabilityEffect = NULL;
-    }
-    effect = g_EffectManager.SpawnReservedEffect(0x1c, &player->position, 4, 1, 0xffffffff);
-    effect->sprite.interpDuration[4].Set(0);
-    effect->sprite.interpFrame[4].Set(player->stateTimer.AsFrames());
-    effect->sprite.scaleInterpEasing = 0;
-    effect->sprite.scaleTween.y = 1.0f;
-    effect->sprite.scaleTween.x = 1.0f;
-    effect->sprite.scaleTween.z = 0.25f;
-    effect->sprite.colorTween.x = 0.25f;
-    effect->sprite.scriptVar0 = player->stateTimer.AsFrames();
-    effect->sprite.rotationSpeedZ *= -1.0f;
-    player->bombInvulnerabilityEffect = effect;
-    g_Gui.ShowFullPowerPopup(0, 2);
-    g_SoundPlayer.QueueSound(0x20, 0);
-    g_SoundPlayer.QueueSound(0x24, 0);
-    g_ReplayManager->frameEvents |= 8;
-}
-
 void Player::EndBombState()
 {
     int bonus;
@@ -1877,6 +1823,60 @@ PlayerArea *Player::AddHitboxAreaCircle(D3DXVECTOR3 *pos, float radius, float ra
     area->framesLeft = framesLeft;
     area->itemType = itemType;
     return area;
+}
+
+void StartBombState(Player *player)
+{
+    Effect *effect;
+
+    if (player->bomb.running || g_Gui.IsMsgRunning())
+    {
+        player->bombState = 2;
+        return;
+    }
+    switch (player->playerState)
+    {
+    case 1:
+    case 3:
+        player->bombState = 2;
+        return;
+    case 2:
+        if (player->deathbombFrames != 0)
+        {
+            player->StopBombState(0);
+            return;
+        }
+        player->bombState = 2;
+        return;
+    }
+    player->stateTimer.Set(540);
+    player->bombStateTimerSnapshot = player->stateTimer;
+    player->bombState = 1;
+    player->playerState = 4;
+    if (player->bombInvulnerabilityEffect != NULL)
+    {
+        player->bombInvulnerabilityEffect->active = 0;
+    }
+    if (player->invulnerabilityEffect != NULL)
+    {
+        player->invulnerabilityEffect->active = 0;
+        player->invulnerabilityEffect = NULL;
+    }
+    effect = g_EffectManager.SpawnReservedEffect(0x1c, &player->position, 4, 1, 0xffffffff);
+    effect->sprite.interpDuration[4].Set(0);
+    effect->sprite.interpFrame[4].Set(player->stateTimer.AsFrames());
+    effect->sprite.scaleInterpEasing = 0;
+    effect->sprite.scaleTween.y = 1.0f;
+    effect->sprite.scaleTween.x = 1.0f;
+    effect->sprite.scaleTween.z = 0.25f;
+    effect->sprite.colorTween.x = 0.25f;
+    effect->sprite.scriptVar0 = player->stateTimer.AsFrames();
+    effect->sprite.rotationSpeedZ *= -1.0f;
+    player->bombInvulnerabilityEffect = effect;
+    g_Gui.ShowFullPowerPopup(0, 2);
+    g_SoundPlayer.QueueSound(0x20, 0);
+    g_SoundPlayer.QueueSound(0x24, 0);
+    g_ReplayManager->frameEvents |= 8;
 }
 
 void Player::StopBombState(int unused)
@@ -2074,30 +2074,6 @@ float Player::AngleFrom(D3DXVECTOR3 *pos)
     return atan2f(y, x);
 }
 
-int Player::RegisterChain(int arg)
-{
-    Player *player = &g_Player;
-
-    memset(player, 0, sizeof(Player));
-    player->stateTimer.Set(0);
-    player->registerChainArg = arg;
-    player->calcChain = g_Chain.CreateElem((ChainCallback)Player::OnUpdate);
-    player->drawChain = g_Chain.CreateElem((ChainCallback)Player::OnDraw);
-    player->drawChain2 = g_Chain.CreateElem((ChainCallback)Player::OnDraw2);
-    player->calcChain->arg = player;
-    player->drawChain->arg = player;
-    player->drawChain2->arg = player;
-    player->calcChain->addedCallback = (ChainCallback)Player::AddedCallback;
-    player->calcChain->deletedCallback = (ChainCallback)Player::DeletedCallback;
-    if (g_Chain.AddToCalcChain(player->calcChain, 8) != 0)
-    {
-        return -1;
-    }
-    g_Chain.AddToDrawChain(player->drawChain, 6);
-    g_Chain.AddToDrawChain(player->drawChain2, 8);
-    return 0;
-}
-
 int Player::AddedCallback(Player *player)
 {
     int i;
@@ -2213,6 +2189,30 @@ int Player::DeletedCallback(Player *player)
         MemFree(g_Player.shotTypeFocused);
         g_Player.shotTypeFocused = NULL;
     }
+    return 0;
+}
+
+int Player::RegisterChain(int arg)
+{
+    Player *player = &g_Player;
+
+    memset(player, 0, sizeof(Player));
+    player->stateTimer.Set(0);
+    player->registerChainArg = arg;
+    player->calcChain = g_Chain.CreateElem((ChainCallback)Player::OnUpdate);
+    player->drawChain = g_Chain.CreateElem((ChainCallback)Player::OnDraw);
+    player->drawChain2 = g_Chain.CreateElem((ChainCallback)Player::OnDraw2);
+    player->calcChain->arg = player;
+    player->drawChain->arg = player;
+    player->drawChain2->arg = player;
+    player->calcChain->addedCallback = (ChainCallback)Player::AddedCallback;
+    player->calcChain->deletedCallback = (ChainCallback)Player::DeletedCallback;
+    if (g_Chain.AddToCalcChain(player->calcChain, 8) != 0)
+    {
+        return -1;
+    }
+    g_Chain.AddToDrawChain(player->drawChain, 6);
+    g_Chain.AddToDrawChain(player->drawChain2, 8);
     return 0;
 }
 
