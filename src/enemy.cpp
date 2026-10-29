@@ -3,6 +3,28 @@
 #include "enemy.h"
 #include "unsorted.h"
 
+void MoveEnemyEffects(Enemy *enemy)
+{
+    Effect *eff;
+    int i;
+
+    for (i = 0; i < enemy->effectCount; i++)
+    {
+        eff = enemy->effects[i];
+        if (eff == NULL)
+        {
+            continue;
+        }
+        eff->sprite.visible = !enemy->flags.unk_b;
+        eff->origin = enemy->pos;
+        if (eff->radius < enemy->effectRadius)
+        {
+            eff->radius += 0.3f;
+        }
+        eff->angle = AddNormalizeAngle(eff->angle, 0.031415928f);
+    }
+}
+
 void Enemy::Move()
 {
     this->posDelta = this->pos - this->prevPos;

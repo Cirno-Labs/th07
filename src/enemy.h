@@ -5,6 +5,7 @@
 #include <d3dx8math.h>
 
 #include "common.h"
+#include "effect.h"
 
 // Enemy's flags, in bytes. The first byte is th06's.
 struct EnemyFlags
@@ -16,6 +17,9 @@ struct EnemyFlags
     unsigned char mirrored : 1;
     // In use.
     unsigned char active : 1;
+    unsigned char unk_8 : 3;
+    // Hides the effects that follow the enemy (th06's isBoss bit).
+    unsigned char unk_b : 1;
 };
 
 // One enemy (0x4f48 bytes).
@@ -35,6 +39,17 @@ struct Enemy
     D3DXVECTOR3 posDelta;
     unsigned char unk_2b3c[0x2ec];
     EnemyFlags flags;
-    unsigned char unk_2e29[0x211f];
+    unsigned char unk_2e2a[0x26];
+    // Effects that follow the enemy, as th06's.
+    Effect *effects[25];
+    int effectCount;
+    // How far the effects following the enemy widen.
+    float effectRadius;
+    unsigned char unk_2ebc[0x208c];
 };
 ASSERT_SIZE(Enemy, 0x4f48);
+
+// Keeps the effects following `enemy` on it, widening their circle up
+// to effectRadius and turning them, as th06's; they are shown unless
+// flags.unk_b is set.
+void MoveEnemyEffects(Enemy *enemy);

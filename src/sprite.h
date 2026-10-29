@@ -104,7 +104,16 @@ struct SpriteBase
     // The color drawn instead of color while flag bit 16 is set.
     D3DCOLOR color2;
     // Bit 0x1000 is set on items as they spawn.
-    DWORD flags;
+    union
+    {
+        DWORD flags;
+        struct
+        {
+            // Bits 0 and 1, for bitfield stores.
+            DWORD shown : 1;
+            DWORD visible : 1;
+        };
+    };
     // Whether the bullets' draw functions turn it along their angle, as
     // th06's autoRotate.
     short autoRotate;
