@@ -49,7 +49,7 @@ struct BulletCommand
     float unk_0;
     float unk_4;
     // Frames, for most flags.
-    int unk_8;
+    int frames;
     int unk_c;
     DWORD flag;
     int unk_14;

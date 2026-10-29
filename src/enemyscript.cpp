@@ -1203,7 +1203,7 @@ loop:
             cmd = &enemy->shooter.commands[INT_ARG(0)];
             cmd->flag = INT_ARG(1);
             cmd->unk_14 = INT_ARG(2);
-            cmd->unk_8 = INT_ARG(3);
+            cmd->frames = INT_ARG(3);
             cmd->unk_c = INT_ARG(4);
             cmd->unk_0 = FLOAT_ARG(5);
             cmd->unk_4 = FLOAT_ARG(6);

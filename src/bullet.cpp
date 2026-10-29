@@ -320,7 +320,7 @@ void Bullet::SetTurnCommand(int idx, int unk_14, int unk_8, float unk_4, float u
 {
     BulletCommand *cmd = this->RestartCommand(idx, unk_14, 0x20);
 
-    cmd->unk_8 = unk_8;
+    cmd->frames = unk_8;
     cmd->unk_0 = unk_0;
     cmd->unk_4 = unk_4;
 }
@@ -329,7 +329,7 @@ void Bullet::SetAccelerateCommand(int idx, int unk_14, int unk_8, float unk_0, f
 {
     BulletCommand *cmd = this->RestartCommand(idx, unk_14, 0x10);
 
-    cmd->unk_8 = unk_8;
+    cmd->frames = unk_8;
     cmd->unk_0 = unk_0;
     cmd->unk_4 = unk_4;
 }
@@ -338,7 +338,7 @@ void BulletShooter::SetShooterTurnCommand(int idx, int unk_14, int unk_8, float 
 {
     BulletCommand *cmd = this->StartCommand(idx, unk_14, 0x20);
 
-    cmd->unk_8 = unk_8;
+    cmd->frames = unk_8;
     cmd->unk_0 = unk_0;
     cmd->unk_4 = unk_4;
 }
@@ -347,7 +347,7 @@ void BulletShooter::SetStopTurnCommand(int idx, int unk_14, int unk_8, int unk_c
 {
     BulletCommand *cmd = this->StartCommand(idx, unk_14, 0x80);
 
-    cmd->unk_8 = unk_8;
+    cmd->frames = unk_8;
     cmd->unk_c = unk_c;
     cmd->unk_0 = unk_0;
     cmd->unk_4 = unk_4;
@@ -357,7 +357,7 @@ void BulletShooter::SetShooterAccelerateCommand(int idx, int unk_14, int unk_8, 
 {
     BulletCommand *cmd = this->StartCommand(idx, unk_14, 0x10);
 
-    cmd->unk_8 = unk_8;
+    cmd->frames = unk_8;
     cmd->unk_0 = unk_0;
     cmd->unk_4 = unk_4;
 }
@@ -366,7 +366,7 @@ void BulletShooter::SetHiddenCommand(int idx, int unk_14, int unk_8)
 {
     BulletCommand *cmd = this->StartCommand(idx, unk_14, 0x2000);
 
-    cmd->unk_8 = unk_8;
+    cmd->frames = unk_8;
 }
 
 int BulletManager::FirePattern(BulletShooter *shooter)
@@ -818,7 +818,7 @@ void RunBulletCommands(Bullet *bullet)
             bullet->ex[1].unk_c = cmd->unk_0;
             bullet->ex[1].unk_10 = cmd->unk_4 > -990.0f ? cmd->unk_4 : bullet->angle;
             bullet->ex[1].timer.Set(0);
-            bullet->ex[1].duration = cmd->unk_8;
+            bullet->ex[1].duration = cmd->frames;
             ((Vector2 *)&bullet->ex[1].accel)->SetPolar(bullet->ex[1].unk_10, g_App.gameSpeed * bullet->ex[1].unk_c);
             if (bullet->commandIndex != 0 && bullet->sound >= 0)
             {
@@ -830,7 +830,7 @@ void RunBulletCommands(Bullet *bullet)
             bullet->ex[2].unk_c = cmd->unk_0;
             bullet->ex[2].unk_10 = cmd->unk_4;
             bullet->ex[2].timer.Set(0);
-            bullet->ex[2].duration = cmd->unk_8;
+            bullet->ex[2].duration = cmd->frames;
             if (bullet->commandIndex != 0 && bullet->sound >= 0)
             {
                 g_SoundPlayer.QueueSound(bullet->sound, 0);
@@ -843,7 +843,7 @@ void RunBulletCommands(Bullet *bullet)
             bullet->ex[3].unk_10 = cmd->unk_0;
             bullet->ex[3].unk_c = cmd->unk_4 > -999.0f ? cmd->unk_4 : bullet->speed;
             bullet->ex[3].timer.Set(0);
-            bullet->ex[3].duration = cmd->unk_8;
+            bullet->ex[3].duration = cmd->frames;
             bullet->ex[3].unk_24 = cmd->unk_c;
             bullet->ex[3].unk_28 = 0;
             break;
@@ -858,11 +858,11 @@ void RunBulletCommands(Bullet *bullet)
             {
                 bullet->ex[4].unk_c = bullet->speed;
             }
-            bullet->ex[4].unk_24 = cmd->unk_8;
+            bullet->ex[4].unk_24 = cmd->frames;
             bullet->ex[4].duration = 0;
             break;
         case 0x2000:
-            bullet->boundsCheckDelay = cmd->unk_8;
+            bullet->boundsCheckDelay = cmd->frames;
             bullet->commandIndex++;
             continue;
         }
