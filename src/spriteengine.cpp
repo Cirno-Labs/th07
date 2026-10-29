@@ -427,6 +427,20 @@ void SpriteEngine::ReleaseTexture(int index)
     this->textureFiles[index] = NULL;
 }
 
+void SpriteEngine::LoadSprite(int index, SpriteData *sprite)
+{
+    this->sprites[index] = *sprite;
+    this->sprites[index].spriteId = this->spriteCount++;
+    // The comma operators reproduce the original's operand order: it
+    // loads the texture size first (fdivr).
+    this->sprites[index].uvStartX = this->sprites[index].startX / (0, this->sprites[index].textureWidth);
+    this->sprites[index].uvEndX = this->sprites[index].endX / (0, this->sprites[index].textureWidth);
+    this->sprites[index].uvStartY = this->sprites[index].startY / (0, this->sprites[index].textureHeight);
+    this->sprites[index].uvEndY = this->sprites[index].endY / (0, this->sprites[index].textureHeight);
+    this->sprites[index].width = (this->sprites[index].endX - this->sprites[index].startX) / sprite->scaleX;
+    this->sprites[index].height = (this->sprites[index].endY - this->sprites[index].startY) / sprite->scaleY;
+}
+
 void SpriteEngine::RenderTextToTextureIndex(int textureIndex, int x, int y, int width, int unk4, int fontHeight,
                                             int unk6, D3DCOLOR textColor, D3DCOLOR shadowColor, char *text,
                                             float scaleX, float scaleY)

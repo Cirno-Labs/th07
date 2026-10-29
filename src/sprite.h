@@ -437,14 +437,18 @@ public:
     // How far the screen is shaken, set by ScreenEffect's shake.
     float shakeX;
     float shakeY;
-    unsigned char unk_20[0x2828c];
+    unsigned char unk_20[0x40];
+    SpriteData sprites[0xa00];
+    unsigned char unk_28060[0x24c];
     // The textures of the loaded ANM files, by slot.
     IDirect3DTexture8 *textures[0x108];
     // The image files the textures were created from, kept loaded.
     void *textureFiles[0x100];
     // The image file names of the ANMs loaded into each slot.
     char *anmImageNames[0x32];
-    unsigned char unk_28b94[0x35c];
+    unsigned char unk_28b94[0x358];
+    // Counts the sprites loaded, for SpriteData::spriteId.
+    int spriteCount;
     // The scripts of the loaded ANM files.
     void *scripts[0xa00];
     // The first sprite number of each script's ANM file.
