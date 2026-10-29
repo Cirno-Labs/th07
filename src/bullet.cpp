@@ -4,6 +4,11 @@
 
 #include "bullet.h"
 
+BulletManager::BulletManager()
+{
+    this->Reset();
+}
+
 void BulletManager::Reset()
 {
     memset(this, 0, sizeof(BulletManager));

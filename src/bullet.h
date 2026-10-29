@@ -155,6 +155,9 @@ ASSERT_SIZE(Laser, 0x4ec);
 class BulletManager
 {
 public:
+    // Constructs the members and resets.
+    BulletManager();
+
     // Zeroes everything and marks the spare bullet.
     void Reset();
     // Removes the bullets (Player's respawn step calls it with 0).
