@@ -18,6 +18,9 @@ public:
     int ReadInt();
     // Steps the fade and draws it over the screen.
     void DrawFade();
+    // Runs the script until it waits: shows text lines, runs the '@'
+    // commands. Returns 0, or -1 at its end ("@z") or on failure.
+    int RunScript();
     // Loads the script at `path` and starts it. Returns 0, or -1 after
     // logging an error.
     int Load(char *path);
