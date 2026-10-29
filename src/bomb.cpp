@@ -400,3 +400,72 @@ void DrawReimuABombFocused(Player *player)
         DRAW_BOMB_PART_SPRITE();
     }
 }
+
+void UpdateReimuBBomb(Player *player)
+{
+    int i;
+    Sprite *sprite;
+    D3DXVECTOR3 unused;
+    PlayerArea *area[4];
+
+    if (player->bomb.timer >= player->bomb.duration)
+    {
+        g_Unknown49fbf0.EndBombName();
+        player->bomb.running = 0;
+        return;
+    }
+    if (player->bomb.timer.HasTicked() && player->bomb.timer == 0)
+    {
+        g_ItemManager.CollectAll();
+        g_Unknown49fbf0.ShowBombName(0x4a1, "夢符「封魔陣」");
+        player->bomb.duration = 140;
+        player->stateTimer.Set(200);
+        SpawnBombAura(player);
+        for (i = 0; i < 4; i++)
+        {
+            sprite = player->bomb.parts[i].sprites;
+            g_SpriteEngine->StartScriptAtOrigin(sprite, i + 0x489);
+        }
+        g_SoundPlayer.QueueSound(6, 0);
+        player->bomb.parts[0].pos.x = player->position.x;
+        player->bomb.parts[0].pos.y = 224.0f;
+        player->bomb.parts[0].pos.z = 0.42f;
+        player->bomb.parts[1].pos.x = 192.0f;
+        player->bomb.parts[1].pos.y = player->position.y;
+        player->bomb.parts[1].pos.z = 0.415f;
+        player->bomb.parts[2].pos.x = player->position.x;
+        player->bomb.parts[2].pos.y = 224.0f;
+        player->bomb.parts[2].pos.z = 0.41f;
+        player->bomb.parts[3].pos.x = 192.0f;
+        player->bomb.parts[3].pos.y = player->position.y;
+        player->bomb.parts[3].pos.z = 0.405f;
+        ScreenEffect::StartEffect(1, 60, 2, 6, 0);
+        SetBombDrain(player, 3000, 0.17f);
+    }
+    else
+    {
+        if (player->bomb.timer == 60)
+        {
+            ScreenEffect::StartEffect(1, 80, 20, 0, 0);
+        }
+        area[0] = player->AddHitboxArea(&player->position, 62.0f, 448.0f, 6);
+        area[1] = player->AddHitboxArea(&player->position, 384.0f, 62.0f, 6);
+        area[2] = player->AddHitboxArea(&player->position, 62.0f, 448.0f, 6);
+        area[3] = player->AddHitboxArea(&player->position, 384.0f, 62.0f, 6);
+        for (i = 0; i < 4; i++)
+        {
+            g_SpriteEngine->Step(player->bomb.parts[i].sprites);
+            if (player->bomb.timer.HasTicked() && player->bomb.timer.AsFrames() % 2 != 0)
+            {
+                area[i]->x = player->bomb.parts[i].pos.x + player->bomb.parts[i].sprites[0].posOffset.x;
+                area[i]->y = player->bomb.parts[i].pos.y + player->bomb.parts[i].sprites[0].posOffset.y;
+                player->unk_9dc[i].size.x = area[i]->width;
+                player->unk_9dc[i].size.y = area[i]->height;
+                player->unk_9dc[i].pos = player->bomb.parts[i].pos + player->bomb.parts[i].sprites[0].posOffset;
+                player->unk_9dc[i].unk_18 = 16;
+            }
+        }
+    }
+    player->playerState = 3;
+    player->bomb.timer.Tick();
+}

@@ -621,3 +621,9 @@ void UpdateReimuABombFocused(Player *player);
 
 // Draws Reimu A's focused bomb, as DrawReimuABomb.
 void DrawReimuABombFocused(Player *player);
+
+// Reimu B's bomb, as th06's UpdateReimuBBomb: 140 frames with
+// stateTimer at 200 and an aura; four barriers, two crossing the play
+// area each way through the player, each an area (AddHitboxArea) and
+// a box of 16 damage that follow its sprite on odd frames.
+void UpdateReimuBBomb(Player *player);
