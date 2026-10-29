@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">60.09% (417)</tspan> · <tspan class="decompiled">4.47% (31)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">35.30% (245)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">60.23% (418)</tspan> · <tspan class="decompiled">4.47% (31)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">35.16% (244)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="448.85" height="6" x="0" y="0" class="named"/>
-<rect width="33.37" height="6" x="448.85" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="482.21" y="0" class="nonmatching"/>
-<rect width="263.71" height="6" x="483.29" y="0" class="todo"/>
+<rect width="449.92" height="6" x="0" y="0" class="named"/>
+<rect width="33.37" height="6" x="449.92" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="483.29" y="0" class="nonmatching"/>
+<rect width="262.63" height="6" x="484.37" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="named"><title>0x00401000 D3DXMatrixIdentity (173 bytes)</title></rect>
@@ -93,7 +93,7 @@
 <rect width="12" height="12" x="315" y="0" class="named"><title>0x00401f40 AsciiText::AddString (277 bytes)</title></rect>
 <rect width="12" height="12" x="330" y="0" class="named"><title>0x00402060 AsciiText::AddFormat (68 bytes)</title></rect>
 <rect width="12" height="12" x="345" y="0" class="named"><title>0x004020b0 AsciiText::DrawStrings (1082 bytes)</title></rect>
-<rect width="12" height="12" x="360" y="0" class="todo"><title>0x004024f0 Func4024f0 (320 bytes)</title></rect>
+<rect width="12" height="12" x="360" y="0" class="named"><title>0x004024f0 AsciiText::AddPopup (320 bytes)</title></rect>
 <rect width="12" height="12" x="375" y="0" class="todo"><title>0x00402630 Func402630 (322 bytes)</title></rect>
 <rect width="12" height="12" x="390" y="0" class="todo"><title>0x00402780 PauseMenu::UpdatePauseMenu (4709 bytes)</title></rect>
 <rect width="12" height="12" x="405" y="0" class="todo"><title>0x00403a20 PauseMenu::DrawPauseMenu (310 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">45.86%</tspan> · <tspan class="decompiled">0.88%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">53.17%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">45.95%</tspan> · <tspan class="decompiled">0.88%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">53.08%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="342.59" height="6" x="0" y="0" class="named"/>
-<rect width="6.59" height="6" x="342.59" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="349.18" y="0" class="nonmatching"/>
-<rect width="397.16" height="6" x="349.84" y="0" class="todo"/>
+<rect width="343.22" height="6" x="0" y="0" class="named"/>
+<rect width="6.59" height="6" x="343.22" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="349.80" y="0" class="nonmatching"/>
+<rect width="396.53" height="6" x="350.47" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1038,7 +1038,7 @@
 <rect width="8.10" height="9.16" x="727.81" y="42.67" class="todo"><title>0x00402630 Func402630 (322 bytes)</title></rect>
 <rect width="8.10" height="9.16" x="738.90" y="42.67" class="named"><title>0x00435fc0 ResolveShortcut (322 bytes)</title></rect>
 <rect width="8.59" height="8.60" x="591.09" y="54.84" class="named"><title>0x0045f960 DatArchive::Decode (321 bytes)</title></rect>
-<rect width="8.59" height="8.57" x="591.09" y="66.44" class="todo"><title>0x004024f0 Func4024f0 (320 bytes)</title></rect>
+<rect width="8.59" height="8.57" x="591.09" y="66.44" class="named"><title>0x004024f0 AsciiText::AddPopup (320 bytes)</title></rect>
 <rect width="8.59" height="8.53" x="591.09" y="78.01" class="named"><title>0x00431730 LogError (319 bytes)</title></rect>
 <rect width="8.59" height="8.39" x="591.09" y="89.54" class="todo"><title>0x004082b0 Unknown1347b00::Func4082b0 (315 bytes)</title></rect>
 <rect width="8.59" height="8.32" x="591.09" y="100.93" class="named"><title>0x004315f0 LogPrintf (313 bytes)</title></rect>

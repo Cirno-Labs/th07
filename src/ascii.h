@@ -127,6 +127,9 @@ public:
     void AddString(D3DXVECTOR3 *pos, char *text);
     // AddString with printf-style formatting.
     void AddFormat(D3DXVECTOR3 *pos, char *fmt, ...);
+    // Shows `value` rising from `pos` (play-area coordinates) in `color`
+    // for 60 frames, in one of the first 0x2d0 popups, as th06's.
+    void AddPopup(D3DXVECTOR3 *pos, int value, D3DCOLOR color);
 
     void SetColor(D3DCOLOR color)
     {
