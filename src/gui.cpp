@@ -438,3 +438,25 @@ int Unknown49fbf0::AddedCallback(Unknown49fbf0 *gui)
 {
     return gui->LoadResources();
 }
+
+int Unknown49fbf0::DeletedCallback(Unknown49fbf0 *gui)
+{
+    g_SpriteEngine->ReleaseAnm(0x18);
+    g_SpriteEngine->ReleaseAnm(0x1c);
+    g_SpriteEngine->ReleaseAnm(0x1d);
+    g_SpriteEngine->ReleaseAnm(0x1e);
+    g_SpriteEngine->ReleaseAnm(0x1f);
+    gui->FreeMsgFile();
+    if ((g_App.scene != 3 && g_App.scene != 0xb && g_App.scene != 0xc) != 0)
+    {
+        g_SpriteEngine->ReleaseAnm(0x15);
+        g_SpriteEngine->ReleaseAnm(0x17);
+        g_SpriteEngine->ReleaseAnm(0x19);
+        g_SpriteEngine->ReleaseAnm(0x1a);
+        g_SpriteEngine->ReleaseAnm(0x1b);
+        g_SpriteEngine->ReleaseAnm(0x16);
+        delete gui->impl;
+        gui->impl = NULL;
+    }
+    return 0;
+}

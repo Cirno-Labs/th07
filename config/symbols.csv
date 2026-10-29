@@ -251,7 +251,7 @@ address,size,name,symbol
 0x0042b603,3956,Unknown49fbf0::DrawHud,?DrawHud@Unknown49fbf0@@QAEXXZ
 0x0042c577,2755,Unknown49fbf0::DrawBanners,?DrawBanners@Unknown49fbf0@@QAEXXZ
 0x0042d03a,17,Unknown49fbf0::AddedCallback,?AddedCallback@Unknown49fbf0@@SIHPAV1@@Z
-0x0042d04b,235,Func42d04b,
+0x0042d04b,235,Unknown49fbf0::DeletedCallback,?DeletedCallback@Unknown49fbf0@@SIHPAV1@@Z
 0x0042d136,279,Func42d136,
 0x0042d24d,536,Func42d24d,
 0x0042d465,216,Func42d465,

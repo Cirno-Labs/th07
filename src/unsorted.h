@@ -1318,6 +1318,10 @@ public:
     int LoadResources();
     // The update element's added callback: runs LoadResources.
     static int AddedCallback(Unknown49fbf0 *gui);
+    // Frees ANM slots 0x18 and 0x1c to 0x1f and the message file and,
+    // unless the scene is 3, 0xb or 0xc, slots 0x15 to 0x17 and 0x19 to
+    // 0x1b and impl. Returns 0.
+    static int DeletedCallback(Unknown49fbf0 *gui);
     // Sets bombName's pendingInterrupt to 1 and bombNameBar's to 2, as
     // the bomb ends. th06 interrupted bombName only.
     void EndBombName();
