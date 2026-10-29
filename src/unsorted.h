@@ -940,7 +940,7 @@ public:
     // 2. Returns 1.
     static int OnDraw(Unknown626270 *mgr);
     // Whether the checksummed fields of `stats` no longer agree.
-    int Func404fe0();
+    int ChecksumMismatch();
     // Whether Phantasm is open: a shot type cleared Extra (or captured
     // 60 spell cards, which marks those that cleared Extra as such).
     int IsPhantasmOpen();

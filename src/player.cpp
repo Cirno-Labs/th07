@@ -25,7 +25,7 @@ void Unknown626270::RerollLifeChecksumKeys()
 
 void Unknown626270::AddDeaths(int deaths)
 {
-    if (this->Func404fe0())
+    if (this->ChecksumMismatch())
     {
         memset(&g_App, 0xff, 0x2d0);
     }
@@ -35,7 +35,7 @@ void Unknown626270::AddDeaths(int deaths)
 
 void Unknown626270::AddBombsUsed(int bombs)
 {
-    if (this->Func404fe0())
+    if (this->ChecksumMismatch())
     {
         memset(&g_App, 0xff, 0x2d0);
     }
@@ -1095,7 +1095,7 @@ void UpdateBombState(Player *player)
         }
         return;
     }
-    if (!g_Unknown626270.Func404fe0() && !g_Unknown49fbf0.Func42ad66() && player->deathbombFrames != 0 &&
+    if (!g_Unknown626270.ChecksumMismatch() && !g_Unknown49fbf0.Func42ad66() && player->deathbombFrames != 0 &&
         (int)g_Unknown626270.stats->bombs > 0 && player->unk_23fc == 0 && (g_Unknown4b9e50 & 2))
     {
         g_ReplayManager->unk_d6 |= 1;

@@ -33,7 +33,7 @@ address,size,name,symbol
 0x00404e70,62,D3DXVec3Length,?D3DXVec3Length@@YIMPBUD3DXVECTOR3@@@Z
 0x00404eb0,124,Func404eb0,
 0x00404f30,169,SpriteEngine::StartScriptAtOrigin,?StartScriptAtOrigin@SpriteEngine@@QAEXPAVSprite@@H@Z
-0x00404fe0,145,Unknown626270::Func404fe0,?Func404fe0@Unknown626270@@QAEHXZ
+0x00404fe0,145,Unknown626270::ChecksumMismatch,?ChecksumMismatch@Unknown626270@@QAEHXZ
 0x00405080,585,Func405080,
 0x004052d0,152,Func4052d0,
 0x00405370,775,Func405370,

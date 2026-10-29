@@ -3,6 +3,18 @@
 
 #include "unsorted.h"
 
+// An inline of unsorted.h, probably, whose out-of-line copy the original
+// keeps with this file's; defined here so that the other files' calls
+// stay calls. unk_ac has to be unk_34[2] plus unk_b4[2] for each byte
+// ComputeChecksum sums (0x84 past unk_ac), unk_b0 plus unk_8c[3] unk_9614.
+int Unknown626270::ChecksumMismatch()
+{
+    return this->stats->unk_ac == this->stats->unk_34[2] + this->stats->unk_b4[2] * ((BYTE *)&this->stats->unk_ac - (BYTE *)this->stats->unk_34 + 0x84) &&
+                   this->stats->unk_b0 + this->stats->unk_8c[3] == (int)this->unk_9614
+               ? FALSE
+               : TRUE;
+}
+
 void Unknown1347b00::SetTintColor(D3DCOLOR color)
 {
     ColorBytes c;

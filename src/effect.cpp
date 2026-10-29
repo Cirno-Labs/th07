@@ -575,7 +575,7 @@ int EffectManager::OnUpdate(EffectManager *mgr)
         }
     }
     mgr->frames++;
-    if (mgr->frames % 300 == 100 && g_Unknown626270.Func404fe0())
+    if (mgr->frames % 300 == 100 && g_Unknown626270.ChecksumMismatch())
     {
         return 4;
     }

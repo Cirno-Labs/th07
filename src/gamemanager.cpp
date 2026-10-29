@@ -25,7 +25,7 @@ Unknown626270::Unknown626270()
 
 void Unknown626270::AddLives(int lives)
 {
-    if (this->Func404fe0())
+    if (this->ChecksumMismatch())
     {
         memset(&g_App, 0xff, 0x2d0);
     }
@@ -35,7 +35,7 @@ void Unknown626270::AddLives(int lives)
 
 void Unknown626270::AddBombs(int bombs)
 {
-    if (this->Func404fe0())
+    if (this->ChecksumMismatch())
     {
         memset(&g_App, 0xff, 0x2d0);
     }
