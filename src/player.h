@@ -604,3 +604,8 @@ void SetBombDrain(Player *player, int minimum, float share);
 // (a 256 box of 400 damage, an area, sound 0xf and a shake), then stays
 // a 256 box of 2 damage for 30 frames. Stops at the end.
 void UpdateReimuABomb(Player *player);
+
+// Draws Reimu A's bomb, as th06's DrawReimuABomb: the stage tint
+// (DimPlayAreaForBomb), then each live orb's four sprites at its
+// position in the play area.
+void DrawReimuABomb(Player *player);

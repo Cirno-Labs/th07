@@ -200,3 +200,34 @@ void UpdateReimuABomb(Player *player)
     }
     bomb->timer.Tick();
 }
+
+// Places curSprite at orb's position plus its offset in the play area,
+// draws it and moves on to the next.
+#define DRAW_BOMB_SPRITE()                                              \
+    curSprite->pos = orb->pos + curSprite->posOffset;                   \
+    curSprite->pos.x = g_Unknown626270.arena[0] + curSprite->pos.x;     \
+    curSprite->pos.y = g_Unknown626270.arena[1] + curSprite->pos.y;     \
+    curSprite->pos.z = 0.0f;                                            \
+    g_SpriteEngine->DrawUnrotated(curSprite);                           \
+    curSprite++;
+
+void DrawReimuABomb(Player *player)
+{
+    Sprite *curSprite;
+    PlayerBombPart *orb;
+    int i;
+
+    DimPlayAreaForBomb(player);
+    for (i = 0, orb = player->bomb.parts; i < 8; i++, orb++)
+    {
+        if (orb->state == 0)
+        {
+            continue;
+        }
+        curSprite = orb->sprites;
+        DRAW_BOMB_SPRITE();
+        DRAW_BOMB_SPRITE();
+        DRAW_BOMB_SPRITE();
+        DRAW_BOMB_SPRITE();
+    }
+}
