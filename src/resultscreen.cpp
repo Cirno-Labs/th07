@@ -484,7 +484,7 @@ void SaveScoreDat(ResultScreen *screen)
     vrsm13.version = 1;
     vrsm13.size2 = sizeof(Vrsm);
     vrsm13.size = sizeof(Vrsm);
-    vrsm13.unk_09 = 0;
+    vrsm13.clearedOnSave = 0;
     strcpy(vrsm13.gameVersion, "0100b");
     vrsm13.exeSize = g_App.exeSize;
     vrsm13.exeChecksum = g_App.exeChecksum;
