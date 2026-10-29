@@ -180,7 +180,7 @@ address,size,name,symbol
 0x00420490,386,Enemy::CheckPlayerContact,?CheckPlayerContact@Enemy@@QAEXPAUD3DXVECTOR3@@0@Z
 0x00420620,6840,EnemyManager::OnUpdate,?OnUpdate@EnemyManager@@SIHPAV1@@Z
 0x004220f0,114,LerpAngle,?LerpAngle@@YIMMMM@Z
-0x00422170,2863,EnemyManager::Func422170,?Func422170@EnemyManager@@SIHPAV1@HH@Z
+0x00422170,2863,EnemyManager::DrawEnemies,?DrawEnemies@EnemyManager@@SIHPAV1@HH@Z
 0x00422ca0,23,EnemyManager::OnDraw,?OnDraw@EnemyManager@@SIHPAV1@@Z
 0x00422cc0,26,EnemyManager::OnDraw2,?OnDraw2@EnemyManager@@SIHPAV1@@Z
 0x00422ce0,394,EnemyManager::AddedCallback,?AddedCallback@EnemyManager@@SIHPAV1@@Z

@@ -603,14 +603,202 @@ float LerpAngle(float a, float b, float t)
     }
 }
 
+int EnemyManager::DrawEnemies(EnemyManager *mgr, int from, int to)
+{
+    float uSpan2;
+    float cs2;
+    float theta;
+    float uDecr;
+    VertexTex1DiffuseXyzrwh *out;
+    float lastTheta;
+    float tu;
+    float sinA;
+    int vertices;
+    float width;
+    float height;
+    Enemy *enemy;
+    int b;
+    Sprite *sprite;
+    D3DCOLOR savedColor;
+    int i;
+    D3DXVECTOR2 savedScale;
+
+    for (i = from; i < to; i++)
+    {
+        enemy = mgr->unk_954700[i];
+        while (enemy != NULL)
+        {
+            for (sprite = enemy->sprites, b = 0; b < 1; b++, sprite++)
+            {
+                if (sprite->scriptIndex >= 0)
+                {
+                    if (sprite->autoRotate != 0)
+                    {
+                        sprite->SetRotationZ(enemy->angle);
+                    }
+                    sprite->pos = enemy->pos + sprite->posOffset;
+                    sprite->pos.z = 0.3f;
+                    sprite->pos.x = g_Unknown626270.arena[0] + sprite->pos.x;
+                    sprite->pos.y = g_Unknown626270.arena[1] + sprite->pos.y;
+                    g_SpriteEngine->Draw(sprite);
+                }
+            }
+            if (enemy->flags.rotateSprite)
+            {
+                enemy->sprite.SetRotationZ(enemy->angle);
+            }
+            enemy->sprite.pos = enemy->pos + enemy->sprite.posOffset;
+            enemy->sprite.pos.z = 0.29f;
+            if (!(enemy->unk_4f30 & 0x10) && !enemy->flags.unk_1a)
+            {
+                enemy->sprite.pos.x = g_Unknown626270.arena[0] + enemy->sprite.pos.x;
+                enemy->sprite.pos.y = g_Unknown626270.arena[1] + enemy->sprite.pos.y;
+                g_SpriteEngine->Draw(&enemy->sprite);
+            }
+            for (b = 1; b < 2; b++, sprite++)
+            {
+                if (sprite->scriptIndex >= 0)
+                {
+                    if (sprite->autoRotate != 0)
+                    {
+                        sprite->SetRotationZ(-enemy->angle);
+                    }
+                    sprite->pos = enemy->pos + sprite->posOffset;
+                    sprite->pos.z = 0.3f;
+                    sprite->pos.x = g_Unknown626270.arena[0] + sprite->pos.x;
+                    sprite->pos.y = g_Unknown626270.arena[1] + sprite->pos.y;
+                    g_SpriteEngine->Draw(sprite);
+                }
+            }
+            if (enemy->unk_4f30)
+            {
+                savedScale = *(D3DXVECTOR2 *)&enemy->sprite.scaleY;
+                savedColor = enemy->sprite.color;
+                if (!(enemy->unk_4f30 & 8))
+                {
+                    for (b = enemy->unk_4f36; b < enemy->unk_4f32; b += enemy->unk_4f36)
+                    {
+                        if (enemy->unk_2f78[b].pos.x < -990.0f)
+                        {
+                            continue;
+                        }
+                        if (enemy->flags.rotateSprite)
+                        {
+                            enemy->sprite.SetRotationZ(enemy->unk_2f78[b].angle);
+                        }
+                        if (enemy->unk_4f30 & 2)
+                        {
+                            enemy->sprite.scaleY = savedScale.x - b * savedScale.x / enemy->unk_4f32;
+                        }
+                        if (enemy->unk_4f30 & 4)
+                        {
+                            enemy->sprite.alpha =
+                                ((BYTE *)&savedColor)[3] - ((BYTE *)&savedColor)[3] * b / enemy->unk_4f32;
+                        }
+                        enemy->sprite.pos = enemy->unk_2f78[b].pos + enemy->sprite.posOffset;
+                        enemy->sprite.pos.z = 0.3f;
+                        enemy->sprite.pos.x = g_Unknown626270.arena[0] + enemy->sprite.pos.x;
+                        enemy->sprite.pos.y = g_Unknown626270.arena[1] + enemy->sprite.pos.y;
+                        g_SpriteEngine->Draw(&enemy->sprite);
+                    }
+                }
+                else
+                {
+                    vertices = 0;
+                    for (b = 0; b < enemy->unk_4f32; b += enemy->unk_4f36)
+                    {
+                        if (enemy->unk_2f78[b].pos.x < -990.0f)
+                        {
+                            break;
+                        }
+                        vertices += 2;
+                    }
+                    if (vertices > 2)
+                    {
+                        uSpan2 = enemy->sprite.spriteData->uvEndX - enemy->sprite.spriteData->uvStartX;
+                        uDecr = uSpan2 / ((vertices + 1) / 2 - 1);
+                        tu = enemy->sprite.spriteData->uvEndX + enemy->sprite.uvScrollX;
+                        out = (VertexTex1DiffuseXyzrwh *)enemy->unk_39f8;
+                        for (b = 0; b < enemy->unk_4f32; b += enemy->unk_4f36, tu -= uDecr)
+                        {
+                            if (enemy->unk_2f78[b].pos.x < -990.0f)
+                            {
+                                break;
+                            }
+                            if (b == 0)
+                            {
+                                theta = enemy->unk_2f78[0].angle;
+                            }
+                            else
+                            {
+                                theta = LerpAngle(enemy->unk_2f78[b - 1].angle, enemy->unk_2f78[b].angle, 0.5f);
+                            }
+                            if ((enemy->unk_4f30 & 2) && b > 0 && b + enemy->unk_4f36 < enemy->unk_4f32)
+                            {
+                                sinA = LerpAngle(enemy->unk_2f78[b + enemy->unk_4f36 - 1].angle,
+                                                 enemy->unk_2f78[enemy->unk_4f36].angle, 0.5f);
+                                if (fabsf(lastTheta - theta) < 0.00001f && fabsf(theta - sinA) < 0.00001f)
+                                {
+                                    vertices -= 2;
+                                    continue;
+                                }
+                            }
+                            lastTheta = theta;
+                            sinA = sinf(theta);
+                            cs2 = cosf(theta);
+                            width = 0.0f;
+                            height = savedScale.y * enemy->sprite.spriteData->height / 2.0f;
+                            if (enemy->unk_4f30 & 2)
+                            {
+                                theta = 1.0f - (float)b / enemy->unk_4f32;
+                                width *= theta;
+                                height *= theta;
+                            }
+                            out[1].diffuse = enemy->sprite.color;
+                            out[0].diffuse = out[1].diffuse;
+                            if (enemy->unk_4f30 & 4)
+                            {
+                                ((BYTE *)&out[1].diffuse)[3] =
+                                    ((BYTE *)&savedColor)[3] - ((BYTE *)&savedColor)[3] * b / enemy->unk_4f32;
+                                ((BYTE *)&out[0].diffuse)[3] = ((BYTE *)&out[1].diffuse)[3];
+                            }
+                            out->pos = enemy->unk_2f78[b].pos;
+                            out->pos.x = cs2 * width - sinA * height + 32.0f + out->pos.x;
+                            out->pos.y = sinA * width + cs2 * height + 16.0f + out->pos.y;
+                            out->uv.x = tu;
+                            out->uv.y = enemy->sprite.spriteData->uvStartY + enemy->sprite.uvScrollY;
+                            out++;
+                            out->pos = enemy->unk_2f78[b].pos;
+                            out->pos.x = cs2 * width + sinA * height + 32.0f + out->pos.x;
+                            out->pos.y = sinA * width - cs2 * height + 16.0f + out->pos.y;
+                            out->uv.x = tu;
+                            out->uv.y = enemy->sprite.spriteData->uvEndY + enemy->sprite.uvScrollY;
+                            out++;
+                        }
+                        if (vertices > 2)
+                        {
+                            g_SpriteEngine->DrawVertexStrip(&enemy->sprite,
+                                                            (VertexTex1DiffuseXyzrwh *)enemy->unk_39f8, vertices);
+                        }
+                    }
+                }
+                *(D3DXVECTOR2 *)&enemy->sprite.scaleY = savedScale;
+                enemy->sprite.color = savedColor;
+            }
+            enemy = enemy->unk_4f44;
+        }
+    }
+    return 1;
+}
+
 int EnemyManager::OnDraw(EnemyManager *mgr)
 {
-    return EnemyManager::Func422170(mgr, 0, 2);
+    return EnemyManager::DrawEnemies(mgr, 0, 2);
 }
 
 int EnemyManager::OnDraw2(EnemyManager *mgr)
 {
-    return EnemyManager::Func422170(mgr, 2, 4);
+    return EnemyManager::DrawEnemies(mgr, 2, 4);
 }
 
 int EnemyManager::AddedCallback(EnemyManager *mgr)

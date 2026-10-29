@@ -47,6 +47,7 @@ struct EnemyFlags
     unsigned char unk_18 : 1;
     // Cleared as a spell card starts.
     unsigned char unk_19 : 1;
+    unsigned char unk_1a : 1;
 };
 
 // The variables of an enemy's script, by number from 10000: 10000 to
@@ -93,7 +94,8 @@ ASSERT_SIZE(EnemyScriptState, 0x218);
 struct EnemyBox
 {
     D3DXVECTOR3 pos;
-    unsigned char unk_c[0x10];
+    unsigned char unk_c[0xc];
+    float angle;
 };
 ASSERT_SIZE(EnemyBox, 0x1c);
 
@@ -238,9 +240,10 @@ struct Enemy
     BYTE unk_4f30;
     unsigned char unk_4f31[0x1];
     short unk_4f32;
-    unsigned char unk_4f34[0x4];
+    unsigned char unk_4f34[0x2];
+    short unk_4f36;
     Timer unk_4f38;
-    unsigned char unk_4f44[0x4];
+    Enemy *unk_4f44;
 };
 ASSERT_SIZE(Enemy, 0x4f48);
 
@@ -323,9 +326,15 @@ public:
     int AnyBossActive();
 
     // Draws the enemies of the lists at +0x954700, from `from` up to
-    // `to`. Returns 1.
-    static int Func422170(EnemyManager *mgr, int from, int to);
-    // A draw callback: Func422170 for lists 0 and 1.
+    // `to`, as th06's OnDraw: sprites[0], the main sprite (unless
+    // unk_4f30 bit 4 or flags.unk_1a) and sprites[1], each at the
+    // enemy's position plus posOffset. With unk_4f30 set, also its trail
+    // along unk_2f78 (every unk_4f36th of unk_4f32 boxes): copies of the
+    // main sprite on the boxes not at x below -990, or with bit 3 a
+    // vertex strip in unk_39f8 up to the first such box; bit 1 narrows
+    // it and bit 2 fades it towards the end. Returns 1.
+    static int DrawEnemies(EnemyManager *mgr, int from, int to);
+    // A draw callback: DrawEnemies for lists 0 and 1.
     static int OnDraw(EnemyManager *mgr);
     // The other draw callback: lists 2 and 3.
     static int OnDraw2(EnemyManager *mgr);
@@ -366,7 +375,7 @@ public:
     unsigned char unk_9545ec[0x8];
     EnemyTimeline unk_9545f4[16];
     Timer unk_9546f4;
-    unsigned char unk_954700[0x10];
+    Enemy *unk_954700[4];
 };
 ASSERT_SIZE(EnemyManager, 0x954710);
 extern EnemyManager g_Unknown9a9b00;
