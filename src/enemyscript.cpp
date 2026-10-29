@@ -941,6 +941,94 @@ void CopyBossMoveStart(Enemy *enemy, EnemyScriptInstr *instr)
     }
 }
 
+void FireBackwardFans(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    Bullet *bullet = g_BulletManager.bullets;
+    int i;
+    BulletShooter shooter;
+
+    for (i = 0; i < 0x400; i++, bullet++)
+    {
+        if (bullet->state == 0 || bullet->state == 5)
+        {
+            continue;
+        }
+        if (bullet->sprites.sprite0.spriteData != NULL &&
+            ((instr->args[1].i == 0 && bullet->color == 6) || (instr->args[1].i == 1 && bullet->color == 15) ||
+             (instr->args[1].i == 2 && bullet->color == 2)))
+        {
+            shooter.pos = bullet->pos;
+            shooter.sprite = 6;
+            shooter.color = 15;
+            shooter.angle1 = AddNormalizeAngle(bullet->angle, 3.1415927f);
+            shooter.angle2 = 0.5235988f;
+            shooter.speed1 = bullet->speed * 1.1f;
+            if (g_Unknown626270.difficulty < 3)
+            {
+                shooter.count1 = 4;
+            }
+            else
+            {
+                shooter.count1 = 2;
+                shooter.angle2 = 1.5707964f;
+            }
+            shooter.count2 = 1;
+            shooter.flags = 2;
+            shooter.SetHiddenCommand(0, 0, 0x82);
+            if (instr->args[1].i == 0)
+            {
+                shooter.flags = 0x2002;
+            }
+            else if (instr->args[1].i == 1)
+            {
+                if (g_Unknown626270.difficulty != 3)
+                {
+                    shooter.flags = 2;
+                }
+                else
+                {
+                    shooter.flags = 0x2002;
+                }
+                shooter.color = 2;
+            }
+            else if (instr->args[1].i == 2)
+            {
+                shooter.flags = 2;
+                shooter.color = 10;
+            }
+            shooter.aimMode = 1;
+            g_BulletManager.FirePattern(&shooter);
+            shooter.angle2 = 1.0471976f;
+            if (instr->args[1].i == 0)
+            {
+                shooter.flags = 0x2000;
+            }
+            else if (instr->args[1].i == 1)
+            {
+                if (g_Unknown626270.difficulty != 3)
+                {
+                    shooter.flags = 0;
+                }
+                else
+                {
+                    shooter.flags = 0x2000;
+                }
+            }
+            else
+            {
+                shooter.flags = 0;
+            }
+            shooter.speed1 = bullet->speed * 0.7f;
+            shooter.count1 = 2;
+            g_BulletManager.FirePattern(&shooter);
+            shooter.speed1 = bullet->speed * 0.85f;
+            shooter.count1 = 1;
+            g_BulletManager.FirePattern(&shooter);
+            bullet->FreeBullet();
+        }
+    }
+}
+
 // As in bullet.cpp: defined after its callers, so they call the copy.
 inline void Bullet::FreeBullet()
 {

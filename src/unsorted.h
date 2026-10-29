@@ -1568,6 +1568,9 @@ void ReplaceTallBulletWithEffect(Enemy *enemy, EnemyScriptInstr *instr);
 // Copies boss 0's position into moveStart, and its unk_2b6c and
 // unk_2b60; then switches on its ints2[0] with no cases.
 void CopyBossMoveStart(Enemy *enemy, EnemyScriptInstr *instr);
+// Each flying bullet with a sprite of color 6, 15 or 2 (argument 1 = 0,
+// 1 or 2) fires three fans back the way it came and is removed.
+void FireBackwardFans(Enemy *enemy, EnemyScriptInstr *instr);
 
 // Set to 9 as the dialogue of stages 6 to 8 starts.
 extern int g_Unknown9a9ab8;
