@@ -642,3 +642,9 @@ void UpdateReimuBBombFocused(Player *player);
 // Draws Reimu B's focused bomb: the stage tint, then the barrier's
 // three sprites around startPos in the play area.
 void DrawReimuBBombFocused(Player *player);
+
+// Marisa A's bomb, as th06's UpdateMarisaABomb: 200 frames with
+// stateTimer at 250 and an aura; eight stars fly out in a circle at
+// speed 2, each an area (AddHitboxAreaCircle, 96) and a 128 box of 8
+// damage on two frames out of three.
+void UpdateMarisaABomb(Player *player);

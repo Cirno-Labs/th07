@@ -554,3 +554,56 @@ void DrawReimuBBombFocused(Player *player)
         g_SpriteEngine->Draw(curSprite);
     }
 }
+
+void UpdateMarisaABomb(Player *player)
+{
+    int i;
+    Sprite *sprite;
+    D3DXVECTOR3 unused;
+    float theta;
+
+    if (player->bomb.timer >= player->bomb.duration)
+    {
+        g_Unknown49fbf0.EndBombName();
+        player->bomb.running = 0;
+        return;
+    }
+    if (player->bomb.timer.HasTicked() && player->bomb.timer == 0)
+    {
+        g_ItemManager.CollectAll();
+        g_Unknown49fbf0.ShowBombName(0x4a3, "魔符「スターダストレヴァリエ」");
+        player->bomb.duration = 200;
+        player->stateTimer.Set(250);
+        SpawnBombAura(player);
+        for (i = 0; i < 8; i++, sprite++)
+        {
+            sprite = player->bomb.parts[i].sprites;
+            g_SpriteEngine->StartScriptAtOrigin(sprite, i % 3 + 0x405);
+            player->bomb.parts[i].pos = player->position;
+            theta = (float)i * 6.2831855f / 8.0f;
+            ((Vector2 *)&player->bomb.parts[i].velocity)->SetPolar(theta, 2.0f);
+            player->bomb.parts[i].velocity.z = 0.0f;
+        }
+        g_SoundPlayer.QueueSound(6, 0);
+        ScreenEffect::StartEffect(1, 120, 4, 1, 0);
+        SetBombDrain(player, 8000, 0.3f);
+    }
+    else
+    {
+        for (i = 0; i < 8; i++)
+        {
+            player->bomb.parts[i].pos += player->bomb.parts[i].velocity * g_App.unk_178;
+            if (player->bomb.timer.HasTicked() && player->bomb.timer.AsFrames() % 3 != 0)
+            {
+                player->AddHitboxAreaCircle(&player->bomb.parts[i].pos, 96.0f, 0.0f, 0, 6);
+                player->unk_9dc[i].size.x = 128.0f;
+                player->unk_9dc[i].size.y = 128.0f;
+                player->unk_9dc[i].pos = player->bomb.parts[i].pos;
+                player->unk_9dc[i].unk_18 = 8;
+            }
+            g_SpriteEngine->Step(player->bomb.parts[i].sprites);
+        }
+    }
+    player->playerState = 3;
+    player->bomb.timer.Tick();
+}
