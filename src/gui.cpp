@@ -29,3 +29,12 @@ int Unknown49fbf0::Func427be2()
 {
     return this->impl->msg.skippable;
 }
+
+void Unknown49fbf0::ShowBonusPopup(int bonus)
+{
+    this->impl->bonusPopup.pos = D3DXVECTOR3(416.0f, 48.0f, 0.0f);
+    this->impl->bonusPopup.shown = 1;
+    this->impl->bonusPopup.timer.Set(0);
+    this->impl->bonusPopup.value = bonus;
+    g_App.redrawFrames = 2;
+}

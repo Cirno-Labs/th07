@@ -1171,6 +1171,17 @@ struct GuiMsg
 };
 ASSERT_SIZE(GuiMsg, 0xe10);
 
+// A message Unknown49fbf0 shows for a while at a fixed place, with a
+// number, as th06's GuiPopup.
+struct GuiPopup
+{
+    D3DXVECTOR3 pos;
+    int value;
+    // Nonzero while it shows.
+    int shown;
+    Timer timer;
+};
+
 // The bulk of Unknown49fbf0 (th06's GuiImpl), 0x20a30 bytes. Only what
 // is known so far.
 struct GuiImpl
@@ -1196,7 +1207,13 @@ struct GuiImpl
     Sprite unk_79c0[0xa8];
     int unk_1fba0;
     GuiMsg msg;
-    unsigned char unk_209b4[0x7c];
+    unsigned char unk_209b4[0xc];
+    // The bonus for bullets cleared (th06's bonusPopup), a popup that
+    // also shows what kind it is in `shown`, and the spell card's bonus.
+    GuiPopup bonusPopup;
+    GuiPopup unk_209e0;
+    GuiPopup spellBonusPopup;
+    unsigned char unk_20a20[0x10];
 };
 ASSERT_SIZE(GuiImpl, 0x20a30);
 
@@ -1220,6 +1237,9 @@ public:
     int Func42ad66();
     // Returns impl->msg.skippable, as th06's IsMsgSkippable.
     int Func427be2();
+    // Shows `bonus` in bonusPopup, at (416, 48), and sets
+    // g_App.redrawFrames to 2.
+    void ShowBonusPopup(int bonus);
     // Player::EndBombState calls it with the points it scores and 4.
     void Func427c81(int points, int unk);
 
