@@ -206,6 +206,11 @@ public:
 ASSERT_SIZE(AsciiText, 0x11194);
 extern AsciiText g_AsciiText;
 
+// Adds 1 to `*count` unless it reached 999999; `max` goes unused.
+// ContinueMenu::UpdateContinueMenu calls it on six counters of
+// g_Unknown626270. Not in th06.
+void IncrementCounterCapped(DWORD *count, DWORD max);
+
 // AsciiText's chain elements, statically allocated as in th06: the
 // update element and the two draw elements.
 extern ChainElem g_AsciiCalcChain;

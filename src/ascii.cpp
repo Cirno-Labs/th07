@@ -35,6 +35,14 @@ AsciiText::AsciiText()
 {
 }
 
+void IncrementCounterCapped(DWORD *count, DWORD max)
+{
+    if (*count < 999999)
+    {
+        *count = *count + 1;
+    }
+}
+
 void AsciiText::RunScripts()
 {
     g_SpriteEngine->Step(&this->unk_498);
