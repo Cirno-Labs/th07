@@ -288,7 +288,7 @@ int UpdateLaserBullet(Player *player, PlayerBullet *bullet)
     {
         bullet->sprite.pendingInterrupt = 1;
     }
-    if ((g_Gui.Func42ad66() || player->bomb.running) &&
+    if ((g_Gui.IsMsgRunning() || player->bomb.running) &&
         player->lasers[bullet->laserIndex].timer.AsFrames() > 20)
     {
         player->lasers[bullet->laserIndex].timer.Set(20);
@@ -325,7 +325,7 @@ int UpdateTrailLaserBullet(Player *player, PlayerBullet *bullet)
     {
         bullet->sprite.pendingInterrupt = 1;
     }
-    if ((g_Gui.Func42ad66() || player->bomb.running) &&
+    if ((g_Gui.IsMsgRunning() || player->bomb.running) &&
         player->lasers[bullet->laserIndex].timer.AsFrames() > 20)
     {
         player->lasers[bullet->laserIndex].timer.Set(20);
@@ -1398,7 +1398,7 @@ int HandleInput(Player *player)
             break;
         }
     }
-    if ((g_Unknown4b9e50 & 1) && !g_Gui.Func42ad66())
+    if ((g_Unknown4b9e50 & 1) && !g_Gui.IsMsgRunning())
     {
         if (!g_GameManager.ChecksumMismatch())
         {
@@ -1493,7 +1493,7 @@ void UpdateBombState(Player *player)
         }
         return;
     }
-    if (!g_GameManager.ChecksumMismatch() && !g_Gui.Func42ad66() && player->deathbombFrames != 0 &&
+    if (!g_GameManager.ChecksumMismatch() && !g_Gui.IsMsgRunning() && player->deathbombFrames != 0 &&
         (int)g_GameManager.stats->bombs > 0 && player->bombCooldown == 0 && (g_Unknown4b9e50 & 2))
     {
         g_ReplayManager->frameEvents |= 1;
@@ -1755,7 +1755,7 @@ void StartBombState(Player *player)
 {
     Effect *effect;
 
-    if (player->bomb.running || g_Gui.Func42ad66())
+    if (player->bomb.running || g_Gui.IsMsgRunning())
     {
         player->bombState = 2;
         return;
@@ -1799,7 +1799,7 @@ void StartBombState(Player *player)
     effect->sprite.scriptVar0 = player->stateTimer.AsFrames();
     effect->sprite.rotationSpeedZ *= -1.0f;
     player->bombInvulnerabilityEffect = effect;
-    g_Gui.Func427c81(0, 2);
+    g_Gui.ShowFullPowerPopup(0, 2);
     g_SoundPlayer.QueueSound(0x20, 0);
     g_SoundPlayer.QueueSound(0x24, 0);
     g_ReplayManager->frameEvents |= 8;
@@ -1814,7 +1814,7 @@ void Player::EndBombState()
     bonus = g_GameManager.bonusPoints - g_GameManager.stats->grazeCount;
     bonus *= 10;
     g_GameManager.AddScore(bonus);
-    g_Gui.Func427c81(bonus, 4);
+    g_Gui.ShowFullPowerPopup(bonus, 4);
     g_GameManager.invulnerabilityBonus = g_GameManager.stats->grazeCount;
     g_SoundPlayer.QueueSound(0x21, 0);
     if (this->playerState == 1)

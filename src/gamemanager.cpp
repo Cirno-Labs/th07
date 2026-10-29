@@ -150,7 +150,7 @@ int GameManager::OnUpdate(GameManager *mgr)
     g_App.viewport.MinZ = 0.0f;
     g_App.viewport.MaxZ = 1.0f;
     g_SpriteEngine->ClearUnk2e4d4();
-    if ((g_GameManager.unk_93d8 >> 3) & 1 && g_GameManager.replayMenuChoice == 1 && !g_Gui.Func42ad66())
+    if ((g_GameManager.unk_93d8 >> 3) & 1 && g_GameManager.replayMenuChoice == 1 && !g_Gui.IsMsgRunning())
     {
         mgr->slowdownCounter++;
         if ((g_App.roundedFps < 20 && mgr->slowdownCounter % 3 != 0) ||
@@ -836,7 +836,7 @@ void GameManager::AddBonusPoints(int amount)
     }
     if (this->bonusPoints >= this->bonusPointsCap && prev != this->bonusPoints)
     {
-        g_Gui.Func427c81(this->bonusPoints - this->stats->grazeCount, 3);
+        g_Gui.ShowFullPowerPopup(this->bonusPoints - this->stats->grazeCount, 3);
     }
 }
 
@@ -852,7 +852,7 @@ void GameManager::AddBonusPointsNoTrack(int amount)
     }
     if (this->bonusPoints >= this->bonusPointsCap && prev != this->bonusPoints)
     {
-        g_Gui.Func427c81(this->bonusPoints - this->stats->grazeCount, 3);
+        g_Gui.ShowFullPowerPopup(this->bonusPoints - this->stats->grazeCount, 3);
     }
 }
 

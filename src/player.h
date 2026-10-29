@@ -186,7 +186,7 @@ int UpdateHomingOrbFast(Player *player, PlayerBullet *bullet);
 // a random 0.27 to 0.37 a frame. Returns 0.
 int UpdateAcceleratingBullet(Player *player, PlayerBullet *bullet);
 // A laser, as th06's UpdateBullets case 3: cut short to 20 frames while
-// g_Gui.Func42ad66() or a bomb runs; ends it (returning 1)
+// g_Gui.IsMsgRunning() or a bomb runs; ends it (returning 1)
 // once its timer runs out, else keeps it on its option, and unless
 // Player::playerState is 2 (returning 1) stretches it to the top. Returns
 // 0 otherwise.
@@ -240,7 +240,7 @@ int UpdateFiring(Player *player);
 // GameManager::unk_9604, sets the boxes and moves the options in and
 // out while focused, with effect 0x18 (unk_9d8) on the way in. Sakuya B
 // (character 2, shot type 1) fans her options around unk_b7e58
-// instead. On button 1, unless Gui's Func42ad66 holds, starts firing
+// instead. On button 1, unless Gui's IsMsgRunning holds, starts firing
 // (if the checksums agree) and, unfocused, turns unk_b7e58 with the
 // sideways movement, between -7pi/10 and -3pi/10, or else back to
 // -pi/2. Returns 0.
@@ -256,7 +256,7 @@ void UpdateHitboxAreas(Player *player);
 // from GameManager::unk_961c on each new frame (down to stats->
 // unk_88) and runs. Else, with button 2 held, deathbombFrames left,
 // bombs left, unk_23fc at 0, intact checksums and no
-// g_Gui.Func42ad66(), starts a bomb: marks bit 1 of
+// g_Gui.IsMsgRunning(), starts a bomb: marks bit 1 of
 // g_ReplayManager->unk_d6, uses a bomb, runs it for the player's
 // focus, takes 2 from the rank and gives 6 more deathbombFrames (up to
 // the shot type's). unk_23dc is 1 on the frame a bomb starts, else 0.
@@ -275,12 +275,12 @@ void UpdateBombState(Player *player);
 int UpdateDyingState(Player *player);
 // Tries to start playerState 4 (UpdateBombState calls it while unk_240d is
 // 2): sets unk_240d to 2 during a bomb or while
-// g_Gui.Func42ad66(), or while playerState is 1 or 3, or
+// g_Gui.IsMsgRunning(), or while playerState is 1 or 3, or
 // while dying without deathbombFrames; while dying with them calls
 // StopBombState(0). Otherwise starts playerState 4 for 540 frames of
 // stateTimer (kept in unk_16a0c), with unk_240d 1: ends unk_b7e68 (and
 // lets unk_b7e6c end), starts effect 0x1c in slot 4 to follow the
-// player in unk_b7e6c, calls Gui's Func427c81(0, 2), plays
+// player in unk_b7e6c, calls Gui's ShowFullPowerPopup(0, 2), plays
 // sounds 0x20 and 0x24 and marks bit 8 of g_ReplayManager->unk_d6.
 void StartBombState(Player *player);
 // OnUpdate's respawning step, as th06's: for 60 frames clears bullets
@@ -483,7 +483,7 @@ public:
     // Ends playerState 4 (UpdateInvulnerability calls it when it runs out): calls
     // GameManager's IncreaseBonusCap and AddBonusPointsCapped with 10000, scores ten
     // times unk_961c over stats->unk_88 (shown through Gui's
-    // Func427c81), resets unk_9620, plays sound 0x21, finishes a respawn
+    // ShowFullPowerPopup), resets unk_9620, plays sound 0x21, finishes a respawn
     // if one runs, then makes the player invulnerable (playerState 3)
     // for 40 frames, with unk_23fc 40 and unk_240d 0, and ends the
     // unk_b7e6c effect.

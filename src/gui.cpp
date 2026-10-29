@@ -40,7 +40,7 @@ void Gui::HideInterface()
     this->impl->backgroundTileCount = 0;
 }
 
-int Gui::Func427be2()
+int Gui::IsMsgSkippable()
 {
     return this->impl->msg.skippable;
 }
@@ -54,7 +54,7 @@ void Gui::ShowBonusPopup(int bonus)
     g_App.redrawFrames = 2;
 }
 
-void Gui::Func427c81(int points, int unk)
+void Gui::ShowFullPowerPopup(int points, int unk)
 {
     this->impl->unk_209e0.pos = D3DXVECTOR3(416.0f, 168.0f, 0.0f);
     this->impl->unk_209e0.shown = unk;
@@ -908,7 +908,7 @@ BOOL Gui::MsgHoldsTimeline()
     return this->impl->msg.scriptIndex >= 0;
 }
 
-int Gui::Func42ad66()
+int Gui::IsMsgRunning()
 {
     if (this->impl == NULL)
     {

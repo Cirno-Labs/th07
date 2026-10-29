@@ -141,7 +141,7 @@ public:
     static int RecordOnUpdate(ReplayManager *replay);
     // The second update callback while playing: while bit 2 of
     // GameManager::unk_93d8 is set, returns 6 on two frames of every
-    // three while g_Gui's Func42ad66 and Func427be2 hold, and
+    // three while g_Gui's IsMsgRunning and IsMsgSkippable hold, and
     // on four of every five while unk_93df is 2 and
     // g_EnemyManager.AnyBossActive() does not; otherwise 1.
     static int PlayOnUpdate2(ReplayManager *replay);

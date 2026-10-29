@@ -621,7 +621,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
 
     bomb = 0;
     level = g_GameManager.stage >= 5 ? 10 : g_GameManager.stage * 2;
-    if (!g_Gui.Func42ad66())
+    if (!g_Gui.IsMsgRunning())
     {
         int period;
 
@@ -1025,7 +1025,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
         }
         if (enemy->flags.isBoss)
         {
-            if (!g_Gui.Func42ad66() && enemy->bossIndex == 0)
+            if (!g_Gui.IsMsgRunning() && enemy->bossIndex == 0)
             {
                 g_Gui.SetBossHealth(enemy->life / (float)enemy->maxLife);
             }

@@ -229,9 +229,9 @@ address,size,name,symbol
 0x00427b21,51,Gui::EndBombName,?EndBombName@Gui@@QAEXXZ
 0x00427b54,78,Gui::EndSpellCardName,?EndSpellCardName@Gui@@QAEXXZ
 0x00427ba2,64,Gui::HideInterface,?HideInterface@Gui@@QAEXXZ
-0x00427be2,22,Gui::Func427be2,?Func427be2@Gui@@QAEHXZ
+0x00427be2,22,Gui::IsMsgSkippable,?IsMsgSkippable@Gui@@QAEHXZ
 0x00427bf8,137,Gui::ShowBonusPopup,?ShowBonusPopup@Gui@@QAEXH@Z
-0x00427c81,136,Gui::Func427c81,?Func427c81@Gui@@QAEXHH@Z
+0x00427c81,136,Gui::ShowFullPowerPopup,?ShowFullPowerPopup@Gui@@QAEXHH@Z
 0x00427d09,137,Gui::ShowSpellCardBonus,?ShowSpellCardBonus@Gui@@QAEXH@Z
 0x00427d92,234,CopySpriteToTexture,?CopySpriteToTexture@@YIXH@Z
 0x00427e7c,166,Gui::OnUpdate,?OnUpdate@Gui@@SIHPAV1@@Z
@@ -246,7 +246,7 @@ address,size,name,symbol
 0x00429c42,3064,GuiImpl::RunMsg,?RunMsg@GuiImpl@@QAEHXZ
 0x0042a876,1203,GuiImpl::DrawMsg,?DrawMsg@GuiImpl@@QAEHXZ
 0x0042ad29,61,Gui::MsgHoldsTimeline,?MsgHoldsTimeline@Gui@@QAEHXZ
-0x0042ad66,69,Gui::Func42ad66,?Func42ad66@Gui@@QAEHXZ
+0x0042ad66,69,Gui::IsMsgRunning,?IsMsgRunning@Gui@@QAEHXZ
 0x0042adab,2136,Gui::UpdateInterface,?UpdateInterface@Gui@@QAEXXZ
 0x0042b603,3956,Gui::DrawHud,?DrawHud@Gui@@QAEXXZ
 0x0042c577,2755,Gui::DrawBanners,?DrawBanners@Gui@@QAEXXZ

@@ -989,7 +989,7 @@ public:
     // Player::unk_240d also adds to unk_9620 and, once that reaches
     // stats->unk_88 + 50000, caps it there and calls StartBombState. When
     // unk_961c reaches unk_9618 and changed, calls Gui's
-    // Func427c81 with unk_961c less stats->unk_88 and 3.
+    // ShowFullPowerPopup with unk_961c less stats->unk_88 and 3.
     void AddBonusPoints(int amount);
     // The same without unk_9620.
     void AddBonusPointsNoTrack(int amount);
@@ -1437,9 +1437,9 @@ public:
 
     // Whether impl is set and impl->msg.scriptIndex is not negative, or
     // is -2. th06's IsMsgRunning.
-    int Func42ad66();
+    int IsMsgRunning();
     // Returns impl->msg.skippable, as th06's IsMsgSkippable.
-    int Func427be2();
+    int IsMsgSkippable();
     // Shows `bonus` in bonusPopup, at (416, 48), and sets
     // g_App.redrawFrames to 2.
     void ShowBonusPopup(int bonus);
@@ -1447,7 +1447,7 @@ public:
     // (416, 168), with `unk` as its shown value, and sets
     // g_App.redrawFrames to 2. Player::EndBombState calls it with the
     // points it scores and 4.
-    void Func427c81(int points, int unk);
+    void ShowFullPowerPopup(int points, int unk);
     // Shows `value` in spellBonusPopup, at (224, 16), and sets
     // g_App.redrawFrames to 2.
     void ShowSpellCardBonus(int value);
