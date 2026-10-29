@@ -486,3 +486,54 @@ void DrawReimuBBomb(Player *player)
         g_SpriteEngine->Draw(curSprite);
     }
 }
+
+void UpdateReimuBBombFocused(Player *player)
+{
+    int i;
+    Sprite *sprite;
+    D3DXVECTOR3 unused;
+
+    if (player->bomb.timer >= player->bomb.duration)
+    {
+        g_Unknown49fbf0.EndBombName();
+        player->bomb.running = 0;
+        player->moveScaleY = 1.0f;
+        player->moveScaleX = 1.0f;
+        return;
+    }
+    if (player->bomb.timer.HasTicked() && player->bomb.timer == 0)
+    {
+        g_ItemManager.CollectAll();
+        g_Unknown49fbf0.ShowBombName(0x4a1, "夢符「二重結界」");
+        player->bomb.duration = 190;
+        player->stateTimer.Set(250);
+        SpawnBombAura(player);
+        for (sprite = player->bomb.parts[0].sprites, i = 0; i < 3; i++, sprite++)
+        {
+            g_SpriteEngine->StartScriptAtOrigin(sprite, i + 0x48d);
+        }
+        g_SoundPlayer.QueueSound(6, 0);
+        ScreenEffect::StartEffect(1, 60, 2, 6, 0);
+        player->bomb.startPos = player->position;
+        SetBombDrain(player, 3000, 0.17f);
+        player->moveScaleY = 0.4f;
+        player->moveScaleX = 0.4f;
+        player->AddHitboxAreaCircle(&player->position, 192.0f, 0.384f, 210, 6);
+    }
+    else
+    {
+        if (player->bomb.timer == 60)
+        {
+            ScreenEffect::StartEffect(1, 80, 20, 0, 0);
+        }
+        g_SpriteEngine->Step(&player->bomb.parts[0].sprites[0]);
+        g_SpriteEngine->Step(&player->bomb.parts[0].sprites[1]);
+        g_SpriteEngine->Step(&player->bomb.parts[0].sprites[2]);
+        player->unk_9dc[0].size.x = 256.0f;
+        player->unk_9dc[0].size.y = 256.0f;
+        player->unk_9dc[0].pos = player->bomb.startPos + player->bomb.parts[0].sprites[0].posOffset;
+        player->unk_9dc[0].unk_18 = 18;
+    }
+    player->playerState = 3;
+    player->bomb.timer.Tick();
+}

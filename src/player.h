@@ -351,7 +351,8 @@ struct PlayerBomb
     void (*updateFocused)(Player *player);
     void (*drawFocused)(Player *player);
     PlayerBombPart parts[0x80];
-    // Where the player was when the bomb started (Reimu A).
+    // Where the player was when the bomb started (Reimu A, Reimu B
+    // focused).
     D3DXVECTOR3 startPos;
 };
 ASSERT_SIZE(PlayerBomb, 0xa1438);
@@ -631,3 +632,9 @@ void UpdateReimuBBomb(Player *player);
 // Draws Reimu B's bomb, as th06's DrawReimuBBomb: the stage tint, then
 // each barrier's sprite at its position in the play area.
 void DrawReimuBBomb(Player *player);
+
+// Reimu B's focused bomb: 190 frames with stateTimer at 250, an aura
+// and the player slowed to 0.4; a barrier of three sprites around
+// where the bomb started, a 256 box of 18 damage, and one area
+// (AddHitboxAreaCircle, 192) for the whole bomb.
+void UpdateReimuBBombFocused(Player *player);
