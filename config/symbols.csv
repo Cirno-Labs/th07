@@ -1774,6 +1774,7 @@ address,size,name,symbol
 0x004b9e5c,,g_ButtonRepeat,?g_ButtonRepeat@@3GA
 0x004b9e60,,g_ButtonFrames,?g_ButtonFrames@@3GA
 0x004b9e64,,g_FileSize,?g_FileSize@@3HA
+0x004ba078,,g_DiffuseQuadXyz,?g_DiffuseQuadXyz@@3PAUVertexTex1DiffuseXyz@@A
 0x004ba0d8,,g_SoundPlayer,?g_SoundPlayer@@3VSoundPlayer@@A
 0x004bdad8,,g_Player,?g_Player@@3VPlayer@@A
 0x00575950,,g_App,?g_App@@3VApp@@A

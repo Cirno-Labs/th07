@@ -164,6 +164,21 @@ struct VertexTex1DiffuseXyzrwh
     D3DXVECTOR2 uv;
 };
 
+// A vertex with a position and texture coordinates, as in th06.
+struct VertexTex1Xyz
+{
+    D3DXVECTOR3 pos;
+    D3DXVECTOR2 uv;
+};
+// A vertex with a position, a color and texture coordinates, as in
+// th06.
+struct VertexTex1DiffuseXyz
+{
+    D3DXVECTOR3 pos;
+    D3DCOLOR diffuse;
+    D3DXVECTOR2 uv;
+};
+
 // Runs the sprites' ANM scripts. Only the fields known so far.
 class SpriteEngine
 {
@@ -352,7 +367,8 @@ public:
     // The sprite data Draw last used, NULL when unknown.
     void *currentSpriteData;
     IDirect3DVertexBuffer8 *vertexBuffer;
-    unsigned char unk_2e4e0[0x50];
+    // The quad the vertex buffer holds, 256 pixels across.
+    VertexTex1Xyz quad[4];
     // The number of quads batched to draw with Func44f5c0.
     int batchQuadCount;
     unsigned char unk_2e534[0x150008];
@@ -371,6 +387,9 @@ public:
 };
 ASSERT_SIZE(SpriteEngine, 0x17e560);
 extern SpriteEngine *g_SpriteEngine;
+// CreateQuad's quad with a color, for drawing without the vertex
+// buffer.
+extern VertexTex1DiffuseXyz g_DiffuseQuadXyz[4];
 
 inline BOOL Sprite::HasTexture()
 {
