@@ -1480,7 +1480,7 @@ void UpdateBombState(Player *player)
     {
         if (player->bomb.timer.HasTicked())
         {
-            g_GameManager.SubUnk961c(player->bomb.drainPerFrame);
+            g_GameManager.SubBonusPoints(player->bomb.drainPerFrame);
             g_Gui.frameItemsHideTimer = 2;
         }
         if (!player->bomb.focused)
@@ -1934,18 +1934,18 @@ void ResetHomingAndText(Player *player)
     player->homingTargetSet = 0;
     if (player->position.y >= 400.0f)
     {
-        if (g_AsciiText.GetUnk74d4() != 2 && player->position.x < 160.0f)
+        if (g_AsciiText.GetSummaryPendingInterrupt() != 2 && player->position.x < 160.0f)
         {
-            g_AsciiText.SetUnk74d4(2);
+            g_AsciiText.SetSummaryPendingInterrupt(2);
         }
-        else if (g_AsciiText.GetUnk74d4() == 2 && player->position.x > 160.0f)
+        else if (g_AsciiText.GetSummaryPendingInterrupt() == 2 && player->position.x > 160.0f)
         {
-            g_AsciiText.SetUnk74d4(3);
+            g_AsciiText.SetSummaryPendingInterrupt(3);
         }
     }
-    else if (g_AsciiText.GetUnk74d4() == 2)
+    else if (g_AsciiText.GetSummaryPendingInterrupt() == 2)
     {
-        g_AsciiText.SetUnk74d4(3);
+        g_AsciiText.SetSummaryPendingInterrupt(3);
     }
 }
 
@@ -2181,9 +2181,9 @@ int Player::AddedCallback(Player *player)
         g_AsciiText.summaryPopup.pendingInterrupt = 1;
         g_AsciiText.summaryPendingInterrupt = 1;
     }
-    g_AsciiText.SetUnkB7cInterrupt(0, 2);
-    g_AsciiText.SetUnkB7cInterrupt(1, 2);
-    g_AsciiText.SetUnkB7cInterrupt(2, 2);
+    g_AsciiText.SetNearbyLabelInterrupt(0, 2);
+    g_AsciiText.SetNearbyLabelInterrupt(1, 2);
+    g_AsciiText.SetNearbyLabelInterrupt(2, 2);
     if (g_GameManager.invulnerabilityBonus >= g_GameManager.stats->grazeCount + 50000)
     {
         g_GameManager.invulnerabilityBonus = g_GameManager.stats->grazeCount + 50000;
@@ -2199,9 +2199,9 @@ int Player::DeletedCallback(Player *player)
         g_SpriteEngine->ReleaseAnm(10);
         g_AsciiText.summaryPopup.pendingInterrupt = 99;
         g_AsciiText.summaryPendingInterrupt = 99;
-        g_AsciiText.InterruptUnkB7c(0);
-        g_AsciiText.InterruptUnkB7c(1);
-        g_AsciiText.InterruptUnkB7c(2);
+        g_AsciiText.InterruptNearbyLabel(0);
+        g_AsciiText.InterruptNearbyLabel(1);
+        g_AsciiText.InterruptNearbyLabel(2);
     }
     if (g_Player.shotType != NULL)
     {

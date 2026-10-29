@@ -56,10 +56,10 @@ void Gui::ShowBonusPopup(int bonus)
 
 void Gui::ShowFullPowerPopup(int points, int kind)
 {
-    this->impl->unk_209e0.pos = D3DXVECTOR3(416.0f, 168.0f, 0.0f);
-    this->impl->unk_209e0.shown = kind;
-    this->impl->unk_209e0.timer.Set(0);
-    this->impl->unk_209e0.value = points;
+    this->impl->fullPowerPopup.pos = D3DXVECTOR3(416.0f, 168.0f, 0.0f);
+    this->impl->fullPowerPopup.shown = kind;
+    this->impl->fullPowerPopup.timer.Set(0);
+    this->impl->fullPowerPopup.value = points;
     g_App.redrawFrames = 2;
 }
 
@@ -219,11 +219,11 @@ int Gui::OnDraw(Gui *gui)
         g_AsciiText.AddFormat(&gui->impl->bonusPopup.pos, "BONUS %8d", gui->impl->bonusPopup.value);
         g_AsciiText.color = 0xffffffff;
     }
-    switch (gui->impl->unk_209e0.shown)
+    switch (gui->impl->fullPowerPopup.shown)
     {
     case 1:
         g_AsciiText.color = 0xffc0b0ff;
-        g_AsciiText.AddFormat(&gui->impl->unk_209e0.pos, "Full Power Mode!");
+        g_AsciiText.AddFormat(&gui->impl->fullPowerPopup.pos, "Full Power Mode!");
         g_AsciiText.color = 0xffffffff;
         break;
     case 2:
@@ -231,7 +231,7 @@ int Gui::OnDraw(Gui *gui)
         g_AsciiText.scaleY = 1.0f;
         g_AsciiText.glyphWidth = 11;
         g_AsciiText.color = 0xffe0b0ff;
-        g_AsciiText.AddFormat(&gui->impl->unk_209e0.pos, "Supernatural Border!!");
+        g_AsciiText.AddFormat(&gui->impl->fullPowerPopup.pos, "Supernatural Border!!");
         g_AsciiText.color = 0xffffffff;
         g_AsciiText.scaleX = 1.0f;
         g_AsciiText.scaleY = 1.0f;
@@ -239,7 +239,7 @@ int Gui::OnDraw(Gui *gui)
         break;
     case 3:
         g_AsciiText.color = 0xffc0b0ff;
-        g_AsciiText.AddFormat(&gui->impl->unk_209e0.pos, "CherryPoint Max!");
+        g_AsciiText.AddFormat(&gui->impl->fullPowerPopup.pos, "CherryPoint Max!");
         g_AsciiText.color = 0xffffffff;
         break;
     case 4:
@@ -247,7 +247,7 @@ int Gui::OnDraw(Gui *gui)
         g_AsciiText.scaleY = 1.0f;
         g_AsciiText.glyphWidth = 11;
         g_AsciiText.color = 0xffe0b0ff;
-        g_AsciiText.AddFormat(&gui->impl->unk_209e0.pos, "Border Bonus %7d", gui->impl->unk_209e0.value);
+        g_AsciiText.AddFormat(&gui->impl->fullPowerPopup.pos, "Border Bonus %7d", gui->impl->fullPowerPopup.value);
         g_AsciiText.color = 0xffffffff;
         g_AsciiText.scaleX = 1.0f;
         g_AsciiText.scaleY = 1.0f;
@@ -564,7 +564,7 @@ int Gui::LoadResources()
     this->impl->msg.scriptIndex = -1;
     this->impl->stageClearShown = 0;
     this->impl->bonusPopup.shown = 0;
-    this->impl->unk_209e0.shown = 0;
+    this->impl->fullPowerPopup.shown = 0;
     this->impl->spellBonusPopup.shown = 0;
     this->livesChanged = 2;
     this->bombsChanged = 2;
@@ -1165,21 +1165,21 @@ void Gui::UpdateInterface()
         }
         ++this->impl->bonusPopup.timer;
     }
-    if (this->impl->unk_209e0.shown)
+    if (this->impl->fullPowerPopup.shown)
     {
-        if (this->impl->unk_209e0.timer < 30)
+        if (this->impl->fullPowerPopup.timer < 30)
         {
-            this->impl->unk_209e0.pos.x = this->impl->unk_209e0.timer.AsFloat() * -312.0f / 30.0f + 416.0f;
+            this->impl->fullPowerPopup.pos.x = this->impl->fullPowerPopup.timer.AsFloat() * -312.0f / 30.0f + 416.0f;
         }
         else
         {
-            this->impl->unk_209e0.pos.x = 104.0f;
+            this->impl->fullPowerPopup.pos.x = 104.0f;
         }
-        if (this->impl->unk_209e0.timer >= 180)
+        if (this->impl->fullPowerPopup.timer >= 180)
         {
-            this->impl->unk_209e0.shown = 0;
+            this->impl->fullPowerPopup.shown = 0;
         }
-        ++this->impl->unk_209e0.timer;
+        ++this->impl->fullPowerPopup.timer;
     }
     if (this->impl->spellBonusPopup.shown)
     {

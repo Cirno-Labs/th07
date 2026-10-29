@@ -1375,7 +1375,7 @@ loop:
                 g_Gui.bossHealth = 1.0f;
                 enemy->flags.isBoss = 1;
                 enemy->bossIndex = INT_ARG(0);
-                g_AsciiText.SetUnkB7cInterrupt(enemy->bossIndex, 1);
+                g_AsciiText.SetNearbyLabelInterrupt(enemy->bossIndex, 1);
             }
             else
             {
@@ -1385,7 +1385,7 @@ loop:
                 }
                 g_EnemyManager.bosses[enemy->bossIndex] = NULL;
                 enemy->flags.isBoss = 0;
-                g_AsciiText.SetUnkB7cInterrupt(enemy->bossIndex, 2);
+                g_AsciiText.SetNearbyLabelInterrupt(enemy->bossIndex, 2);
                 ReleaseEnemyEffects(enemy);
             }
             break;
@@ -1516,7 +1516,7 @@ loop:
             enemy->flags.contactDamage = instr->args[0].i;
             break;
         case 103:
-            enemy->flags.unk_a = instr->args[0].i;
+            enemy->flags.hitBonusEnabled = instr->args[0].i;
             break;
         case 104:
             enemy->flags.takesDamage = instr->args[0].i;
@@ -2091,7 +2091,7 @@ done:
     {
         if (g_Player.bomb.running && g_SpellCardActive && g_SpellCardNumber >= 0x76)
         {
-            enemy->flags.unk_1a = 1;
+            enemy->flags.hideEffectsAndTrail = 1;
             enemy->keepSpellCardDelay = 1;
         }
         else if (enemy->keepSpellCardDelay > 0)
@@ -2100,7 +2100,7 @@ done:
         }
         else
         {
-            enemy->flags.unk_1a = 0;
+            enemy->flags.hideEffectsAndTrail = 0;
         }
     }
     return 0;

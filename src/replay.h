@@ -73,7 +73,7 @@ struct ReplayHeader
     ReplayStage *stages[7];
     // The same for the frame rates kept every 30 frames.
     BYTE *extras[7];
-    BYTE unk_54;
+    BYTE randomByte;
     // 0x62.
     BYTE versionByte55;
     // character * 2 + shot type.

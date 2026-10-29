@@ -744,7 +744,7 @@ void SetDefaultRenderStates()
         g_SpriteEngine->ClearColorOp();
         g_SpriteEngine->ClearVertexFormat();
         g_SpriteEngine->ClearTexture();
-        g_SpriteEngine->ClearUnk2e4d4();
+        g_SpriteEngine->ClearLastCameraSetupFlag();
     }
     g_FogColorChanged = 1;
 }

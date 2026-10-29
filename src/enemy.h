@@ -24,7 +24,7 @@ struct EnemyFlags
     // Can be shot and killed, as th06's.
     unsigned char shootable : 1;
     unsigned char contactDamage : 1;
-    unsigned char unk_a : 1;
+    unsigned char hitBonusEnabled : 1;
     // Hides the effects that follow the enemy.
     unsigned char hideFollowEffects : 1;
     unsigned char takesDamage : 1;
@@ -47,7 +47,7 @@ struct EnemyFlags
     unsigned char isWarpingToBoss : 1;
     // Cleared as a spell card starts.
     unsigned char hidden : 1;
-    unsigned char unk_1a : 1;
+    unsigned char hideEffectsAndTrail : 1;
     // While a bomb runs or the player is not in playerState 0, OnUpdate
     // skips the enemy's script, movement and damage, and holds
     // callbackTimer back.
@@ -373,7 +373,7 @@ public:
 
     // Draws the enemies of the lists at +0x954700, from `from` up to
     // `to`, as th06's OnDraw: sprites[0], the main sprite (unless
-    // unk_4f30 bit 4 or flags.unk_1a) and sprites[1], each at the
+    // unk_4f30 bit 4 or flags.hideEffectsAndTrail) and sprites[1], each at the
     // enemy's position plus posOffset. With unk_4f30 set, also its trail
     // along unk_2f78 (every unk_4f36th of unk_4f32 boxes): copies of the
     // main sprite on the boxes not at x below -990, or with bit 3 a

@@ -674,33 +674,33 @@ int EffectManager::OnDraw2()
 int EffectManager::AddedCallback(EffectManager *mgr)
 {
     mgr->Reset();
-    g_Unknown1348024 = 0;
+    g_EffectManagerInitFlag = 0;
     switch (g_GameManager.stage)
     {
     case 0:
     case 1:
-        g_Unknown1348020 = 1;
+        g_EffectStyle = 1;
         if (g_SpriteEngine->LoadAnm(0x11, "data/eff01.anm", 0x2dc) != 0)
         {
             return -1;
         }
         break;
     case 2:
-        g_Unknown1348020 = 1;
+        g_EffectStyle = 1;
         if (g_SpriteEngine->LoadAnm(0x11, "data/eff02.anm", 0x2dc) != 0)
         {
             return -1;
         }
         break;
     case 3:
-        g_Unknown1348020 = 1;
+        g_EffectStyle = 1;
         if (g_SpriteEngine->LoadAnm(0x11, "data/eff03.anm", 0x2dc) != 0)
         {
             return -1;
         }
         break;
     case 4:
-        g_Unknown1348020 = 2;
+        g_EffectStyle = 2;
         if (g_SpriteEngine->LoadAnm(0x11, "data/eff04.anm", 0x2dc) != 0)
         {
             return -1;
@@ -711,14 +711,14 @@ int EffectManager::AddedCallback(EffectManager *mgr)
         }
         break;
     case 5:
-        g_Unknown1348020 = 2;
+        g_EffectStyle = 2;
         if (g_SpriteEngine->LoadAnm(0x11, "data/eff05.anm", 0x2dc) != 0)
         {
             return -1;
         }
         break;
     case 6:
-        g_Unknown1348020 = 2;
+        g_EffectStyle = 2;
         if (g_SpriteEngine->LoadAnm(0x11, "data/eff05.anm", 0x2dc) != 0)
         {
             return -1;
@@ -729,7 +729,7 @@ int EffectManager::AddedCallback(EffectManager *mgr)
         }
         break;
     case 7:
-        g_Unknown1348020 = 1;
+        g_EffectStyle = 1;
         if (g_SpriteEngine->LoadAnm(0x11, "data/eff02.anm", 0x2dc) != 0)
         {
             return -1;
@@ -740,7 +740,7 @@ int EffectManager::AddedCallback(EffectManager *mgr)
         }
         break;
     case 8:
-        g_Unknown1348020 = 2;
+        g_EffectStyle = 2;
         if (g_SpriteEngine->LoadAnm(0x11, "data/eff07.anm", 0x2dc) != 0)
         {
             return -1;

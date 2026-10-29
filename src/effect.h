@@ -238,9 +238,9 @@ extern ChainElem g_EffectCalcChain;
 extern ChainElem g_EffectDrawChain;
 
 // Set by EffectManager::AddedCallback to 1 or 2, by stage. Not in th06.
-extern int g_Unknown1348020;
+extern int g_EffectStyle;
 // Cleared by EffectManager::AddedCallback.
-extern int g_Unknown1348024;
+extern int g_EffectManagerInitFlag;
 
 // Probably the 3D camera: where it is, and the direction it looks in
 // (normalized). Not declared as part of a struct yet.

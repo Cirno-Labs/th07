@@ -994,7 +994,7 @@ public:
     // The same without unk_9620.
     void AddBonusPointsNoTrack(int amount);
     // Takes `amount` from unk_961c, down to stats->unk_88.
-    void SubUnk961c(int amount)
+    void SubBonusPoints(int amount)
     {
         if (this->bonusPoints - this->stats->grazeCount >= amount)
         {
@@ -1049,7 +1049,7 @@ public:
     // Adds `bombs` to stats->bombsUsed, checked like AddPower.
     void AddBombsUsed(int bombs);
     // Sets bit 3 (0x8) of unk_93d8 to `value`.
-    void SetUnk93d8Bit3(int value)
+    void SetIsInReplay(int value)
     {
         this->isInReplay = value;
     }
@@ -1335,7 +1335,7 @@ struct GuiImpl
     // The bonus for bullets cleared (th06's bonusPopup), a popup that
     // also shows what kind it is in `shown`, and the spell card's bonus.
     GuiPopup bonusPopup;
-    GuiPopup unk_209e0;
+    GuiPopup fullPowerPopup;
     GuiPopup spellBonusPopup;
     // The stage clear bonus's power, point items, cherry and grazes.
     int stageClearPower;
@@ -1443,7 +1443,7 @@ public:
     // Shows `bonus` in bonusPopup, at (416, 48), and sets
     // g_App.redrawFrames to 2.
     void ShowBonusPopup(int bonus);
-    // th06's ShowFullPowerPopup: shows `points` in impl->unk_209e0, at
+    // th06's ShowFullPowerPopup: shows `points` in impl->fullPowerPopup, at
     // (416, 168), with `kind` as its shown value, and sets
     // g_App.redrawFrames to 2. Player::EndBombState calls it with the
     // points it scores and 4.

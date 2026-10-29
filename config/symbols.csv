@@ -1835,8 +1835,8 @@ address,size,name,symbol
 0x01347ae0,,g_StageDrawChain,?g_StageDrawChain@@3UChainElem@@A
 0x01347b00,,g_Stage,?g_Stage@@3VStage@@A
 0x01348010,,g_FogColorChanged,?g_FogColorChanged@@3EA
-0x01348020,,g_Unknown1348020,?g_Unknown1348020@@3HA
-0x01348024,,g_Unknown1348024,?g_Unknown1348024@@3HA
+0x01348020,,g_EffectStyle,?g_EffectStyle@@3HA
+0x01348024,,g_EffectManagerInitFlag,?g_EffectManagerInitFlag@@3HA
 0x0134ccf8,,g_CameraEye,?g_CameraEye@@3UD3DXVECTOR3@@A
 0x0134cd04,,g_CameraAt,?g_CameraAt@@3UD3DXVECTOR3@@A
 0x0134cd1c,,g_CameraDir,?g_CameraDir@@3UD3DXVECTOR3@@A

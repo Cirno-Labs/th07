@@ -115,7 +115,7 @@ int MainMenu::StartTitle()
             this->SetState(7);
             g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 13);
             this->helpSprite->SetPendingInterrupt(2);
-            g_GameManager.SetUnk93d8Bit3(0);
+            g_GameManager.SetIsInReplay(0);
             return 1;
         }
         if (this->returningFromPractice != 0)
@@ -163,7 +163,7 @@ int MainMenu::StartTitle()
             }
             else
             {
-                g_GameManager.SetUnk93d8Bit3(1);
+                g_GameManager.SetIsInReplay(1);
                 g_GameManager.stateFlags |= 2;
                 g_GameManager.demoFrames = 0;
                 g_GameManager.difficulty = this->loadedReplay->difficulty;
@@ -1464,7 +1464,7 @@ int MainMenu::UpdateShotTypeMenu()
                     g_GameManager.stage = g_GameManager.difficulty + 2;
                 }
                 g_App.scene = 2;
-                g_GameManager.SetUnk93d8Bit3(0);
+                g_GameManager.SetIsInReplay(0);
                 g_App.StopMusic();
                 while (g_SoundPlayer.PlayQueuedSounds())
                 {
@@ -1593,7 +1593,7 @@ int MainMenu::UpdateGameStartMenu()
             g_GameManager.difficulty = g_App.defaultDifficulty;
             g_GameManager.stage = this->cursor;
             g_App.scene = 2;
-            g_GameManager.SetUnk93d8Bit3(0);
+            g_GameManager.SetIsInReplay(0);
             g_App.StopMusic();
             while (g_SoundPlayer.PlayQueuedSounds())
             {
@@ -1837,7 +1837,7 @@ int MainMenu::UpdateReplayMenu()
         }
         if (WAS_PRESSED(0x1001))
         {
-            g_GameManager.SetUnk93d8Bit3(1);
+            g_GameManager.SetIsInReplay(1);
             strcpy(g_GameManager.replayFile, this->replayPaths[this->replayCursor]);
             g_GameManager.difficulty = this->loadedReplay->difficulty;
             g_GameManager.character = this->loadedReplay->shotType / 2;
@@ -2181,9 +2181,9 @@ int MainMenu::InitTitleScene()
             g_SpriteEngine->ClearColorOp();
             g_SpriteEngine->ClearBlendMode();
             g_SpriteEngine->ClearZWrite();
-            g_SpriteEngine->ClearUnk8();
-            g_SpriteEngine->ClearUnk2e4d4();
-            g_SpriteEngine->ResetUnk0();
+            g_SpriteEngine->ClearDrawStats();
+            g_SpriteEngine->ClearLastCameraSetupFlag();
+            g_SpriteEngine->ResetColorModulation();
             g_App.d3dDevice->BeginScene();
             g_SpriteEngine->CopySurfaceToBackBuffer(0, 0, 0, 0, 0);
             if (i < 60)

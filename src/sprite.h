@@ -520,29 +520,29 @@ public:
     {
         this->currentSpriteData = NULL;
     }
-    void ClearUnk2e4d4()
+    void ClearLastCameraSetupFlag()
     {
         this->lastCameraSetupFlag = 0xff;
     }
-    void ClearUnk8()
+    void ClearDrawStats()
     {
         this->stepCount = 0;
         this->renderStateSetCount = 0;
         this->scriptStartCount = 0;
         this->batchDrawCount = 0;
     }
-    void ResetUnk0()
+    void ResetColorModulation()
     {
         this->modulateColorEnabled = 0;
         this->modulateColor = 0x80808080;
     }
     // Modulates sprites by `color` (sets unk_4).
-    void SetUnk0(D3DCOLOR color)
+    void SetColorModulation(D3DCOLOR color)
     {
         this->modulateColorEnabled = 1;
         this->modulateColor = color;
     }
-    void SetUnk2e4d4(int value)
+    void SetLastCameraSetupFlag(int value)
     {
         this->lastCameraSetupFlag = value;
     }

@@ -33,7 +33,7 @@ void DimPlayAreaForBomb(Player *player)
         color.g = color.b;
         color.r = color.g;
     }
-    g_SpriteEngine->ResetUnk0();
+    g_SpriteEngine->ResetColorModulation();
     g_Stage.SetTintColor(color.color);
     g_Stage.keepTintColor = 1;
 }

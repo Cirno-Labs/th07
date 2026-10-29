@@ -159,32 +159,32 @@ public:
     // Sends unk_b7c[idx] interrupt 99. Must be an inline: under /Od only
     // an inline's constant argument leaves the index multiplied out at
     // run time, as Player::DeletedCallback does.
-    void InterruptUnkB7c(int idx)
+    void InterruptNearbyLabel(int idx)
     {
         this->nearbyLabels[idx].pendingInterrupt = 99;
     }
     // Sends unk_b7c[idx] interrupt `interrupt`, the same way.
-    void SetUnkB7cInterrupt(int idx, int interrupt)
+    void SetNearbyLabelInterrupt(int idx, int interrupt)
     {
         this->nearbyLabels[idx].pendingInterrupt = interrupt;
     }
     // Moves unk_b7c[idx] to `pos`, the same way.
-    void SetUnkB7cPos(int idx, D3DXVECTOR3 *pos)
+    void SetNearbyLabelPos(int idx, D3DXVECTOR3 *pos)
     {
         this->nearbyLabels[idx].pos = *pos;
     }
     // Sets unk_14ac[idx], the same way.
-    void SetUnk14ac(int idx, int value)
+    void SetNearbyLabelDimmed(int idx, int value)
     {
         this->nearbyLabelDimmed[idx] = value;
     }
     // unk_74d4, and setting it while sending unk_498 the same
     // interrupt. Inlines: each read takes a temporary in ResetHomingAndText.
-    int GetUnk74d4()
+    int GetSummaryPendingInterrupt()
     {
         return this->summaryPendingInterrupt;
     }
-    void SetUnk74d4(int value)
+    void SetSummaryPendingInterrupt(int value)
     {
         this->summaryPopup.pendingInterrupt = value;
         this->summaryPendingInterrupt = value;

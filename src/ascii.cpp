@@ -149,7 +149,7 @@ void AsciiText::Initialize()
     this->digit.pos.z = 0.1f;
     this->highlight = 0;
     this->glyphWidth = 14;
-    this->SetUnk74d4(this->summaryPendingInterrupt);
+    this->SetSummaryPendingInterrupt(this->summaryPendingInterrupt);
 }
 
 void AsciiText::StartScripts()

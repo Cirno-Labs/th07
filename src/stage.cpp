@@ -477,8 +477,8 @@ int Stage::OnDraw(Stage *stage)
     g_SpriteEngine->ClearColorOp();
     g_SpriteEngine->ClearBlendMode();
     g_SpriteEngine->ClearZWrite();
-    g_SpriteEngine->ClearUnk8();
-    g_SpriteEngine->ClearUnk2e4d4();
+    g_SpriteEngine->ClearDrawStats();
+    g_SpriteEngine->ClearLastCameraSetupFlag();
     if (!g_App.flags.noFog)
     {
         g_App.DisableFog();
@@ -497,7 +497,7 @@ int Stage::OnDraw(Stage *stage)
     g_App.d3dDevice->SetViewport(&g_App.viewport);
     if (stage->tintColor.a > 0)
     {
-        g_SpriteEngine->SetUnk0(stage->tintColor.color);
+        g_SpriteEngine->SetColorModulation(stage->tintColor.color);
     }
     stage->tintColor.a = 0;
     stage->tintColor.r = 0x80;
@@ -594,7 +594,7 @@ int Stage::OnDraw2(Stage *stage)
             g_SpriteEngine->DrawAndFlush(&stage->dialogueSprites[j]);
         }
     }
-    g_SpriteEngine->SetUnk2e4d4(0);
+    g_SpriteEngine->SetLastCameraSetupFlag(0);
     stage->SetupFixedCamera();
     g_App.d3dDevice->SetViewport(&g_App.viewport);
     fog = 1000.0f;
@@ -603,7 +603,7 @@ int Stage::OnDraw2(Stage *stage)
     g_App.SetRenderState(D3DRS_FOGEND, *(DWORD *)&fog);
     if (stage->keepTintColor == 0)
     {
-        g_SpriteEngine->ResetUnk0();
+        g_SpriteEngine->ResetColorModulation();
     }
     stage->keepTintColor = 0;
     return 1;
@@ -827,7 +827,7 @@ int Stage::DrawLayer(int layer)
     origin.z = 0.0f;
     fog = 0xff;
     this->SetupCamera();
-    g_SpriteEngine->SetUnk2e4d4(1);
+    g_SpriteEngine->SetLastCameraSetupFlag(1);
     D3DXMatrixIdentity(&mat);
     while (placement->id >= 0)
     {

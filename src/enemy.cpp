@@ -107,7 +107,7 @@ void EnemyManager::Initialize()
     enemy->turnStill = -1;
     enemy->flags.shootable = 1;
     enemy->flags.contactDamage = 1;
-    enemy->flags.unk_a = 1;
+    enemy->flags.hitBonusEnabled = 1;
     enemy->flags.hideFollowEffects = 0;
     enemy->flags.takesDamage = 1;
     enemy->flags.grazeable = 0;
@@ -735,7 +735,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
         }
         bomb = 0;
         hit = 0;
-        if (!enemy->flags.hideFollowEffects && !enemy->flags.unk_1a)
+        if (!enemy->flags.hideFollowEffects && !enemy->flags.hideEffectsAndTrail)
         {
             if (enemy->flags.shootable && enemy->flags.contactDamage)
             {
@@ -812,7 +812,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                         hurt = 70;
                     }
                     g_GameManager.AddScore(hurt / 5 * 10);
-                    if (enemy->flags.unk_a)
+                    if (enemy->flags.hitBonusEnabled)
                     {
                         if (mgr->spellCardActive)
                         {
@@ -914,7 +914,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
             {
             case 3:
                 enemy->life = 1;
-                enemy->flags.unk_a = 0;
+                enemy->flags.hitBonusEnabled = 0;
                 enemy->flags.deathMode = 0;
                 g_Gui.bossPresent = 0;
                 g_ReplayManager->frameEvents |= 0x20;
@@ -1043,8 +1043,8 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                 }
                 markerPos.y = 472.0f;
                 markerPos.z = 0.0f;
-                g_AsciiText.SetUnkB7cPos(enemy->bossIndex, &markerPos);
-                g_AsciiText.SetUnk14ac(enemy->bossIndex, (enemy->sprite.flags >> 16) & 1);
+                g_AsciiText.SetNearbyLabelPos(enemy->bossIndex, &markerPos);
+                g_AsciiText.SetNearbyLabelDimmed(enemy->bossIndex, (enemy->sprite.flags >> 16) & 1);
             }
         }
         MoveEnemyEffects(enemy);
@@ -1116,7 +1116,7 @@ int EnemyManager::DrawEnemies(EnemyManager *mgr, int from, int to)
             }
             enemy->sprite.pos = enemy->pos + enemy->sprite.posOffset;
             enemy->sprite.pos.z = 0.29f;
-            if (!(enemy->trailFlags & 0x10) && !enemy->flags.unk_1a)
+            if (!(enemy->trailFlags & 0x10) && !enemy->flags.hideEffectsAndTrail)
             {
                 enemy->sprite.pos.x = g_GameManager.arena[0] + enemy->sprite.pos.x;
                 enemy->sprite.pos.y = g_GameManager.arena[1] + enemy->sprite.pos.y;
@@ -1284,10 +1284,10 @@ int EnemyManager::AddedCallback(EnemyManager *mgr)
     mgr->dropIndex = g_Rng.GetRandomU16InRange(8);
     mgr->spellCardActive = 0;
     D3DXVECTOR3 nowhere(-999.0f, -999.0f, -999.0f);
-    g_AsciiText.SetUnkB7cPos(0, &nowhere);
-    g_AsciiText.SetUnkB7cPos(1, &nowhere);
-    g_AsciiText.SetUnkB7cPos(2, &nowhere);
-    g_AsciiText.SetUnkB7cPos(3, &nowhere);
+    g_AsciiText.SetNearbyLabelPos(0, &nowhere);
+    g_AsciiText.SetNearbyLabelPos(1, &nowhere);
+    g_AsciiText.SetNearbyLabelPos(2, &nowhere);
+    g_AsciiText.SetNearbyLabelPos(3, &nowhere);
     return 0;
 }
 
@@ -1296,10 +1296,10 @@ int EnemyManager::DeletedCallback(EnemyManager *mgr)
     g_SpriteEngine->ReleaseAnm(0x10);
     g_SpriteEngine->ReleaseAnm(0xf);
     D3DXVECTOR3 nowhere(-999.0f, -999.0f, -999.0f);
-    g_AsciiText.SetUnkB7cPos(0, &nowhere);
-    g_AsciiText.SetUnkB7cPos(1, &nowhere);
-    g_AsciiText.SetUnkB7cPos(2, &nowhere);
-    g_AsciiText.SetUnkB7cPos(3, &nowhere);
+    g_AsciiText.SetNearbyLabelPos(0, &nowhere);
+    g_AsciiText.SetNearbyLabelPos(1, &nowhere);
+    g_AsciiText.SetNearbyLabelPos(2, &nowhere);
+    g_AsciiText.SetNearbyLabelPos(3, &nowhere);
     return 0;
 }
 
