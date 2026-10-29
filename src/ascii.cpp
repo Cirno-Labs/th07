@@ -22,6 +22,15 @@ void Unknown626270::RerollChecksumKeys()
     this->unk_9614 = this->stats->unk_b0 + this->stats->unk_8c[3];
 }
 
+// Like RerollChecksumKeys, without rerolling the keys.
+void Unknown626270::SetBombs(int bombs)
+{
+    this->stats->bombs = bombs;
+    this->stats->unk_ac = this->stats->unk_34[2];
+    this->stats->unk_b0 = this->ComputeChecksum();
+    this->unk_9614 = this->stats->unk_b0 + this->stats->unk_8c[3];
+}
+
 AsciiText::AsciiText()
 {
 }
