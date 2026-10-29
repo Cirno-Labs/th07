@@ -55,6 +55,9 @@ ASSERT_SIZE(Effect, 0x2d8);
 class EffectManager
 {
 public:
+    // Constructs the effects, zeroes everything and sets colorScale to
+    // 1.
+    EffectManager();
     // Zeroes everything.
     void Reset();
     // Starts `count` effects of `type` at `pos` in `color`. Returns the
