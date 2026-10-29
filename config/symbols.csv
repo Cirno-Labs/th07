@@ -157,7 +157,7 @@ address,size,name,symbol
 0x0041d2f0,141,Func41d2f0,
 0x0041d380,131,Func41d380,
 0x0041d410,115,Ending::ReadInt,?ReadInt@Ending@@QAEHXZ
-0x0041d490,591,Func41d490,
+0x0041d490,591,Ending::DrawFade,?DrawFade@Ending@@QAEXXZ
 0x0041d700,3268,Func41d700,
 0x0041e4b0,216,Func41e4b0,
 0x0041e590,508,Func41e590,

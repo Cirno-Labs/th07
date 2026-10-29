@@ -16,6 +16,8 @@ public:
     // Reads a number at the cursor and moves the cursor past it and the
     // NULs after it.
     int ReadInt();
+    // Steps the fade and draws it over the screen.
+    void DrawFade();
 
     ChainElem *calcChain;
     ChainElem *drawChain;
