@@ -653,7 +653,7 @@ void StartSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
             sum += rec->attempts[len];
             sum += rec->maxBonus[len];
         }
-        if (rec->unk_2a != (BYTE)sum)
+        if (rec->checksum != (BYTE)sum)
         {
             for (len = 0; len < 7; len++)
             {
@@ -676,7 +676,7 @@ void StartSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
             sum2 += rec->attempts[len];
             sum2 += rec->maxBonus[len];
         }
-        rec->unk_2a = sum2;
+        rec->checksum = sum2;
     }
 }
 
@@ -724,7 +724,7 @@ void EndSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
                         sum += rec->attempts[len];
                         sum += rec->maxBonus[len];
                     }
-                    if (rec->unk_2a != (BYTE)sum)
+                    if (rec->checksum != (BYTE)sum)
                     {
                         for (len = 0; len < 7; len++)
                         {
@@ -756,7 +756,7 @@ void EndSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
                         sum2 += rec->attempts[len];
                         sum2 += rec->maxBonus[len];
                     }
-                    rec->unk_2a = sum2;
+                    rec->checksum = sum2;
                 }
                 g_Unknown626270.stats->spellCardsCaptured++;
             }

@@ -63,7 +63,7 @@ struct Catk
     DWORD maxBonus[7];
     // The card's number.
     WORD index;
-    BYTE unk_2a;
+    BYTE checksum;
     char name[0x31];
     // By shot type, then with every shot type: the times tried and
     // captured. The result screen shows "？？？？？" for the name while
