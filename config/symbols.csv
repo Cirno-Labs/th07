@@ -920,7 +920,7 @@ address,size,name,symbol
 0x0046fc62,306,Func46fc62,
 0x0046fd94,97,Func46fd94,
 0x0046fdf5,1175,Func46fdf5,
-0x0046fed0,,Unknown46fed0,
+0x0046fed0,,Func46fed0,
 0x0047028c,233,Func47028c,
 0x00470375,78,Func470375,
 0x004703c3,256,Func4703c3,

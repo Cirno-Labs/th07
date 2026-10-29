@@ -121,7 +121,7 @@ public:
     // success; on failure deletes the file.
     bool ReadTable(char *path);
     // Builds the entry table from the `count` entries at `table` (each a
-    // name, then offset, size and unk_0c), plus an end entry at
+    // name, then offset, size and checksum), plus an end entry at
     // `tableOffset`. Returns a new[]'d array, or NULL.
     DatArchiveEntry *BuildEntryTable(BYTE *table, int count, DWORD tableOffset);
     // A GlobalAlloc'd copy of `str`, or NULL.

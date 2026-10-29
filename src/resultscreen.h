@@ -263,7 +263,7 @@ void SaveScoreDat(class ResultScreen *screen);
 // Moves `screen`'s cursor up or down through `count` items, wrapping.
 // Returns -1 for up, 1 for down, 0 if it did not move.
 int MoveCursorVertical(ResultScreen *screen, int count);
-// The same for `screen`'s unk_24.
+// The same for `screen`'s spellCursor.
 int LoadScreenPlstChunk(ResultScreen *screen, int count);
 // The same with left and right.
 int MoveCursorHorizontal(ResultScreen *screen, int count);

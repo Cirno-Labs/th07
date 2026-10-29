@@ -972,7 +972,7 @@ public:
     // Whether shot type `shot` has Phantasm open (IsPhantasmOpen for one
     // shot type).
     int HasPhantasmOpen(int shot);
-    // The checksum: ChecksumBytes over stats from unk_34 to checksum, over
+    // The checksum: ChecksumBytes over stats from lifeChecksumKeys to checksum, over
     // stats->checksumKeysE, over what savedConfig points at and over g_App's config
     // (0x38 bytes each).
     int ComputeChecksum();
@@ -1145,7 +1145,7 @@ public:
     // The frames played, which the result screen shows as progress.
     int progressFrames;
     // Counts frames for OnUpdate's slowdowns: of a replay played slowly
-    // (replayMenuChoice 1) and, while savedConfig->unk_25 is set, by bullet count.
+    // (replayMenuChoice 1) and, while savedConfig->scoreDisabled is set, by bullet count.
     DWORD slowdownCounter;
     // Set by the title menu from the play time: 3 under 7 hours, 4
     // under 14, else 5.
@@ -1196,7 +1196,7 @@ void RerollStatsChecksumKeys();
 // file (ResultScreen::RegisterChain(2)), resets the spell cards, then
 // loads the high score, the spell cards, the clears and the practice
 // scores from "score.dat" (a practice takes its high score from the
-// practice scores and adds one to its unk_0c) and keeps a copy of the
+// practice scores and adds one to its playCount) and keeps a copy of the
 // spell cards in savedCatks. Returns 0, or -1 if the file cannot be
 // read. Not in th06 as a function of its own.
 int LoadScoreFile();
@@ -1680,7 +1680,7 @@ void EndSpellCard(Enemy *enemy, EnemyScriptInstr *instr);
 // in its order.
 
 // Puts `enemy` where boss argument 1 is, with its velocity and angle,
-// and sets flags.unk_18.
+// and sets flags.isWarpingToBoss.
 void WarpToBoss(Enemy *enemy, EnemyScriptInstr *instr);
 // Shakes and flashes the screen, and starts the flying bullets with
 // sprites that no call has turned yet (only color 8 for argument 1 = 1,

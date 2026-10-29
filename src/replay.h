@@ -31,7 +31,7 @@ struct ReplayStage
     int invulnerabilityBonus;
     // GameStats::grazeTotal.
     int grazeTotal;
-    // GameStats::checksumKeyStage and unk_30.
+    // GameStats::checksumKeyStage and checksumKeyPoints.
     int checksumKeyStage;
     int checksumKeyPoints;
     // GameManager::rngSeed.

@@ -168,10 +168,10 @@ struct Enemy
     // Keeps the position within the bounds, with flags.clampPos, as
     // th06's.
     void ClampPos();
-    // Contact with the player, from th06's OnUpdate: with flags.unk_d,
+    // Contact with the player, from th06's OnUpdate: with flags.grazeable,
     // every sixth frame of callbackTimer lets the player graze `size`
     // / 0.7 at `pos`; touching `size` / 1.5 there costs a shootable
-    // enemy that is neither a boss nor flags.unk_d 10 life.
+    // enemy that is neither a boss nor flags.grazeable 10 life.
     void CheckPlayerContact(D3DXVECTOR3 *pos, D3DXVECTOR3 *size);
 
     Sprite sprite;
@@ -362,7 +362,7 @@ public:
     Enemy *SpawnWithVars(int sub, D3DXVECTOR3 *pos, int life, int item, int score,
                       EnemyScriptVars *vars);
     // Kills every enemy but the bosses, as th06's spell card ends do.
-    // Those with flags.unk_d, and their first trailSegmentCount boxes (every
+    // Those with flags.grazeable, and their first trailSegmentCount boxes (every
     // sixth, while trailFlags is set), each drop item 6 and show a bonus
     // that starts at 2000 and grows by 30 up to `maxBonus` (white
     // below it, yellow from it). Returns `start` plus the bonuses.
@@ -375,7 +375,7 @@ public:
     // `to`, as th06's OnDraw: sprites[0], the main sprite (unless
     // trailFlags bit 4 or flags.hideEffectsAndTrail) and sprites[1], each at the
     // enemy's position plus posOffset. With trailFlags set, also its trail
-    // along trailBoxes (every unk_4f36th of trailSegmentCount boxes): copies of the
+    // along trailBoxes (every trailSegmentStep-th of trailSegmentCount boxes): copies of the
     // main sprite on the boxes not at x below -990, or with bit 3 a
     // vertex strip in spriteStripVertices up to the first such box; bit 1 narrows
     // it and bit 2 fades it towards the end. Returns 1.

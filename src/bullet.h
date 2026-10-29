@@ -298,7 +298,7 @@ extern int g_BulletColorOffsets32[16];
 void ShowSpawnSprite(Sprite *dst, Sprite *src, Bullet *bullet, int color);
 
 // Starts the bullet's commands from commandIndex on: skips those whose
-// flag the bullet lacks, and stops at an empty one, at one whose unk_14
+// flag the bullet lacks, and stops at an empty one, at one whose concurrentFlag
 // is 0 while a behavior is still running, or after starting one
 // behavior in its BulletEx (flag 0x2000 only sets boundsCheckDelay and goes on).
 // Behaviors started after the first play the bullet's sound.
@@ -312,19 +312,19 @@ void SlowBulletStart(Bullet *bullet);
 // Flag 0x10, ex[1]: for its duration the bullet speeds up by accel,
 // turned along its velocity.
 void AccelerateAlongVelocity(Bullet *bullet);
-// Flag 0x20, ex[2]: for its duration the bullet turns by unk_10 and
-// speeds up by unk_c a frame.
+// Flag 0x20, ex[2]: for its duration the bullet turns by turnAngle and
+// speeds up by turnSpeed a frame.
 void TurnAndAccelerate(Bullet *bullet);
 // Flags 0x40, 0x100 and 0x80, ex[3]: the bullet slows to a stop over
-// each `duration` frames, then plays its sound, turns (by unk_10, to
-// unk_10, or to the player plus unk_10) and runs at unk_c again, unk_24
-// times (counted in unk_28).
+// each `duration` frames, then plays its sound, turns (by turnAngle, to
+// turnAngle, or to the player plus turnAngle) and runs at turnSpeed again,
+// maxTurns times (counted in turnCount).
 void StopTurnAndRestart(Bullet *bullet);
 void StopTurnToAngle(Bullet *bullet);
 void StopTurnToPlayer(Bullet *bullet);
 // Flags 0x400 and 0x800, ex[4]: a bullet leaving the play area plays
 // its sound and bounces off the sides and the top (and the bottom with
-// 0x400) at speed unk_c, up to unk_24 times (counted in duration).
+// 0x400) at speed turnSpeed, up to maxTurns times (counted in duration).
 void BounceOffWalls(Bullet *bullet);
 
 // Draws a bullet with the sprite for its state (spawning effects, fading

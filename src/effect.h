@@ -152,7 +152,7 @@ int EffectInitPetal30(Effect *effect);
 // g_CameraEye plus half of g_CameraAt, with a random step
 // on top of velocity, scaled by App::gameSpeed, and a z acceleration of
 // -0.015; a random spin, the second draw list and sprite 0x2d8 in
-// white, its unk_14 doubled. Returns 0.
+// white, its rotationSpeedZ doubled. Returns 0.
 int EffectInitPetal31(Effect *effect);
 
 // An effect init like EffectInitConverge, for types 22 and 32: the

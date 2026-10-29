@@ -247,12 +247,12 @@ int UpdateFiring(Player *player);
 int HandleInput(Player *player);
 // OnUpdate's first step, as the start of th06's: clears the sizes of
 // the 0x70 bombHitboxes hitboxes, then counts down each PlayerArea's framesLeft,
-// growing unk_10 by unk_14 meanwhile, and frees it once it is 0.
+// growing radius by radiusGrowth meanwhile, and frees it once it is 0.
 void UpdateHitboxAreas(Player *player);
 // OnUpdate's bomb step, the bomb part of th06's: with bombState set and
 // button 2 held outside a bomb, ends playerState 4 (StopBombState(1)) and
 // collects all items instead. Otherwise tries StartBombState while
-// bombState is 2 and runs down bombCooldown. A running bomb takes its unk_c
+// bombState is 2 and runs down bombCooldown. A running bomb takes its drainPerFrame
 // from GameManager::bonusPoints on each new frame (down to stats->
 // grazeCount) and runs. Else, with button 2 held, deathbombFrames left,
 // bombs left, bombCooldown at 0, intact checksums and no
@@ -317,7 +317,7 @@ struct PlayerBombHit
 ASSERT_SIZE(PlayerBombHit, 0x20);
 
 // One of the 0x60 entries at Player+0x17dc, maybe th06's
-// bulletClearAreas grown. Free while width and unk_10 are 0.
+// bulletClearAreas grown. Free while width and radius are 0.
 struct PlayerArea
 {
     float x;
@@ -416,13 +416,13 @@ public:
     // callback returns nonzero; then, unless of type 4 or 5, it is
     // marked hit (restarting its script 0x20 on and bursting effect 5
     // if it was flying) and, unless of type 3, slowed to an eighth.
-    // Each bombHitboxes box that meets it deals its unk_18 and adds it to
-    // its unk_1c; every fourth such hit bursts effect 3 at `pos` (5
+    // Each bombHitboxes box that meets it deals its damage and adds it to
+    // its damageDealt; every fourth such hit bursts effect 3 at `pos` (5
     // for the last 0x10 boxes), and during a bomb sets *hitByBomb.
     int CalcDamage(D3DXVECTOR3 *pos, D3DXVECTOR3 *size, int *hitByBomb);
     // Whether a `size` box at `pos` meets one of hitAreas's areas: a box
-    // while its width is set, else a circle of radius unk_10 if that is
-    // set. Keeps the area's unk_1c in areaItemType and returns 2 if so, else
+    // while its width is set, else a circle of radius `radius` if that is
+    // set. Keeps the area's itemType in areaItemType and returns 2 if so, else
     // returns 0. Not in th06.
     int CheckAreaHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size);
     // The angle from `pos` to the player, pi / 2 when they coincide.
@@ -445,9 +445,9 @@ public:
     // Removes the player's update and draw elements from the chain.
     // Takes the first free one of hitAreas's first 0x5f entries, or the
     // last entry, and sets it to a `width` by `height` area at `pos`
-    // with unk_18 0. Returns it.
+    // with framesLeft 0. Returns it.
     PlayerArea *AddHitboxArea(D3DXVECTOR3 *pos, float width, float height, int itemType);
-    // The same, setting unk_10 to unk_1c instead of width and height.
+    // The same, setting radius to itemType instead of width and height.
     PlayerArea *AddHitboxAreaCircle(D3DXVECTOR3 *pos, float radius, float radiusGrowth, int framesLeft, int itemType);
     // Clears the player and adds it to the chains (update priority 8,
     // draw 6 and 8), keeping `arg` in registerChainArg. Returns 0, or -1 if
@@ -555,12 +555,12 @@ public:
     int bombCooldown;
     // Frames left of clearing all bullets after a respawn, as th06's.
     int respawnClearFrames;
-    // The unk_1c of the PlayerArea CheckAreaHit met last.
+    // The itemType of the PlayerArea CheckAreaHit met last.
     int areaItemType;
     // As th06's: 0 normally, 1 respawning, 2 dying, 3 invulnerable.
     // Firing stops at 1 and 2.
     char playerState;
-    // RegisterChain's argument, as th06's unk_09e1.
+    // RegisterChain's argument, as th06's byte at +0x9e1.
     BYTE registerChainArg;
     // FireLaser fires its lasers while it is 1, FireTrailLaser while it
     // is 3. Where th06 has optionState.
@@ -626,7 +626,7 @@ void DimPlayAreaForBomb(Player *player);
 // player in slot 0 that runs as long as stateTimer, keeping it there.
 void SpawnBombAura(Player *player);
 
-// Sets the bomb's unk_c, what each of its frames takes from
+// Sets the bomb's drainPerFrame, what each of its frames takes from
 // GameManager::bonusPoints: `share` of bonusPoints over stats->grazeCount, halved
 // on difficulty 2, quartered on 3 and a third on 4 and 5, spread over
 // the bomb's duration, but at least `minimum` spread the same way,

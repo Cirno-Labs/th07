@@ -10,8 +10,8 @@
 
 // An inline of unsorted.h, probably, whose out-of-line copy the original
 // keeps with this file's; defined here so that the other files' calls
-// stay calls. checksum has to be unk_34[2] plus checksumKeysE[2] for each byte
-// ComputeChecksum sums (0x84 past checksum), computedChecksum plus unk_8c[3] checksumValue.
+// stay calls. checksum has to be lifeChecksumKeys[2] plus checksumKeysE[2] for each byte
+// ComputeChecksum sums (0x84 past checksum), computedChecksum plus checksumKeysD[3] checksumValue.
 int GameManager::ChecksumMismatch()
 {
     return this->stats->checksum == this->stats->lifeChecksumKeys[2] + this->stats->checksumKeysE[2] * ((BYTE *)&this->stats->checksum - (BYTE *)this->stats->lifeChecksumKeys + 0x84) &&
@@ -299,7 +299,7 @@ loop:
             }
             break;
         case 30:
-            // Hides unk_4, not backgroundLayer1, for a negative script.
+            // Hides backgroundLayer0, not backgroundLayer1, for a negative script.
             if (*(int *)&cmd->args.x >= 0)
             {
                 g_SpriteEngine->StartScriptAtOrigin(&stage->backgroundLayer1, *(int *)&cmd->args.x + 0x300);
