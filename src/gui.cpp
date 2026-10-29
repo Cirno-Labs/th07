@@ -75,3 +75,28 @@ void CopySpriteToTexture(int sprite)
     GetSpriteRect(&spriteRect, sprite);
     g_SpriteEngine->CopyTextureRect(0x15, 0x16, &dstRect, &spriteRect);
 }
+
+int Unknown49fbf0::OnUpdate(Unknown49fbf0 *gui)
+{
+    if (g_Unknown626270.isFrozen)
+    {
+        return 1;
+    }
+    if (gui->impl->unk_209bc != 0)
+    {
+        g_App.scene = 3;
+        gui->impl->unk_209bc = 0;
+    }
+    gui->UpdateInterface();
+    gui->impl->RunMsg();
+    gui->unk_0++;
+    if (g_Unknown626270.stage == 6 && gui->unk_0 == 300)
+    {
+        g_App.PlayMidi(0);
+    }
+    if ((g_Buttons & 0x100) && g_App.redrawFrames < 8)
+    {
+        g_App.redrawFrames = 8;
+    }
+    return 1;
+}

@@ -1206,8 +1206,13 @@ struct GuiImpl
     Sprite unk_7774;
     Sprite unk_79c0[0xa8];
     int unk_1fba0;
+    // Runs the dialogue for a frame, as th06's.
+    int RunMsg();
+
     GuiMsg msg;
-    unsigned char unk_209b4[0xc];
+    unsigned char unk_209b4[0x8];
+    // When set, OnUpdate clears it and sets g_App.scene to 3.
+    int unk_209bc;
     // The bonus for bullets cleared (th06's bonusPopup), a popup that
     // also shows what kind it is in `shown`, and the spell card's bonus.
     GuiPopup bonusPopup;
@@ -1222,6 +1227,14 @@ ASSERT_SIZE(GuiImpl, 0x20a30);
 class Unknown49fbf0
 {
 public:
+    // The update element's callback: unless g_Unknown626270.isFrozen is
+    // set, sets g_App.scene to 3 if impl->unk_209bc is set, runs
+    // UpdateInterface and impl->RunMsg and counts unk_0 up; plays MIDI
+    // slot 0 on frame 300 of stage 6, and holds g_App.redrawFrames at 8
+    // or more while button 0x100 is held. Returns 1.
+    static int OnUpdate(Unknown49fbf0 *gui);
+    // The update, as th06's UpdateInterface.
+    void UpdateInterface();
     // Sets bombName's pendingInterrupt to 1 and bombNameBar's to 2, as
     // the bomb ends. th06 interrupted bombName only.
     void EndBombName();
@@ -1249,7 +1262,8 @@ public:
     // g_App.redrawFrames to 2.
     void ShowSpellCardBonus(int value);
 
-    unsigned char unk_0[0x4];
+    // Counts OnUpdate's frames.
+    int unk_0;
     // Set to 2 when they change, as th06's GuiFlags.
     unsigned int livesChanged : 2;
     unsigned int bombsChanged : 2;

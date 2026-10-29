@@ -234,7 +234,7 @@ address,size,name,symbol
 0x00427c81,136,Unknown49fbf0::Func427c81,?Func427c81@Unknown49fbf0@@QAEXHH@Z
 0x00427d09,137,Unknown49fbf0::ShowSpellCardBonus,?ShowSpellCardBonus@Unknown49fbf0@@QAEXH@Z
 0x00427d92,234,CopySpriteToTexture,?CopySpriteToTexture@@YIXH@Z
-0x00427e7c,166,Func427e7c,
+0x00427e7c,166,Unknown49fbf0::OnUpdate,?OnUpdate@Unknown49fbf0@@SIHPAV1@@Z
 0x00427f22,1899,Func427f22,
 0x0042868d,506,Func42868d,
 0x00428887,658,Func428887,
@@ -243,11 +243,11 @@ address,size,name,symbol
 0x004299f8,62,Func4299f8,
 0x00429a36,25,Func429a36,
 0x00429a4f,467,Func429a4f,
-0x00429c42,3064,Func429c42,
+0x00429c42,3064,GuiImpl::RunMsg,?RunMsg@GuiImpl@@QAEHXZ
 0x0042a876,1203,Func42a876,
 0x0042ad29,61,Func42ad29,
 0x0042ad66,69,Unknown49fbf0::Func42ad66,?Func42ad66@Unknown49fbf0@@QAEHXZ
-0x0042adab,2136,Func42adab,
+0x0042adab,2136,Unknown49fbf0::UpdateInterface,?UpdateInterface@Unknown49fbf0@@QAEXXZ
 0x0042b603,3956,Func42b603,
 0x0042c577,2755,Func42c577,
 0x0042d03a,17,Func42d03a,
