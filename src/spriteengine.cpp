@@ -287,7 +287,7 @@ int SpriteEngine::LoadAnm(int slot, char *path, int firstSprite)
     }
     while (1)
     {
-        count = this->Func44e070(slot, anmFile, firstSprite, ownsData);
+        count = this->LoadAnmSprites(slot, anmFile, firstSprite, ownsData);
         if (count < 0)
         {
             this->anmSlots[firstSlot].count = slot - firstSlot;
@@ -303,6 +303,113 @@ int SpriteEngine::LoadAnm(int slot, char *path, int firstSprite)
         ownsData = 0;
         firstSprite += count;
     }
+}
+
+int SpriteEngine::LoadAnmSprites(int slot, AnmFile *anm, int firstSprite, int ownsData)
+{
+    SpriteData data;
+    int *entries;
+    int k;
+    AnmSprite *rawSprite;
+    char *name;
+    D3DSURFACE_DESC desc;
+    AnmFile *anmHeader;
+    int highest;
+
+    highest = 0;
+    if (anm == NULL)
+    {
+        LogError(&g_Log, "アニメが読み込めません。データが失われてるか壊れています\r\n");
+        return -1;
+    }
+    if (slot >= 0x32)
+    {
+        LogError(&g_Log, "テクスチャ格納先が足りません\r\n");
+        return -1;
+    }
+    this->ReleaseAnm(slot);
+    anmHeader = anm;
+    if (anmHeader->version != 2)
+    {
+        LogError(&g_Log, "アニメのバージョンが違います\r\n");
+        return -1;
+    }
+    anmHeader->textureIndex = slot;
+    anmHeader->ownsData = ownsData;
+    if (!anmHeader->hasImage)
+    {
+        name = (char *)anmHeader + anmHeader->nameOffset;
+        if (*name == '@')
+        {
+            this->CreateTexture(anmHeader->textureIndex, anmHeader->width, anmHeader->height, anmHeader->format);
+        }
+        else if (this->LoadTexture(anmHeader->textureIndex, name, anmHeader->format, anmHeader->colorKey) != 0)
+        {
+            LogError(&g_Log, "テクスチャ %s が読み込めません。データが失われてるか壊れています\r\n", name);
+            return -1;
+        }
+        if (anmHeader->alphaNameOffset != 0)
+        {
+            name = (char *)anmHeader + anmHeader->alphaNameOffset;
+            if (this->LoadTextureAlpha(anmHeader->textureIndex, name, anmHeader->format, anmHeader->colorKey) != 0)
+            {
+                LogError(&g_Log, "テクスチャ %s が読み込めません。データが失われてるか壊れています\r\n", name);
+                return -1;
+            }
+        }
+    }
+    else if (this->CreateTextureFromImage(anmHeader->textureIndex, (AnmImage *)((BYTE *)anmHeader + anmHeader->imageOffset),
+                              anmHeader->format) != 0)
+    {
+        LogError(&g_Log, "テクスチャが読み込めません。データが失われてるか壊れています\r\n");
+        return -1;
+    }
+    this->anmImageNames[slot] = (char *)anmHeader + anmHeader->nameOffset;
+    this->textures[slot]->SetPriority(anmHeader->priority);
+    this->textures[slot]->PreLoad();
+    this->textures[slot]->GetLevelDesc(0, &desc);
+    anmHeader->spriteOffset = firstSprite;
+    entries = anmHeader->spriteOffsets;
+    for (k = 0; k < anmHeader->numSprites; k++, entries++)
+    {
+        rawSprite = (AnmSprite *)((char *)anmHeader + *entries);
+        data.sourceFileIndex = anmHeader->textureIndex;
+        data.scaleX = (float)desc.Width / anmHeader->width;
+        data.scaleY = (float)desc.Height / anmHeader->height;
+        data.startX = data.scaleX * rawSprite->x;
+        data.startY = data.scaleY * rawSprite->y;
+        data.endX = (rawSprite->x + rawSprite->width) * data.scaleX;
+        data.endY = (rawSprite->y + rawSprite->height) * data.scaleY;
+        data.textureWidth = desc.Width;
+        data.textureHeight = desc.Height;
+        if (highest < rawSprite->id)
+        {
+            highest = rawSprite->id;
+        }
+        if (rawSprite->id + firstSprite >= 0xa00)
+        {
+            LogError(&g_Log, "スプライトが格納できません。テーブルが不足しています\r\n");
+            return -1;
+        }
+        this->LoadSprite(rawSprite->id + firstSprite, &data);
+    }
+    for (k = 0; k < anmHeader->numScripts; k++, entries += 2)
+    {
+        if (entries[0] + firstSprite >= 0xa00)
+        {
+            LogError(&g_Log, "アニメが格納できません。テーブルが不足しています\r\n");
+            return -1;
+        }
+        if (highest < entries[0])
+        {
+            highest = entries[0];
+        }
+        this->scripts[entries[0] + firstSprite] = (char *)anmHeader + entries[1];
+        this->scriptSpriteOffsets[entries[0] + firstSprite] = firstSprite;
+    }
+    this->anmSlots[slot].file = anmHeader;
+    this->anmSlots[slot].spriteOffset = firstSprite;
+    return highest + 1;
 }
 
 void SpriteEngine::RenderTextToTextureIndex(int textureIndex, int x, int y, int width, int unk4, int fontHeight,

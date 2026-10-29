@@ -17,7 +17,8 @@ struct SpriteData
     // The sprite's rectangle in the texture, in pixels.
     float startX;
     float startY;
-    unsigned char unk_c[0x8];
+    float endX;
+    float endY;
     // The texture's size.
     float textureHeight;
     float textureWidth;
@@ -33,7 +34,10 @@ struct SpriteData
     // divides the rectangle's size by these. Not in th06.
     float scaleX;
     float scaleY;
+    // Numbers the sprites in the order they were loaded, as in th06.
+    int spriteId;
 };
+ASSERT_SIZE(SpriteData, 0x40);
 
 // The part of Sprite up to pos. Its implicit constructor (0x4011b0)
 // constructs the Timers; Sprite's calls it rather than expanding it.
@@ -192,12 +196,50 @@ struct AnmImage
     BYTE data[1];
 };
 
-// An ANM file's header. Only the fields known so far.
+// A sprite in an ANM file: its number and rectangle, in pixels, as in
+// th06.
+struct AnmSprite
+{
+    int id;
+    float x;
+    float y;
+    float width;
+    float height;
+};
+
+// An ANM file's header. The sprites' and then the scripts' offsets
+// follow it.
 struct AnmFile
 {
-    unsigned char unk_0[0x38];
+    int numSprites;
+    int numScripts;
+    // Set to the slot it is loaded into.
+    int textureIndex;
+    int width;
+    int height;
+    int format;
+    D3DCOLOR colorKey;
+    // The image's file name, or "@" for a texture created blank.
+    int nameOffset;
+    // Set to the first sprite number.
+    int spriteOffset;
+    // The file name of an image to take the alpha from, or 0.
+    int alphaNameOffset;
+    // 2 in th07's files.
+    int version;
+    // The texture's resource priority.
+    DWORD priority;
+    // The image stored in the file, when hasImage is set. Not in th06.
+    int imageOffset;
+    BYTE hasImage;
+    // Set on the first ANM of a file: its memory is the file's, which
+    // ReleaseAnm frees.
+    BYTE ownsData;
+    unsigned char unk_36[0x2];
     // The offset of the next ANM in the same file, 0 for the last.
     int nextOffset;
+    unsigned char unk_3c[0x4];
+    int spriteOffsets[1];
 };
 
 // The ANMs loaded into one slot. Not in th06.
@@ -288,7 +330,10 @@ public:
     // Loads `anm` into slot `slot`, its sprites from `firstSprite` on.
     // Returns the number of sprites it takes, or -1 on failure. Not in
     // th06 as such.
-    int Func44e070(int slot, AnmFile *anm, int firstSprite, int ownsData);
+    int LoadAnmSprites(int slot, AnmFile *anm, int firstSprite, int ownsData);
+    // Copies `sprite` into sprite `index` and works out its texture
+    // coordinates and size.
+    void LoadSprite(int index, SpriteData *sprite);
     // Releases ANM slot `slot`.
     void ReleaseAnm(int slot);
     // Releases surface `surface`.
@@ -397,9 +442,13 @@ public:
     IDirect3DTexture8 *textures[0x108];
     // The image files the textures were created from, kept loaded.
     void *textureFiles[0x100];
-    unsigned char unk_28acc[0x424];
-    void *scripts[1];
-    unsigned char unk_28ef4[0x4ffc];
+    // The image file names of the ANMs loaded into each slot.
+    char *anmImageNames[0x32];
+    unsigned char unk_28b94[0x35c];
+    // The scripts of the loaded ANM files.
+    void *scripts[0xa00];
+    // The first sprite number of each script's ANM file.
+    int scriptSpriteOffsets[0xa00];
     AnmSlot anmSlots[0x32];
     // Images loaded as surfaces to copy to the back buffer from.
     IDirect3DSurface8 *surfaces[0x20];
