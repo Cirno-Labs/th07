@@ -579,7 +579,7 @@ address,size,name,symbol
 0x004501a0,782,SpriteEngine::ProjectSprite3D,?ProjectSprite3D@SpriteEngine@@QAEXPAVSprite@@@Z
 0x004504b0,102,SpriteEngine::DrawProjected3D,?DrawProjected3D@SpriteEngine@@QAEHPAVSprite@@@Z
 0x00450520,1316,SpriteEngine::Draw3D,?Draw3D@SpriteEngine@@QAEHPAVSprite@@@Z
-0x00450a50,166,Func450a50,
+0x00450a50,166,Sprite::ResolveFloatArgument,?ResolveFloatArgument@Sprite@@QAEMM@Z
 0x00450b20,186,Func450b20,
 0x00450c10,124,Func450c10,
 0x00450ca0,139,Func450ca0,

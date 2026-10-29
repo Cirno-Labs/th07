@@ -71,8 +71,20 @@ struct SpriteBase
     // Player's StartBombState sets these on its effect.
     BYTE unk_c4;
     unsigned char unk_c5[0x3];
+    // The script's variables: an argument of 10000 to 10009 stands for
+    // one of them. 10000-10003 and 10008-10009 are ints, 10004-10007
+    // floats.
     int unk_c8;
-    unsigned char unk_cc[0x2c];
+    int unk_cc;
+    int unk_d0;
+    int unk_d4;
+    float unk_d8;
+    float unk_dc;
+    float unk_e0;
+    float unk_e4;
+    int unk_e8;
+    int unk_ec;
+    unsigned char unk_f0[0x8];
     D3DXMATRIX matrix;
     // A copy of matrix, made by SetSprite.
     D3DXMATRIX unk_138;
@@ -126,6 +138,9 @@ public:
     // Whether the sprite shows a sprite whose texture is loaded. Defined
     // after SpriteEngine.
     __forceinline BOOL HasTexture();
+    // The value of `value` as a float argument: the variable it stands
+    // for, if any, or itself.
+    float ResolveFloatArgument(float value);
     void SetPendingInterrupt(short interrupt)
     {
         this->pendingInterrupt = interrupt;
