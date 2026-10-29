@@ -37,7 +37,7 @@ void Gui::HideInterface()
     this->impl->unk_6e44.spriteIndex = -1;
     this->impl->unk_7090.spriteIndex = -1;
     this->impl->unk_72dc.spriteIndex = -1;
-    this->impl->unk_1fba0 = 0;
+    this->impl->backgroundTileCount = 0;
 }
 
 int Gui::Func427be2()
@@ -97,10 +97,10 @@ int Gui::OnUpdate(Gui *gui)
     {
         return 1;
     }
-    if (gui->impl->unk_209bc != 0)
+    if (gui->impl->returnToTitleRequested != 0)
     {
         g_App.scene = 3;
-        gui->impl->unk_209bc = 0;
+        gui->impl->returnToTitleRequested = 0;
     }
     gui->UpdateInterface();
     gui->impl->RunMsg();
@@ -385,16 +385,16 @@ int Gui::LoadResources()
         {
             for (x = 0; x < 0xc; x++)
             {
-                g_SpriteEngine->StartScript(&this->impl->unk_79c0[y * 0xc + x], ((y + x) & 1) + 0x726);
-                this->impl->unk_79c0[y * 0xc + x].unk_e8 = y + x * 2;
-                this->impl->unk_79c0[y * 0xc + x].pos.x = x * 32.0f - 0.5f + 16.0f;
-                this->impl->unk_79c0[y * 0xc + x].pos.y = y * 32.0f - 0.5f + 16.0f;
-                this->impl->unk_79c0[y * 0xc + x].pos.z = 0.0f;
-                this->impl->unk_79c0[y * 0xc + x].uvScrollX = x * 32.0f / 512.0f;
-                this->impl->unk_79c0[y * 0xc + x].uvScrollY = y * 32.0f / 512.0f;
+                g_SpriteEngine->StartScript(&this->impl->backgroundTiles[y * 0xc + x], ((y + x) & 1) + 0x726);
+                this->impl->backgroundTiles[y * 0xc + x].unk_e8 = y + x * 2;
+                this->impl->backgroundTiles[y * 0xc + x].pos.x = x * 32.0f - 0.5f + 16.0f;
+                this->impl->backgroundTiles[y * 0xc + x].pos.y = y * 32.0f - 0.5f + 16.0f;
+                this->impl->backgroundTiles[y * 0xc + x].pos.z = 0.0f;
+                this->impl->backgroundTiles[y * 0xc + x].uvScrollX = x * 32.0f / 512.0f;
+                this->impl->backgroundTiles[y * 0xc + x].uvScrollY = y * 32.0f / 512.0f;
             }
         }
-        this->impl->unk_1fba0 = 0xa8;
+        this->impl->backgroundTileCount = 0xa8;
     }
     switch (g_Unknown626270.stage)
     {
@@ -536,7 +536,7 @@ int Gui::LoadResources()
     g_SpriteEngine->StartScript(&this->impl->spellPortrait, 0x4a3);
     g_SpriteEngine->StartScript(&this->impl->bombName, 0x704);
     g_SpriteEngine->StartScript(&this->impl->spellName, 0x705);
-    g_SpriteEngine->StartSpriteSeries(this->impl->unk_4bd0, 0x800, 5);
+    g_SpriteEngine->StartSpriteSeries(this->impl->trackNumberSprites, 0x800, 5);
     g_SpriteEngine->StartScript(&this->impl->bombNameBar, 1);
     g_SpriteEngine->StartScript(&this->impl->spellNameBar, 0);
     g_SpriteEngine->StartScript(&this->impl->unk_7774, 2);
@@ -777,13 +777,13 @@ int GuiImpl::RunMsg()
         case 7:
             if (g_Unknown626270.stage != 6)
             {
-                g_SpriteEngine->StartScript(&this->unk_4bd0[0], 0x804);
+                g_SpriteEngine->StartScript(&this->trackNumberSprites[0], 0x804);
             }
             else
             {
-                g_SpriteEngine->StartScript(&this->unk_4bd0[0], 0x805);
+                g_SpriteEngine->StartScript(&this->trackNumberSprites[0], 0x805);
             }
-            g_SpriteEngine->SetSprite(&this->unk_4bd0[0], this->msg.instr->i + 0x803);
+            g_SpriteEngine->SetSprite(&this->trackNumberSprites[0], this->msg.instr->i + 0x803);
             if (g_App.PlayMidi(this->msg.instr->i) != 0)
             {
                 g_App.PlayMusic(g_Unknown1347b00.data->songPaths[this->msg.instr->i]);
@@ -842,7 +842,7 @@ int GuiImpl::RunMsg()
                     goto stepSprites;
                 }
                 g_SpriteEngine->InitSprite(&this->unk_7090, 0x10c);
-                this->unk_209bc = 1;
+                this->returnToTitleRequested = 1;
                 this->msg.scriptIndex = -2;
             }
             else if (!(g_Unknown626270.unk_93d8 >> 3 & 1))
@@ -1114,7 +1114,7 @@ void Gui::UpdateInterface()
         }
     }
     g_SpriteEngine->StepSprites(this->impl->sprites, 0x21);
-    g_SpriteEngine->StepSprites(this->impl->unk_4bd0, 5);
+    g_SpriteEngine->StepSprites(this->impl->trackNumberSprites, 5);
     g_SpriteEngine->Step(&this->impl->bombPortrait);
     g_SpriteEngine->Step(&this->impl->unk_5be4);
     g_SpriteEngine->Step(&this->impl->unk_607c);
@@ -1137,17 +1137,17 @@ void Gui::UpdateInterface()
             this->impl->unk_72dc.spriteIndex = -1;
         }
     }
-    if (this->impl->unk_1fba0 != 0)
+    if (this->impl->backgroundTileCount != 0)
     {
         count = 0xa8;
         for (i = 0; i < 0xa8; i++)
         {
-            if (g_SpriteEngine->Step(&this->impl->unk_79c0[i]) != 0)
+            if (g_SpriteEngine->Step(&this->impl->backgroundTiles[i]) != 0)
             {
                 count--;
             }
         }
-        this->impl->unk_1fba0 = count;
+        this->impl->backgroundTileCount = count;
     }
     if (this->impl->bonusPopup.shown)
     {
@@ -1502,7 +1502,7 @@ void Gui::DrawBanners()
 
     for (iVal = 0; iVal < 5; iVal++)
     {
-        g_SpriteEngine->Draw(&this->impl->unk_4bd0[iVal]);
+        g_SpriteEngine->Draw(&this->impl->trackNumberSprites[iVal]);
     }
     if (this->impl->bombPortrait.shown)
     {
@@ -1596,11 +1596,11 @@ void Gui::DrawBanners()
             g_SpriteEngine->DrawUnrotated(&this->impl->unk_7090);
         }
     }
-    if (this->impl->unk_1fba0 != 0)
+    if (this->impl->backgroundTileCount != 0)
     {
         for (iVal = 0; iVal < 0xa8; iVal++)
         {
-            g_SpriteEngine->DrawProjected3D(&this->impl->unk_79c0[iVal]);
+            g_SpriteEngine->DrawProjected3D(&this->impl->backgroundTiles[iVal]);
             g_SpriteEngine->ClearSpriteData();
         }
     }

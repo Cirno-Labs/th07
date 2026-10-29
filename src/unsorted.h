@@ -1294,7 +1294,7 @@ struct GuiImpl
     // leaving, as th06's.
     BYTE bossBarState;
     unsigned char unk_4bcd[0x3];
-    Sprite unk_4bd0[5];
+    Sprite trackNumberSprites[5];
     Sprite bombPortrait;
     Sprite spellPortrait;
     Sprite unk_5be4;
@@ -1310,8 +1310,8 @@ struct GuiImpl
     Sprite unk_72dc;
     Sprite unk_7528;
     Sprite unk_7774;
-    Sprite unk_79c0[0xa8];
-    int unk_1fba0;
+    Sprite backgroundTiles[0xa8];
+    int backgroundTileCount;
     // Starts script `index` of msg.msgFile, as th06's.
     void StartMsgScript(int index);
     // Runs the dialogue for a frame, as th06's. New: each frame it calls
@@ -1331,7 +1331,7 @@ struct GuiImpl
     int stageClearShown;
     int stageClearTotal;
     // When set, OnUpdate clears it and sets g_App.scene to 3.
-    int unk_209bc;
+    int returnToTitleRequested;
     // The bonus for bullets cleared (th06's bonusPopup), a popup that
     // also shows what kind it is in `shown`, and the spell card's bonus.
     GuiPopup bonusPopup;
