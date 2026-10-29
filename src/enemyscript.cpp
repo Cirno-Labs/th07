@@ -1118,6 +1118,12 @@ void UpdateLaserEdgeBullets(Enemy *enemy, EnemyScriptInstr *instr)
     }
 }
 
+void ShakeAndStartFallingPetals(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    ScreenEffect::StartEffect(1, 0x50, 8, 0, 0);
+    StartPetalsFalling();
+}
+
 // As in bullet.cpp: defined after its callers, so they call the copy.
 inline void Bullet::FreeBullet()
 {

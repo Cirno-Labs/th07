@@ -1576,6 +1576,9 @@ void FireBackwardFans(Enemy *enemy, EnemyScriptInstr *instr);
 // slow by 0.1 (above 0.5), turn square to the laser on the side their
 // velocity points to, take typeSprites[5]'s sprites, and wait 10 more.
 void UpdateLaserEdgeBullets(Enemy *enemy, EnemyScriptInstr *instr);
+// Shakes the screen for 0x50 frames and starts the type 30 effects
+// falling (StartPetalsFalling).
+void ShakeAndStartFallingPetals(Enemy *enemy, EnemyScriptInstr *instr);
 // Whether `point`, turned about `origin` by the angle with sine
 // `sinAngle` and cosine `cosAngle`, lies in the `size` box centred on
 // `center` (x and y only).
