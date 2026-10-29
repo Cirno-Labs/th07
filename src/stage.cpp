@@ -94,6 +94,344 @@ void UpdateEasedVector(Unknown1347b00 *stage, int i, D3DXVECTOR3 *out, D3DXVECTO
     }
 }
 
+int Unknown1347b00::OnUpdate(Unknown1347b00 *stage)
+{
+    StageInstr *cmd;
+    D3DXVECTOR3 tmpVec;
+    int idx;
+
+    if (stage->data == NULL)
+    {
+        return 1;
+    }
+    if (stage->unk_50f4 != 0)
+    {
+        idx = 0;
+        cmd = stage->script;
+        stage->scriptIndex = 0;
+        while ((cmd->opcode != 0x1f || stage->unk_50f4 != *(int *)&cmd->args.x) && cmd->frame != -1)
+        {
+            cmd++;
+            idx++;
+        }
+        if (cmd->frame != -1)
+        {
+            stage->scriptIndex = idx + 1;
+            stage->scriptTime.Set(cmd->frame);
+            stage->unk_50f4 = 0;
+        }
+    }
+loop:
+    cmd = &stage->script[stage->scriptIndex];
+    if (stage->scriptTime >= cmd->frame && cmd->frame != -1)
+    {
+        switch (cmd->opcode)
+        {
+        case 0:
+            if (cmd->frame == -1)
+            {
+                stage->keyPos = cmd->args;
+                stage->cameraPos.x = stage->keyPos.x;
+                stage->cameraPos.y = stage->keyPos.y;
+                stage->cameraPos.z = stage->keyPos.z;
+            }
+            else
+            {
+                tmpVec = cmd->args;
+                stage->cameraPos.x = tmpVec.x;
+                stage->cameraPos.y = tmpVec.y;
+                stage->cameraPos.z = tmpVec.z;
+                stage->keyPos = tmpVec;
+                stage->keyFrame = cmd->frame;
+                cmd++;
+                while (cmd->opcode != 0)
+                {
+                    cmd++;
+                }
+                stage->nextKeyFrame = cmd->frame;
+                stage->nextKeyPos = cmd->args;
+            }
+            break;
+        case 1:
+            stage->fog.color = *(D3DCOLOR *)&cmd->args.x;
+            stage->fog.nearPlane = cmd->args.y;
+            stage->fog.farPlane = cmd->args.z;
+            stage->fogTarget = stage->fog;
+            break;
+        case 2:
+            stage->fogStart = stage->fog;
+            stage->fogFadeFrames = *(int *)&cmd->args.x;
+            stage->fogFadeTime.Set(0);
+            break;
+        case 5:
+            if (stage->unk_52a8)
+            {
+                D3DXVECTOR3 offset = cmd->args - stage->unk_50f8.eye;
+                OffsetPetalEffects(&offset);
+                stage->unk_52a8 = 0;
+            }
+            stage->unk_5138.eye = stage->unk_50f8.eye;
+            stage->unk_50f8.eye = cmd->args;
+            if (stage->unk_5238[0] == 0)
+            {
+                stage->camera.eye = cmd->args;
+            }
+            break;
+        case 6:
+            stage->unk_5238[0] = *(int *)&cmd->args.x;
+            stage->unk_5248[0].Set(0);
+            stage->unk_5278[0] = *(int *)&cmd->args.y;
+            break;
+        case 7:
+            stage->unk_5138.at = stage->unk_50f8.at;
+            stage->unk_50f8.at = cmd->args;
+            if (stage->unk_5238[1] == 0)
+            {
+                stage->camera.at = cmd->args;
+            }
+            break;
+        case 8:
+            stage->unk_5238[1] = *(int *)&cmd->args.x;
+            stage->unk_5248[1].Set(0);
+            stage->unk_5278[1] = *(int *)&cmd->args.y;
+            break;
+        case 9:
+            stage->unk_5138.up = stage->unk_50f8.up;
+            stage->unk_50f8.up = cmd->args;
+            if (stage->unk_5238[2] == 0)
+            {
+                stage->camera.up = cmd->args;
+            }
+            break;
+        case 10:
+            stage->unk_5238[2] = *(int *)&cmd->args.x;
+            stage->unk_5278[2] = *(int *)&cmd->args.y;
+            stage->unk_5248[2].Set(0);
+            break;
+        case 11:
+            stage->unk_5138.fov = stage->unk_50f8.fov;
+            stage->unk_50f8.fov = cmd->args.x;
+            if (stage->unk_5238[3] == 0)
+            {
+                stage->camera.fov = cmd->args.x;
+            }
+            break;
+        case 12:
+            stage->unk_5238[3] = *(int *)&cmd->args.x;
+            stage->unk_5248[3].Set(0);
+            stage->unk_5278[3] = *(int *)&cmd->args.y;
+            break;
+        case 13:
+            stage->unk_4d8 = *(D3DCOLOR *)&cmd->args.x;
+            break;
+        case 3:
+            if (stage->unk_50f4 != 0)
+            {
+                stage->unk_50f4 = 0;
+                break;
+            }
+            goto done;
+        case 4:
+            stage->scriptIndex = *(int *)&cmd->args.x;
+            stage->scriptTime.Set(*(int *)&cmd->args.y);
+            stage->unk_5238[0] = 0;
+            stage->unk_52a8 = 1;
+            goto loop;
+        case 14:
+            stage->unk_5138.eye = cmd->args;
+            break;
+        case 15:
+            stage->unk_50f8.eye = cmd->args;
+            break;
+        case 16:
+            stage->unk_51b8.eye = cmd->args;
+            break;
+        case 17:
+            stage->unk_5178.eye = cmd->args;
+            break;
+        case 18:
+            stage->unk_5238[0] = *(int *)&cmd->args.x;
+            stage->unk_5248[0].Set(0);
+            stage->unk_5278[0] = 7;
+            break;
+        case 19:
+            stage->unk_5138.at = cmd->args;
+            break;
+        case 20:
+            stage->unk_50f8.at = cmd->args;
+            break;
+        case 21:
+            stage->unk_51b8.at = cmd->args;
+            break;
+        case 22:
+            stage->unk_5178.at = cmd->args;
+            break;
+        case 23:
+            stage->unk_5238[1] = *(int *)&cmd->args.x;
+            stage->unk_5248[1].Set(0);
+            stage->unk_5278[1] = 7;
+            break;
+        case 24:
+            stage->unk_5138.up = cmd->args;
+            break;
+        case 25:
+            stage->unk_50f8.up = cmd->args;
+            break;
+        case 26:
+            stage->unk_51b8.up = cmd->args;
+            break;
+        case 27:
+            stage->unk_5178.up = cmd->args;
+            break;
+        case 28:
+            stage->unk_5238[2] = *(int *)&cmd->args.x;
+            stage->unk_5248[2].Set(0);
+            stage->unk_5278[2] = 7;
+            break;
+        case 29:
+            if (*(int *)&cmd->args.x >= 0)
+            {
+                g_SpriteEngine->StartScriptAtOrigin(&stage->unk_4, *(int *)&cmd->args.x + 0x300);
+            }
+            else
+            {
+                stage->unk_4.spriteIndex = -1;
+            }
+            break;
+        case 30:
+            // Hides unk_4, not unk_250, for a negative script.
+            if (*(int *)&cmd->args.x >= 0)
+            {
+                g_SpriteEngine->StartScriptAtOrigin(&stage->unk_250, *(int *)&cmd->args.x + 0x300);
+            }
+            else
+            {
+                stage->unk_4.spriteIndex = -1;
+            }
+            break;
+        }
+        stage->scriptIndex++;
+        goto loop;
+    }
+done:
+    {
+        int i;
+        float delta;
+        float t;
+
+        i = 0;
+        if (stage->unk_5238[i] != 0)
+        {
+            UpdateEasedVector(stage, i, &stage->camera.eye, &stage->unk_5138.eye, &stage->unk_50f8.eye, &stage->unk_51b8.eye, &stage->unk_5178.eye);
+        }
+        i = 1;
+        if (stage->unk_5238[i] != 0)
+        {
+            UpdateEasedVector(stage, i, &stage->camera.at, &stage->unk_5138.at, &stage->unk_50f8.at, &stage->unk_51b8.at, &stage->unk_5178.at);
+        }
+        i = 2;
+        if (stage->unk_5238[i] != 0)
+        {
+            UpdateEasedVector(stage, i, &stage->camera.up, &stage->unk_5138.up, &stage->unk_50f8.up, &stage->unk_51b8.up, &stage->unk_5178.up);
+        }
+        i = 3;
+        if (stage->unk_5238[i] != 0)
+        {
+            if (stage->unk_5248[i] < stage->unk_5238[i])
+            {
+                stage->unk_5248[i].Tick();
+                t = stage->unk_5248[i].AsFloat() / stage->unk_5238[i];
+            }
+            else
+            {
+                stage->unk_5248[i].Set(stage->unk_5238[i]);
+                t = 1.0f;
+                stage->unk_5238[i] = 0;
+            }
+            switch (stage->unk_5278[i])
+            {
+            case 1:
+                t = 1.0f - (t = 1.0f - t) * t;
+                break;
+            case 2:
+                t = 1.0f - (t = 1.0f - t) * t * t;
+                break;
+            case 3:
+                t = 1.0f - (t = 1.0f - t) * t * t * t;
+                break;
+            case 4:
+                t = t * t;
+                break;
+            case 5:
+                t = t * t * t;
+                break;
+            case 6:
+                t = t * t * t * t;
+                break;
+            }
+            stage->camera.fov = (delta = stage->unk_50f8.fov - stage->unk_5138.fov) * t + stage->unk_5138.fov;
+        }
+    }
+    D3DXVec3Normalize(&stage->camera.dir, &stage->camera.at);
+    if (stage->fogFadeFrames != 0)
+    {
+        float fogT;
+        int j;
+
+        stage->fogFadeTime.Tick();
+        fogT = stage->fogFadeTime.AsFloat() / stage->fogFadeFrames;
+        if (fogT >= 1.0f)
+        {
+            fogT = 1.0f;
+        }
+        for (j = 0; j < 4; j++)
+        {
+            ((BYTE *)&stage->fog.color)[j] =
+                ((float)((BYTE *)&stage->fogTarget.color)[j] - (float)((BYTE *)&stage->fogStart.color)[j]) * fogT +
+                (float)((BYTE *)&stage->fogStart.color)[j];
+        }
+        stage->fog.nearPlane = (stage->fogTarget.nearPlane - stage->fogStart.nearPlane) * fogT + stage->fogStart.nearPlane;
+        stage->fog.farPlane = (stage->fogTarget.farPlane - stage->fogStart.farPlane) * fogT + stage->fogStart.farPlane;
+        if (stage->fogFadeTime >= stage->fogFadeFrames)
+        {
+            stage->fogFadeFrames = 0;
+        }
+    }
+    if (cmd->opcode != 3)
+    {
+        stage->scriptTime.Tick();
+    }
+    stage->StepObjects();
+    if (stage->spellCardState >= 1)
+    {
+        int k;
+
+        if (stage->spellCardFrames == 60)
+        {
+            stage->spellCardState++;
+        }
+        stage->spellCardFrames++;
+        for (k = 0; k < stage->unk_520; k++)
+        {
+            g_SpriteEngine->Step(&stage->unk_528[k]);
+        }
+    }
+    if (stage->unk_4.spriteIndex > 0)
+    {
+        g_SpriteEngine->Step(&stage->unk_4);
+    }
+    if (stage->unk_250.spriteIndex > 0)
+    {
+        g_SpriteEngine->Step(&stage->unk_250);
+    }
+    stage->unk_4c4++;
+    if (stage->unk_4c4 % 500 == 250 && g_Unknown626270.ChecksumMismatch())
+    {
+        return 4;
+    }
+    return 1;
+}
+
 void Unknown1347b00::SetTintColor(D3DCOLOR color)
 {
     ColorBytes c;

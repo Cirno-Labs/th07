@@ -1539,6 +1539,14 @@ public:
     static int RegisterChain(int stage);
     // Removes the update element and the two draw elements.
     static void RemoveChain();
+    // Runs the stage script up to the current frame, as th06's, with
+    // th07's opcodes: 3 waits for unk_50f4 (which first restarts the
+    // script after the opcode 31 with that argument), 4 jumps, 5 to 28
+    // set and fade the cameras' eye, at, up and field of view (fade
+    // modes as UpdateEasedVector's), 29 and 30 start unk_4's and unk_250's
+    // scripts. Then fades the cameras and the fog and runs the sprites.
+    // Returns 1, or 4 when ChecksumMismatch finds the player's numbers
+    // tampered with (checked every 500 frames).
     static int OnUpdate(Unknown1347b00 *stage);
     // Resets the SpriteEngine's render state, clears the play area to
     // black once if unk_51c is set, makes the SpriteEngine modulate by
