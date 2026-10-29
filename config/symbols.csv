@@ -206,7 +206,7 @@ address,size,name,symbol
 0x004251a0,356,AccelerateAlongVelocity,?AccelerateAlongVelocity@@YIXPAUBullet@@@Z
 0x00425310,231,TurnAndAccelerate,?TurnAndAccelerate@@YIXPAUBullet@@@Z
 0x00425400,378,StopTurnAndRestart,?StopTurnAndRestart@@YIXPAUBullet@@@Z
-0x00425580,372,Func425580,
+0x00425580,372,StopTurnToAngle,?StopTurnToAngle@@YIXPAUBullet@@@Z
 0x00425700,403,Func425700,
 0x004258a0,425,Func4258a0,
 0x00425a50,4237,BulletManager::OnUpdate,?OnUpdate@BulletManager@@SIHPAV1@@Z

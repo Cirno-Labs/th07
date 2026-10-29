@@ -272,6 +272,7 @@ void TurnAndAccelerate(Bullet *bullet);
 // unk_10, or to the player plus unk_10) and runs at unk_c again, unk_24
 // times (counted in unk_28).
 void StopTurnAndRestart(Bullet *bullet);
+void StopTurnToAngle(Bullet *bullet);
 
 // The colors of effect 0xd by index, as th06's; RegisterChain points
 // g_EffectColors at them.
