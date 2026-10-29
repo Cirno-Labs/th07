@@ -189,6 +189,8 @@ public:
                                   D3DCOLOR textColor, D3DCOLOR shadowColor, char *text, float scaleX, float scaleY);
     // Renders text from `fmt` into `sprite`'s texture.
     void RenderText(Sprite *sprite, D3DCOLOR textColor, D3DCOLOR shadowColor, char *fmt, ...);
+    // RenderText, aligned to the right of the sprite.
+    void RenderTextRightAligned(Sprite *vm, D3DCOLOR color, D3DCOLOR shadowColor, char *fmt, ...);
     // RenderText, centered on the sprite.
     void RenderTextCentered(Sprite *vm, D3DCOLOR color, D3DCOLOR shadowColor, char *fmt, ...);
     // Releases ANM slot `slot`.

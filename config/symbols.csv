@@ -586,7 +586,7 @@ address,size,name,symbol
 0x00450d60,13178,SpriteEngine::Step,?Step@SpriteEngine@@QAEHPAVSprite@@@Z
 0x00454260,108,SpriteEngine::RenderTextToTextureIndex,?RenderTextToTextureIndex@SpriteEngine@@QAEXHHHHHHHKKPADMM@Z
 0x004542d0,222,SpriteEngine::RenderText,?RenderText@SpriteEngine@@QAAXPAVSprite@@KKPADZZ
-0x004543b0,505,Func4543b0,
+0x004543b0,505,SpriteEngine::RenderTextRightAligned,?RenderTextRightAligned@SpriteEngine@@QAAXPAVSprite@@KKPADZZ
 0x004545b0,511,SpriteEngine::RenderTextCentered,?RenderTextCentered@SpriteEngine@@QAAXPAVSprite@@KKPADZZ
 0x004547b0,599,SpriteEngine::LoadSurface,?LoadSurface@SpriteEngine@@QAEHHPAD@Z
 0x00454a10,143,SpriteEngine::ReleaseSurface,?ReleaseSurface@SpriteEngine@@QAEXH@Z
