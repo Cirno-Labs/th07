@@ -1,6 +1,8 @@
 // The file starting at 0x401000: text in the ASCII font, as th06's
 // ascii.cpp.
 
+#include <string.h>
+
 #include "ascii.h"
 #include "unsorted.h"
 
@@ -166,4 +168,30 @@ void AsciiText::RemoveChain()
 {
     g_Chain.Remove(&g_AsciiCalcChain);
     g_Chain.Remove(&g_AsciiDrawChain);
+}
+
+void AsciiText::AddString(D3DXVECTOR3 *pos, char *text)
+{
+    AsciiString *str;
+
+    if (this->stringCount >= 0x100)
+    {
+        return;
+    }
+    str = &this->strings[this->stringCount];
+    this->stringCount++;
+    strcpy(str->text, text);
+    str->pos = *pos;
+    str->color = this->color;
+    str->scaleX = this->scaleX;
+    str->scaleY = this->scaleY;
+    str->inArena = this->inArena;
+    if (g_App.HasFlag0Or8())
+    {
+        str->highlight = this->highlight;
+    }
+    else
+    {
+        str->highlight = 0;
+    }
 }

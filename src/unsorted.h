@@ -157,6 +157,12 @@ public:
     {
         return this->flags.clearBackBuffer | this->flags.noFrameItems;
     }
+    // As th06's: whether color blending is off or color add emulated.
+    // AsciiText::AddString only keeps a string's highlight then.
+    int HasFlag0Or8()
+    {
+        return this->flags.noColorBlending | this->flags.emulateColorAdd;
+    }
 
     BOOL UsesPresentImmediate()
     {
