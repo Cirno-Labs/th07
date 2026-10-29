@@ -867,6 +867,310 @@ void RunBulletCommands(Bullet *bullet)
     }
 }
 
+int BulletManager::OnUpdate(BulletManager *mgr)
+{
+    int fadeTime6;
+    D3DXVECTOR3 center2;
+    Laser *las;
+    int alpha4;
+    Bullet *bullet;
+    D3DXVECTOR3 extent5;
+    // Which bullet the walk is at: 0, then from the last one down.
+    int order;
+    float scale3;
+    int k7;
+    int result;
+
+    order = 0;
+    bullet = mgr->bullets;
+    if (g_Unknown626270.isFrozen != 0)
+    {
+        return 1;
+    }
+    g_ItemManager.UpdateItems();
+    mgr->bulletCount = 0;
+    mgr->drawLists[0] = mgr->drawLists[1] = mgr->drawLists[2] = mgr->drawLists[3] = mgr->drawLists[4] =
+        mgr->drawLists[5] = NULL;
+    for (k7 = 0; k7 < 0x400; k7++)
+    {
+        if (bullet->state == 0)
+        {
+            goto next;
+        }
+        mgr->bulletCount++;
+        switch (bullet->state)
+        {
+        spawned:
+            bullet->state = 1;
+            bullet->timer.Set(0);
+        case 1:
+            RunBulletCommands(bullet);
+            if (bullet->activeFlags != 0)
+            {
+                if (bullet->activeFlags & 1)
+                {
+                    SlowBulletStart(bullet);
+                }
+                if (bullet->activeFlags & 0x10)
+                {
+                    AccelerateAlongVelocity(bullet);
+                }
+                if (bullet->activeFlags & 0x20)
+                {
+                    TurnAndAccelerate(bullet);
+                }
+                if (bullet->activeFlags & 0x40)
+                {
+                    StopTurnAndRestart(bullet);
+                }
+                if (bullet->activeFlags & 0x100)
+                {
+                    StopTurnToAngle(bullet);
+                }
+                if (bullet->activeFlags & 0x80)
+                {
+                    StopTurnToPlayer(bullet);
+                }
+                if (bullet->activeFlags & 0xc00)
+                {
+                    BounceOffWalls(bullet);
+                }
+            }
+            if (bullet->unk_bf0 != 0)
+            {
+                bullet->unk_bf0--;
+            }
+            bullet->pos += bullet->velocity;
+            if (bullet->unk_bf0 == 0)
+            {
+                if (!g_Unknown626270.IsInPlayArea(bullet->pos.x, bullet->pos.y, bullet->sprites.sprite0.spriteData->width,
+                                                  bullet->sprites.sprite0.spriteData->height))
+                {
+                    if (bullet->activeFlags & 0xdc0)
+                    {
+                        bullet->unk_bfe++;
+                        if (bullet->unk_bfe >= 0x80)
+                        {
+                            bullet->FreeBullet();
+                            goto next;
+                        }
+                    }
+                    else
+                    {
+                        if (bullet->unk_bfe == 0)
+                        {
+                            bullet->FreeBullet();
+                            goto next;
+                        }
+                        bullet->unk_bfe--;
+                    }
+                }
+                else
+                {
+                    bullet->unk_bfe = 0;
+                }
+            }
+            if (bullet->grazed == 0 && bullet->unk_bd4.AsFrames() >= 0x10)
+            {
+                result = g_Player.CheckGraze(&bullet->pos, &bullet->sprites.hitboxSize);
+                if (result == 1)
+                {
+                    bullet->grazed = 1;
+                    goto checkHit;
+                }
+                if (result == 2 && !(bullet->flags & 0x1000))
+                {
+                    bullet->state = 5;
+                    g_ItemManager.SpawnItem(&bullet->pos, g_Player.unk_2404, 1);
+                }
+            }
+            else
+            {
+            checkHit:
+                result = g_Player.CheckHit(&bullet->pos, &bullet->sprites.hitboxSize);
+                if (result != 0 && (result != 2 || !(bullet->flags & 0x1000)))
+                {
+                    bullet->state = 5;
+                    if (result == 2)
+                    {
+                        g_ItemManager.SpawnItem(&bullet->pos, g_Player.unk_2404, 1);
+                    }
+                }
+            }
+            if (bullet->sprites.sprite0.scriptPos != NULL)
+            {
+                g_SpriteEngine->Step(&bullet->sprites.sprite0);
+            }
+            break;
+        case 2:
+            bullet->unk_bd4.Sub(1);
+            bullet->pos += bullet->velocity / 2.0f;
+            if (g_SpriteEngine->Step(&bullet->sprites.sprite1) == 0)
+            {
+                break;
+            }
+            goto spawned;
+        case 3:
+            bullet->unk_bd4.Sub(1);
+            bullet->pos += bullet->velocity / 2.5f;
+            if (g_SpriteEngine->Step(&bullet->sprites.sprite2) == 0)
+            {
+                break;
+            }
+            goto spawned;
+        case 4:
+            bullet->unk_bd4.Sub(1);
+            bullet->pos += bullet->velocity / 3.0f;
+            if (g_SpriteEngine->Step(&bullet->sprites.sprite3) == 0)
+            {
+                break;
+            }
+            goto spawned;
+        case 5:
+            bullet->pos += bullet->velocity / 2.0f;
+            if (g_SpriteEngine->Step(&bullet->sprites.sprite4) != 0)
+            {
+                bullet->FreeBullet();
+                goto next;
+            }
+        }
+        bullet->timer.Tick();
+        bullet->unk_bd4.Tick();
+        bullet->next = mgr->drawLists[bullet->sprites.unk_b8a];
+        mgr->drawLists[bullet->sprites.unk_b8a] = bullet;
+    next:
+        order--;
+        if (order < 0)
+        {
+            order = 0x3ff;
+            bullet += 0x400;
+        }
+        bullet--;
+    }
+    las = mgr->lasers;
+    for (k7 = 0; k7 < 0x40; k7++, las++)
+    {
+        if (!las->active)
+        {
+            continue;
+        }
+        las->endOffset = g_App.unk_178 * las->speed + las->endOffset;
+        if (las->endOffset - las->startOffset > las->maxLength)
+        {
+            las->startOffset = las->endOffset - las->maxLength;
+        }
+        if (las->startOffset < 0.0f)
+        {
+            las->startOffset = 0.0f;
+        }
+        extent5.y = las->width / 2.0f;
+        extent5.x = las->endOffset - las->startOffset;
+        center2.x = (las->endOffset - las->startOffset) / 2.0f + las->startOffset + las->pos.x;
+        center2.y = las->pos.y;
+        las->sprite0.scaleY = las->width / las->sprite0.spriteData->width;
+        scale3 = las->endOffset - las->startOffset;
+        las->sprite0.scaleX = scale3 / las->sprite0.spriteData->height;
+        las->sprite0.SetRotationZ(AddNormalizeAngle(1.5707964f + las->angle, 0.0f));
+        switch (las->state)
+        {
+        case 0:
+            if (las->flags & 1)
+            {
+                alpha4 = las->timer.AsFloat() * 255.0f / las->startFrames;
+                if (alpha4 > 0xff)
+                {
+                    alpha4 = 0xff;
+                }
+                las->sprite0.color = alpha4 << 24;
+            }
+            else
+            {
+                fadeTime6 = las->startFrames > 30 ? 30 : las->startFrames;
+                if (las->startFrames - fadeTime6 < las->timer.AsFrames())
+                {
+                    scale3 = las->timer.AsFloat() * las->width / las->startFrames;
+                }
+                else
+                {
+                    scale3 = 1.2f;
+                }
+                las->unk_4b8 = scale3;
+                las->sprite0.scaleY = scale3 / 16.0f;
+                extent5.x = scale3 / 2.0f;
+            }
+            if (las->timer >= las->hitStartFrame)
+            {
+                g_Player.CheckLaserHit(&center2, &extent5, &las->pos, las->angle, las->timer.AsFrames() % 12 == 0);
+            }
+            if (las->timer < las->startFrames)
+            {
+                break;
+            }
+            las->timer.Set(0);
+            las->state++;
+            las->unk_4b8 = las->width;
+        case 1:
+            g_Player.CheckLaserHit(&center2, &extent5, &las->pos, las->angle, las->timer.AsFrames() % 12 == 0);
+            if (las->timer < las->durationFrames)
+            {
+                break;
+            }
+            las->timer.Set(0);
+            las->state++;
+            if (las->endFrames == 0)
+            {
+                las->active = 0;
+                continue;
+            }
+        case 2:
+            if (las->flags & 1)
+            {
+                alpha4 = las->timer.AsFloat() * 255.0f / las->startFrames;
+                if (alpha4 > 0xff)
+                {
+                    alpha4 = 0xff;
+                }
+                las->sprite0.color = alpha4 << 24;
+            }
+            else if (las->endFrames > 0)
+            {
+                las->sprite0.scaleY = (scale3 = las->width - las->timer.AsFloat() * las->width / las->endFrames) / 16.0f;
+                extent5.x = scale3 / 2.0f;
+            }
+            if (las->timer < las->endHitFrames)
+            {
+                g_Player.CheckLaserHit(&center2, &extent5, &las->pos, las->angle, las->timer.AsFrames() % 12 == 0);
+            }
+            if (las->timer < las->endFrames)
+            {
+                break;
+            }
+            las->active = 0;
+            continue;
+        }
+        if (las->startOffset >= 640.0f)
+        {
+            las->active = 0;
+        }
+        las->timer.Tick();
+        g_SpriteEngine->Step(&las->sprite0);
+    }
+    if (mgr->unk_37a12c != 0)
+    {
+        mgr->unk_37a12c--;
+    }
+    mgr->unk_37a130.Tick();
+    mgr->unk_37a13c++;
+    return 1;
+}
+
+inline void Bullet::FreeBullet()
+{
+    this->state = 0;
+    this->timer.Set(0);
+    this->unk_bd4.Set(0);
+}
+
 void DrawBullet(Bullet *bullet)
 {
     Sprite *sprite;

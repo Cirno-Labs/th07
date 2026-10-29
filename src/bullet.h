@@ -67,6 +67,9 @@ struct Bullet
     BulletCommand *RestartCommand(int idx, int unk_14, DWORD flag);
     // Sets command `idx` up for flag 0x10.
     void SetAccelerateCommand(int idx, int unk_14, int unk_8, float unk_0, float unk_4);
+    // Frees the bullet: state 0 and both timers reset. Inline, defined
+    // after BulletManager::OnUpdate, which calls it out of line.
+    void FreeBullet();
     // Sets command `idx` up for flag 0x20.
     void SetTurnCommand(int idx, int unk_14, int unk_8, float unk_4, float unk_0);
 

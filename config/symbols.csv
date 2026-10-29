@@ -92,7 +92,7 @@ address,size,name,symbol
 0x004101a0,889,Func4101a0,
 0x00410520,29464,Func410520,
 0x00417af0,33,Func417af0,
-0x00417b20,107,Func417b20,
+0x00417b20,107,FreeBullet,
 0x00417b90,151,Func417b90,
 0x00417c30,533,Func417c30,
 0x00417e50,680,Func417e50,
@@ -330,7 +330,7 @@ address,size,name,symbol
 0x00432630,84,ItemManager::ItemManager,??0ItemManager@@QAE@XZ
 0x00432690,91,Item::Item,??0Item@@QAE@XZ
 0x004326f0,660,ItemManager::SpawnItem,?SpawnItem@ItemManager@@QAEPAUItem@@PAUD3DXVECTOR3@@HH@Z
-0x00432990,4298,Func432990,
+0x00432990,4298,ItemManager::UpdateItems,?UpdateItems@ItemManager@@QAEXXZ
 0x00433a90,132,ItemManager::CollectAll,?CollectAll@ItemManager@@QAEXXZ
 0x00433b20,275,ItemManager::ConvertPowerItems,?ConvertPowerItems@ItemManager@@QAEXH@Z
 0x00433c40,141,ItemManager::RecycleCollectedItems,?RecycleCollectedItems@ItemManager@@QAEXXZ

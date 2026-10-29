@@ -49,6 +49,8 @@ public:
     // Draws the items in the order UpdateItems listed them; those above
     // the top as markers at its edge, fading out with the distance.
     void DrawItems();
+    // Moves the items and builds the draw list, each frame.
+    void UpdateItems();
 
     // The last one is what SpawnItem returns when all others are taken.
     Item items[0x44d];
