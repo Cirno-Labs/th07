@@ -1844,7 +1844,7 @@ struct StageObject
 struct StageInstance
 {
     short id;
-    short unk_02;
+    short unusedShort02;
     D3DXVECTOR3 pos;
 };
 
