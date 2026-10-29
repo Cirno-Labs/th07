@@ -45,7 +45,7 @@ address,size,name,symbol
 0x00407410,166,Unknown1347b00::DeletedCallback,?DeletedCallback@Unknown1347b00@@SIHPAV1@@Z
 0x004074c0,270,Unknown1347b00::RegisterChain,?RegisterChain@Unknown1347b00@@SIHH@Z
 0x004075d0,50,Unknown1347b00::RemoveChain,?RemoveChain@Unknown1347b00@@SIXXZ
-0x00407610,474,Func407610,
+0x00407610,474,Unknown1347b00::Load,?Load@Unknown1347b00@@QAEHPAD@Z
 0x004077f0,263,Func4077f0,
 0x00407900,2167,Func407900,
 0x00408180,304,Unknown1347b00::Func408180,?Func408180@Unknown1347b00@@QAEXXZ

@@ -160,3 +160,42 @@ void Unknown1347b00::RemoveChain()
     g_Chain.Remove(&g_Unknown1347b00DrawChain);
     g_Chain.Remove(&g_Unknown1347b00DrawChain2);
 }
+
+int Unknown1347b00::Load(char *dataPath)
+{
+    int count;
+    int i;
+    StageObject *ob;
+    StageQuad *quad;
+
+    this->data = (StageData *)LoadFileData(dataPath, 0);
+    if (this->data == NULL)
+    {
+        LogPrintf(&g_Log, "ステージデータが見つかりません。データが壊れています\r\n");
+        return -1;
+    }
+    this->objectCount = this->data->objectCount;
+    this->quadCount = this->data->quadCount;
+    this->instances = (StageInstance *)(this->data->instancesOffset + (int)this->data);
+    this->script = (StageInstr *)(this->data->scriptOffset + (int)this->data);
+    this->objects = (StageObject **)((char *)this->data + 0x490);
+    for (i = 0; i < this->objectCount; i++)
+    {
+        this->objects[i] = (StageObject *)((int)this->objects[i] + (int)this->data);
+    }
+    this->sprites = (Sprite *)MemAlloc(this->quadCount * sizeof(Sprite));
+    for (i = 0, count = 0; i < this->objectCount; i++)
+    {
+        ob = this->objects[i];
+        ob->flags = 1;
+        quad = ob->quads;
+        while (quad->type >= 0)
+        {
+            g_SpriteEngine->StartScriptAtOrigin(&this->sprites[count], quad->script + 0x300);
+            quad->spriteIndex = count;
+            count++;
+            quad = (StageQuad *)((char *)quad + quad->size);
+        }
+    }
+    return 0;
+}

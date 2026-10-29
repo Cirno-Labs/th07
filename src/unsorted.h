@@ -1540,6 +1540,10 @@ public:
     static int OnDraw(Unknown1347b00 *stage);
     static int OnDraw2(Unknown1347b00 *stage);
     static int AddedCallback(Unknown1347b00 *stage);
+    // Loads the stage data from `dataPath` and starts the background
+    // sprites' scripts, as th06's (the ANMs are loaded by AddedCallback
+    // here). Returns 0, or -1 on failure.
+    int Load(char *dataPath);
     // Releases the background ANMs (slots 5 to 9) and frees the sprites
     // and the data. Returns 0.
     static int DeletedCallback(Unknown1347b00 *stage);

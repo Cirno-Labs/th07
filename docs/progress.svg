@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">70.46% (489)</tspan> · <tspan class="decompiled">7.93% (55)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">21.47% (149)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">70.61% (490)</tspan> · <tspan class="decompiled">7.93% (55)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">21.33% (148)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="526.34" height="6" x="0" y="0" class="named"/>
-<rect width="59.20" height="6" x="526.34" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="585.54" y="0" class="nonmatching"/>
-<rect width="160.38" height="6" x="586.62" y="0" class="todo"/>
+<rect width="527.42" height="6" x="0" y="0" class="named"/>
+<rect width="59.20" height="6" x="527.42" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="586.62" y="0" class="nonmatching"/>
+<rect width="159.30" height="6" x="587.70" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="named"><title>0x00401000 D3DXMatrixIdentity (173 bytes)</title></rect>
@@ -115,7 +115,7 @@
 <rect width="12" height="12" x="645" y="0" class="named"><title>0x00407410 Unknown1347b00::DeletedCallback (166 bytes)</title></rect>
 <rect width="12" height="12" x="660" y="0" class="named"><title>0x004074c0 Unknown1347b00::RegisterChain (270 bytes)</title></rect>
 <rect width="12" height="12" x="675" y="0" class="named"><title>0x004075d0 Unknown1347b00::RemoveChain (50 bytes)</title></rect>
-<rect width="12" height="12" x="690" y="0" class="todo"><title>0x00407610 Func407610 (474 bytes)</title></rect>
+<rect width="12" height="12" x="690" y="0" class="named"><title>0x00407610 Unknown1347b00::Load (474 bytes)</title></rect>
 <rect width="12" height="12" x="705" y="0" class="todo"><title>0x004077f0 Func4077f0 (263 bytes)</title></rect>
 <rect width="12" height="12" x="720" y="0" class="todo"><title>0x00407900 Func407900 (2167 bytes)</title></rect>
 <rect width="12" height="12" x="735" y="0" class="todo"><title>0x00408180 Unknown1347b00::Func408180 (304 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">53.07%</tspan> · <tspan class="decompiled">2.83%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">44.01%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">53.19%</tspan> · <tspan class="decompiled">2.83%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">43.89%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="396.41" height="6" x="0" y="0" class="named"/>
-<rect width="21.15" height="6" x="396.41" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="417.56" y="0" class="nonmatching"/>
-<rect width="328.77" height="6" x="418.23" y="0" class="todo"/>
+<rect width="397.34" height="6" x="0" y="0" class="named"/>
+<rect width="21.15" height="6" x="397.34" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="418.49" y="0" class="nonmatching"/>
+<rect width="327.85" height="6" x="419.15" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -969,7 +969,7 @@
 <rect width="10.75" height="11.85" x="722.51" y="14.70" class="named"><title>0x0044f770 SpriteEngine::DrawUnrotated (487 bytes)</title></rect>
 <rect width="10.75" height="11.85" x="736.25" y="14.70" class="named"><title>0x0044fc10 SpriteEngine::DrawNoRound (487 bytes)</title></rect>
 <rect width="10.60" height="11.92" x="552.02" y="29.55" class="named"><title>0x0045d3c0 CSound::FillBufferWithSound (484 bytes)</title></rect>
-<rect width="10.60" height="11.61" x="552.02" y="44.47" class="todo"><title>0x00407610 Func407610 (474 bytes)</title></rect>
+<rect width="10.60" height="11.61" x="552.02" y="44.47" class="named"><title>0x00407610 Unknown1347b00::Load (474 bytes)</title></rect>
 <rect width="10.60" height="11.55" x="552.02" y="59.08" class="named"><title>0x0044c4d0 SoundPlayer::PlayPreloadedBgm (472 bytes)</title></rect>
 <rect width="10.60" height="11.52" x="552.02" y="73.63" class="named"><title>0x0045fde0 DatArchive::BuildEntryTable (471 bytes)</title></rect>
 <rect width="10.60" height="11.42" x="552.02" y="88.14" class="named"><title>0x0043ac4c MusicScreen::OnDraw (468 bytes)</title></rect>
