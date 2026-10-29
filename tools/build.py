@@ -207,7 +207,7 @@ def link_exe(objs):
     tool("link", "/SUBSYSTEM:WINDOWS", "/FIXED", "/NODEFAULTLIB:libc.lib",
          "/MAP:" + win(EXE[:-4] + ".map"), "/OUT:" + win(EXE), *map(win, objs), win(res),
          "libcmt.lib", "d3dx8.lib", "d3d8.lib", "dsound.lib", "dinput8.lib", "dxguid.lib",
-         "winmm.lib", "kernel32.lib", "user32.lib", "gdi32.lib")
+         "winmm.lib", "kernel32.lib", "user32.lib", "gdi32.lib", "ole32.lib")
     copy_header_fields(ORIGINAL, EXE)
     print("linked", EXE)
 
