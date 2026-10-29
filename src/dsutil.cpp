@@ -565,35 +565,6 @@ int CStreamingSound::UpdateFade()
     return 0;
 }
 
-CWaveFile::CWaveFile()
-{
-    this->format = NULL;
-    m_pwfx = NULL;
-    m_dwSize = 0;
-    m_bIsReadingFromMemory = FALSE;
-}
-
-DWORD CWaveFile::GetSize()
-{
-    return m_dwSize;
-}
-
-HRESULT CWaveFile::Close()
-{
-    if (m_dwFlags == WAVEFILE_READ)
-    {
-        CloseHandle(this->hFile);
-        this->hFile = INVALID_HANDLE_VALUE;
-    }
-
-    return S_OK;
-}
-
-CWaveFile::~CWaveFile()
-{
-    Close();
-}
-
 // As th06's, the locked buffer's variables are renamed and declared after
 // the restore; the cursors' names are picked for their stack slots too.
 HRESULT CStreamingSound::HandleWaveStreamNotification(BOOL bLoopedPlay)
@@ -778,6 +749,19 @@ HRESULT CStreamingSound::Reset()
     return m_apDSBuffer[0]->SetCurrentPosition(0L);
 }
 
+CWaveFile::CWaveFile()
+{
+    this->format = NULL;
+    m_pwfx = NULL;
+    m_dwSize = 0;
+    m_bIsReadingFromMemory = FALSE;
+}
+
+CWaveFile::~CWaveFile()
+{
+    Close();
+}
+
 HRESULT CWaveFile::Open(LPTSTR strFileName, BgmFormat *format, DWORD dwFlags)
 {
     m_dwFlags = dwFlags;
@@ -830,6 +814,11 @@ HRESULT CWaveFile::OpenFromMemory(BYTE *pbData, ULONG ulDataSize, BgmFormat *for
         return E_NOTIMPL;
 
     return S_OK;
+}
+
+DWORD CWaveFile::GetSize()
+{
+    return m_dwSize;
 }
 
 HRESULT CWaveFile::ResetFile(bool bLoop)
@@ -914,4 +903,15 @@ HRESULT CWaveFile::Read(BYTE *pBuffer, DWORD dwSizeToRead, DWORD *pdwSizeRead)
 
         return S_OK;
     }
+}
+
+HRESULT CWaveFile::Close()
+{
+    if (m_dwFlags == WAVEFILE_READ)
+    {
+        CloseHandle(this->hFile);
+        this->hFile = INVALID_HANDLE_VALUE;
+    }
+
+    return S_OK;
 }
