@@ -517,3 +517,17 @@ void Unknown9a9b00::RemoveChain()
     g_Chain.Remove(&g_Unknown9a9b00DrawChain);
     g_Chain.Remove(&g_Unknown9a9b00DrawChain2);
 }
+
+int Unknown9a9b00::AnyBossActive()
+{
+    int i;
+
+    for (i = 0; i < 8; i++)
+    {
+        if (this->bosses[i] != NULL)
+        {
+            return 1;
+        }
+    }
+    return 0;
+}

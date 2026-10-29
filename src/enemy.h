@@ -239,8 +239,8 @@ public:
                       EnemyScriptVars *vars);
     // GuiImpl::StartMsgScript calls it with (0, 0) as a dialogue starts.
     void Func423090(int unk0, int unk1);
-    // Whether one of the eight pointers at +0x954598 is set.
-    int Func4232a0();
+    // Whether any of bosses is set.
+    int AnyBossActive();
 
     // Draws the enemies of the lists at +0x954700, from `from` up to
     // `to`. Returns 1.

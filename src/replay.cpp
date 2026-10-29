@@ -72,7 +72,7 @@ int ReplayManager::PlayOnUpdate2(ReplayManager *replay)
     {
         return 6;
     }
-    if (g_Unknown626270.unk_93df == 2 && !g_Unknown9a9b00.Func4232a0() && replay->frame % 5 != 4)
+    if (g_Unknown626270.unk_93df == 2 && !g_Unknown9a9b00.AnyBossActive() && replay->frame % 5 != 4)
     {
         return 6;
     }
