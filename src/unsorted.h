@@ -1531,6 +1531,14 @@ public:
     // it to unk_50f8 and unk_5138.
     Unknown1347b00();
 
+    // Zeroes the stage, remembers `stage` and adds the update element
+    // (priority 7) and the draw elements (priorities 3 and 4), as th06's.
+    // Returns 0, or -1 if adding fails.
+    static int RegisterChain(int stage);
+    static int OnUpdate(Unknown1347b00 *stage);
+    static int OnDraw(Unknown1347b00 *stage);
+    static int OnDraw2(Unknown1347b00 *stage);
+    static int AddedCallback(Unknown1347b00 *stage);
     // Releases the background ANMs (slots 5 to 9) and frees the sprites
     // and the data. Returns 0.
     static int DeletedCallback(Unknown1347b00 *stage);
@@ -1594,3 +1602,7 @@ public:
 };
 ASSERT_SIZE(Unknown1347b00, 0x52b4);
 extern Unknown1347b00 g_Unknown1347b00;
+// Unknown1347b00's statically allocated chain elements.
+extern ChainElem g_Unknown1347b00CalcChain;
+extern ChainElem g_Unknown1347b00DrawChain;
+extern ChainElem g_Unknown1347b00DrawChain2;

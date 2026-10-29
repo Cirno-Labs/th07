@@ -128,3 +128,28 @@ int Unknown1347b00::DeletedCallback(Unknown1347b00 *stage)
     }
     return 0;
 }
+
+int Unknown1347b00::RegisterChain(int stage)
+{
+    Unknown1347b00 *s = &g_Unknown1347b00;
+
+    memset(s, 0, sizeof(Unknown1347b00));
+    s->data = NULL;
+    s->unk_4c4 = 0;
+    s->stage = stage;
+    g_Unknown1347b00CalcChain.SetCallback((ChainCallback)Unknown1347b00::OnUpdate);
+    g_Unknown1347b00CalcChain.addedCallback = (ChainCallback)Unknown1347b00::AddedCallback;
+    g_Unknown1347b00CalcChain.deletedCallback = (ChainCallback)Unknown1347b00::DeletedCallback;
+    g_Unknown1347b00CalcChain.arg = s;
+    if (g_Chain.AddToCalcChain(&g_Unknown1347b00CalcChain, 7) != 0)
+    {
+        return -1;
+    }
+    g_Unknown1347b00DrawChain.SetCallback((ChainCallback)Unknown1347b00::OnDraw);
+    g_Unknown1347b00DrawChain.arg = s;
+    g_Chain.AddToDrawChain(&g_Unknown1347b00DrawChain, 3);
+    g_Unknown1347b00DrawChain2.SetCallback((ChainCallback)Unknown1347b00::OnDraw2);
+    g_Unknown1347b00DrawChain2.arg = s;
+    g_Chain.AddToDrawChain(&g_Unknown1347b00DrawChain2, 4);
+    return 0;
+}
