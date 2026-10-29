@@ -278,7 +278,7 @@ int GameManager::OnUpdate(GameManager *mgr)
             g_Unknown626270.checksumValue = -9999.0f;
         }
     }
-    if (g_Unknown626270.unk_4->unk_25)
+    if (g_Unknown626270.unk_4->scoreDisabled)
     {
         g_Unknown626270.skipFpsMeasure = 0;
         mgr->slowdownCounter++;
@@ -509,7 +509,7 @@ int GameManager::AddedCallback(GameManager *mgr)
         else
         {
             mgr->stats->checksumKeyPoints = 200;
-            mgr->unk_4->unk_25 = 0;
+            mgr->unk_4->scoreDisabled = 0;
         }
         mgr->stats->checksumKeyStage = 0;
         if (LoadScoreFile() != 0)
@@ -590,7 +590,7 @@ int GameManager::AddedCallback(GameManager *mgr)
         }
         if (!((g_Unknown626270.unk_93d8 >> 3) & 1))
         {
-            if (!mgr->unk_4->unk_25)
+            if (!mgr->unk_4->scoreDisabled)
             {
                 IncrementStatCounter((DWORD *)&g_Unknown626270.plst.counts[g_Unknown626270.difficulty].plays[0], 999999);
                 IncrementStatCounter((DWORD *)&g_Unknown626270.plst.counts[6].plays[0], 999999);
@@ -610,7 +610,7 @@ int GameManager::AddedCallback(GameManager *mgr)
         }
         else
         {
-            mgr->unk_4->unk_25 = 0;
+            mgr->unk_4->scoreDisabled = 0;
         }
     }
     else

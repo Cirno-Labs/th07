@@ -1363,7 +1363,7 @@ int App::FadeOutMusic(float seconds)
 
 int App::IsScoreDisabled()
 {
-    return g_Unknown626270.unk_4 != NULL && g_Unknown626270.unk_4->unk_25 != 0;
+    return g_Unknown626270.unk_4 != NULL && g_Unknown626270.unk_4->scoreDisabled != 0;
 }
 
 int App::EnableFog()

@@ -492,7 +492,7 @@ int PauseMenu::UpdatePauseMenu()
         {
             this->sprites[8].ClearShown();
         }
-        if (!g_Unknown626270.unk_4->unk_25)
+        if (!g_Unknown626270.unk_4->scoreDisabled)
         {
             this->sprites[9].ClearShown();
         }

@@ -941,7 +941,7 @@ struct Unknown626270Unk4
     BYTE lifeCount;
     unsigned char unk_1d[0x8];
     // App::IsScoreDisabled tests it.
-    BYTE unk_25;
+    BYTE scoreDisabled;
     unsigned char unk_26[0x12];
 };
 

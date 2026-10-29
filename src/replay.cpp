@@ -32,7 +32,7 @@ int ReplayManager::RecordOnUpdate(ReplayManager *replay)
     }
     g_Unknown4b9e58 = g_Unknown4b9e50;
     g_Unknown4b9e50 = g_Buttons;
-    if (g_Unknown626270.unk_4->unk_25 != 0)
+    if (g_Unknown626270.unk_4->scoreDisabled != 0)
     {
         return 1;
     }
@@ -87,7 +87,7 @@ int ReplayManager::PlayOnUpdate(ReplayManager *replay)
     {
         return 1;
     }
-    if (g_Unknown626270.unk_4->unk_25 != 0)
+    if (g_Unknown626270.unk_4->scoreDisabled != 0)
     {
         return 1;
     }
