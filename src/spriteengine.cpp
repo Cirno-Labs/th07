@@ -824,6 +824,12 @@ int SpriteEngine::DrawUnrotated(Sprite *vm)
     return this->DrawQuad(vm, 1);
 }
 
+void SpriteEngine::RotatePoint(float *out, float x, float y, float sine, float cosine, float cx, float cy)
+{
+    out[0] = x * cosine - y * sine + cx;
+    out[1] = x * sine + y * cosine + cy;
+}
+
 void SpriteEngine::RenderTextToTextureIndex(int textureIndex, int x, int y, int width, int unk4, int fontHeight,
                                             int unk6, D3DCOLOR textColor, D3DCOLOR shadowColor, char *text,
                                             float scaleX, float scaleY)

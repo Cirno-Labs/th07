@@ -272,6 +272,9 @@ public:
     int SetSprite(Sprite *vm, int sprite);
     // Draws `vm` at its position.
     int Draw(Sprite *vm);
+    // Rotates (`x`, `y`) by the angle with `sine` and `cosine`, the other
+    // way from th06, and moves it to (`cx`, `cy`), into `out`.
+    void RotatePoint(float *out, float x, float y, float sine, float cosine, float cx, float cy);
     // Draws `vm` when it is not rotated. Not in th06 as such.
     int DrawUnrotated(Sprite *vm);
     // Copies surface `surface` to the back buffer at (`left`, `top`),
