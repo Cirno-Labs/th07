@@ -131,6 +131,11 @@ void Unknown9a9b00::Initialize()
     enemy->shooter.unk_cc = 0x19;
 }
 
+Unknown9a9b00::Unknown9a9b00()
+{
+    this->Initialize();
+}
+
 Enemy *Unknown9a9b00::Spawn(short sub, D3DXVECTOR3 *pos, int life, char item, int score, BYTE mirrored)
 {
     Enemy *enemy;

@@ -115,6 +115,12 @@ ASSERT_SIZE(Bullet, 0xd68);
 // What a bullet pattern fires, as th06's.
 struct BulletShooter
 {
+    BulletShooter()
+    {
+        memset(this, 0, sizeof(BulletShooter));
+        this->unk_cc = -1;
+    }
+
     // Sets command `idx` to run under `flag` and adds `flag` to flags.
     // Returns the command.
     BulletCommand *StartCommand(int idx, int unk_14, DWORD flag);

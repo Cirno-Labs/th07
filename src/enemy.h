@@ -51,13 +51,28 @@ struct EnemyScriptVars
 };
 ASSERT_SIZE(EnemyScriptVars, 0x68);
 
+// One of EnemyScriptState's eight unk_8c.
+struct EnemyScriptLoop
+{
+    int unk_0;
+    Timer timer;
+    unsigned char unk_10[0x20];
+};
+ASSERT_SIZE(EnemyScriptLoop, 0x30);
+
 // Where one enemy is in its script (0x218 bytes), th06's grown. Its
 // implicit constructor is 0x41f220.
 struct EnemyScriptState
 {
-    unsigned char unk_0[0x18];
+    void *code;
+    Timer timer;
+    unsigned char unk_10[0x8];
     EnemyScriptVars vars;
-    unsigned char unk_80[0x198];
+    Timer unk_80;
+    EnemyScriptLoop unk_8c[8];
+    unsigned char unk_20c[0x8];
+    short sub;
+    short unk_216;
 };
 ASSERT_SIZE(EnemyScriptState, 0x218);
 
@@ -223,11 +238,21 @@ void ReleaseEnemyEffects(Enemy *enemy);
 // of their direct and wrapped-around (2 pi) distances. Not in th06.
 float LerpAngle(float a, float b, float t);
 
+// One of Unknown9a9b00's sixteen unk_9545f4.
+struct Unknown9a9b00Timer
+{
+    Timer timer;
+    int unk_c;
+};
+
 // The enemies, at 0x9a9b00, th06's EnemyManager. Placeholder name; only
 // what is known so far.
 class Unknown9a9b00
 {
 public:
+    // Constructs the members and initializes, as th06's.
+    Unknown9a9b00();
+
     // Zeroes everything and sets the template up, as th06's Initialize.
     void Initialize();
     // Spawns an enemy from the template at `pos`, starting script
@@ -289,7 +314,12 @@ public:
     unsigned char unk_9545bc[0xc];
     // th06's spellCardActive; other code reaches it as g_Unknown12fe0c8.
     int spellCardActive;
-    unsigned char unk_9545cc[0x144];
+    unsigned char unk_9545cc[0x14];
+    Timer unk_9545e0;
+    unsigned char unk_9545ec[0x8];
+    Unknown9a9b00Timer unk_9545f4[16];
+    Timer unk_9546f4;
+    unsigned char unk_954700[0x10];
 };
 ASSERT_SIZE(Unknown9a9b00, 0x954710);
 extern Unknown9a9b00 g_Unknown9a9b00;
