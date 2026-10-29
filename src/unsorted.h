@@ -1455,8 +1455,17 @@ public:
 
     EnemyScriptHeader *file;
     void **subs;
+    unsigned char unk_8[0x160];
+    // The scripts' shared variables, 10037 to 10040 and 10041 to 10044.
+    int globalInts[4];
+    float globalFloats[4];
 };
 extern Unknown1347938 g_Unknown1347938;
+
+// The value of script operand `id` for `enemy`: a variable (floats
+// truncated) or another value the scripts read by number from 10000;
+// any other number is its own value.
+int GetIntOperand(Enemy *enemy, int id);
 
 // Set to 9 as the dialogue of stages 6 to 8 starts.
 extern int g_Unknown9a9ab8;

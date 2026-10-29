@@ -44,10 +44,17 @@ struct EnemyFlags
     unsigned char keepSpellCard : 1;
 };
 
-// The variables of an enemy's script.
+// The variables of an enemy's script, by number from 10000: 10000 to
+// 10003 ints, 10004 to 10011 floats, 10012 to 10015 ints, 10072 and
+// 10073 floats, 10029 to 10032 ints, 10033 to 10036 floats.
 struct EnemyScriptVars
 {
-    int unk_0[0x1a];
+    int ints[4];
+    float floats[8];
+    int ints2[4];
+    float floats2[2];
+    int ints3[4];
+    float floats3[4];
 };
 ASSERT_SIZE(EnemyScriptVars, 0x68);
 
@@ -146,13 +153,16 @@ struct Enemy
     unsigned char unk_2b48[0xc];
     float angle;
     float angularVelocity;
-    unsigned char unk_2b5c[0x8];
+    float unk_2b5c;
+    float unk_2b60;
     float speed;
     float acceleration;
-    unsigned char unk_2b6c[0x8];
+    float unk_2b6c;
+    unsigned char unk_2b70[0x4];
     // Where shots start, from the position.
     D3DXVECTOR3 shootOffset;
-    unsigned char unk_2b80[0x18];
+    unsigned char unk_2b80[0xc];
+    D3DXVECTOR3 unk_2b8c;
     Timer moveTimer;
     int unk_2ba4;
     // How the shots' speed and counts grow with the rank, as th06's.
@@ -196,7 +206,7 @@ struct Enemy
     // The bounds of the position, with flags.clampPos.
     float lowerBound[2];
     float upperBound[2];
-    unsigned char unk_2e4c[0x4];
+    int unk_2e4c;
     // Effects that follow the enemy, as th06's.
     Effect *effects[25];
     int effectCount;

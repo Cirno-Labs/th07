@@ -80,7 +80,7 @@ address,size,name,symbol
 0x0040e420,197,Unknown1347938::Load,?Load@Unknown1347938@@QAEHPAD@Z
 0x0040e4f0,50,Unknown1347938::Release,?Release@Unknown1347938@@QAEXXZ
 0x0040e530,128,Unknown1347938::StartSub,?StartSub@Unknown1347938@@QAEHPAUEnemyScriptState@@F@Z
-0x0040e5b0,1310,Func40e5b0,
+0x0040e5b0,1310,GetIntOperand,?GetIntOperand@@YIHPAUEnemy@@H@Z
 0x0040ec00,325,Func40ec00,
 0x0040edf0,1178,Func40edf0,
 0x0040f3c0,528,Func40f3c0,
