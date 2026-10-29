@@ -955,6 +955,15 @@ public:
     // Sets stats->bombs to `bombs` and updates the fields that follow
     // from it.
     void SetBombs(int bombs);
+    // Set stats->lives and stats->power, without the checksums.
+    void SetLives(int lives)
+    {
+        this->stats->lives = lives;
+    }
+    void SetPower(int power)
+    {
+        this->stats->power = power;
+    }
     // Takes `amount` hundredths from the rank, as th06's SubSubRank.
     void SubSubRank(int amount);
     // Adds `deaths` to stats->deaths, checked like AddPower.
@@ -1045,7 +1054,7 @@ public:
     // under 14, else 5.
     int unk_9630;
     // A replay stage keeps it.
-    BYTE unk_9634;
+    int unk_9634;
 };
 extern Unknown626270 g_Unknown626270;
 

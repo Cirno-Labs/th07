@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "lzss.h"
+#include "player.h"
 #include "replay.h"
 #include "unsorted.h"
 
@@ -256,4 +257,101 @@ ReplayHeader *ValidateReplay(void *data, int size)
 fail:
     free(data);
     return NULL;
+}
+
+int ReplayManager::PlayAddedCallback(ReplayManager *replay)
+{
+    ReplayStage *cur;
+    int idx;
+    BYTE *extras;
+
+    replay->frame = 0;
+    if (replay->data == NULL)
+    {
+        replay->data = (ReplayHeader *)LoadFileData(replay->path, !(g_Unknown626270.unk_93d8 >> 1 & 1));
+        replay->data = ValidateReplay(replay->data, g_FileSize);
+        if (replay->data == NULL)
+        {
+            return -1;
+        }
+        replay->unk_40 = NULL;
+        for (idx = 0; idx < 7; idx++)
+        {
+            replay->stageSizes[idx] = 0;
+            replay->extraSizes[idx] = 0;
+            if (replay->data->stages[idx] != NULL)
+            {
+                if (idx < 6 && replay->data->stages[idx + 1] != NULL)
+                {
+                    replay->stageSizes[idx] = (int)replay->data->stages[idx + 1] - (int)replay->data->stages[idx];
+                }
+                else
+                {
+                    replay->stageSizes[idx] = (int)replay->data->extras[idx] - (int)replay->data->stages[idx];
+                }
+                if (idx < 6 && replay->data->extras[idx + 1] != NULL)
+                {
+                    replay->extraSizes[idx] = (int)replay->data->extras[idx + 1] - (int)replay->data->extras[idx];
+                }
+                else
+                {
+                    replay->extraSizes[idx] = replay->data->dataSize + 0x54 - (int)replay->data->extras[idx];
+                }
+            }
+            if (replay->data->stages[idx] != NULL)
+            {
+                replay->data->stages[idx] = (ReplayStage *)((int)replay->data->stages[idx] + (int)replay->data);
+            }
+            if (replay->data->extras[idx] != NULL)
+            {
+                replay->data->extras[idx] = (BYTE *)((int)replay->data->extras[idx] + (int)replay->data);
+            }
+        }
+    }
+    idx = g_Unknown626270.stage - 1;
+    if (idx >= 7)
+    {
+        idx = 6;
+    }
+    if (replay->data->stages[idx] == NULL)
+    {
+        return -1;
+    }
+    cur = replay->data->stages[idx];
+    extras = replay->data->extras[idx];
+    g_Unknown626270.character = replay->data->shotType / 2;
+    g_Unknown626270.shotType = replay->data->shotType % 2;
+    g_Unknown626270.unk_93d7 = replay->data->shotType;
+    g_Unknown626270.difficulty = replay->data->difficulty;
+    g_Unknown626270.stats->pointItemsTotal = cur->pointItemsTotal;
+    g_Unknown626270.unk_9634 = cur->unk_25;
+    g_Unknown626270.SetLives(cur->lives);
+    g_Unknown626270.Func4012b0();
+    g_Unknown626270.SetBombs(cur->bombs);
+    g_Unknown626270.SetPower(cur->power);
+    g_Unknown626270.Func4012b0();
+    g_Unknown626270.stats->grazeTotal = cur->grazeTotal;
+    replay->cursor = cur->frames;
+    g_Unknown626270.unk_93d4 = cur->unk_26;
+    g_Unknown626270.unk_961c = cur->unk_08 + g_Unknown626270.stats->unk_88;
+    g_Unknown626270.unk_9618 = cur->unk_0c + g_Unknown626270.stats->unk_88;
+    g_Unknown626270.unk_9620 = cur->unk_10 + g_Unknown626270.stats->unk_88;
+    if (g_Unknown626270.unk_9620 >= g_Unknown626270.stats->unk_88 + 50000)
+    {
+        g_Unknown626270.unk_9620 = g_Unknown626270.stats->unk_88 + 50000;
+        StartBombState(&g_Player);
+    }
+    *g_Unknown626270.unk_4 = *(Unknown626270Unk4 *)replay->data->config;
+    g_Rng.SetSeed(cur->unk_20);
+    g_Unknown626270.stats->spellCardsCaptured = cur->spellCardsCaptured;
+    g_Unknown626270.stats->unk_2c = cur->unk_18;
+    g_Unknown626270.stats->unk_30 = cur->unk_1c;
+    replay->extraCursor = extras;
+    if (g_Unknown626270.stage >= 2 && g_Unknown626270.stage <= 6 &&
+        replay->data->stages[g_Unknown626270.stage - 2] != NULL)
+    {
+        g_Unknown626270.stats->score = replay->data->stages[g_Unknown626270.stage - 2]->score;
+        g_Unknown626270.stats->guiScore = g_Unknown626270.stats->score;
+    }
+    return 0;
 }

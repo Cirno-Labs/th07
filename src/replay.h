@@ -142,14 +142,25 @@ public:
     // before; then (re)allocates the stage's frames and frame rates and
     // keeps the game's state in the stage. Returns 0.
     static int RecordAddedCallback(ReplayManager *replay);
+    // The update element's added callback when playing: loads and checks
+    // the replay at `path` the first time, keeping each stage's sizes and
+    // turning its offsets into pointers; then puts the stage's state back
+    // into the game. Returns 0, or -1 if the replay or the stage is
+    // missing.
+    static int PlayAddedCallback(ReplayManager *replay);
 
     // The current frame.
     int frame;
     // The replay data.
     ReplayHeader *data;
-    unsigned char unk_8[0x38];
+    // Each stage's size in bytes, and its frame rates', when playing.
+    int stageSizes[7];
+    int extraSizes[7];
     void *unk_40;
-    unsigned char unk_44[0x3e];
+    unsigned char unk_44[0x4];
+    // The replay to play.
+    char *path;
+    unsigned char unk_4c[0x36];
     WORD unk_82;
     // The last frame recorded or played; [stage - 1] is where that
     // stage's frames end (stages past 7 share the last).
