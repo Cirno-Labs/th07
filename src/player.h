@@ -681,3 +681,9 @@ void UpdateMarisaBBomb(Player *player);
 // Draws Marisa B's bomb: the stage tint, then each laser's sprite
 // halfway along it from the player, turned along laserAngle.
 void DrawMarisaBBomb(Player *player);
+
+// Marisa B's focused bomb, th06's Master Spark (UpdateMarisaBBomb):
+// 340 frames with stateTimer at 390, an aura and the player slowed to
+// 0.2; on three frames out of four a box of 23 damage and an area
+// (AddHitboxArea) from the player up to the top of the play area.
+void UpdateMarisaBBombFocused(Player *player);

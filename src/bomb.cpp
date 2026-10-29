@@ -874,3 +874,62 @@ void DrawMarisaBBomb(Player *player)
         curSprite++;
     }
 }
+
+void UpdateMarisaBBombFocused(Player *player)
+{
+    int i;
+    Sprite *sprite;
+    D3DXVECTOR3 unused;
+
+    if (player->bomb.timer >= player->bomb.duration)
+    {
+        g_Unknown49fbf0.EndBombName();
+        player->bomb.running = 0;
+        player->moveScaleY = 1.0f;
+        player->moveScaleX = 1.0f;
+        return;
+    }
+    if (player->bomb.timer.HasTicked() && player->bomb.timer == 0)
+    {
+        g_ItemManager.CollectAll();
+        g_Unknown49fbf0.ShowBombName(0x4a2, "恋符「マスタースパーク」");
+        player->bomb.duration = 340;
+        player->stateTimer.Set(390);
+        SpawnBombAura(player);
+        for (sprite = player->bomb.parts[0].sprites, i = 0; i < 4; i++, sprite++)
+        {
+            g_SpriteEngine->StartScriptAtOrigin(sprite, i + 0x408);
+            player->bomb.parts[i].pos = player->position;
+        }
+        g_SoundPlayer.QueueSound(0x13, 0);
+        player->moveScaleY = 0.2f;
+        player->moveScaleX = 0.2f;
+        SetBombDrain(player, 10000, 0.41f);
+    }
+    else
+    {
+        if (player->bomb.timer == 60)
+        {
+            ScreenEffect::StartEffect(1, 60, 1, 7, 0);
+        }
+        else if (player->bomb.timer == 120)
+        {
+            ScreenEffect::StartEffect(1, 200, 24, 0, 0);
+        }
+        if (player->bomb.timer.HasTicked() && player->bomb.timer.AsFrames() % 4 != 0)
+        {
+            player->unk_9dc[0].size.x = 384.0f;
+            player->unk_9dc[0].size.y = player->position.y;
+            player->unk_9dc[0].pos.x = 192.0f;
+            player->unk_9dc[0].pos.y = player->position.y / 2.0f;
+            player->unk_9dc[0].unk_18 = 23;
+            player->AddHitboxArea(&player->unk_9dc[0].pos, 384.0f, player->position.y, 6);
+        }
+        g_SpriteEngine->Step(&player->bomb.parts[0].sprites[0]);
+        g_SpriteEngine->Step(&player->bomb.parts[0].sprites[1]);
+        g_SpriteEngine->Step(&player->bomb.parts[0].sprites[2]);
+        g_SpriteEngine->Step(&player->bomb.parts[0].sprites[3]);
+    }
+    player->playerState = 3;
+    player->bomb.timer.Tick();
+}
