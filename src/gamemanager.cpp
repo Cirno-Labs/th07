@@ -271,7 +271,7 @@ int GameManager::DeletedCallback(GameManager *mgr)
     while (g_SoundPlayer.PlayQueuedSounds())
     {
     }
-    Unknown1347b00::RemoveChain();
+    Stage::RemoveChain();
     BulletManager::RemoveChain();
     Player::RemoveChain();
     Unknown9a9b00::RemoveChain();

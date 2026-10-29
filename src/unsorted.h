@@ -1593,7 +1593,7 @@ struct StageQuad
     // The offset of the next quad.
     short size;
     short script;
-    // Set by Load: the quad's Sprite in Unknown1347b00::sprites.
+    // Set by Load: the quad's Sprite in Stage::sprites.
     short spriteIndex;
     D3DXVECTOR3 pos;
     float width;
@@ -1670,22 +1670,22 @@ struct StageCamera
 // (0 to 1). Not in th06.
 float HermiteInterpolate(float p0, float p1, float m0, float m1, float t);
 
-class Unknown1347b00;
+class Stage;
 // Moves `out` from `from` to `to` over stage->unk_5238[i] frames, on
 // stage->unk_5248[i], eased by stage->unk_5278[i]: 1 to 3 slow down, 4
 // to 6 speed up, 7 follows a Hermite curve with tangents m0 and m1.
 // Clears the frame count once the timer reaches it. Not in th06.
-void UpdateEasedVector(Unknown1347b00 *stage, int i, D3DXVECTOR3 *out, D3DXVECTOR3 *from, D3DXVECTOR3 *to, D3DXVECTOR3 *m0, D3DXVECTOR3 *m1);
+void UpdateEasedVector(Stage *stage, int i, D3DXVECTOR3 *out, D3DXVECTOR3 *from, D3DXVECTOR3 *to, D3DXVECTOR3 *m0, D3DXVECTOR3 *m1);
 
 // The object at 0x1347b00: th06's Stage, the background. Placeholder
 // name.
-class Unknown1347b00
+class Stage
 {
 public:
     // Zeroes the object, then puts the camera at (0, 0, 1000) looking
     // nowhere, with up along y and a field of view of pi / 6, and copies
     // it to unk_50f8 and unk_5138.
-    Unknown1347b00();
+    Stage();
 
     // Zeroes the stage, remembers `stage` and adds the update element
     // (priority 7) and the draw elements (priorities 3 and 4), as th06's.
@@ -1701,26 +1701,26 @@ public:
     // scripts. Then fades the cameras and the fog and runs the sprites.
     // Returns 1, or 4 when ChecksumMismatch finds the player's numbers
     // tampered with (checked every 500 frames).
-    static int OnUpdate(Unknown1347b00 *stage);
+    static int OnUpdate(Stage *stage);
     // Resets the SpriteEngine's render state, clears the play area to
     // black once if unk_51c is set, makes the SpriteEngine modulate by
     // unk_52ac if its alpha is set (and resets it to gray), draws unk_4
     // and unk_250, clears the viewport to unk_4d8, sets the fog (its
     // color modulated as the SpriteEngine's) and draws layers 0 and 1
     // under the same conditions as OnDraw2. Returns 1.
-    static int OnDraw(Unknown1347b00 *stage);
+    static int OnDraw(Stage *stage);
     // Draws layers 2 and 3 unless spellCardState is above 1 or the Gui's
     // loading sprite shows, with a rectangle fading in while
     // spellCardState is 1, as th06's; then unk_528's first unk_520
     // sprites, the fixed camera (SetupFixedCamera) and the fog at 1000 to
     // 2000. Resets the SpriteEngine's color unless unk_52b0 was set,
     // and clears it. Returns 1.
-    static int OnDraw2(Unknown1347b00 *stage);
+    static int OnDraw2(Stage *stage);
     // Resets the script, loads the stage's background ANMs (five for
     // stage 4) and its data from g_StageDataFiles, and sets the fog and
     // the cameras up as the constructor. Returns 0, or -1 if loading
     // fails.
-    static int AddedCallback(Unknown1347b00 *stage);
+    static int AddedCallback(Stage *stage);
     // Loads the stage data from `dataPath` and starts the background
     // sprites' scripts, as th06's (the ANMs are loaded by AddedCallback
     // here). Returns 0, or -1 on failure.
@@ -1733,7 +1733,7 @@ public:
     int StepObjects();
     // Releases the background ANMs (slots 5 to 9) and frees the sprites
     // and the data. Returns 0.
-    static int DeletedCallback(Unknown1347b00 *stage);
+    static int DeletedCallback(Stage *stage);
     // Sets the color at +0x52ac to `color`, or to the average of the two
     // while its alpha byte is set.
     void SetTintColor(D3DCOLOR color);
@@ -1798,11 +1798,11 @@ public:
     ColorBytes unk_52ac;
     int unk_52b0;
 };
-ASSERT_SIZE(Unknown1347b00, 0x52b4);
-extern Unknown1347b00 g_Unknown1347b00;
+ASSERT_SIZE(Stage, 0x52b4);
+extern Stage g_Unknown1347b00;
 // The stage data file of each stage; stage 0 has a "dummy" one.
 extern char *g_StageDataFiles[];
-// Unknown1347b00's statically allocated chain elements.
+// Stage's statically allocated chain elements.
 extern ChainElem g_Unknown1347b00CalcChain;
 extern ChainElem g_Unknown1347b00DrawChain;
 extern ChainElem g_Unknown1347b00DrawChain2;

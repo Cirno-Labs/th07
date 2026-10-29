@@ -1,4 +1,4 @@
-// The file with Unknown1347b00, th06's Stage, from 0x404fe0, as th06's
+// The file with Stage, th06's Stage, from 0x404fe0, as th06's
 // stage.cpp.
 
 #include <math.h>
@@ -20,9 +20,9 @@ int GameManager::ChecksumMismatch()
                : TRUE;
 }
 
-Unknown1347b00::Unknown1347b00()
+Stage::Stage()
 {
-    memset(this, 0, sizeof(Unknown1347b00));
+    memset(this, 0, sizeof(Stage));
     this->camera.eye = D3DXVECTOR3(0.0f, 0.0f, 1000.0f);
     this->camera.at = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
     this->camera.up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
@@ -45,7 +45,7 @@ float HermiteInterpolate(float p0, float p1, float m0, float m1, float t)
     return f00 * p0 + f01 * p1 + f10 * m0 + f11 * m1;
 }
 
-void UpdateEasedVector(Unknown1347b00 *stage, int i, D3DXVECTOR3 *out, D3DXVECTOR3 *from, D3DXVECTOR3 *to, D3DXVECTOR3 *m0, D3DXVECTOR3 *m1)
+void UpdateEasedVector(Stage *stage, int i, D3DXVECTOR3 *out, D3DXVECTOR3 *from, D3DXVECTOR3 *to, D3DXVECTOR3 *m0, D3DXVECTOR3 *m1)
 {
     float t;
 
@@ -94,7 +94,7 @@ void UpdateEasedVector(Unknown1347b00 *stage, int i, D3DXVECTOR3 *out, D3DXVECTO
     }
 }
 
-int Unknown1347b00::OnUpdate(Unknown1347b00 *stage)
+int Stage::OnUpdate(Stage *stage)
 {
     StageInstr *cmd;
     D3DXVECTOR3 tmpVec;
@@ -432,7 +432,7 @@ done:
     return 1;
 }
 
-void Unknown1347b00::SetTintColor(D3DCOLOR color)
+void Stage::SetTintColor(D3DCOLOR color)
 {
     ColorBytes c;
 
@@ -465,7 +465,7 @@ inline DWORD ModulateChannel(BYTE c, BYTE factor)
 #define MODULATE_CHANNEL(color, factor, i) \
     ((BYTE *)&(color))[i] = ModulateChannel(((BYTE *)&(color))[i], ((BYTE *)&(factor))[i])
 
-int Unknown1347b00::OnDraw(Unknown1347b00 *stage)
+int Stage::OnDraw(Stage *stage)
 {
     D3DVIEWPORT8 viewport;
     D3DCOLOR fogColor;
@@ -549,7 +549,7 @@ int Unknown1347b00::OnDraw(Unknown1347b00 *stage)
     return 1;
 }
 
-int Unknown1347b00::OnDraw2(Unknown1347b00 *stage)
+int Stage::OnDraw2(Stage *stage)
 {
     float fog;
     int opacity;
@@ -609,7 +609,7 @@ int Unknown1347b00::OnDraw2(Unknown1347b00 *stage)
     return 1;
 }
 
-int Unknown1347b00::AddedCallback(Unknown1347b00 *stage)
+int Stage::AddedCallback(Stage *stage)
 {
     int i;
 
@@ -709,7 +709,7 @@ int Unknown1347b00::AddedCallback(Unknown1347b00 *stage)
     return 0;
 }
 
-int Unknown1347b00::DeletedCallback(Unknown1347b00 *stage)
+int Stage::DeletedCallback(Stage *stage)
 {
     g_SpriteEngine->ReleaseAnm(5);
     g_SpriteEngine->ReleaseAnm(6);
@@ -729,39 +729,39 @@ int Unknown1347b00::DeletedCallback(Unknown1347b00 *stage)
     return 0;
 }
 
-int Unknown1347b00::RegisterChain(int stage)
+int Stage::RegisterChain(int stage)
 {
-    Unknown1347b00 *s = &g_Unknown1347b00;
+    Stage *s = &g_Unknown1347b00;
 
-    memset(s, 0, sizeof(Unknown1347b00));
+    memset(s, 0, sizeof(Stage));
     s->data = NULL;
     s->unk_4c4 = 0;
     s->stage = stage;
-    g_Unknown1347b00CalcChain.SetCallback((ChainCallback)Unknown1347b00::OnUpdate);
-    g_Unknown1347b00CalcChain.addedCallback = (ChainCallback)Unknown1347b00::AddedCallback;
-    g_Unknown1347b00CalcChain.deletedCallback = (ChainCallback)Unknown1347b00::DeletedCallback;
+    g_Unknown1347b00CalcChain.SetCallback((ChainCallback)Stage::OnUpdate);
+    g_Unknown1347b00CalcChain.addedCallback = (ChainCallback)Stage::AddedCallback;
+    g_Unknown1347b00CalcChain.deletedCallback = (ChainCallback)Stage::DeletedCallback;
     g_Unknown1347b00CalcChain.arg = s;
     if (g_Chain.AddToCalcChain(&g_Unknown1347b00CalcChain, 7) != 0)
     {
         return -1;
     }
-    g_Unknown1347b00DrawChain.SetCallback((ChainCallback)Unknown1347b00::OnDraw);
+    g_Unknown1347b00DrawChain.SetCallback((ChainCallback)Stage::OnDraw);
     g_Unknown1347b00DrawChain.arg = s;
     g_Chain.AddToDrawChain(&g_Unknown1347b00DrawChain, 3);
-    g_Unknown1347b00DrawChain2.SetCallback((ChainCallback)Unknown1347b00::OnDraw2);
+    g_Unknown1347b00DrawChain2.SetCallback((ChainCallback)Stage::OnDraw2);
     g_Unknown1347b00DrawChain2.arg = s;
     g_Chain.AddToDrawChain(&g_Unknown1347b00DrawChain2, 4);
     return 0;
 }
 
-void Unknown1347b00::RemoveChain()
+void Stage::RemoveChain()
 {
     g_Chain.Remove(&g_Unknown1347b00CalcChain);
     g_Chain.Remove(&g_Unknown1347b00DrawChain);
     g_Chain.Remove(&g_Unknown1347b00DrawChain2);
 }
 
-int Unknown1347b00::Load(char *dataPath)
+int Stage::Load(char *dataPath)
 {
     int count;
     int i;
@@ -800,7 +800,7 @@ int Unknown1347b00::Load(char *dataPath)
     return 0;
 }
 
-int Unknown1347b00::DrawLayer(int layer)
+int Stage::DrawLayer(int layer)
 {
     Sprite *spr;
     int objCount;
@@ -953,7 +953,7 @@ int Unknown1347b00::DrawLayer(int layer)
     return 0;
 }
 
-int Unknown1347b00::StepObjects()
+int Stage::StepObjects()
 {
     StageQuad *altQuad;
     int busy;
@@ -997,7 +997,7 @@ int Unknown1347b00::StepObjects()
     return 0;
 }
 
-void Unknown1347b00::SetupFixedCamera()
+void Stage::SetupFixedCamera()
 {
     float midX;
     float halfHeight;
@@ -1021,7 +1021,7 @@ void Unknown1347b00::SetupFixedCamera()
     }
 }
 
-void Unknown1347b00::SetupCamera()
+void Stage::SetupCamera()
 {
     D3DXVECTOR3 at = this->camera.at + this->camera.eye;
 

@@ -275,7 +275,7 @@ void UpdateRespawningState(Player *player);
 // unk_b7e68 and returns to playerState 0. While playerState is 4 keeps
 // unk_b7e6c on the player, sets GameManager::unk_9620 from the time
 // left, and counts stateTimer down, blinking the player red and setting
-// Unknown1347b00's color, then calls EndBombState at 0. Otherwise ticks
+// Stage's color, then calls EndBombState at 0. Otherwise ticks
 // stateTimer.
 void UpdateInvulnerability(Player *player);
 // OnUpdate's last step: clears unk_2428, homingTarget and unk_2440 for
@@ -456,7 +456,7 @@ public:
     // continue menu, the player and, while unk_240a is set and
     // playerState is 0, 3 or 4, the options, all offset by the play
     // area. While playerState is 4 and stateTimer runs, blinks the
-    // player red and sets Unknown1347b00's color, as UpdateInvulnerability.
+    // player red and sets Stage's color, as UpdateInvulnerability.
     // Returns 1.
     static int OnDraw(Player *player);
     // The update element's added callback, as th06's: loads the shot
@@ -571,7 +571,7 @@ extern Player g_Player;
 
 // Probably th06's DimPlayAreaForBomb, turned into a stage tint: over
 // the bomb's first and last 60 frames the stage fades between gray
-// (0x80) and 0x30, through Unknown1347b00::SetTintColor, after resetting the
+// (0x80) and 0x30, through Stage::SetTintColor, after resetting the
 // SpriteEngine's color; sets the stage's unk_52b0, which keeps OnDraw2
 // from resetting that color.
 void DimPlayAreaForBomb(Player *player);
