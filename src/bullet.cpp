@@ -1163,8 +1163,8 @@ int BulletManager::OnUpdate(BulletManager *mgr)
     {
         mgr->clearAllFrames--;
     }
-    mgr->unk_37a130.Tick();
-    mgr->unk_37a13c++;
+    mgr->updateTimer.Tick();
+    mgr->updateFrameCount++;
     return 1;
 }
 

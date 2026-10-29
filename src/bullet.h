@@ -269,8 +269,8 @@ public:
     Laser lasers[0x40];
     int bulletCount;
     int clearAllFrames;
-    Timer unk_37a130;
-    int unk_37a13c;
+    Timer updateTimer;
+    int updateFrameCount;
     // RegisterChain's argument.
     char *anmPath;
     // Six lists of the bullets to draw, in order, linked by
