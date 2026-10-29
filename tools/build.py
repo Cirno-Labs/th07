@@ -200,11 +200,13 @@ def write_hooks(objs, symbols):
 
 
 def link_order(objs, symbols):
-    """Sorts the game's objects into the original's order: by the lowest
-    original address of a function that only that object defines, so an
-    inline function other objects also emit doesn't pull it forward.
-    Objects that define no such function (data, globals) go last, in
-    their given order."""
+    """Sorts the game's objects into the original's order: by the median
+    original address of the functions that only that object defines. An
+    inline function other objects also emit doesn't count, and the median
+    ignores a function the original's linker folded into another
+    object's identical one (ReplayManager::OnDraw sits among effect.cpp's
+    functions). Objects that define no such function (data, globals) go
+    last, in their given order."""
     code = {}
     for path in objs:
         obj = coff.Object(path)
@@ -212,10 +214,10 @@ def link_order(objs, symbols):
                       if s.section > 0 and obj.sections[s.section - 1].flags & coff.CODE}
     count = collections.Counter(n for names in code.values() for n in names)
 
-    def first(path):
-        return min((symbols[n] for n in code[path] if count[n] == 1 and n in symbols),
-                   default=1 << 32)
-    return sorted(objs, key=first)
+    def median(path):
+        addrs = sorted(symbols[n] for n in code[path] if count[n] == 1 and n in symbols)
+        return addrs[len(addrs) // 2] if addrs else 1 << 32
+    return sorted(objs, key=median)
 
 
 def link_exe(objs):
