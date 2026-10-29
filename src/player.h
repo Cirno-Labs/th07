@@ -323,6 +323,8 @@ struct PlayerBombPart
         float homingSpeed;
         // Marisa B: the laser's direction.
         float laserAngle;
+        // Sakuya A: added to speed every frame.
+        float speedStep;
     };
     float speed;
     float angle;
@@ -332,7 +334,8 @@ struct PlayerBombPart
     D3DXVECTOR3 velocity;
     D3DXVECTOR3 acceleration;
     Sprite sprites[8];
-    unsigned char unk_1418[0x4];
+    // Sakuya A, part 0: an effect 0x15 at the player.
+    Effect *effect;
     Timer timer;
 };
 ASSERT_SIZE(PlayerBombPart, 0x1428);
@@ -358,7 +361,7 @@ struct PlayerBomb
     void (*drawFocused)(Player *player);
     PlayerBombPart parts[0x80];
     // Where the player was when the bomb started (Reimu A, Reimu B
-    // focused, Marisa B).
+    // focused, Marisa B, Sakuya A).
     D3DXVECTOR3 startPos;
 };
 ASSERT_SIZE(PlayerBomb, 0xa1438);
@@ -692,3 +695,12 @@ void UpdateMarisaBBombFocused(Player *player);
 // tint, then the beam's four sprites fanned out upwards from the
 // player.
 void DrawMarisaBBombFocused(Player *player);
+
+// Sakuya A's bomb: 160 frames with stateTimer at 210, an aura and an
+// effect 0x15; from frame 60 to 120 five knives a frame (up to 0x60)
+// start 24 out from startPos in random directions, each speeding up
+// and turning at its own random rate, an area (AddHitboxAreaCircle,
+// 32) and a 24 box of 10 damage until it has hit 30 times (then it
+// restarts its sprite at script 0x460 and stops), gone once it leaves
+// the play area.
+void UpdateSakuyaABomb(Player *player);

@@ -956,3 +956,92 @@ void DrawMarisaBBombFocused(Player *player)
         curSprite++;
     }
 }
+
+void UpdateSakuyaABomb(Player *player)
+{
+    int i;
+    Sprite *spr;
+    PlayerBombPart *knife;
+    D3DXVECTOR3 tmp;
+    float angle;
+    int remaining;
+
+    if (player->bomb.timer >= player->bomb.duration)
+    {
+        g_Unknown49fbf0.EndBombName();
+        player->bomb.running = 0;
+        return;
+    }
+    if (player->bomb.timer.HasTickedTo(0))
+    {
+        g_ItemManager.CollectAll();
+        g_Unknown49fbf0.ShowBombName(0x4a1, "幻符「インディスクリミネイト」");
+        player->bomb.duration = 160;
+        player->stateTimer.Set(210);
+        SpawnBombAura(player);
+        player->bomb.startPos = player->position;
+        for (knife = player->bomb.parts, i = 0; i < 0x60; i++, knife++)
+        {
+            knife->state = 0;
+        }
+        SetBombDrain(player, 6000, 0.28f);
+        player->bomb.parts[0].effect = g_EffectManager.SpawnEffect(0x15, &player->position, 1, 0xffffffff);
+        g_SoundPlayer.QueueSound(5, 0);
+    }
+    if (player->bomb.timer >= 60)
+    {
+        remaining = 5;
+        for (knife = player->bomb.parts, i = 0; i < 0x60; i++, knife++)
+        {
+            if (knife->state == 0)
+            {
+                if (player->bomb.timer <= 120 && remaining != 0)
+                {
+                    knife->state = 1;
+                    spr = knife->sprites;
+                    g_SpriteEngine->StartScriptAtOrigin(spr, (i & 1) + 0x405);
+                    angle = g_Rng.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
+                    knife->angle = angle;
+                    knife->speed = g_Rng.GetRandomF32ZeroToOne() * 6.0f + 5.5f;
+                    knife->speedStep = g_Rng.GetRandomF32ZeroToOne() * 0.1f + 0.1f;
+                    knife->acceleration.x = g_Rng.GetRandomF32ZeroToOne() * 0.06283186f - 0.031415927f;
+                    knife->velocity.x = cosf(knife->angle) * 24.0f;
+                    knife->velocity.y = sinf(knife->angle) * 24.0f;
+                    knife->pos = player->bomb.startPos + knife->velocity;
+                    knife->velocity.z = 0.0f;
+                    player->unk_9dc[i].unk_1c = 0;
+                    remaining--;
+                }
+                continue;
+            }
+            else
+            {
+                knife->angle = AddNormalizeAngle(knife->angle, knife->acceleration.x);
+                knife->speed += knife->speedStep;
+                knife->velocity.x = cosf(knife->angle) * knife->speed;
+                knife->velocity.y = sinf(knife->angle) * knife->speed;
+                if (player->unk_9dc[i].unk_1c < 30)
+                {
+                    knife->pos += knife->velocity * g_App.unk_178;
+                    player->AddHitboxAreaCircle(&knife->pos, 32.0f, 0.0f, 0, 6);
+                    player->unk_9dc[i].size.x = 24.0f;
+                    player->unk_9dc[i].size.y = 24.0f;
+                    player->unk_9dc[i].pos = knife->pos;
+                    player->unk_9dc[i].unk_18 = 10;
+                }
+                else if (player->unk_9dc[i].unk_1c < 999)
+                {
+                    g_SpriteEngine->StartScriptAtOrigin(knife->sprites, 0x460);
+                    player->unk_9dc[i].unk_1c = 999;
+                }
+                if (!g_Unknown626270.IsInPlayArea(knife->pos.x, knife->pos.y, 64.0f, 64.0f))
+                {
+                    knife->state = 0;
+                }
+                g_SpriteEngine->Step(knife->sprites);
+            }
+        }
+    }
+    player->playerState = 3;
+    player->bomb.timer.Tick();
+}

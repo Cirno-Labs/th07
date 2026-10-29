@@ -62,6 +62,10 @@ struct Timer
     {
         return this->current != this->previous;
     }
+    BOOL HasTickedTo(int frames)
+    {
+        return this->current != this->previous && this->current == frames;
+    }
     BOOL operator==(int frames)
     {
         return this->current == frames;
