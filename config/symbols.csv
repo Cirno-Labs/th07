@@ -169,7 +169,7 @@ address,size,name,symbol
 0x0041ef70,684,Func41ef70,
 0x0041f220,185,Func41f220,
 0x0041f2e0,327,Unknown9a9b00::Spawn,?Spawn@Unknown9a9b00@@QAEPAUEnemy@@FPAUD3DXVECTOR3@@HDHE@Z
-0x0041f430,332,Func41f430,
+0x0041f430,332,Unknown9a9b00::SpawnWithVars,?SpawnWithVars@Unknown9a9b00@@QAEPAUEnemy@@FPAUD3DXVECTOR3@@HDHPAUEnemyScriptVars@@@Z
 0x0041f580,240,MoveEnemyEffects,?MoveEnemyEffects@@YIXPAUEnemy@@@Z
 0x0041f670,115,ReleaseEnemyEffects,?ReleaseEnemyEffects@@YIXPAUEnemy@@@Z
 0x0041f6f0,1599,Func41f6f0,

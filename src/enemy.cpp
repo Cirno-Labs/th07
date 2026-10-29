@@ -162,3 +162,45 @@ Enemy *Unknown9a9b00::Spawn(short sub, D3DXVECTOR3 *pos, int life, char item, in
     }
     return enemy;
 }
+
+Enemy *Unknown9a9b00::SpawnWithVars(short sub, D3DXVECTOR3 *pos, int life, char item, int score,
+                                 EnemyScriptVars *vars)
+{
+    Enemy *enemy;
+    int i;
+
+    enemy = this->enemies;
+    for (i = 0; i < 0x1e0; i++, enemy++)
+    {
+        if (enemy->flags.active)
+        {
+            continue;
+        }
+        *enemy = this->enemyTemplate;
+        if (life >= 0)
+        {
+            enemy->life = life;
+        }
+        enemy->pos = *pos;
+        g_Unknown1347938.StartSub(&enemy->ctx, sub);
+        enemy->ctx.vars = *vars;
+        if (g_Unknown1347938.RunEnemy(enemy) == -1)
+        {
+            enemy->flags.active = 0;
+            break;
+        }
+        enemy->color = enemy->sprite.color;
+        enemy->item = item;
+        if (life >= 0)
+        {
+            enemy->life = life;
+        }
+        if (score >= 0)
+        {
+            enemy->score = score;
+        }
+        enemy->maxLife = enemy->life;
+        break;
+    }
+    return enemy;
+}

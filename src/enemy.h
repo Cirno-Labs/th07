@@ -39,11 +39,20 @@ struct EnemyFlags
     unsigned char rotateSprite : 1;
 };
 
+// The variables of an enemy's script.
+struct EnemyScriptVars
+{
+    int unk_0[0x1a];
+};
+ASSERT_SIZE(EnemyScriptVars, 0x68);
+
 // Where one enemy is in its script (0x218 bytes), th06's grown. Its
 // implicit constructor is 0x41f220.
 struct EnemyScriptState
 {
-    unsigned char unk_0[0x218];
+    unsigned char unk_0[0x18];
+    EnemyScriptVars vars;
+    unsigned char unk_80[0x198];
 };
 ASSERT_SIZE(EnemyScriptState, 0x218);
 
@@ -186,6 +195,10 @@ public:
     // the enemy again if its script ends at once. Returns the enemy,
     // or the one past the last if all are in use.
     Enemy *Spawn(short sub, D3DXVECTOR3 *pos, int life, char item, int score, BYTE mirrored);
+    // Spawn without the mirroring, with the script's variables from
+    // `vars` once the subroutine starts.
+    Enemy *SpawnWithVars(short sub, D3DXVECTOR3 *pos, int life, char item, int score,
+                      EnemyScriptVars *vars);
     // GuiImpl::StartMsgScript calls it with (0, 0) as a dialogue starts.
     void Func423090(int unk0, int unk1);
     // Whether one of the eight pointers at +0x954598 is set.
