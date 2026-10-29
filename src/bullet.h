@@ -290,7 +290,7 @@ extern int g_BulletTypeScripts[11][5];
 // Sprite offsets by color, for bullets up to 16 and up to 32 high, as
 // th06's.
 extern int g_BulletColorOffsets16[16];
-extern int g_BulletColorOffsets32[16];
+extern int g_BulletColorOffsets32[8];
 
 // Shows sprite `src` in `color` on `dst`, by the size of `bullet`'s
 // sprite, unless `dst` shows it already: th06's SET_BULLET_SPRITE macro
