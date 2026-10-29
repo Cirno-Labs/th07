@@ -120,7 +120,7 @@ address,size,name,symbol
 0x00419ff0,542,Func419ff0,
 0x0041a210,218,Func41a210,
 0x0041a2f0,91,Func41a2f0,
-0x0041a350,25,Func41a350,
+0x0041a350,25,EffectManager::Reset,?Reset@EffectManager@@QAEXXZ
 0x0041a370,375,Func41a370,
 0x0041a4f0,166,Func41a4f0,
 0x0041a5a0,387,Func41a5a0,
