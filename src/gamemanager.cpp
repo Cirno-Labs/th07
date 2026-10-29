@@ -458,31 +458,6 @@ void IncrementStatCounter(DWORD *count, DWORD max)
 
 int GameManager::AddedCallback(GameManager *mgr)
 {
-#ifdef TH07_EXE
-    static EnemyAnmPaths g_EnemyAnmPaths[9] = {
-        {"dummy", "dummy"},
-        {"data/stg1enm.anm", NULL},
-        {"data/stg2enm.anm", NULL},
-        {"data/stg3enm.anm", NULL},
-        {"data/stg4enm.anm", NULL},
-        {"data/stg5enm.anm", NULL},
-        {"data/stg6enm.anm", NULL},
-        {"data/stg7enm.anm", NULL},
-        {"data/stg8enm.anm", NULL},
-    };
-    static char *g_EclPaths[10] = {
-        "dummy",
-        "data/ecldata1.ecl",
-        "data/ecldata2.ecl",
-        "data/ecldata3.ecl",
-        "data/ecldata4.ecl",
-        "data/ecldata5.ecl",
-        "data/ecldata6.ecl",
-        "data/ecldata7.ecl",
-        "data/ecldata8.ecl",
-        NULL,
-    };
-#endif // TH07_EXE
     int size;
     int shot;
     WORD seed;
@@ -714,11 +689,38 @@ int GameManager::AddedCallback(GameManager *mgr)
         LogPrintf(&g_Log, "error : 敵弾の初期化に失敗しました\r\n");
         return -1;
     }
+#ifdef TH07_EXE
+    static EnemyAnmPaths g_EnemyAnmPaths[9] = {
+        {"dummy", "dummy"},
+        {"data/stg1enm.anm", NULL},
+        {"data/stg2enm.anm", NULL},
+        {"data/stg3enm.anm", NULL},
+        {"data/stg4enm.anm", NULL},
+        {"data/stg5enm.anm", NULL},
+        {"data/stg6enm.anm", NULL},
+        {"data/stg7enm.anm", NULL},
+        {"data/stg8enm.anm", NULL},
+    };
+#endif // TH07_EXE
     if (EnemyManager::RegisterChain(g_EnemyAnmPaths[mgr->stage].anmPath, g_EnemyAnmPaths[mgr->stage].anmPath2) != 0)
     {
         LogPrintf(&g_Log, "error : 敵の初期化に失敗しました\r\n");
         return -1;
     }
+#ifdef TH07_EXE
+    static char *g_EclPaths[10] = {
+        "dummy",
+        "data/ecldata1.ecl",
+        "data/ecldata2.ecl",
+        "data/ecldata3.ecl",
+        "data/ecldata4.ecl",
+        "data/ecldata5.ecl",
+        "data/ecldata6.ecl",
+        "data/ecldata7.ecl",
+        "data/ecldata8.ecl",
+        NULL,
+    };
+#endif // TH07_EXE
     if (g_EnemyScripts.Load(g_EclPaths[mgr->stage]) != 0)
     {
         LogPrintf(&g_Log, "error : 敵頭脳の初期化に失敗しました\r\n");

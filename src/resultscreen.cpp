@@ -1753,22 +1753,6 @@ int ResultScreen::RunStatisticsMenu()
 
 int ResultScreen::DrawStatistics()
 {
-#ifdef TH07_EXE
-    static const float g_DifficultyRatings[5] = {
-        -30.0f, -10.0f, 20.0f, 30.0f, 30.0f,
-    };
-    static char *g_DifficultyNames[6] = {
-        "      Easy",
-        "    Normal",
-        "      Hard",
-        "   Lunatic",
-        "     Extra",
-        "  Phantasm",
-    };
-    static float g_SpellCardRatings[5] = {
-        1.0f, 1.5f, 1.5f, 2.0f, 2.5f,
-    };
-#endif // TH07_EXE
     Sprite *spr;
     D3DXVECTOR3 cursorPos;
     float progress;
@@ -1810,7 +1794,22 @@ int ResultScreen::DrawStatistics()
             rating += 40.0f;
         }
         cursorPos.y += 22.0f;
+#ifdef TH07_EXE
+        static char *g_DifficultyNames[6] = {
+            "      Easy",
+            "    Normal",
+            "      Hard",
+            "   Lunatic",
+            "     Extra",
+            "  Phantasm",
+        };
+#endif // TH07_EXE
         g_AsciiText.AddString(&cursorPos, g_DifficultyNames[g_GameManager.difficulty]);
+#ifdef TH07_EXE
+        static const float g_DifficultyRatings[5] = {
+            -30.0f, -10.0f, 20.0f, 30.0f, 30.0f,
+        };
+#endif // TH07_EXE
         rating += g_DifficultyRatings[g_GameManager.difficulty];
         cursorPos.x += 14.0f;
         cursorPos.y += 22.0f;
@@ -1839,6 +1838,11 @@ int ResultScreen::DrawStatistics()
         rating -= (int)g_GameManager.stats->bombsUsed * 2.0f - 10.0f;
         cursorPos.y += 22.0f;
         g_AsciiText.AddFormat(&cursorPos, "%9d", g_GameManager.stats->spellCardsCaptured);
+#ifdef TH07_EXE
+        static float g_SpellCardRatings[5] = {
+            1.0f, 1.5f, 1.5f, 2.0f, 2.5f,
+        };
+#endif // TH07_EXE
         rating += g_GameManager.stats->spellCardsCaptured * g_SpellCardRatings[g_GameManager.difficulty];
         slowdown = (g_App.achievedFrames / g_App.expectedFrames - 0.5f) * 2.0f;
         if (slowdown < 0.0f)

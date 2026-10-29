@@ -367,21 +367,6 @@ int Ending::Load(char *path)
 
 int Ending::AddedCallback(Ending *ending)
 {
-#ifdef TH07_EXE
-    static char *g_BadEndingFiles[3] = {
-        "data/end00b.end",
-        "data/end10b.end",
-        "data/end20b.end",
-    };
-    static char *g_EndingFiles[6] = {
-        "data/end00.end",
-        "data/end01.end",
-        "data/end10.end",
-        "data/end11.end",
-        "data/end20.end",
-        "data/end21.end",
-    };
-#endif // TH07_EXE
     char *script;
     int j;
     int si;
@@ -415,6 +400,21 @@ int Ending::AddedCallback(Ending *ending)
         g_SpriteEngine->StartScriptAtOrigin(&ending->sprites[j], j + 0x70f);
         ending->sprites[j].pos = D3DXVECTOR3(64.0f, (float)j * 16.0f + 392.0f, 0.0f);
     }
+#ifdef TH07_EXE
+    static char *g_BadEndingFiles[3] = {
+        "data/end00b.end",
+        "data/end10b.end",
+        "data/end20b.end",
+    };
+    static char *g_EndingFiles[6] = {
+        "data/end00.end",
+        "data/end01.end",
+        "data/end10.end",
+        "data/end11.end",
+        "data/end20.end",
+        "data/end21.end",
+    };
+#endif // TH07_EXE
     if (g_GameManager.stats->continuesUsed != 0)
     {
         script = g_BadEndingFiles[g_GameManager.character];
