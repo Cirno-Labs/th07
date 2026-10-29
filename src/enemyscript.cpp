@@ -1580,10 +1580,10 @@ loop:
             enemy->flags.contactDamage = instr->args[0].i;
             break;
         case 103:
-            enemy->flags.hitBonusEnabled = instr->args[0].i;
+            enemy->flags.takesDamage = instr->args[0].i;
             break;
         case 104:
-            enemy->flags.takesDamage = instr->args[0].i;
+            enemy->flags.hitByShots = instr->args[0].i;
             break;
         case 105:
             g_SoundPlayer.QueueSound(INT_ARG(0), 0);
@@ -2155,16 +2155,16 @@ done:
     {
         if (g_Player.bomb.running && g_EnemyManager.spellCardActive && g_EnemyManager.spellCardIndex >= 0x76)
         {
-            enemy->flags.hideEffectsAndTrail = 1;
-            enemy->keepSpellCardDelay = 1;
+            enemy->flags.hiddenByBomb = 1;
+            enemy->hiddenByBombDelay = 1;
         }
-        else if (enemy->keepSpellCardDelay > 0)
+        else if (enemy->hiddenByBombDelay > 0)
         {
-            enemy->keepSpellCardDelay--;
+            enemy->hiddenByBombDelay--;
         }
         else
         {
-            enemy->flags.hideEffectsAndTrail = 0;
+            enemy->flags.hiddenByBomb = 0;
         }
     }
     return 0;

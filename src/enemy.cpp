@@ -82,9 +82,9 @@ void EnemyManager::Initialize()
     enemy->turnStill = -1;
     enemy->flags.shootable = 1;
     enemy->flags.contactDamage = 1;
-    enemy->flags.hitBonusEnabled = 1;
-    enemy->flags.hideFollowEffects = 0;
     enemy->flags.takesDamage = 1;
+    enemy->flags.hideFollowEffects = 0;
+    enemy->flags.hitByShots = 1;
     enemy->flags.grazeable = 0;
     enemy->flags.deathMode = 0;
     enemy->deathSub = -1;
@@ -722,7 +722,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
         }
         bomb = 0;
         hit = 0;
-        if (!enemy->flags.hideFollowEffects && !enemy->flags.hideEffectsAndTrail)
+        if (!enemy->flags.hideFollowEffects && !enemy->flags.hiddenByBomb)
         {
             if (enemy->flags.shootable && enemy->flags.contactDamage)
             {
@@ -741,7 +741,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                 }
             }
             enemy->lastDamage = 0;
-            if (enemy->flags.shootable && enemy->flags.takesDamage)
+            if (enemy->flags.shootable && enemy->flags.hitByShots)
             {
                 hurt = g_Player.CalcDamage(&enemy->pos, &enemy->hitboxSize, &bomb);
                 if (enemy->extraHitboxSize.x > 0.0f)
@@ -799,7 +799,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                         hurt = 70;
                     }
                     g_GameManager.AddScore(hurt / 5 * 10);
-                    if (enemy->flags.hitBonusEnabled)
+                    if (enemy->flags.takesDamage)
                     {
                         if (mgr->spellCardActive)
                         {
@@ -901,7 +901,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
             {
             case 3:
                 enemy->life = 1;
-                enemy->flags.hitBonusEnabled = 0;
+                enemy->flags.takesDamage = 0;
                 enemy->flags.deathMode = 0;
                 g_Gui.bossPresent = 0;
                 g_ReplayManager->frameEvents |= 0x20;
@@ -1129,7 +1129,7 @@ int EnemyManager::DrawEnemies(EnemyManager *mgr, int from, int to)
             }
             enemy->sprite.pos = enemy->pos + enemy->sprite.posOffset;
             enemy->sprite.pos.z = 0.29f;
-            if (!(enemy->trailFlags & 0x10) && !enemy->flags.hideEffectsAndTrail)
+            if (!(enemy->trailFlags & 0x10) && !enemy->flags.hiddenByBomb)
             {
                 enemy->sprite.pos.x = g_GameManager.arena[0] + enemy->sprite.pos.x;
                 enemy->sprite.pos.y = g_GameManager.arena[1] + enemy->sprite.pos.y;

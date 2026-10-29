@@ -24,10 +24,12 @@ struct EnemyFlags
     // Can be shot and killed, as th06's.
     unsigned char shootable : 1;
     unsigned char contactDamage : 1;
-    unsigned char hitBonusEnabled : 1;
+    // The shots' damage comes off the life, as th06's takesDamage.
+    unsigned char takesDamage : 1;
     // Hides the effects that follow the enemy.
     unsigned char hideFollowEffects : 1;
-    unsigned char takesDamage : 1;
+    // The player's shots and bombs hit it (Player::CalcDamage).
+    unsigned char hitByShots : 1;
     unsigned char grazeable : 1;
     // A boss, as th06's isBoss.
     unsigned char isBoss : 1;
@@ -47,7 +49,10 @@ struct EnemyFlags
     unsigned char isWarpingToBoss : 1;
     // Cleared as a spell card starts.
     unsigned char hidden : 1;
-    unsigned char hideEffectsAndTrail : 1;
+    // Set on an Extra or Phantasm boss while a bomb runs during spell
+    // card 0x76 or later: hides the main sprite and skips contact and
+    // shots.
+    unsigned char hiddenByBomb : 1;
     // While a bomb runs or the player is not in playerState 0, OnUpdate
     // skips the enemy's script, movement and damage, and holds
     // callbackTimer back.
@@ -243,7 +248,8 @@ struct Enemy
     unsigned char pad_2e19[0x3];
     Timer unusedTimer2e1c;
     EnemyFlags flags;
-    WORD keepSpellCardDelay;
+    // Keeps flags.hiddenByBomb set for a frame after the bomb.
+    WORD hiddenByBombDelay;
     // The turning sprite script last started, as th06's
     // flags.spriteDirection: 0 still, 1 left, 2 right, 0xff none yet.
     BYTE spriteDirection;
@@ -373,7 +379,7 @@ public:
 
     // Draws the enemies of the lists at +0x954700, from `from` up to
     // `to`, as th06's OnDraw: sprites[0], the main sprite (unless
-    // trailFlags bit 4 or flags.hideEffectsAndTrail) and sprites[1], each at the
+    // trailFlags bit 4 or flags.hiddenByBomb) and sprites[1], each at the
     // enemy's position plus posOffset. With trailFlags set, also its trail
     // along trailBoxes (every trailSegmentStep-th of trailSegmentCount boxes): copies of the
     // main sprite on the boxes not at x below -990, or with bit 3 a
