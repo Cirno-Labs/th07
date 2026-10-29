@@ -50,3 +50,10 @@ int BulletManager::RegisterChain(char *anmPath)
     g_Chain.AddToDrawChain(&g_BulletDrawChain, 10);
     return 0;
 }
+
+void BulletManager::RemoveChain()
+{
+    g_Chain.Remove(&g_BulletCalcChain);
+    g_Chain.Remove(&g_BulletDrawChain);
+    memset(&g_BulletManager, 0, sizeof(BulletManager));
+}

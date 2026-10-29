@@ -174,6 +174,8 @@ public:
     // Frees the bullet sprites (slots 0xb to 0xe), unless the scene is
     // 3, 0xb or 0xc. Returns 0.
     static int DeletedCallback(BulletManager *mgr);
+    // Removes the two chain elements and zeroes g_BulletManager.
+    static void RemoveChain();
 
     BulletTypeSprites typeSprites[0x10];
     // The last one is a spare whose state 6 sends searches back to the

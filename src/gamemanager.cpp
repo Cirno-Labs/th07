@@ -5,6 +5,7 @@
 #include <string.h>
 
 #include "ascii.h"
+#include "bullet.h"
 #include "effect.h"
 #include "midi.h"
 #include "player.h"
@@ -270,7 +271,7 @@ int Unknown626270::DeletedCallback(Unknown626270 *mgr)
     {
     }
     Unknown1347b00::RemoveChain();
-    Func427760();
+    BulletManager::RemoveChain();
     Player::RemoveChain();
     Func423050();
     g_Unknown1347938.Func40e4f0();
