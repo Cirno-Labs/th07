@@ -92,7 +92,7 @@ Item *ItemManager::SpawnItem(D3DXVECTOR3 *pos, int type, int state)
         g_SpriteEngine->StartScript(&item->sprite, type + 0x2c4);
         item->sprite.color = 0xffffffff;
         item->sprite.flags |= 0x1000;
-        item->unk_280 = 0;
+        item->countsFullValue = 0;
         item->onScreen = 1;
         break;
     }
@@ -153,7 +153,7 @@ void ItemManager::UpdateItems()
                     entry->state = 1;
                     if (g_Player.unk_240d == 1)
                     {
-                        entry->unk_280 = 1;
+                        entry->countsFullValue = 1;
                     }
                 }
                 else
@@ -253,7 +253,7 @@ void ItemManager::UpdateItems()
                 amount = (entry->pos.y < g_Player.shotType->unk_20 ? 1 : 0)
                              ? 50000
                              : 50000 - (int)(entry->pos.y - g_Player.shotType->unk_20) * 100;
-                if (entry->unk_280 == 1)
+                if (entry->countsFullValue == 1)
                 {
                     amount = 50000;
                 }
@@ -270,7 +270,7 @@ void ItemManager::UpdateItems()
                 }
                 amount -= amount % 10;
                 g_AsciiText.AddPopup(&entry->pos, amount,
-                                     entry->pos.y < g_Player.shotType->unk_20 || entry->unk_280 == 1
+                                     entry->pos.y < g_Player.shotType->unk_20 || entry->countsFullValue == 1
                                          ? 0xffffff00
                                          : 0xffffffff);
                 g_Unknown626270.AddScore(amount);
@@ -433,12 +433,12 @@ void ItemManager::UpdateItems()
             case 7:
                 if ((g_Unknown626270.bonusPoints >= g_Unknown626270.bonusPointsCap) != 0)
                 {
-                    amount = (entry->pos.y < g_Player.shotType->unk_20 || entry->unk_280 ? 1 : 0)
+                    amount = (entry->pos.y < g_Player.shotType->unk_20 || entry->countsFullValue ? 1 : 0)
                                  ? 50000
                                  : 50000 - (int)(entry->pos.y - g_Player.shotType->unk_20) * 100;
                     amount -= amount % 10;
                     g_AsciiText.AddPopup(&entry->pos, amount,
-                                         entry->pos.y < g_Player.shotType->unk_20 || entry->unk_280
+                                         entry->pos.y < g_Player.shotType->unk_20 || entry->countsFullValue
                                              ? 0xffffff00
                                              : 0xffffffff);
                     g_Unknown626270.AddScore(amount);
