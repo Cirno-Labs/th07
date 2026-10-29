@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">97.55% (677)</tspan> · <tspan class="decompiled">0.43% (3)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">1.87% (13)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">97.69% (678)</tspan> · <tspan class="decompiled">0.43% (3)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">1.73% (12)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="728.70" height="6" x="0" y="0" class="named"/>
-<rect width="3.23" height="6" x="728.70" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="731.93" y="0" class="nonmatching"/>
-<rect width="13.99" height="6" x="733.01" y="0" class="todo"/>
+<rect width="729.78" height="6" x="0" y="0" class="named"/>
+<rect width="3.23" height="6" x="729.78" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="733.01" y="0" class="nonmatching"/>
+<rect width="12.92" height="6" x="734.08" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="named"><title>0x00401000 D3DXMatrixIdentity (173 bytes)</title></rect>
@@ -308,7 +308,7 @@
 <rect width="12" height="12" x="540" y="60" class="named"><title>0x00427f22 Gui::OnDraw (1899 bytes)</title></rect>
 <rect width="12" height="12" x="555" y="60" class="named"><title>0x0042868d Gui::ShowBombName (506 bytes)</title></rect>
 <rect width="12" height="12" x="570" y="60" class="named"><title>0x00428887 Gui::ShowSpellCardName (658 bytes)</title></rect>
-<rect width="12" height="12" x="585" y="60" class="todo"><title>0x00428b19 Gui::LoadResources (3580 bytes)</title></rect>
+<rect width="12" height="12" x="585" y="60" class="named"><title>0x00428b19 Gui::LoadResources (3580 bytes)</title></rect>
 <rect width="12" height="12" x="600" y="60" class="named"><title>0x00429935 Gui::LoadMsg (195 bytes)</title></rect>
 <rect width="12" height="12" x="615" y="60" class="named"><title>0x004299f8 Gui::FreeMsgFile (62 bytes)</title></rect>
 <rect width="12" height="12" x="630" y="60" class="named"><title>0x00429a36 Gui::StartMsg (25 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">79.01%</tspan> · <tspan class="decompiled">0.06%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">20.84%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">79.95%</tspan> · <tspan class="decompiled">0.06%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">19.90%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="590.22" height="6" x="0" y="0" class="named"/>
-<rect width="0.44" height="6" x="590.22" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="590.67" y="0" class="nonmatching"/>
-<rect width="155.67" height="6" x="591.33" y="0" class="todo"/>
+<rect width="597.24" height="6" x="0" y="0" class="named"/>
+<rect width="0.44" height="6" x="597.24" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="597.68" y="0" class="nonmatching"/>
+<rect width="148.65" height="6" x="598.35" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 EnemyScripts::RunEnemy (29464 bytes)</title></rect>
@@ -786,7 +786,7 @@
 <rect width="37.81" height="40.51" x="130.67" y="91.49" class="named"><title>0x00425a50 BulletManager::OnUpdate (4237 bytes)</title></rect>
 <rect width="37.81" height="37.62" x="130.67" y="135" class="todo"><title>0x0042b603 Gui::DrawHud (3956 bytes)</title></rect>
 <rect width="37.81" height="34.38" x="130.67" y="175.62" class="named"><title>0x00447198 ResultScreen::HandleReplaySaving (3640 bytes)</title></rect>
-<rect width="36.54" height="34.94" x="171.48" y="0" class="todo"><title>0x00428b19 Gui::LoadResources (3580 bytes)</title></rect>
+<rect width="36.54" height="34.94" x="171.48" y="0" class="named"><title>0x00428b19 Gui::LoadResources (3580 bytes)</title></rect>
 <rect width="36.54" height="34.36" x="171.48" y="37.94" class="named"><title>0x00448d40 ResultScreen::OnDraw (3525 bytes)</title></rect>
 <rect width="36.54" height="31.71" x="171.48" y="75.30" class="named"><title>0x0045a924 MainMenu::UpdateReplayMenu (3275 bytes)</title></rect>
 <rect width="36.54" height="31.65" x="171.48" y="110.01" class="named"><title>0x00459518 MainMenu::UpdateShotTypeMenu (3269 bytes)</title></rect>

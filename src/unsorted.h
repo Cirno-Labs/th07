@@ -1361,7 +1361,13 @@ public:
     // and starting lives), added to the score in ten parts.
     void UpdateInterface();
     // Loads the interface's sprites and the stage's portraits and
-    // messages, as th06's.
+    // messages, as th06's. Unless the scene is 3, 0xb or 0xc, zeroes impl
+    // and loads front.anm and the character's face and loading ANMs;
+    // otherwise restarts unk_72dc (script 0x725), has the play area of
+    // the back buffer copied to texture 4 at its sprite and lays out the
+    // 14 by 12 unk_79c0 tiles. Stages 1 to 8 run CopySpriteToTexture and
+    // load their face, text and message files; others return -1. Returns
+    // 0, or -1 when a file fails to load.
     int LoadResources();
     // The update element's added callback: runs LoadResources.
     static int AddedCallback(Gui *gui);

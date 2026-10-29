@@ -321,6 +321,259 @@ void Gui::ShowSpellCardName(int sprite, char *text)
     g_App.redrawFrames = 2;
 }
 
+int Gui::LoadResources()
+{
+    int x;
+    int y;
+    int i;
+
+    this->unk_0 = 0;
+    if ((g_App.scene != 3 && g_App.scene != 0xb && g_App.scene != 0xc) != 0)
+    {
+        memset(this->impl, 0, sizeof(GuiImpl));
+        if (g_SpriteEngine->LoadAnm(0x15, "data/front.anm", 0x600) != 0)
+        {
+            return -1;
+        }
+        this->HideInterface();
+        switch (g_Unknown626270.character)
+        {
+        case 0:
+            if (g_SpriteEngine->LoadAnm(0x19, "data/face_rm00.anm", 0x4a0) != 0)
+            {
+                return -1;
+            }
+            if (g_SpriteEngine->LoadAnm(0x17, "data/loading.anm", 0x61e) != 0)
+            {
+                return -1;
+            }
+            break;
+        case 1:
+            if (g_SpriteEngine->LoadAnm(0x19, "data/face_mr00.anm", 0x4a0) != 0)
+            {
+                return -1;
+            }
+            if (g_SpriteEngine->LoadAnm(0x17, "data/loading2.anm", 0x61e) != 0)
+            {
+                return -1;
+            }
+            break;
+        case 2:
+            if (g_SpriteEngine->LoadAnm(0x19, "data/face_sk00.anm", 0x4a0) != 0)
+            {
+                return -1;
+            }
+            if (g_SpriteEngine->LoadAnm(0x17, "data/loading3.anm", 0x61e) != 0)
+            {
+                return -1;
+            }
+            break;
+        }
+    }
+    else
+    {
+        this->HideInterface();
+        g_SpriteEngine->StartScript(&this->impl->unk_72dc, 0x725);
+        this->impl->unk_72dc.pendingInterrupt = 1;
+        g_SpriteEngine->SetPendingCopy(4, 0x20, 0x10, 0x180, 0x1c0, this->impl->unk_72dc.spriteData->startX,
+                                       this->impl->unk_72dc.spriteData->startY,
+                                       this->impl->unk_72dc.spriteData->width,
+                                       this->impl->unk_72dc.spriteData->height);
+        for (y = 0; y < 0xe; y++)
+        {
+            for (x = 0; x < 0xc; x++)
+            {
+                g_SpriteEngine->StartScript(&this->impl->unk_79c0[y * 0xc + x], ((y + x) & 1) + 0x726);
+                this->impl->unk_79c0[y * 0xc + x].unk_e8 = y + x * 2;
+                this->impl->unk_79c0[y * 0xc + x].pos.x = x * 32.0f - 0.5f + 16.0f;
+                this->impl->unk_79c0[y * 0xc + x].pos.y = y * 32.0f - 0.5f + 16.0f;
+                this->impl->unk_79c0[y * 0xc + x].pos.z = 0.0f;
+                this->impl->unk_79c0[y * 0xc + x].uvScrollX = x * 32.0f / 512.0f;
+                this->impl->unk_79c0[y * 0xc + x].uvScrollY = y * 32.0f / 512.0f;
+            }
+        }
+        this->impl->unk_1fba0 = 0xa8;
+    }
+    switch (g_Unknown626270.stage)
+    {
+    case 1:
+        CopySpriteToTexture(0x60e);
+        if (g_SpriteEngine->LoadAnm(0x1c, "data/face_01_00.anm", 0x4ad) != 0)
+        {
+            return -1;
+        }
+        if (g_SpriteEngine->LoadAnm(0x18, "data/std1txt.anm", 0x800) != 0)
+        {
+            return -1;
+        }
+        if (this->LoadMsg("data/msg1.dat") != 0)
+        {
+            return -1;
+        }
+        break;
+    case 2:
+        CopySpriteToTexture(0x610);
+        if (g_SpriteEngine->LoadAnm(0x1c, "data/face_02_00.anm", 0x4ad) != 0)
+        {
+            return -1;
+        }
+        if (g_SpriteEngine->LoadAnm(0x18, "data/std2txt.anm", 0x800) != 0)
+        {
+            return -1;
+        }
+        if (this->LoadMsg("data/msg2.dat") != 0)
+        {
+            return -1;
+        }
+        break;
+    case 3:
+        CopySpriteToTexture(0x612);
+        if (g_SpriteEngine->LoadAnm(0x1c, "data/face_03_00.anm", 0x4ad) != 0)
+        {
+            return -1;
+        }
+        if (g_SpriteEngine->LoadAnm(0x18, "data/std3txt.anm", 0x800) != 0)
+        {
+            return -1;
+        }
+        if (this->LoadMsg("data/msg3.dat") != 0)
+        {
+            return -1;
+        }
+        break;
+    case 4:
+        CopySpriteToTexture(0x614);
+        if (g_SpriteEngine->LoadAnm(0x1c, "data/face_04_00.anm", 0x4ad) != 0)
+        {
+            return -1;
+        }
+        if (g_SpriteEngine->LoadAnm(0x18, "data/std4txt.anm", 0x800) != 0)
+        {
+            return -1;
+        }
+        if (this->LoadMsg("data/msg4.dat") != 0)
+        {
+            return -1;
+        }
+        break;
+    case 5:
+        CopySpriteToTexture(0x616);
+        if (g_SpriteEngine->LoadAnm(0x1c, "data/face_05_00.anm", 0x4ad) != 0)
+        {
+            return -1;
+        }
+        if (g_SpriteEngine->LoadAnm(0x18, "data/std5txt.anm", 0x800) != 0)
+        {
+            return -1;
+        }
+        if (this->LoadMsg("data/msg5.dat") != 0)
+        {
+            return -1;
+        }
+        break;
+    case 6:
+        CopySpriteToTexture(0x618);
+        if (g_SpriteEngine->LoadAnm(0x1c, "data/face_06_00.anm", 0x4ad) != 0)
+        {
+            return -1;
+        }
+        if (g_SpriteEngine->LoadAnm(0x18, "data/std6txt.anm", 0x800) != 0)
+        {
+            return -1;
+        }
+        if (this->LoadMsg("data/msg6.dat") != 0)
+        {
+            return -1;
+        }
+        break;
+    case 7:
+        CopySpriteToTexture(0x61a);
+        if (g_SpriteEngine->LoadAnm(0x1c, "data/face_07_00.anm", 0x4ad) != 0)
+        {
+            return -1;
+        }
+        if (g_SpriteEngine->LoadAnm(0x18, "data/std7txt.anm", 0x800) != 0)
+        {
+            return -1;
+        }
+        if (this->LoadMsg("data/msg7.dat") != 0)
+        {
+            return -1;
+        }
+        break;
+    case 8:
+        CopySpriteToTexture(0x61c);
+        if (g_SpriteEngine->LoadAnm(0x1c, "data/face_08_00.anm", 0x4ad) != 0)
+        {
+            return -1;
+        }
+        if (g_SpriteEngine->LoadAnm(0x18, "data/std8txt.anm", 0x800) != 0)
+        {
+            return -1;
+        }
+        if (this->LoadMsg("data/msg8.dat") != 0)
+        {
+            return -1;
+        }
+        break;
+    default:
+        return -1;
+    }
+    if ((g_App.scene != 3 && g_App.scene != 0xb && g_App.scene != 0xc) != 0)
+    {
+        for (i = 0; i < 0x21; i++)
+        {
+            g_SpriteEngine->StartScript(&this->impl->sprites[i], i + 0x600);
+        }
+    }
+    this->bossPresent = 0;
+    this->impl->bossBarState = 0;
+    this->bossHealth = 0.0f;
+    this->bossHealthShown = 0.0f;
+    g_SpriteEngine->StartScript(&this->impl->bombPortrait, 0x4a1);
+    g_SpriteEngine->StartScript(&this->impl->spellPortrait, 0x4a3);
+    g_SpriteEngine->StartScript(&this->impl->bombName, 0x704);
+    g_SpriteEngine->StartScript(&this->impl->spellName, 0x705);
+    g_SpriteEngine->StartSpriteSeries(this->impl->unk_4bd0, 0x800, 5);
+    g_SpriteEngine->StartScript(&this->impl->bombNameBar, 1);
+    g_SpriteEngine->StartScript(&this->impl->spellNameBar, 0);
+    g_SpriteEngine->StartScript(&this->impl->unk_7774, 2);
+    g_SpriteEngine->StartScript(&this->impl->unk_7528, 3);
+    this->impl->bombPortrait.scriptPos = NULL;
+    this->impl->unk_5be4.scriptPos = NULL;
+    this->impl->unk_607c.scriptPos = NULL;
+    this->impl->bombName.scriptPos = NULL;
+    this->impl->spellPortrait.scriptPos = NULL;
+    this->impl->unk_5e30.scriptPos = NULL;
+    this->impl->unk_62c8.scriptPos = NULL;
+    this->impl->spellName.scriptPos = NULL;
+    this->impl->bombPortrait.shown = 0;
+    this->impl->unk_5be4.shown = 0;
+    this->impl->unk_607c.shown = 0;
+    this->impl->bombName.shown = 0;
+    this->impl->spellPortrait.shown = 0;
+    this->impl->unk_5e30.shown = 0;
+    this->impl->unk_62c8.shown = 0;
+    this->impl->spellName.shown = 0;
+    this->impl->bombName.fontWidth = 15;
+    this->impl->bombName.fontHeight = 15;
+    this->impl->spellName.fontWidth = 15;
+    this->impl->spellName.fontHeight = 15;
+    this->impl->msg.scriptIndex = -1;
+    this->impl->stageClearShown = 0;
+    this->impl->bonusPopup.shown = 0;
+    this->impl->unk_209e0.shown = 0;
+    this->impl->spellBonusPopup.shown = 0;
+    this->livesChanged = 2;
+    this->bombsChanged = 2;
+    this->grazeChanged = 2;
+    this->unk_4_8 = 2;
+    this->powerChanged = 2;
+    g_App.redrawFrames = 0x10;
+    return 0;
+}
+
+
 int Gui::LoadMsg(char *path)
 {
     int i;
