@@ -147,9 +147,9 @@
 <rect width="12" height="12" x="375" y="15" class="todo"><title>0x0040d9a0 Func40d9a0 (216 bytes)</title></rect>
 <rect width="12" height="12" x="390" y="15" class="todo"><title>0x0040da80 Func40da80 (2048 bytes)</title></rect>
 <rect width="12" height="12" x="405" y="15" class="todo"><title>0x0040e280 Func40e280 (406 bytes)</title></rect>
-<rect width="12" height="12" x="420" y="15" class="named"><title>0x0040e420 Unknown1347938::Load (197 bytes)</title></rect>
-<rect width="12" height="12" x="435" y="15" class="named"><title>0x0040e4f0 Unknown1347938::Release (50 bytes)</title></rect>
-<rect width="12" height="12" x="450" y="15" class="named"><title>0x0040e530 Unknown1347938::StartSub (128 bytes)</title></rect>
+<rect width="12" height="12" x="420" y="15" class="named"><title>0x0040e420 EnemyScripts::Load (197 bytes)</title></rect>
+<rect width="12" height="12" x="435" y="15" class="named"><title>0x0040e4f0 EnemyScripts::Release (50 bytes)</title></rect>
+<rect width="12" height="12" x="450" y="15" class="named"><title>0x0040e530 EnemyScripts::StartSub (128 bytes)</title></rect>
 <rect width="12" height="12" x="465" y="15" class="named"><title>0x0040e5b0 GetIntOperand (1310 bytes)</title></rect>
 <rect width="12" height="12" x="480" y="15" class="named"><title>0x0040ec00 ResolveOperand (325 bytes)</title></rect>
 <rect width="12" height="12" x="495" y="15" class="named"><title>0x0040edf0 GetFloatOperand (1178 bytes)</title></rect>
@@ -160,7 +160,7 @@
 <rect width="12" height="12" x="570" y="15" class="named"><title>0x0040fb90 ScriptMoveHermite (256 bytes)</title></rect>
 <rect width="12" height="12" x="585" y="15" class="named"><title>0x0040fc90 StartSpellCard (1285 bytes)</title></rect>
 <rect width="12" height="12" x="600" y="15" class="named"><title>0x004101a0 EndSpellCard (889 bytes)</title></rect>
-<rect width="12" height="12" x="615" y="15" class="todo"><title>0x00410520 Unknown1347938::RunEnemy (29464 bytes)</title></rect>
+<rect width="12" height="12" x="615" y="15" class="todo"><title>0x00410520 EnemyScripts::RunEnemy (29464 bytes)</title></rect>
 <rect width="12" height="12" x="630" y="15" class="named"><title>0x00417af0 SinCos (33 bytes)</title></rect>
 <rect width="12" height="12" x="645" y="15" class="named"><title>0x00417b20 Bullet::FreeBullet (107 bytes)</title></rect>
 <rect width="12" height="12" x="660" y="15" class="named"><title>0x00417b90 WarpToBoss (151 bytes)</title></rect>
@@ -775,7 +775,7 @@
 <rect width="236.75" height="6" x="510.25" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
-<rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Unknown1347938::RunEnemy (29464 bytes)</title></rect>
+<rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 EnemyScripts::RunEnemy (29464 bytes)</title></rect>
 <rect width="80.90" height="62.83" x="0" y="147.17" class="todo"><title>0x00450d60 SpriteEngine::Step (13178 bytes)</title></rect>
 <rect width="43.76" height="58.30" x="83.90" y="0" class="todo"><title>0x00420620 EnemyManager::OnUpdate (6840 bytes)</title></rect>
 <rect width="43.76" height="57.85" x="83.90" y="61.30" class="todo"><title>0x0043ee50 Func43ee50 (6790 bytes)</title></rect>
@@ -1155,7 +1155,7 @@
 <rect width="5.72" height="6.52" x="723.85" y="96.15" class="named"><title>0x00439401 Timer::Add (198 bytes)</title></rect>
 <rect width="5.72" height="6.52" x="732.57" y="96.15" class="named"><title>0x004394c7 Timer::Sub (198 bytes)</title></rect>
 <rect width="5.72" height="6.52" x="741.28" y="96.15" class="named"><title>0x0044f5c0 SpriteEngine::FlushQuadBatch (198 bytes)</title></rect>
-<rect width="6.09" height="6.08" x="633.20" y="105.67" class="named"><title>0x0040e420 Unknown1347938::Load (197 bytes)</title></rect>
+<rect width="6.09" height="6.08" x="633.20" y="105.67" class="named"><title>0x0040e420 EnemyScripts::Load (197 bytes)</title></rect>
 <rect width="6.09" height="6.08" x="633.20" y="114.75" class="todo"><title>0x00419610 Func419610 (197 bytes)</title></rect>
 <rect width="6.09" height="6.08" x="633.20" y="123.83" class="named"><title>0x0042fbd0 Chain::AddToCalcChain (197 bytes)</title></rect>
 <rect width="6.09" height="6.08" x="633.20" y="132.91" class="named"><title>0x0043a69b MusicScreen::MusicScreen (197 bytes)</title></rect>
@@ -1251,7 +1251,7 @@
 <rect width="4.34" height="4.42" x="666.71" y="205.58" class="named"><title>0x0042d6d8 GameManager::IsInPlayArea (130 bytes)</title></rect>
 <rect width="4.14" height="4.63" x="674.06" y="129.84" class="named"><title>0x00445110 LoadLsnmChunk (130 bytes)</title></rect>
 <rect width="4.08" height="4.63" x="681.20" y="129.84" class="named"><title>0x0042d657 GameManager::SetPlayArea (129 bytes)</title></rect>
-<rect width="4.03" height="4.63" x="688.28" y="129.84" class="named"><title>0x0040e530 Unknown1347938::StartSub (128 bytes)</title></rect>
+<rect width="4.03" height="4.63" x="688.28" y="129.84" class="named"><title>0x0040e530 EnemyScripts::StartSub (128 bytes)</title></rect>
 <rect width="3.97" height="4.63" x="695.31" y="129.84" class="named"><title>0x00431930 AddNormalizeAngle (127 bytes)</title></rect>
 <rect width="3.86" height="4.63" x="702.28" y="129.84" class="named"><title>0x0044547f LoadPlstChunk (125 bytes)</title></rect>
 <rect width="3.81" height="4.63" x="709.15" y="129.84" class="named"><title>0x004010f0 Sprite::Initialize (124 bytes)</title></rect>
@@ -1401,7 +1401,7 @@
 <rect width="1.35" height="1.91" x="732.85" y="178.61" class="named"><title>0x0045e8b0 File::Seek (51 bytes)</title></rect>
 <rect width="1.27" height="1.91" x="737.20" y="178.61" class="named"><title>0x00401170 Sprite::Sprite (50 bytes)</title></rect>
 <rect width="1.27" height="1.91" x="741.47" y="178.61" class="named"><title>0x004075d0 Stage::RemoveChain (50 bytes)</title></rect>
-<rect width="1.27" height="1.91" x="745.73" y="178.61" class="named"><title>0x0040e4f0 Unknown1347938::Release (50 bytes)</title></rect>
+<rect width="1.27" height="1.91" x="745.73" y="178.61" class="named"><title>0x0040e4f0 EnemyScripts::Release (50 bytes)</title></rect>
 <rect width="1.82" height="1.35" x="719.79" y="183.52" class="named"><title>0x00423050 EnemyManager::RemoveChain (50 bytes)</title></rect>
 <rect width="1.82" height="1.26" x="719.79" y="187.87" class="named"><title>0x0043a24e App::SetRenderState (49 bytes)</title></rect>
 <rect width="1.82" height="1.17" x="719.79" y="192.13" class="named"><title>0x00427ab0 BulletShooter::SetHiddenCommand (48 bytes)</title></rect>

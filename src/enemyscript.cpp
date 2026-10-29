@@ -1,4 +1,4 @@
-// The file with Unknown1347938, th06's EnemyScripts, from 0x40e420, as
+// The file with EnemyScripts, th06's EnemyScripts, from 0x40e420, as
 // th06's enemyscript.cpp.
 
 #include <math.h>
@@ -18,7 +18,7 @@
 #define FLOAT_ARG(n) \
     ((instr->paramMask & (1 << (n))) ? GetFloatOperand(enemy, instr->args[n].f) : instr->args[n].f)
 
-int Unknown1347938::Load(char *path)
+int EnemyScripts::Load(char *path)
 {
     int i;
 
@@ -40,7 +40,7 @@ int Unknown1347938::Load(char *path)
     return 0;
 }
 
-void Unknown1347938::Release()
+void EnemyScripts::Release()
 {
     if (this->file != NULL)
     {
@@ -49,7 +49,7 @@ void Unknown1347938::Release()
     this->file = NULL;
 }
 
-int Unknown1347938::StartSub(EnemyScriptState *ctx, short sub)
+int EnemyScripts::StartSub(EnemyScriptState *ctx, short sub)
 {
     ctx->code = this->subs[sub];
     ctx->timer.Set(0);

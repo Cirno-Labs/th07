@@ -77,9 +77,9 @@ address,size,name,symbol
 0x0040d9a0,216,Func40d9a0,
 0x0040da80,2048,Func40da80,
 0x0040e280,406,Func40e280,
-0x0040e420,197,Unknown1347938::Load,?Load@Unknown1347938@@QAEHPAD@Z
-0x0040e4f0,50,Unknown1347938::Release,?Release@Unknown1347938@@QAEXXZ
-0x0040e530,128,Unknown1347938::StartSub,?StartSub@Unknown1347938@@QAEHPAUEnemyScriptState@@F@Z
+0x0040e420,197,EnemyScripts::Load,?Load@EnemyScripts@@QAEHPAD@Z
+0x0040e4f0,50,EnemyScripts::Release,?Release@EnemyScripts@@QAEXXZ
+0x0040e530,128,EnemyScripts::StartSub,?StartSub@EnemyScripts@@QAEHPAUEnemyScriptState@@F@Z
 0x0040e5b0,1310,GetIntOperand,?GetIntOperand@@YIHPAUEnemy@@H@Z
 0x0040ec00,325,ResolveOperand,?ResolveOperand@@YIPAHPAUEnemy@@PAHGH@Z
 0x0040edf0,1178,GetFloatOperand,?GetFloatOperand@@YIMPAUEnemy@@M@Z
@@ -90,7 +90,7 @@ address,size,name,symbol
 0x0040fb90,256,ScriptMoveHermite,?ScriptMoveHermite@@YIXPAUEnemy@@PAUEnemyScriptInstr@@M@Z
 0x0040fc90,1285,StartSpellCard,?StartSpellCard@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x004101a0,889,EndSpellCard,?EndSpellCard@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
-0x00410520,29464,Unknown1347938::RunEnemy,?RunEnemy@Unknown1347938@@QAEHPAUEnemy@@@Z
+0x00410520,29464,EnemyScripts::RunEnemy,?RunEnemy@EnemyScripts@@QAEHPAUEnemy@@@Z
 0x00417af0,33,SinCos,?SinCos@@YIXPAM0M@Z
 0x00417b20,107,Bullet::FreeBullet,?FreeBullet@Bullet@@QAEXXZ
 0x00417b90,151,WarpToBoss,?WarpToBoss@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
@@ -1823,7 +1823,7 @@ address,size,name,symbol
 0x012fe250,,g_EffectManager,?g_EffectManager@@3VEffectManager@@A
 0x013478f8,,g_EffectCalcChain,?g_EffectCalcChain@@3UChainElem@@A
 0x01347918,,g_EffectDrawChain,?g_EffectDrawChain@@3UChainElem@@A
-0x01347938,,g_Unknown1347938,?g_Unknown1347938@@3VUnknown1347938@@A
+0x01347938,,g_Unknown1347938,?g_Unknown1347938@@3VEnemyScripts@@A
 0x01347ae0,,g_Unknown1347b00DrawChain,?g_Unknown1347b00DrawChain@@3UChainElem@@A
 0x01347b00,,g_Unknown1347b00,?g_Unknown1347b00@@3VStage@@A
 0x01348010,,g_Unknown1348010,?g_Unknown1348010@@3EA

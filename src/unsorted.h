@@ -1472,7 +1472,7 @@ struct EnemyScriptHeader
 
 // The object at 0x1347938, where th06 has its EnemyScripts.
 // Placeholder name; only what is known so far.
-class Unknown1347938
+class EnemyScripts
 {
 public:
     // Loads the script file at `path` and turns its offsets into
@@ -1494,7 +1494,7 @@ public:
     int globalInts[4];
     float globalFloats[4];
 };
-extern Unknown1347938 g_Unknown1347938;
+extern EnemyScripts g_Unknown1347938;
 
 // The value of script operand `id` for `enemy`: a variable (floats
 // truncated) or another value the scripts read by number from 10000;
