@@ -61,10 +61,10 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">92.80% (644)</tspan> · <tspan class="decompiled">0.86% (6)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">6.20% (43)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">93.08% (646)</tspan> · <tspan class="decompiled">0.58% (4)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">6.20% (43)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="693.18" height="6" x="0" y="0" class="named"/>
-<rect width="6.46" height="6" x="693.18" y="0" class="decompiled"/>
+<rect width="695.33" height="6" x="0" y="0" class="named"/>
+<rect width="4.31" height="6" x="695.33" y="0" class="decompiled"/>
 <rect width="1.08" height="6" x="699.64" y="0" class="nonmatching"/>
 <rect width="46.28" height="6" x="700.72" y="0" class="todo"/>
 </g>
@@ -728,8 +728,8 @@
 <rect width="12" height="12" x="90" y="195" class="named"><title>0x0045e360 CWaveFile::Read (328 bytes)</title></rect>
 <rect width="12" height="12" x="105" y="195" class="named"><title>0x0045e4b0 CWaveFile::Close (51 bytes)</title></rect>
 <rect width="12" height="12" x="120" y="195" class="named"><title>0x0045e4f0 DebugPrint (5 bytes)</title></rect>
-<rect width="12" height="12" x="135" y="195" class="decompiled"><title>0x0045e500 Unknown45e500::~Unknown45e500 (20 bytes)</title></rect>
-<rect width="12" height="12" x="150" y="195" class="decompiled"><title>0x0045e520 Unknown45e500::`scalar deleting destructor&#x27; (47 bytes)</title></rect>
+<rect width="12" height="12" x="135" y="195" class="named"><title>0x0045e500 FileBase::~FileBase (20 bytes)</title></rect>
+<rect width="12" height="12" x="150" y="195" class="named"><title>0x0045e520 FileBase::`scalar deleting destructor&#x27; (47 bytes)</title></rect>
 <rect width="12" height="12" x="165" y="195" class="named"><title>0x0045e550 File::File (52 bytes)</title></rect>
 <rect width="12" height="12" x="180" y="195" class="named"><title>0x0045e590 File::`scalar deleting destructor&#x27; (46 bytes)</title></rect>
 <rect width="12" height="12" x="195" y="195" class="named"><title>0x0045e5c0 File::~File (82 bytes)</title></rect>
@@ -767,10 +767,10 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">69.44%</tspan> · <tspan class="decompiled">0.09%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">30.39%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">69.46%</tspan> · <tspan class="decompiled">0.07%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">30.39%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="518.70" height="6" x="0" y="0" class="named"/>
-<rect width="0.64" height="6" x="518.70" y="0" class="decompiled"/>
+<rect width="518.83" height="6" x="0" y="0" class="named"/>
+<rect width="0.51" height="6" x="518.83" y="0" class="decompiled"/>
 <rect width="0.66" height="6" x="519.34" y="0" class="nonmatching"/>
 <rect width="226.99" height="6" x="520.01" y="0" class="todo"/>
 </g>
@@ -1410,7 +1410,7 @@
 <rect width="1.82" height="1.17" x="719.79" y="204.65" class="named"><title>0x004454fc ReleaseScoreDat (48 bytes)</title></rect>
 <rect width="1.82" height="1.17" x="719.79" y="208.83" class="named"><title>0x0044bff0 SoundPlayer::LoadBgmFormat (48 bytes)</title></rect>
 <rect width="1.29" height="1.59" x="724.61" y="183.52" class="named"><title>0x00419d90 ScriptPlayMusic (47 bytes)</title></rect>
-<rect width="1.29" height="1.59" x="728.90" y="183.52" class="decompiled"><title>0x0045e520 Unknown45e500::`scalar deleting destructor&#x27; (47 bytes)</title></rect>
+<rect width="1.29" height="1.59" x="728.90" y="183.52" class="named"><title>0x0045e520 FileBase::`scalar deleting destructor&#x27; (47 bytes)</title></rect>
 <rect width="1.20" height="1.59" x="733.20" y="183.52" class="named"><title>0x0045d030 CSound::`scalar deleting destructor&#x27; (46 bytes)</title></rect>
 <rect width="1.20" height="1.59" x="737.40" y="183.52" class="named"><title>0x0045da80 CStreamingSound::`scalar deleting destructor&#x27; (46 bytes)</title></rect>
 <rect width="1.20" height="1.59" x="741.60" y="183.52" class="named"><title>0x0045e590 File::`scalar deleting destructor&#x27; (46 bytes)</title></rect>
@@ -1454,7 +1454,7 @@
 <rect width="0.10" height="0.44" x="736.45" y="209.56" class="decompiled"><title>0x00427be2 Gui::Func427be2 (22 bytes)</title></rect>
 <rect width="0.19" height="0.10" x="739.12" y="202.36" class="named"><title>0x004378b0 MidiTimer::OnTimer (22 bytes)</title></rect>
 <rect width="0.19" height="0.10" x="739.12" y="205.25" class="named"><title>0x0043831b App::OnDraw (20 bytes)</title></rect>
-<rect width="0.19" height="0.10" x="739.12" y="207.88" class="decompiled"><title>0x0045e500 Unknown45e500::~Unknown45e500 (20 bytes)</title></rect>
+<rect width="0.19" height="0.10" x="739.12" y="207.88" class="named"><title>0x0045e500 FileBase::~FileBase (20 bytes)</title></rect>
 <rect width="0.19" height="0.10" x="739.12" y="210.51" class="named"><title>0x00436140 MidiDevice::~MidiDevice (19 bytes)</title></rect>
 <rect width="0.10" height="0.11" x="742.32" y="202.36" class="named"><title>0x004378f0 MidiTimer::StopTimer (19 bytes)</title></rect>
 <rect width="0.10" height="0.11" x="744.88" y="202.36" class="named"><title>0x0045e060 CWaveFile::~CWaveFile (19 bytes)</title></rect>

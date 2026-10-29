@@ -9,7 +9,7 @@
 #include "common.h"
 
 // An abstract file, the interface File implements. Not in th06.
-class Unknown45e500
+class FileBase
 {
 public:
     virtual bool Open(char *path, char *mode) = 0;
@@ -19,13 +19,13 @@ public:
     virtual DWORD Tell() = 0;
     virtual DWORD GetSize() = 0;
     virtual bool Seek(LONG offset, DWORD origin) = 0;
-    virtual ~Unknown45e500()
+    virtual ~FileBase()
     {
     }
 };
 
 // A Win32 file.
-class File : public Unknown45e500
+class File : public FileBase
 {
 public:
     File();

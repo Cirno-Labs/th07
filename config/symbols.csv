@@ -658,8 +658,8 @@ address,size,name,symbol
 0x0045e360,328,CWaveFile::Read,?Read@CWaveFile@@QAEJPAEKPAK@Z
 0x0045e4b0,51,CWaveFile::Close,?Close@CWaveFile@@QAEJXZ
 0x0045e4f0,5,DebugPrint,?DebugPrint@@YAXPBDZZ
-0x0045e500,20,Unknown45e500::~Unknown45e500,??1Unknown45e500@@UAE@XZ
-0x0045e520,47,Unknown45e500::`scalar deleting destructor',??_GUnknown45e500@@UAEPAXI@Z
+0x0045e500,20,FileBase::~FileBase,??1FileBase@@UAE@XZ
+0x0045e520,47,FileBase::`scalar deleting destructor',??_GFileBase@@UAEPAXI@Z
 0x0045e550,52,File::File,??0File@@QAE@XZ
 0x0045e590,46,File::`scalar deleting destructor',??_GFile@@UAEPAXI@Z
 0x0045e5c0,82,File::~File,??1File@@UAE@XZ
@@ -1731,7 +1731,7 @@ address,size,name,symbol
 0x00495144,,g_TextureFormatSizes,?g_TextureFormatSizes@@3PAHA
 0x00495160,,g_BulletTypeScripts,?g_BulletTypeScripts@@3PAY04HA
 0x00495248,36,File::`vftable',??_7File@@6B@
-0x0049526c,32,Unknown45e500::`vftable',??_7Unknown45e500@@6B@
+0x0049526c,32,FileBase::`vftable',??_7FileBase@@6B@
 0x0049528c,4,CStreamingSound::`vftable',??_7CStreamingSound@@6B@
 0x00495290,4,CSound::`vftable',??_7CSound@@6B@
 0x004964f4,,g_DifficultyRatings,?g_DifficultyRatings@@3PAMA
