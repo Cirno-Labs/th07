@@ -677,3 +677,7 @@ void DrawMarisaABombFocused(Player *player);
 // side of the play area), each six 128 boxes of 10 damage and areas
 // (AddHitboxAreaCircle, 64) along its length.
 void UpdateMarisaBBomb(Player *player);
+
+// Draws Marisa B's bomb: the stage tint, then each laser's sprite
+// halfway along it from the player, turned along laserAngle.
+void DrawMarisaBBomb(Player *player);

@@ -851,3 +851,26 @@ void UpdateMarisaBBomb(Player *player)
     player->playerState = 3;
     player->bomb.timer.Tick();
 }
+
+void DrawMarisaBBomb(Player *player)
+{
+    Sprite *curSprite;
+    int i;
+    float theta;
+
+    DimPlayAreaForBomb(player);
+    for (i = 0; i < 3; i++)
+    {
+        curSprite = player->bomb.parts[i].sprites;
+        theta = player->bomb.parts[i].laserAngle;
+        curSprite->pos = player->position;
+        curSprite->pos.x += cosf(theta) * curSprite->spriteData->height * curSprite->scaleX / 2.0f;
+        curSprite->pos.y += sinf(theta) * curSprite->spriteData->height * curSprite->scaleX / 2.0f;
+        curSprite->SetRotationZ(AddNormalizeAngle(theta, 1.5707964f));
+        curSprite->pos.x = g_Unknown626270.arena[0] + curSprite->pos.x;
+        curSprite->pos.y = g_Unknown626270.arena[1] + curSprite->pos.y;
+        curSprite->pos.z = 0.0f;
+        g_SpriteEngine->Draw(curSprite);
+        curSprite++;
+    }
+}

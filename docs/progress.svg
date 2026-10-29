@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">95.39% (662)</tspan> · <tspan class="decompiled">0.43% (3)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">4.03% (28)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">95.53% (663)</tspan> · <tspan class="decompiled">0.43% (3)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">3.89% (27)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="712.56" height="6" x="0" y="0" class="named"/>
-<rect width="3.23" height="6" x="712.56" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="715.79" y="0" class="nonmatching"/>
-<rect width="30.14" height="6" x="716.86" y="0" class="todo"/>
+<rect width="713.63" height="6" x="0" y="0" class="named"/>
+<rect width="3.23" height="6" x="713.63" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="716.86" y="0" class="nonmatching"/>
+<rect width="29.06" height="6" x="717.94" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="named"><title>0x00401000 D3DXMatrixIdentity (173 bytes)</title></rect>
@@ -136,7 +136,7 @@
 <rect width="12" height="12" x="210" y="15" class="named"><title>0x0040af10 UpdateMarisaABombFocused (1714 bytes)</title></rect>
 <rect width="12" height="12" x="225" y="15" class="named"><title>0x0040b5d0 DrawMarisaABombFocused (505 bytes)</title></rect>
 <rect width="12" height="12" x="240" y="15" class="named"><title>0x0040b7d0 UpdateMarisaBBomb (1229 bytes)</title></rect>
-<rect width="12" height="12" x="255" y="15" class="todo"><title>0x0040bca0 Func40bca0 (372 bytes)</title></rect>
+<rect width="12" height="12" x="255" y="15" class="named"><title>0x0040bca0 DrawMarisaBBomb (372 bytes)</title></rect>
 <rect width="12" height="12" x="270" y="15" class="todo"><title>0x0040be20 Func40be20 (830 bytes)</title></rect>
 <rect width="12" height="12" x="285" y="15" class="todo"><title>0x0040c160 Func40c160 (369 bytes)</title></rect>
 <rect width="12" height="12" x="300" y="15" class="todo"><title>0x0040c2e0 Func40c2e0 (1668 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">73.17%</tspan> · <tspan class="decompiled">0.06%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">26.68%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">73.26%</tspan> · <tspan class="decompiled">0.06%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">26.59%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="546.56" height="6" x="0" y="0" class="named"/>
-<rect width="0.44" height="6" x="546.56" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="547" y="0" class="nonmatching"/>
-<rect width="199.33" height="6" x="547.67" y="0" class="todo"/>
+<rect width="547.29" height="6" x="0" y="0" class="named"/>
+<rect width="0.44" height="6" x="547.29" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="547.73" y="0" class="nonmatching"/>
+<rect width="198.60" height="6" x="548.40" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 EnemyScripts::RunEnemy (29464 bytes)</title></rect>
@@ -1010,7 +1010,7 @@
 <rect width="8.94" height="10.12" x="726.14" y="29.55" class="named"><title>0x0041c610 EffectManager::SpawnReservedEffect (374 bytes)</title></rect>
 <rect width="8.91" height="10.12" x="738.09" y="29.55" class="named"><title>0x0043a27f App::AddPlayTime (373 bytes)</title></rect>
 <rect width="9.33" height="9.68" x="578.75" y="42.67" class="named"><title>0x0043a3f4 App::AddTotalPlayTime (373 bytes)</title></rect>
-<rect width="9.33" height="9.64" x="578.75" y="55.35" class="todo"><title>0x0040bca0 Func40bca0 (372 bytes)</title></rect>
+<rect width="9.33" height="9.64" x="578.75" y="55.35" class="named"><title>0x0040bca0 DrawMarisaBBomb (372 bytes)</title></rect>
 <rect width="9.33" height="9.64" x="578.75" y="67.99" class="named"><title>0x00425580 StopTurnToAngle (372 bytes)</title></rect>
 <rect width="9.33" height="9.54" x="578.75" y="80.63" class="todo"><title>0x0040c160 Func40c160 (369 bytes)</title></rect>
 <rect width="9.33" height="9.13" x="578.75" y="93.17" class="named"><title>0x0041d180 Ending::Ending (357 bytes)</title></rect>
