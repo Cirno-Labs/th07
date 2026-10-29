@@ -266,6 +266,11 @@ public:
     // A draw callback, as th06's: draws the bullets that hit
     // (DrawHitBullets). Returns 1.
     static int OnDraw2(Player *player);
+    // Whether a `size` box at `pos` meets one of unk_17dc's areas: a box
+    // while its width is set, else a circle of radius unk_10 if that is
+    // set. Keeps the area's unk_1c in unk_2404 and returns 2 if so, else
+    // returns 0. Not in th06.
+    int CheckAreaHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size);
     // The angle from `pos` to the player, pi / 2 when they coincide.
     float AngleFrom(D3DXVECTOR3 *pos);
     // Removes the player's update and draw elements from the chain.
@@ -304,7 +309,9 @@ public:
     unsigned char unk_23dc[0x4];
     // The shot each laser was fired from, by ShotData::phase.
     ShotData *laserShots[3];
-    unsigned char unk_23ec[0x1c];
+    unsigned char unk_23ec[0x18];
+    // The unk_1c of the PlayerArea CheckAreaHit met last.
+    int unk_2404;
     // As th06's: 0 normally, 1 respawning, 2 dying, 3 invulnerable.
     // Firing stops at 1 and 2.
     char playerState;

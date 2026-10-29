@@ -681,6 +681,54 @@ void Player::StartFiring(Player *player)
     }
 }
 
+int Player::CheckAreaHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size)
+{
+    int idx;
+    D3DXVECTOR3 start;
+    D3DXVECTOR3 end;
+    PlayerArea *area;
+    D3DXVECTOR3 areaMax;
+    // The point's offset from a circle's centre.
+    D3DXVECTOR2 rel;
+    D3DXVECTOR3 areaMin;
+
+    area = this->unk_17dc;
+    start.x = pos->x - size->x / 2.0f;
+    start.y = pos->y - size->y / 2.0f;
+    end.x = size->x / 2.0f + pos->x;
+    end.y = size->y / 2.0f + pos->y;
+    for (idx = 0; idx < 0x60; idx++, area++)
+    {
+        if (area->width != 0.0f)
+        {
+            areaMin.x = area->x - area->width / 2.0f;
+            areaMin.y = area->y - area->height / 2.0f;
+            areaMax.x = area->width / 2.0f + area->x;
+            areaMax.y = area->height / 2.0f + area->y;
+            if (!(areaMin.x > end.x || areaMax.x < start.x || areaMin.y > end.y || areaMax.y < start.y))
+            {
+                this->unk_2404 = area->unk_1c;
+                return 2;
+            }
+        }
+        else if (area->unk_10 != 0.0)
+        {
+            rel.x = pos->x - area->x;
+            rel.y = pos->y - area->y;
+            if (rel.x * rel.x + rel.y * rel.y < area->unk_10 * area->unk_10)
+            {
+                this->unk_2404 = area->unk_1c;
+                return 2;
+            }
+        }
+        else
+        {
+            continue;
+        }
+    }
+    return 0;
+}
+
 void UpdateHitboxAreas(Player *player)
 {
     int i;
