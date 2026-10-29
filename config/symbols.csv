@@ -139,7 +139,7 @@ address,size,name,symbol
 0x0041b770,628,EffectInitPetal27,?EffectInitPetal27@@YIHPAUEffect@@@Z
 0x0041b9f0,559,EffectInitPetal30,?EffectInitPetal30@@YIHPAUEffect@@@Z
 0x0041bc20,668,EffectInitPetal31,?EffectInitPetal31@@YIHPAUEffect@@@Z
-0x0041bec0,263,Func41bec0,
+0x0041bec0,263,EffectInitDiverge,?EffectInitDiverge@@YIHPAUEffect@@@Z
 0x0041bfd0,301,Func41bfd0,
 0x0041c100,173,Func41c100,
 0x0041c1b0,16,ReplayManager::OnDraw,?OnDraw@ReplayManager@@SIHPAV1@@Z

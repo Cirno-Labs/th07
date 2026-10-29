@@ -155,6 +155,11 @@ int EffectInitPetal30(Effect *effect);
 // white, its unk_14 doubled. Returns 0.
 int EffectInitPetal31(Effect *effect);
 
+// An effect init like EffectInitConverge, for types 22 and 32: the
+// direction is velocity.x as an angle, or random when that is -990 or
+// less, and axis is 1 to 2.5 long. Returns 0.
+int EffectInitDiverge(Effect *effect);
+
 // The effects, at 0x12fe250: 400 started in turn, 8 reserved slots and
 // a spare.
 class EffectManager

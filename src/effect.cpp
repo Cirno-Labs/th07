@@ -336,6 +336,27 @@ int EffectInitPetal31(Effect *effect)
     return 0;
 }
 
+int EffectInitDiverge(Effect *effect)
+{
+    float angle;
+
+    if (effect->velocity.x > -990.0)
+    {
+        angle = AddNormalizeAngle(effect->velocity.x, 0.0f);
+    }
+    else
+    {
+        angle = g_Rng.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
+    }
+    effect->origin = effect->pos;
+    effect->origin.z = 0.0f;
+    effect->axis.x = cosf(angle);
+    effect->axis.y = sinf(angle);
+    effect->axis.z = 0.0f;
+    effect->axis *= g_Rng.GetRandomF32ZeroToOne() * 1.5f + 1.0f;
+    return 0;
+}
+
 Effect *EffectManager::SpawnEffect(int type, D3DXVECTOR3 *pos, int count, D3DCOLOR color)
 {
     Effect *effect;
