@@ -6,6 +6,8 @@
 #include <string.h>
 
 #include "ascii.h"
+#include "bullet.h"
+#include "item.h"
 #include "replay.h"
 #include "unsorted.h"
 
@@ -345,4 +347,67 @@ void Unknown49fbf0::FreeMsgFile()
 void Unknown49fbf0::StartMsg(int index)
 {
     this->impl->StartMsgScript(index);
+}
+
+void GuiImpl::StartMsgScript(int index)
+{
+    MsgFile *msgFile;
+
+    if (this->msg.msgFile->count <= index)
+    {
+        return;
+    }
+    msgFile = this->msg.msgFile;
+    memset(&this->msg, 0, sizeof(GuiMsg));
+    this->msg.scriptIndex = index;
+    this->msg.msgFile = msgFile;
+    this->msg.instr = (MsgInstr *)this->msg.msgFile->scripts[index];
+    this->msg.text[0].scriptIndex = -1;
+    this->msg.text[1].scriptIndex = -1;
+    this->msg.fontSize = 15;
+    this->msg.textColors[0] = 0xe8f0ff;
+    this->msg.textColors[1] = 0xffe8f0;
+    this->msg.shadowColors[0] = 0;
+    this->msg.shadowColors[1] = 0;
+    this->msg.skippable = 1;
+    g_BulletManager.ClearAll(1);
+    g_Unknown9a9b00.Func423090(0, 0);
+    g_ItemManager.CollectAll();
+    if (index % 10 == 0)
+    {
+        switch (g_Unknown626270.stage)
+        {
+        case 1:
+            CopySpriteToTexture(0x60f);
+            break;
+        case 2:
+            CopySpriteToTexture(0x611);
+            break;
+        case 3:
+            CopySpriteToTexture(0x613);
+            break;
+        case 4:
+            CopySpriteToTexture(0x615);
+            break;
+        case 5:
+            CopySpriteToTexture(0x617);
+            break;
+        case 6:
+            CopySpriteToTexture(0x619);
+            g_Unknown1347b00.unk_524 = 2;
+            g_Unknown9a9ab8 = 9;
+            break;
+        case 7:
+            CopySpriteToTexture(0x61b);
+            g_Unknown1347b00.unk_524 = 1;
+            g_Unknown1347b00.unk_520 = 2;
+            g_Unknown9a9ab8 = 9;
+            break;
+        case 8:
+            CopySpriteToTexture(0x61d);
+            g_Unknown1347b00.unk_524 = 2;
+            g_Unknown9a9ab8 = 9;
+            break;
+        }
+    }
 }

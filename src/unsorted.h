@@ -1185,7 +1185,19 @@ struct GuiMsg
     MsgInstr *instr;
     // The running script; negative when none runs.
     int scriptIndex;
-    unsigned char unk_c[0xe00];
+    Timer timer;
+    int unk_18;
+    // The player's and the boss's portraits, and the two lines of text,
+    // as th06's.
+    Sprite portraits[2];
+    Sprite text[2];
+    Sprite unk_94c[2];
+    // The text colors and their shadows, by speaker.
+    D3DCOLOR textColors[4];
+    D3DCOLOR shadowColors[4];
+    // The text's height in pixels.
+    int fontSize;
+    unsigned char unk_e08[0x4];
     // Lets the skip button fast-forward the script, as th06's.
     BYTE skippable;
     unsigned char unk_e0d[0x3];
@@ -1367,10 +1379,14 @@ extern Unknown1347938 g_Unknown1347938;
 class Unknown9a9b00
 {
 public:
+    // GuiImpl::StartMsgScript calls it with (0, 0) as a dialogue starts.
+    void Func423090(int unk0, int unk1);
     // Whether one of the eight pointers at +0x954598 is set.
     int Func4232a0();
 };
 extern Unknown9a9b00 g_Unknown9a9b00;
+// Set to 9 as the dialogue of stages 6 to 8 starts.
+extern int g_Unknown9a9ab8;
 
 // The object at 0x1347b00. Placeholder name; only what is known so far.
 class Unknown1347b00
@@ -1383,5 +1399,10 @@ public:
     // on flag bit 14, before it sets the viewport.
     void Func408180();
     void Func4082b0();
+
+    unsigned char unk_0[0x520];
+    // Set as the dialogue of stages 6 to 8 starts.
+    int unk_520;
+    int unk_524;
 };
 extern Unknown1347b00 g_Unknown1347b00;

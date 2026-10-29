@@ -187,7 +187,7 @@ address,size,name,symbol
 0x00422e70,193,Func422e70,
 0x00422f40,267,Func422f40,
 0x00423050,50,Func423050,?Func423050@@YIXXZ
-0x00423090,522,Func423090,
+0x00423090,522,Unknown9a9b00::Func423090,?Func423090@Unknown9a9b00@@QAEXHH@Z
 0x004232a0,64,Unknown9a9b00::Func4232a0,?Func4232a0@Unknown9a9b00@@QAEHXZ
 0x004232e0,67,Func4232e0,
 0x00423330,236,Func423330,
@@ -1793,6 +1793,7 @@ address,size,name,symbol
 0x0062f8b4,,g_Unknown626270CalcChain,?g_Unknown626270CalcChain@@3UChainElem@@A
 0x0062f8d4,,g_Unknown626270DrawChain,?g_Unknown626270DrawChain@@3UChainElem@@A
 0x0062f958,,g_BulletManager,?g_BulletManager@@3VBulletManager@@A
+0x009a9ab8,,g_Unknown9a9ab8,?g_Unknown9a9ab8@@3HA
 0x009a9b00,,g_Unknown9a9b00,?g_Unknown9a9b00@@3VUnknown9a9b00@@A
 0x012fe0c4,,g_Unknown12fe0c4,?g_Unknown12fe0c4@@3HA
 0x012fe0c8,,g_Unknown12fe0c8,?g_Unknown12fe0c8@@3HA
