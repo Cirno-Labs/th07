@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">70.32% (488)</tspan> · <tspan class="decompiled">7.93% (55)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">21.61% (150)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">70.46% (489)</tspan> · <tspan class="decompiled">7.93% (55)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">21.47% (149)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="525.27" height="6" x="0" y="0" class="named"/>
-<rect width="59.20" height="6" x="525.27" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="584.47" y="0" class="nonmatching"/>
-<rect width="161.46" height="6" x="585.54" y="0" class="todo"/>
+<rect width="526.34" height="6" x="0" y="0" class="named"/>
+<rect width="59.20" height="6" x="526.34" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="585.54" y="0" class="nonmatching"/>
+<rect width="160.38" height="6" x="586.62" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="named"><title>0x00401000 D3DXMatrixIdentity (173 bytes)</title></rect>
@@ -114,7 +114,7 @@
 <rect width="12" height="12" x="630" y="0" class="todo"><title>0x00407000 Unknown1347b00::AddedCallback (1001 bytes)</title></rect>
 <rect width="12" height="12" x="645" y="0" class="named"><title>0x00407410 Unknown1347b00::DeletedCallback (166 bytes)</title></rect>
 <rect width="12" height="12" x="660" y="0" class="named"><title>0x004074c0 Unknown1347b00::RegisterChain (270 bytes)</title></rect>
-<rect width="12" height="12" x="675" y="0" class="todo"><title>0x004075d0 Func4075d0 (50 bytes)</title></rect>
+<rect width="12" height="12" x="675" y="0" class="named"><title>0x004075d0 Unknown1347b00::RemoveChain (50 bytes)</title></rect>
 <rect width="12" height="12" x="690" y="0" class="todo"><title>0x00407610 Func407610 (474 bytes)</title></rect>
 <rect width="12" height="12" x="705" y="0" class="todo"><title>0x004077f0 Func4077f0 (263 bytes)</title></rect>
 <rect width="12" height="12" x="720" y="0" class="todo"><title>0x00407900 Func407900 (2167 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">53.05%</tspan> · <tspan class="decompiled">2.83%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">44.03%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">53.07%</tspan> · <tspan class="decompiled">2.83%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">44.01%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="396.31" height="6" x="0" y="0" class="named"/>
-<rect width="21.15" height="6" x="396.31" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="417.46" y="0" class="nonmatching"/>
-<rect width="328.87" height="6" x="418.13" y="0" class="todo"/>
+<rect width="396.41" height="6" x="0" y="0" class="named"/>
+<rect width="21.15" height="6" x="396.41" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="417.56" y="0" class="nonmatching"/>
+<rect width="328.77" height="6" x="418.23" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1400,7 +1400,7 @@
 <rect width="1.35" height="1.91" x="728.50" y="178.61" class="named"><title>0x0045e4b0 CWaveFile::Close (51 bytes)</title></rect>
 <rect width="1.35" height="1.91" x="732.85" y="178.61" class="named"><title>0x0045e8b0 File::Seek (51 bytes)</title></rect>
 <rect width="1.27" height="1.91" x="737.20" y="178.61" class="named"><title>0x00401170 Sprite::Sprite (50 bytes)</title></rect>
-<rect width="1.27" height="1.91" x="741.47" y="178.61" class="todo"><title>0x004075d0 Func4075d0 (50 bytes)</title></rect>
+<rect width="1.27" height="1.91" x="741.47" y="178.61" class="named"><title>0x004075d0 Unknown1347b00::RemoveChain (50 bytes)</title></rect>
 <rect width="1.27" height="1.91" x="745.73" y="178.61" class="todo"><title>0x0040e4f0 Unknown1347938::Func40e4f0 (50 bytes)</title></rect>
 <rect width="1.82" height="1.35" x="719.79" y="183.52" class="todo"><title>0x00423050 Func423050 (50 bytes)</title></rect>
 <rect width="1.82" height="1.26" x="719.79" y="187.87" class="named"><title>0x0043a24e App::SetRenderState (49 bytes)</title></rect>

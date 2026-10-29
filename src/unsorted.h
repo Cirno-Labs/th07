@@ -307,10 +307,9 @@ extern App g_App;
 int RegisterGameManagerChain();
 void RemoveGameManagerChain();
 // Remove the chains of objects not named yet, in the order th06's
-// GameManager::DeletedCallback removes Stage, BulletManager, Player,
-// EnemyManager, EffectManager and Gui (Player::RemoveChain is the third
-// here; Gui's is Unknown49fbf0::RemoveChain).
-void Func4075d0();
+// GameManager::DeletedCallback removes BulletManager and EnemyManager
+// (after Stage's, Unknown1347b00::RemoveChain; Player::RemoveChain comes
+// between the two).
 void Func427760();
 void Func423050();
 
@@ -1535,6 +1534,8 @@ public:
     // (priority 7) and the draw elements (priorities 3 and 4), as th06's.
     // Returns 0, or -1 if adding fails.
     static int RegisterChain(int stage);
+    // Removes the update element and the two draw elements.
+    static void RemoveChain();
     static int OnUpdate(Unknown1347b00 *stage);
     static int OnDraw(Unknown1347b00 *stage);
     static int OnDraw2(Unknown1347b00 *stage);

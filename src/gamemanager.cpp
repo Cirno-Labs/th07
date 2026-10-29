@@ -269,7 +269,7 @@ int Unknown626270::DeletedCallback(Unknown626270 *mgr)
     while (g_SoundPlayer.PlayQueuedSounds())
     {
     }
-    Func4075d0();
+    Unknown1347b00::RemoveChain();
     Func427760();
     Player::RemoveChain();
     Func423050();

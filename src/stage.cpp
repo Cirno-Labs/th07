@@ -153,3 +153,10 @@ int Unknown1347b00::RegisterChain(int stage)
     g_Chain.AddToDrawChain(&g_Unknown1347b00DrawChain2, 4);
     return 0;
 }
+
+void Unknown1347b00::RemoveChain()
+{
+    g_Chain.Remove(&g_Unknown1347b00CalcChain);
+    g_Chain.Remove(&g_Unknown1347b00DrawChain);
+    g_Chain.Remove(&g_Unknown1347b00DrawChain2);
+}
