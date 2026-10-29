@@ -145,6 +145,15 @@ int EffectUpdateConvergeSlow(Effect *effect)
     return 1;
 }
 
+int EffectUpdateDivergeLinear(Effect *effect)
+{
+    float f;
+
+    f = effect->timer.AsFloat() * 256.0f / 30.0f;
+    effect->pos = f * effect->axis + effect->origin;
+    return 1;
+}
+
 Effect *EffectManager::SpawnEffect(int type, D3DXVECTOR3 *pos, int count, D3DCOLOR color)
 {
     Effect *effect;

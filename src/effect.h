@@ -104,6 +104,10 @@ int EffectUpdateFollowPlayer(Effect *effect);
 // th06's.
 int EffectUpdateConvergeSlow(Effect *effect);
 
+// An effect update, the reverse of EffectUpdateConverge: goes out from
+// origin along axis, 256 every 30 frames. Returns 1.
+int EffectUpdateDivergeLinear(Effect *effect);
+
 // The effects, at 0x12fe250: 400 started in turn, 8 reserved slots and
 // a spare.
 class EffectManager

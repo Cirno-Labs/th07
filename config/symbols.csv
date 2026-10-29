@@ -130,7 +130,7 @@ address,size,name,symbol
 0x0041aaf0,230,EffectUpdateConverge,?EffectUpdateConverge@@YIHPAUEffect@@@Z
 0x0041abe0,72,EffectUpdateFollowPlayer,?EffectUpdateFollowPlayer@@YIHPAUEffect@@@Z
 0x0041ac30,217,EffectUpdateConvergeSlow,?EffectUpdateConvergeSlow@@YIHPAUEffect@@@Z
-0x0041ad10,211,Func41ad10,
+0x0041ad10,211,EffectUpdateDivergeLinear,?EffectUpdateDivergeLinear@@YIHPAUEffect@@@Z
 0x0041adf0,153,Func41adf0,
 0x0041ae90,86,Func41ae90,
 0x0041aef0,436,Func41aef0,
