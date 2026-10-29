@@ -1815,7 +1815,7 @@ struct StageInstr
 {
     int frame;
     short opcode;
-    short unk_06;
+    short unusedShort06;
     D3DXVECTOR3 args;
 };
 
