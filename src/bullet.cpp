@@ -218,11 +218,11 @@ int BulletManager::SpawnBullet(BulletShooter *shooter, int col, int row, float a
     ((Vector2 *)&cur->velocity)->SetPolar(angle, v * g_App.gameSpeed);
     cur->activeFlags = shooter->flags;
     cur->color = shooter->color;
-    cur->deflectState = 0;
+    cur->scriptFuncState = 0;
     CopyBulletSprite(&cur->sprites.sprite0, &shooter->typeSprites->sprite0);
     CopyBulletSprite(&cur->sprites.sprite4, &shooter->typeSprites->sprite4);
     cur->sprites.hitboxSize = shooter->typeSprites->hitboxSize;
-    cur->sprites.spawnCopiedFlag = shooter->typeSprites->spawnCopiedFlag;
+    cur->sprites.unusedByteB88 = shooter->typeSprites->unusedByteB88;
     cur->sprites.height = shooter->typeSprites->height;
     cur->sprites.sizeClass = shooter->typeSprites->sizeClass;
     cur->sound = shooter->bulletSound;

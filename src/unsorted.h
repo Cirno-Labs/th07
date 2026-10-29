@@ -1434,16 +1434,16 @@ void CopyBossMoveStart(Enemy *enemy, EnemyScriptInstr *instr);
 // 1 or 2) fires three fans back the way it came and is removed.
 void FireBackwardFans(Enemy *enemy, EnemyScriptInstr *instr);
 // For the even or odd lasers by callbackTimer, those not ending: the
-// flying bullets with sprites inside one count deflectState down; at 0 they
+// flying bullets with sprites inside one count scriptFuncState down; at 0 they
 // slow by 0.1 (above 0.5), turn square to the laser on the side their
 // velocity points to, take typeSprites[5]'s sprites, and wait 10 more.
 void UpdateLaserEdgeBullets(Enemy *enemy, EnemyScriptInstr *instr);
 // For every third laser by callbackTimer, those not ending: the flying
 // bullets with sprites inside one, 1.5 times its width, that it has not
-// deflected yet (deflectState neither li + 1 nor negative) slow to a random
+// deflected yet (scriptFuncState neither li + 1 nor negative) slow to a random
 // 0.7 to 1 (0.8 to 1.2 from difficulty 2) of their speed, turn square
 // to the laser on the side their velocity points to, and take
-// typeSprites[5]'s sprites; deflectState becomes -1, or li + 1 from
+// typeSprites[5]'s sprites; scriptFuncState becomes -1, or li + 1 from
 // difficulty 2.
 void DeflectBulletsOffLasers(Enemy *enemy, EnemyScriptInstr *instr);
 // Shakes the screen for 0x50 frames and starts the type 30 effects
@@ -1467,7 +1467,7 @@ void EndSlowdown(Enemy *enemy, EnemyScriptInstr *instr);
 // = 0) or from pi / 4, every other one with flag 2, and is removed.
 void BurstBulletsByDifficulty(Enemy *enemy, EnemyScriptInstr *instr);
 // Flashes the screen 0x50cfcfff for 0x10 frames; each bullet turned
-// once (deflectState 1) gets a flag 0x10 command 0 for 0x5a frames with its
+// once (scriptFuncState 1) gets a flag 0x10 command 0 for 0x5a frames with its
 // angle to the player, clears command 1's flag and is marked 2.
 void AimTurnedBulletsAtPlayer(Enemy *enemy, EnemyScriptInstr *instr);
 // Flashes the screen 0xd0cfcfff for argument 1 frames.
@@ -1484,24 +1484,24 @@ void ScriptFadeOutMusic(Enemy *enemy, EnemyScriptInstr *instr);
 // Plays music slot 2 (App::PlayMidi) and, if that returns nonzero,
 // bgm/th07_13b.mid.
 void ScriptPlayMusic(Enemy *enemy, EnemyScriptInstr *instr);
-// Each bullet not yet turned (deflectState 0) with y between the enemy's
+// Each bullet not yet turned (scriptFuncState 0) with y between the enemy's
 // and 352 and x within 16 of it starts turning by pi / 60 a frame
 // (-pi / 60 for even indices) for 0xa0 frames, slowing by its speed /
 // 180, and is marked turned (1).
 void TurnNearbyBullets(Enemy *enemy, EnemyScriptInstr *instr);
-// Each bullet not yet turned (deflectState 0) with a sprite from 0x278 to
+// Each bullet not yet turned (scriptFuncState 0) with a sprite from 0x278 to
 // 0x27f fires five color 6 bullets (aim mode 1, pi / 8 apart) back the
 // way it came, at speed floats[1].
 void FireBackFromUnturned(Enemy *enemy, EnemyScriptInstr *instr);
 // Flashes the screen 0x80cfcfff for 0xc frames. Each bullet not yet
-// turned (deflectState 0) with sprite 0x27c is replaced by an enemy running
+// turned (scriptFuncState 0) with sprite 0x27c is replaced by an enemy running
 // the next sub (life 1, item -2, score 10) with a copy of this enemy's
 // variables, floats[0] the bullet's angle and floats[7] an angle from
 // -pi up in steps of pi / 4; bullets with sprites 0x278 to 0x27f are
 // removed.
 void ReplaceBulletsWithEnemies(Enemy *enemy, EnemyScriptInstr *instr);
 // Counts in ints[0] the bullets with sprite 0x27c not yet turned
-// (deflectState 0).
+// (scriptFuncState 0).
 void CountUnturnedBullets(Enemy *enemy, EnemyScriptInstr *instr);
 // Unless callbackTimer is a multiple of 3: each bullet without behavior
 // 0x40 above y 320 with a sprite over 60 high fires bullets at a random

@@ -51,7 +51,7 @@ void ShakeAndSpinBullets(Enemy *enemy, EnemyScriptInstr *instr)
         {
             continue;
         }
-        if (curBullet->sprites.sprite0.spriteData != NULL && curBullet->deflectState == 0)
+        if (curBullet->sprites.sprite0.spriteData != NULL && curBullet->scriptFuncState == 0)
         {
             if (instr->args[1].i == 1 && curBullet->color != 8)
             {
@@ -87,7 +87,7 @@ void ShakeAndSpinBullets(Enemy *enemy, EnemyScriptInstr *instr)
             {
                 curBullet->SetTurnCommand(0, 0, 240, angle, 1.0f / 190.0f);
             }
-            curBullet->deflectState = 1;
+            curBullet->scriptFuncState = 1;
         }
     }
 }
@@ -339,11 +339,11 @@ void UpdateLaserEdgeBullets(Enemy *enemy, EnemyScriptInstr *instr)
                 }
                 if (blt->sprites.sprite0.spriteData != NULL && PointInRotatedBox(&blt->pos, &middle, &size, &l->pos, s, c))
                 {
-                    if (blt->deflectState > 0)
+                    if (blt->scriptFuncState > 0)
                     {
-                        blt->deflectState--;
+                        blt->scriptFuncState--;
                     }
-                    if (blt->deflectState == 0)
+                    if (blt->scriptFuncState == 0)
                     {
                         if (blt->speed > 0.5f)
                         {
@@ -359,7 +359,7 @@ void UpdateLaserEdgeBullets(Enemy *enemy, EnemyScriptInstr *instr)
                             blt->angle = AddNormalizeAngle(l->angle, -1.5707964f);
                         }
                         ((Vector2 *)&blt->velocity)->SetPolar(blt->angle, g_App.gameSpeed * blt->speed);
-                        blt->deflectState = 10;
+                        blt->scriptFuncState = 10;
                         blt->sprites = g_BulletManager.typeSprites[5];
                         g_SpriteEngine->SetSprite(&blt->sprites.sprite0, blt->sprites.sprite0.spriteIndex + blt->color);
                     }
@@ -410,7 +410,7 @@ void DeflectBulletsOffLasers(Enemy *enemy, EnemyScriptInstr *instr)
                 {
                     continue;
                 }
-                if (blt->sprites.sprite0.spriteData != NULL && blt->deflectState != li + 1 && blt->deflectState >= 0 &&
+                if (blt->sprites.sprite0.spriteData != NULL && blt->scriptFuncState != li + 1 && blt->scriptFuncState >= 0 &&
                     PointInRotatedBox(&blt->pos, &middle, &size, &l->pos, s, c))
                 {
                     if (g_GameManager.difficulty < 2)
@@ -438,11 +438,11 @@ void DeflectBulletsOffLasers(Enemy *enemy, EnemyScriptInstr *instr)
                     ((Vector2 *)&blt->velocity)->SetPolar(blt->angle, blt->speed);
                     if (g_GameManager.difficulty < 2)
                     {
-                        blt->deflectState = -1;
+                        blt->scriptFuncState = -1;
                     }
                     else
                     {
-                        blt->deflectState = li + 1;
+                        blt->scriptFuncState = li + 1;
                     }
                 }
             }
@@ -584,11 +584,11 @@ void TurnNearbyBullets(Enemy *enemy, EnemyScriptInstr *instr)
         {
             continue;
         }
-        if (bullet->deflectState == 0 && bullet->pos.y > enemy->pos.y && bullet->pos.y < 352.0f &&
+        if (bullet->scriptFuncState == 0 && bullet->pos.y > enemy->pos.y && bullet->pos.y < 352.0f &&
             enemy->pos.x - 16.0f < bullet->pos.x && enemy->pos.x + 16.0f > bullet->pos.x)
         {
             bullet->SetTurnCommand(0, 0, 0xa0, (i & 1) ? 0.05235988f : -0.05235988f, -bullet->speed / 180.0f);
-            bullet->deflectState = 1;
+            bullet->scriptFuncState = 1;
         }
     }
 }
@@ -605,11 +605,11 @@ void AimTurnedBulletsAtPlayer(Enemy *enemy, EnemyScriptInstr *instr)
         {
             continue;
         }
-        if (bullet->deflectState == 1)
+        if (bullet->scriptFuncState == 1)
         {
             bullet->SetAccelerateCommand(0, 0, 0x5a, 0.026666667f, g_Player.AngleFrom(&bullet->pos));
             bullet->ClearCommandFlag(1);
-            bullet->deflectState = 2;
+            bullet->scriptFuncState = 2;
         }
     }
 }
@@ -631,7 +631,7 @@ void FireBackFromUnturned(Enemy *enemy, EnemyScriptInstr *instr)
         {
             continue;
         }
-        if (bullet->deflectState == 0 && bullet->sprites.sprite0.spriteIndex >= 0x278 &&
+        if (bullet->scriptFuncState == 0 && bullet->sprites.sprite0.spriteIndex >= 0x278 &&
             bullet->sprites.sprite0.spriteIndex <= 0x27f)
         {
             pattern.pos = bullet->pos;
@@ -666,7 +666,7 @@ void ReplaceBulletsWithEnemies(Enemy *enemy, EnemyScriptInstr *instr)
         {
             continue;
         }
-        if (blt->deflectState == 0 && blt->sprites.sprite0.spriteIndex == 0x27c)
+        if (blt->scriptFuncState == 0 && blt->sprites.sprite0.spriteIndex == 0x27c)
         {
             childVars.floats[0] = blt->angle;
             childVars.floats[7] = theta;
@@ -693,7 +693,7 @@ void CountUnturnedBullets(Enemy *enemy, EnemyScriptInstr *instr)
         {
             continue;
         }
-        if (bullet->deflectState == 0 && bullet->sprites.sprite0.spriteIndex == 0x27c)
+        if (bullet->scriptFuncState == 0 && bullet->sprites.sprite0.spriteIndex == 0x27c)
         {
             enemy->ctx.vars.ints[0]++;
         }

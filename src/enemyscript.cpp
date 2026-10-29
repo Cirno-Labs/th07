@@ -1250,7 +1250,7 @@ loop:
                     bs->speed2 = 0.3f;
                 }
             }
-            bs->patternCounter = 0;
+            bs->unusedAfterFireC2 = 0;
             bs->flags = bulletArgs[7].i;
             value = ((short *)bulletArgs)[1];
             bs->color = INT_OP(value, 2);

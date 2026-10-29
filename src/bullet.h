@@ -32,7 +32,8 @@ struct BulletTypeSprites
     Sprite sprite4;
     // The size of the bullet's hitbox.
     D3DXVECTOR3 hitboxSize;
-    BYTE spawnCopiedFlag;
+    // Only copied from the shooter's type into each bullet.
+    BYTE unusedByteB88;
     // The height of the bullet's sprite.
     BYTE height;
     // A size class: 5 up to 8 high, 4 or 3 up to 16, 2 or 1 up to 32,
@@ -123,7 +124,9 @@ struct Bullet
     unsigned char pad_c02[0x2];
     // The next bullet in the same BulletManager draw list.
     Bullet *next;
-    int deflectState;
+    // 0 when fired; free for the g_EnemyScriptFuncs that work on bullets,
+    // which use it as a turned mark, a laser index or a countdown.
+    int scriptFuncState;
     // The sound the bullet's behaviors play as they start.
     int sound;
     // The command to start next.
@@ -175,7 +178,8 @@ struct BulletShooter
     short count1;
     short count2;
     WORD aimMode;
-    WORD patternCounter;
+    // Cleared by the fire opcodes (64 to 72); nothing reads it.
+    WORD unusedAfterFireC2;
     int flags;
     int sound;
     // Bullet::sound.
