@@ -579,7 +579,7 @@ retry:
     SetDefaultRenderStates();
     ClearViewport(0xff000000);
     g_GameWindow.isClosing = 0;
-    g_App.unk_174 = 0;
+    g_App.clearedOnD3dInit = 0;
     return 0;
 }
 

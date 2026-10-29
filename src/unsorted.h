@@ -243,7 +243,7 @@ public:
     // Set while the device is created asking for 60 Hz.
     int wants60Hz;
     // Cleared by InitD3dDevice.
-    int unk_174;
+    int clearedOnD3dInit;
     // Set to 1 by the title menu.
     float gameSpeed;
     // The MIDI player; its long messages come back to WindowProc.
