@@ -157,7 +157,7 @@ again:
     {
         screen->stateFrames++;
     }
-    g_SpriteEngine->Step(&screen->unk_0024[0]);
+    g_SpriteEngine->Step(&screen->bgSprite[0]);
     for (i = 0; i < 0x1f; i++)
     {
         g_SpriteEngine->Step(&screen->titles[i]);
@@ -177,7 +177,7 @@ int MusicScreen::OnDraw(MusicScreen *screen)
 
     g_SpriteEngine->ClearTexture();
     g_SpriteEngine->CopySurfaceToBackBuffer(0, 0, 0, 0, 0);
-    g_SpriteEngine->DrawUnrotated(&screen->unk_0024[0]);
+    g_SpriteEngine->DrawUnrotated(&screen->bgSprite[0]);
     for (i = screen->listTop; i < screen->listTop + 10; i++)
     {
         if (i >= screen->tuneCount)
@@ -228,7 +228,7 @@ int MusicScreen::AddedCallback(MusicScreen *screen)
     {
         return -1;
     }
-    g_SpriteEngine->StartScript(&screen->unk_0024[0], 0x900);
+    g_SpriteEngine->StartScript(&screen->bgSprite[0], 0x900);
     screen->stateFrames = 0;
     data = rp = (char *)LoadFileData("data/musiccmt.txt", 0);
     if (rp == NULL)

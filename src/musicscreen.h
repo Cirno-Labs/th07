@@ -79,7 +79,7 @@ public:
     int tuneCount;
     MusicTune *tunes;
     // An array of one: it is constructed in a loop.
-    Sprite unk_0024[1];
+    Sprite bgSprite[1];
     // One per tune in the list.
     Sprite titles[0x1f];
     // One per line of the selected tune's comment.
