@@ -538,7 +538,7 @@ public:
     void QueueSoundCommand(int type, int arg, char *path);
 
     IDirectSound8 *dsound;
-    DWORD unk_004;
+    DWORD unusedDword004;
     // The loaded sound files' buffers.
     IDirectSoundBuffer *soundBuffers[0x80];
     // Each sound effect's own buffer.
@@ -554,7 +554,7 @@ public:
     // The thread streaming the wave music and its ID.
     DWORD notifyThreadId;
     HANDLE notifyThread;
-    DWORD unk_61c;
+    DWORD unusedDword61c;
     // The sound effects to play, or -1.
     int queue[5];
     // The thbgm.fmt entries of the preloaded tracks, their data, and
@@ -577,7 +577,7 @@ public:
     CStreamingSound *bgm;
     // Signalled as the wave music plays.
     HANDLE notifyEvent;
-    DWORD unk_39c4;
+    DWORD unusedDword39c4;
     // Added to every BgmFormat offset by CWaveFile::ResetFile.
     DWORD bgmFileOffset;
 };
