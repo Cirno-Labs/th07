@@ -289,7 +289,7 @@ int GameWindow::RunFrame()
             {
                 s_lastCount = *(LARGE_INTEGER *)count;
             }
-            if (elapsed >= 1.0 / 60.0 || g_GameWindow.unk_1c)
+            if (elapsed >= 1.0 / 60.0 || g_GameWindow.forceClockPacing)
             {
                 while (elapsed >= 1.0 / 60.0)
                 {
@@ -313,7 +313,7 @@ int GameWindow::RunFrame()
             }
             delta2 = fabs(now - s_lastFrameTime);
             timeEndPeriod(1);
-            if (delta2 >= 1000.0 / 60.0 || g_GameWindow.unk_1c)
+            if (delta2 >= 1000.0 / 60.0 || g_GameWindow.forceClockPacing)
             {
                 while (delta2 >= 1000.0 / 60.0)
                 {
@@ -429,7 +429,7 @@ int InitD3dDevice()
         {
             params3.BackBufferFormat = D3DFMT_R5G6B5;
         }
-        if (g_GameWindow.unk_1c)
+        if (g_GameWindow.forceClockPacing)
         {
             g_App.presentImmediate = 1;
         }
@@ -784,7 +784,7 @@ int CheckSingleInstance(HINSTANCE instance)
             }
             if (strcmp(exePath, consoleTitle) != 0)
             {
-                g_GameWindow.unk_1c = 1;
+                g_GameWindow.forceClockPacing = 1;
             }
         }
     }

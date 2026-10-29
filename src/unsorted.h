@@ -367,7 +367,7 @@ struct GameWindow
     DWORD perfFrequency[2];
     // Set when the game was started from a shortcut or another path;
     // paces every frame by the clock, even ones that are early.
-    BYTE unk_1c;
+    BYTE forceClockPacing;
     unsigned char unk_1d[0x3];
     // The screen saver and power settings, put back on exit.
     int screenSaveActive;
