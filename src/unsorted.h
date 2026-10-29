@@ -1535,6 +1535,14 @@ void ScriptMoveHermite(Enemy *enemy, EnemyScriptInstr *instr, float t);
 // Catk (by unk_93d7 and in all), first clearing its counts if their
 // checksum (unk_2a, with the name's) fails.
 void StartSpellCard(Enemy *enemy, EnemyScriptInstr *instr);
+// Ends the spell card, as th06's RunEnemy did: hides the name; if it
+// was active (1), clears the bullets and the other enemies for bonuses
+// and, if it was captured, scores its bonus and, unless bit 3 of
+// g_Unknown626270.unk_93d8 is set, keeps the best bonus and counts the
+// capture in its Catk as StartSpellCard does the attempt. Then releases
+// the bosses' effects[24] and plays sound 0xf. Always resets the
+// stage's spellCardState.
+void EndSpellCard(Enemy *enemy, EnemyScriptInstr *instr);
 
 // Set to 9 as the dialogue of stages 6 to 8 starts.
 extern int g_Unknown9a9ab8;

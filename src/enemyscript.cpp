@@ -677,3 +677,98 @@ void StartSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
         rec->unk_2a = sum2;
     }
 }
+
+void EndSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    int bossIdx;
+    int sum2;
+    int sum;
+    int shot;
+    int len;
+    Catk *rec;
+    int bonus;
+
+    if (g_Unknown12fe0c8 != 0)
+    {
+        g_Unknown49fbf0.EndSpellCardName();
+        if (g_Unknown12fe0c8 == 1)
+        {
+            bonus = g_BulletManager.ClearAllWithBonus(8000, 1);
+            bonus = g_Unknown9a9b00.ClearEnemiesForBonus(8000, bonus);
+            if (bonus != 0)
+            {
+                g_Unknown626270.AddScore(bonus);
+                g_Unknown49fbf0.ShowBonusPopup(bonus);
+            }
+            if (g_Unknown12fe0c4 != 0)
+            {
+                rec = &g_Unknown626270.catks[g_Unknown12fe0d8];
+                bonus = g_Unknown12fe0cc + g_Unknown12fe0d0;
+                g_Unknown49fbf0.ShowSpellCardBonus(bonus);
+                g_Unknown626270.AddScore(bonus);
+                if (!g_Unknown626270.unk_93d8Bit3)
+                {
+                    sum = 0;
+                    len = strlen(rec->name);
+                    while (len > 0)
+                    {
+                        len--;
+                        sum += rec->name[len];
+                    }
+                    sum2 = sum;
+                    for (len = 0; len < 7; len++)
+                    {
+                        sum += rec->captures[len];
+                        sum += rec->attempts[len];
+                        sum += rec->maxBonus[len];
+                    }
+                    if (rec->unk_2a != (BYTE)sum)
+                    {
+                        for (len = 0; len < 7; len++)
+                        {
+                            rec->captures[len] = 0;
+                            rec->attempts[len] = 0;
+                            rec->maxBonus[len] = 0;
+                        }
+                    }
+                    shot = g_Unknown626270.unk_93d7;
+                    if (rec->maxBonus[shot] < bonus)
+                    {
+                        rec->maxBonus[shot] = bonus;
+                    }
+                    if (rec->maxBonus[6] < bonus)
+                    {
+                        rec->maxBonus[6] = bonus;
+                    }
+                    if (rec->captures[shot] < 9999)
+                    {
+                        rec->captures[shot]++;
+                    }
+                    if (rec->captures[6] < 9999)
+                    {
+                        rec->captures[6]++;
+                    }
+                    for (len = 0; len < 7; len++)
+                    {
+                        sum2 += rec->captures[len];
+                        sum2 += rec->attempts[len];
+                        sum2 += rec->maxBonus[len];
+                    }
+                    rec->unk_2a = sum2;
+                }
+                g_Unknown626270.stats->spellCardsCaptured++;
+            }
+        }
+        g_Unknown12fe0c8 = 0;
+        for (bossIdx = 0; bossIdx < 8; bossIdx++)
+        {
+            if (g_Unknown9a9b00.bosses[bossIdx] != NULL && g_Unknown9a9b00.bosses[bossIdx]->effects[24] != NULL)
+            {
+                g_Unknown9a9b00.bosses[bossIdx]->effects[24]->active = 0;
+                g_Unknown9a9b00.bosses[bossIdx]->effects[24] = NULL;
+            }
+        }
+        g_SoundPlayer.QueueSound(0xf, 0);
+    }
+    g_Unknown1347b00.spellCardState = 0;
+}

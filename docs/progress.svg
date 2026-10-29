@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">80.26% (557)</tspan> · <tspan class="decompiled">9.65% (67)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">9.94% (69)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">80.40% (558)</tspan> · <tspan class="decompiled">9.65% (67)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">9.80% (68)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="599.54" height="6" x="0" y="0" class="named"/>
-<rect width="72.12" height="6" x="599.54" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="671.65" y="0" class="nonmatching"/>
-<rect width="74.27" height="6" x="672.73" y="0" class="todo"/>
+<rect width="600.61" height="6" x="0" y="0" class="named"/>
+<rect width="72.12" height="6" x="600.61" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="672.73" y="0" class="nonmatching"/>
+<rect width="73.19" height="6" x="673.81" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="named"><title>0x00401000 D3DXMatrixIdentity (173 bytes)</title></rect>
@@ -159,7 +159,7 @@
 <rect width="12" height="12" x="555" y="15" class="named"><title>0x0040fb30 ScriptMoveLinear (89 bytes)</title></rect>
 <rect width="12" height="12" x="570" y="15" class="named"><title>0x0040fb90 ScriptMoveHermite (256 bytes)</title></rect>
 <rect width="12" height="12" x="585" y="15" class="named"><title>0x0040fc90 StartSpellCard (1285 bytes)</title></rect>
-<rect width="12" height="12" x="600" y="15" class="todo"><title>0x004101a0 Func4101a0 (889 bytes)</title></rect>
+<rect width="12" height="12" x="600" y="15" class="named"><title>0x004101a0 EndSpellCard (889 bytes)</title></rect>
 <rect width="12" height="12" x="615" y="15" class="todo"><title>0x00410520 Unknown1347938::RunEnemy (29464 bytes)</title></rect>
 <rect width="12" height="12" x="630" y="15" class="named"><title>0x00417af0 SinCos (33 bytes)</title></rect>
 <rect width="12" height="12" x="645" y="15" class="named"><title>0x00417b20 Bullet::FreeBullet (107 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">63.20%</tspan> · <tspan class="decompiled">3.75%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">32.96%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">63.43%</tspan> · <tspan class="decompiled">3.75%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">32.73%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="472.11" height="6" x="0" y="0" class="named"/>
-<rect width="28" height="6" x="472.11" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="500.11" y="0" class="nonmatching"/>
-<rect width="246.23" height="6" x="500.77" y="0" class="todo"/>
+<rect width="473.86" height="6" x="0" y="0" class="named"/>
+<rect width="28" height="6" x="473.86" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="501.85" y="0" class="nonmatching"/>
+<rect width="244.49" height="6" x="502.51" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Unknown1347938::RunEnemy (29464 bytes)</title></rect>
@@ -869,7 +869,7 @@
 <rect width="16.17" height="17.95" x="446.82" y="0" class="named"><title>0x0045b5ef MainMenu::DrawReplayMenu (958 bytes)</title></rect>
 <rect width="16.17" height="17.14" x="446.82" y="20.95" class="todo"><title>0x00408e10 Func408e10 (921 bytes)</title></rect>
 <rect width="16.17" height="16.96" x="446.82" y="41.09" class="named"><title>0x0043d2f0 UpdateBullets (913 bytes)</title></rect>
-<rect width="16.17" height="16.44" x="446.82" y="61.05" class="todo"><title>0x004101a0 Func4101a0 (889 bytes)</title></rect>
+<rect width="16.17" height="16.44" x="446.82" y="61.05" class="named"><title>0x004101a0 EndSpellCard (889 bytes)</title></rect>
 <rect width="16.17" height="16.02" x="446.82" y="80.49" class="todo"><title>0x0040aba0 Func40aba0 (870 bytes)</title></rect>
 <rect width="16.17" height="16.02" x="446.82" y="99.51" class="named"><title>0x00443040 ReplayManager::RecordAddedCallback (870 bytes)</title></rect>
 <rect width="16.17" height="15.98" x="446.82" y="118.54" class="named"><title>0x0043c940 UpdateTrailLaserBullet (868 bytes)</title></rect>
