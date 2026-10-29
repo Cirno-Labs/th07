@@ -73,3 +73,49 @@ int ReplayManager::PlayOnUpdate2(ReplayManager *replay)
     }
     return 1;
 }
+
+int ReplayManager::PlayOnUpdate(ReplayManager *replay)
+{
+    int unused;
+
+    if (!(g_Unknown626270.unk_93d8 >> 2 & 1))
+    {
+        return 1;
+    }
+    if (g_Unknown626270.unk_4->unk_25 != 0)
+    {
+        return 1;
+    }
+    unused = 0;
+    g_Unknown4b9e58 = g_Unknown4b9e50;
+    g_Unknown4b9e50 = replay->cursor->input;
+    replay->cursor++;
+    g_ButtonRepeat = 0;
+    if (g_Unknown4b9e58 == g_Unknown4b9e50)
+    {
+        if (g_ButtonFrames >= 30)
+        {
+            if (g_ButtonFrames % 8 == 0)
+            {
+                g_ButtonRepeat = 1;
+            }
+            if (g_ButtonFrames >= 38)
+            {
+                g_ButtonFrames = 30;
+            }
+        }
+        g_ButtonFrames++;
+    }
+    else
+    {
+        g_ButtonFrames = 0;
+    }
+    if (replay->frame % 30 == 0)
+    {
+        g_App.unk_188 = (char)replay->extraCursor[1] & 0x7f;
+        g_App.unk_2a8 = (char)replay->extraCursor[1] >> 7;
+        replay->extraCursor++;
+    }
+    replay->frame++;
+    return 1;
+}

@@ -76,6 +76,13 @@ public:
     // on four of every five while unk_93df is 2 and
     // g_Unknown9a9b00.Func4232a0() does not; otherwise 1.
     static int PlayOnUpdate2(ReplayManager *replay);
+    // The update callback while playing: while bit 2 of
+    // Unknown626270::unk_93d8 is set and the config's unk_25 is not,
+    // plays the recorded buttons for the frame, with key repeat as in
+    // App::OnUpdate, and every 30 frames puts the recorded frame rate
+    // back into App::unk_188 and unk_2a8, then counts the frame.
+    // Returns 1.
+    static int PlayOnUpdate(ReplayManager *replay);
 
     // The current frame.
     int frame;
