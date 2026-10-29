@@ -1512,6 +1512,9 @@ void ScriptMoveAngle(Enemy *enemy, EnemyScriptInstr *instr);
 // with ScriptMoveAngle's duration, easing and mirroring; stops the
 // velocity.
 void ScriptMovePos(Enemy *enemy, EnemyScriptInstr *instr);
+// Sets the float variable argument 8 names to argument 4 eased
+// linearly towards argument 5 by `t`, 0 to 1.
+void ScriptMoveLinear(Enemy *enemy, EnemyScriptInstr *instr, float t);
 
 // Set to 9 as the dialogue of stages 6 to 8 starts.
 extern int g_Unknown9a9ab8;
