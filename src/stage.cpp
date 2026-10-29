@@ -291,22 +291,22 @@ loop:
         case 29:
             if (*(int *)&cmd->args.x >= 0)
             {
-                g_SpriteEngine->StartScriptAtOrigin(&stage->unk_4, *(int *)&cmd->args.x + 0x300);
+                g_SpriteEngine->StartScriptAtOrigin(&stage->backgroundLayer0, *(int *)&cmd->args.x + 0x300);
             }
             else
             {
-                stage->unk_4.spriteIndex = -1;
+                stage->backgroundLayer0.spriteIndex = -1;
             }
             break;
         case 30:
             // Hides unk_4, not unk_250, for a negative script.
             if (*(int *)&cmd->args.x >= 0)
             {
-                g_SpriteEngine->StartScriptAtOrigin(&stage->unk_250, *(int *)&cmd->args.x + 0x300);
+                g_SpriteEngine->StartScriptAtOrigin(&stage->backgroundLayer1, *(int *)&cmd->args.x + 0x300);
             }
             else
             {
-                stage->unk_4.spriteIndex = -1;
+                stage->backgroundLayer0.spriteIndex = -1;
             }
             break;
         }
@@ -416,16 +416,16 @@ done:
             g_SpriteEngine->Step(&stage->dialogueSprites[k]);
         }
     }
-    if (stage->unk_4.spriteIndex > 0)
+    if (stage->backgroundLayer0.spriteIndex > 0)
     {
-        g_SpriteEngine->Step(&stage->unk_4);
+        g_SpriteEngine->Step(&stage->backgroundLayer0);
     }
-    if (stage->unk_250.spriteIndex > 0)
+    if (stage->backgroundLayer1.spriteIndex > 0)
     {
-        g_SpriteEngine->Step(&stage->unk_250);
+        g_SpriteEngine->Step(&stage->backgroundLayer1);
     }
-    stage->unk_4c4++;
-    if (stage->unk_4c4 % 500 == 250 && g_GameManager.ChecksumMismatch())
+    stage->checksumCheckFrames++;
+    if (stage->checksumCheckFrames % 500 == 250 && g_GameManager.ChecksumMismatch())
     {
         return 4;
     }
@@ -505,13 +505,13 @@ int Stage::OnDraw(Stage *stage)
     stage->tintColor.b = 0x80;
     if (stage->spellCardState <= 1 && !g_Gui.IsLoadingShown())
     {
-        if (stage->unk_4.spriteIndex > 0)
+        if (stage->backgroundLayer0.spriteIndex > 0)
         {
-            g_SpriteEngine->DrawAndFlush(&stage->unk_4);
+            g_SpriteEngine->DrawAndFlush(&stage->backgroundLayer0);
         }
-        if (stage->unk_250.spriteIndex > 0)
+        if (stage->backgroundLayer1.spriteIndex > 0)
         {
-            g_SpriteEngine->DrawAndFlush(&stage->unk_250);
+            g_SpriteEngine->DrawAndFlush(&stage->backgroundLayer1);
         }
     }
     if (stage->clearColor != 0)
@@ -735,7 +735,7 @@ int Stage::RegisterChain(int stage)
 
     memset(s, 0, sizeof(Stage));
     s->data = NULL;
-    s->unk_4c4 = 0;
+    s->checksumCheckFrames = 0;
     s->stage = stage;
     g_StageCalcChain.SetCallback((ChainCallback)Stage::OnUpdate);
     g_StageCalcChain.addedCallback = (ChainCallback)Stage::AddedCallback;

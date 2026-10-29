@@ -1959,8 +1959,8 @@ public:
 
     // One Sprite per object sprite in the data, malloc'd.
     Sprite *sprites;
-    Sprite unk_4;
-    Sprite unk_250;
+    Sprite backgroundLayer0;
+    Sprite backgroundLayer1;
     StageData *data;
     int quadCount;
     int objectCount;
@@ -1969,7 +1969,7 @@ public:
     StageInstr *script;
     Timer scriptTime;
     int scriptIndex;
-    int unk_4c4;
+    int checksumCheckFrames;
     // RegisterChain's argument.
     int stage;
     D3DXVECTOR3 cameraPos;
@@ -1979,7 +1979,7 @@ public:
     StageFog fogTarget;
     int fogFadeFrames;
     Timer fogFadeTime;
-    BYTE unk_510;
+    BYTE unusedByte510;
     unsigned char pad_511[0x3];
     int spellCardState;
     int spellCardFrames;
@@ -1988,7 +1988,7 @@ public:
     int dialogueSpriteCount;
     int dialogueScriptOffset;
     Sprite dialogueSprites[0x20];
-    Sprite unk_4ea8;
+    Sprite unusedSprite4ea8;
     int waitLabel;
     StageCamera cameraFrom;
     StageCamera cameraTo;
