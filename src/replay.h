@@ -165,7 +165,7 @@ public:
     // missing.
     static int PlayAddedCallback(ReplayManager *replay);
     // Removes the chain elements but the update one, frees the replay
-    // data and frameRateBuffer and deletes the ReplayManager. Returns 0.
+    // data and bufferFreedOnDelete and deletes the ReplayManager. Returns 0.
     static int DeletedCallback(ReplayManager *replay);
     // The draw callback; does nothing. Returns 1.
     static int OnDraw(ReplayManager *replay);
@@ -201,7 +201,9 @@ public:
     // Each stage's size in bytes, and its frame rates', when playing.
     int stageSizes[7];
     int extraSizes[7];
-    void *frameRateBuffer;
+    // Cleared as recording or playing starts and freed by
+    // DeletedCallback if set; nothing else sets it.
+    void *bufferFreedOnDelete;
     // RegisterChain's arguments.
     int mode;
     char *path;
