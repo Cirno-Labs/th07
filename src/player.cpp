@@ -679,3 +679,9 @@ void Player::StartFiring(Player *player)
         player->fireTimer.Set(0);
     }
 }
+
+int Player::OnDraw2(Player *player)
+{
+    DrawHitBullets(player);
+    return 1;
+}

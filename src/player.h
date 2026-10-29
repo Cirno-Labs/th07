@@ -230,6 +230,9 @@ public:
 
     // Starts fireTimer from 0 unless it already runs, as th06's.
     static void StartFiring(Player *player);
+    // A draw callback, as th06's: draws the bullets that hit
+    // (DrawHitBullets). Returns 1.
+    static int OnDraw2(Player *player);
 
     Sprite sprite;
     Sprite optionSprites[3];
