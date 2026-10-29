@@ -593,7 +593,7 @@ struct SoundInfo
 {
     int buffer;
     short volume;
-    short unk_6;
+    short priority;
 };
 extern SoundInfo g_SoundInfos[0x26];
 // The sound files LoadSounds loads, by index.

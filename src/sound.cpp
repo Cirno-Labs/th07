@@ -488,7 +488,7 @@ void SoundPlayer::QueueSound(int idx, int unused)
     int i;
     int unk;
 
-    unk = g_SoundInfos[idx].unk_6;
+    unk = g_SoundInfos[idx].priority;
     for (i = 0; i < 5; i++)
     {
         if (this->queue[i] < 0)
