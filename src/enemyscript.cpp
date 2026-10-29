@@ -1316,6 +1316,68 @@ void CountUnturnedBullets(Enemy *enemy, EnemyScriptInstr *instr)
     }
 }
 
+void FireAimedBulletPattern1(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    Bullet *bullet = g_BulletManager.bullets;
+    BulletShooter pattern;
+    int variant;
+    int i;
+
+    if (enemy->callbackTimer.current % 3 == 0)
+    {
+        return;
+    }
+    variant = enemy->callbackTimer.current % 2;
+    for (i = 0; i < 0x400; i++, bullet++)
+    {
+        if (bullet->state == 0)
+        {
+            continue;
+        }
+        if ((bullet->activeFlags & 0x40) == 0 && bullet->pos.y < 320.0f &&
+            bullet->sprites.sprite0.spriteData->height > 60.0f)
+        {
+            pattern.pos = bullet->pos;
+            if (variant != 0)
+            {
+                pattern.sprite = 1;
+            }
+            else
+            {
+                pattern.sprite = 3;
+            }
+            pattern.color = bullet->color == 1 ? 6 : 2;
+            pattern.angle1 = g_Rng.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
+            pattern.angle2 = -3.1415927f;
+            if (variant != 0)
+            {
+                pattern.speed1 = 1.2f;
+            }
+            else
+            {
+                pattern.speed1 = 0.8f;
+            }
+            if (variant != 0)
+            {
+                pattern.count1 = 1;
+            }
+            else
+            {
+                pattern.count1 = 2;
+            }
+            pattern.count2 = 1;
+            pattern.flags = 0x208;
+            pattern.aimMode = 3;
+            pattern.unk_cc = 0x19;
+            if (variant != 0)
+            {
+                pattern.SetStopTurnCommand(0, 0, 0x3c, 1, 0.0f, 3.1f);
+            }
+            g_BulletManager.FirePattern(&pattern);
+        }
+    }
+}
+
 void FireAimedBulletPattern2(Enemy *enemy, EnemyScriptInstr *instr)
 {
     Bullet *bullet = g_BulletManager.bullets;

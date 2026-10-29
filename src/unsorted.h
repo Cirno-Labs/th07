@@ -1619,6 +1619,12 @@ void ReplaceBulletsWithEnemies(Enemy *enemy, EnemyScriptInstr *instr);
 // Counts in ints[0] the bullets with sprite 0x27c not yet turned
 // (unk_c08 0).
 void CountUnturnedBullets(Enemy *enemy, EnemyScriptInstr *instr);
+// Unless callbackTimer is a multiple of 3: each bullet without behavior
+// 0x40 above y 320 with a sprite over 60 high fires bullets at a random
+// angle (aim mode 3, sound 0x19), color 6 from color 1 bullets, 2 from
+// others; when callbackTimer is even two of sprite 3 at 0.8, when odd
+// one of sprite 1 at 1.2 with a flag 0x80 command (0x3c frames, 3.1).
+void FireAimedBulletPattern1(Enemy *enemy, EnemyScriptInstr *instr);
 // Unless callbackTimer is 2 modulo 3: each bullet without behavior 0x40
 // above y 320 with a sprite over 60 high fires one bullet at a random
 // angle (aim mode 3, sound 0x19), color 10 from color 2 bullets, 13 from
