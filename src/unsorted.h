@@ -668,6 +668,8 @@ void Func42e1f8();
 // The buttons held this frame and the frame before, as bits.
 extern WORD g_Buttons;
 extern WORD g_PrevButtons;
+// The buttons the game plays by this frame: g_Buttons, or a replay's.
+extern WORD g_Unknown4b9e50;
 // 1 on every 8th frame once the buttons have been held unchanged for 30
 // frames, for key repeat.
 extern WORD g_ButtonRepeat;
@@ -867,7 +869,9 @@ struct Unknown626270Stats
     unsigned char unk_54[0x8];
     // The lives left, a float behind checksums, as the other counts.
     float lives;
-    unsigned char unk_60[0xc];
+    unsigned char unk_60[0x8];
+    // The bombs left, the same way.
+    float bombs;
     float bombsUsed;
     // Set to 6543 plus a random float under 100000 by
     // Unknown626270::RerollLifeChecksumKeys.
@@ -915,6 +919,18 @@ public:
     // Add `amount` to unk_9618 and to unk_961c, each up to a limit.
     void Func42f789(int amount);
     void Func42f736(int amount);
+    // Takes `amount` from unk_961c, down to stats->unk_88.
+    void SubUnk961c(int amount)
+    {
+        if (this->unk_961c - this->stats->unk_88 >= amount)
+        {
+            this->unk_961c -= amount;
+        }
+        else
+        {
+            this->unk_961c = this->stats->unk_88;
+        }
+    }
     // Adds `points` to stats->score, which counts in tens.
     void AddScore(int points)
     {
@@ -931,8 +947,10 @@ public:
     void RerollLifeChecksumKeys();
     // Adds `lives` to stats->lives, checked like AddPower.
     void AddLives(int lives);
-    // Sets stats->bombs (+0x68) to `bombs` and updates the fields that
-    // follow from it.
+    // Adds `bombs` to stats->bombs, checked like AddPower.
+    void AddBombs(int bombs);
+    // Sets stats->bombs to `bombs` and updates the fields that follow
+    // from it.
     void SetBombs(int bombs);
     // Takes `amount` hundredths from the rank, as th06's SubSubRank.
     void SubSubRank(int amount);
@@ -1047,6 +1065,10 @@ extern int g_Unknown12fe0d0;
 // Cleared by Player::StopBombState, next to g_Unknown12fe0d0.
 extern int g_Unknown12fe0c4;
 extern int g_Unknown12fe0cc;
+// Player's UpdateBombState copies the first into the second when a bomb
+// starts.
+extern int g_Unknown12fe0c8;
+extern int g_Unknown12fe0dc;
 
 // The object at 0x1347b00. Placeholder name; only what is known so far.
 class Unknown1347b00

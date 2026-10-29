@@ -195,7 +195,18 @@ int Func43ee50(Player *player);
 // the 0x70 unk_9dc hitboxes, then counts down each PlayerArea's unk_18,
 // growing unk_10 by unk_14 meanwhile, and frees it once it is 0.
 void UpdateHitboxAreas(Player *player);
-void Func4409f0(Player *player);
+// OnUpdate's bomb step, the bomb part of th06's: with unk_240d set and
+// button 2 held outside a bomb, ends playerState 4 (StopBombState(1)) and
+// collects all items instead. Otherwise tries StartBombState while
+// unk_240d is 2 and runs down unk_23fc. A running bomb takes its unk_c
+// from Unknown626270::unk_961c on each new frame (down to stats->
+// unk_88) and runs. Else, with button 2 held, deathbombFrames left,
+// bombs left, unk_23fc at 0, intact checksums and no
+// g_Unknown49fbf0.Func42ad66(), starts a bomb: marks bit 1 of
+// g_ReplayManager->unk_d6, uses a bomb, runs it for the player's
+// focus, takes 2 from the rank and gives 6 more deathbombFrames (up to
+// the shot type's). unk_23dc is 1 on the frame a bomb starts, else 0.
+void UpdateBombState(Player *player);
 // OnUpdate's dying step, the dying part of th06's: while
 // deathbombFrames run, ends playerState 4 at once (StopBombState(0)) if
 // unk_240d is 1, else counts them down and at 0 loses a life: marks bit
@@ -208,7 +219,7 @@ void Func4409f0(Player *player);
 // respawning, and takes a life and refills the bombs, returning 1, or
 // with no lives left opens the continue menu. Returns 0 otherwise.
 int UpdateDyingState(Player *player);
-// Tries to start playerState 4 (Func4409f0 calls it while unk_240d is
+// Tries to start playerState 4 (UpdateBombState calls it while unk_240d is
 // 2): sets unk_240d to 2 during a bomb or while
 // g_Unknown49fbf0.Func42ad66(), or while playerState is 1 or 3, or
 // while dying without deathbombFrames; while dying with them calls
@@ -283,14 +294,19 @@ struct PlayerBomb
 {
     // Whether a bomb runs, as in th06.
     int running;
-    // Picks drawFocused over draw.
+    // Player::focused when the bomb started: picks updateFocused and
+    // drawFocused over update and draw.
     int focused;
-    unsigned char unk_8[0x8];
+    // Set to 999 when a bomb starts, as th06's.
+    int duration;
+    // What each frame of the bomb takes from Unknown626270::unk_961c.
+    int unk_c;
     Timer timer;
-    void *unk_1c;
-    // Draws the bomb, unfocused and focused, as th06's draw.
+    // Run the bomb and draw it, unfocused and focused, as th06's update
+    // and draw.
+    void (*update)(Player *player);
     void (*draw)(Player *player);
-    void *unk_24;
+    void (*updateFocused)(Player *player);
     void (*drawFocused)(Player *player);
     PlayerBombPart parts[0x80];
 };
@@ -437,7 +453,8 @@ public:
     unsigned char unk_9cc[0x10];
     PlayerBombHit unk_9dc[0x70];
     PlayerArea unk_17dc[0x60];
-    unsigned char unk_23dc[0x4];
+    // 1 on the frame a bomb starts, else 0 (UpdateBombState).
+    int unk_23dc;
     // The shot each laser was fired from, by ShotData::phase.
     ShotData *laserShots[3];
     unsigned char unk_23ec[0x4];

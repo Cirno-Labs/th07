@@ -1061,6 +1061,76 @@ void UpdateHitboxAreas(Player *player)
     }
 }
 
+void UpdateBombState(Player *player)
+{
+    if (player->unk_240d && !player->bomb.running && (g_Unknown4b9e50 & 2))
+    {
+        player->StopBombState(1);
+        player->unk_23dc = 0;
+        g_ItemManager.CollectAll();
+        return;
+    }
+    if (player->unk_240d == 2)
+    {
+        StartBombState(player);
+    }
+    if (player->unk_23fc != 0)
+    {
+        player->unk_23fc--;
+    }
+    if (player->bomb.running)
+    {
+        if (player->bomb.timer.HasTicked())
+        {
+            g_Unknown626270.SubUnk961c(player->bomb.unk_c);
+            g_Unknown49fbf0.unk_4_8 = 2;
+        }
+        if (!player->bomb.focused)
+        {
+            player->bomb.update(player);
+        }
+        else
+        {
+            player->bomb.updateFocused(player);
+        }
+        return;
+    }
+    if (!g_Unknown626270.Func404fe0() && !g_Unknown49fbf0.Func42ad66() && player->deathbombFrames != 0 &&
+        (int)g_Unknown626270.stats->bombs > 0 && player->unk_23fc == 0 && (g_Unknown4b9e50 & 2))
+    {
+        g_ReplayManager->unk_d6 |= 1;
+        g_Unknown626270.AddBombsUsed(1);
+        g_Unknown626270.AddBombs(-1);
+        g_Unknown49fbf0.bombsChanged = 2;
+        player->bomb.focused = player->focused;
+        player->bomb.running = 1;
+        player->unk_23dc = 1;
+        player->bomb.timer.Set(0);
+        player->bomb.duration = 999;
+        if (!player->bomb.focused)
+        {
+            player->bomb.update(player);
+        }
+        else
+        {
+            player->bomb.updateFocused(player);
+        }
+        g_Unknown12fe0cc = 0;
+        g_Unknown12fe0c4 = 0;
+        g_Unknown626270.SubSubRank(200);
+        g_Unknown12fe0dc = g_Unknown12fe0c8;
+        player->deathbombFrames += 6;
+        if (player->deathbombFrames > g_Player.shotType->deathbombFrames)
+        {
+            player->deathbombFrames = g_Player.shotType->deathbombFrames;
+        }
+    }
+    else
+    {
+        player->unk_23dc = 0;
+    }
+}
+
 int UpdateDyingState(Player *player)
 {
     int bonus;
@@ -1488,7 +1558,7 @@ int Player::OnUpdate(Player *player)
         return 1;
     }
     UpdateHitboxAreas(player);
-    Func4409f0(player);
+    UpdateBombState(player);
     if (player->playerState == 2)
     {
         if (UpdateDyingState(player))

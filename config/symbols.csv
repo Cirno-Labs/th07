@@ -258,7 +258,7 @@ address,size,name,symbol
 0x0042d53d,35,Func42d53d,
 0x0042d560,109,Func42d560,
 0x0042d5cd,69,Unknown626270::AddLives,?AddLives@Unknown626270@@QAEXH@Z
-0x0042d612,69,Func42d612,
+0x0042d612,69,Unknown626270::AddBombs,?AddBombs@Unknown626270@@QAEXH@Z
 0x0042d657,129,Func42d657,
 0x0042d6d8,130,Unknown626270::IsInPlayArea,?IsInPlayArea@Unknown626270@@QAEHMMMM@Z
 0x0042d75a,100,Func42d75a,
@@ -460,7 +460,7 @@ address,size,name,symbol
 0x0043edc0,143,Player::Die,?Die@Player@@QAEXXZ
 0x0043ee50,6790,Func43ee50,?Func43ee50@@YIHPAVPlayer@@@Z
 0x00440940,169,UpdateHitboxAreas,?UpdateHitboxAreas@@YIXPAVPlayer@@@Z
-0x004409f0,760,Func4409f0,?Func4409f0@@YIXPAVPlayer@@@Z
+0x004409f0,760,UpdateBombState,?UpdateBombState@@YIXPAVPlayer@@@Z
 0x00440cf0,1231,UpdateDyingState,?UpdateDyingState@@YIHPAVPlayer@@@Z
 0x004411c0,353,UpdateRespawningState,?UpdateRespawningState@@YIXPAVPlayer@@@Z
 0x00441330,825,UpdateInvulnerability,?UpdateInvulnerability@@YIXPAVPlayer@@@Z
@@ -1761,6 +1761,7 @@ address,size,name,symbol
 0x004b9e44,,g_SpriteEngine,?g_SpriteEngine@@3PAVSpriteEngine@@A
 0x004b9e48,,g_ReplayManager,?g_ReplayManager@@3PAVReplayManager@@A
 0x004b9e4c,,g_Buttons,?g_Buttons@@3GA
+0x004b9e50,,g_Unknown4b9e50,?g_Unknown4b9e50@@3GA
 0x004b9e54,,g_PrevButtons,?g_PrevButtons@@3GA
 0x004b9e5c,,g_ButtonRepeat,?g_ButtonRepeat@@3GA
 0x004b9e60,,g_ButtonFrames,?g_ButtonFrames@@3GA
@@ -1776,8 +1777,10 @@ address,size,name,symbol
 0x00626270,,g_Unknown626270,?g_Unknown626270@@3VUnknown626270@@A
 0x0062f958,,g_BulletManager,?g_BulletManager@@3VBulletManager@@A
 0x012fe0c4,,g_Unknown12fe0c4,?g_Unknown12fe0c4@@3HA
+0x012fe0c8,,g_Unknown12fe0c8,?g_Unknown12fe0c8@@3HA
 0x012fe0cc,,g_Unknown12fe0cc,?g_Unknown12fe0cc@@3HA
 0x012fe0d0,,g_Unknown12fe0d0,?g_Unknown12fe0d0@@3HA
+0x012fe0dc,,g_Unknown12fe0dc,?g_Unknown12fe0dc@@3HA
 0x012fe250,,g_EffectManager,?g_EffectManager@@3VEffectManager@@A
 0x01347b00,,g_Unknown1347b00,?g_Unknown1347b00@@3VUnknown1347b00@@A
 0x01348010,,g_Unknown1348010,?g_Unknown1348010@@3EA
