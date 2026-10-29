@@ -825,7 +825,7 @@ void GameManager::AddBonusPoints(int amount)
     {
         this->bonusPoints = this->bonusPointsCap;
     }
-    if (amount > 0 && !g_Player.unk_240d)
+    if (amount > 0 && !g_Player.bombState)
     {
         this->invulnerabilityBonus += amount;
         if (this->invulnerabilityBonus >= this->stats->unk_88 + 50000)

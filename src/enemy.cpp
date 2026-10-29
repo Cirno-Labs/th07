@@ -861,33 +861,33 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                 }
                 if (enemy->flags.isBoss)
                 {
-                    targetDiff = g_Player.unk_2428 - g_Player.position;
+                    targetDiff = g_Player.orbHomingTarget - g_Player.position;
                     toward = enemy->pos - g_Player.position;
-                    if (!g_Player.unk_2440 || fabsf(targetDiff.x) > fabsf(toward.x))
+                    if (!g_Player.homingTargetSet || fabsf(targetDiff.x) > fabsf(toward.x))
                     {
-                        g_Player.unk_2428 = enemy->pos;
+                        g_Player.orbHomingTarget = enemy->pos;
                     }
                     if (g_Unknown626270.character == 2)
                     {
                         targetDiff = g_Player.homingTarget - g_Player.position;
                         angle2 = atan2f(enemy->pos.y - g_Player.position.y, enemy->pos.x - g_Player.position.x);
                         if (angle2 >= -2.0943952f && angle2 <= -1.0471976f &&
-                            (!g_Player.unk_2440 || fabsf(targetDiff.x) > fabsf(toward.x)))
+                            (!g_Player.homingTargetSet || fabsf(targetDiff.x) > fabsf(toward.x)))
                         {
                             g_Player.homingTarget = enemy->pos;
-                            g_Player.unk_2440 = 1;
+                            g_Player.homingTargetSet = 1;
                         }
                     }
                     else
                     {
-                        g_Player.unk_2440 = 1;
+                        g_Player.homingTargetSet = 1;
                     }
                 }
-                if (!g_Player.unk_2440)
+                if (!g_Player.homingTargetSet)
                 {
-                    if (g_Player.unk_2428.y < enemy->pos.y)
+                    if (g_Player.orbHomingTarget.y < enemy->pos.y)
                     {
-                        g_Player.unk_2428 = enemy->pos;
+                        g_Player.orbHomingTarget = enemy->pos;
                     }
                     if (g_Unknown626270.character == 2 && g_Player.homingTarget.y < -900.0f)
                     {

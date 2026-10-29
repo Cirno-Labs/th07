@@ -525,24 +525,24 @@ public:
     D3DXVECTOR3 grazeMin;
     D3DXVECTOR3 grazeMax;
     // The corners of the box TouchesGrazeBox tests.
-    D3DXVECTOR3 unk_978;
-    D3DXVECTOR3 unk_984;
+    D3DXVECTOR3 grazeTestMin;
+    D3DXVECTOR3 grazeTestMax;
     // The hitbox's half size, as th06's.
     D3DXVECTOR3 hitboxSize;
     D3DXVECTOR3 grazeSize;
-    D3DXVECTOR3 unk_9a8;
+    D3DXVECTOR3 grazeTestHalfSize;
     // Where the two options are.
     D3DXVECTOR3 optionPos[2];
     // The movement of the last frame, scaled by the frame rate.
-    float unk_9cc;
-    float unk_9d0;
+    float moveDeltaX;
+    float moveDeltaY;
     unsigned char unk_9d4[0x4];
     // The effect HandleInput shows while the player is focused.
-    Effect *unk_9d8;
-    PlayerBombHit unk_9dc[0x70];
-    PlayerArea unk_17dc[0x60];
+    Effect *optionEffect;
+    PlayerBombHit bombHitboxes[0x70];
+    PlayerArea hitAreas[0x60];
     // 1 on the frame a bomb starts, else 0 (UpdateBombState).
-    int unk_23dc;
+    int bombJustStarted;
     // The shot each laser was fired from, by ShotData::phase.
     ShotData *laserShots[3];
     unsigned char unk_23ec[0x4];
@@ -552,11 +552,11 @@ public:
     // As th06's: while the player dies, the frames left to bomb.
     int deathbombFrames;
     // Set to 40 by EndBombState.
-    int unk_23fc;
+    int bombCooldown;
     // Frames left of clearing all bullets after a respawn, as th06's.
     int respawnClearFrames;
     // The unk_1c of the PlayerArea CheckAreaHit met last.
-    int unk_2404;
+    int areaItemType;
     // As th06's: 0 normally, 1 respawning, 2 dying, 3 invulnerable.
     // Firing stops at 1 and 2.
     char playerState;
@@ -570,22 +570,22 @@ public:
     // Counts hits on enemies, to burst an effect every few, as in th06.
     BYTE hitCounter;
     // Graze treats 1 specially.
-    char unk_240d;
+    char bombState;
     unsigned char unk_240e[0x2];
-    Timer unk_2410;
+    Timer optionTimer;
     // Cleared by AddedCallback, as th06's direction.
-    int unk_241c;
+    int direction;
     // The last frame's movement, as th06's.
     float velocityX;
     float velocityY;
     // What UpdateHomingOrb's and UpdateHomingOrbFast's shots home in on; x is -100 or
     // less when there is nothing.
-    D3DXVECTOR3 unk_2428;
+    D3DXVECTOR3 orbHomingTarget;
     // What the homing shots aim at; x is -100 or less when there is
     // nothing.
     D3DXVECTOR3 homingTarget;
     // Cleared every frame by ResetHomingAndText.
-    int unk_2440;
+    int homingTargetSet;
     PlayerBullet bullets[0x60];
     PlayerLaser lasers[3];
     // Runs while firing, as th06's: -1 when idle, stopped after 30
@@ -597,15 +597,15 @@ public:
     unsigned char unk_16a18[0x8];
     PlayerBomb bomb;
     // The angle FireAimedShot's shots fly at, turned by sd->angle + pi / 2.
-    float unk_b7e58;
+    float aimedShotAngle;
     // The update element and the two draw elements, as in th06
     // (removed together by RemoveChain).
     ChainElem *calcChain;
     ChainElem *drawChain;
     ChainElem *drawChain2;
     // Effects that follow the player while playerState is 3 and 4.
-    Effect *unk_b7e68;
-    Effect *unk_b7e6c;
+    Effect *invulnerabilityEffect;
+    Effect *bombInvulnerabilityEffect;
     // The shot type's data, unfocused and focused.
     ShotTypeData *shotType;
     ShotTypeData *shotTypeFocused;

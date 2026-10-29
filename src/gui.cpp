@@ -689,7 +689,7 @@ int GuiImpl::RunMsg()
     {
         this->msg.timer.Set(this->msg.instr->time);
     }
-    if (g_Player.unk_240d)
+    if (g_Player.bombState)
     {
         g_Player.EndBombState();
     }

@@ -1159,7 +1159,7 @@ void AsciiText::DrawPopups()
         this->unk_6e4.pos.x = this->unk_498.pos.x + 40.0f + 6.0f + 7.0f;
         this->unk_6e4.pos.y = this->unk_498.pos.y + 2.0f;
         amount = g_Unknown626270.invulnerabilityBonus - g_Unknown626270.stats->unk_88;
-        if (g_Player.unk_240d)
+        if (g_Player.bombState)
         {
             this->unk_6e4.unk_rgb[2] = 0xff;
             div = amount % 4000;
@@ -1200,7 +1200,7 @@ void AsciiText::DrawPopups()
         }
         this->unk_6e4.scaleY = 1.0f;
         this->unk_6e4.scaleX = 1.0f;
-        if (g_Player.unk_240d == 1)
+        if (g_Player.bombState == 1)
         {
             this->unk_930.pos = this->unk_498.pos;
             this->unk_930.pos.x += 24.0f;

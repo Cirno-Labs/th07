@@ -985,7 +985,7 @@ int BulletManager::OnUpdate(BulletManager *mgr)
                 if (result == 2 && !(bullet->flags & 0x1000))
                 {
                     bullet->state = 5;
-                    g_ItemManager.SpawnItem(&bullet->pos, g_Player.unk_2404, 1);
+                    g_ItemManager.SpawnItem(&bullet->pos, g_Player.areaItemType, 1);
                 }
             }
             else
@@ -997,7 +997,7 @@ int BulletManager::OnUpdate(BulletManager *mgr)
                     bullet->state = 5;
                     if (result == 2)
                     {
-                        g_ItemManager.SpawnItem(&bullet->pos, g_Player.unk_2404, 1);
+                        g_ItemManager.SpawnItem(&bullet->pos, g_Player.areaItemType, 1);
                     }
                 }
             }

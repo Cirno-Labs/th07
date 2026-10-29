@@ -143,7 +143,7 @@ void ItemManager::UpdateItems()
                 (((int)g_Unknown626270.stats->power >= 128.0 ||
                   g_Unknown626270.difficulty >= 4) &&
                  g_Player.position.y < g_Player.shotType->unk_20) ||
-                g_Player.unk_240d == 1)
+                g_Player.bombState == 1)
             {
                 if (g_Player.playerState != 1)
                 {
@@ -151,7 +151,7 @@ void ItemManager::UpdateItems()
                     ((Vector2 *)&entry->velocity)
                         ->SetPolar(angle, g_Player.shotType->unk_14);
                     entry->state = 1;
-                    if (g_Player.unk_240d == 1)
+                    if (g_Player.bombState == 1)
                     {
                         entry->countsFullValue = 1;
                     }
@@ -399,7 +399,7 @@ void ItemManager::UpdateItems()
                 g_Unknown49fbf0.powerChanged = 2;
                 break;
             case 6:
-                if (!g_Player.unk_23dc)
+                if (!g_Player.bombJustStarted)
                 {
                     amount = g_Unknown626270.stats->grazeTotal / 40 * 10 + 300;
                     if (amount <= 0)

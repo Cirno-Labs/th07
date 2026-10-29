@@ -182,7 +182,7 @@ int FireAimedShot(Player *player, PlayerBullet *bullet, int frame, ShotData *sd)
     if (frame % sd->interval == sd->phase)
     {
         FireShot(player, bullet, sd);
-        angle = AddNormalizeAngle(player->unk_b7e58, sd->angle + 1.5707964f);
+        angle = AddNormalizeAngle(player->aimedShotAngle, sd->angle + 1.5707964f);
         speed = sd->speed;
         ((Vector2 *)&bullet->velocity)->SetPolar(angle, speed);
         bullet->angle = angle;
@@ -199,10 +199,10 @@ int UpdateHomingOrb(Player *player, PlayerBullet *bullet)
 
     if (bullet->state == 1)
     {
-        if (player->unk_2428.x > -100.0f && bullet->timer.AsFrames() < 40 && bullet->timer.HasTicked())
+        if (player->orbHomingTarget.x > -100.0f && bullet->timer.AsFrames() < 40 && bullet->timer.HasTicked())
         {
-            x = player->unk_2428.x - bullet->pos.x;
-            y = player->unk_2428.y - bullet->pos.y;
+            x = player->orbHomingTarget.x - bullet->pos.x;
+            y = player->orbHomingTarget.y - bullet->pos.y;
             len = sqrtf(x * x + y * y) / (bullet->speed / 4.0f);
             if (len < 1.0f)
             {
@@ -240,10 +240,10 @@ int UpdateHomingOrbFast(Player *player, PlayerBullet *bullet)
 
     if (bullet->state == 1)
     {
-        if (player->unk_2428.x > -100.0f && bullet->timer.AsFrames() < 40 && bullet->timer.HasTicked())
+        if (player->orbHomingTarget.x > -100.0f && bullet->timer.AsFrames() < 40 && bullet->timer.HasTicked())
         {
-            x = player->unk_2428.x - bullet->pos.x;
-            y = player->unk_2428.y - bullet->pos.y;
+            x = player->orbHomingTarget.x - bullet->pos.x;
+            y = player->orbHomingTarget.y - bullet->pos.y;
             len = sqrtf(x * x + y * y) / (bullet->speed / 4.0f);
             if (len < 1.0f)
             {
@@ -345,9 +345,9 @@ int UpdateTrailLaserBullet(Player *player, PlayerBullet *bullet)
     {
         if (bullet->unk_258[i].x >= -900.0f)
         {
-            player->unk_9dc[i + 0x60].pos = bullet->unk_258[i];
-            player->unk_9dc[i + 0x60].unk_18 = 1;
-            player->unk_9dc[i + 0x60].size = bullet->size;
+            player->bombHitboxes[i + 0x60].pos = bullet->unk_258[i];
+            player->bombHitboxes[i + 0x60].unk_18 = 1;
+            player->bombHitboxes[i + 0x60].size = bullet->size;
         }
     }
     for (i = 15; i > 0; i--)
@@ -760,18 +760,18 @@ int Player::CalcDamage(D3DXVECTOR3 *pos, D3DXVECTOR3 *size, int *hitByBomb)
     }
     for (idx = 0; idx < 0x70; idx++)
     {
-        if (this->unk_9dc[idx].size.x <= 0.0f)
+        if (this->bombHitboxes[idx].size.x <= 0.0f)
         {
             continue;
         }
-        targetLo = this->unk_9dc[idx].pos - this->unk_9dc[idx].size / 2.0f;
-        targetHi = this->unk_9dc[idx].size / 2.0f + this->unk_9dc[idx].pos;
+        targetLo = this->bombHitboxes[idx].pos - this->bombHitboxes[idx].size / 2.0f;
+        targetHi = this->bombHitboxes[idx].size / 2.0f + this->bombHitboxes[idx].pos;
         if (targetLo.x > eMax.x || targetHi.x < eMin.x || targetLo.y > eMax.y || targetHi.y < eMin.y)
         {
             continue;
         }
-        damage += this->unk_9dc[idx].unk_18;
-        this->unk_9dc[idx].unk_1c += this->unk_9dc[idx].unk_18;
+        damage += this->bombHitboxes[idx].unk_18;
+        this->bombHitboxes[idx].unk_1c += this->bombHitboxes[idx].unk_18;
         this->hitCounter++;
         if (this->hitCounter % 4 == 0)
         {
@@ -803,7 +803,7 @@ int Player::CheckAreaHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size)
     D3DXVECTOR2 rel;
     D3DXVECTOR3 areaMin;
 
-    area = this->unk_17dc;
+    area = this->hitAreas;
     start.x = pos->x - size->x / 2.0f;
     start.y = pos->y - size->y / 2.0f;
     end.x = size->x / 2.0f + pos->x;
@@ -818,7 +818,7 @@ int Player::CheckAreaHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size)
             areaMax.y = area->height / 2.0f + area->y;
             if (!(areaMin.x > end.x || areaMax.x < start.x || areaMin.y > end.y || areaMax.y < start.y))
             {
-                this->unk_2404 = area->unk_1c;
+                this->areaItemType = area->unk_1c;
                 return 2;
             }
         }
@@ -828,7 +828,7 @@ int Player::CheckAreaHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size)
             rel.y = pos->y - area->y;
             if (rel.x * rel.x + rel.y * rel.y < area->unk_10 * area->unk_10)
             {
-                this->unk_2404 = area->unk_1c;
+                this->areaItemType = area->unk_1c;
                 return 2;
             }
         }
@@ -845,7 +845,7 @@ int Player::CheckHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size)
     D3DXVECTOR3 start;
     D3DXVECTOR3 end;
 
-    this->unk_2404 = 6;
+    this->areaItemType = 6;
     if (this->CheckAreaHit(pos, size))
     {
         return 2;
@@ -879,7 +879,7 @@ int Player::CheckGraze(D3DXVECTOR3 *pos, D3DXVECTOR3 *size)
     D3DXVECTOR3 start;
     D3DXVECTOR3 end;
 
-    this->unk_2404 = 6;
+    this->areaItemType = 6;
     if (this->CheckAreaHit(pos, size))
     {
         return 2;
@@ -912,8 +912,8 @@ int Player::TouchesGrazeBox(D3DXVECTOR3 *pos, D3DXVECTOR3 *size)
     }
     start = *pos - *size / 2.0f;
     end = *size / 2.0f + *pos;
-    if (this->unk_978.x > end.x || this->unk_984.x < start.x || this->unk_978.y > end.y ||
-        this->unk_984.y < start.y)
+    if (this->grazeTestMin.x > end.x || this->grazeTestMax.x < start.x || this->grazeTestMin.y > end.y ||
+        this->grazeTestMax.y < start.y)
     {
         return 0;
     }
@@ -991,7 +991,7 @@ void Player::Graze(D3DXVECTOR3 *pos)
         }
     }
     mid = (this->position + *pos) / 2.0f;
-    if (this->unk_240d == 1)
+    if (this->bombState == 1)
     {
         if (this->focused)
         {
@@ -1011,7 +1011,7 @@ void Player::Graze(D3DXVECTOR3 *pos)
     g_SoundPlayer.QueueSound(0x1e, 0);
     g_Unknown12fe0d0 += 2500 + (g_Unknown626270.bonusPoints - g_Unknown626270.stats->unk_88) / 1500 * 20;
     g_Unknown626270.AddScore(2000);
-    if (this->unk_240d == 1)
+    if (this->bombState == 1)
     {
         if (this->focused)
         {
@@ -1050,47 +1050,47 @@ int HandleInput(Player *player)
 
     deltaX = 0.0f;
     deltaY = 0.0f;
-    previous = player->unk_241c;
-    player->unk_241c = 0;
+    previous = player->direction;
+    player->direction = 0;
     if (g_Unknown4b9e50 & 0x10)
     {
-        player->unk_241c = 1;
+        player->direction = 1;
         if (g_Unknown4b9e50 & 0x40)
         {
-            player->unk_241c = 5;
+            player->direction = 5;
         }
         if (g_Unknown4b9e50 & 0x80)
         {
-            player->unk_241c = 6;
+            player->direction = 6;
         }
     }
     else if (g_Unknown4b9e50 & 0x20)
     {
-        player->unk_241c = 2;
+        player->direction = 2;
         if (g_Unknown4b9e50 & 0x40)
         {
-            player->unk_241c = 7;
+            player->direction = 7;
         }
         if (g_Unknown4b9e50 & 0x80)
         {
-            player->unk_241c = 8;
+            player->direction = 8;
         }
     }
     else
     {
         if (g_Unknown4b9e50 & 0x40)
         {
-            player->unk_241c = 3;
+            player->direction = 3;
         }
         if (g_Unknown4b9e50 & 0x80)
         {
-            player->unk_241c = 4;
+            player->direction = 4;
         }
     }
     if (g_Unknown4b9e50 & 4)
     {
         player->focused = 1;
-        switch (player->unk_241c)
+        switch (player->direction)
         {
         case 4:
             deltaX = player->shotType->speedFocused;
@@ -1125,7 +1125,7 @@ int HandleInput(Player *player)
     else
     {
         player->focused = 0;
-        switch (player->unk_241c)
+        switch (player->direction)
         {
         case 4:
             deltaX = player->shotType->speed;
@@ -1175,10 +1175,10 @@ int HandleInput(Player *player)
     }
     player->velocityX = deltaX;
     player->velocityY = deltaY;
-    player->unk_9cc = deltaX * player->moveScaleX * g_App.gameSpeed;
-    player->unk_9d0 = deltaY * player->moveScaleY * g_App.gameSpeed;
-    player->position[0] += player->unk_9cc;
-    player->position[1] += player->unk_9d0;
+    player->moveDeltaX = deltaX * player->moveScaleX * g_App.gameSpeed;
+    player->moveDeltaY = deltaY * player->moveScaleY * g_App.gameSpeed;
+    player->position[0] += player->moveDeltaX;
+    player->position[1] += player->moveDeltaY;
     if (player->position.x < g_Unknown626270.arena2[0])
     {
         player->position.x = g_Unknown626270.arena2[0];
@@ -1199,8 +1199,8 @@ int HandleInput(Player *player)
     player->hitboxMax = player->position + player->hitboxSize;
     player->grazeMin = player->position - player->grazeSize;
     player->grazeMax = player->position + player->grazeSize;
-    player->unk_978 = player->position - player->unk_9a8;
-    player->unk_984 = player->position + player->unk_9a8;
+    player->grazeTestMin = player->position - player->grazeTestHalfSize;
+    player->grazeTestMax = player->position + player->grazeTestHalfSize;
     player->optionPos[0] = player->position;
     player->optionPos[1] = player->position;
     sideX = sideY = 0.0f;
@@ -1209,15 +1209,15 @@ int HandleInput(Player *player)
         switch (player->unk_240a)
         {
         case 0:
-            player->unk_2410.Set(0);
+            player->optionTimer.Set(0);
             break;
         case 1:
             sideX = 24.0f;
-            player->unk_2410.Set(0);
+            player->optionTimer.Set(0);
             if (player->focused)
             {
                 player->unk_240a = 2;
-                player->unk_9d8 = g_EffectManager.SpawnReservedEffect(0x18, &player->position, 2, 1, 0xffffffff);
+                player->optionEffect = g_EffectManager.SpawnReservedEffect(0x18, &player->position, 2, 1, 0xffffffff);
             }
             else
             {
@@ -1225,22 +1225,22 @@ int HandleInput(Player *player)
             }
         case 2:
         slideIn:
-            player->unk_2410.Tick();
-            t = player->unk_2410.AsFloat() / 8.0f;
+            player->optionTimer.Tick();
+            t = player->optionTimer.AsFloat() / 8.0f;
             sideY = (1.0f - t) * 32.0f + -32.0f;
             t = t * t;
             sideX = -16.0f * t + 24.0f;
-            if (player->unk_2410 >= 8)
+            if (player->optionTimer >= 8)
             {
                 player->unk_240a = 3;
             }
             if (!player->focused)
             {
                 player->unk_240a = 4;
-                player->unk_2410.Set(8 - player->unk_2410.AsFrames());
-                if (player->unk_9d8 != NULL)
+                player->optionTimer.Set(8 - player->optionTimer.AsFrames());
+                if (player->optionEffect != NULL)
                 {
-                    player->unk_9d8->sprite.SetPendingInterrupt(1);
+                    player->optionEffect->sprite.SetPendingInterrupt(1);
                 }
                 goto slideOut;
             }
@@ -1248,13 +1248,13 @@ int HandleInput(Player *player)
         case 3:
             sideX = 8.0f;
             sideY = -32.0f;
-            player->unk_2410.Set(0);
+            player->optionTimer.Set(0);
             if (!player->focused)
             {
                 player->unk_240a = 4;
-                if (player->unk_9d8 != NULL)
+                if (player->optionEffect != NULL)
                 {
-                    player->unk_9d8->sprite.SetPendingInterrupt(1);
+                    player->optionEffect->sprite.SetPendingInterrupt(1);
                 }
             }
             else
@@ -1263,21 +1263,21 @@ int HandleInput(Player *player)
             }
         case 4:
         slideOut:
-            player->unk_2410.Tick();
-            t = player->unk_2410.AsFloat() / 8.0f;
+            player->optionTimer.Tick();
+            t = player->optionTimer.AsFloat() / 8.0f;
             sideY = 32.0f * t + -32.0f;
             t = t * t;
             t = 1.0f - t;
             sideX = -16.0f * t + 24.0f;
-            if (player->unk_2410 >= 8)
+            if (player->optionTimer >= 8)
             {
                 player->unk_240a = 1;
             }
             if (player->focused)
             {
                 player->unk_240a = 2;
-                player->unk_2410.Set(8 - player->unk_2410.AsFrames());
-                player->unk_9d8 = g_EffectManager.SpawnReservedEffect(0x18, &player->position, 2, 1, 0xffffffff);
+                player->optionTimer.Set(8 - player->optionTimer.AsFrames());
+                player->optionEffect = g_EffectManager.SpawnReservedEffect(0x18, &player->position, 2, 1, 0xffffffff);
                 goto slideIn;
             }
             break;
@@ -1292,16 +1292,16 @@ int HandleInput(Player *player)
         switch (player->unk_240a)
         {
         case 0:
-            player->unk_2410.Set(0);
+            player->optionTimer.Set(0);
             break;
         case 1:
-            sideX = cosf(player->unk_b7e58 + 1.5707964f) * 24.0f;
-            sideY = sinf(player->unk_b7e58 + 1.5707964f) * 24.0f;
-            player->unk_2410.Set(0);
+            sideX = cosf(player->aimedShotAngle + 1.5707964f) * 24.0f;
+            sideY = sinf(player->aimedShotAngle + 1.5707964f) * 24.0f;
+            player->optionTimer.Set(0);
             if (player->focused)
             {
                 player->unk_240a = 2;
-                player->unk_9d8 = g_EffectManager.SpawnReservedEffect(0x18, &player->position, 2, 1, 0xffffffff);
+                player->optionEffect = g_EffectManager.SpawnReservedEffect(0x18, &player->position, 2, 1, 0xffffffff);
             }
             else
             {
@@ -1316,28 +1316,28 @@ int HandleInput(Player *player)
             if (!player->focused)
             {
                 player->unk_240a = 4;
-                player->unk_2410.Set(8 - player->unk_2410.AsFrames());
-                if (player->unk_9d8 != NULL)
+                player->optionTimer.Set(8 - player->optionTimer.AsFrames());
+                if (player->optionEffect != NULL)
                 {
-                    player->unk_9d8->sprite.SetPendingInterrupt(1);
+                    player->optionEffect->sprite.SetPendingInterrupt(1);
                 }
                 goto fanIn;
             }
-            player->unk_2410.Tick();
-            t = player->unk_2410.AsFloat() / 8.0f;
-            sideX = cosf(player->unk_b7e58 + 1.5707964f) * 24.0f;
-            sideY = sinf(player->unk_b7e58 + 1.5707964f) * 24.0f;
-            spreadX = cosf(player->unk_b7e58 + 0.22439948f) * 24.0f;
-            spreadY = sinf(player->unk_b7e58 + 0.22439948f) * 24.0f;
+            player->optionTimer.Tick();
+            t = player->optionTimer.AsFloat() / 8.0f;
+            sideX = cosf(player->aimedShotAngle + 1.5707964f) * 24.0f;
+            sideY = sinf(player->aimedShotAngle + 1.5707964f) * 24.0f;
+            spreadX = cosf(player->aimedShotAngle + 0.22439948f) * 24.0f;
+            spreadY = sinf(player->aimedShotAngle + 0.22439948f) * 24.0f;
             spreadX = (spreadX - sideX) * t + sideX;
             spreadY = (spreadY - sideY) * t + sideY;
             player->optionPos[1].x += spreadX;
             player->optionPos[1].y += spreadY;
-            spreadX = cosf(player->unk_b7e58 - 0.22439948f) * 24.0f;
-            spreadY = sinf(player->unk_b7e58 - 0.22439948f) * 24.0f;
+            spreadX = cosf(player->aimedShotAngle - 0.22439948f) * 24.0f;
+            spreadY = sinf(player->aimedShotAngle - 0.22439948f) * 24.0f;
             spreadX = (spreadX + sideX) * t - sideX;
             spreadY = (spreadY + sideY) * t - sideY;
-            if (player->unk_2410 >= 8)
+            if (player->optionTimer >= 8)
             {
                 player->unk_240a = 3;
             }
@@ -1345,23 +1345,23 @@ int HandleInput(Player *player)
             player->optionPos[0].y += spreadY;
             break;
         case 3:
-            player->unk_2410.Set(0);
+            player->optionTimer.Set(0);
             if (!player->focused)
             {
                 player->unk_240a = 4;
-                if (player->unk_9d8 != NULL)
+                if (player->optionEffect != NULL)
                 {
-                    player->unk_9d8->sprite.SetPendingInterrupt(1);
+                    player->optionEffect->sprite.SetPendingInterrupt(1);
                 }
             }
             else
             {
-                spreadX = cosf(player->unk_b7e58 + 0.22439948f) * 24.0f;
-                spreadY = sinf(player->unk_b7e58 + 0.22439948f) * 24.0f;
+                spreadX = cosf(player->aimedShotAngle + 0.22439948f) * 24.0f;
+                spreadY = sinf(player->aimedShotAngle + 0.22439948f) * 24.0f;
                 player->optionPos[1].x += spreadX;
                 player->optionPos[1].y += spreadY;
-                spreadX = cosf(player->unk_b7e58 - 0.22439948f) * 24.0f;
-                spreadY = sinf(player->unk_b7e58 - 0.22439948f) * 24.0f;
+                spreadX = cosf(player->aimedShotAngle - 0.22439948f) * 24.0f;
+                spreadY = sinf(player->aimedShotAngle - 0.22439948f) * 24.0f;
                 player->optionPos[0].x += spreadX;
                 player->optionPos[0].y += spreadY;
                 break;
@@ -1371,25 +1371,25 @@ int HandleInput(Player *player)
             if (player->focused)
             {
                 player->unk_240a = 2;
-                player->unk_2410.Set(8 - player->unk_2410.AsFrames());
-                player->unk_9d8 = g_EffectManager.SpawnReservedEffect(0x18, &player->position, 2, 1, 0xffffffff);
+                player->optionTimer.Set(8 - player->optionTimer.AsFrames());
+                player->optionEffect = g_EffectManager.SpawnReservedEffect(0x18, &player->position, 2, 1, 0xffffffff);
                 goto fanOut;
             }
-            player->unk_2410.Tick();
-            t = 1.0f - player->unk_2410.AsFloat() / 8.0f;
-            sideX = cosf(player->unk_b7e58 + 1.5707964f) * 24.0f;
-            sideY = sinf(player->unk_b7e58 + 1.5707964f) * 24.0f;
-            spreadX = cosf(player->unk_b7e58 + 0.22439948f) * 24.0f;
-            spreadY = sinf(player->unk_b7e58 + 0.22439948f) * 24.0f;
+            player->optionTimer.Tick();
+            t = 1.0f - player->optionTimer.AsFloat() / 8.0f;
+            sideX = cosf(player->aimedShotAngle + 1.5707964f) * 24.0f;
+            sideY = sinf(player->aimedShotAngle + 1.5707964f) * 24.0f;
+            spreadX = cosf(player->aimedShotAngle + 0.22439948f) * 24.0f;
+            spreadY = sinf(player->aimedShotAngle + 0.22439948f) * 24.0f;
             spreadX = (spreadX - sideX) * t + sideX;
             spreadY = (spreadY - sideY) * t + sideY;
             player->optionPos[1].x += spreadX;
             player->optionPos[1].y += spreadY;
-            spreadX = cosf(player->unk_b7e58 - 0.22439948f) * 24.0f;
-            spreadY = sinf(player->unk_b7e58 - 0.22439948f) * 24.0f;
+            spreadX = cosf(player->aimedShotAngle - 0.22439948f) * 24.0f;
+            spreadY = sinf(player->aimedShotAngle - 0.22439948f) * 24.0f;
             spreadX = (spreadX + sideX) * t - sideX;
             spreadY = (spreadY + sideY) * t - sideY;
-            if (player->unk_2410 >= 8)
+            if (player->optionTimer >= 8)
             {
                 player->unk_240a = 1;
             }
@@ -1406,28 +1406,28 @@ int HandleInput(Player *player)
         }
         if (!(g_Unknown4b9e50 & 4))
         {
-            if (player->unk_9cc != 0.0f)
+            if (player->moveDeltaX != 0.0f)
             {
-                angleStep = -(player->unk_9cc / 4.0f) * D3DX_PI / 5.0f / 10.0f;
-                player->unk_b7e58 -= angleStep;
-                if (player->unk_b7e58 < -2.1991148f)
+                angleStep = -(player->moveDeltaX / 4.0f) * D3DX_PI / 5.0f / 10.0f;
+                player->aimedShotAngle -= angleStep;
+                if (player->aimedShotAngle < -2.1991148f)
                 {
-                    player->unk_b7e58 = -2.1991148f;
+                    player->aimedShotAngle = -2.1991148f;
                 }
-                else if (player->unk_b7e58 > -0.9424778f)
+                else if (player->aimedShotAngle > -0.9424778f)
                 {
-                    player->unk_b7e58 = -0.9424778f;
+                    player->aimedShotAngle = -0.9424778f;
                 }
             }
-            else if (fabsf(player->unk_b7e58 - -1.5707964f) > 0.031415928f)
+            else if (fabsf(player->aimedShotAngle - -1.5707964f) > 0.031415928f)
             {
-                angleStep = player->unk_b7e58 < -1.5707964f ? 0.062831856f * g_App.gameSpeed
+                angleStep = player->aimedShotAngle < -1.5707964f ? 0.062831856f * g_App.gameSpeed
                                                              : -0.062831856f * g_App.gameSpeed;
-                player->unk_b7e58 += angleStep;
+                player->aimedShotAngle += angleStep;
             }
             else
             {
-                player->unk_b7e58 = -1.5707964f;
+                player->aimedShotAngle = -1.5707964f;
             }
         }
     }
@@ -1441,9 +1441,9 @@ void UpdateHitboxAreas(Player *player)
 
     for (i = 0; i < 0x70; i++)
     {
-        player->unk_9dc[i].size.x = 0.0f;
+        player->bombHitboxes[i].size.x = 0.0f;
     }
-    area = player->unk_17dc;
+    area = player->hitAreas;
     for (i = 0; i < 0x60; i++, area++)
     {
         if (area->unk_18 <= 0)
@@ -1461,20 +1461,20 @@ void UpdateHitboxAreas(Player *player)
 
 void UpdateBombState(Player *player)
 {
-    if (player->unk_240d && !player->bomb.running && (g_Unknown4b9e50 & 2))
+    if (player->bombState && !player->bomb.running && (g_Unknown4b9e50 & 2))
     {
         player->StopBombState(1);
-        player->unk_23dc = 0;
+        player->bombJustStarted = 0;
         g_ItemManager.CollectAll();
         return;
     }
-    if (player->unk_240d == 2)
+    if (player->bombState == 2)
     {
         StartBombState(player);
     }
-    if (player->unk_23fc != 0)
+    if (player->bombCooldown != 0)
     {
-        player->unk_23fc--;
+        player->bombCooldown--;
     }
     if (player->bomb.running)
     {
@@ -1494,7 +1494,7 @@ void UpdateBombState(Player *player)
         return;
     }
     if (!g_Unknown626270.ChecksumMismatch() && !g_Unknown49fbf0.Func42ad66() && player->deathbombFrames != 0 &&
-        (int)g_Unknown626270.stats->bombs > 0 && player->unk_23fc == 0 && (g_Unknown4b9e50 & 2))
+        (int)g_Unknown626270.stats->bombs > 0 && player->bombCooldown == 0 && (g_Unknown4b9e50 & 2))
     {
         g_ReplayManager->unk_d6 |= 1;
         g_Unknown626270.AddBombsUsed(1);
@@ -1502,7 +1502,7 @@ void UpdateBombState(Player *player)
         g_Unknown49fbf0.bombsChanged = 2;
         player->bomb.focused = player->focused;
         player->bomb.running = 1;
-        player->unk_23dc = 1;
+        player->bombJustStarted = 1;
         player->bomb.timer.Set(0);
         player->bomb.duration = 999;
         if (!player->bomb.focused)
@@ -1525,7 +1525,7 @@ void UpdateBombState(Player *player)
     }
     else
     {
-        player->unk_23dc = 0;
+        player->bombJustStarted = 0;
     }
 }
 
@@ -1536,7 +1536,7 @@ int UpdateDyingState(Player *player)
 
     if (player->deathbombFrames != 0)
     {
-        if (player->unk_240d == 1)
+        if (player->bombState == 1)
         {
             player->StopBombState(0);
             return 0;
@@ -1670,17 +1670,17 @@ void UpdateInvulnerability(Player *player)
     }
     if (player->playerState == 3)
     {
-        if (player->unk_b7e68 != NULL)
+        if (player->invulnerabilityEffect != NULL)
         {
-            player->unk_b7e68->pos = player->position;
+            player->invulnerabilityEffect->pos = player->position;
         }
         player->stateTimer.Sub(1);
         if (player->stateTimer.AsFrames() <= 0)
         {
-            if (player->unk_b7e68 != NULL)
+            if (player->invulnerabilityEffect != NULL)
             {
-                player->unk_b7e68->active = 0;
-                player->unk_b7e68 = NULL;
+                player->invulnerabilityEffect->active = 0;
+                player->invulnerabilityEffect = NULL;
             }
             player->playerState = 0;
             player->stateTimer.Set(0);
@@ -1697,9 +1697,9 @@ void UpdateInvulnerability(Player *player)
     }
     else if (player->playerState == 4)
     {
-        if (player->unk_b7e6c != NULL)
+        if (player->bombInvulnerabilityEffect != NULL)
         {
-            player->unk_b7e6c->pos = player->position;
+            player->bombInvulnerabilityEffect->pos = player->position;
         }
         g_Unknown626270.invulnerabilityBonus = player->stateTimer.AsFrames() * 50000 / player->unk_16a0c.AsFrames();
         if (g_Unknown626270.invulnerabilityBonus < 0)
@@ -1757,14 +1757,14 @@ void StartBombState(Player *player)
 
     if (player->bomb.running || g_Unknown49fbf0.Func42ad66())
     {
-        player->unk_240d = 2;
+        player->bombState = 2;
         return;
     }
     switch (player->playerState)
     {
     case 1:
     case 3:
-        player->unk_240d = 2;
+        player->bombState = 2;
         return;
     case 2:
         if (player->deathbombFrames != 0)
@@ -1772,21 +1772,21 @@ void StartBombState(Player *player)
             player->StopBombState(0);
             return;
         }
-        player->unk_240d = 2;
+        player->bombState = 2;
         return;
     }
     player->stateTimer.Set(540);
     player->unk_16a0c = player->stateTimer;
-    player->unk_240d = 1;
+    player->bombState = 1;
     player->playerState = 4;
-    if (player->unk_b7e6c != NULL)
+    if (player->bombInvulnerabilityEffect != NULL)
     {
-        player->unk_b7e6c->active = 0;
+        player->bombInvulnerabilityEffect->active = 0;
     }
-    if (player->unk_b7e68 != NULL)
+    if (player->invulnerabilityEffect != NULL)
     {
-        player->unk_b7e68->active = 0;
-        player->unk_b7e68 = NULL;
+        player->invulnerabilityEffect->active = 0;
+        player->invulnerabilityEffect = NULL;
     }
     effect = g_EffectManager.SpawnReservedEffect(0x1c, &player->position, 4, 1, 0xffffffff);
     effect->sprite.unk_48[4].Set(0);
@@ -1798,7 +1798,7 @@ void StartBombState(Player *player)
     effect->sprite.unk_224.x = 0.25f;
     effect->sprite.unk_c8 = player->stateTimer.AsFrames();
     effect->sprite.unk_14 *= -1.0f;
-    player->unk_b7e6c = effect;
+    player->bombInvulnerabilityEffect = effect;
     g_Unknown49fbf0.Func427c81(0, 2);
     g_SoundPlayer.QueueSound(0x20, 0);
     g_SoundPlayer.QueueSound(0x24, 0);
@@ -1828,18 +1828,18 @@ void Player::EndBombState()
     }
     this->playerState = 3;
     this->stateTimer.Set(40);
-    this->unk_23fc = 40;
-    this->unk_240d = 0;
-    if (this->unk_b7e6c != NULL)
+    this->bombCooldown = 40;
+    this->bombState = 0;
+    if (this->bombInvulnerabilityEffect != NULL)
     {
-        this->unk_b7e6c->active = 0;
-        this->unk_b7e6c = NULL;
+        this->bombInvulnerabilityEffect->active = 0;
+        this->bombInvulnerabilityEffect = NULL;
     }
 }
 
 PlayerArea *Player::AddHitboxArea(D3DXVECTOR3 *pos, float width, float height, int unk_1c)
 {
-    PlayerArea *area = this->unk_17dc;
+    PlayerArea *area = this->hitAreas;
     int i;
 
     for (i = 0; i < 0x5f; i++, area++)
@@ -1860,7 +1860,7 @@ PlayerArea *Player::AddHitboxArea(D3DXVECTOR3 *pos, float width, float height, i
 
 PlayerArea *Player::AddHitboxAreaCircle(D3DXVECTOR3 *pos, float unk_10, float unk_14, int unk_18, int unk_1c)
 {
-    PlayerArea *area = this->unk_17dc;
+    PlayerArea *area = this->hitAreas;
     int i;
 
     for (i = 0; i < 0x5f; i++, area++)
@@ -1885,10 +1885,10 @@ void Player::StopBombState(int unk)
     int i;
     float angle;
 
-    if (this->unk_b7e6c != NULL)
+    if (this->bombInvulnerabilityEffect != NULL)
     {
-        this->unk_b7e6c->active = 0;
-        this->unk_b7e6c = NULL;
+        this->bombInvulnerabilityEffect->active = 0;
+        this->bombInvulnerabilityEffect = NULL;
     }
     eff = g_EffectManager.SpawnReservedEffect(0x1c, &this->position, 4, 1, 0xffffffff);
     eff->sprite.unk_48[4].Set(0);
@@ -1906,13 +1906,13 @@ void Player::StopBombState(int unk)
     ((BYTE *)&eff->sprite.unk_224.y)[3] = eff->sprite.alpha;
     ((BYTE *)&eff->sprite.unk_224.z)[3] = 0;
     eff->sprite.unk_c8 = 30;
-    this->unk_b7e6c = eff;
+    this->bombInvulnerabilityEffect = eff;
     g_Unknown12fe0cc = 0;
     g_Unknown12fe0c4 = 0;
-    this->unk_240d = 0;
+    this->bombState = 0;
     this->playerState = 3;
     this->stateTimer.Set(40);
-    this->unk_23fc = 40;
+    this->bombCooldown = 40;
     g_Unknown626270.invulnerabilityBonus = g_Unknown626270.stats->unk_88;
     this->AddHitboxAreaCircle(&this->position, 32.0f, 16.0f, 0x32, 8);
     angle = -D3DX_PI;
@@ -1929,9 +1929,9 @@ void Player::StopBombState(int unk)
 
 void ResetHomingAndText(Player *player)
 {
-    player->unk_2428 = D3DXVECTOR3(-999.0f, -999.0f, 0.0f);
+    player->orbHomingTarget = D3DXVECTOR3(-999.0f, -999.0f, 0.0f);
     player->homingTarget = D3DXVECTOR3(-999.0f, -999.0f, 0.0f);
-    player->unk_2440 = 0;
+    player->homingTargetSet = 0;
     if (player->position.y >= 400.0f)
     {
         if (g_AsciiText.GetUnk74d4() != 2 && player->position.x < 160.0f)
@@ -2144,7 +2144,7 @@ int Player::AddedCallback(Player *player)
     // 0x80 entries: past unk_9dc's 0x70, into unk_17dc.
     for (i = 0; i < 0x80; i++)
     {
-        player->unk_9dc[i].size.x = 0.0f;
+        player->bombHitboxes[i].size.x = 0.0f;
     }
     player->hitboxSize.y = g_Player.shotType->hitboxSize / 2.0f;
     player->hitboxSize.x = player->hitboxSize.y;
@@ -2152,10 +2152,10 @@ int Player::AddedCallback(Player *player)
     player->grazeSize.y = g_Player.shotType->grazeSize / 2.0f;
     player->grazeSize.x = player->grazeSize.y;
     player->grazeSize.z = 5.0f;
-    player->unk_9a8.x = 12.0f;
-    player->unk_9a8.y = 12.0f;
-    player->unk_9a8.z = 5.0f;
-    player->unk_241c = 0;
+    player->grazeTestHalfSize.x = 12.0f;
+    player->grazeTestHalfSize.y = 12.0f;
+    player->grazeTestHalfSize.z = 5.0f;
+    player->direction = 0;
     player->playerState = 1;
     player->stateTimer.Set(120);
     player->unk_240a = 1;
@@ -2172,7 +2172,7 @@ int Player::AddedCallback(Player *player)
     player->bomb.updateFocused = g_Bombs[g_Unknown626270.shotIndex].updateFocused;
     player->bomb.drawFocused = g_Bombs[g_Unknown626270.shotIndex].drawFocused;
     player->bomb.running = 0;
-    player->unk_b7e58 = -(D3DX_PI / 2.0f);
+    player->aimedShotAngle = -(D3DX_PI / 2.0f);
     player->moveScaleY = 1.0f;
     player->moveScaleX = 1.0f;
     player->deathbombFrames = g_Player.shotType->deathbombFrames;

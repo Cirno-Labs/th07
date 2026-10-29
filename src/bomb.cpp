@@ -42,9 +42,9 @@ void SpawnBombAura(Player *player)
 {
     Effect *effect;
 
-    if (player->unk_b7e68 != NULL)
+    if (player->invulnerabilityEffect != NULL)
     {
-        player->unk_b7e68->active = 0;
+        player->invulnerabilityEffect->active = 0;
     }
     effect = g_EffectManager.SpawnReservedEffect(0x19, &player->position, 0, 1, 0xffffffff);
     effect->sprite.unk_48[4].Set(0);
@@ -58,7 +58,7 @@ void SpawnBombAura(Player *player)
     effect->sprite.unk_rgb[2] = 0xff;
     effect->sprite.unk_rgb[1] = 0x40;
     effect->sprite.unk_rgb[0] = 0x40;
-    player->unk_b7e68 = effect;
+    player->invulnerabilityEffect = effect;
 }
 
 void SetBombDrain(Player *player, int minimum, float share)
@@ -135,7 +135,7 @@ void UpdateReimuABomb(Player *player)
         }
         orb->angle = AddNormalizeAngle(ang, 0.0f);
         orb->unk_4 = 0;
-        player->unk_9dc[i].unk_1c = 0;
+        player->bombHitboxes[i].unk_1c = 0;
         for (sprite = orb->sprites, k = 0; k < 4; k++, sprite++)
         {
             g_SpriteEngine->StartScriptAtOrigin(sprite, k + 0x485);
@@ -162,10 +162,10 @@ void UpdateReimuABomb(Player *player)
                 orb->sprites[1].pendingInterrupt = 1;
                 orb->sprites[2].pendingInterrupt = 1;
                 orb->sprites[3].pendingInterrupt = 1;
-                player->unk_9dc[i].pos = orb->pos;
-                player->unk_9dc[i].size.x = 256.0f;
-                player->unk_9dc[i].size.y = 256.0f;
-                player->unk_9dc[i].unk_18 = 400;
+                player->bombHitboxes[i].pos = orb->pos;
+                player->bombHitboxes[i].size.x = 256.0f;
+                player->bombHitboxes[i].size.y = 256.0f;
+                player->bombHitboxes[i].unk_18 = 400;
                 player->AddHitboxAreaCircle(&orb->pos, 64.0f, 4.2666669f, 0x1e, 6);
                 orb->velocity.x = 0.0f;
                 orb->velocity.y = 0.0f;
@@ -175,19 +175,19 @@ void UpdateReimuABomb(Player *player)
             }
             if (bomb->timer.HasTicked())
             {
-                player->unk_9dc[i].size.x = 48.0f;
-                player->unk_9dc[i].size.y = 48.0f;
-                player->unk_9dc[i].pos = orb->pos;
-                player->unk_9dc[i].unk_18 = 8;
+                player->bombHitboxes[i].size.x = 48.0f;
+                player->bombHitboxes[i].size.y = 48.0f;
+                player->bombHitboxes[i].pos = orb->pos;
+                player->bombHitboxes[i].unk_18 = 8;
                 player->AddHitboxAreaCircle(&orb->pos, 128.0f, 0.0f, 0, 6);
             }
         }
         else if (orb->state != 0 && bomb->timer.HasTicked())
         {
-            player->unk_9dc[i].pos = bomb->parts[i].pos;
-            player->unk_9dc[i].size.x = 256.0f;
-            player->unk_9dc[i].size.y = 256.0f;
-            player->unk_9dc[i].unk_18 = 2;
+            player->bombHitboxes[i].pos = bomb->parts[i].pos;
+            player->bombHitboxes[i].size.x = 256.0f;
+            player->bombHitboxes[i].size.y = 256.0f;
+            player->bombHitboxes[i].unk_18 = 2;
             orb->unk_4++;
             if (orb->unk_4 >= 30)
             {
@@ -286,7 +286,7 @@ void UpdateReimuABombFocused(Player *player)
                 orb->pos = player->position;
                 x = g_Rng.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
                 ((Vector2 *)&orb->velocity)->SetPolar(x, orb->homingSpeed);
-                player->unk_9dc[i].unk_1c = 0;
+                player->bombHitboxes[i].unk_1c = 0;
                 for (spr = orb->sprites, k = 0; k < 4; k++, spr++)
                 {
                     g_SpriteEngine->StartScriptAtOrigin(spr, k + 0x485);
@@ -306,9 +306,9 @@ void UpdateReimuABombFocused(Player *player)
         {
             if (bombs->timer.HasTicked())
             {
-                if (player->unk_2428.x > -100.0f)
+                if (player->orbHomingTarget.x > -100.0f)
                 {
-                    aim = player->unk_2428;
+                    aim = player->orbHomingTarget;
                 }
                 else
                 {
@@ -331,12 +331,12 @@ void UpdateReimuABombFocused(Player *player)
                 }
                 orb->velocity.x = x * orb->homingSpeed / len;
                 orb->velocity.y = y * orb->homingSpeed / len;
-                player->unk_9dc[i].size.x = 48.0f;
-                player->unk_9dc[i].size.y = 48.0f;
-                player->unk_9dc[i].pos = orb->pos;
-                player->unk_9dc[i].unk_18 = 8;
+                player->bombHitboxes[i].size.x = 48.0f;
+                player->bombHitboxes[i].size.y = 48.0f;
+                player->bombHitboxes[i].pos = orb->pos;
+                player->bombHitboxes[i].unk_18 = 8;
                 player->AddHitboxAreaCircle(&orb->pos, 128.0f, 0.0f, 0, 6);
-                if (player->unk_9dc[i].unk_1c >= 100 || bombs->timer >= bombs->duration - 30)
+                if (player->bombHitboxes[i].unk_1c >= 100 || bombs->timer >= bombs->duration - 30)
                 {
                     g_EffectManager.SpawnEffect(6, &orb->pos, 8, 0xffffffff);
                     g_EffectManager.SpawnEffect(0xc, &orb->pos, 1, 0xff4040ff);
@@ -345,9 +345,9 @@ void UpdateReimuABombFocused(Player *player)
                     orb->sprites[1].pendingInterrupt = 1;
                     orb->sprites[2].pendingInterrupt = 1;
                     orb->sprites[3].pendingInterrupt = 1;
-                    player->unk_9dc[i].size.x = 256.0f;
-                    player->unk_9dc[i].size.y = 256.0f;
-                    player->unk_9dc[i].unk_18 = 400;
+                    player->bombHitboxes[i].size.x = 256.0f;
+                    player->bombHitboxes[i].size.y = 256.0f;
+                    player->bombHitboxes[i].unk_18 = 400;
                     player->AddHitboxAreaCircle(&orb->pos, 32.0f, 6.6666665f, 0xf, 6);
                     D3DXVECTOR3 velocity = orb->velocity / 8.0f;
                     g_SoundPlayer.QueueSound(0xf, 0);
@@ -460,10 +460,10 @@ void UpdateReimuBBomb(Player *player)
             {
                 area[i]->x = player->bomb.parts[i].pos.x + player->bomb.parts[i].sprites[0].posOffset.x;
                 area[i]->y = player->bomb.parts[i].pos.y + player->bomb.parts[i].sprites[0].posOffset.y;
-                player->unk_9dc[i].size.x = area[i]->width;
-                player->unk_9dc[i].size.y = area[i]->height;
-                player->unk_9dc[i].pos = player->bomb.parts[i].pos + player->bomb.parts[i].sprites[0].posOffset;
-                player->unk_9dc[i].unk_18 = 16;
+                player->bombHitboxes[i].size.x = area[i]->width;
+                player->bombHitboxes[i].size.y = area[i]->height;
+                player->bombHitboxes[i].pos = player->bomb.parts[i].pos + player->bomb.parts[i].sprites[0].posOffset;
+                player->bombHitboxes[i].unk_18 = 16;
             }
         }
     }
@@ -530,10 +530,10 @@ void UpdateReimuBBombFocused(Player *player)
         g_SpriteEngine->Step(&player->bomb.parts[0].sprites[0]);
         g_SpriteEngine->Step(&player->bomb.parts[0].sprites[1]);
         g_SpriteEngine->Step(&player->bomb.parts[0].sprites[2]);
-        player->unk_9dc[0].size.x = 256.0f;
-        player->unk_9dc[0].size.y = 256.0f;
-        player->unk_9dc[0].pos = player->bomb.startPos + player->bomb.parts[0].sprites[0].posOffset;
-        player->unk_9dc[0].unk_18 = 18;
+        player->bombHitboxes[0].size.x = 256.0f;
+        player->bombHitboxes[0].size.y = 256.0f;
+        player->bombHitboxes[0].pos = player->bomb.startPos + player->bomb.parts[0].sprites[0].posOffset;
+        player->bombHitboxes[0].unk_18 = 18;
     }
     player->playerState = 3;
     player->bomb.timer.Tick();
@@ -597,10 +597,10 @@ void UpdateMarisaABomb(Player *player)
             if (player->bomb.timer.HasTicked() && player->bomb.timer.AsFrames() % 3 != 0)
             {
                 player->AddHitboxAreaCircle(&player->bomb.parts[i].pos, 96.0f, 0.0f, 0, 6);
-                player->unk_9dc[i].size.x = 128.0f;
-                player->unk_9dc[i].size.y = 128.0f;
-                player->unk_9dc[i].pos = player->bomb.parts[i].pos;
-                player->unk_9dc[i].unk_18 = 8;
+                player->bombHitboxes[i].size.x = 128.0f;
+                player->bombHitboxes[i].size.y = 128.0f;
+                player->bombHitboxes[i].pos = player->bomb.parts[i].pos;
+                player->bombHitboxes[i].unk_18 = 8;
             }
             g_SpriteEngine->Step(player->bomb.parts[i].sprites);
         }
@@ -700,7 +700,7 @@ void UpdateMarisaABombFocused(Player *player)
             player->bomb.parts[i].acceleration.z = 0.0f;
             g_SoundPlayer.QueueSound(7, 0);
             ScreenEffect::StartEffect(1, 120, 4, 1, 0);
-            player->unk_9dc[i].unk_1c = 0;
+            player->bombHitboxes[i].unk_1c = 0;
         }
     }
     for (orb = player->bomb.parts, i = 0; i < 24; i++, orb++)
@@ -721,12 +721,12 @@ void UpdateMarisaABombFocused(Player *player)
             orb->state = 0;
         }
         player->AddHitboxAreaCircle(&orb->pos, 96.0f, 0.0f, 0, 6);
-        if (player->unk_9dc[i].unk_1c < 80)
+        if (player->bombHitboxes[i].unk_1c < 80)
         {
-            player->unk_9dc[i].size.x = 128.0f;
-            player->unk_9dc[i].size.y = 128.0f;
-            player->unk_9dc[i].pos = orb->pos;
-            player->unk_9dc[i].unk_18 = 12;
+            player->bombHitboxes[i].size.x = 128.0f;
+            player->bombHitboxes[i].size.y = 128.0f;
+            player->bombHitboxes[i].pos = orb->pos;
+            player->bombHitboxes[i].unk_18 = 12;
         }
         g_SpriteEngine->Step(orb->sprites);
     }
@@ -812,7 +812,7 @@ void UpdateMarisaBBomb(Player *player)
     }
     else
     {
-        for (laser = player->bomb.parts, hit = player->unk_9dc, i = 0; i < 3; i++, laser++)
+        for (laser = player->bomb.parts, hit = player->bombHitboxes, i = 0; i < 3; i++, laser++)
         {
             if (player->bomb.startPos.x < 192.0f)
             {
@@ -919,12 +919,12 @@ void UpdateMarisaBBombFocused(Player *player)
         }
         if (player->bomb.timer.HasTicked() && player->bomb.timer.AsFrames() % 4 != 0)
         {
-            player->unk_9dc[0].size.x = 384.0f;
-            player->unk_9dc[0].size.y = player->position.y;
-            player->unk_9dc[0].pos.x = 192.0f;
-            player->unk_9dc[0].pos.y = player->position.y / 2.0f;
-            player->unk_9dc[0].unk_18 = 23;
-            player->AddHitboxArea(&player->unk_9dc[0].pos, 384.0f, player->position.y, 6);
+            player->bombHitboxes[0].size.x = 384.0f;
+            player->bombHitboxes[0].size.y = player->position.y;
+            player->bombHitboxes[0].pos.x = 192.0f;
+            player->bombHitboxes[0].pos.y = player->position.y / 2.0f;
+            player->bombHitboxes[0].unk_18 = 23;
+            player->AddHitboxArea(&player->bombHitboxes[0].pos, 384.0f, player->position.y, 6);
         }
         g_SpriteEngine->Step(&player->bomb.parts[0].sprites[0]);
         g_SpriteEngine->Step(&player->bomb.parts[0].sprites[1]);
@@ -1010,7 +1010,7 @@ void UpdateSakuyaABomb(Player *player)
                     knife->velocity.y = sinf(knife->angle) * 24.0f;
                     knife->pos = player->bomb.startPos + knife->velocity;
                     knife->velocity.z = 0.0f;
-                    player->unk_9dc[i].unk_1c = 0;
+                    player->bombHitboxes[i].unk_1c = 0;
                     remaining--;
                 }
                 continue;
@@ -1021,19 +1021,19 @@ void UpdateSakuyaABomb(Player *player)
                 knife->speed += knife->speedStep;
                 knife->velocity.x = cosf(knife->angle) * knife->speed;
                 knife->velocity.y = sinf(knife->angle) * knife->speed;
-                if (player->unk_9dc[i].unk_1c < 30)
+                if (player->bombHitboxes[i].unk_1c < 30)
                 {
                     knife->pos += knife->velocity * g_App.gameSpeed;
                     player->AddHitboxAreaCircle(&knife->pos, 32.0f, 0.0f, 0, 6);
-                    player->unk_9dc[i].size.x = 24.0f;
-                    player->unk_9dc[i].size.y = 24.0f;
-                    player->unk_9dc[i].pos = knife->pos;
-                    player->unk_9dc[i].unk_18 = 10;
+                    player->bombHitboxes[i].size.x = 24.0f;
+                    player->bombHitboxes[i].size.y = 24.0f;
+                    player->bombHitboxes[i].pos = knife->pos;
+                    player->bombHitboxes[i].unk_18 = 10;
                 }
-                else if (player->unk_9dc[i].unk_1c < 999)
+                else if (player->bombHitboxes[i].unk_1c < 999)
                 {
                     g_SpriteEngine->StartScriptAtOrigin(knife->sprites, 0x460);
-                    player->unk_9dc[i].unk_1c = 999;
+                    player->bombHitboxes[i].unk_1c = 999;
                 }
                 if (!g_Unknown626270.IsInPlayArea(knife->pos.x, knife->pos.y, 64.0f, 64.0f))
                 {
@@ -1124,7 +1124,7 @@ void UpdateSakuyaABombFocused(Player *player)
             knife->pos = player->position + knife->velocity;
             knife->timer.Set(0);
             knife->velocity.z = 0.0f;
-            player->unk_9dc[i].unk_1c = 0;
+            player->bombHitboxes[i].unk_1c = 0;
         }
         g_SoundPlayer.QueueSound(6, 0);
         ScreenEffect::StartEffect(1, 120, 4, 1, 0);
@@ -1139,9 +1139,9 @@ void UpdateSakuyaABombFocused(Player *player)
         {
             if (knife->timer.HasTickedTo(70))
             {
-                if (player->unk_2428.x > -100.0f)
+                if (player->orbHomingTarget.x > -100.0f)
                 {
-                    knife->angle = AddNormalizeAngle(atan2f(player->unk_2428.y - knife->pos.y, player->unk_2428.x - knife->pos.x), 0.0f);
+                    knife->angle = AddNormalizeAngle(atan2f(player->orbHomingTarget.y - knife->pos.y, player->orbHomingTarget.x - knife->pos.x), 0.0f);
                 }
                 knife->speed = 14.0f;
             }
@@ -1155,19 +1155,19 @@ void UpdateSakuyaABombFocused(Player *player)
             knife->velocity.x = 0.0f;
             knife->velocity.y = 0.0f;
         }
-        if (player->unk_9dc[i].unk_1c == 0)
+        if (player->bombHitboxes[i].unk_1c == 0)
         {
             knife->pos += knife->velocity * g_App.gameSpeed;
             player->AddHitboxAreaCircle(&player->bomb.parts[i].pos, 32.0f, 0.0f, 0, 6);
-            player->unk_9dc[i].size.x = 24.0f;
-            player->unk_9dc[i].size.y = 24.0f;
-            player->unk_9dc[i].pos = knife->pos;
-            player->unk_9dc[i].unk_18 = 22;
+            player->bombHitboxes[i].size.x = 24.0f;
+            player->bombHitboxes[i].size.y = 24.0f;
+            player->bombHitboxes[i].pos = knife->pos;
+            player->bombHitboxes[i].unk_18 = 22;
         }
-        else if (player->unk_9dc[i].unk_1c < 999)
+        else if (player->bombHitboxes[i].unk_1c < 999)
         {
             g_SpriteEngine->StartScriptAtOrigin(knife->sprites, 0x460);
-            player->unk_9dc[i].unk_1c = 999;
+            player->bombHitboxes[i].unk_1c = 999;
             g_EffectManager.SpawnEffect(0, &player->bomb.parts[i].pos, 1, 0xffff80ff);
         }
         g_SpriteEngine->Step(knife->sprites);
@@ -1254,11 +1254,11 @@ void UpdateSakuyaBBomb(Player *player)
     }
     if (player->bomb.timer >= 30 && player->bomb.timer.HasTicked() && player->bomb.timer.current % 4 == 0)
     {
-        player->unk_9dc[0].pos.x = 192.0f;
-        player->unk_9dc[0].pos.y = 224.0f;
-        player->unk_9dc[0].size.x = 352.0f;
-        player->unk_9dc[0].size.y = 416.0f;
-        player->unk_9dc[0].unk_18 = 3;
+        player->bombHitboxes[0].pos.x = 192.0f;
+        player->bombHitboxes[0].pos.y = 224.0f;
+        player->bombHitboxes[0].size.x = 352.0f;
+        player->bombHitboxes[0].size.y = 416.0f;
+        player->bombHitboxes[0].unk_18 = 3;
     }
     if (player->bomb.timer.HasTickedTo(40))
     {
@@ -1316,10 +1316,10 @@ void UpdateSakuyaBBombFocused(Player *player)
         player->moveScaleY = 1.0f;
         player->moveScaleX = 1.0f;
         player->AddHitboxAreaCircle(&player->position, 800.0f, 0.0f, 0, 6);
-        player->unk_17dc[0].x = 192.0f;
-        player->unk_17dc[0].y = 224.0f;
-        player->unk_17dc[0].width = 448.0f;
-        player->unk_17dc[0].height = 512.0f;
+        player->hitAreas[0].x = 192.0f;
+        player->hitAreas[0].y = 224.0f;
+        player->hitAreas[0].width = 448.0f;
+        player->hitAreas[0].height = 512.0f;
         return;
     }
     if (player->bomb.timer.HasTickedTo(0))
@@ -1329,7 +1329,7 @@ void UpdateSakuyaBBombFocused(Player *player)
         player->bomb.duration = 300;
         player->stateTimer.Set(420);
         SpawnBombAura(player);
-        player->unk_23dc = 0;
+        player->bombJustStarted = 0;
         for (knife = player->bomb.parts, i = 0; i < 2; i++, knife++)
         {
             knife->state = 1;
@@ -1353,11 +1353,11 @@ void UpdateSakuyaBBombFocused(Player *player)
         SetBombDrain(player, 6000, 0.29f);
     }
     player->AddHitboxAreaCircle(&player->bomb.parts[0].pos, 96.0f, 0.0f, 0, 6);
-    player->unk_9dc[0].pos.x = player->bomb.parts[0].pos.x;
-    player->unk_9dc[0].pos.y = player->bomb.parts[0].pos.y;
-    player->unk_9dc[0].size.x = 160.0f;
-    player->unk_9dc[0].size.y = 160.0f;
-    player->unk_9dc[0].unk_18 = 1;
+    player->bombHitboxes[0].pos.x = player->bomb.parts[0].pos.x;
+    player->bombHitboxes[0].pos.y = player->bomb.parts[0].pos.y;
+    player->bombHitboxes[0].size.x = 160.0f;
+    player->bombHitboxes[0].size.y = 160.0f;
+    player->bombHitboxes[0].unk_18 = 1;
     if (player->bomb.timer.HasTickedTo(40))
     {
         ScreenEffect::StartEffect(1, 60, 1, 7, 0);
