@@ -60,14 +60,14 @@ ASSERT_SIZE(BulletCommand, 0x18);
 struct BulletEx
 {
     Timer timer;
-    float unk_c;
-    float unk_10;
+    float turnSpeed;
+    float turnAngle;
     // Added to the velocity (flag 0x10).
     D3DXVECTOR3 accel;
     // How long the behavior runs, in frames.
     int duration;
-    int unk_24;
-    int unk_28;
+    int maxTurns;
+    int turnCount;
 };
 ASSERT_SIZE(BulletEx, 0x2c);
 

@@ -661,8 +661,8 @@ void TurnAndAccelerate(Bullet *bullet)
     }
     else
     {
-        bullet->angle = AddNormalizeAngle(bullet->angle, g_App.gameSpeed * bullet->ex[2].unk_10);
-        bullet->speed = g_App.gameSpeed * bullet->ex[2].unk_c + bullet->speed;
+        bullet->angle = AddNormalizeAngle(bullet->angle, g_App.gameSpeed * bullet->ex[2].turnAngle);
+        bullet->speed = g_App.gameSpeed * bullet->ex[2].turnSpeed + bullet->speed;
         ((Vector2 *)&bullet->velocity)->SetPolar(bullet->angle, g_App.gameSpeed * bullet->speed);
     }
     bullet->ex[2].timer.Tick();
@@ -678,13 +678,13 @@ void StopTurnAndRestart(Bullet *bullet)
         {
             g_SoundPlayer.QueueSound(bullet->sound, 0);
         }
-        bullet->ex[3].unk_28++;
-        if (bullet->ex[3].unk_28 >= bullet->ex[3].unk_24)
+        bullet->ex[3].turnCount++;
+        if (bullet->ex[3].turnCount >= bullet->ex[3].maxTurns)
         {
             bullet->activeFlags &= ~0x40;
         }
-        bullet->angle += bullet->ex[3].unk_10;
-        bullet->speed = bullet->ex[3].unk_c;
+        bullet->angle += bullet->ex[3].turnAngle;
+        bullet->speed = bullet->ex[3].turnSpeed;
         speed = bullet->speed;
         bullet->ex[3].timer.Set(0);
     }
@@ -706,13 +706,13 @@ void StopTurnToAngle(Bullet *bullet)
         {
             g_SoundPlayer.QueueSound(bullet->sound, 0);
         }
-        bullet->ex[3].unk_28++;
-        if (bullet->ex[3].unk_28 >= bullet->ex[3].unk_24)
+        bullet->ex[3].turnCount++;
+        if (bullet->ex[3].turnCount >= bullet->ex[3].maxTurns)
         {
             bullet->activeFlags &= ~0x100;
         }
-        bullet->angle = bullet->ex[3].unk_10;
-        bullet->speed = bullet->ex[3].unk_c;
+        bullet->angle = bullet->ex[3].turnAngle;
+        bullet->speed = bullet->ex[3].turnSpeed;
         speed = bullet->speed;
         bullet->ex[3].timer.Set(0);
     }
@@ -734,13 +734,13 @@ void StopTurnToPlayer(Bullet *bullet)
         {
             g_SoundPlayer.QueueSound(bullet->sound, 0);
         }
-        bullet->ex[3].unk_28++;
-        if (bullet->ex[3].unk_28 >= bullet->ex[3].unk_24)
+        bullet->ex[3].turnCount++;
+        if (bullet->ex[3].turnCount >= bullet->ex[3].maxTurns)
         {
             bullet->activeFlags &= ~0x80;
         }
-        bullet->angle = AddNormalizeAngle(g_Player.AngleFrom(&bullet->pos), bullet->ex[3].unk_10);
-        bullet->speed = bullet->ex[3].unk_c;
+        bullet->angle = AddNormalizeAngle(g_Player.AngleFrom(&bullet->pos), bullet->ex[3].turnAngle);
+        bullet->speed = bullet->ex[3].turnSpeed;
         speed = bullet->speed;
         bullet->ex[3].timer.Set(0);
     }
@@ -771,11 +771,11 @@ void BounceOffWalls(Bullet *bullet)
         {
             bullet->angle = -bullet->angle;
         }
-        bullet->speed = bullet->ex[4].unk_c;
+        bullet->speed = bullet->ex[4].turnSpeed;
         speed = bullet->speed;
         ((Vector2 *)&bullet->velocity)->SetPolar(bullet->angle, speed * g_App.gameSpeed);
         bullet->ex[4].duration++;
-        if (bullet->ex[4].duration >= bullet->ex[4].unk_24)
+        if (bullet->ex[4].duration >= bullet->ex[4].maxTurns)
         {
             bullet->activeFlags &= ~0xc00;
         }
@@ -815,11 +815,11 @@ void RunBulletCommands(Bullet *bullet)
             break;
         case 0x10:
             bullet->activeFlags |= 0x10;
-            bullet->ex[1].unk_c = cmd->arg0;
-            bullet->ex[1].unk_10 = cmd->arg1 > -990.0f ? cmd->arg1 : bullet->angle;
+            bullet->ex[1].turnSpeed = cmd->arg0;
+            bullet->ex[1].turnAngle = cmd->arg1 > -990.0f ? cmd->arg1 : bullet->angle;
             bullet->ex[1].timer.Set(0);
             bullet->ex[1].duration = cmd->frames;
-            ((Vector2 *)&bullet->ex[1].accel)->SetPolar(bullet->ex[1].unk_10, g_App.gameSpeed * bullet->ex[1].unk_c);
+            ((Vector2 *)&bullet->ex[1].accel)->SetPolar(bullet->ex[1].turnAngle, g_App.gameSpeed * bullet->ex[1].turnSpeed);
             if (bullet->commandIndex != 0 && bullet->sound >= 0)
             {
                 g_SoundPlayer.QueueSound(bullet->sound, 0);
@@ -827,8 +827,8 @@ void RunBulletCommands(Bullet *bullet)
             break;
         case 0x20:
             bullet->activeFlags |= 0x20;
-            bullet->ex[2].unk_c = cmd->arg0;
-            bullet->ex[2].unk_10 = cmd->arg1;
+            bullet->ex[2].turnSpeed = cmd->arg0;
+            bullet->ex[2].turnAngle = cmd->arg1;
             bullet->ex[2].timer.Set(0);
             bullet->ex[2].duration = cmd->frames;
             if (bullet->commandIndex != 0 && bullet->sound >= 0)
@@ -840,25 +840,25 @@ void RunBulletCommands(Bullet *bullet)
         case 0x80:
         case 0x100:
             bullet->activeFlags |= cmd->flag;
-            bullet->ex[3].unk_10 = cmd->arg0;
-            bullet->ex[3].unk_c = cmd->arg1 > -999.0f ? cmd->arg1 : bullet->speed;
+            bullet->ex[3].turnAngle = cmd->arg0;
+            bullet->ex[3].turnSpeed = cmd->arg1 > -999.0f ? cmd->arg1 : bullet->speed;
             bullet->ex[3].timer.Set(0);
             bullet->ex[3].duration = cmd->frames;
-            bullet->ex[3].unk_24 = cmd->maxTurns;
-            bullet->ex[3].unk_28 = 0;
+            bullet->ex[3].maxTurns = cmd->maxTurns;
+            bullet->ex[3].turnCount = 0;
             break;
         case 0x400:
         case 0x800:
             bullet->activeFlags |= cmd->flag;
             if (cmd->arg0 >= 0.0f)
             {
-                bullet->ex[4].unk_c = cmd->arg0;
+                bullet->ex[4].turnSpeed = cmd->arg0;
             }
             else
             {
-                bullet->ex[4].unk_c = bullet->speed;
+                bullet->ex[4].turnSpeed = bullet->speed;
             }
-            bullet->ex[4].unk_24 = cmd->frames;
+            bullet->ex[4].maxTurns = cmd->frames;
             bullet->ex[4].duration = 0;
             break;
         case 0x2000:
