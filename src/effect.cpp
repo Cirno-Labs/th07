@@ -48,6 +48,12 @@ int EffectInitDriftFast(Effect *effect)
     return 0;
 }
 
+int EffectInitForeground(Effect *effect)
+{
+    effect->drawList = 2;
+    return 0;
+}
+
 Effect *EffectManager::SpawnEffect(int type, D3DXVECTOR3 *pos, int count, D3DCOLOR color)
 {
     Effect *effect;

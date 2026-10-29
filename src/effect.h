@@ -78,6 +78,9 @@ int EffectUpdateMove(Effect *effect);
 // th06's EffectUpdateDriftFast.
 int EffectInitDriftFast(Effect *effect);
 
+// An effect init: puts it in the third draw list. Returns 0.
+int EffectInitForeground(Effect *effect);
+
 // The effects, at 0x12fe250: 400 started in turn, 8 reserved slots and
 // a spare.
 class EffectManager
