@@ -704,3 +704,7 @@ void DrawMarisaBBombFocused(Player *player);
 // restarts its sprite at script 0x460 and stops), gone once it leaves
 // the play area.
 void UpdateSakuyaABomb(Player *player);
+
+// Draws Sakuya A's bomb: the stage tint, then each knife's sprite at
+// its position, turned along its angle (not offset by the play area).
+void DrawSakuyaABomb(Player *player);
