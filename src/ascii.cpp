@@ -64,7 +64,7 @@ void AsciiText::RunScripts()
     g_SpriteEngine->Step(&this->summaryBombIcon);
 }
 
-AsciiText::AsciiText()
+EXE_INLINE AsciiText::AsciiText()
 {
 }
 

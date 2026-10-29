@@ -51,7 +51,7 @@ ChainElem g_EffectCalcChain;
 ChainElem g_EffectDrawChain;
 #endif // TH07_EXE
 
-EffectManager::EffectManager()
+EXE_INLINE EffectManager::EffectManager()
 {
     this->Reset();
     this->colorScale[0] = 1.0f;

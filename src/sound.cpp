@@ -84,7 +84,7 @@ SoundPlayer g_SoundPlayer;
 
 char *FindRiffChunk(char *data, char *name, int *chunkSize, unsigned int size);
 
-SoundPlayer::SoundPlayer()
+EXE_INLINE SoundPlayer::SoundPlayer()
 {
     int i;
 

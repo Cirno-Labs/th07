@@ -52,7 +52,7 @@ void GameManager::AddPower(int power)
     this->RerollChecksumKeys();
 }
 
-ItemManager::ItemManager()
+EXE_INLINE ItemManager::ItemManager()
 {
 }
 

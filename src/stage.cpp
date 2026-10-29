@@ -29,7 +29,7 @@ int GameManager::ChecksumMismatch()
                : TRUE;
 }
 
-Stage::Stage()
+EXE_INLINE Stage::Stage()
 {
     memset(this, 0, sizeof(Stage));
     this->camera.eye = D3DXVECTOR3(0.0f, 0.0f, 1000.0f);

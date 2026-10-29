@@ -84,7 +84,7 @@ void GameManager::AddBombsUsed(int bombs)
     this->RerollChecksumKeys();
 }
 
-Player::Player()
+EXE_INLINE Player::Player()
 {
 }
 
