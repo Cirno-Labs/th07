@@ -4,8 +4,9 @@
 
 #include <d3dx8math.h>
 
-#include "common.h"
 #include "bullet.h"
+#include "chain.h"
+#include "common.h"
 #include "effect.h"
 #include "sprite.h"
 #include "timer.h"
@@ -256,6 +257,12 @@ public:
     // Frees the enemy sprites and hides AsciiText's unk_b7c sprites at
     // -999 again. Returns 0.
     static int DeletedCallback(Unknown9a9b00 *mgr);
+    // Initializes, remembers the stage's two enemy sprite files and adds
+    // the update element (priority 10) and the draw elements (5 and 7).
+    // Returns 0, or -1 if adding fails.
+    static int RegisterChain(char *anmPath, char *anmPath2);
+    // The update callback, th06's OnUpdate.
+    static int OnUpdate(Unknown9a9b00 *mgr);
 
     // The stage's two enemy sprite files.
     char *anmPath;
@@ -276,3 +283,7 @@ public:
 };
 ASSERT_SIZE(Unknown9a9b00, 0x954710);
 extern Unknown9a9b00 g_Unknown9a9b00;
+// Its statically allocated chain elements.
+extern ChainElem g_Unknown9a9b00CalcChain;
+extern ChainElem g_Unknown9a9b00DrawChain;
+extern ChainElem g_Unknown9a9b00DrawChain2;

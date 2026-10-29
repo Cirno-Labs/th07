@@ -480,3 +480,33 @@ int Unknown9a9b00::DeletedCallback(Unknown9a9b00 *mgr)
     g_AsciiText.SetUnkB7cPos(3, &nowhere);
     return 0;
 }
+
+int Unknown9a9b00::RegisterChain(char *anmPath, char *anmPath2)
+{
+    Unknown9a9b00 *mgr = &g_Unknown9a9b00;
+
+    mgr->Initialize();
+    mgr->anmPath = anmPath;
+    mgr->anmPath2 = anmPath2;
+    g_Unknown9a9b00CalcChain.SetCallback((ChainCallback)Unknown9a9b00::OnUpdate);
+    g_Unknown9a9b00CalcChain.addedCallback = (ChainCallback)Unknown9a9b00::AddedCallback;
+    g_Unknown9a9b00CalcChain.deletedCallback = (ChainCallback)Unknown9a9b00::DeletedCallback;
+    g_Unknown9a9b00CalcChain.arg = mgr;
+    if (g_Chain.AddToCalcChain(&g_Unknown9a9b00CalcChain, 10) != 0)
+    {
+        return -1;
+    }
+    g_Unknown9a9b00DrawChain.SetCallback((ChainCallback)Unknown9a9b00::OnDraw);
+    g_Unknown9a9b00DrawChain.arg = mgr;
+    if (g_Chain.AddToDrawChain(&g_Unknown9a9b00DrawChain, 5) != 0)
+    {
+        return -1;
+    }
+    g_Unknown9a9b00DrawChain2.SetCallback((ChainCallback)Unknown9a9b00::OnDraw2);
+    g_Unknown9a9b00DrawChain2.arg = mgr;
+    if (g_Chain.AddToDrawChain(&g_Unknown9a9b00DrawChain2, 7) != 0)
+    {
+        return -1;
+    }
+    return 0;
+}
