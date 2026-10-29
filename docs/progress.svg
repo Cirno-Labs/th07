@@ -61,11 +61,10 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">99.42% (690)</tspan> · <tspan class="decompiled">0.43% (3)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">0% (0)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">99.57% (691)</tspan> · <tspan class="decompiled">0.43% (3)</tspan> · <tspan class="nonmatching">0% (0)</tspan> · <tspan class="todo">0% (0)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="742.69" height="6" x="0" y="0" class="named"/>
-<rect width="3.23" height="6" x="742.69" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="745.92" y="0" class="nonmatching"/>
+<rect width="743.77" height="6" x="0" y="0" class="named"/>
+<rect width="3.23" height="6" x="743.77" y="0" class="decompiled"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="named"><title>0x00401000 D3DXMatrixIdentity (173 bytes)</title></rect>
@@ -587,7 +586,7 @@
 <rect width="12" height="12" x="240" y="150" class="named"><title>0x00448d40 ResultScreen::OnDraw (3525 bytes)</title></rect>
 <rect width="12" height="12" x="255" y="150" class="named"><title>0x00449b05 ResultScreen::AddedCallback (1780 bytes)</title></rect>
 <rect width="12" height="12" x="270" y="150" class="named"><title>0x0044a1f9 ResultScreen::DeletedCallback (265 bytes)</title></rect>
-<rect width="12" height="12" x="285" y="150" class="nonmatching"><title>0x0044a302 ResultScreen::RegisterChain (339 bytes)</title></rect>
+<rect width="12" height="12" x="285" y="150" class="named"><title>0x0044a302 ResultScreen::RegisterChain (339 bytes)</title></rect>
 <rect width="12" height="12" x="300" y="150" class="named"><title>0x0044a460 ClearScreen (190 bytes)</title></rect>
 <rect width="12" height="12" x="315" y="150" class="named"><title>0x0044a520 ClearViewport (124 bytes)</title></rect>
 <rect width="12" height="12" x="330" y="150" class="named"><title>0x0044a5a0 ScreenEffect::OnUpdateFadeIn (165 bytes)</title></rect>
@@ -766,11 +765,10 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">99.85%</tspan> · <tspan class="decompiled">0.06%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">0%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">99.94%</tspan> · <tspan class="decompiled">0.06%</tspan> · <tspan class="nonmatching">0%</tspan> · <tspan class="todo">0%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="745.89" height="6" x="0" y="0" class="named"/>
-<rect width="0.44" height="6" x="745.89" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="746.34" y="0" class="nonmatching"/>
+<rect width="746.56" height="6" x="0" y="0" class="named"/>
+<rect width="0.44" height="6" x="746.56" y="0" class="decompiled"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="named"><title>0x00410520 EnemyScripts::RunEnemy (29464 bytes)</title></rect>
@@ -1023,7 +1021,7 @@
 <rect width="9.33" height="8.79" x="578.75" y="201.21" class="named"><title>0x0044e780 SpriteEngine::LoadSprite (347 bytes)</title></rect>
 <rect width="8.79" height="9.16" x="591.09" y="42.67" class="named"><title>0x0044c7d0 SoundPlayer::LoadSounds (342 bytes)</title></rect>
 <rect width="8.75" height="9.16" x="602.87" y="42.67" class="named"><title>0x00442ee0 ReplayManager::PlayOnUpdate (341 bytes)</title></rect>
-<rect width="8.68" height="9.16" x="614.63" y="42.67" class="nonmatching"><title>0x0044a302 ResultScreen::RegisterChain (339 bytes)</title></rect>
+<rect width="8.68" height="9.16" x="614.63" y="42.67" class="named"><title>0x0044a302 ResultScreen::RegisterChain (339 bytes)</title></rect>
 <rect width="8.44" height="9.16" x="626.31" y="42.67" class="named"><title>0x0041f430 EnemyManager::SpawnWithVars (332 bytes)</title></rect>
 <rect width="8.37" height="9.16" x="637.75" y="42.67" class="named"><title>0x0045e620 File::Open (330 bytes)</title></rect>
 <rect width="8.30" height="9.16" x="649.12" y="42.67" class="named"><title>0x0045e210 CWaveFile::ResetFile (328 bytes)</title></rect>

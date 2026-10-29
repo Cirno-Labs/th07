@@ -2307,16 +2307,16 @@ int ResultScreen::RegisterChain(int unk)
     {
         if (!(g_Unknown626270.unk_93d8 & 1))
         {
-            screen->state = 10;
+            screen->SetState(10);
         }
         else
         {
-            screen->state = 0x12;
+            screen->SetState(0x12);
         }
     }
     else if (unk == 2)
     {
-        screen->state = 0x13;
+        screen->SetState(0x13);
         ResultScreen::AddedCallback(screen);
         return 0;
     }

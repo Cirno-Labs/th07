@@ -306,6 +306,13 @@ public:
         MemFree(this->scoreDat);
     }
 
+    // Sets the state. Inline: RegisterChain's three calls count towards
+    // its inline budget, so it keeps 6 slots for the constructor, not 13.
+    void SetState(int state)
+    {
+        this->state = state;
+    }
+
     // Inserts `entry` into the high score list for `difficulty` and
     // `shot`.
     int AddScore(Hscr *entry, int difficulty, int shot);
