@@ -126,7 +126,7 @@ address,size,name,symbol
 0x0041a5a0,387,EffectInitDriftFast,?EffectInitDriftFast@@YIHPAUEffect@@@Z
 0x0041a730,23,EffectInitForeground,?EffectInitForeground@@YIHPAUEffect@@@Z
 0x0041a750,773,EffectUpdateOrbit,?EffectUpdateOrbit@@YIHPAUEffect@@@Z
-0x0041aa60,136,Func41aa60,
+0x0041aa60,136,EffectInitConverge,?EffectInitConverge@@YIHPAUEffect@@@Z
 0x0041aaf0,230,Func41aaf0,
 0x0041abe0,72,Func41abe0,
 0x0041ac30,217,Func41ac30,

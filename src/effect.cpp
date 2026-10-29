@@ -102,6 +102,19 @@ int EffectUpdateOrbit(Effect *effect)
     return 1;
 }
 
+int EffectInitConverge(Effect *effect)
+{
+    float f;
+
+    effect->origin = effect->pos;
+    effect->origin.z = 0.0f;
+    f = g_Rng.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
+    effect->axis.x = cosf(f);
+    effect->axis.y = sinf(f);
+    effect->axis.z = 0.0f;
+    return 0;
+}
+
 Effect *EffectManager::SpawnEffect(int type, D3DXVECTOR3 *pos, int count, D3DCOLOR color)
 {
     Effect *effect;

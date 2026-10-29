@@ -86,6 +86,11 @@ int EffectInitForeground(Effect *effect);
 // fades out and grows over 16 frames, then ends.
 int EffectUpdateOrbit(Effect *effect);
 
+// An effect init, as the first frame of th06's EffectUpdateConverge:
+// sets origin to where it starts (at z 0) and a random direction.
+// Returns 0.
+int EffectInitConverge(Effect *effect);
+
 // The effects, at 0x12fe250: 400 started in turn, 8 reserved slots and
 // a spare.
 class EffectManager
