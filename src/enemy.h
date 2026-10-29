@@ -100,6 +100,11 @@ struct Enemy
     // Keeps the position within the bounds, with flags.clampPos, as
     // th06's.
     void ClampPos();
+    // Contact with the player, from th06's OnUpdate: with flags.unk_d,
+    // every sixth frame of callbackTimer lets the player graze `size`
+    // / 0.7 at `pos`; touching `size` / 1.5 there costs a shootable
+    // enemy that is neither a boss nor flags.unk_d 10 life.
+    void CheckPlayerContact(D3DXVECTOR3 *pos, D3DXVECTOR3 *size);
 
     Sprite sprite;
     Sprite sprites[2];

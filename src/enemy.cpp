@@ -4,6 +4,7 @@
 
 #include "bullet.h"
 #include "enemy.h"
+#include "player.h"
 #include "replay.h"
 #include "unsorted.h"
 
@@ -388,5 +389,22 @@ void Enemy::ClampPos()
         {
             this->pos.y = this->upperBound[1];
         }
+    }
+}
+
+void Enemy::CheckPlayerContact(D3DXVECTOR3 *pos, D3DXVECTOR3 *size)
+{
+    D3DXVECTOR3 box;
+
+    box = *size / 0.7f;
+    if (this->flags.unk_d && this->callbackTimer.HasTicked() && this->callbackTimer.current % 6 == 0)
+    {
+        g_Player.CheckGraze(pos, &box);
+    }
+    box = *size / 1.5f;
+    if (g_Player.CheckHit(pos, &box) == 1 && this->flags.shootable && !this->flags.isBoss &&
+        !this->flags.unk_d)
+    {
+        this->life -= 10;
     }
 }

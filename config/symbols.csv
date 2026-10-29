@@ -177,7 +177,7 @@ address,size,name,symbol
 0x0041ff80,847,Enemy::CheckTimerCallback,?CheckTimerCallback@Enemy@@QAEHXZ
 0x004202d0,210,Enemy::Despawn,?Despawn@Enemy@@QAEXXZ
 0x004203b0,213,Enemy::ClampPos,?ClampPos@Enemy@@QAEXXZ
-0x00420490,386,Func420490,
+0x00420490,386,Enemy::CheckPlayerContact,?CheckPlayerContact@Enemy@@QAEXPAUD3DXVECTOR3@@0@Z
 0x00420620,6840,Func420620,
 0x004220f0,114,Func4220f0,
 0x00422170,2863,Func422170,
