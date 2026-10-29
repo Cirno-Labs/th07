@@ -5,7 +5,7 @@ address,size,name,symbol
 0x00401170,50,Func401170,
 0x004011b0,251,Func4011b0,
 0x004012b0,212,Unknown626270::Func4012b0,?Func4012b0@Unknown626270@@QAEXXZ
-0x00401390,107,Func401390,
+0x00401390,107,Unknown626270::SetBombs,?SetBombs@Unknown626270@@QAEXH@Z
 0x00401400,155,Func401400,
 0x004014a0,496,Func4014a0,
 0x00401690,143,Func401690,
@@ -257,7 +257,7 @@ address,size,name,symbol
 0x0042d465,216,Func42d465,
 0x0042d53d,35,Func42d53d,
 0x0042d560,109,Func42d560,
-0x0042d5cd,69,Func42d5cd,
+0x0042d5cd,69,Unknown626270::AddLives,?AddLives@Unknown626270@@QAEXH@Z
 0x0042d612,69,Func42d612,
 0x0042d657,129,Func42d657,
 0x0042d6d8,130,Unknown626270::IsInPlayArea,?IsInPlayArea@Unknown626270@@QAEHMMMM@Z
@@ -276,7 +276,7 @@ address,size,name,symbol
 0x0042f3c5,152,Func42f3c5,?Func42f3c5@@YIHXZ
 0x0042f45d,77,Func42f45d,?Func42f45d@@YIXXZ
 0x0042f4aa,124,Unknown626270::AddSubRank,?AddSubRank@Unknown626270@@QAEXH@Z
-0x0042f526,124,Func42f526,
+0x0042f526,124,Unknown626270::SubSubRank,?SubSubRank@Unknown626270@@QAEXH@Z
 0x0042f5a2,253,Func42f5a2,
 0x0042f69f,151,Func42f69f,
 0x0042f736,83,Unknown626270::Func42f736,?Func42f736@Unknown626270@@QAEXH@Z
@@ -461,7 +461,7 @@ address,size,name,symbol
 0x0043ee50,6790,Func43ee50,?Func43ee50@@YIHPAVPlayer@@@Z
 0x00440940,169,UpdateHitboxAreas,?UpdateHitboxAreas@@YIXPAVPlayer@@@Z
 0x004409f0,760,Func4409f0,?Func4409f0@@YIXPAVPlayer@@@Z
-0x00440cf0,1231,Func440cf0,?Func440cf0@@YIHPAVPlayer@@@Z
+0x00440cf0,1231,UpdateDyingState,?UpdateDyingState@@YIHPAVPlayer@@@Z
 0x004411c0,353,UpdateRespawningState,?UpdateRespawningState@@YIXPAVPlayer@@@Z
 0x00441330,825,UpdateInvulnerability,?UpdateInvulnerability@@YIXPAVPlayer@@@Z
 0x00441670,394,Player::EndBombState,?EndBombState@Player@@QAEXXZ
@@ -1769,6 +1769,7 @@ address,size,name,symbol
 0x004bdad8,,g_Player,?g_Player@@3VPlayer@@A
 0x00575950,,g_App,?g_App@@3VApp@@A
 0x00575c20,,g_GameWindow,?g_GameWindow@@3UGameWindow@@A
+0x00575c70,,g_ItemManager,?g_ItemManager@@3VItemManager@@A
 0x00624210,,g_Log,?g_Log@@3VLog@@A
 0x00626218,,g_Chain,?g_Chain@@3VChain@@A
 0x00626258,,g_Archive,?g_Archive@@3VDatArchive@@A

@@ -6,6 +6,7 @@
 #include "ascii.h"
 #include "bullet.h"
 #include "effect.h"
+#include "item.h"
 #include "player.h"
 #include "replay.h"
 #include "unsorted.h"
@@ -1060,6 +1061,111 @@ void UpdateHitboxAreas(Player *player)
     }
 }
 
+int UpdateDyingState(Player *player)
+{
+    int bonus;
+    float progress;
+
+    if (player->deathbombFrames != 0)
+    {
+        if (player->unk_240d == 1)
+        {
+            player->StopBombState(0);
+            return 0;
+        }
+        player->deathbombFrames--;
+        if (player->deathbombFrames == 0)
+        {
+            g_ReplayManager->unk_d6 |= 4;
+            g_Unknown626270.unk_93d4 = 0;
+            g_Unknown12fe0cc = 0;
+            g_Unknown12fe0c4 = 0;
+            g_Unknown626270.AddDeaths(1);
+            if ((int)g_Unknown626270.stats->lives > 0)
+            {
+                if ((int)g_Unknown626270.stats->power <= 16)
+                {
+                    g_Unknown626270.stats->power = 0;
+                    g_Unknown626270.Func4012b0();
+                }
+                else
+                {
+                    g_Unknown626270.AddPower(-16);
+                }
+                g_ItemManager.SpawnItem(&player->position, 2, 2);
+                g_ItemManager.SpawnItem(&player->position, 0, 2);
+                g_ItemManager.SpawnItem(&player->position, 0, 2);
+                g_ItemManager.SpawnItem(&player->position, 0, 2);
+                g_ItemManager.SpawnItem(&player->position, 0, 2);
+                g_ItemManager.SpawnItem(&player->position, 0, 2);
+                g_Unknown49fbf0.powerChanged = 2;
+                bonus = (g_Unknown626270.unk_961c - g_Unknown626270.stats->unk_88) * g_Player.shotType->unk_1c;
+                if (g_Unknown626270.character != 2)
+                {
+                    if (bonus > 100000)
+                    {
+                        bonus = 100000;
+                    }
+                }
+                else if (bonus > 60000)
+                {
+                    bonus = 60000;
+                }
+                bonus -= bonus % 10;
+                g_Unknown626270.unk_961c -= bonus;
+                g_Unknown49fbf0.unk_4_8 = 2;
+                g_ItemManager.RecycleCollectedItems();
+            }
+            else
+            {
+                g_Unknown626270.stats->power = 0;
+                g_Unknown626270.Func4012b0();
+                g_ItemManager.SpawnItem(&player->position, 4, 2);
+                g_ItemManager.SpawnItem(&player->position, 4, 2);
+                g_ItemManager.SpawnItem(&player->position, 4, 2);
+                g_ItemManager.SpawnItem(&player->position, 4, 2);
+                g_ItemManager.SpawnItem(&player->position, 4, 2);
+                g_Unknown49fbf0.powerChanged = 2;
+            }
+            g_Unknown626270.SubSubRank(1600);
+        }
+    }
+    else
+    {
+        progress = player->stateTimer.AsFloat() / 30.0f;
+        player->sprite.scaleX = 3.0f * progress + 1.0f;
+        player->sprite.scaleY = 1.0f - 1.0f * progress;
+        player->sprite.color = (int)(255.0f - player->stateTimer.AsFloat() * 255.0f / 30.0f) << 24 | 0xffffff;
+        player->sprite.flags |= 0x10;
+        player->velocityX = 0.0f;
+        player->velocityY = 0.0f;
+        if (player->stateTimer.AsFrames() >= 30)
+        {
+            player->playerState = 1;
+            player->position.x = g_Unknown626270.arena[2] / 2.0f;
+            player->position.y = g_Unknown626270.arena[3] - 64.0f;
+            player->position.z = 0.2f;
+            player->stateTimer.Set(0);
+            player->sprite.scaleY = 3.0f;
+            player->sprite.scaleX = 3.0f;
+            g_SpriteEngine->StartScript(&player->sprite, 0x400);
+            if ((int)g_Unknown626270.stats->lives <= 0)
+            {
+                g_Unknown626270.isInContinueMenu = 1;
+            }
+            else
+            {
+                g_Unknown626270.AddLives(-1);
+                g_Unknown49fbf0.livesChanged = 2;
+                g_Unknown626270.SetBombs(g_Player.shotType->bombs);
+                g_Unknown49fbf0.bombsChanged = 2;
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
 void UpdateRespawningState(Player *player)
 {
     float progress;
@@ -1385,7 +1491,7 @@ int Player::OnUpdate(Player *player)
     Func4409f0(player);
     if (player->playerState == 2)
     {
-        if (Func440cf0(player))
+        if (UpdateDyingState(player))
         {
             goto respawn;
         }

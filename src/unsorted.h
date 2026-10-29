@@ -864,7 +864,10 @@ struct Unknown626270Stats
     DWORD unk_34[5];
     unsigned char unk_48[0x8];
     float deaths;
-    unsigned char unk_54[0x18];
+    unsigned char unk_54[0x8];
+    // The lives left, a float behind checksums, as the other counts.
+    float lives;
+    unsigned char unk_60[0xc];
     float bombsUsed;
     // Set to 6543 plus a random float under 100000 by
     // Unknown626270::RerollLifeChecksumKeys.
@@ -926,6 +929,13 @@ public:
     // Sets stats->unk_34 and unk_70 to random numbers from 6543 up.
     // Not in th06.
     void RerollLifeChecksumKeys();
+    // Adds `lives` to stats->lives, checked like AddPower.
+    void AddLives(int lives);
+    // Sets stats->bombs (+0x68) to `bombs` and updates the fields that
+    // follow from it.
+    void SetBombs(int bombs);
+    // Takes `amount` hundredths from the rank, as th06's SubSubRank.
+    void SubSubRank(int amount);
     // Adds `deaths` to stats->deaths, checked like AddPower.
     void AddDeaths(int deaths);
     // Adds `bombs` to stats->bombsUsed, checked like AddPower.
@@ -958,7 +968,9 @@ public:
     // The "PLST" chunk. When its magic is set on exit, WinMain calls
     // ResultScreen::RegisterChain(2) to save the score file.
     Plst plst;
-    unsigned char unk_93d0[0x5];
+    unsigned char unk_93d0[0x4];
+    // Cleared by Player's UpdateDyingState when the player dies.
+    BYTE unk_93d4;
     BYTE character;
     BYTE shotType;
     // character * 2 + shotType, as a replay stores it.
@@ -1020,9 +1032,12 @@ public:
     void Func427c81(int points, int unk);
 
     unsigned char unk_0[0x4];
-    // Set to 2 when the player grazes, as th06's GuiFlags.grazeChanged.
-    unsigned int unk_4 : 6;
+    // Set to 2 when they change, as th06's GuiFlags.
+    unsigned int livesChanged : 2;
+    unsigned int bombsChanged : 2;
+    unsigned int powerChanged : 2;
     unsigned int grazeChanged : 2;
+    unsigned int unk_4_8 : 2;
 };
 extern Unknown49fbf0 g_Unknown49fbf0;
 

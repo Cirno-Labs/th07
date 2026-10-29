@@ -57,3 +57,4 @@ public:
     // The head of the list of items to draw, which UpdateItems builds.
     Item drawList;
 };
+extern ItemManager g_ItemManager;

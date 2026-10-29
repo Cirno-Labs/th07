@@ -96,10 +96,16 @@ struct ShotTable
 // the fields known so far.
 struct ShotTypeData
 {
-    unsigned char unk_0[0x8];
+    unsigned char unk_0[0x4];
+    // The bombs the player respawns with.
+    float bombs;
     // Player::deathbombFrames once the player has respawned.
     int deathbombFrames;
-    unsigned char unk_c[0x28];
+    unsigned char unk_c[0x10];
+    // The share of Unknown626270::unk_961c over stats->unk_88 a death
+    // costs.
+    float unk_1c;
+    unsigned char unk_20[0x14];
     ShotTable tables[1];
 };
 
@@ -182,15 +188,26 @@ void DrawHitBullets(Player *player);
 int UpdateFiring(Player *player);
 
 // OnUpdate's steps, not decompiled yet. Func43ee50 runs unless the
-// player is respawning or dying, Func440cf0 while dying, and UpdateRespawningState
-// while respawning or when Func440cf0 returns nonzero.
+// player is respawning or dying, UpdateDyingState while dying, and UpdateRespawningState
+// while respawning or when UpdateDyingState returns nonzero.
 int Func43ee50(Player *player);
 // OnUpdate's first step, as the start of th06's: clears the sizes of
 // the 0x70 unk_9dc hitboxes, then counts down each PlayerArea's unk_18,
 // growing unk_10 by unk_14 meanwhile, and frees it once it is 0.
 void UpdateHitboxAreas(Player *player);
 void Func4409f0(Player *player);
-int Func440cf0(Player *player);
+// OnUpdate's dying step, the dying part of th06's: while
+// deathbombFrames run, ends playerState 4 at once (StopBombState(0)) if
+// unk_240d is 1, else counts them down and at 0 loses a life: marks bit
+// 4 of g_ReplayManager->unk_d6, counts the death, and with lives left
+// drops 16 power and spawns six power items and takes a share of
+// Unknown626270::unk_961c (at most 100000, or 60000 for character 2);
+// without, drops all power and spawns five type 4 items; then takes 16
+// from the rank. Afterwards it fades and stretches the player out over
+// 30 frames, then puts it back at the bottom of the play area,
+// respawning, and takes a life and refills the bombs, returning 1, or
+// with no lives left opens the continue menu. Returns 0 otherwise.
+int UpdateDyingState(Player *player);
 // Tries to start playerState 4 (Func4409f0 calls it while unk_240d is
 // 2): sets unk_240d to 2 during a bomb or while
 // g_Unknown49fbf0.Func42ad66(), or while playerState is 1 or 3, or
@@ -451,7 +468,10 @@ public:
     char unk_240d;
     unsigned char unk_240e[0x2];
     Timer unk_2410;
-    unsigned char unk_241c[0xc];
+    unsigned char unk_241c[0x4];
+    // The last frame's movement, as th06's.
+    float velocityX;
+    float velocityY;
     // What UpdateHomingOrb's and UpdateHomingOrbFast's shots home in on; x is -100 or
     // less when there is nothing.
     D3DXVECTOR3 unk_2428;
