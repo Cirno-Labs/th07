@@ -71,7 +71,7 @@ struct BulletEx
 };
 ASSERT_SIZE(BulletEx, 0x2c);
 
-// One enemy bullet. Its implicit constructor is 0x423510.
+// One enemy bullet.
 struct Bullet
 {
     // Empty. Inline, defined in bullet.cpp after BulletTypeSprites's
@@ -184,7 +184,7 @@ struct BulletShooter
     BulletTypeSprites *typeSprites;
 };
 
-// One enemy laser, as th06's. Its implicit constructor is 0x4235d0.
+// One enemy laser, as th06's.
 struct Laser
 {
     // Empty. Inline, defined in bullet.cpp after Bullet's, for the
