@@ -209,12 +209,12 @@ address,size,name,symbol
 0x00425580,372,Func425580,
 0x00425700,403,Func425700,
 0x004258a0,425,Func4258a0,
-0x00425a50,4237,Func425a50,
+0x00425a50,4237,BulletManager::OnUpdate,?OnUpdate@BulletManager@@SIHPAV1@@Z
 0x00426b00,289,Func426b00,
-0x00426c40,796,Func426c40,
-0x00426f60,1703,Func426f60,
+0x00426c40,796,BulletManager::OnDraw,?OnDraw@BulletManager@@SIHPAV1@@Z
+0x00426f60,1703,BulletManager::AddedCallback,?AddedCallback@BulletManager@@SIHPAV1@@Z
 0x00427620,116,BulletManager::DeletedCallback,?DeletedCallback@BulletManager@@SIHPAV1@@Z
-0x004276a0,192,Func4276a0,
+0x004276a0,192,BulletManager::RegisterChain,?RegisterChain@BulletManager@@SIHPAD@Z
 0x00427760,51,Func427760,?Func427760@@YIXXZ
 0x004277a0,266,Func4277a0,
 0x004278b0,91,Func4278b0,
@@ -1749,6 +1749,8 @@ address,size,name,symbol
 0x0049ece8,,g_ShotHitFuncs,?g_ShotHitFuncs@@3PAP6IHPAVPlayer@@PAUPlayerBullet@@PAUD3DXVECTOR3@@@ZA
 0x0049ed98,,g_FormatInfos,?g_FormatInfos@@3PAUFormatInfo@@A
 0x0049ee40,,g_DefaultControllerMapping,?g_DefaultControllerMapping@@3UControllerMapping@@A
+0x0049eec8,,g_EffectColorsFull,?g_EffectColorsFull@@3PAKA
+0x0049ef38,,g_EffectColors,?g_EffectColors@@3PAKA
 0x0049efc0,,g_EffectInfos,?g_EffectInfos@@3PAUEffectInfo@@A
 0x0049f40c,,g_PracticeStageNames,?g_PracticeStageNames@@3PAPADA
 0x0049f424,,g_MenuStageNames,?g_MenuStageNames@@3PAPADA
@@ -1799,8 +1801,10 @@ address,size,name,symbol
 0x0062f8d4,,g_Unknown626270DrawChain,?g_Unknown626270DrawChain@@3UChainElem@@A
 0x0062f8f4,,g_Unknown49fbf0DrawChain,?g_Unknown49fbf0DrawChain@@3UChainElem@@A
 0x0062f914,,g_Unknown49fbf0CalcChain,?g_Unknown49fbf0CalcChain@@3UChainElem@@A
+0x0062f934,,g_BulletDrawChain,?g_BulletDrawChain@@3UChainElem@@A
 0x0062f958,,g_BulletManager,?g_BulletManager@@3VBulletManager@@A
 0x009a9ab8,,g_Unknown9a9ab8,?g_Unknown9a9ab8@@3HA
+0x009a9abc,,g_BulletCalcChain,?g_BulletCalcChain@@3UChainElem@@A
 0x009a9b00,,g_Unknown9a9b00,?g_Unknown9a9b00@@3VUnknown9a9b00@@A
 0x012fe0c4,,g_Unknown12fe0c4,?g_Unknown12fe0c4@@3HA
 0x012fe0c8,,g_Unknown12fe0c8,?g_Unknown12fe0c8@@3HA

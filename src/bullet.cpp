@@ -29,3 +29,24 @@ int BulletManager::DeletedCallback(BulletManager *mgr)
     }
     return 0;
 }
+
+int BulletManager::RegisterChain(char *anmPath)
+{
+    BulletManager *mgr = &g_BulletManager;
+
+    g_EffectColors = g_EffectColorsFull;
+    mgr->Reset();
+    mgr->anmPath = anmPath;
+    g_BulletCalcChain.SetCallback((ChainCallback)BulletManager::OnUpdate);
+    g_BulletCalcChain.addedCallback = (ChainCallback)BulletManager::AddedCallback;
+    g_BulletCalcChain.deletedCallback = (ChainCallback)BulletManager::DeletedCallback;
+    g_BulletCalcChain.arg = mgr;
+    if (g_Chain.AddToCalcChain(&g_BulletCalcChain, 0xc) != 0)
+    {
+        return -1;
+    }
+    g_BulletDrawChain.SetCallback((ChainCallback)BulletManager::OnDraw);
+    g_BulletDrawChain.arg = mgr;
+    g_Chain.AddToDrawChain(&g_BulletDrawChain, 10);
+    return 0;
+}

@@ -163,6 +163,14 @@ public:
     // Removes the bullets (Player's respawn step calls it with 0).
     void ClearAll(int unk);
 
+    // Resets, remembers `anmPath`, points g_EffectColors at
+    // g_EffectColorsFull (th06 picked by an option), and adds the update
+    // element (priority 0xc) and the draw element (priority 10). Returns
+    // 0, or -1 if adding fails.
+    static int RegisterChain(char *anmPath);
+    static int OnUpdate(BulletManager *mgr);
+    static int OnDraw(BulletManager *mgr);
+    static int AddedCallback(BulletManager *mgr);
     // Frees the bullet sprites (slots 0xb to 0xe), unless the scene is
     // 3, 0xb or 0xc. Returns 0.
     static int DeletedCallback(BulletManager *mgr);
@@ -186,3 +194,12 @@ public:
 };
 ASSERT_SIZE(BulletManager, 0x37a164);
 extern BulletManager g_BulletManager;
+
+// The colors of effect 0xd by index, as th06's; RegisterChain points
+// g_EffectColors at them.
+extern DWORD g_EffectColorsFull[0x1c];
+extern DWORD *g_EffectColors;
+
+// BulletManager's statically allocated chain elements.
+extern ChainElem g_BulletCalcChain;
+extern ChainElem g_BulletDrawChain;
