@@ -31,7 +31,7 @@ address,size,name,symbol
 0x00404560,298,ContinueMenu::DrawContinueMenu,?DrawContinueMenu@ContinueMenu@@QAEXXZ
 0x00404690,2010,AsciiText::DrawPopups,?DrawPopups@AsciiText@@QAEXXZ
 0x00404e70,62,D3DXVec3Length,?D3DXVec3Length@@YIMPBUD3DXVECTOR3@@@Z
-0x00404eb0,124,Func404eb0,
+0x00404eb0,124,D3DXVec3Cross,?D3DXVec3Cross@@YIPAUD3DXVECTOR3@@PAU1@PBU1@1@Z
 0x00404f30,169,SpriteEngine::StartScriptAtOrigin,?StartScriptAtOrigin@SpriteEngine@@QAEXPAVSprite@@H@Z
 0x00404fe0,145,Unknown626270::ChecksumMismatch,?ChecksumMismatch@Unknown626270@@QAEHXZ
 0x00405080,585,Unknown1347b00::Unknown1347b00,??0Unknown1347b00@@QAE@XZ

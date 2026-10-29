@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">71.18% (494)</tspan> · <tspan class="decompiled">7.93% (55)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">20.75% (144)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">71.33% (495)</tspan> · <tspan class="decompiled">7.93% (55)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">20.61% (143)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="531.73" height="6" x="0" y="0" class="named"/>
-<rect width="59.20" height="6" x="531.73" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="590.93" y="0" class="nonmatching"/>
-<rect width="155" height="6" x="592" y="0" class="todo"/>
+<rect width="532.80" height="6" x="0" y="0" class="named"/>
+<rect width="59.20" height="6" x="532.80" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="592" y="0" class="nonmatching"/>
+<rect width="153.92" height="6" x="593.08" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="named"><title>0x00401000 D3DXMatrixIdentity (173 bytes)</title></rect>
@@ -101,7 +101,7 @@
 <rect width="12" height="12" x="435" y="0" class="named"><title>0x00404560 ContinueMenu::DrawContinueMenu (298 bytes)</title></rect>
 <rect width="12" height="12" x="450" y="0" class="named"><title>0x00404690 AsciiText::DrawPopups (2010 bytes)</title></rect>
 <rect width="12" height="12" x="465" y="0" class="named"><title>0x00404e70 D3DXVec3Length (62 bytes)</title></rect>
-<rect width="12" height="12" x="480" y="0" class="todo"><title>0x00404eb0 Func404eb0 (124 bytes)</title></rect>
+<rect width="12" height="12" x="480" y="0" class="named"><title>0x00404eb0 D3DXVec3Cross (124 bytes)</title></rect>
 <rect width="12" height="12" x="495" y="0" class="named"><title>0x00404f30 SpriteEngine::StartScriptAtOrigin (169 bytes)</title></rect>
 <rect width="12" height="12" x="510" y="0" class="decompiled"><title>0x00404fe0 Unknown626270::ChecksumMismatch (145 bytes)</title></rect>
 <rect width="12" height="12" x="525" y="0" class="named"><title>0x00405080 Unknown1347b00::Unknown1347b00 (585 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">53.68%</tspan> · <tspan class="decompiled">2.83%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">43.39%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">53.72%</tspan> · <tspan class="decompiled">2.83%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">43.36%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="401.03" height="6" x="0" y="0" class="named"/>
-<rect width="21.15" height="6" x="401.03" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="422.18" y="0" class="nonmatching"/>
-<rect width="324.16" height="6" x="422.84" y="0" class="todo"/>
+<rect width="401.27" height="6" x="0" y="0" class="named"/>
+<rect width="21.15" height="6" x="401.27" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="422.42" y="0" class="nonmatching"/>
+<rect width="323.91" height="6" x="423.09" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1255,7 +1255,7 @@
 <rect width="3.97" height="4.63" x="695.31" y="129.84" class="named"><title>0x00431930 AddNormalizeAngle (127 bytes)</title></rect>
 <rect width="3.86" height="4.63" x="702.28" y="129.84" class="named"><title>0x0044547f LoadPlstChunk (125 bytes)</title></rect>
 <rect width="3.81" height="4.63" x="709.15" y="129.84" class="named"><title>0x004010f0 Sprite::Initialize (124 bytes)</title></rect>
-<rect width="3.81" height="4.63" x="715.95" y="129.84" class="todo"><title>0x00404eb0 Func404eb0 (124 bytes)</title></rect>
+<rect width="3.81" height="4.63" x="715.95" y="129.84" class="named"><title>0x00404eb0 D3DXVec3Cross (124 bytes)</title></rect>
 <rect width="3.81" height="4.63" x="722.76" y="129.84" class="decompiled"><title>0x0042d7be Unknown626270::ComputeChecksum (124 bytes)</title></rect>
 <rect width="3.81" height="4.63" x="729.57" y="129.84" class="decompiled"><title>0x0042f4aa Unknown626270::AddSubRank (124 bytes)</title></rect>
 <rect width="3.81" height="4.63" x="736.38" y="129.84" class="decompiled"><title>0x0042f526 Unknown626270::SubSubRank (124 bytes)</title></rect>
