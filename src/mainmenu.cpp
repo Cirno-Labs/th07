@@ -133,7 +133,7 @@ int MainMenu::StartTitle()
         i = this->MoveMenuCursor(8);
         if (i != 0)
         {
-            while (!g_Unknown626270.Func42f8de() && this->cursor == 1)
+            while (!g_Unknown626270.AnyShotHasExtraOpen() && this->cursor == 1)
             {
                 this->cursor += i;
             }
@@ -222,7 +222,7 @@ int MainMenu::StartTitle()
                 this->unk_b0c8->SetPendingInterrupt(2);
                 return 1;
             case 1:
-                if (g_Unknown626270.Func42f8de())
+                if (g_Unknown626270.AnyShotHasExtraOpen())
                 {
                     g_Unknown626270.unk_93d8 &= ~1;
                     this->cursor = g_App.defaultDifficulty == 5;

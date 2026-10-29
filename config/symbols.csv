@@ -283,7 +283,7 @@ address,size,name,symbol
 0x0042f789,86,Unknown626270::IncreaseBonusCap,?IncreaseBonusCap@Unknown626270@@QAEXH@Z
 0x0042f7df,116,Unknown626270::HasExtraOpen,?HasExtraOpen@Unknown626270@@QAEHH@Z
 0x0042f853,139,Unknown626270::HasPhantasmOpen,?HasPhantasmOpen@Unknown626270@@QAEHH@Z
-0x0042f8de,110,Unknown626270::Func42f8de,?Func42f8de@Unknown626270@@QAEHXZ
+0x0042f8de,110,Unknown626270::AnyShotHasExtraOpen,?AnyShotHasExtraOpen@Unknown626270@@QAEHXZ
 0x0042f94c,261,Unknown626270::Func42f94c,?Func42f94c@Unknown626270@@QAEHXZ
 0x0042fa60,75,Chain::~Chain,??1Chain@@QAE@XZ
 0x0042fab0,99,ChainElem::ChainElem,??0ChainElem@@QAE@XZ

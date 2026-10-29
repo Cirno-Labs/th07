@@ -929,7 +929,7 @@ public:
     // 60 spell cards, which marks those that cleared Extra as such).
     int Func42f94c();
     // Whether a shot type has Extra open (HasExtraOpen for any of them).
-    int Func42f8de();
+    int AnyShotHasExtraOpen();
     // Whether shot type `shot` (character * 2 + shot) cleared one of
     // the four main difficulties, which opens Extra for it.
     int HasExtraOpen(int shot);

@@ -402,3 +402,11 @@ int Unknown626270::HasPhantasmOpen(int shot)
     }
     return this->clrds[shot].stagesClearedNoContinue[5] == 99;
 }
+
+int Unknown626270::AnyShotHasExtraOpen()
+{
+    return this->HasExtraOpen(0) || this->HasExtraOpen(1) || this->HasExtraOpen(2) || this->HasExtraOpen(3) || this->HasExtraOpen(4) ||
+                   this->HasExtraOpen(5)
+               ? TRUE
+               : FALSE;
+}
