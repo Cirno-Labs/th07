@@ -1075,6 +1075,24 @@ void SpriteEngine::ProjectSprite3D(Sprite *vm)
     this->unk_20 = worldMatrix;
 }
 
+int SpriteEngine::DrawProjected3D(Sprite *vm)
+{
+    if ((vm->flags & 1) == 0)
+    {
+        return -1;
+    }
+    if ((vm->flags >> 1 & 1) == 0)
+    {
+        return -1;
+    }
+    if (vm->alpha == 0)
+    {
+        return -1;
+    }
+    this->ProjectSprite3D(vm);
+    return this->DrawQuad(vm, 0);
+}
+
 void SpriteEngine::RenderTextToTextureIndex(int textureIndex, int x, int y, int width, int unk4, int fontHeight,
                                             int unk6, D3DCOLOR textColor, D3DCOLOR shadowColor, char *text,
                                             float scaleX, float scaleY)

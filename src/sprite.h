@@ -293,6 +293,8 @@ public:
     // Remakes that matrix first from matrix, the scale and the rotations
     // while flag 3 or 2 is set and flag 15 is not. Not in th06.
     void ProjectSprite3D(Sprite *vm);
+    // Draws `vm` in 3D, projected by ProjectSprite3D. Not in th06.
+    int DrawProjected3D(Sprite *vm);
     // Copies surface `surface` to the back buffer at (`left`, `top`),
     // as in th06.
     void CopySurfaceToBackBuffer(int surface, int left, int top, int x, int y);
