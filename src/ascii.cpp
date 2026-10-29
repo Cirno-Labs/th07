@@ -22,6 +22,14 @@ void Unknown626270::RerollChecksumKeys()
     this->unk_9614 = this->stats->unk_b0 + this->stats->unk_8c[3];
 }
 
+// The same for Timer::NextTick, which only the Gui file calls.
+int Timer::NextTick()
+{
+    this->previous = this->current;
+    g_App.TickTimer(&this->current, &this->subFrame);
+    return this->current;
+}
+
 // Like RerollChecksumKeys, without rerolling the keys.
 void Unknown626270::SetBombs(int bombs)
 {

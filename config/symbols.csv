@@ -1,6 +1,6 @@
 address,size,name,symbol
 0x00401000,173,D3DXMatrixIdentity,?D3DXMatrixIdentity@@YIPAUD3DXMATRIX@@PAU1@@Z
-0x004010b0,52,Func4010b0,
+0x004010b0,52,Timer::NextTick,?NextTick@Timer@@QAEHXZ
 0x004010f0,124,Sprite::Initialize,?Initialize@Sprite@@QAEXXZ
 0x00401170,50,Sprite::Sprite,??0Sprite@@QAE@XZ
 0x004011b0,251,SpriteBase::SpriteBase,??0SpriteBase@@QAE@XZ

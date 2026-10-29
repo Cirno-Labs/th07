@@ -39,6 +39,9 @@ struct Timer
     // Advances by one frame through App::TickTimer. Inline; defined in
     // unsorted.h.
     void Tick();
+    // Tick, returning the new count. Out of line in ascii.cpp, as th06's
+    // in its Gui file.
+    int NextTick();
 
     // The count with its fraction.
     float AsFloat()
