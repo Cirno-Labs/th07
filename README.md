@@ -135,12 +135,18 @@ in `symbols.csv` too, so the game and the new code share one heap.
 
 ```
 orig/     your game files (not tracked) and their checksums
-src/      decompiled source; src/dll/ is the hook DLL's own code,
-          src/exe/ the game's data and globals for the standalone exe
+src/      decompiled source; src/dll/ is the hook DLL's own code
 config/   symbols.csv: address, size, name and mangled symbol
-tools/    build, compare, exe patcher, symbol seeding, Ghidra scripts
+tools/    the shared decomp-tools: build, compare, exe patcher, symbol
+          seeding, Ghidra scripts and the just recipes
+project.toml  th07's settings for the tools: exe, flags, link order
 build/    outputs; build/game/ is a runnable copy of the patched game
 ```
+
+`tools/` is the decomp-tools repository, shared with the other games and
+kept here as a git subtree: `just tools-pull` brings in its changes and
+`just tools-push` sends changes made here back. Each pull adds a squash
+commit and a merge commit.
 
 ## Requirements
 
