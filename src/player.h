@@ -687,3 +687,8 @@ void DrawMarisaBBomb(Player *player);
 // 0.2; on three frames out of four a box of 23 damage and an area
 // (AddHitboxArea) from the player up to the top of the play area.
 void UpdateMarisaBBombFocused(Player *player);
+
+// Draws Marisa B's focused bomb, as th06's DrawMarisaBBomb: the stage
+// tint, then the beam's four sprites fanned out upwards from the
+// player.
+void DrawMarisaBBombFocused(Player *player);

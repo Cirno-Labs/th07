@@ -933,3 +933,26 @@ void UpdateMarisaBBombFocused(Player *player)
     player->playerState = 3;
     player->bomb.timer.Tick();
 }
+
+void DrawMarisaBBombFocused(Player *player)
+{
+    Sprite *curSprite;
+    int i;
+    float angle;
+
+    DimPlayAreaForBomb(player);
+    curSprite = player->bomb.parts[0].sprites;
+    for (i = 0; i < 4; i++)
+    {
+        angle = 0.62831855f * (float)i / 3.0f - 3.1415927f + 1.2566371f;
+        curSprite->pos = player->position;
+        curSprite->pos.x += cosf(angle) * curSprite->spriteData->height * curSprite->scaleX / 2.0f;
+        curSprite->pos.y += sinf(angle) * curSprite->spriteData->height * curSprite->scaleX / 2.0f;
+        curSprite->SetRotationZ(AddNormalizeAngle(angle, 1.5707964f));
+        curSprite->pos.x = g_Unknown626270.arena[0] + curSprite->pos.x;
+        curSprite->pos.y = g_Unknown626270.arena[1] + curSprite->pos.y;
+        curSprite->pos.z = 0.0f;
+        g_SpriteEngine->Draw(curSprite);
+        curSprite++;
+    }
+}
