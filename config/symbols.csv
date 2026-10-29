@@ -280,7 +280,7 @@ address,size,name,symbol
 0x0042f5a2,253,Unknown626270::AddBonusPoints,?AddBonusPoints@Unknown626270@@QAEXH@Z
 0x0042f69f,151,Unknown626270::AddBonusPointsNoTrack,?AddBonusPointsNoTrack@Unknown626270@@QAEXH@Z
 0x0042f736,83,Unknown626270::AddBonusPointsCapped,?AddBonusPointsCapped@Unknown626270@@QAEXH@Z
-0x0042f789,86,Unknown626270::Func42f789,?Func42f789@Unknown626270@@QAEXH@Z
+0x0042f789,86,Unknown626270::IncreaseBonusCap,?IncreaseBonusCap@Unknown626270@@QAEXH@Z
 0x0042f7df,116,Unknown626270::Func42f7df,?Func42f7df@Unknown626270@@QAEHH@Z
 0x0042f853,139,Unknown626270::Func42f853,?Func42f853@Unknown626270@@QAEHH@Z
 0x0042f8de,110,Unknown626270::Func42f8de,?Func42f8de@Unknown626270@@QAEHXZ

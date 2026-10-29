@@ -365,3 +365,12 @@ void Unknown626270::AddBonusPointsCapped(int amount)
         this->unk_961c = this->unk_9618;
     }
 }
+
+void Unknown626270::IncreaseBonusCap(int amount)
+{
+    this->unk_9618 += amount;
+    if (this->unk_9618 >= this->stats->unk_88 + 9999990)
+    {
+        this->unk_9618 = this->stats->unk_88 + 9999990;
+    }
+}

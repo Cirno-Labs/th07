@@ -1015,12 +1015,12 @@ void Player::Graze(D3DXVECTOR3 *pos)
     {
         if (this->focused)
         {
-            g_Unknown626270.Func42f789(30);
+            g_Unknown626270.IncreaseBonusCap(30);
             g_Unknown626270.AddBonusPointsCapped(30);
         }
         else
         {
-            g_Unknown626270.Func42f789(80);
+            g_Unknown626270.IncreaseBonusCap(80);
             g_Unknown626270.AddBonusPointsCapped(80);
         }
     }
@@ -1411,7 +1411,7 @@ void Player::EndBombState()
 {
     int bonus;
 
-    g_Unknown626270.Func42f789(10000);
+    g_Unknown626270.IncreaseBonusCap(10000);
     g_Unknown626270.AddBonusPointsCapped(10000);
     bonus = g_Unknown626270.unk_961c - g_Unknown626270.stats->unk_88;
     bonus *= 10;

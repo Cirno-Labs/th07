@@ -947,7 +947,7 @@ public:
     // Adds `amount` hundredths to the rank, as th06's.
     void AddSubRank(int amount);
     // Add `amount` to unk_9618 and to unk_961c, each up to a limit.
-    void Func42f789(int amount);
+    void IncreaseBonusCap(int amount);
     void AddBonusPointsCapped(int amount);
     // Adds `amount` to unk_961c, up to unk_9618. A gain outside
     // Player::unk_240d also adds to unk_9620 and, once that reaches
