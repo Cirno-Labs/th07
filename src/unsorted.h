@@ -1259,6 +1259,9 @@ public:
     GuiImpl *impl;
 };
 extern Unknown49fbf0 g_Unknown49fbf0;
+// Copies the rectangle of sprite `sprite` in texture 0x16 into sprite
+// 0x609's in texture 0x15 (SpriteEngine::CopyTextureRect). Not in th06.
+void CopySpriteToTexture(int sprite);
 
 // Grows by 2500 plus 20 for every 1500 of Unknown626270::unk_961c above
 // stats->unk_88 with each graze. Probably a field of a larger object.

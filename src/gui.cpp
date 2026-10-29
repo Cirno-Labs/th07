@@ -56,3 +56,22 @@ void Unknown49fbf0::ShowSpellCardBonus(int value)
     this->impl->spellBonusPopup.value = value;
     g_App.redrawFrames = 2;
 }
+
+// The rectangle of sprite `sprite` in its texture, in pixels.
+__forceinline void GetSpriteRect(RECT *rect, int sprite)
+{
+    rect->left = g_SpriteEngine->sprites[sprite].startX;
+    rect->top = g_SpriteEngine->sprites[sprite].startY;
+    rect->right = g_SpriteEngine->sprites[sprite].endX;
+    rect->bottom = g_SpriteEngine->sprites[sprite].endY;
+}
+
+void CopySpriteToTexture(int sprite)
+{
+    RECT dstRect;
+    RECT spriteRect;
+
+    GetSpriteRect(&dstRect, 0x609);
+    GetSpriteRect(&spriteRect, sprite);
+    g_SpriteEngine->CopyTextureRect(0x15, 0x16, &dstRect, &spriteRect);
+}
