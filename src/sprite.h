@@ -179,6 +179,19 @@ struct VertexTex1DiffuseXyz
     D3DXVECTOR2 uv;
 };
 
+// An image stored in an ANM file, its pixels following the header.
+// Not in th06.
+struct AnmImage
+{
+    unsigned char unk_0[0x6];
+    // The pixels' format, an index into g_TextureFormats.
+    short format;
+    short width;
+    short height;
+    unsigned char unk_c[0x4];
+    BYTE data[1];
+};
+
 // Runs the sprites' ANM scripts. Only the fields known so far.
 class SpriteEngine
 {
@@ -243,6 +256,10 @@ public:
     // g_TextureFormats[`format`] (16 bits when forced), with `colorKey`
     // transparent, and keeps the file. Returns 0, or -1 on failure.
     int LoadTexture(int index, char *path, int format, D3DCOLOR colorKey);
+    // Creates texture `index` from the pixels of `image`, in the format
+    // g_TextureFormats[`format`] (16 bits when forced). Returns 0, or -1
+    // on failure. Not in th06.
+    int CreateTextureFromImage(int index, AnmImage *image, int format);
     // Releases texture `index` and its file.
     void ReleaseTexture(int index);
     // Releases ANM slot `slot`.
@@ -400,6 +417,8 @@ extern SpriteEngine *g_SpriteEngine;
 extern VertexTex1DiffuseXyz g_DiffuseQuadXyz[4];
 // The texture formats LoadTexture takes by number.
 extern D3DFORMAT g_TextureFormats[];
+// The bytes per pixel of each of g_TextureFormats.
+extern int g_TextureFormatSizes[];
 
 inline BOOL Sprite::HasTexture()
 {
