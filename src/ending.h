@@ -31,6 +31,11 @@ public:
     // Loads the script at `path` and starts it. Returns 0, or -1 after
     // logging an error.
     int Load(char *path);
+    // The update chain element's added callback: marks the game cleared,
+    // loads data/staff01.anm, records the clear and loads the shot
+    // type's ending (a bad ending after a continue). Returns 0, or -1 on
+    // failure.
+    static int AddedCallback(Ending *ending);
 
     ChainElem *calcChain;
     ChainElem *drawChain;
@@ -72,3 +77,8 @@ public:
     char *cursor;
 };
 ASSERT_SIZE(Ending, 0x2530);
+
+// The endings' scripts, by shot type (character * 2 + shot), and the
+// bad endings after a continue, by character.
+extern char *g_EndingFiles[];
+extern char *g_BadEndingFiles[];

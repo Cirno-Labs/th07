@@ -364,3 +364,53 @@ int Ending::Load(char *path)
     }
     return 0;
 }
+
+int Ending::AddedCallback(Ending *ending)
+{
+    char *script;
+    int j;
+    int si;
+    // Unused.
+    int unused = g_Unknown626270.unk_93d7;
+
+    g_Unknown626270.unk_93d8 |= 0x10;
+    g_App.hideFps = 1;
+    g_SpriteEngine->LoadAnm(0x31, "data/staff01.anm", 0x600);
+    g_SpriteEngine->ClearTexture();
+    g_SpriteEngine->ClearSpriteData();
+    g_SpriteEngine->ClearBlendMode();
+    g_SpriteEngine->ClearVertexFormat();
+    si = g_Unknown626270.unk_93d7;
+    ending->canSkip = 0;
+    if (g_Unknown626270.stats->continuesUsed == 0)
+    {
+        if (g_Unknown626270.clrds[si].stagesClearedNoContinue[g_Unknown626270.difficulty] == 'c')
+        {
+            ending->canSkip = 1;
+        }
+        g_Unknown626270.clrds[si].stagesClearedNoContinue[g_Unknown626270.difficulty] = 'c';
+    }
+    else if (g_Unknown626270.clrds[si].stagesCleared[g_Unknown626270.difficulty] == 'c')
+    {
+        ending->canSkip = 1;
+    }
+    g_Unknown626270.clrds[si].stagesCleared[g_Unknown626270.difficulty] = 'c';
+    for (j = 0; j < 0xf; j++)
+    {
+        g_SpriteEngine->StartScriptAtOrigin(&ending->sprites[j], j + 0x70f);
+        ending->sprites[j].pos = D3DXVECTOR3(64.0f, (float)j * 16.0f + 392.0f, 0.0f);
+    }
+    if (g_Unknown626270.stats->continuesUsed != 0)
+    {
+        script = g_BadEndingFiles[g_Unknown626270.character];
+    }
+    else
+    {
+        script = g_EndingFiles[g_Unknown626270.unk_93d7];
+    }
+    if (ending->Load(script) != 0)
+    {
+        return -1;
+    }
+    return 0;
+}

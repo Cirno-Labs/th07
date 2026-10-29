@@ -160,7 +160,7 @@ address,size,name,symbol
 0x0041d490,591,Ending::DrawFade,?DrawFade@Ending@@QAEXXZ
 0x0041d700,3268,Ending::RunScript,?RunScript@Ending@@QAEHXZ
 0x0041e4b0,216,Ending::Load,?Load@Ending@@QAEHPAD@Z
-0x0041e590,508,Func41e590,
+0x0041e590,508,Ending::AddedCallback,?AddedCallback@Ending@@SIHPAV1@@Z
 0x0041e790,137,Func41e790,
 0x0041e820,245,Func41e820,?Func41e820@@YIHXZ
 0x0041e920,312,Func41e920,
@@ -1763,6 +1763,8 @@ address,size,name,symbol
 0x0049f530,,g_ShotFiles,?g_ShotFiles@@3PAPADA
 0x0049f548,,g_ShotFilesFocused,?g_ShotFilesFocused@@3PAPADA
 0x0049f5d0,,g_Ranks,?g_Ranks@@3PAURankSettings@@A
+0x0049f628,,g_BadEndingFiles,?g_BadEndingFiles@@3PAPADA
+0x0049f634,,g_EndingFiles,?g_EndingFiles@@3PAPADA
 0x0049fbf0,,g_Unknown49fbf0,?g_Unknown49fbf0@@3VUnknown49fbf0@@A
 0x0049fc88,,g_JoyCaps,?g_JoyCaps@@3UtagJOYCAPSA@@A
 0x0049fe1c,,g_ShotHeldFrames,?g_ShotHeldFrames@@3GA
