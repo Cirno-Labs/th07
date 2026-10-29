@@ -434,3 +434,8 @@ float LerpAngle(float a, float b, float t)
         return wrap * t + a;
     }
 }
+
+int Unknown9a9b00::OnDraw(Unknown9a9b00 *mgr)
+{
+    return Unknown9a9b00::Func422170(mgr, 0, 2);
+}

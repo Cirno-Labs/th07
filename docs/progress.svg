@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">78.24% (543)</tspan> · <tspan class="decompiled">8.36% (58)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">13.26% (92)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">78.24% (543)</tspan> · <tspan class="decompiled">8.50% (59)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">13.11% (91)</tspan></tspan></text>
 <g transform="translate(0 20)">
 <rect width="584.47" height="6" x="0" y="0" class="named"/>
-<rect width="62.43" height="6" x="584.47" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="646.90" y="0" class="nonmatching"/>
-<rect width="99.03" height="6" x="647.97" y="0" class="todo"/>
+<rect width="63.51" height="6" x="584.47" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="647.97" y="0" class="nonmatching"/>
+<rect width="97.95" height="6" x="649.05" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="named"><title>0x00401000 D3DXMatrixIdentity (173 bytes)</title></rect>
@@ -250,8 +250,8 @@
 <rect width="12" height="12" x="420" y="45" class="named"><title>0x00420490 Enemy::CheckPlayerContact (386 bytes)</title></rect>
 <rect width="12" height="12" x="435" y="45" class="todo"><title>0x00420620 Func420620 (6840 bytes)</title></rect>
 <rect width="12" height="12" x="450" y="45" class="named"><title>0x004220f0 LerpAngle (114 bytes)</title></rect>
-<rect width="12" height="12" x="465" y="45" class="todo"><title>0x00422170 Func422170 (2863 bytes)</title></rect>
-<rect width="12" height="12" x="480" y="45" class="todo"><title>0x00422ca0 Func422ca0 (23 bytes)</title></rect>
+<rect width="12" height="12" x="465" y="45" class="todo"><title>0x00422170 Unknown9a9b00::Func422170 (2863 bytes)</title></rect>
+<rect width="12" height="12" x="480" y="45" class="decompiled"><title>0x00422ca0 Unknown9a9b00::OnDraw (23 bytes)</title></rect>
 <rect width="12" height="12" x="495" y="45" class="todo"><title>0x00422cc0 Func422cc0 (26 bytes)</title></rect>
 <rect width="12" height="12" x="510" y="45" class="todo"><title>0x00422ce0 Func422ce0 (394 bytes)</title></rect>
 <rect width="12" height="12" x="525" y="45" class="todo"><title>0x00422e70 Func422e70 (193 bytes)</title></rect>
@@ -770,9 +770,9 @@
 <text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">61.27%</tspan> · <tspan class="decompiled">3.28%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">35.36%</tspan></tspan></text>
 <g transform="translate(0 20)">
 <rect width="457.70" height="6" x="0" y="0" class="named"/>
-<rect width="24.48" height="6" x="457.70" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="482.17" y="0" class="nonmatching"/>
-<rect width="264.16" height="6" x="482.84" y="0" class="todo"/>
+<rect width="24.52" height="6" x="457.70" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="482.22" y="0" class="nonmatching"/>
+<rect width="264.12" height="6" x="482.88" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Unknown1347938::RunEnemy (29464 bytes)</title></rect>
@@ -796,7 +796,7 @@
 <rect width="31.96" height="33.73" x="211.02" y="37.79" class="todo"><title>0x00429c42 GuiImpl::RunMsg (3064 bytes)</title></rect>
 <rect width="31.96" height="33.67" x="211.02" y="74.52" class="named"><title>0x0045624d MainMenu::UpdateOptions (3059 bytes)</title></rect>
 <rect width="31.96" height="31.47" x="211.02" y="111.19" class="named"><title>0x00423730 BulletManager::SpawnBullet (2875 bytes)</title></rect>
-<rect width="31.96" height="31.32" x="211.02" y="145.65" class="todo"><title>0x00422170 Func422170 (2863 bytes)</title></rect>
+<rect width="31.96" height="31.32" x="211.02" y="145.65" class="todo"><title>0x00422170 Unknown9a9b00::Func422170 (2863 bytes)</title></rect>
 <rect width="31.96" height="30.03" x="211.02" y="179.97" class="todo"><title>0x0042c577 Unknown49fbf0::DrawBanners (2755 bytes)</title></rect>
 <rect width="29.69" height="31.95" x="245.98" y="0" class="todo"><title>0x0042e83e Unknown626270::AddedCallback (2726 bytes)</title></rect>
 <rect width="29.69" height="29.41" x="245.98" y="34.95" class="todo"><title>0x00403b60 ContinueMenu::UpdateContinueMenu (2528 bytes)</title></rect>
@@ -1449,7 +1449,7 @@
 <rect width="0.39" height="0.10" x="739.98" y="199.40" class="named"><title>0x004019e0 AsciiText::OnDraw2 (24 bytes)</title></rect>
 <rect width="0.39" height="0.10" x="743.36" y="199.40" class="named"><title>0x00442350 Player::OnDraw2 (24 bytes)</title></rect>
 <rect width="0.25" height="0.10" x="746.75" y="199.40" class="named"><title>0x0041a730 EffectInitForeground (23 bytes)</title></rect>
-<rect width="0.10" height="0.60" x="736.45" y="202.36" class="todo"><title>0x00422ca0 Func422ca0 (23 bytes)</title></rect>
+<rect width="0.10" height="0.60" x="736.45" y="202.36" class="decompiled"><title>0x00422ca0 Unknown9a9b00::OnDraw (23 bytes)</title></rect>
 <rect width="0.10" height="0.60" x="736.45" y="205.96" class="named"><title>0x0045c6f0 CSoundManager::CSoundManager (23 bytes)</title></rect>
 <rect width="0.10" height="0.44" x="736.45" y="209.56" class="decompiled"><title>0x00427be2 Unknown49fbf0::Func427be2 (22 bytes)</title></rect>
 <rect width="0.19" height="0.10" x="739.12" y="202.36" class="decompiled"><title>0x004378b0 Unknown4378b0::OnTimer (22 bytes)</title></rect>

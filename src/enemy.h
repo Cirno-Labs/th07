@@ -241,6 +241,12 @@ public:
     // Whether one of the eight pointers at +0x954598 is set.
     int Func4232a0();
 
+    // Draws the enemies of the lists at +0x954700, from `from` up to
+    // `to`. Returns 1.
+    static int Func422170(Unknown9a9b00 *mgr, int from, int to);
+    // A draw callback: Func422170 for lists 0 and 1.
+    static int OnDraw(Unknown9a9b00 *mgr);
+
     // The stage's two enemy sprite files.
     char *anmPath;
     char *anmPath2;
