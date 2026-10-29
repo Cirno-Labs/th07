@@ -70,10 +70,9 @@ void MakeFullPath(char *dst, char *path);
 // An entry of an archive's table.
 struct DatArchiveEntry
 {
-    DatArchiveEntry()
-    {
-        this->name = NULL;
-    }
+    // Defined in dsutil.cpp, beside CSoundManager's identical
+    // constructor, which the original's linker folded it into.
+    DatArchiveEntry();
     ~DatArchiveEntry()
     {
         if (this->name != NULL)

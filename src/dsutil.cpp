@@ -1,6 +1,7 @@
 // The file from 0x45c6f0: the DirectX 8 SDK's dsutil.cpp, as the game
 // builds it.
 
+#include "archive.h"
 #include "dsutil.h"
 #include "unsorted.h"
 
@@ -14,6 +15,15 @@
 CSoundManager::CSoundManager()
 {
     m_pDS = NULL;
+}
+
+// DatArchiveEntry's constructor, inline in th06: here so that it shares
+// an object with CSoundManager's, which the original's linker folded it
+// into (which copy our linker keeps across objects changes with
+// unrelated edits).
+DatArchiveEntry::DatArchiveEntry()
+{
+    this->name = NULL;
 }
 
 CSoundManager::~CSoundManager()
