@@ -153,7 +153,7 @@ address,size,name,symbol
 0x0041d050,65,Func41d050,
 0x0041d0a0,165,Func41d0a0,
 0x0041d150,35,Func41d150,?Func41d150@@YIXXZ
-0x0041d180,357,Func41d180,
+0x0041d180,357,Ending::Ending,??0Ending@@QAE@XZ
 0x0041d2f0,141,Ending::OnUpdate,?OnUpdate@Ending@@SIHPAV1@@Z
 0x0041d380,131,Ending::OnDraw,?OnDraw@Ending@@SIHPAV1@@Z
 0x0041d410,115,Ending::ReadInt,?ReadInt@Ending@@QAEHXZ
