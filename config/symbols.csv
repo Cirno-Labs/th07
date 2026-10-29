@@ -186,7 +186,7 @@ address,size,name,symbol
 0x00422ce0,394,Unknown9a9b00::AddedCallback,?AddedCallback@Unknown9a9b00@@SIHPAV1@@Z
 0x00422e70,193,Unknown9a9b00::DeletedCallback,?DeletedCallback@Unknown9a9b00@@SIHPAV1@@Z
 0x00422f40,267,Unknown9a9b00::RegisterChain,?RegisterChain@Unknown9a9b00@@SIHPAD0@Z
-0x00423050,50,Func423050,?Func423050@@YIXXZ
+0x00423050,50,Unknown9a9b00::RemoveChain,?RemoveChain@Unknown9a9b00@@SIXXZ
 0x00423090,522,Unknown9a9b00::Func423090,?Func423090@Unknown9a9b00@@QAEXHH@Z
 0x004232a0,64,Unknown9a9b00::Func4232a0,?Func4232a0@Unknown9a9b00@@QAEHXZ
 0x004232e0,67,BulletManager::Reset,?Reset@BulletManager@@QAEXXZ

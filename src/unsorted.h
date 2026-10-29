@@ -306,10 +306,6 @@ extern App g_App;
 // th06's GameManager::RegisterChain and RemoveChain.
 int RegisterGameManagerChain();
 void RemoveGameManagerChain();
-// Removes the chain of an object not named yet, in the place th06's
-// GameManager::DeletedCallback removes EnemyManager's (after
-// BulletManager::RemoveChain and Player::RemoveChain).
-void Func423050();
 
 // Measures the frame rate every half second, with the performance
 // counter when there is one (calling g_App.CheckClockDrift every eighth

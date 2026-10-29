@@ -261,6 +261,8 @@ public:
     // the update element (priority 10) and the draw elements (5 and 7).
     // Returns 0, or -1 if adding fails.
     static int RegisterChain(char *anmPath, char *anmPath2);
+    // Removes the three chain elements.
+    static void RemoveChain();
     // The update callback, th06's OnUpdate.
     static int OnUpdate(Unknown9a9b00 *mgr);
 

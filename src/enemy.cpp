@@ -510,3 +510,10 @@ int Unknown9a9b00::RegisterChain(char *anmPath, char *anmPath2)
     }
     return 0;
 }
+
+void Unknown9a9b00::RemoveChain()
+{
+    g_Chain.Remove(&g_Unknown9a9b00CalcChain);
+    g_Chain.Remove(&g_Unknown9a9b00DrawChain);
+    g_Chain.Remove(&g_Unknown9a9b00DrawChain2);
+}
