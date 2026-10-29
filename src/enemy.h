@@ -253,6 +253,9 @@ public:
     // card and hides AsciiText's unk_b7c sprites at -999. Returns 0, or
     // -1 if loading fails.
     static int AddedCallback(Unknown9a9b00 *mgr);
+    // Frees the enemy sprites and hides AsciiText's unk_b7c sprites at
+    // -999 again. Returns 0.
+    static int DeletedCallback(Unknown9a9b00 *mgr);
 
     // The stage's two enemy sprite files.
     char *anmPath;

@@ -468,3 +468,15 @@ int Unknown9a9b00::AddedCallback(Unknown9a9b00 *mgr)
     g_AsciiText.SetUnkB7cPos(3, &nowhere);
     return 0;
 }
+
+int Unknown9a9b00::DeletedCallback(Unknown9a9b00 *mgr)
+{
+    g_SpriteEngine->ReleaseAnm(0x10);
+    g_SpriteEngine->ReleaseAnm(0xf);
+    D3DXVECTOR3 nowhere(-999.0f, -999.0f, -999.0f);
+    g_AsciiText.SetUnkB7cPos(0, &nowhere);
+    g_AsciiText.SetUnkB7cPos(1, &nowhere);
+    g_AsciiText.SetUnkB7cPos(2, &nowhere);
+    g_AsciiText.SetUnkB7cPos(3, &nowhere);
+    return 0;
+}
