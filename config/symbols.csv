@@ -252,7 +252,7 @@ address,size,name,symbol
 0x0042c577,2755,Unknown49fbf0::DrawBanners,?DrawBanners@Unknown49fbf0@@QAEXXZ
 0x0042d03a,17,Unknown49fbf0::AddedCallback,?AddedCallback@Unknown49fbf0@@SIHPAV1@@Z
 0x0042d04b,235,Unknown49fbf0::DeletedCallback,?DeletedCallback@Unknown49fbf0@@SIHPAV1@@Z
-0x0042d136,279,Func42d136,
+0x0042d136,279,Unknown49fbf0::RegisterChain,?RegisterChain@Unknown49fbf0@@SIHXZ
 0x0042d24d,536,Func42d24d,
 0x0042d465,216,Func42d465,
 0x0042d53d,35,Func42d53d,?Func42d53d@@YIXXZ
@@ -1792,6 +1792,8 @@ address,size,name,symbol
 0x00626270,,g_Unknown626270,?g_Unknown626270@@3VUnknown626270@@A
 0x0062f8b4,,g_Unknown626270CalcChain,?g_Unknown626270CalcChain@@3UChainElem@@A
 0x0062f8d4,,g_Unknown626270DrawChain,?g_Unknown626270DrawChain@@3UChainElem@@A
+0x0062f8f4,,g_Unknown49fbf0DrawChain,?g_Unknown49fbf0DrawChain@@3UChainElem@@A
+0x0062f914,,g_Unknown49fbf0CalcChain,?g_Unknown49fbf0CalcChain@@3UChainElem@@A
 0x0062f958,,g_BulletManager,?g_BulletManager@@3VBulletManager@@A
 0x009a9ab8,,g_Unknown9a9ab8,?g_Unknown9a9ab8@@3HA
 0x009a9b00,,g_Unknown9a9b00,?g_Unknown9a9b00@@3VUnknown9a9b00@@A

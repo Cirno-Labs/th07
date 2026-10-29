@@ -460,3 +460,26 @@ int Unknown49fbf0::DeletedCallback(Unknown49fbf0 *gui)
     }
     return 0;
 }
+
+int Unknown49fbf0::RegisterChain()
+{
+    Unknown49fbf0 *gui = &g_Unknown49fbf0;
+
+    if ((g_App.scene != 3 && g_App.scene != 0xb && g_App.scene != 0xc) != 0)
+    {
+        memset(gui, 0, sizeof(Unknown49fbf0));
+        gui->impl = new GuiImpl;
+    }
+    g_Unknown49fbf0CalcChain.SetCallback((ChainCallback)Unknown49fbf0::OnUpdate);
+    g_Unknown49fbf0CalcChain.addedCallback = (ChainCallback)Unknown49fbf0::AddedCallback;
+    g_Unknown49fbf0CalcChain.deletedCallback = (ChainCallback)Unknown49fbf0::DeletedCallback;
+    g_Unknown49fbf0CalcChain.arg = gui;
+    if (g_Chain.AddToCalcChain(&g_Unknown49fbf0CalcChain, 13) != 0)
+    {
+        return -1;
+    }
+    g_Unknown49fbf0DrawChain.SetCallback((ChainCallback)Unknown49fbf0::OnDraw);
+    g_Unknown49fbf0DrawChain.arg = gui;
+    g_Chain.AddToDrawChain(&g_Unknown49fbf0DrawChain, 12);
+    return 0;
+}

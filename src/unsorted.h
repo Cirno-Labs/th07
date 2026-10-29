@@ -1322,6 +1322,10 @@ public:
     // unless the scene is 3, 0xb or 0xc, slots 0x15 to 0x17 and 0x19 to
     // 0x1b and impl. Returns 0.
     static int DeletedCallback(Unknown49fbf0 *gui);
+    // Unless the scene is 3, 0xb or 0xc, zeroes the interface and
+    // allocates impl; then adds the update element (priority 13) and the
+    // draw element (priority 12). Returns 0, or -1 if adding fails.
+    static int RegisterChain();
     // Sets bombName's pendingInterrupt to 1 and bombNameBar's to 2, as
     // the bomb ends. th06 interrupted bombName only.
     void EndBombName();
@@ -1362,8 +1366,12 @@ public:
     float bombNameWidth;
     // The same for ShowSpellCardName.
     float spellNameWidth;
+    unsigned char unk_14[0x80];
 };
+ASSERT_SIZE(Unknown49fbf0, 0x94);
 extern Unknown49fbf0 g_Unknown49fbf0;
+extern ChainElem g_Unknown49fbf0CalcChain;
+extern ChainElem g_Unknown49fbf0DrawChain;
 // Copies the rectangle of sprite `sprite` in texture 0x16 into sprite
 // 0x609's in texture 0x15 (SpriteEngine::CopyTextureRect). Not in th06.
 void CopySpriteToTexture(int sprite);
