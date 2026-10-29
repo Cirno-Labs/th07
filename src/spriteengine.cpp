@@ -412,6 +412,54 @@ int SpriteEngine::LoadAnmSprites(int slot, AnmFile *anm, int firstSprite, int ow
     return highest + 1;
 }
 
+void SpriteEngine::ReleaseAnm(int slot)
+{
+    AnmFile *header;
+    int *entries;
+    int sub;
+    int k;
+    int startSprite;
+    AnmSprite *rawSprite;
+
+    if (slot < 0 || slot >= ARRAY_SIZE(this->anmSlots))
+    {
+        return;
+    }
+    if (this->anmSlots[slot].file != NULL)
+    {
+        entries = this->anmSlots[slot].file->spriteOffsets;
+        startSprite = this->anmSlots[slot].spriteOffset;
+        header = this->anmSlots[slot].file;
+        for (sub = slot + 1, k = 1; k < this->anmSlots[slot].count; k++, sub++)
+        {
+            this->ReleaseAnm(sub);
+        }
+        for (k = 0; k < header->numSprites; k++, entries++)
+        {
+            rawSprite = (AnmSprite *)((char *)header + *entries);
+            memset(&this->sprites[rawSprite->id + startSprite], 0, sizeof(SpriteData));
+            this->sprites[rawSprite->id + startSprite].sourceFileIndex = -1;
+        }
+        for (k = 0; k < header->numScripts; k++, entries += 2)
+        {
+            this->scripts[entries[0] + startSprite] = NULL;
+            this->scriptSpriteOffsets[entries[0] + startSprite] = 0;
+        }
+        this->anmSlots[slot].spriteOffset = 0;
+        this->ReleaseTexture(header->textureIndex);
+        if (header->ownsData)
+        {
+            free(header);
+        }
+        this->anmSlots[slot].file = NULL;
+        this->ClearBlendMode();
+        this->ClearColorOp();
+        this->vertexFormat = 0;
+        this->ClearTexture();
+        this->anmSlots[slot].count = 0;
+    }
+}
+
 void SpriteEngine::ReleaseTexture(int index)
 {
     if (index < 0 || index >= ARRAY_SIZE(this->textures))
