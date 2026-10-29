@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">68.30% (474)</tspan> · <tspan class="decompiled">7.78% (54)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">23.78% (165)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">68.44% (475)</tspan> · <tspan class="decompiled">7.78% (54)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">23.63% (164)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="510.20" height="6" x="0" y="0" class="named"/>
-<rect width="58.12" height="6" x="510.20" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="568.32" y="0" class="nonmatching"/>
-<rect width="177.60" height="6" x="569.40" y="0" class="todo"/>
+<rect width="511.28" height="6" x="0" y="0" class="named"/>
+<rect width="58.12" height="6" x="511.28" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="569.40" y="0" class="nonmatching"/>
+<rect width="176.52" height="6" x="570.48" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="named"><title>0x00401000 D3DXMatrixIdentity (173 bytes)</title></rect>
@@ -207,7 +207,7 @@
 <rect width="12" height="12" x="525" y="30" class="named"><title>0x0041b0b0 EffectInitPetal20 (997 bytes)</title></rect>
 <rect width="12" height="12" x="540" y="30" class="named"><title>0x0041b4a0 EffectInitPetal26 (710 bytes)</title></rect>
 <rect width="12" height="12" x="555" y="30" class="named"><title>0x0041b770 EffectInitPetal27 (628 bytes)</title></rect>
-<rect width="12" height="12" x="570" y="30" class="todo"><title>0x0041b9f0 Func41b9f0 (559 bytes)</title></rect>
+<rect width="12" height="12" x="570" y="30" class="named"><title>0x0041b9f0 EffectInitPetal30 (559 bytes)</title></rect>
 <rect width="12" height="12" x="585" y="30" class="todo"><title>0x0041bc20 Func41bc20 (668 bytes)</title></rect>
 <rect width="12" height="12" x="600" y="30" class="todo"><title>0x0041bec0 Func41bec0 (263 bytes)</title></rect>
 <rect width="12" height="12" x="615" y="30" class="todo"><title>0x0041bfd0 Func41bfd0 (301 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">51.81%</tspan> · <tspan class="decompiled">2.79%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">45.31%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">51.96%</tspan> · <tspan class="decompiled">2.79%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">45.16%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="387.03" height="6" x="0" y="0" class="named"/>
-<rect width="20.87" height="6" x="387.03" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="407.90" y="0" class="nonmatching"/>
-<rect width="338.44" height="6" x="408.56" y="0" class="todo"/>
+<rect width="388.12" height="6" x="0" y="0" class="named"/>
+<rect width="20.87" height="6" x="388.12" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="408.99" y="0" class="nonmatching"/>
+<rect width="337.34" height="6" x="409.66" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -938,7 +938,7 @@
 <rect width="12.83" height="11.99" x="536.19" y="123.94" class="todo"><title>0x0040f8f0 Func40f8f0 (566 bytes)</title></rect>
 <rect width="12.83" height="11.99" x="536.19" y="138.93" class="named"><title>0x0043c700 UpdateLaserBullet (566 bytes)</title></rect>
 <rect width="12.83" height="11.94" x="536.19" y="153.92" class="named"><title>0x0041c1c0 EffectManager::SpawnEffect (564 bytes)</title></rect>
-<rect width="12.83" height="11.80" x="536.19" y="168.85" class="todo"><title>0x0041b9f0 Func41b9f0 (559 bytes)</title></rect>
+<rect width="12.83" height="11.80" x="536.19" y="168.85" class="named"><title>0x0041b9f0 EffectInitPetal30 (559 bytes)</title></rect>
 <rect width="12.83" height="11.67" x="536.19" y="183.66" class="named"><title>0x0043c250 UpdateHomingOrb (554 bytes)</title></rect>
 <rect width="12.83" height="11.67" x="536.19" y="198.33" class="named"><title>0x0043c480 UpdateHomingOrbFast (554 bytes)</title></rect>
 <rect width="12.65" height="11.70" x="552.02" y="0" class="named"><title>0x0043eb90 Player::Graze (549 bytes)</title></rect>

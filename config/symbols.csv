@@ -137,7 +137,7 @@ address,size,name,symbol
 0x0041b0b0,997,EffectInitPetal20,?EffectInitPetal20@@YIHPAUEffect@@@Z
 0x0041b4a0,710,EffectInitPetal26,?EffectInitPetal26@@YIHPAUEffect@@@Z
 0x0041b770,628,EffectInitPetal27,?EffectInitPetal27@@YIHPAUEffect@@@Z
-0x0041b9f0,559,Func41b9f0,
+0x0041b9f0,559,EffectInitPetal30,?EffectInitPetal30@@YIHPAUEffect@@@Z
 0x0041bc20,668,Func41bc20,
 0x0041bec0,263,Func41bec0,
 0x0041bfd0,301,Func41bfd0,
