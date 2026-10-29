@@ -1259,7 +1259,7 @@ struct GuiMsg
     // as th06's.
     Sprite portraits[2];
     Sprite text[2];
-    Sprite unk_94c[2];
+    Sprite nameplates[2];
     // The text colors and their shadows, by speaker.
     D3DCOLOR textColors[4];
     D3DCOLOR shadowColors[4];

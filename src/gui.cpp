@@ -791,8 +791,8 @@ int GuiImpl::RunMsg()
             break;
         case 8:
             args = &this->msg.instr->args;
-            g_SpriteEngine->StartScript(&this->msg.unk_94c[args->index], args->index + 0x702);
-            g_SpriteEngine->RenderTextRightAligned(&this->msg.unk_94c[args->index], this->msg.textColors[args->who],
+            g_SpriteEngine->StartScript(&this->msg.nameplates[args->index], args->index + 0x702);
+            g_SpriteEngine->RenderTextRightAligned(&this->msg.nameplates[args->index], this->msg.textColors[args->who],
                                                    this->msg.shadowColors[args->who], args->text);
             this->msg.waitFrames = 0;
             break;
@@ -886,8 +886,8 @@ stepSprites:
     g_SpriteEngine->Step(&this->msg.portraits[1]);
     g_SpriteEngine->Step(&this->msg.text[0]);
     g_SpriteEngine->Step(&this->msg.text[1]);
-    g_SpriteEngine->Step(&this->msg.unk_94c[0]);
-    g_SpriteEngine->Step(&this->msg.unk_94c[1]);
+    g_SpriteEngine->Step(&this->msg.nameplates[0]);
+    g_SpriteEngine->Step(&this->msg.nameplates[1]);
     if (this->msg.timer < 60 && this->msg.skippable && (g_Unknown4b9e50 & 0x100))
     {
         this->msg.timer.Set(60);
@@ -1034,8 +1034,8 @@ int GuiImpl::DrawMsg()
     g_App.d3dDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
     g_SpriteEngine->DrawUnrotated(&this->msg.text[0]);
     g_SpriteEngine->DrawUnrotated(&this->msg.text[1]);
-    g_SpriteEngine->DrawUnrotated(&this->msg.unk_94c[0]);
-    g_SpriteEngine->DrawUnrotated(&this->msg.unk_94c[1]);
+    g_SpriteEngine->DrawUnrotated(&this->msg.nameplates[0]);
+    g_SpriteEngine->DrawUnrotated(&this->msg.nameplates[1]);
     return 0;
 }
 
