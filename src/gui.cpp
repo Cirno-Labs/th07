@@ -895,84 +895,6 @@ stepSprites:
     return 0;
 }
 
-BOOL Gui::MsgHoldsTimeline()
-{
-    if (this->impl == NULL)
-    {
-        return FALSE;
-    }
-    if (this->impl->msg.timelineRelease > 0)
-    {
-        return FALSE;
-    }
-    return this->impl->msg.scriptIndex >= 0;
-}
-
-int Gui::IsMsgRunning()
-{
-    if (this->impl == NULL)
-    {
-        return 0;
-    }
-    return this->impl->msg.scriptIndex >= 0 || this->impl->msg.scriptIndex == -2 ? 1 : 0;
-}
-
-int Gui::AddedCallback(Gui *gui)
-{
-    return gui->LoadResources();
-}
-
-int Gui::DeletedCallback(Gui *gui)
-{
-    g_SpriteEngine->ReleaseAnm(0x18);
-    g_SpriteEngine->ReleaseAnm(0x1c);
-    g_SpriteEngine->ReleaseAnm(0x1d);
-    g_SpriteEngine->ReleaseAnm(0x1e);
-    g_SpriteEngine->ReleaseAnm(0x1f);
-    gui->FreeMsgFile();
-    if ((g_App.scene != 3 && g_App.scene != 0xb && g_App.scene != 0xc) != 0)
-    {
-        g_SpriteEngine->ReleaseAnm(0x15);
-        g_SpriteEngine->ReleaseAnm(0x17);
-        g_SpriteEngine->ReleaseAnm(0x19);
-        g_SpriteEngine->ReleaseAnm(0x1a);
-        g_SpriteEngine->ReleaseAnm(0x1b);
-        g_SpriteEngine->ReleaseAnm(0x16);
-        delete gui->impl;
-        gui->impl = NULL;
-    }
-    return 0;
-}
-
-int Gui::RegisterChain()
-{
-    Gui *gui = &g_Gui;
-
-    if ((g_App.scene != 3 && g_App.scene != 0xb && g_App.scene != 0xc) != 0)
-    {
-        memset(gui, 0, sizeof(Gui));
-        gui->impl = new GuiImpl;
-    }
-    g_GuiCalcChain.SetCallback((ChainCallback)Gui::OnUpdate);
-    g_GuiCalcChain.addedCallback = (ChainCallback)Gui::AddedCallback;
-    g_GuiCalcChain.deletedCallback = (ChainCallback)Gui::DeletedCallback;
-    g_GuiCalcChain.arg = gui;
-    if (g_Chain.AddToCalcChain(&g_GuiCalcChain, 13) != 0)
-    {
-        return -1;
-    }
-    g_GuiDrawChain.SetCallback((ChainCallback)Gui::OnDraw);
-    g_GuiDrawChain.arg = gui;
-    g_Chain.AddToDrawChain(&g_GuiDrawChain, 12);
-    return 0;
-}
-
-void Gui::RemoveChain()
-{
-    g_Chain.Remove(&g_GuiCalcChain);
-    g_Chain.Remove(&g_GuiDrawChain);
-}
-
 int GuiImpl::DrawMsg()
 {
     float height;
@@ -1037,6 +959,28 @@ int GuiImpl::DrawMsg()
     g_SpriteEngine->DrawUnrotated(&this->msg.nameplates[0]);
     g_SpriteEngine->DrawUnrotated(&this->msg.nameplates[1]);
     return 0;
+}
+
+BOOL Gui::MsgHoldsTimeline()
+{
+    if (this->impl == NULL)
+    {
+        return FALSE;
+    }
+    if (this->impl->msg.timelineRelease > 0)
+    {
+        return FALSE;
+    }
+    return this->impl->msg.scriptIndex >= 0;
+}
+
+int Gui::IsMsgRunning()
+{
+    if (this->impl == NULL)
+    {
+        return 0;
+    }
+    return this->impl->msg.scriptIndex >= 0 || this->impl->msg.scriptIndex == -2 ? 1 : 0;
 }
 
 void Gui::UpdateInterface()
@@ -1681,4 +1625,60 @@ void Gui::DrawBanners()
         g_AsciiText.color = 0xffffffff;
         this->lastDrawnBossTimer = this->bossTimer;
     }
+}
+
+int Gui::AddedCallback(Gui *gui)
+{
+    return gui->LoadResources();
+}
+
+int Gui::DeletedCallback(Gui *gui)
+{
+    g_SpriteEngine->ReleaseAnm(0x18);
+    g_SpriteEngine->ReleaseAnm(0x1c);
+    g_SpriteEngine->ReleaseAnm(0x1d);
+    g_SpriteEngine->ReleaseAnm(0x1e);
+    g_SpriteEngine->ReleaseAnm(0x1f);
+    gui->FreeMsgFile();
+    if ((g_App.scene != 3 && g_App.scene != 0xb && g_App.scene != 0xc) != 0)
+    {
+        g_SpriteEngine->ReleaseAnm(0x15);
+        g_SpriteEngine->ReleaseAnm(0x17);
+        g_SpriteEngine->ReleaseAnm(0x19);
+        g_SpriteEngine->ReleaseAnm(0x1a);
+        g_SpriteEngine->ReleaseAnm(0x1b);
+        g_SpriteEngine->ReleaseAnm(0x16);
+        delete gui->impl;
+        gui->impl = NULL;
+    }
+    return 0;
+}
+
+int Gui::RegisterChain()
+{
+    Gui *gui = &g_Gui;
+
+    if ((g_App.scene != 3 && g_App.scene != 0xb && g_App.scene != 0xc) != 0)
+    {
+        memset(gui, 0, sizeof(Gui));
+        gui->impl = new GuiImpl;
+    }
+    g_GuiCalcChain.SetCallback((ChainCallback)Gui::OnUpdate);
+    g_GuiCalcChain.addedCallback = (ChainCallback)Gui::AddedCallback;
+    g_GuiCalcChain.deletedCallback = (ChainCallback)Gui::DeletedCallback;
+    g_GuiCalcChain.arg = gui;
+    if (g_Chain.AddToCalcChain(&g_GuiCalcChain, 13) != 0)
+    {
+        return -1;
+    }
+    g_GuiDrawChain.SetCallback((ChainCallback)Gui::OnDraw);
+    g_GuiDrawChain.arg = gui;
+    g_Chain.AddToDrawChain(&g_GuiDrawChain, 12);
+    return 0;
+}
+
+void Gui::RemoveChain()
+{
+    g_Chain.Remove(&g_GuiCalcChain);
+    g_Chain.Remove(&g_GuiDrawChain);
 }
