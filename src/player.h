@@ -266,9 +266,15 @@ struct PlayerBomb
 {
     // Whether a bomb runs, as in th06.
     int running;
-    unsigned char unk_4[0xc];
+    // Picks drawFocused over draw.
+    int focused;
+    unsigned char unk_8[0x8];
     Timer timer;
-    unsigned char unk_1c[0x10];
+    void *unk_1c;
+    // Draws the bomb, unfocused and focused, as th06's draw.
+    void (*draw)(Player *player);
+    void *unk_24;
+    void (*drawFocused)(Player *player);
     PlayerBombPart parts[0x80];
 };
 ASSERT_SIZE(PlayerBomb, 0xa142c);
@@ -372,6 +378,13 @@ public:
     // is set), the bullets (UpdateBullets) and the firing (UpdateFiring).
     // Returns 1.
     static int OnUpdate(Player *player);
+    // The draw callback, as th06's: draws the flying bullets
+    // (DrawBullets) and a running bomb, then, unless the game is in the
+    // continue menu, the player and, while unk_240a is set and
+    // playerState is 0, 3 or 4, the options, all offset by the play
+    // area. While playerState is 4 and stateTimer runs, blinks the
+    // player red and sets Unknown1347b00's color, as UpdateInvulnerability.
+    // Returns 1.
     static int OnDraw(Player *player);
     static int AddedCallback(Player *player);
     // Unless the scene is 3, 0xb or 0xc, releases ANM 10 and sets

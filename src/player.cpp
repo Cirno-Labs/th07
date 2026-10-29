@@ -1364,6 +1364,74 @@ int Player::OnUpdate(Player *player)
     return 1;
 }
 
+int Player::OnDraw(Player *player)
+{
+    ColorBytes color;
+
+    DrawBullets(player);
+    if (player->bomb.running)
+    {
+        if (!player->bomb.focused)
+        {
+            player->bomb.draw(player);
+        }
+        else
+        {
+            player->bomb.drawFocused(player);
+        }
+    }
+    if (!g_Unknown626270.isInContinueMenu)
+    {
+        player->sprite.pos.x = g_Unknown626270.arena[0] + player->position.x;
+        player->sprite.pos.y = g_Unknown626270.arena[1] + player->position.y;
+        player->sprite.pos.z = 0.0f;
+        g_SpriteEngine->Func44f770(&player->sprite);
+        if (player->unk_240a && (player->playerState == 0 || player->playerState == 4 || player->playerState == 3))
+        {
+            player->optionSprites[0].pos.x = g_Unknown626270.arena[0] + player->optionPos[0].x;
+            player->optionSprites[0].pos.y = g_Unknown626270.arena[1] + player->optionPos[0].y;
+            player->optionSprites[0].pos.z = 0.0f;
+            player->optionSprites[1].pos.x = g_Unknown626270.arena[0] + player->optionPos[1].x;
+            player->optionSprites[1].pos.y = g_Unknown626270.arena[1] + player->optionPos[1].y;
+            player->optionSprites[1].pos.z = 0.0f;
+            g_SpriteEngine->Draw(&player->optionSprites[0]);
+            g_SpriteEngine->Draw(&player->optionSprites[1]);
+        }
+    }
+    if (player->playerState == 4 && player->stateTimer.AsFrames() > 0)
+    {
+        if (player->stateTimer.AsFrames() % 4 < 2)
+        {
+            player->sprite.color = 0xffff0000;
+        }
+        else
+        {
+            player->sprite.color = 0xffffffff;
+        }
+        color.a = 0x80;
+        if (g_Player.stateTimer >= 510)
+        {
+            color.b = 0x80 - (540 - g_Player.stateTimer.AsFrames()) * 80 / 30;
+            color.g = color.b;
+            color.r = color.g;
+        }
+        else if (g_Player.stateTimer < 30)
+        {
+            color.b = 0x80 - g_Player.stateTimer.AsFrames() * 80 / 30;
+            color.g = color.b;
+            color.r = color.g;
+        }
+        else
+        {
+            color.b = 0x30;
+            color.g = color.b;
+            color.r = color.g;
+        }
+        g_Unknown1347b00.Func406930(color.color);
+    }
+    return 1;
+}
+
 int Player::OnDraw2(Player *player)
 {
     DrawHitBullets(player);

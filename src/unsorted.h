@@ -975,7 +975,8 @@ public:
     };
     // Cleared by SetUpTitleScene.
     BYTE unk_93dc;
-    unsigned char unk_93dd[0x1];
+    // Set while the continue menu shows, as th06's.
+    BYTE isInContinueMenu;
     // The demo replay played last, 0 to 2.
     BYTE demoIndex;
     // Set from the replay menu's last choice when a replay starts.
