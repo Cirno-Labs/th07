@@ -239,6 +239,12 @@ public:
     int DrawVertexStrip(Sprite *vm, VertexTex1DiffuseXyzrwh *vertices, int count);
     // Sets the render states `vm` wants on the device, as in th06.
     void SetRenderStateForSprite(Sprite *vm);
+    // Creates texture `index` from the image file at `path`, in the format
+    // g_TextureFormats[`format`] (16 bits when forced), with `colorKey`
+    // transparent, and keeps the file. Returns 0, or -1 on failure.
+    int LoadTexture(int index, char *path, int format, D3DCOLOR colorKey);
+    // Releases texture `index` and its file.
+    void ReleaseTexture(int index);
     // Releases ANM slot `slot`.
     void ReleaseAnm(int slot);
     // Releases surface `surface`.
@@ -344,8 +350,10 @@ public:
     float shakeY;
     unsigned char unk_20[0x2828c];
     // The textures of the loaded ANM files, by slot.
-    IDirect3DTexture8 *textures[1];
-    unsigned char unk_282b0[0xc40];
+    IDirect3DTexture8 *textures[0x108];
+    // The image files the textures were created from, kept loaded.
+    void *textureFiles[0x100];
+    unsigned char unk_28acc[0x424];
     void *scripts[1];
     unsigned char unk_28ef4[0x5254];
     // Images loaded as surfaces to copy to the back buffer from.
@@ -390,6 +398,8 @@ extern SpriteEngine *g_SpriteEngine;
 // CreateQuad's quad with a color, for drawing without the vertex
 // buffer.
 extern VertexTex1DiffuseXyz g_DiffuseQuadXyz[4];
+// The texture formats LoadTexture takes by number.
+extern D3DFORMAT g_TextureFormats[];
 
 inline BOOL Sprite::HasTexture()
 {

@@ -553,14 +553,14 @@ address,size,name,symbol
 0x0044d3e0,573,SpriteEngine::SpriteEngine,??0SpriteEngine@@QAE@XZ
 0x0044d620,11,MmTimer::OnTimer,?OnTimer@MmTimer@@UAEXXZ ??1SpriteEngine@@QAE@XZ
 0x0044d630,700,SpriteEngine::CreateQuad,?CreateQuad@SpriteEngine@@QAEXXZ
-0x0044d8f0,234,Func44d8f0,
+0x0044d8f0,234,SpriteEngine::LoadTexture,?LoadTexture@SpriteEngine@@QAEHHPADHK@Z
 0x0044d9e0,511,Func44d9e0,
 0x0044dbe0,861,Func44dbe0,
 0x0044df40,66,Func44df40,
 0x0044df90,223,SpriteEngine::LoadAnm,?LoadAnm@SpriteEngine@@QAEHHPADH@Z
 0x0044e070,1122,Func44e070,
 0x0044e4e0,514,SpriteEngine::ReleaseAnm,?ReleaseAnm@SpriteEngine@@QAEXH@Z
-0x0044e6f0,142,Func44e6f0,
+0x0044e6f0,142,SpriteEngine::ReleaseTexture,?ReleaseTexture@SpriteEngine@@QAEXH@Z
 0x0044e780,347,Func44e780,
 0x0044e8e0,308,SpriteEngine::SetSprite,?SetSprite@SpriteEngine@@QAEHPAVSprite@@H@Z
 0x0044ea20,188,SpriteEngine::SetScript,?SetScript@SpriteEngine@@QAEXPAVSprite@@PAX@Z
@@ -717,7 +717,7 @@ address,size,name,symbol
 0x004629f0,182,D3DXLoadSurfaceFromFileInMemory,_D3DXLoadSurfaceFromFileInMemory@36
 0x00462aa6,285,D3DXLoadSurfaceFromSurface,_D3DXLoadSurfaceFromSurface@32
 0x00462bc3,305,Func462bc3,
-0x00462cf4,1041,Func462cf4,
+0x00462cf4,1041,D3DXCreateTextureFromFileInMemoryEx,_D3DXCreateTextureFromFileInMemoryEx@60
 0x00463105,10,Func463105,
 0x0046310f,30,Func46310f,
 0x0046312d,34,Func46312d,
@@ -1726,6 +1726,7 @@ address,size,name,symbol
 0x004904d8,,IID_IPersistFile,_IID_IPersistFile
 0x004904e8,,GUID_NULL,_GUID_NULL
 0x00495120,,g_SeekOrigins,?g_SeekOrigins@@3QBKB
+0x0049512c,,g_TextureFormats,?g_TextureFormats@@3PAW4_D3DFORMAT@@A
 0x00495248,36,File::`vftable',??_7File@@6B@
 0x0049526c,32,Unknown45e500::`vftable',??_7Unknown45e500@@6B@
 0x0049528c,4,CStreamingSound::`vftable',??_7CStreamingSound@@6B@

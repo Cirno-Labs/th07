@@ -43,6 +43,38 @@ void SpriteEngine::CreateQuad()
     }
 }
 
+int SpriteEngine::LoadTexture(int index, char *path, int format, D3DCOLOR colorKey)
+{
+    void *data;
+
+    this->ReleaseTexture(index);
+    if (g_App.flags.force16BitTextures)
+    {
+        if (g_TextureFormats[format] == D3DFMT_A8R8G8B8 || g_TextureFormats[format] == D3DFMT_UNKNOWN)
+        {
+            format = 5;
+        }
+        else if (g_TextureFormats[format] == D3DFMT_R8G8B8)
+        {
+            format = 3;
+        }
+    }
+    data = LoadFileData(path, 1);
+    if (data == NULL)
+    {
+        return -1;
+    }
+    if (D3DXCreateTextureFromFileInMemoryEx(g_App.d3dDevice, data, g_FileSize, 0, 0, 0, 0, g_TextureFormats[format],
+                                            D3DPOOL_MANAGED, D3DX_FILTER_LINEAR, D3DX_DEFAULT, colorKey, NULL, NULL,
+                                            &this->textures[index]) != D3D_OK)
+    {
+        free(data);
+        return -1;
+    }
+    this->textureFiles[index] = data;
+    return 0;
+}
+
 void SpriteEngine::RenderTextToTextureIndex(int textureIndex, int x, int y, int width, int unk4, int fontHeight,
                                             int unk6, D3DCOLOR textColor, D3DCOLOR shadowColor, char *text,
                                             float scaleX, float scaleY)
