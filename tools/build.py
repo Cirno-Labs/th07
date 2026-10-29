@@ -12,7 +12,7 @@ The standalone exe links src/ without src/dll/ but with src/exe/ (the
 game's data and global objects, which the DLL takes from the original)
 against the real libraries, plus the original's resources.
 """
-import csv, glob, os, struct, subprocess, sys
+import collections, csv, glob, os, struct, subprocess, sys
 from concurrent.futures import ThreadPoolExecutor
 
 import coff
@@ -198,16 +198,39 @@ def write_hooks(objs, symbols):
     return path
 
 
+def link_order(objs, symbols):
+    """Sorts the game's objects into the original's order: by the lowest
+    original address of a function that only that object defines, so an
+    inline function other objects also emit doesn't pull it forward.
+    Objects that define no such function (data, globals) go last, in
+    their given order."""
+    code = {}
+    for path in objs:
+        obj = coff.Object(path)
+        code[path] = {s.name for s in obj.externals()
+                      if s.section > 0 and obj.sections[s.section - 1].flags & coff.CODE}
+    count = collections.Counter(n for names in code.values() for n in names)
+
+    def first(path):
+        return min((symbols[n] for n in code[path] if count[n] == 1 and n in symbols),
+                   default=1 << 32)
+    return sorted(objs, key=first)
+
+
 def link_exe(objs):
     """Links the standalone game with the libraries the original was built
     with: the static multithreaded CRT, D3DX8 and the import libraries."""
     import rsrc
     res = os.path.join(OBJ, "th07.res")
     rsrc.write_res(res, rsrc.resources(ORIGINAL))
+    # Objects and libraries in the original's order: its import table
+    # lists DINPUT8, DSOUND and d3d8 first and ole32 last, D3DX8 follows
+    # the game code and the CRT comes last.
+    objs = link_order(objs, read_symbols())
     tool("link", "/SUBSYSTEM:WINDOWS", "/FIXED", "/NODEFAULTLIB:libc.lib",
          "/MAP:" + win(EXE[:-4] + ".map"), "/OUT:" + win(EXE), *map(win, objs), win(res),
-         "libcmt.lib", "d3dx8.lib", "d3d8.lib", "dsound.lib", "dinput8.lib", "dxguid.lib",
-         "winmm.lib", "kernel32.lib", "user32.lib", "gdi32.lib", "ole32.lib")
+         "dinput8.lib", "dsound.lib", "d3d8.lib", "d3dx8.lib", "dxguid.lib", "winmm.lib",
+         "kernel32.lib", "user32.lib", "gdi32.lib", "ole32.lib", "libcmt.lib")
     copy_header_fields(ORIGINAL, EXE)
     print("linked", EXE)
 
