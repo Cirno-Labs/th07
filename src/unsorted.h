@@ -376,11 +376,14 @@ int SetButtonFromJoystick(WORD *buttons, short button, WORD bit, DWORD joyButton
 // a button is down when its byte has bit 0x80 set.
 int SetButtonFromDirectInput(WORD *buttons, short button, WORD bit, BYTE *rgbButtons);
 
+// How many frames shoot has been held, for App::shootFocuses; at most
+// 20. Named, and declared before g_JoyCaps, to come between g_JoyCaps
+// and g_Rng in .bss as in the original: the exe sorts an object's
+// globals by name_hash(name) % 1024 (tools/locals.py), and of two equal
+// ones puts the name first seen later first.
+extern WORD g_ShotButtonHeldLen;
 // The joystick's capabilities, from joyGetDevCaps.
 extern JOYCAPSA g_JoyCaps;
-// How many frames shoot has been held, for App::shootFocuses; at most
-// 20.
-extern WORD g_ShotHeldFrames;
 
 // Adds the joystick's buttons and directions to `buttons` and returns
 // them: through DirectInput if there is a device, else joyGetPosEx.

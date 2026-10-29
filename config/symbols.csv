@@ -1783,7 +1783,7 @@ address,size,name,symbol
 0x0049f64c,,g_StageDataFiles,?g_StageDataFiles@@3PAPADA
 0x0049fbf0,,g_Gui,?g_Gui@@3VGui@@A
 0x0049fc88,,g_JoyCaps,?g_JoyCaps@@3UtagJOYCAPSA@@A
-0x0049fe1c,,g_ShotHeldFrames,?g_ShotHeldFrames@@3GA
+0x0049fe1c,,g_ShotButtonHeldLen,?g_ShotButtonHeldLen@@3GA
 0x0049fe20,,g_Rng,?g_Rng@@3VRng@@A
 0x0049fe28,,g_TextSurface,?g_TextSurface@@3PAUIDirect3DSurface8@@A
 0x0049fe30,,g_LzssTree,?g_LzssTree@@3PAULzssNode@@A
