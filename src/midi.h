@@ -226,10 +226,10 @@ public:
     float volumeScale;
     // The volume last sent while fading, volumeScale * 128.
     int lastVolume;
-    int unk_2d0;
-    int unk_2d4;
-    int unk_2d8;
-    int unk_2dc;
+    int unusedAfterConstruct2d0;
+    int suppressVolume;
+    int unusedAfterConstruct2d8;
+    int framesSinceRewind;
     // Set while fading out.
     int fading;
     // In ms, set by FadeOut.
