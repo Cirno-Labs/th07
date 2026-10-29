@@ -96,7 +96,7 @@ address,size,name,symbol
 0x00417b90,151,WarpToBoss,?WarpToBoss@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x00417c30,533,ShakeAndSpinBullets,?ShakeAndSpinBullets@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x00417e50,680,SpawnFansFromNearbyBullets,?SpawnFansFromNearbyBullets@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
-0x00418110,16,Func418110,
+0x00418110,16,NoOp,?NoOp@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x00418120,311,Func418120,
 0x00418260,106,Func418260,
 0x004182d0,766,Func4182d0,

@@ -898,6 +898,10 @@ void SpawnFansFromNearbyBullets(Enemy *enemy, EnemyScriptInstr *instr)
     }
 }
 
+void NoOp(Enemy *enemy, EnemyScriptInstr *instr)
+{
+}
+
 // As in bullet.cpp: defined after its callers, so they call the copy.
 inline void Bullet::FreeBullet()
 {

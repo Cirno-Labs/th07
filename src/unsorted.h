@@ -1559,6 +1559,8 @@ void ShakeAndSpinBullets(Enemy *enemy, EnemyScriptInstr *instr);
 // (128, 192, 256 or 999 by argument 1; 0 also shakes and flashes the
 // screen) fires two color 6 bullets and is removed (FreeBullet).
 void SpawnFansFromNearbyBullets(Enemy *enemy, EnemyScriptInstr *instr);
+// Does nothing.
+void NoOp(Enemy *enemy, EnemyScriptInstr *instr);
 
 // Set to 9 as the dialogue of stages 6 to 8 starts.
 extern int g_Unknown9a9ab8;
