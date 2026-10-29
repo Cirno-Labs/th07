@@ -10,7 +10,7 @@ symbol: the link map (build/th07.map) gives each function's address in
 our exe, config/symbols.csv its address in the original. For each
 function it checks whether it sits at its original address and whether
 its bytes are identical, raw and with addresses masked (a dword that is
-an absolute address in both images, or a rel32 call/jump/jcc whose
+an address inside both images, or a rel32 call/jump/jcc whose
 target lies in both images' .text). Functions are grouped into regions
 (game, the DirectInput data, D3DX8, CRT) by the object or library our
 map puts them in. -v lists every function that moved or differs.
@@ -58,6 +58,7 @@ class PE:
         self.opt = pe + 24
         self.base, = struct.unpack_from("<I", d, self.opt + 28)
         self.sizeof_headers, = struct.unpack_from("<I", d, self.opt + 60)
+        self.sizeof_image, = struct.unpack_from("<I", d, self.opt + 56)
         self.sections = {}
         self.order = []
         for i in range(self.nsec):
@@ -286,8 +287,8 @@ def masked_same(ours, orig, a_addr, b_addr, a, b):
     a = a + ours.read(a_addr + len(a), 3)
     b = b + orig.read(b_addr + len(b), 3)
     ta, tb = ours.sections[".text"], orig.sections[".text"]
-    lo_a, hi_a = ours.base, ours.base + 0x400000
-    lo_b, hi_b = orig.base, orig.base + 0x400000
+    lo_a, hi_a = ours.base, ours.base + ours.sizeof_image
+    lo_b, hi_b = orig.base, orig.base + orig.sizeof_image
     in_text = lambda t, x: t[0] <= x < t[0] + t[1]
     n = min(len(a), len(b))
     masked = bytearray(n)
@@ -444,7 +445,7 @@ def find_code(ours, orig, addr, size):
     wild = bytearray(len(a))
     for j in range(len(a) - 3):
         v, = struct.unpack_from("<I", a, j)
-        if ours.base <= v < ours.base + 0x400000 or (j and a[j - 1] in (0xE8, 0xE9)) \
+        if ours.base <= v < ours.base + ours.sizeof_image or (j and a[j - 1] in (0xE8, 0xE9)) \
                 or (j > 1 and a[j - 2] == 0x0F and 0x80 <= a[j - 1] < 0x90):
             wild[j:j + 4] = b"\1\1\1\1"
     if sum(not w for w in wild) < 24:
