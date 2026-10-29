@@ -100,6 +100,9 @@ public:
     static int AddedCallback(EffectManager *mgr);
     // Frees the effect sprites. Returns 0.
     static int DeletedCallback(EffectManager *mgr);
+    // Resets and adds the update element (priority 11) and the draw
+    // element (priority 9). Returns 0, or -1 if adding fails.
+    static int RegisterChain();
 
     // Where SpawnEffect looks for a free effect next.
     int next;
@@ -120,6 +123,10 @@ public:
 };
 ASSERT_SIZE(EffectManager, 0x496a8);
 extern EffectManager g_EffectManager;
+
+// EffectManager's statically allocated chain elements.
+extern ChainElem g_EffectCalcChain;
+extern ChainElem g_EffectDrawChain;
 
 // Set by EffectManager::AddedCallback to 1 or 2, by stage. Not in th06.
 extern int g_Unknown1348020;

@@ -151,7 +151,7 @@ address,size,name,symbol
 0x0041cb80,596,EffectManager::OnDraw2,?OnDraw2@EffectManager@@QAEHXZ
 0x0041cde0,581,EffectManager::AddedCallback,?AddedCallback@EffectManager@@SIHPAV1@@Z
 0x0041d050,65,EffectManager::DeletedCallback,?DeletedCallback@EffectManager@@SIHPAV1@@Z
-0x0041d0a0,165,Func41d0a0,
+0x0041d0a0,165,EffectManager::RegisterChain,?RegisterChain@EffectManager@@SIHXZ
 0x0041d150,35,Func41d150,?Func41d150@@YIXXZ
 0x0041d180,357,Ending::Ending,??0Ending@@QAE@XZ
 0x0041d2f0,141,Ending::OnUpdate,?OnUpdate@Ending@@SIHPAV1@@Z
@@ -1807,6 +1807,8 @@ address,size,name,symbol
 0x012fe0d0,,g_Unknown12fe0d0,?g_Unknown12fe0d0@@3HA
 0x012fe0dc,,g_Unknown12fe0dc,?g_Unknown12fe0dc@@3HA
 0x012fe250,,g_EffectManager,?g_EffectManager@@3VEffectManager@@A
+0x013478f8,,g_EffectCalcChain,?g_EffectCalcChain@@3UChainElem@@A
+0x01347918,,g_EffectDrawChain,?g_EffectDrawChain@@3UChainElem@@A
 0x01347938,,g_Unknown1347938,?g_Unknown1347938@@3VUnknown1347938@@A
 0x01347b00,,g_Unknown1347b00,?g_Unknown1347b00@@3VUnknown1347b00@@A
 0x01348010,,g_Unknown1348010,?g_Unknown1348010@@3EA
