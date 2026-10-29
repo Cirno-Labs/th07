@@ -87,7 +87,7 @@ public:
     // The draw chain callback: draws the frame rate. Returns 1.
     static int OnDraw(App *arg);
     // Adds the time since the last call to the play time in
-    // g_Unknown626270.plst. Not in th06.
+    // g_GameManager.plst. Not in th06.
     void AddPlayTime();
     // Unless unk_2b8 is clear, compares the time the local clock and
     // the performance counter say passed since startTime and
@@ -103,9 +103,9 @@ public:
     // -1, which makes OnUpdate quit. Not in th06.
     int CheckVersionFile(char *version, DWORD size, DWORD checksum);
     // Adds the time since the last call to the time played in
-    // g_Unknown626270.plst. Not in th06.
+    // g_GameManager.plst. Not in th06.
     void AddTotalPlayTime();
-    // Whether g_Unknown626270.unk_4 is set and its byte at 0x25 is not
+    // Whether g_GameManager.unk_4 is set and its byte at 0x25 is not
     // 0. The result screen records no score then. Not in th06.
     int IsScoreDisabled();
     // Saves the back buffer as a 24-bit 640x480 bitmap at `path`, from an
@@ -253,7 +253,7 @@ public:
     float achievedFrames;
     float expectedFrames;
     // The frame rate rounded, as DrawFps shows it with bit 3 of
-    // g_Unknown626270.unk_93d8.
+    // g_GameManager.unk_93d8.
     short roundedFps;
     unsigned char unk_18a[0x2];
     // Bit 1: the device does T&L in hardware; 2: the back buffer is
@@ -310,7 +310,7 @@ void RemoveGameManagerChain();
 // Measures the frame rate every half second, with the performance
 // counter when there is one (calling g_App.CheckClockDrift every eighth
 // time), and adds up the frames there should have been and those there
-// were while bit 2 of g_Unknown626270.unk_93d8 is set and `draw` is.
+// were while bit 2 of g_GameManager.unk_93d8 is set and `draw` is.
 // Shows the rate when `draw` is set and hideFps is not, with
 // g_App.unk_188 below it while bits 2 and 3 are set.
 void DrawFps(int draw);
@@ -1159,11 +1159,11 @@ public:
     int subRank;
 };
 ASSERT_SIZE(GameManager, 0x9644);
-extern GameManager g_Unknown626270;
+extern GameManager g_GameManager;
 
-// The update and draw chain elements of g_Unknown626270, after it.
-extern ChainElem g_Unknown626270CalcChain;
-extern ChainElem g_Unknown626270DrawChain;
+// The update and draw chain elements of g_GameManager, after it.
+extern ChainElem g_GameManagerCalcChain;
+extern ChainElem g_GameManagerDrawChain;
 
 // The rank a game starts at and its bounds, as th06's.
 struct RankSettings
@@ -1187,9 +1187,9 @@ extern EnemyAnmPaths g_EnemyAnmPaths[];
 extern char *g_EclPaths[];
 
 // The sum of the `size` bytes at `data`. Adds
-// g_Unknown626270.stats->unk_b4[2] to its unk_ac for every byte.
+// g_GameManager.stats->unk_b4[2] to its unk_ac for every byte.
 int ChecksumBytes(BYTE *data, int size);
-// Fills the checksum keys in g_Unknown626270.stats with random numbers
+// Fills the checksum keys in g_GameManager.stats with random numbers
 // from 6543 up, then stores the checksum. Not in th06.
 void RerollStatsChecksumKeys();
 // th06's score loading from GameManager::AddedCallback: saves the score
@@ -1350,7 +1350,7 @@ ASSERT_SIZE(GuiImpl, 0x20a30);
 class Gui
 {
 public:
-    // The update element's callback: unless g_Unknown626270.isFrozen is
+    // The update element's callback: unless g_GameManager.isFrozen is
     // set, sets g_App.scene to 3 if impl->unk_209bc is set, runs
     // UpdateInterface and impl->RunMsg and counts unk_0 up; plays MIDI
     // slot 0 on frame 300 of stage 6, and holds g_App.redrawFrames at 8
@@ -1518,9 +1518,9 @@ public:
     int sectionColors[8];
 };
 ASSERT_SIZE(Gui, 0x94);
-extern Gui g_Unknown49fbf0;
-extern ChainElem g_Unknown49fbf0CalcChain;
-extern ChainElem g_Unknown49fbf0DrawChain;
+extern Gui g_Gui;
+extern ChainElem g_GuiCalcChain;
+extern ChainElem g_GuiDrawChain;
 // The colors of the boss timer: 20 seconds and more, 10, 5 and under 5.
 extern D3DCOLOR g_BossTimerColors[4];
 // Copies the rectangle of sprite `sprite` in texture 0x16 into sprite
@@ -1626,7 +1626,7 @@ public:
     int globalInts[4];
     float globalFloats[4];
 };
-extern EnemyScripts g_Unknown1347938;
+extern EnemyScripts g_EnemyScripts;
 
 // The value of script operand `id` for `enemy`: a variable (floats
 // truncated) or another value the scripts read by number from 10000;
@@ -1663,14 +1663,14 @@ void ScriptMoveHermite(Enemy *enemy, EnemyScriptInstr *instr, float t);
 // the rank values, and starts effect 0x19 in reserved slot 1 as
 // effects[24], with its scale and then 0.125 twice in unk_218 and
 // timerCallbackTime in its unk_84[4] timer. Unless bit 3 of
-// g_Unknown626270.unk_93d8 is set, counts the attempt in the card's
+// g_GameManager.unk_93d8 is set, counts the attempt in the card's
 // Catk (by unk_93d7 and in all), first clearing its counts if their
 // checksum (unk_2a, with the name's) fails.
 void StartSpellCard(Enemy *enemy, EnemyScriptInstr *instr);
 // Ends the spell card, as th06's RunEnemy did: hides the name; if it
 // was active (1), clears the bullets and the other enemies for bonuses
 // and, if it was captured, scores its bonus and, unless bit 3 of
-// g_Unknown626270.unk_93d8 is set, keeps the best bonus and counts the
+// g_GameManager.unk_93d8 is set, keeps the best bonus and counts the
 // capture in its Catk as StartSpellCard does the attempt. Then releases
 // the bosses' effects[24] and plays sound 0xf. Always resets the
 // stage's spellCardState.
@@ -2008,10 +2008,10 @@ public:
     int keepTintColor;
 };
 ASSERT_SIZE(Stage, 0x52b4);
-extern Stage g_Unknown1347b00;
+extern Stage g_Stage;
 // The stage data file of each stage; stage 0 has a "dummy" one.
 extern char *g_StageDataFiles[];
 // Stage's statically allocated chain elements.
-extern ChainElem g_Unknown1347b00CalcChain;
-extern ChainElem g_Unknown1347b00DrawChain;
-extern ChainElem g_Unknown1347b00DrawChain2;
+extern ChainElem g_StageCalcChain;
+extern ChainElem g_StageDrawChain;
+extern ChainElem g_StageDrawChain2;

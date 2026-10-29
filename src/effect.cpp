@@ -225,8 +225,8 @@ int EffectInitPetal20(Effect *effect)
     effect->drawList = 1;
     effect->sprite.rotationZ = g_Rng.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
     effect->sprite.rotationX = g_Rng.GetRandomF32ZeroToOne() * 0.031415928f - 0.015707964f;
-    percent = g_Unknown626270.bonusPoints - g_Unknown626270.stats->grazeCount;
-    percent = percent * 100 / g_Unknown626270.bonusPointsCap;
+    percent = g_GameManager.bonusPoints - g_GameManager.stats->grazeCount;
+    percent = percent * 100 / g_GameManager.bonusPointsCap;
     if (percent >= g_Rng.GetRandomU32InRange(100))
     {
         g_SpriteEngine->SetSprite(&effect->sprite, 0x2d8);
@@ -252,8 +252,8 @@ int EffectInitPetal26(Effect *effect)
     effect->drawList = 1;
     effect->sprite.rotationZ = g_Rng.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
     effect->sprite.rotationX = g_Rng.GetRandomF32ZeroToOne() * 0.06283186f - 0.031415928f;
-    percent = g_Unknown626270.bonusPoints - g_Unknown626270.stats->grazeCount;
-    percent = percent * 100 / g_Unknown626270.bonusPointsCap;
+    percent = g_GameManager.bonusPoints - g_GameManager.stats->grazeCount;
+    percent = percent * 100 / g_GameManager.bonusPointsCap;
     if (percent >= g_Rng.GetRandomU32InRange(100))
     {
         g_SpriteEngine->SetSprite(&effect->sprite, 0x2d8);
@@ -575,7 +575,7 @@ int EffectManager::OnUpdate(EffectManager *mgr)
         }
     }
     mgr->frames++;
-    if (mgr->frames % 300 == 100 && g_Unknown626270.ChecksumMismatch())
+    if (mgr->frames % 300 == 100 && g_GameManager.ChecksumMismatch())
     {
         return 4;
     }
@@ -590,8 +590,8 @@ int EffectManager::OnDraw(EffectManager *mgr)
     while (eff != NULL)
     {
         eff->sprite.pos = eff->pos;
-        eff->sprite.pos.x = g_Unknown626270.arena[0] + eff->sprite.pos.x;
-        eff->sprite.pos.y = g_Unknown626270.arena[1] + eff->sprite.pos.y;
+        eff->sprite.pos.x = g_GameManager.arena[0] + eff->sprite.pos.x;
+        eff->sprite.pos.y = g_GameManager.arena[1] + eff->sprite.pos.y;
         g_SpriteEngine->Draw(&eff->sprite);
         eff = eff->next;
     }
@@ -606,8 +606,8 @@ int EffectManager::OnDraw(EffectManager *mgr)
     while (eff != NULL)
     {
         eff->sprite.pos = eff->pos;
-        eff->sprite.pos.x = g_Unknown626270.arena[0] + eff->sprite.pos.x;
-        eff->sprite.pos.y = g_Unknown626270.arena[1] + eff->sprite.pos.y;
+        eff->sprite.pos.x = g_GameManager.arena[0] + eff->sprite.pos.x;
+        eff->sprite.pos.y = g_GameManager.arena[1] + eff->sprite.pos.y;
         g_SpriteEngine->Draw(&eff->sprite);
         eff = eff->next;
     }
@@ -675,7 +675,7 @@ int EffectManager::AddedCallback(EffectManager *mgr)
 {
     mgr->Reset();
     g_Unknown1348024 = 0;
-    switch (g_Unknown626270.stage)
+    switch (g_GameManager.stage)
     {
     case 0:
     case 1:

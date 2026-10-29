@@ -437,7 +437,7 @@ void SaveScoreDat(ResultScreen *screen)
             }
         }
     }
-    clrd26 = g_Unknown626270.clrds;
+    clrd26 = g_GameManager.clrds;
     for (i = 0; i < 6; i++, clrd26++)
     {
         clrd26->magic = 0x44524c43;
@@ -447,7 +447,7 @@ void SaveScoreDat(ResultScreen *screen)
         memcpy(buf + size0, clrd26, sizeof(Clrd));
         size0 += sizeof(Clrd);
     }
-    catk1 = g_Unknown626270.catks;
+    catk1 = g_GameManager.catks;
     for (i = 0; i < 0x8d; i++, catk1++)
     {
         if (catk1->magic == 0x4b544143)
@@ -460,7 +460,7 @@ void SaveScoreDat(ResultScreen *screen)
             size0 += sizeof(Catk);
         }
     }
-    pscr0 = &g_Unknown626270.pscrs[0][0][0];
+    pscr0 = &g_GameManager.pscrs[0][0][0];
     for (i = 0; i < 6; i++)
     {
         for (j = 0; j < 6; j++)
@@ -478,7 +478,7 @@ void SaveScoreDat(ResultScreen *screen)
     memcpy(buf + size0, &screen->lsnm, sizeof(Lsnm));
     size0 += sizeof(Lsnm);
     g_App.AddPlayTime();
-    memcpy(buf + size0, &g_Unknown626270.plst, sizeof(Plst));
+    memcpy(buf + size0, &g_GameManager.plst, sizeof(Plst));
     size0 += sizeof(Plst);
     vrsm13.magic = 0x4d535256;
     vrsm13.version = 1;
@@ -650,7 +650,7 @@ int ResultScreen::OnUpdate(ResultScreen *screen)
                     sprite->posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
                 }
             }
-            if (!g_Unknown626270.IsPhantasmOpen())
+            if (!g_GameManager.IsPhantasmOpen())
             {
                 screen->sprites[5].flags &= ~2;
                 screen->sprites[6].posOffset.y += -32.0f;
@@ -670,7 +670,7 @@ int ResultScreen::OnUpdate(ResultScreen *screen)
         screen->frame = 0;
     case 1:
         i = MoveCursorVertical(screen, 9);
-        if (screen->cursor == 5 && !g_Unknown626270.IsPhantasmOpen())
+        if (screen->cursor == 5 && !g_GameManager.IsPhantasmOpen())
         {
             screen->cursor += i;
         }
@@ -688,7 +688,7 @@ int ResultScreen::OnUpdate(ResultScreen *screen)
                 sprite->posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
             }
         }
-        if (!g_Unknown626270.IsPhantasmOpen())
+        if (!g_GameManager.IsPhantasmOpen())
         {
             screen->sprites[5].flags &= ~2;
             screen->sprites[6].posOffset.y += -32.0f;
@@ -825,8 +825,8 @@ int ResultScreen::OnUpdate(ResultScreen *screen)
                 {
                     for (k = 0; k < 6; k++)
                     {
-                        g_Unknown626270.clrds[shot].stagesClearedNoContinue[k] = 99;
-                        g_Unknown626270.clrds[shot].stagesCleared[k] = 99;
+                        g_GameManager.clrds[shot].stagesClearedNoContinue[k] = 99;
+                        g_GameManager.clrds[shot].stagesCleared[k] = 99;
                     }
                 }
                 screen->cheatProgress = 0;
@@ -887,14 +887,14 @@ int ResultScreen::OnUpdate(ResultScreen *screen)
                 {
                     break;
                 }
-                if (g_Unknown626270.catks[i].attempts[6] == 0)
+                if (g_GameManager.catks[i].attempts[6] == 0)
                 {
                     g_SpriteEngine->RenderText(&screen->textSprites[i % 10], 0xffffff, 0, "？？？？？");
                 }
                 else
                 {
                     g_SpriteEngine->RenderText(&screen->textSprites[i % 10], 0xffffff, 0,
-                                               g_Unknown626270.catks[i].name);
+                                               g_GameManager.catks[i].name);
                 }
                 screen->textSprites[i % 10].alpha = 0xff;
             }
@@ -978,13 +978,13 @@ int ResultScreen::HandleNameEntry()
     {
         this->state = 0x10;
         this->frame = 0;
-        memcpy(g_Unknown626270.catks, g_Unknown626270.savedCatks, sizeof(g_Unknown626270.catks));
+        memcpy(g_GameManager.catks, g_GameManager.savedCatks, sizeof(g_GameManager.catks));
         return 0;
     }
     if (this->frame == 0)
     {
-        this->character = g_Unknown626270.character * 2 + g_Unknown626270.shotType;
-        this->difficulty = g_Unknown626270.difficulty;
+        this->character = g_GameManager.character * 2 + g_GameManager.shotType;
+        this->difficulty = g_GameManager.difficulty;
         sprite = this->sprites;
         for (i = 0; i < 0x29; i++, sprite++)
         {
@@ -994,13 +994,13 @@ int ResultScreen::HandleNameEntry()
         this->textSprites[0].alpha = 0xff;
         this->entry.shot = this->character;
         this->entry.difficulty = this->difficulty;
-        this->entry.score = g_Unknown626270.stats->score;
-        this->entry.continuesUsed = g_Unknown626270.stats->continuesUsed;
+        this->entry.score = g_GameManager.stats->score;
+        this->entry.continuesUsed = g_GameManager.stats->continuesUsed;
         this->entry.version = 1;
         this->entry.magic = *(DWORD *)"HSCR";
-        if ((g_Unknown626270.unk_93d8 >> 4 & 1) == 0)
+        if ((g_GameManager.unk_93d8 >> 4 & 1) == 0)
         {
-            this->entry.stage = g_Unknown626270.stage;
+            this->entry.stage = g_GameManager.stage;
         }
         else
         {
@@ -1189,7 +1189,7 @@ int ResultScreen::HandleReplaySaving()
             {
                 interrupt = 0x13;
             }
-            else if (g_Unknown626270.stats->continuesUsed != 0)
+            else if (g_GameManager.stats->continuesUsed != 0)
             {
                 interrupt = 0xe;
             }
@@ -1304,7 +1304,7 @@ int ResultScreen::HandleReplaySaving()
             this->replaySlot = this->cursor;
             this->frame = 0;
             FormatTodayDate(this->replay.date);
-            this->replay.score = g_Unknown626270.stats->score;
+            this->replay.score = g_GameManager.stats->score;
             if (*(DWORD *)this->replays[this->cursor].magic != *(DWORD *)"T7RP" ||
                 (this->replays[this->cursor].version & 0xfff) != 0x100)
             {
@@ -1573,19 +1573,19 @@ int ResultScreen::RunStatisticsMenu()
             sprite0 = &this->textSprites[0];
             sprite0->pos = pos2;
             g_App.AddPlayTime();
-            g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "総起動時間   %.2d:%.2d:%.2d", g_Unknown626270.plst.runHours,
-                                       g_Unknown626270.plst.runMinutes, g_Unknown626270.plst.runSeconds);
+            g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "総起動時間   %.2d:%.2d:%.2d", g_GameManager.plst.runHours,
+                                       g_GameManager.plst.runMinutes, g_GameManager.plst.runSeconds);
             g_App.AddPlayTime();
-            this->shownRunSeconds = g_Unknown626270.plst.runSeconds;
+            this->shownRunSeconds = g_GameManager.plst.runSeconds;
             sprite0++;
             pos2.y += 17.0f;
             sprite0->pos = pos2;
-            g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "総プレイ時間 %.2d:%.2d:%.2d", g_Unknown626270.plst.playHours,
-                                       g_Unknown626270.plst.playMinutes, g_Unknown626270.plst.playSeconds);
+            g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "総プレイ時間 %.2d:%.2d:%.2d", g_GameManager.plst.playHours,
+                                       g_GameManager.plst.playMinutes, g_GameManager.plst.playSeconds);
             sprite0++;
             pos2.y += 17.0f;
             sprite0->pos = pos2;
-            if (g_Unknown626270.IsPhantasmOpen())
+            if (g_GameManager.IsPhantasmOpen())
             {
                 g_SpriteEngine->RenderText(sprite0, 0xffffff, 0,
                                            "プレイ回数　　　 　Easy 　Norm 　Hard 　Luna  Extra Phants  Total");
@@ -1599,89 +1599,89 @@ int ResultScreen::RunStatisticsMenu()
                 sprite0++;
                 pos2.y += 17.0f;
                 sprite0->pos = pos2;
-                if (g_Unknown626270.IsPhantasmOpen())
+                if (g_GameManager.IsPhantasmOpen())
                 {
                     g_SpriteEngine->RenderText(
                         sprite0, 0xffffff, 0, "%s %6d %6d %6d %6d %6d %6d %6d", g_ShotNames[i],
-                        g_Unknown626270.plst.counts[0].plays[i + 1], g_Unknown626270.plst.counts[1].plays[i + 1],
-                        g_Unknown626270.plst.counts[2].plays[i + 1], g_Unknown626270.plst.counts[3].plays[i + 1],
-                        g_Unknown626270.plst.counts[4].plays[i + 1], g_Unknown626270.plst.counts[5].plays[i + 1],
-                        g_Unknown626270.plst.counts[6].plays[i + 1]);
+                        g_GameManager.plst.counts[0].plays[i + 1], g_GameManager.plst.counts[1].plays[i + 1],
+                        g_GameManager.plst.counts[2].plays[i + 1], g_GameManager.plst.counts[3].plays[i + 1],
+                        g_GameManager.plst.counts[4].plays[i + 1], g_GameManager.plst.counts[5].plays[i + 1],
+                        g_GameManager.plst.counts[6].plays[i + 1]);
                 }
                 else
                 {
                     g_SpriteEngine->RenderText(
                         sprite0, 0xffffff, 0, "%s %6d %6d %6d %6d %6d %6d", g_ShotNames[i],
-                        g_Unknown626270.plst.counts[0].plays[i + 1], g_Unknown626270.plst.counts[1].plays[i + 1],
-                        g_Unknown626270.plst.counts[2].plays[i + 1], g_Unknown626270.plst.counts[3].plays[i + 1],
-                        g_Unknown626270.plst.counts[4].plays[i + 1], g_Unknown626270.plst.counts[6].plays[i + 1]);
+                        g_GameManager.plst.counts[0].plays[i + 1], g_GameManager.plst.counts[1].plays[i + 1],
+                        g_GameManager.plst.counts[2].plays[i + 1], g_GameManager.plst.counts[3].plays[i + 1],
+                        g_GameManager.plst.counts[4].plays[i + 1], g_GameManager.plst.counts[6].plays[i + 1]);
                 }
             }
             sprite0++;
             pos2.y += 17.0f;
             sprite0->pos = pos2;
-            if (g_Unknown626270.IsPhantasmOpen())
+            if (g_GameManager.IsPhantasmOpen())
             {
                 g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "%s %6d %6d %6d %6d %6d %6d %6d", g_ShotNames[6],
-                                           g_Unknown626270.plst.counts[0].plays[0], g_Unknown626270.plst.counts[1].plays[0],
-                                           g_Unknown626270.plst.counts[2].plays[0], g_Unknown626270.plst.counts[3].plays[0],
-                                           g_Unknown626270.plst.counts[4].plays[0], g_Unknown626270.plst.counts[5].plays[0],
-                                           g_Unknown626270.plst.counts[6].plays[0]);
+                                           g_GameManager.plst.counts[0].plays[0], g_GameManager.plst.counts[1].plays[0],
+                                           g_GameManager.plst.counts[2].plays[0], g_GameManager.plst.counts[3].plays[0],
+                                           g_GameManager.plst.counts[4].plays[0], g_GameManager.plst.counts[5].plays[0],
+                                           g_GameManager.plst.counts[6].plays[0]);
             }
             else
             {
                 g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "%s %6d %6d %6d %6d %6d %6d", g_ShotNames[6],
-                                           g_Unknown626270.plst.counts[0].plays[0], g_Unknown626270.plst.counts[1].plays[0],
-                                           g_Unknown626270.plst.counts[2].plays[0], g_Unknown626270.plst.counts[3].plays[0],
-                                           g_Unknown626270.plst.counts[4].plays[0], g_Unknown626270.plst.counts[6].plays[0]);
+                                           g_GameManager.plst.counts[0].plays[0], g_GameManager.plst.counts[1].plays[0],
+                                           g_GameManager.plst.counts[2].plays[0], g_GameManager.plst.counts[3].plays[0],
+                                           g_GameManager.plst.counts[4].plays[0], g_GameManager.plst.counts[6].plays[0]);
             }
             sprite0++;
             pos2.y += 34.0f;
             sprite0->pos = pos2;
-            g_Unknown626270.plst.counts[6].clears =
-                g_Unknown626270.plst.counts[0].clears + g_Unknown626270.plst.counts[1].clears +
-                g_Unknown626270.plst.counts[2].clears + g_Unknown626270.plst.counts[3].clears +
-                g_Unknown626270.plst.counts[4].clears + g_Unknown626270.plst.counts[5].clears;
-            if (g_Unknown626270.IsPhantasmOpen())
+            g_GameManager.plst.counts[6].clears =
+                g_GameManager.plst.counts[0].clears + g_GameManager.plst.counts[1].clears +
+                g_GameManager.plst.counts[2].clears + g_GameManager.plst.counts[3].clears +
+                g_GameManager.plst.counts[4].clears + g_GameManager.plst.counts[5].clears;
+            if (g_GameManager.IsPhantasmOpen())
             {
-                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "クリア回数  　　 %6d %6d %6d %6d %6d %6d %6d", g_Unknown626270.plst.counts[0].clears, g_Unknown626270.plst.counts[1].clears, g_Unknown626270.plst.counts[2].clears, g_Unknown626270.plst.counts[3].clears, g_Unknown626270.plst.counts[4].clears, g_Unknown626270.plst.counts[5].clears, g_Unknown626270.plst.counts[6].clears);
+                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "クリア回数  　　 %6d %6d %6d %6d %6d %6d %6d", g_GameManager.plst.counts[0].clears, g_GameManager.plst.counts[1].clears, g_GameManager.plst.counts[2].clears, g_GameManager.plst.counts[3].clears, g_GameManager.plst.counts[4].clears, g_GameManager.plst.counts[5].clears, g_GameManager.plst.counts[6].clears);
             }
             else
             {
-                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "クリア回数  　　 %6d %6d %6d %6d %6d %6d", g_Unknown626270.plst.counts[0].clears, g_Unknown626270.plst.counts[1].clears, g_Unknown626270.plst.counts[2].clears, g_Unknown626270.plst.counts[3].clears, g_Unknown626270.plst.counts[4].clears, g_Unknown626270.plst.counts[6].clears);
+                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "クリア回数  　　 %6d %6d %6d %6d %6d %6d", g_GameManager.plst.counts[0].clears, g_GameManager.plst.counts[1].clears, g_GameManager.plst.counts[2].clears, g_GameManager.plst.counts[3].clears, g_GameManager.plst.counts[4].clears, g_GameManager.plst.counts[6].clears);
             }
             sprite0++;
             pos2.y += 17.0f;
             sprite0->pos = pos2;
-            if (g_Unknown626270.IsPhantasmOpen())
+            if (g_GameManager.IsPhantasmOpen())
             {
-                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "コンティニュー   %6d %6d %6d %6d %6d %6d %6d", g_Unknown626270.plst.counts[0].continues, g_Unknown626270.plst.counts[1].continues, g_Unknown626270.plst.counts[2].continues, g_Unknown626270.plst.counts[3].continues, g_Unknown626270.plst.counts[4].continues, g_Unknown626270.plst.counts[5].continues, g_Unknown626270.plst.counts[6].continues);
+                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "コンティニュー   %6d %6d %6d %6d %6d %6d %6d", g_GameManager.plst.counts[0].continues, g_GameManager.plst.counts[1].continues, g_GameManager.plst.counts[2].continues, g_GameManager.plst.counts[3].continues, g_GameManager.plst.counts[4].continues, g_GameManager.plst.counts[5].continues, g_GameManager.plst.counts[6].continues);
             }
             else
             {
-                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "コンティニュー   %6d %6d %6d %6d %6d %6d", g_Unknown626270.plst.counts[0].continues, g_Unknown626270.plst.counts[1].continues, g_Unknown626270.plst.counts[2].continues, g_Unknown626270.plst.counts[3].continues, g_Unknown626270.plst.counts[4].continues, g_Unknown626270.plst.counts[6].continues);
+                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "コンティニュー   %6d %6d %6d %6d %6d %6d", g_GameManager.plst.counts[0].continues, g_GameManager.plst.counts[1].continues, g_GameManager.plst.counts[2].continues, g_GameManager.plst.counts[3].continues, g_GameManager.plst.counts[4].continues, g_GameManager.plst.counts[6].continues);
             }
             sprite0++;
             pos2.y += 17.0f;
             sprite0->pos = pos2;
-            if (g_Unknown626270.IsPhantasmOpen())
+            if (g_GameManager.IsPhantasmOpen())
             {
-                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "プラクティス　   %6d %6d %6d %6d %6d %6d %6d", g_Unknown626270.plst.counts[0].practices, g_Unknown626270.plst.counts[1].practices, g_Unknown626270.plst.counts[2].practices, g_Unknown626270.plst.counts[3].practices, g_Unknown626270.plst.counts[4].practices, g_Unknown626270.plst.counts[5].practices, g_Unknown626270.plst.counts[6].practices);
+                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "プラクティス　   %6d %6d %6d %6d %6d %6d %6d", g_GameManager.plst.counts[0].practices, g_GameManager.plst.counts[1].practices, g_GameManager.plst.counts[2].practices, g_GameManager.plst.counts[3].practices, g_GameManager.plst.counts[4].practices, g_GameManager.plst.counts[5].practices, g_GameManager.plst.counts[6].practices);
             }
             else
             {
-                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "プラクティス　   %6d %6d %6d %6d %6d %6d", g_Unknown626270.plst.counts[0].practices, g_Unknown626270.plst.counts[1].practices, g_Unknown626270.plst.counts[2].practices, g_Unknown626270.plst.counts[3].practices, g_Unknown626270.plst.counts[4].practices, g_Unknown626270.plst.counts[6].practices);
+                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "プラクティス　   %6d %6d %6d %6d %6d %6d", g_GameManager.plst.counts[0].practices, g_GameManager.plst.counts[1].practices, g_GameManager.plst.counts[2].practices, g_GameManager.plst.counts[3].practices, g_GameManager.plst.counts[4].practices, g_GameManager.plst.counts[6].practices);
             }
             sprite0++;
             pos2.y += 17.0f;
             sprite0->pos = pos2;
-            if (g_Unknown626270.IsPhantasmOpen())
+            if (g_GameManager.IsPhantasmOpen())
             {
-                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "リトライ回数  　 %6d %6d %6d %6d %6d %6d %6d", g_Unknown626270.plst.counts[0].retries, g_Unknown626270.plst.counts[1].retries, g_Unknown626270.plst.counts[2].retries, g_Unknown626270.plst.counts[3].retries, g_Unknown626270.plst.counts[4].retries, g_Unknown626270.plst.counts[5].retries, g_Unknown626270.plst.counts[6].retries);
+                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "リトライ回数  　 %6d %6d %6d %6d %6d %6d %6d", g_GameManager.plst.counts[0].retries, g_GameManager.plst.counts[1].retries, g_GameManager.plst.counts[2].retries, g_GameManager.plst.counts[3].retries, g_GameManager.plst.counts[4].retries, g_GameManager.plst.counts[5].retries, g_GameManager.plst.counts[6].retries);
             }
             else
             {
-                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "リトライ回数  　 %6d %6d %6d %6d %6d %6d", g_Unknown626270.plst.counts[0].retries, g_Unknown626270.plst.counts[1].retries, g_Unknown626270.plst.counts[2].retries, g_Unknown626270.plst.counts[3].retries, g_Unknown626270.plst.counts[4].retries, g_Unknown626270.plst.counts[6].retries);
+                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "リトライ回数  　 %6d %6d %6d %6d %6d %6d", g_GameManager.plst.counts[0].retries, g_GameManager.plst.counts[1].retries, g_GameManager.plst.counts[2].retries, g_GameManager.plst.counts[3].retries, g_GameManager.plst.counts[4].retries, g_GameManager.plst.counts[6].retries);
             }
         }
         if (this->frame < 40)
@@ -1701,13 +1701,13 @@ int ResultScreen::RunStatisticsMenu()
         if (this->frame % 60 == 0)
         {
             g_App.AddPlayTime();
-            if (g_Unknown626270.plst.runSeconds != this->shownRunSeconds)
+            if (g_GameManager.plst.runSeconds != this->shownRunSeconds)
             {
                 sprite0 = &this->textSprites[0];
                 g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "総起動時間   %.2d:%.2d:%.2d",
-                                           g_Unknown626270.plst.runHours, g_Unknown626270.plst.runMinutes,
-                                           g_Unknown626270.plst.runSeconds);
-                this->shownRunSeconds = g_Unknown626270.plst.runSeconds;
+                                           g_GameManager.plst.runHours, g_GameManager.plst.runMinutes,
+                                           g_GameManager.plst.runSeconds);
+                this->shownRunSeconds = g_GameManager.plst.runSeconds;
             }
         }
         if (WAS_PRESSED(0x100b))
@@ -1755,35 +1755,35 @@ int ResultScreen::DrawStatistics()
             g_AsciiText.color = color;
         }
         rating = 0.0f;
-        progress = g_Unknown626270.difficulty < 4
-                       ? g_Unknown626270.progressFrames / 180621.0f
-                       : progress = g_Unknown626270.difficulty == 4 ? g_Unknown626270.progressFrames / 80000.0f
-                                                                    : g_Unknown626270.progressFrames / 85000.0f;
+        progress = g_GameManager.difficulty < 4
+                       ? g_GameManager.progressFrames / 180621.0f
+                       : progress = g_GameManager.difficulty == 4 ? g_GameManager.progressFrames / 80000.0f
+                                                                    : g_GameManager.progressFrames / 85000.0f;
         cursorPos = spr->pos;
         cursorPos.x += 210.0f;
         cursorPos.y += 32.0f;
-        g_AsciiText.AddFormat(&cursorPos, "%9d", g_Unknown626270.stats->guiScore);
+        g_AsciiText.AddFormat(&cursorPos, "%9d", g_GameManager.stats->guiScore);
         cursorPos.x += 126.0f;
-        g_AsciiText.AddFormat(&cursorPos, "%1d", g_Unknown626270.stats->continuesUsed);
+        g_AsciiText.AddFormat(&cursorPos, "%1d", g_GameManager.stats->continuesUsed);
         cursorPos.x -= 126.0f;
-        if (g_Unknown626270.stats->guiScore < 2000000)
+        if (g_GameManager.stats->guiScore < 2000000)
         {
             rating -= 20.0f;
         }
-        else if (g_Unknown626270.stats->guiScore < 200000000)
+        else if (g_GameManager.stats->guiScore < 200000000)
         {
-            rating += (g_Unknown626270.stats->guiScore - 2000000) / 198000000.0f * 60.0f - 20.0f;
+            rating += (g_GameManager.stats->guiScore - 2000000) / 198000000.0f * 60.0f - 20.0f;
         }
         else
         {
             rating += 40.0f;
         }
         cursorPos.y += 22.0f;
-        g_AsciiText.AddString(&cursorPos, g_DifficultyNames[g_Unknown626270.difficulty]);
-        rating += g_DifficultyRatings[g_Unknown626270.difficulty];
+        g_AsciiText.AddString(&cursorPos, g_DifficultyNames[g_GameManager.difficulty]);
+        rating += g_DifficultyRatings[g_GameManager.difficulty];
         cursorPos.x += 14.0f;
         cursorPos.y += 22.0f;
-        if ((g_Unknown626270.unk_93d8 >> 4 & 1) == 0)
+        if ((g_GameManager.unk_93d8 >> 4 & 1) == 0)
         {
             if (progress >= 1.0f)
             {
@@ -1798,17 +1798,17 @@ int ResultScreen::DrawStatistics()
             rating += 70.0f;
         }
         cursorPos.y += 22.0f;
-        g_AsciiText.AddFormat(&cursorPos, "%9d", g_Unknown626270.stats->continuesUsed);
-        rating -= g_Unknown626270.stats->continuesUsed * 10.0f;
+        g_AsciiText.AddFormat(&cursorPos, "%9d", g_GameManager.stats->continuesUsed);
+        rating -= g_GameManager.stats->continuesUsed * 10.0f;
         cursorPos.y += 22.0f;
-        g_AsciiText.AddFormat(&cursorPos, "%9d", (int)g_Unknown626270.stats->deaths);
-        rating -= (int)g_Unknown626270.stats->deaths * 5.0f - 10.0f;
+        g_AsciiText.AddFormat(&cursorPos, "%9d", (int)g_GameManager.stats->deaths);
+        rating -= (int)g_GameManager.stats->deaths * 5.0f - 10.0f;
         cursorPos.y += 22.0f;
-        g_AsciiText.AddFormat(&cursorPos, "%9d", (int)g_Unknown626270.stats->bombsUsed);
-        rating -= (int)g_Unknown626270.stats->bombsUsed * 2.0f - 10.0f;
+        g_AsciiText.AddFormat(&cursorPos, "%9d", (int)g_GameManager.stats->bombsUsed);
+        rating -= (int)g_GameManager.stats->bombsUsed * 2.0f - 10.0f;
         cursorPos.y += 22.0f;
-        g_AsciiText.AddFormat(&cursorPos, "%9d", g_Unknown626270.stats->spellCardsCaptured);
-        rating += g_Unknown626270.stats->spellCardsCaptured * g_SpellCardRatings[g_Unknown626270.difficulty];
+        g_AsciiText.AddFormat(&cursorPos, "%9d", g_GameManager.stats->spellCardsCaptured);
+        rating += g_GameManager.stats->spellCardsCaptured * g_SpellCardRatings[g_GameManager.difficulty];
         slowdown = (g_App.achievedFrames / g_App.expectedFrames - 0.5f) * 2.0f;
         if (slowdown < 0.0f)
         {
@@ -1829,17 +1829,17 @@ int ResultScreen::DrawStatistics()
         {
             rating = -999.0f;
         }
-        if (g_Unknown626270.stats->pointItemsTotal < 800)
+        if (g_GameManager.stats->pointItemsTotal < 800)
         {
-            rating += 0.01f * g_Unknown626270.stats->pointItemsTotal;
+            rating += 0.01f * g_GameManager.stats->pointItemsTotal;
         }
         else
         {
             rating += 8.0f;
         }
-        if (g_Unknown626270.stats->grazeTotal < 5000)
+        if (g_GameManager.stats->grazeTotal < 5000)
         {
-            rating += 0.0025f * g_Unknown626270.stats->grazeTotal;
+            rating += 0.0025f * g_GameManager.stats->grazeTotal;
         }
         else
         {
@@ -1968,11 +1968,11 @@ int ResultScreen::OnDraw(ResultScreen *screen)
                 pos3[1] -= 16.0f;
                 pos3.x = x0;
                 screen->textSprites[i].pos = pos3;
-                if (g_Unknown626270.catks[card].attempts[screen->shownShotType] == 0)
+                if (g_GameManager.catks[card].attempts[screen->shownShotType] == 0)
                 {
                     g_AsciiText.color = 0xc0c0c0ff;
                 }
-                else if (g_Unknown626270.catks[card].captures[screen->shownShotType] == 0)
+                else if (g_GameManager.catks[card].captures[screen->shownShotType] == 0)
                 {
                     g_AsciiText.color = 0xffc0a0a0;
                 }
@@ -1984,15 +1984,15 @@ int ResultScreen::OnDraw(ResultScreen *screen)
                 screen->textSprites[i].pos[0] += 96.0f;
                 g_SpriteEngine->DrawUnrotated(&screen->textSprites[i]);
                 pos3[0] += 496.0f;
-                if (g_Unknown626270.catks[card].attempts[screen->shownShotType] == 0)
+                if (g_GameManager.catks[card].attempts[screen->shownShotType] == 0)
                 {
-                    g_AsciiText.AddFormat(&pos3, "---/---", g_Unknown626270.catks[card].captures[screen->shownShotType],
-                                          g_Unknown626270.catks[card].attempts[screen->shownShotType]);
+                    g_AsciiText.AddFormat(&pos3, "---/---", g_GameManager.catks[card].captures[screen->shownShotType],
+                                          g_GameManager.catks[card].attempts[screen->shownShotType]);
                 }
                 else
                 {
-                    g_AsciiText.AddFormat(&pos3, "%3d/%3d", g_Unknown626270.catks[card].captures[screen->shownShotType],
-                                          g_Unknown626270.catks[card].attempts[screen->shownShotType]);
+                    g_AsciiText.AddFormat(&pos3, "%3d/%3d", g_GameManager.catks[card].captures[screen->shownShotType],
+                                          g_GameManager.catks[card].attempts[screen->shownShotType]);
                 }
                 pos3[0] -= 496.0f;
                 pos3[0] += 424.0f;
@@ -2000,9 +2000,9 @@ int ResultScreen::OnDraw(ResultScreen *screen)
                 g_AsciiText.color = 0xffa08090;
                 g_AsciiText.scaleX = 0.8f;
                 g_AsciiText.scaleY = 0.8f;
-                if (g_Unknown626270.catks[card].attempts[screen->shownShotType] != 0)
+                if (g_GameManager.catks[card].attempts[screen->shownShotType] != 0)
                 {
-                    g_AsciiText.AddFormat(&pos3, "MaxBonus %8d", g_Unknown626270.catks[card].maxBonus[screen->shownShotType]);
+                    g_AsciiText.AddFormat(&pos3, "MaxBonus %8d", g_GameManager.catks[card].maxBonus[screen->shownShotType]);
                 }
                 pos3[0] -= 424.0f;
                 pos3[1] += 13.0f;
@@ -2108,7 +2108,7 @@ int ResultScreen::OnDraw(ResultScreen *screen)
             if (screen->state == 14)
             {
                 g_AsciiText.AddFormat(&pos3, "No.%.2d %8s %5s  %7s %9d0", i + 1, screen->name, screen->replay.date,
-                                      g_ShotTypeNames[g_Unknown626270.character * 2 + g_Unknown626270.shotType],
+                                      g_ShotTypeNames[g_GameManager.character * 2 + g_GameManager.shotType],
                                       screen->replay.score);
                 g_AsciiText.color = 0xfff0f0ff;
                 *(DWORD *)&name[0] = *(DWORD *)"    ";
@@ -2152,7 +2152,7 @@ int ResultScreen::AddedCallback(ResultScreen *screen)
     Catk *card;
     int j;
 
-    g_Unknown626270.IsPhantasmOpen();
+    g_GameManager.IsPhantasmOpen();
     for (i = 0; i < 6; i++)
     {
         for (shot = 0; shot < 6; shot++)
@@ -2220,29 +2220,29 @@ int ResultScreen::AddedCallback(ResultScreen *screen)
     screen->nameEntryAtEnd = LoadLsnmChunk(screen->scoreDat, &screen->lsnm);
     if (screen->state != 10 && screen->state != 0x12)
     {
-        LoadSpellCards(screen->scoreDat, g_Unknown626270.catks);
-        LoadClears(screen->scoreDat, g_Unknown626270.clrds);
-        g_Unknown626270.IsPhantasmOpen();
-        LoadPracticeScores(screen->scoreDat, &g_Unknown626270.pscrs[0][0][0]);
+        LoadSpellCards(screen->scoreDat, g_GameManager.catks);
+        LoadClears(screen->scoreDat, g_GameManager.clrds);
+        g_GameManager.IsPhantasmOpen();
+        LoadPracticeScores(screen->scoreDat, &g_GameManager.pscrs[0][0][0]);
     }
     if (screen->state == 0x12)
     {
-        if (g_Unknown626270
-                .pscrs[g_Unknown626270.character * 2 + g_Unknown626270.shotType][g_Unknown626270.stage - 1]
-                      [g_Unknown626270.difficulty]
-                .score < g_Unknown626270.stats->score)
+        if (g_GameManager
+                .pscrs[g_GameManager.character * 2 + g_GameManager.shotType][g_GameManager.stage - 1]
+                      [g_GameManager.difficulty]
+                .score < g_GameManager.stats->score)
         {
-            g_Unknown626270
-                .pscrs[g_Unknown626270.character * 2 + g_Unknown626270.shotType][g_Unknown626270.stage - 1]
-                      [g_Unknown626270.difficulty]
-                .score = g_Unknown626270.stats->score;
+            g_GameManager
+                .pscrs[g_GameManager.character * 2 + g_GameManager.shotType][g_GameManager.stage - 1]
+                      [g_GameManager.difficulty]
+                .score = g_GameManager.stats->score;
         }
         screen->state = 0xb;
         strcpy(screen->name, screen->lsnm.name);
     }
     for (i = 0; i < 7; i++)
     {
-        card = g_Unknown626270.catks;
+        card = g_GameManager.catks;
         screen->capturedSpellCounts[i] = 0;
         for (j = 0; j < 0x8d; j++, card++)
         {
@@ -2302,10 +2302,10 @@ int ResultScreen::RegisterChain(int unk)
 {
     ResultScreen *screen = new ResultScreen;
 
-    DebugPrint2("Stg.PlayTimeAll = %d\r\n", g_Unknown626270.progressFrames);
+    DebugPrint2("Stg.PlayTimeAll = %d\r\n", g_GameManager.progressFrames);
     if (unk == 1)
     {
-        if (!(g_Unknown626270.unk_93d8 & 1))
+        if (!(g_GameManager.unk_93d8 & 1))
         {
             screen->SetState(10);
         }

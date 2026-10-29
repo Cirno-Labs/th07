@@ -288,7 +288,7 @@ int UpdateLaserBullet(Player *player, PlayerBullet *bullet)
     {
         bullet->sprite.pendingInterrupt = 1;
     }
-    if ((g_Unknown49fbf0.Func42ad66() || player->bomb.running) &&
+    if ((g_Gui.Func42ad66() || player->bomb.running) &&
         player->lasers[bullet->laserIndex].timer.AsFrames() > 20)
     {
         player->lasers[bullet->laserIndex].timer.Set(20);
@@ -325,7 +325,7 @@ int UpdateTrailLaserBullet(Player *player, PlayerBullet *bullet)
     {
         bullet->sprite.pendingInterrupt = 1;
     }
-    if ((g_Unknown49fbf0.Func42ad66() || player->bomb.running) &&
+    if ((g_Gui.Func42ad66() || player->bomb.running) &&
         player->lasers[bullet->laserIndex].timer.AsFrames() > 20)
     {
         player->lasers[bullet->laserIndex].timer.Set(20);
@@ -383,8 +383,8 @@ int DrawTrailLaserBullet(Player *player, PlayerBullet *bullet)
         bullet->sprite.pos.y = bullet->trail[i].y;
         bullet->sprite.pos.z = bullet->trail[i].z;
         bullet->sprite.alpha = alpha - alpha * i / bullet->trailLength;
-        bullet->sprite.pos[0] += g_Unknown626270.arena[0];
-        bullet->sprite.pos[1] += g_Unknown626270.arena[1];
+        bullet->sprite.pos[0] += g_GameManager.arena[0];
+        bullet->sprite.pos[1] += g_GameManager.arena[1];
         g_SpriteEngine->Draw(&bullet->sprite);
     }
     bullet->sprite.alpha = alpha;
@@ -486,7 +486,7 @@ void FireShots(Player *player, int frame)
     int i;
 
     shotTable = player->focused == 0 ? player->shotType->tables : player->shotTypeFocused->tables;
-    while ((int)g_Unknown626270.stats->power >= shotTable->maxPower)
+    while ((int)g_GameManager.stats->power >= shotTable->maxPower)
     {
         shotTable++;
     }
@@ -596,7 +596,7 @@ void UpdateBullets(Player *player)
         bullet->pos[0] += g_App.gameSpeed * bullet->velocity.x;
         bullet->pos[1] += g_App.gameSpeed * bullet->velocity.y;
         if (bullet->type != 4 && bullet->type != 5 &&
-            !g_Unknown626270.IsInPlayArea(bullet->pos.x, bullet->pos.y, bullet->sprite.spriteData->width,
+            !g_GameManager.IsInPlayArea(bullet->pos.x, bullet->pos.y, bullet->sprite.spriteData->width,
                                           bullet->sprite.spriteData->height))
         {
             bullet->state = 0;
@@ -624,8 +624,8 @@ void DrawBullets(Player *player)
         {
             bullet->sprite.SetRotationZ(AddNormalizeAngle(bullet->angle, 1.5707964f));
         }
-        bullet->sprite.pos.x = g_Unknown626270.arena[0] + bullet->pos.x;
-        bullet->sprite.pos.y = g_Unknown626270.arena[1] + bullet->pos.y;
+        bullet->sprite.pos.x = g_GameManager.arena[0] + bullet->pos.x;
+        bullet->sprite.pos.y = g_GameManager.arena[1] + bullet->pos.y;
         bullet->sprite.pos.z = 0.4f;
         g_SpriteEngine->Draw(&bullet->sprite);
         if (bullet->draw != NULL)
@@ -650,8 +650,8 @@ void DrawHitBullets(Player *player)
         {
             bullet->sprite.SetRotationZ(AddNormalizeAngle(bullet->angle, 1.5707964f));
         }
-        bullet->sprite.pos.x = g_Unknown626270.arena[0] + bullet->pos.x;
-        bullet->sprite.pos.y = g_Unknown626270.arena[1] + bullet->pos.y;
+        bullet->sprite.pos.x = g_GameManager.arena[0] + bullet->pos.x;
+        bullet->sprite.pos.y = g_GameManager.arena[1] + bullet->pos.y;
         bullet->sprite.pos.z = 0.4f;
         g_SpriteEngine->Draw(&bullet->sprite);
     }
@@ -664,7 +664,7 @@ int UpdateFiring(Player *player)
         return 0;
     }
     if (player->fireTimer.HasTicked() &&
-        (!g_Player.bomb.running || g_Unknown626270.character != 1 || g_Unknown626270.shotType != 1))
+        (!g_Player.bomb.running || g_GameManager.character != 1 || g_GameManager.shotType != 1))
     {
         FireShots(player, player->fireTimer.AsFrames());
     }
@@ -869,7 +869,7 @@ int Player::CheckHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size)
     {
         return 1;
     }
-    g_Unknown626270.RerollLifeChecksumKeys();
+    g_GameManager.RerollLifeChecksumKeys();
     this->Die();
     return 1;
 }
@@ -970,7 +970,7 @@ hit:
     {
         return 0;
     }
-    g_Unknown626270.RerollLifeChecksumKeys();
+    g_GameManager.RerollLifeChecksumKeys();
     this->Die();
     return 1;
 }
@@ -981,13 +981,13 @@ void Player::Graze(D3DXVECTOR3 *pos)
 
     if (!g_Player.bomb.running)
     {
-        if (g_Unknown626270.stats->graze < 9999)
+        if (g_GameManager.stats->graze < 9999)
         {
-            g_Unknown626270.stats->graze++;
+            g_GameManager.stats->graze++;
         }
-        if (g_Unknown626270.stats->grazeTotal < 999999)
+        if (g_GameManager.stats->grazeTotal < 999999)
         {
-            g_Unknown626270.stats->grazeTotal++;
+            g_GameManager.stats->grazeTotal++;
         }
     }
     mid = (this->position + *pos) / 2.0f;
@@ -1006,29 +1006,29 @@ void Player::Graze(D3DXVECTOR3 *pos)
     {
         g_EffectManager.SpawnEffect(8, &mid, 1, 0xffffffff);
     }
-    g_Unknown626270.AddSubRank(6);
-    g_Unknown49fbf0.grazeChanged = 2;
+    g_GameManager.AddSubRank(6);
+    g_Gui.grazeChanged = 2;
     g_SoundPlayer.QueueSound(0x1e, 0);
-    g_Unknown12fe0d0 += 2500 + (g_Unknown626270.bonusPoints - g_Unknown626270.stats->grazeCount) / 1500 * 20;
-    g_Unknown626270.AddScore(2000);
+    g_Unknown12fe0d0 += 2500 + (g_GameManager.bonusPoints - g_GameManager.stats->grazeCount) / 1500 * 20;
+    g_GameManager.AddScore(2000);
     if (this->bombState == 1)
     {
         if (this->focused)
         {
-            g_Unknown626270.IncreaseBonusCap(30);
-            g_Unknown626270.AddBonusPointsCapped(30);
+            g_GameManager.IncreaseBonusCap(30);
+            g_GameManager.AddBonusPointsCapped(30);
         }
         else
         {
-            g_Unknown626270.IncreaseBonusCap(80);
-            g_Unknown626270.AddBonusPointsCapped(80);
+            g_GameManager.IncreaseBonusCap(80);
+            g_GameManager.AddBonusPointsCapped(80);
         }
     }
 }
 
 void Player::Die()
 {
-    g_Unknown626270.RerollChecksumKeys();
+    g_GameManager.RerollChecksumKeys();
     g_EffectManager.SpawnReservedEffect(0xc, &this->position, 3, 1, 0xff4040ff);
     g_EffectManager.SpawnEffect(6, &this->position, 16, 0xffffffff);
     this->playerState = 2;
@@ -1179,21 +1179,21 @@ int HandleInput(Player *player)
     player->moveDeltaY = deltaY * player->moveScaleY * g_App.gameSpeed;
     player->position[0] += player->moveDeltaX;
     player->position[1] += player->moveDeltaY;
-    if (player->position.x < g_Unknown626270.arena2[0])
+    if (player->position.x < g_GameManager.arena2[0])
     {
-        player->position.x = g_Unknown626270.arena2[0];
+        player->position.x = g_GameManager.arena2[0];
     }
-    else if (g_Unknown626270.arena2[0] + g_Unknown626270.arena2[2] < player->position.x)
+    else if (g_GameManager.arena2[0] + g_GameManager.arena2[2] < player->position.x)
     {
-        player->position.x = g_Unknown626270.arena2[0] + g_Unknown626270.arena2[2];
+        player->position.x = g_GameManager.arena2[0] + g_GameManager.arena2[2];
     }
-    if (player->position.y < g_Unknown626270.arena2[1])
+    if (player->position.y < g_GameManager.arena2[1])
     {
-        player->position.y = g_Unknown626270.arena2[1];
+        player->position.y = g_GameManager.arena2[1];
     }
-    else if (g_Unknown626270.arena2[1] + g_Unknown626270.arena2[3] < player->position.y)
+    else if (g_GameManager.arena2[1] + g_GameManager.arena2[3] < player->position.y)
     {
-        player->position.y = g_Unknown626270.arena2[1] + g_Unknown626270.arena2[3];
+        player->position.y = g_GameManager.arena2[1] + g_GameManager.arena2[3];
     }
     player->hitboxMin = player->position - player->hitboxSize;
     player->hitboxMax = player->position + player->hitboxSize;
@@ -1204,7 +1204,7 @@ int HandleInput(Player *player)
     player->optionPos[0] = player->position;
     player->optionPos[1] = player->position;
     sideX = sideY = 0.0f;
-    if (g_Unknown626270.character != 2 || g_Unknown626270.shotType != 1)
+    if (g_GameManager.character != 2 || g_GameManager.shotType != 1)
     {
         switch (player->unk_240a)
         {
@@ -1398,9 +1398,9 @@ int HandleInput(Player *player)
             break;
         }
     }
-    if ((g_Unknown4b9e50 & 1) && !g_Unknown49fbf0.Func42ad66())
+    if ((g_Unknown4b9e50 & 1) && !g_Gui.Func42ad66())
     {
-        if (!g_Unknown626270.ChecksumMismatch())
+        if (!g_GameManager.ChecksumMismatch())
         {
             Player::StartFiring(player);
         }
@@ -1480,8 +1480,8 @@ void UpdateBombState(Player *player)
     {
         if (player->bomb.timer.HasTicked())
         {
-            g_Unknown626270.SubUnk961c(player->bomb.drainPerFrame);
-            g_Unknown49fbf0.unk_4_8 = 2;
+            g_GameManager.SubUnk961c(player->bomb.drainPerFrame);
+            g_Gui.unk_4_8 = 2;
         }
         if (!player->bomb.focused)
         {
@@ -1493,13 +1493,13 @@ void UpdateBombState(Player *player)
         }
         return;
     }
-    if (!g_Unknown626270.ChecksumMismatch() && !g_Unknown49fbf0.Func42ad66() && player->deathbombFrames != 0 &&
-        (int)g_Unknown626270.stats->bombs > 0 && player->bombCooldown == 0 && (g_Unknown4b9e50 & 2))
+    if (!g_GameManager.ChecksumMismatch() && !g_Gui.Func42ad66() && player->deathbombFrames != 0 &&
+        (int)g_GameManager.stats->bombs > 0 && player->bombCooldown == 0 && (g_Unknown4b9e50 & 2))
     {
         g_ReplayManager->frameEvents |= 1;
-        g_Unknown626270.AddBombsUsed(1);
-        g_Unknown626270.AddBombs(-1);
-        g_Unknown49fbf0.bombsChanged = 2;
+        g_GameManager.AddBombsUsed(1);
+        g_GameManager.AddBombs(-1);
+        g_Gui.bombsChanged = 2;
         player->bomb.focused = player->focused;
         player->bomb.running = 1;
         player->bombJustStarted = 1;
@@ -1515,7 +1515,7 @@ void UpdateBombState(Player *player)
         }
         g_Unknown12fe0cc = 0;
         g_Unknown12fe0c4 = 0;
-        g_Unknown626270.SubSubRank(200);
+        g_GameManager.SubSubRank(200);
         g_Unknown12fe0dc = g_Unknown12fe0c8;
         player->deathbombFrames += 6;
         if (player->deathbombFrames > g_Player.shotType->deathbombFrames)
@@ -1545,20 +1545,20 @@ int UpdateDyingState(Player *player)
         if (player->deathbombFrames == 0)
         {
             g_ReplayManager->frameEvents |= 4;
-            g_Unknown626270.powerItemCombo = 0;
+            g_GameManager.powerItemCombo = 0;
             g_Unknown12fe0cc = 0;
             g_Unknown12fe0c4 = 0;
-            g_Unknown626270.AddDeaths(1);
-            if ((int)g_Unknown626270.stats->lives > 0)
+            g_GameManager.AddDeaths(1);
+            if ((int)g_GameManager.stats->lives > 0)
             {
-                if ((int)g_Unknown626270.stats->power <= 16)
+                if ((int)g_GameManager.stats->power <= 16)
                 {
-                    g_Unknown626270.stats->power = 0;
-                    g_Unknown626270.RerollChecksumKeys();
+                    g_GameManager.stats->power = 0;
+                    g_GameManager.RerollChecksumKeys();
                 }
                 else
                 {
-                    g_Unknown626270.AddPower(-16);
+                    g_GameManager.AddPower(-16);
                 }
                 g_ItemManager.SpawnItem(&player->position, 2, 2);
                 g_ItemManager.SpawnItem(&player->position, 0, 2);
@@ -1566,9 +1566,9 @@ int UpdateDyingState(Player *player)
                 g_ItemManager.SpawnItem(&player->position, 0, 2);
                 g_ItemManager.SpawnItem(&player->position, 0, 2);
                 g_ItemManager.SpawnItem(&player->position, 0, 2);
-                g_Unknown49fbf0.powerChanged = 2;
-                bonus = (g_Unknown626270.bonusPoints - g_Unknown626270.stats->grazeCount) * g_Player.shotType->deathScoreShare;
-                if (g_Unknown626270.character != 2)
+                g_Gui.powerChanged = 2;
+                bonus = (g_GameManager.bonusPoints - g_GameManager.stats->grazeCount) * g_Player.shotType->deathScoreShare;
+                if (g_GameManager.character != 2)
                 {
                     if (bonus > 100000)
                     {
@@ -1580,22 +1580,22 @@ int UpdateDyingState(Player *player)
                     bonus = 60000;
                 }
                 bonus -= bonus % 10;
-                g_Unknown626270.bonusPoints -= bonus;
-                g_Unknown49fbf0.unk_4_8 = 2;
+                g_GameManager.bonusPoints -= bonus;
+                g_Gui.unk_4_8 = 2;
                 g_ItemManager.RecycleCollectedItems();
             }
             else
             {
-                g_Unknown626270.stats->power = 0;
-                g_Unknown626270.RerollChecksumKeys();
+                g_GameManager.stats->power = 0;
+                g_GameManager.RerollChecksumKeys();
                 g_ItemManager.SpawnItem(&player->position, 4, 2);
                 g_ItemManager.SpawnItem(&player->position, 4, 2);
                 g_ItemManager.SpawnItem(&player->position, 4, 2);
                 g_ItemManager.SpawnItem(&player->position, 4, 2);
                 g_ItemManager.SpawnItem(&player->position, 4, 2);
-                g_Unknown49fbf0.powerChanged = 2;
+                g_Gui.powerChanged = 2;
             }
-            g_Unknown626270.SubSubRank(1600);
+            g_GameManager.SubSubRank(1600);
         }
     }
     else
@@ -1610,23 +1610,23 @@ int UpdateDyingState(Player *player)
         if (player->stateTimer.AsFrames() >= 30)
         {
             player->playerState = 1;
-            player->position.x = g_Unknown626270.arena[2] / 2.0f;
-            player->position.y = g_Unknown626270.arena[3] - 64.0f;
+            player->position.x = g_GameManager.arena[2] / 2.0f;
+            player->position.y = g_GameManager.arena[3] - 64.0f;
             player->position.z = 0.2f;
             player->stateTimer.Set(0);
             player->sprite.scaleY = 3.0f;
             player->sprite.scaleX = 3.0f;
             g_SpriteEngine->StartScript(&player->sprite, 0x400);
-            if ((int)g_Unknown626270.stats->lives <= 0)
+            if ((int)g_GameManager.stats->lives <= 0)
             {
-                g_Unknown626270.isInContinueMenu = 1;
+                g_GameManager.isInContinueMenu = 1;
             }
             else
             {
-                g_Unknown626270.AddLives(-1);
-                g_Unknown49fbf0.livesChanged = 2;
-                g_Unknown626270.SetBombs(g_Player.shotType->bombs);
-                g_Unknown49fbf0.bombsChanged = 2;
+                g_GameManager.AddLives(-1);
+                g_Gui.livesChanged = 2;
+                g_GameManager.SetBombs(g_Player.shotType->bombs);
+                g_Gui.bombsChanged = 2;
                 return 1;
             }
         }
@@ -1701,12 +1701,12 @@ void UpdateInvulnerability(Player *player)
         {
             player->bombInvulnerabilityEffect->pos = player->position;
         }
-        g_Unknown626270.invulnerabilityBonus = player->stateTimer.AsFrames() * 50000 / player->unk_16a0c.AsFrames();
-        if (g_Unknown626270.invulnerabilityBonus < 0)
+        g_GameManager.invulnerabilityBonus = player->stateTimer.AsFrames() * 50000 / player->unk_16a0c.AsFrames();
+        if (g_GameManager.invulnerabilityBonus < 0)
         {
-            g_Unknown626270.invulnerabilityBonus = 0;
+            g_GameManager.invulnerabilityBonus = 0;
         }
-        g_Unknown626270.invulnerabilityBonus += g_Unknown626270.stats->grazeCount;
+        g_GameManager.invulnerabilityBonus += g_GameManager.stats->grazeCount;
         player->stateTimer.Sub(1);
         if (player->stateTimer.AsFrames() <= 0)
         {
@@ -1742,7 +1742,7 @@ void UpdateInvulnerability(Player *player)
                 color.g = color.b;
                 color.r = color.g;
             }
-            g_Unknown1347b00.SetTintColor(color.color);
+            g_Stage.SetTintColor(color.color);
         }
     }
     else
@@ -1755,7 +1755,7 @@ void StartBombState(Player *player)
 {
     Effect *effect;
 
-    if (player->bomb.running || g_Unknown49fbf0.Func42ad66())
+    if (player->bomb.running || g_Gui.Func42ad66())
     {
         player->bombState = 2;
         return;
@@ -1799,7 +1799,7 @@ void StartBombState(Player *player)
     effect->sprite.scriptVar0 = player->stateTimer.AsFrames();
     effect->sprite.rotationSpeedZ *= -1.0f;
     player->bombInvulnerabilityEffect = effect;
-    g_Unknown49fbf0.Func427c81(0, 2);
+    g_Gui.Func427c81(0, 2);
     g_SoundPlayer.QueueSound(0x20, 0);
     g_SoundPlayer.QueueSound(0x24, 0);
     g_ReplayManager->frameEvents |= 8;
@@ -1809,13 +1809,13 @@ void Player::EndBombState()
 {
     int bonus;
 
-    g_Unknown626270.IncreaseBonusCap(10000);
-    g_Unknown626270.AddBonusPointsCapped(10000);
-    bonus = g_Unknown626270.bonusPoints - g_Unknown626270.stats->grazeCount;
+    g_GameManager.IncreaseBonusCap(10000);
+    g_GameManager.AddBonusPointsCapped(10000);
+    bonus = g_GameManager.bonusPoints - g_GameManager.stats->grazeCount;
     bonus *= 10;
-    g_Unknown626270.AddScore(bonus);
-    g_Unknown49fbf0.Func427c81(bonus, 4);
-    g_Unknown626270.invulnerabilityBonus = g_Unknown626270.stats->grazeCount;
+    g_GameManager.AddScore(bonus);
+    g_Gui.Func427c81(bonus, 4);
+    g_GameManager.invulnerabilityBonus = g_GameManager.stats->grazeCount;
     g_SoundPlayer.QueueSound(0x21, 0);
     if (this->playerState == 1)
     {
@@ -1913,7 +1913,7 @@ void Player::StopBombState(int unk)
     this->playerState = 3;
     this->stateTimer.Set(40);
     this->bombCooldown = 40;
-    g_Unknown626270.invulnerabilityBonus = g_Unknown626270.stats->grazeCount;
+    g_GameManager.invulnerabilityBonus = g_GameManager.stats->grazeCount;
     this->AddHitboxAreaCircle(&this->position, 32.0f, 16.0f, 0x32, 8);
     angle = -D3DX_PI;
     for (i = 0; i < 0x20; i++, angle += D3DX_PI / 16.0f)
@@ -1951,7 +1951,7 @@ void ResetHomingAndText(Player *player)
 
 int Player::OnUpdate(Player *player)
 {
-    if (g_Unknown626270.isFrozen)
+    if (g_GameManager.isFrozen)
     {
         return 1;
     }
@@ -2002,19 +2002,19 @@ int Player::OnDraw(Player *player)
             player->bomb.drawFocused(player);
         }
     }
-    if (!g_Unknown626270.isInContinueMenu)
+    if (!g_GameManager.isInContinueMenu)
     {
-        player->sprite.pos.x = g_Unknown626270.arena[0] + player->position.x;
-        player->sprite.pos.y = g_Unknown626270.arena[1] + player->position.y;
+        player->sprite.pos.x = g_GameManager.arena[0] + player->position.x;
+        player->sprite.pos.y = g_GameManager.arena[1] + player->position.y;
         player->sprite.pos.z = 0.0f;
         g_SpriteEngine->DrawUnrotated(&player->sprite);
         if (player->unk_240a && (player->playerState == 0 || player->playerState == 4 || player->playerState == 3))
         {
-            player->optionSprites[0].pos.x = g_Unknown626270.arena[0] + player->optionPos[0].x;
-            player->optionSprites[0].pos.y = g_Unknown626270.arena[1] + player->optionPos[0].y;
+            player->optionSprites[0].pos.x = g_GameManager.arena[0] + player->optionPos[0].x;
+            player->optionSprites[0].pos.y = g_GameManager.arena[1] + player->optionPos[0].y;
             player->optionSprites[0].pos.z = 0.0f;
-            player->optionSprites[1].pos.x = g_Unknown626270.arena[0] + player->optionPos[1].x;
-            player->optionSprites[1].pos.y = g_Unknown626270.arena[1] + player->optionPos[1].y;
+            player->optionSprites[1].pos.x = g_GameManager.arena[0] + player->optionPos[1].x;
+            player->optionSprites[1].pos.y = g_GameManager.arena[1] + player->optionPos[1].y;
             player->optionSprites[1].pos.z = 0.0f;
             g_SpriteEngine->Draw(&player->optionSprites[0]);
             g_SpriteEngine->Draw(&player->optionSprites[1]);
@@ -2049,7 +2049,7 @@ int Player::OnDraw(Player *player)
             color.g = color.b;
             color.r = color.g;
         }
-        g_Unknown1347b00.SetTintColor(color.color);
+        g_Stage.SetTintColor(color.color);
     }
     return 1;
 }
@@ -2103,17 +2103,17 @@ int Player::AddedCallback(Player *player)
     int i;
     PlayerBullet *bullet;
 
-    if (LoadShotTypeFile(&player->shotType, g_ShotFiles[g_Unknown626270.shotIndex]) != 0)
+    if (LoadShotTypeFile(&player->shotType, g_ShotFiles[g_GameManager.shotIndex]) != 0)
     {
         return -1;
     }
-    if (LoadShotTypeFile(&player->shotTypeFocused, g_ShotFilesFocused[g_Unknown626270.shotIndex]) != 0)
+    if (LoadShotTypeFile(&player->shotTypeFocused, g_ShotFilesFocused[g_GameManager.shotIndex]) != 0)
     {
         return -1;
     }
     if ((g_App.scene != 3 && g_App.scene != 0xb && g_App.scene != 0xc) != 0)
     {
-        switch (g_Unknown626270.character)
+        switch (g_GameManager.character)
         {
         case 0:
             if (g_SpriteEngine->LoadAnm(10, "data/player00.anm", 0x400) != 0)
@@ -2136,8 +2136,8 @@ int Player::AddedCallback(Player *player)
         }
     }
     g_SpriteEngine->StartScript(&player->sprite, 0x400);
-    player->position.x = g_Unknown626270.arena[2] / 2.0f;
-    player->position.y = g_Unknown626270.arena[3] - 64.0f;
+    player->position.x = g_GameManager.arena[2] / 2.0f;
+    player->position.y = g_GameManager.arena[3] - 64.0f;
     player->position.z = 0.49f;
     player->optionPos[0].z = 0.49f;
     player->optionPos[1].z = 0.49f;
@@ -2167,10 +2167,10 @@ int Player::AddedCallback(Player *player)
         bullet->state = 0;
     }
     player->fireTimer.Set(-1);
-    player->bomb.update = g_Bombs[g_Unknown626270.shotIndex].update;
-    player->bomb.draw = g_Bombs[g_Unknown626270.shotIndex].draw;
-    player->bomb.updateFocused = g_Bombs[g_Unknown626270.shotIndex].updateFocused;
-    player->bomb.drawFocused = g_Bombs[g_Unknown626270.shotIndex].drawFocused;
+    player->bomb.update = g_Bombs[g_GameManager.shotIndex].update;
+    player->bomb.draw = g_Bombs[g_GameManager.shotIndex].draw;
+    player->bomb.updateFocused = g_Bombs[g_GameManager.shotIndex].updateFocused;
+    player->bomb.drawFocused = g_Bombs[g_GameManager.shotIndex].drawFocused;
     player->bomb.running = 0;
     player->aimedShotAngle = -(D3DX_PI / 2.0f);
     player->moveScaleY = 1.0f;
@@ -2184,9 +2184,9 @@ int Player::AddedCallback(Player *player)
     g_AsciiText.SetUnkB7cInterrupt(0, 2);
     g_AsciiText.SetUnkB7cInterrupt(1, 2);
     g_AsciiText.SetUnkB7cInterrupt(2, 2);
-    if (g_Unknown626270.invulnerabilityBonus >= g_Unknown626270.stats->grazeCount + 50000)
+    if (g_GameManager.invulnerabilityBonus >= g_GameManager.stats->grazeCount + 50000)
     {
-        g_Unknown626270.invulnerabilityBonus = g_Unknown626270.stats->grazeCount + 50000;
+        g_GameManager.invulnerabilityBonus = g_GameManager.stats->grazeCount + 50000;
         StartBombState(&g_Player);
     }
     return 0;

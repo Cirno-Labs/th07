@@ -42,7 +42,7 @@ Item *ItemManager::SpawnItem(D3DXVECTOR3 *pos, int type, int state)
     Item *item;
 
     item = &this->items[this->nextIndex];
-    if ((int)g_Unknown626270.stats->power >= 128 && (type == 0 || type == 2))
+    if ((int)g_GameManager.stats->power >= 128 && (type == 0 || type == 2))
     {
         type = 7;
     }
@@ -140,8 +140,8 @@ void ItemManager::UpdateItems()
         else
         {
             if (entry->state == 1 ||
-                (((int)g_Unknown626270.stats->power >= 128.0 ||
-                  g_Unknown626270.difficulty >= 4) &&
+                (((int)g_GameManager.stats->power >= 128.0 ||
+                  g_GameManager.difficulty >= 4) &&
                  g_Player.position.y < g_Player.shotType->itemAutoCollectLine) ||
                 g_Player.bombState == 1)
             {
@@ -173,10 +173,10 @@ void ItemManager::UpdateItems()
             }
         move:
             entry->pos += entry->velocity * g_App.gameSpeed;
-            if (g_Unknown626270.arena[3] + 16.0f <= entry->pos.y)
+            if (g_GameManager.arena[3] + 16.0f <= entry->pos.y)
             {
                 entry->active = 0;
-                g_Unknown626270.SubSubRank(3);
+                g_GameManager.SubSubRank(3);
                 continue;
             }
             if (entry->velocity.y < 3.0f)
@@ -195,15 +195,15 @@ void ItemManager::UpdateItems()
             switch (entry->type)
             {
             case 0:
-                if ((int)g_Unknown626270.stats->power >= 128)
+                if ((int)g_GameManager.stats->power >= 128)
                 {
-                    g_Unknown626270.powerItemCombo++;
-                    if (g_Unknown626270.powerItemCombo >= ARRAY_SIZE(g_PowerItemBonus))
+                    g_GameManager.powerItemCombo++;
+                    if (g_GameManager.powerItemCombo >= ARRAY_SIZE(g_PowerItemBonus))
                     {
-                        g_Unknown626270.powerItemCombo = ARRAY_SIZE(g_PowerItemBonus) - 1;
+                        g_GameManager.powerItemCombo = ARRAY_SIZE(g_PowerItemBonus) - 1;
                     }
-                    amount = g_PowerItemBonus[g_Unknown626270.powerItemCombo];
-                    g_Unknown626270.AddScore(amount);
+                    amount = g_PowerItemBonus[g_GameManager.powerItemCombo];
+                    g_GameManager.AddScore(amount);
                     g_AsciiText.AddPopup(&entry->pos, amount,
                                          amount >= 12800 ? 0xffffff00 : 0xffffffff);
                 }
@@ -213,27 +213,27 @@ void ItemManager::UpdateItems()
                     int level;
 
                     level = 0;
-                    while ((int)g_Unknown626270.stats->power >= g_PowerLevels[level])
+                    while ((int)g_GameManager.stats->power >= g_PowerLevels[level])
                     {
                         level++;
                     }
                     prevLevel = level;
-                    g_Unknown626270.powerItemCombo = 0;
-                    g_Unknown626270.AddPower(1);
-                    if ((int)g_Unknown626270.stats->power >= 128)
+                    g_GameManager.powerItemCombo = 0;
+                    g_GameManager.AddPower(1);
+                    if ((int)g_GameManager.stats->power >= 128)
                     {
-                        g_Unknown626270.stats->power = 128.0f;
-                        g_Unknown626270.RerollChecksumKeys();
+                        g_GameManager.stats->power = 128.0f;
+                        g_GameManager.RerollChecksumKeys();
                         if (!g_Unknown12fe0c8)
                         {
                             g_BulletManager.ClearAll(1);
                         }
-                        g_Unknown49fbf0.Func427c81(0, 1);
+                        g_Gui.Func427c81(0, 1);
                         this->ConvertPowerItems(i);
                     }
-                    g_Unknown626270.AddScore(10);
-                    g_Unknown49fbf0.powerChanged = 2;
-                    while ((int)g_Unknown626270.stats->power >= g_PowerLevels[level])
+                    g_GameManager.AddScore(10);
+                    g_Gui.powerChanged = 2;
+                    while ((int)g_GameManager.stats->power >= g_PowerLevels[level])
                     {
                         level++;
                     }
@@ -247,7 +247,7 @@ void ItemManager::UpdateItems()
                         g_AsciiText.AddPopup(&entry->pos, 10, 0xffffffff);
                     }
                 }
-                g_Unknown626270.AddSubRank(1);
+                g_GameManager.AddSubRank(1);
                 break;
             case 1:
                 amount = (entry->pos.y < g_Player.shotType->itemAutoCollectLine ? 1 : 0)
@@ -259,67 +259,67 @@ void ItemManager::UpdateItems()
                 }
                 if (amount >= 50000)
                 {
-                    if (g_Unknown626270.bonusPoints - g_Unknown626270.stats->grazeCount > 50000)
+                    if (g_GameManager.bonusPoints - g_GameManager.stats->grazeCount > 50000)
                     {
-                        amount = g_Unknown626270.bonusPoints - g_Unknown626270.stats->grazeCount;
+                        amount = g_GameManager.bonusPoints - g_GameManager.stats->grazeCount;
                     }
                 }
-                else if (g_Unknown626270.bonusPoints - g_Unknown626270.stats->grazeCount > 50000)
+                else if (g_GameManager.bonusPoints - g_GameManager.stats->grazeCount > 50000)
                 {
-                    amount += (g_Unknown626270.bonusPoints - g_Unknown626270.stats->grazeCount - 50000) / 5;
+                    amount += (g_GameManager.bonusPoints - g_GameManager.stats->grazeCount - 50000) / 5;
                 }
                 amount -= amount % 10;
                 g_AsciiText.AddPopup(&entry->pos, amount,
                                      entry->pos.y < g_Player.shotType->itemAutoCollectLine || entry->countsFullValue == 1
                                          ? 0xffffff00
                                          : 0xffffffff);
-                g_Unknown626270.AddScore(amount);
-                g_Unknown626270.stats->stageClearPoints++;
-                g_Unknown626270.stats->pointItemsTotal++;
-                g_Unknown49fbf0.unk_4_8 = 2;
+                g_GameManager.AddScore(amount);
+                g_GameManager.stats->stageClearPoints++;
+                g_GameManager.stats->pointItemsTotal++;
+                g_Gui.unk_4_8 = 2;
                 if (entry->pos.y < 128.0f)
                 {
-                    g_Unknown626270.AddSubRank(10);
+                    g_GameManager.AddSubRank(10);
                 }
                 else
                 {
-                    g_Unknown626270.AddSubRank(3);
+                    g_GameManager.AddSubRank(3);
                 }
-                if (g_Unknown626270.stats->checksumKeyStage >= 0)
+                if (g_GameManager.stats->checksumKeyStage >= 0)
                 {
                     for (;;)
                     {
-                        if (g_Unknown626270.difficulty < 4)
+                        if (g_GameManager.difficulty < 4)
                         {
-                            if (g_Unknown626270.stats->checksumKeyStage < 3)
+                            if (g_GameManager.stats->checksumKeyStage < 3)
                             {
-                                g_Unknown626270.stats->checksumKeyPoints = g_Unknown626270.stats->checksumKeyStage * 75 + 50;
+                                g_GameManager.stats->checksumKeyPoints = g_GameManager.stats->checksumKeyStage * 75 + 50;
                             }
-                            else if (g_Unknown626270.stats->checksumKeyStage < 5)
+                            else if (g_GameManager.stats->checksumKeyStage < 5)
                             {
-                                g_Unknown626270.stats->checksumKeyPoints = (g_Unknown626270.stats->checksumKeyStage - 3) * 150 + 300;
+                                g_GameManager.stats->checksumKeyPoints = (g_GameManager.stats->checksumKeyStage - 3) * 150 + 300;
                             }
                             else
                             {
-                                g_Unknown626270.stats->checksumKeyPoints = (g_Unknown626270.stats->checksumKeyStage - 5) * 200 + 800;
+                                g_GameManager.stats->checksumKeyPoints = (g_GameManager.stats->checksumKeyStage - 5) * 200 + 800;
                             }
                         }
-                        else if (g_Unknown626270.stats->checksumKeyStage == 0)
+                        else if (g_GameManager.stats->checksumKeyStage == 0)
                         {
-                            g_Unknown626270.stats->checksumKeyPoints = 200;
+                            g_GameManager.stats->checksumKeyPoints = 200;
                         }
-                        else if (g_Unknown626270.stats->checksumKeyStage == 1)
+                        else if (g_GameManager.stats->checksumKeyStage == 1)
                         {
-                            g_Unknown626270.stats->checksumKeyPoints = 500;
+                            g_GameManager.stats->checksumKeyPoints = 500;
                         }
                         else
                         {
-                            g_Unknown626270.stats->checksumKeyPoints = (g_Unknown626270.stats->checksumKeyStage - 2) * 500 + 800;
+                            g_GameManager.stats->checksumKeyPoints = (g_GameManager.stats->checksumKeyStage - 2) * 500 + 800;
                         }
-                        if (g_Unknown626270.stats->pointItemsTotal >= g_Unknown626270.stats->checksumKeyPoints)
+                        if (g_GameManager.stats->pointItemsTotal >= g_GameManager.stats->checksumKeyPoints)
                         {
-                            g_Unknown626270.AddLifeOrBomb();
-                            g_Unknown626270.stats->checksumKeyStage++;
+                            g_GameManager.AddLifeOrBomb();
+                            g_GameManager.stats->checksumKeyStage++;
                             continue;
                         }
                         break;
@@ -327,7 +327,7 @@ void ItemManager::UpdateItems()
                 }
                 break;
             case 2:
-                if ((int)g_Unknown626270.stats->power >= 128)
+                if ((int)g_GameManager.stats->power >= 128)
                 {
                     g_AsciiText.AddPopup(&entry->pos, amount,
                                          amount >= 1000 ? 0xffffff00 : 0xffffffff);
@@ -338,26 +338,26 @@ void ItemManager::UpdateItems()
                     int level;
 
                     level = 0;
-                    while ((int)g_Unknown626270.stats->power >= g_PowerLevels[level])
+                    while ((int)g_GameManager.stats->power >= g_PowerLevels[level])
                     {
                         level++;
                     }
                     prevLevel = level;
-                    g_Unknown626270.AddPower(8);
-                    if ((int)g_Unknown626270.stats->power >= 128)
+                    g_GameManager.AddPower(8);
+                    if ((int)g_GameManager.stats->power >= 128)
                     {
-                        g_Unknown626270.stats->power = 128.0f;
-                        g_Unknown626270.RerollChecksumKeys();
+                        g_GameManager.stats->power = 128.0f;
+                        g_GameManager.RerollChecksumKeys();
                         if (!g_Unknown12fe0c8)
                         {
                             g_BulletManager.ClearAll(1);
                         }
-                        g_Unknown49fbf0.Func427c81(0, 1);
+                        g_Gui.Func427c81(0, 1);
                         this->ConvertPowerItems(i);
                     }
-                    g_Unknown49fbf0.powerChanged = 2;
-                    g_Unknown626270.AddScore(10);
-                    while ((int)g_Unknown626270.stats->power >= g_PowerLevels[level])
+                    g_Gui.powerChanged = 2;
+                    g_GameManager.AddScore(10);
+                    while ((int)g_GameManager.stats->power >= g_PowerLevels[level])
                     {
                         level++;
                     }
@@ -373,35 +373,35 @@ void ItemManager::UpdateItems()
                 }
                 break;
             case 3:
-                if ((int)g_Unknown626270.stats->bombs < 8)
+                if ((int)g_GameManager.stats->bombs < 8)
                 {
-                    g_Unknown626270.AddBombs(1);
-                    g_Unknown49fbf0.bombsChanged = 2;
+                    g_GameManager.AddBombs(1);
+                    g_Gui.bombsChanged = 2;
                 }
-                g_Unknown626270.AddSubRank(5);
+                g_GameManager.AddSubRank(5);
                 break;
             case 5:
-                g_Unknown626270.AddLifeOrBomb();
+                g_GameManager.AddLifeOrBomb();
                 break;
             case 4:
-                if ((int)g_Unknown626270.stats->power < 128)
+                if ((int)g_GameManager.stats->power < 128)
                 {
                     g_BulletManager.ClearAll(1);
-                    g_Unknown49fbf0.Func427c81(0, 1);
+                    g_Gui.Func427c81(0, 1);
                     g_SoundPlayer.QueueSound(0x1f, 0);
                     g_AsciiText.AddPopup(&entry->pos, -1, 0xffffc0a0);
                     this->ConvertPowerItems(i);
                 }
-                g_Unknown626270.stats->power = 128.0f;
-                g_Unknown626270.RerollChecksumKeys();
-                g_Unknown626270.AddScore(1000);
+                g_GameManager.stats->power = 128.0f;
+                g_GameManager.RerollChecksumKeys();
+                g_GameManager.AddScore(1000);
                 g_AsciiText.AddPopup(&entry->pos, 1000, 0xffffffff);
-                g_Unknown49fbf0.powerChanged = 2;
+                g_Gui.powerChanged = 2;
                 break;
             case 6:
                 if (!g_Player.bombJustStarted)
                 {
-                    amount = g_Unknown626270.stats->grazeTotal / 40 * 10 + 300;
+                    amount = g_GameManager.stats->grazeTotal / 40 * 10 + 300;
                     if (amount <= 0)
                     {
                         amount = 10;
@@ -412,26 +412,26 @@ void ItemManager::UpdateItems()
                     amount = 100;
                 }
                 g_AsciiText.AddPopup2(&entry->pos, amount, 0xffffffff);
-                g_Unknown626270.AddScore(amount);
+                g_GameManager.AddScore(amount);
                 if (!g_Player.bomb.running)
                 {
-                    g_Unknown626270.AddBonusPoints(20);
+                    g_GameManager.AddBonusPoints(20);
                 }
                 else if ((i & 1) == 0)
                 {
-                    g_Unknown626270.AddBonusPoints(10);
+                    g_GameManager.AddBonusPoints(10);
                 }
                 else
                 {
-                    g_Unknown626270.AddBonusPointsNoTrack(10);
+                    g_GameManager.AddBonusPointsNoTrack(10);
                 }
                 break;
             case 8:
-                g_Unknown626270.AddBonusPoints(30);
-                g_Unknown626270.AddBonusPointsNoTrack(70);
+                g_GameManager.AddBonusPoints(30);
+                g_GameManager.AddBonusPointsNoTrack(70);
                 break;
             case 7:
-                if ((g_Unknown626270.bonusPoints >= g_Unknown626270.bonusPointsCap) != 0)
+                if ((g_GameManager.bonusPoints >= g_GameManager.bonusPointsCap) != 0)
                 {
                     amount = (entry->pos.y < g_Player.shotType->itemAutoCollectLine || entry->countsFullValue ? 1 : 0)
                                  ? 50000
@@ -441,33 +441,33 @@ void ItemManager::UpdateItems()
                                          entry->pos.y < g_Player.shotType->itemAutoCollectLine || entry->countsFullValue
                                              ? 0xffffff00
                                              : 0xffffffff);
-                    g_Unknown626270.AddScore(amount);
+                    g_GameManager.AddScore(amount);
                 }
                 amount = 1000;
-                amount += g_Unknown626270.stats->spellCardsCaptured * 100;
-                if ((g_Unknown626270.bonusPoints >= g_Unknown626270.bonusPointsCap) == 0)
+                amount += g_GameManager.stats->spellCardsCaptured * 100;
+                if ((g_GameManager.bonusPoints >= g_GameManager.bonusPointsCap) == 0)
                 {
                     g_AsciiText.AddPopup(&entry->pos, amount, 0xffff4040);
                 }
-                g_Unknown626270.AddBonusPoints(amount);
+                g_GameManager.AddBonusPoints(amount);
                 break;
             case 9:
-                amount = g_Unknown626270.stats->grazeTotal / 40 * 10 + 300;
+                amount = g_GameManager.stats->grazeTotal / 40 * 10 + 300;
                 if (amount <= 0)
                 {
                     amount = 10;
                 }
-                if ((g_Unknown626270.bonusPoints >= g_Unknown626270.bonusPointsCap) != 0)
+                if ((g_GameManager.bonusPoints >= g_GameManager.bonusPointsCap) != 0)
                 {
                     g_AsciiText.AddPopup(&entry->pos, amount, 0xffffffff);
                 }
-                g_Unknown626270.AddScore(amount);
+                g_GameManager.AddScore(amount);
                 amount = 100;
-                if ((g_Unknown626270.bonusPoints >= g_Unknown626270.bonusPointsCap) == 0)
+                if ((g_GameManager.bonusPoints >= g_GameManager.bonusPointsCap) == 0)
                 {
                     g_AsciiText.AddPopup(&entry->pos, amount, 0xffff4040);
                 }
-                g_Unknown626270.AddBonusPoints(amount);
+                g_GameManager.AddBonusPoints(amount);
                 break;
             }
             entry->active = 0;
@@ -559,12 +559,12 @@ void ItemManager::DrawItems()
 
     while (entry != NULL)
     {
-        entry->sprite.pos.x = g_Unknown626270.arena[0] + entry->pos.x;
-        entry->sprite.pos.y = g_Unknown626270.arena[1] + entry->pos.y;
+        entry->sprite.pos.x = g_GameManager.arena[0] + entry->pos.x;
+        entry->sprite.pos.y = g_GameManager.arena[1] + entry->pos.y;
         entry->sprite.pos.z = 0.01f;
         if (entry->pos.y < -8.0f)
         {
-            entry->sprite.pos.y = 8.0f + g_Unknown626270.arena[1];
+            entry->sprite.pos.y = 8.0f + g_GameManager.arena[1];
             if (entry->onScreen)
             {
                 g_SpriteEngine->SetSprite(&entry->sprite, entry->type + 0x2b6);

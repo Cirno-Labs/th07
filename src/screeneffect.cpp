@@ -226,11 +226,11 @@ int ScreenEffect::OnUpdateShake(ScreenEffect *effect)
 {
     float shake;
 
-    if (g_Unknown626270.isFrozen)
+    if (g_GameManager.isFrozen)
     {
         return 1;
     }
-    if (g_Unknown626270.stageFrames <= 1)
+    if (g_GameManager.stageFrames <= 1)
     {
         return 0;
     }

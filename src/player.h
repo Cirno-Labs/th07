@@ -186,7 +186,7 @@ int UpdateHomingOrbFast(Player *player, PlayerBullet *bullet);
 // a random 0.27 to 0.37 a frame. Returns 0.
 int UpdateAcceleratingBullet(Player *player, PlayerBullet *bullet);
 // A laser, as th06's UpdateBullets case 3: cut short to 20 frames while
-// g_Unknown49fbf0.Func42ad66() or a bomb runs; ends it (returning 1)
+// g_Gui.Func42ad66() or a bomb runs; ends it (returning 1)
 // once its timer runs out, else keeps it on its option, and unless
 // Player::playerState is 2 (returning 1) stretches it to the top. Returns
 // 0 otherwise.
@@ -256,7 +256,7 @@ void UpdateHitboxAreas(Player *player);
 // from GameManager::unk_961c on each new frame (down to stats->
 // unk_88) and runs. Else, with button 2 held, deathbombFrames left,
 // bombs left, unk_23fc at 0, intact checksums and no
-// g_Unknown49fbf0.Func42ad66(), starts a bomb: marks bit 1 of
+// g_Gui.Func42ad66(), starts a bomb: marks bit 1 of
 // g_ReplayManager->unk_d6, uses a bomb, runs it for the player's
 // focus, takes 2 from the rank and gives 6 more deathbombFrames (up to
 // the shot type's). unk_23dc is 1 on the frame a bomb starts, else 0.
@@ -275,7 +275,7 @@ void UpdateBombState(Player *player);
 int UpdateDyingState(Player *player);
 // Tries to start playerState 4 (UpdateBombState calls it while unk_240d is
 // 2): sets unk_240d to 2 during a bomb or while
-// g_Unknown49fbf0.Func42ad66(), or while playerState is 1 or 3, or
+// g_Gui.Func42ad66(), or while playerState is 1 or 3, or
 // while dying without deathbombFrames; while dying with them calls
 // StopBombState(0). Otherwise starts playerState 4 for 540 frames of
 // stateTimer (kept in unk_16a0c), with unk_240d 1: ends unk_b7e68 (and

@@ -67,7 +67,7 @@ int AsciiText::OnUpdate(AsciiText *text)
     int i;
     AsciiPopup *entry;
 
-    if (!g_Unknown626270.isPaused && !g_Unknown626270.isInContinueMenu)
+    if (!g_GameManager.isPaused && !g_GameManager.isInContinueMenu)
     {
         for (entry = text->popups, i = 0; i < 0x2d3; i++, entry++)
         {
@@ -83,16 +83,16 @@ int AsciiText::OnUpdate(AsciiText *text)
             }
         }
     }
-    else if (g_Unknown626270.isPaused)
+    else if (g_GameManager.isPaused)
     {
         text->pauseMenu.UpdatePauseMenu();
     }
-    if (g_Unknown626270.isInContinueMenu)
+    if (g_GameManager.isInContinueMenu)
     {
         text->continueMenu.UpdateContinueMenu();
     }
     text->RunScripts();
-    if ((g_Unknown626270.unk_93d8 >> 1) & 1)
+    if ((g_GameManager.unk_93d8 >> 1) & 1)
     {
         if (text->unk_9e50.scriptIndex == 0)
         {
@@ -277,10 +277,10 @@ void AsciiText::DrawStrings()
             g_SpriteEngine->FlushQuadBatch();
             if (clipped != 0)
             {
-                g_App.viewport.X = g_Unknown626270.arena[0];
-                g_App.viewport.Y = g_Unknown626270.arena[1];
-                g_App.viewport.Width = g_Unknown626270.arena[2];
-                g_App.viewport.Height = g_Unknown626270.arena[3];
+                g_App.viewport.X = g_GameManager.arena[0];
+                g_App.viewport.Y = g_GameManager.arena[1];
+                g_App.viewport.Width = g_GameManager.arena[2];
+                g_App.viewport.Height = g_GameManager.arena[3];
                 g_App.d3dDevice->SetViewport(&g_App.viewport);
             }
             else
@@ -387,8 +387,8 @@ void AsciiText::AddPopup(D3DXVECTOR3 *pos, int value, D3DCOLOR color)
     popup->color = color;
     popup->timer.Set(0);
     popup->pos = *pos;
-    popup->pos.x += g_Unknown626270.arena[0];
-    popup->pos.y += g_Unknown626270.arena[1];
+    popup->pos.x += g_GameManager.arena[0];
+    popup->pos.y += g_GameManager.arena[1];
     this->nextPopup++;
 }
 
@@ -427,8 +427,8 @@ void AsciiText::AddPopup2(D3DXVECTOR3 *pos, int value, D3DCOLOR color)
     popup->color = color;
     popup->timer.Set(0);
     popup->pos = *pos;
-    popup->pos.x += g_Unknown626270.arena[0];
-    popup->pos.y += g_Unknown626270.arena[1];
+    popup->pos.x += g_GameManager.arena[0];
+    popup->pos.y += g_GameManager.arena[1];
     this->nextPopup2++;
 }
 
@@ -463,7 +463,7 @@ int PauseMenu::UpdatePauseMenu()
         }
         this->stateFrames = 0;
     }
-    if (!((g_Unknown626270.unk_93d8 >> 3) & 1) && WAS_PRESSED(0x4000) && this->state != 9)
+    if (!((g_GameManager.unk_93d8 >> 3) & 1) && WAS_PRESSED(0x4000) && this->state != 9)
     {
         g_SoundPlayer.QueueSound(10, 0);
         this->state = 10;
@@ -487,16 +487,16 @@ int PauseMenu::UpdatePauseMenu()
         {
             this->sprites[i].pendingInterrupt = 1;
         }
-        g_SpriteEngine->SetSprite(&this->sprites[7], g_Unknown626270.difficulty + 0x10d);
-        if (!(g_Unknown626270.unk_93d8 & 1))
+        g_SpriteEngine->SetSprite(&this->sprites[7], g_GameManager.difficulty + 0x10d);
+        if (!(g_GameManager.unk_93d8 & 1))
         {
             this->sprites[8].ClearShown();
         }
-        if (!g_Unknown626270.unk_4->scoreDisabled)
+        if (!g_GameManager.unk_4->scoreDisabled)
         {
             this->sprites[9].ClearShown();
         }
-        if ((g_Unknown626270.unk_93d8 >> 3) & 1)
+        if ((g_GameManager.unk_93d8 >> 3) & 1)
         {
             this->sprites[3].scriptPos = NULL;
         }
@@ -525,7 +525,7 @@ int PauseMenu::UpdatePauseMenu()
         this->sprites[2].posOffset = this->sprites[3].posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
         if (this->stateFrames >= 4)
         {
-            if (!((g_Unknown626270.unk_93d8 >> 3) & 1))
+            if (!((g_GameManager.unk_93d8 >> 3) & 1))
             {
                 if (WAS_PRESSED(0x10))
                 {
@@ -569,7 +569,7 @@ int PauseMenu::UpdatePauseMenu()
                 this->state = 1;
                 g_SoundPlayer.QueueSound(0, 0);
             }
-            if ((g_Unknown626270.unk_93d8 >> 3) & 1)
+            if ((g_GameManager.unk_93d8 >> 3) & 1)
             {
                 if (WAS_PRESSED(0x20))
                 {
@@ -636,12 +636,12 @@ int PauseMenu::UpdatePauseMenu()
         if (this->stateFrames >= 20)
         {
             this->state = 0;
-            g_Unknown626270.isPaused = 0;
+            g_GameManager.isPaused = 0;
             for (i = 0; i < ARRAY_SIZE(this->sprites); i++)
             {
                 this->sprites[i].ClearShown();
             }
-            if (g_Unknown626270.stage != 6 || g_Unknown49fbf0.frameCounter >= 300)
+            if (g_GameManager.stage != 6 || g_Gui.frameCounter >= 300)
             {
                 g_SoundPlayer.QueueSoundCommand(7, 0, "UnPause");
             }
@@ -734,7 +734,7 @@ int PauseMenu::UpdatePauseMenu()
         if (this->stateFrames >= 20)
         {
             this->state = 0;
-            g_Unknown626270.isPaused = 0;
+            g_GameManager.isPaused = 0;
             g_App.scene = 1;
             for (i = 0; i < ARRAY_SIZE(this->sprites); i++)
             {
@@ -747,7 +747,7 @@ int PauseMenu::UpdatePauseMenu()
         if (this->stateFrames >= 20)
         {
             this->state = 0;
-            g_Unknown626270.isPaused = 0;
+            g_GameManager.isPaused = 0;
             g_App.scene = 10;
             for (i = 0; i < ARRAY_SIZE(this->sprites); i++)
             {
@@ -772,13 +772,13 @@ void PauseMenu::DrawPauseMenu()
 {
     DWORD i;
 
-    if (g_Unknown626270.isPaused)
+    if (g_GameManager.isPaused)
     {
         g_SpriteEngine->FlushQuadBatch();
-        g_App.viewport.X = g_Unknown626270.arena[0];
-        g_App.viewport.Y = g_Unknown626270.arena[1];
-        g_App.viewport.Width = g_Unknown626270.arena[2];
-        g_App.viewport.Height = g_Unknown626270.arena[3];
+        g_App.viewport.X = g_GameManager.arena[0];
+        g_App.viewport.Y = g_GameManager.arena[1];
+        g_App.viewport.Width = g_GameManager.arena[2];
+        g_App.viewport.Height = g_GameManager.arena[3];
         g_App.d3dDevice->SetViewport(&g_App.viewport);
         if ((g_App.stateFlags >> 1) & 1 && this->state != 0)
         {
@@ -801,25 +801,25 @@ int ContinueMenu::UpdateContinueMenu()
 {
     int i;
 
-    if (g_Unknown626270.unk_93d8 & 1)
+    if (g_GameManager.unk_93d8 & 1)
     {
-        g_Unknown626270.isInContinueMenu = 0;
-        g_Unknown626270.stats->guiScore = g_Unknown626270.stats->score;
+        g_GameManager.isInContinueMenu = 0;
+        g_GameManager.stats->guiScore = g_GameManager.stats->score;
         g_App.scene = 6;
         return 1;
     }
-    if ((g_Unknown626270.unk_93d8 >> 3) & 1)
+    if ((g_GameManager.unk_93d8 >> 3) & 1)
     {
-        g_Unknown626270.isInContinueMenu = 0;
+        g_GameManager.isInContinueMenu = 0;
         g_App.scene = 7;
-        g_Unknown626270.stats->guiScore = g_Unknown626270.stats->score;
+        g_GameManager.stats->guiScore = g_GameManager.stats->score;
         return 1;
     }
-    if (g_Unknown626270.stats->continuesUsed >= g_Unknown626270.maxContinues || g_Unknown626270.difficulty >= 4)
+    if (g_GameManager.stats->continuesUsed >= g_GameManager.maxContinues || g_GameManager.difficulty >= 4)
     {
-        g_Unknown626270.isInContinueMenu = 0;
+        g_GameManager.isInContinueMenu = 0;
         g_App.scene = 6;
-        g_Unknown626270.stats->guiScore = g_Unknown626270.stats->score;
+        g_GameManager.stats->guiScore = g_GameManager.stats->score;
         return 1;
     }
     switch (this->state)
@@ -834,8 +834,8 @@ int ContinueMenu::UpdateContinueMenu()
                 this->sprites[i].pendingInterrupt = 1;
             }
             g_SpriteEngine->StartScript(&this->sprites[4], 0x10c);
-            g_SpriteEngine->SetSprite(&this->sprites[4], g_Unknown626270.maxContinues + 0x106 -
-                                                             g_Unknown626270.stats->continuesUsed);
+            g_SpriteEngine->SetSprite(&this->sprites[4], g_GameManager.maxContinues + 0x106 -
+                                                             g_GameManager.stats->continuesUsed);
             this->sprites[4].pendingInterrupt = 1;
             if ((g_App.stateFlags >> 1) & 1)
             {
@@ -914,13 +914,13 @@ int ContinueMenu::UpdateContinueMenu()
         {
             this->state = 0;
             this->stateFrames = 0;
-            g_Unknown626270.isInContinueMenu = 0;
+            g_GameManager.isInContinueMenu = 0;
             g_App.scene = 6;
             for (i = 0; i < 5; i++)
             {
                 this->sprites[i].ClearShown();
             }
-            g_Unknown626270.stats->guiScore = g_Unknown626270.stats->score;
+            g_GameManager.stats->guiScore = g_GameManager.stats->score;
             g_App.lastTotalPlayTimeTick = timeGetTime();
             return 0;
         }
@@ -930,41 +930,41 @@ int ContinueMenu::UpdateContinueMenu()
         {
             this->state = 0;
             this->stateFrames = 0;
-            g_Unknown626270.isInContinueMenu = 0;
+            g_GameManager.isInContinueMenu = 0;
             for (i = 0; i < 5; i++)
             {
                 this->sprites[i].ClearShown();
             }
-            g_Unknown626270.stats->continuesUsed++;
-            g_Unknown626270.stats->guiScore = g_Unknown626270.stats->continuesUsed;
-            g_Unknown626270.stats->unk_8 = 0;
-            g_Unknown626270.stats->score = g_Unknown626270.stats->guiScore;
-            g_Unknown626270.SetLives(g_Unknown626270.unk_4->lifeCount);
-            g_Unknown626270.RerollChecksumKeys();
-            g_Unknown626270.SetBombs(g_Player.shotType->bombs);
-            g_Unknown626270.stats->graze = 0;
-            g_Unknown626270.stats->stageClearPoints = 0;
-            g_Unknown626270.stats->pointItemsTotal = 0;
-            g_Unknown626270.stats->power = 0.0f;
-            g_Unknown626270.RerollChecksumKeys();
-            g_Unknown626270.stats->checksumKeyStage = 0;
-            g_Unknown626270.stats->checksumKeyPoints = 50;
-            g_Unknown626270.bonusPoints = g_Unknown626270.stats->grazeCount;
-            g_Unknown49fbf0.livesChanged = 2;
-            g_Unknown49fbf0.bombsChanged = 2;
-            g_Unknown49fbf0.grazeChanged = 2;
-            g_Unknown49fbf0.unk_4_8 = 2;
-            g_Unknown49fbf0.powerChanged = 2;
-            IncrementCounterCapped((DWORD *)&g_Unknown626270.plst.counts[g_Unknown626270.difficulty].plays[0], 999999);
-            IncrementCounterCapped((DWORD *)&g_Unknown626270.plst.counts[6].plays[0], 999999);
+            g_GameManager.stats->continuesUsed++;
+            g_GameManager.stats->guiScore = g_GameManager.stats->continuesUsed;
+            g_GameManager.stats->unk_8 = 0;
+            g_GameManager.stats->score = g_GameManager.stats->guiScore;
+            g_GameManager.SetLives(g_GameManager.unk_4->lifeCount);
+            g_GameManager.RerollChecksumKeys();
+            g_GameManager.SetBombs(g_Player.shotType->bombs);
+            g_GameManager.stats->graze = 0;
+            g_GameManager.stats->stageClearPoints = 0;
+            g_GameManager.stats->pointItemsTotal = 0;
+            g_GameManager.stats->power = 0.0f;
+            g_GameManager.RerollChecksumKeys();
+            g_GameManager.stats->checksumKeyStage = 0;
+            g_GameManager.stats->checksumKeyPoints = 50;
+            g_GameManager.bonusPoints = g_GameManager.stats->grazeCount;
+            g_Gui.livesChanged = 2;
+            g_Gui.bombsChanged = 2;
+            g_Gui.grazeChanged = 2;
+            g_Gui.unk_4_8 = 2;
+            g_Gui.powerChanged = 2;
+            IncrementCounterCapped((DWORD *)&g_GameManager.plst.counts[g_GameManager.difficulty].plays[0], 999999);
+            IncrementCounterCapped((DWORD *)&g_GameManager.plst.counts[6].plays[0], 999999);
             IncrementCounterCapped(
-                (DWORD *)&g_Unknown626270.plst.counts[g_Unknown626270.difficulty].plays[g_Unknown626270.shotIndex + 1],
+                (DWORD *)&g_GameManager.plst.counts[g_GameManager.difficulty].plays[g_GameManager.shotIndex + 1],
                 999999);
-            IncrementCounterCapped((DWORD *)&g_Unknown626270.plst.counts[6].plays[g_Unknown626270.shotIndex + 1],
+            IncrementCounterCapped((DWORD *)&g_GameManager.plst.counts[6].plays[g_GameManager.shotIndex + 1],
                                    999999);
-            IncrementCounterCapped((DWORD *)&g_Unknown626270.plst.counts[g_Unknown626270.difficulty].continues,
+            IncrementCounterCapped((DWORD *)&g_GameManager.plst.counts[g_GameManager.difficulty].continues,
                                    999999);
-            IncrementCounterCapped((DWORD *)&g_Unknown626270.plst.counts[6].continues, 999999);
+            IncrementCounterCapped((DWORD *)&g_GameManager.plst.counts[6].continues, 999999);
             g_SoundPlayer.QueueSoundCommand(7, 0, "UnPause");
             g_App.lastTotalPlayTimeTick = timeGetTime();
             return 0;
@@ -986,13 +986,13 @@ void ContinueMenu::DrawContinueMenu()
 {
     int i;
 
-    if (g_Unknown626270.isInContinueMenu)
+    if (g_GameManager.isInContinueMenu)
     {
         g_SpriteEngine->FlushQuadBatch();
-        g_App.viewport.X = g_Unknown626270.arena[0];
-        g_App.viewport.Y = g_Unknown626270.arena[1];
-        g_App.viewport.Width = g_Unknown626270.arena[2];
-        g_App.viewport.Height = g_Unknown626270.arena[3];
+        g_App.viewport.X = g_GameManager.arena[0];
+        g_App.viewport.Y = g_GameManager.arena[1];
+        g_App.viewport.Width = g_GameManager.arena[2];
+        g_App.viewport.Height = g_GameManager.arena[3];
         g_App.d3dDevice->SetViewport(&g_App.viewport);
         if ((g_App.stateFlags >> 1) & 1 && (this->state != 0 || this->stateFrames > 2))
         {
@@ -1083,13 +1083,13 @@ void AsciiText::DrawPopups()
     {
         div = 100000;
         nonzero = 0;
-        amount = g_Unknown626270.bonusPoints - g_Unknown626270.stats->grazeCount;
+        amount = g_GameManager.bonusPoints - g_GameManager.stats->grazeCount;
         g_SpriteEngine->DrawUnrotated(&this->unk_498);
         this->unk_6e4.pos.x = this->unk_498.pos.x + 40.0f + 6.0f;
         this->unk_6e4.pos.y = this->unk_498.pos.y + 11.0f;
         this->unk_6e4.pos.z = this->unk_498.pos.z;
         this->unk_6e4.alpha = this->unk_498.alpha;
-        if ((g_Unknown626270.bonusPoints >= g_Unknown626270.bonusPointsCap) != 0)
+        if ((g_GameManager.bonusPoints >= g_GameManager.bonusPointsCap) != 0)
         {
             this->unk_6e4.unk_rgb[2] = 0xff;
             this->unk_6e4.unk_rgb[1] = 0xd0;
@@ -1123,7 +1123,7 @@ void AsciiText::DrawPopups()
             this->unk_6e4.pos.x += 7.0f;
         }
         nonzero = 0;
-        amount = g_Unknown626270.bonusPointsCap - g_Unknown626270.stats->grazeCount;
+        amount = g_GameManager.bonusPointsCap - g_GameManager.stats->grazeCount;
         this->unk_6e4.unk_rgb[2] = 0xf0;
         this->unk_6e4.unk_rgb[1] = 0xd0;
         this->unk_6e4.unk_rgb[0] = 0xe0;
@@ -1158,7 +1158,7 @@ void AsciiText::DrawPopups()
         nonzero = 0;
         this->unk_6e4.pos.x = this->unk_498.pos.x + 40.0f + 6.0f + 7.0f;
         this->unk_6e4.pos.y = this->unk_498.pos.y + 2.0f;
-        amount = g_Unknown626270.invulnerabilityBonus - g_Unknown626270.stats->grazeCount;
+        amount = g_GameManager.invulnerabilityBonus - g_GameManager.stats->grazeCount;
         if (g_Player.bombState)
         {
             this->unk_6e4.unk_rgb[2] = 0xff;

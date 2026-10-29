@@ -227,8 +227,8 @@ int Ending::RunScript()
                 {
                     for (j = 0; j < 4; j++)
                     {
-                        if (g_Unknown626270.clrds[i2].stagesClearedNoContinue[j] == 'c' ||
-                            g_Unknown626270.clrds[i2].stagesCleared[j] == 'c')
+                        if (g_GameManager.clrds[i2].stagesClearedNoContinue[j] == 'c' ||
+                            g_GameManager.clrds[i2].stagesCleared[j] == 'c')
                         {
                             this->canSkip = 1;
                             break;
@@ -371,42 +371,42 @@ int Ending::AddedCallback(Ending *ending)
     int j;
     int si;
     // Unused.
-    int unused = g_Unknown626270.shotIndex;
+    int unused = g_GameManager.shotIndex;
 
-    g_Unknown626270.unk_93d8 |= 0x10;
+    g_GameManager.unk_93d8 |= 0x10;
     g_App.hideFps = 1;
     g_SpriteEngine->LoadAnm(0x31, "data/staff01.anm", 0x600);
     g_SpriteEngine->ClearTexture();
     g_SpriteEngine->ClearSpriteData();
     g_SpriteEngine->ClearBlendMode();
     g_SpriteEngine->ClearVertexFormat();
-    si = g_Unknown626270.shotIndex;
+    si = g_GameManager.shotIndex;
     ending->canSkip = 0;
-    if (g_Unknown626270.stats->continuesUsed == 0)
+    if (g_GameManager.stats->continuesUsed == 0)
     {
-        if (g_Unknown626270.clrds[si].stagesClearedNoContinue[g_Unknown626270.difficulty] == 'c')
+        if (g_GameManager.clrds[si].stagesClearedNoContinue[g_GameManager.difficulty] == 'c')
         {
             ending->canSkip = 1;
         }
-        g_Unknown626270.clrds[si].stagesClearedNoContinue[g_Unknown626270.difficulty] = 'c';
+        g_GameManager.clrds[si].stagesClearedNoContinue[g_GameManager.difficulty] = 'c';
     }
-    else if (g_Unknown626270.clrds[si].stagesCleared[g_Unknown626270.difficulty] == 'c')
+    else if (g_GameManager.clrds[si].stagesCleared[g_GameManager.difficulty] == 'c')
     {
         ending->canSkip = 1;
     }
-    g_Unknown626270.clrds[si].stagesCleared[g_Unknown626270.difficulty] = 'c';
+    g_GameManager.clrds[si].stagesCleared[g_GameManager.difficulty] = 'c';
     for (j = 0; j < 0xf; j++)
     {
         g_SpriteEngine->StartScriptAtOrigin(&ending->sprites[j], j + 0x70f);
         ending->sprites[j].pos = D3DXVECTOR3(64.0f, (float)j * 16.0f + 392.0f, 0.0f);
     }
-    if (g_Unknown626270.stats->continuesUsed != 0)
+    if (g_GameManager.stats->continuesUsed != 0)
     {
-        script = g_BadEndingFiles[g_Unknown626270.character];
+        script = g_BadEndingFiles[g_GameManager.character];
     }
     else
     {
-        script = g_EndingFiles[g_Unknown626270.shotIndex];
+        script = g_EndingFiles[g_GameManager.shotIndex];
     }
     if (ending->Load(script) != 0)
     {

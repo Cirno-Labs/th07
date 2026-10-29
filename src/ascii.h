@@ -28,7 +28,7 @@ ASSERT_SIZE(AsciiString, 0x60);
 class PauseMenu
 {
 public:
-    // While g_Unknown626270 is paused, as th06's. Returns 0.
+    // While g_GameManager is paused, as th06's. Returns 0.
     int UpdatePauseMenu();
     // Draws it while paused, as th06's, flushing SpriteEngine's batch
     // before setting the play area's viewport: the background with z
@@ -49,7 +49,7 @@ ASSERT_SIZE(PauseMenu, 0x194c);
 class ContinueMenu
 {
 public:
-    // While g_Unknown626270.isInContinueMenu is set, as th06's.
+    // While g_GameManager.isInContinueMenu is set, as th06's.
     int UpdateContinueMenu();
     // Draws it while in the continue menu, as th06's, flushing
     // SpriteEngine's batch before setting the play area's viewport: the
@@ -104,9 +104,9 @@ public:
     // unk_b7c[] (6).
     void StartScripts();
     // The update element's callback: moves the active popups along
-    // unless g_Unknown626270 is paused or in the continue menu, then
+    // unless g_GameManager is paused or in the continue menu, then
     // runs the menus as th06's. Also shows unk_9e50 (script 7) while bit
-    // 1 of g_Unknown626270.unk_93d8 is set. Returns 1.
+    // 1 of g_GameManager.unk_93d8 is set. Returns 1.
     static int OnUpdate(AsciiText *text);
     // The first draw element's callback: draws the queued strings and
     // empties the queue, draws the menus, then unk_9e50 while it runs a
@@ -134,7 +134,7 @@ public:
     // alpha grows with the distance to the player, and their digits
     // show other sprites from frame 52 and 56. Then, while unk_498 is
     // shown, draws it with three numbers through unk_6e4: unk_961c,
-    // unk_9618 and unk_9620 of g_Unknown626270, each less
+    // unk_9618 and unk_9620 of g_GameManager, each less
     // stats->unk_88, and unk_930 while Player::unk_240d is 1.
     void DrawPopups();
 
@@ -231,7 +231,7 @@ extern AsciiText g_AsciiText;
 
 // Adds 1 to `*count` unless it reached 999999; `max` goes unused.
 // ContinueMenu::UpdateContinueMenu calls it on six counters of
-// g_Unknown626270. Not in th06.
+// g_GameManager. Not in th06.
 void IncrementCounterCapped(DWORD *count, DWORD max);
 
 // AsciiText's chain elements, statically allocated as in th06: the

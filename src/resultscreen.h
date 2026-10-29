@@ -254,7 +254,7 @@ int LoadPlstChunk(void *scoreDat, Plst *plst);
 // Frees `dat` and its list.
 void ReleaseScoreDat(ScoreDat *dat);
 // Writes "score.dat" from `screen`'s file header, a "TH7K" chunk, its
-// high score lists (ten entries each at most), g_Unknown626270's clear,
+// high score lists (ten entries each at most), g_GameManager's clear,
 // spell card and practice chunks, the "LSNM", "PLST" and "VRSM" chunks,
 // compressed and encrypted.
 void SaveScoreDat(class ResultScreen *screen);

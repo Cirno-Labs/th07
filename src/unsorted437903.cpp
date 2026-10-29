@@ -110,7 +110,7 @@ int App::OnUpdate(App *arg)
     {
         g_SoundPlayer.bgm->UpdateFade();
     }
-    if (g_Unknown626270.skipFpsMeasure == 0)
+    if (g_GameManager.skipFpsMeasure == 0)
     {
         g_PrevButtons = g_Buttons;
         g_Buttons = ReadButtons();
@@ -217,13 +217,13 @@ int App::OnUpdate(App *arg)
                 break;
             case 10:
                 RemoveGameManagerChain();
-                if (!(g_Unknown626270.unk_93d8 & 1) && g_Unknown626270.difficulty < 4)
+                if (!(g_GameManager.unk_93d8 & 1) && g_GameManager.difficulty < 4)
                 {
-                    g_Unknown626270.stage = 0;
+                    g_GameManager.stage = 0;
                 }
                 else
                 {
-                    g_Unknown626270.stage--;
+                    g_GameManager.stage--;
                 }
                 SaveReplay(NULL, NULL);
                 if (RegisterGameManagerChain() != 0)
@@ -235,7 +235,7 @@ int App::OnUpdate(App *arg)
             case 11:
                 g_App.scene = 3;
                 RemoveGameManagerChain();
-                g_Unknown626270.stage--;
+                g_GameManager.stage--;
                 if (RegisterGameManagerChain() != 0)
                 {
                     return 4;
@@ -271,7 +271,7 @@ int App::OnUpdate(App *arg)
                 }
                 break;
             case 9:
-                g_Unknown626270.plst.counts[g_Unknown626270.difficulty].clears++;
+                g_GameManager.plst.counts[g_GameManager.difficulty].clears++;
                 RemoveGameManagerChain();
                 if (Ending::RegisterChain() != 0)
                 {
@@ -681,12 +681,12 @@ int App::AddedCallback(App *arg)
         }
     }
     scoreDat = LoadScoreDat("score.dat");
-    memset(&g_Unknown626270.plst, 0, sizeof(Plst));
-    g_Unknown626270.plst.size = sizeof(Plst);
-    g_Unknown626270.plst.size2 = g_Unknown626270.plst.size;
-    g_Unknown626270.plst.magic = 'TSLP';
-    g_Unknown626270.plst.version = 1;
-    LoadPlstChunk(scoreDat, &g_Unknown626270.plst);
+    memset(&g_GameManager.plst, 0, sizeof(Plst));
+    g_GameManager.plst.size = sizeof(Plst);
+    g_GameManager.plst.size2 = g_GameManager.plst.size;
+    g_GameManager.plst.magic = 'TSLP';
+    g_GameManager.plst.version = 1;
+    LoadPlstChunk(scoreDat, &g_GameManager.plst);
     ReleaseScoreDat(scoreDat);
     g_App.timer = new MidiTimer();
     if (g_App.timer != NULL)
@@ -740,15 +740,15 @@ int App::DeletedCallback(App *arg)
         arg->dinput->Release();
         arg->dinput = NULL;
     }
-    if (g_Unknown626270.stats != NULL)
+    if (g_GameManager.stats != NULL)
     {
-        delete g_Unknown626270.stats;
-        g_Unknown626270.stats = NULL;
+        delete g_GameManager.stats;
+        g_GameManager.stats = NULL;
     }
-    if (g_Unknown626270.unk_4 != NULL)
+    if (g_GameManager.unk_4 != NULL)
     {
-        delete g_Unknown626270.unk_4;
-        g_Unknown626270.unk_4 = NULL;
+        delete g_GameManager.unk_4;
+        g_GameManager.unk_4 = NULL;
     }
     g_Archive.Release();
     if (g_App.timer != NULL)
@@ -770,7 +770,7 @@ void DrawFps(int draw)
     float fps;
     float duration;
 
-    if (g_Unknown626270.skipFpsMeasure == 0)
+    if (g_GameManager.skipFpsMeasure == 0)
     {
         frames += 1 + g_App.frameSkip;
         if (g_App.perfFrequency[0] == 0)
@@ -791,7 +791,7 @@ void DrawFps(int draw)
                 fps = frames / duration;
                 frames = 0;
                 sprintf(fpsText, "%.02ffps", fps);
-                if ((g_Unknown626270.unk_93d8 >> 2 & 1) && draw)
+                if ((g_GameManager.unk_93d8 >> 2 & 1) && draw)
                 {
                     float target = 60.0f;
 
@@ -812,7 +812,7 @@ void DrawFps(int draw)
                     {
                         g_App.achievedFrames += target * 0.5f;
                     }
-                    if (!(g_Unknown626270.unk_93d8 >> 3 & 1))
+                    if (!(g_GameManager.unk_93d8 >> 3 & 1))
                     {
                         g_App.roundedFps = fps + 0.5f;
                     }
@@ -858,7 +858,7 @@ void DrawFps(int draw)
         pos.y = 464.0f;
         pos.z = 0.0f;
         g_AsciiText.AddString(&pos, fpsText);
-        if ((g_Unknown626270.unk_93d8 >> 3 & 1) && (g_Unknown626270.unk_93d8 >> 2 & 1))
+        if ((g_GameManager.unk_93d8 >> 3 & 1) && (g_GameManager.unk_93d8 >> 2 & 1))
         {
             D3DXVECTOR3 speedPos;
 
@@ -1363,7 +1363,7 @@ int App::FadeOutMusic(float seconds)
 
 int App::IsScoreDisabled()
 {
-    return g_Unknown626270.unk_4 != NULL && g_Unknown626270.unk_4->scoreDisabled != 0;
+    return g_GameManager.unk_4 != NULL && g_GameManager.unk_4->scoreDisabled != 0;
 }
 
 int App::EnableFog()
@@ -1404,27 +1404,27 @@ void App::AddPlayTime()
         this->lastPlayTimeTick = 0;
     }
     delta = now - this->lastPlayTimeTick;
-    g_Unknown626270.plst.runHours += delta / 3600000;
+    g_GameManager.plst.runHours += delta / 3600000;
     delta %= 3600000;
-    g_Unknown626270.plst.runMinutes += delta / 60000;
+    g_GameManager.plst.runMinutes += delta / 60000;
     delta %= 60000;
-    g_Unknown626270.plst.runSeconds += delta / 1000;
+    g_GameManager.plst.runSeconds += delta / 1000;
     delta %= 1000;
-    g_Unknown626270.plst.runMilliseconds += delta;
-    if (g_Unknown626270.plst.runMilliseconds >= 1000)
+    g_GameManager.plst.runMilliseconds += delta;
+    if (g_GameManager.plst.runMilliseconds >= 1000)
     {
-        g_Unknown626270.plst.runSeconds += g_Unknown626270.plst.runMilliseconds / 1000;
-        g_Unknown626270.plst.runMilliseconds %= 1000;
+        g_GameManager.plst.runSeconds += g_GameManager.plst.runMilliseconds / 1000;
+        g_GameManager.plst.runMilliseconds %= 1000;
     }
-    if (g_Unknown626270.plst.runSeconds >= 60)
+    if (g_GameManager.plst.runSeconds >= 60)
     {
-        g_Unknown626270.plst.runMinutes += g_Unknown626270.plst.runSeconds / 60;
-        g_Unknown626270.plst.runSeconds %= 60;
+        g_GameManager.plst.runMinutes += g_GameManager.plst.runSeconds / 60;
+        g_GameManager.plst.runSeconds %= 60;
     }
-    if (g_Unknown626270.plst.runMinutes >= 60)
+    if (g_GameManager.plst.runMinutes >= 60)
     {
-        g_Unknown626270.plst.runHours += g_Unknown626270.plst.runMinutes / 60;
-        g_Unknown626270.plst.runMinutes %= 60;
+        g_GameManager.plst.runHours += g_GameManager.plst.runMinutes / 60;
+        g_GameManager.plst.runMinutes %= 60;
     }
     this->lastPlayTimeTick = now;
 }
@@ -1439,27 +1439,27 @@ void App::AddTotalPlayTime()
         this->lastTotalPlayTimeTick = 0;
     }
     delta = now - this->lastTotalPlayTimeTick;
-    g_Unknown626270.plst.playHours += delta / 3600000;
+    g_GameManager.plst.playHours += delta / 3600000;
     delta %= 3600000;
-    g_Unknown626270.plst.playMinutes += delta / 60000;
+    g_GameManager.plst.playMinutes += delta / 60000;
     delta %= 60000;
-    g_Unknown626270.plst.playSeconds += delta / 1000;
+    g_GameManager.plst.playSeconds += delta / 1000;
     delta %= 1000;
-    g_Unknown626270.plst.playMilliseconds += delta;
-    if (g_Unknown626270.plst.playMilliseconds >= 1000)
+    g_GameManager.plst.playMilliseconds += delta;
+    if (g_GameManager.plst.playMilliseconds >= 1000)
     {
-        g_Unknown626270.plst.playSeconds += g_Unknown626270.plst.playMilliseconds / 1000;
-        g_Unknown626270.plst.playMilliseconds %= 1000;
+        g_GameManager.plst.playSeconds += g_GameManager.plst.playMilliseconds / 1000;
+        g_GameManager.plst.playMilliseconds %= 1000;
     }
-    if (g_Unknown626270.plst.playSeconds >= 60)
+    if (g_GameManager.plst.playSeconds >= 60)
     {
-        g_Unknown626270.plst.playMinutes += g_Unknown626270.plst.playSeconds / 60;
-        g_Unknown626270.plst.playSeconds %= 60;
+        g_GameManager.plst.playMinutes += g_GameManager.plst.playSeconds / 60;
+        g_GameManager.plst.playSeconds %= 60;
     }
-    if (g_Unknown626270.plst.playMinutes >= 60)
+    if (g_GameManager.plst.playMinutes >= 60)
     {
-        g_Unknown626270.plst.playHours += g_Unknown626270.plst.playMinutes / 60;
-        g_Unknown626270.plst.playMinutes %= 60;
+        g_GameManager.plst.playHours += g_GameManager.plst.playMinutes / 60;
+        g_GameManager.plst.playMinutes %= 60;
     }
     this->lastTotalPlayTimeTick = now;
 }

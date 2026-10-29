@@ -425,7 +425,7 @@ done:
         g_SpriteEngine->Step(&stage->unk_250);
     }
     stage->unk_4c4++;
-    if (stage->unk_4c4 % 500 == 250 && g_Unknown626270.ChecksumMismatch())
+    if (stage->unk_4c4 % 500 == 250 && g_GameManager.ChecksumMismatch())
     {
         return 4;
     }
@@ -503,7 +503,7 @@ int Stage::OnDraw(Stage *stage)
     stage->tintColor.r = 0x80;
     stage->tintColor.g = 0x80;
     stage->tintColor.b = 0x80;
-    if (stage->spellCardState <= 1 && !g_Unknown49fbf0.IsLoadingShown())
+    if (stage->spellCardState <= 1 && !g_Gui.IsLoadingShown())
     {
         if (stage->unk_4.spriteIndex > 0)
         {
@@ -541,7 +541,7 @@ int Stage::OnDraw(Stage *stage)
     {
         g_App.EnableFog();
     }
-    if (stage->spellCardState <= 1 && !g_Unknown49fbf0.IsLoadingShown())
+    if (stage->spellCardState <= 1 && !g_Gui.IsLoadingShown())
     {
         stage->DrawLayer(0);
         stage->DrawLayer(1);
@@ -556,7 +556,7 @@ int Stage::OnDraw2(Stage *stage)
     float area[4];
     int j;
 
-    if (stage->spellCardState <= 1 && !g_Unknown49fbf0.IsLoadingShown())
+    if (stage->spellCardState <= 1 && !g_Gui.IsLoadingShown())
     {
         stage->DrawLayer(2);
         stage->DrawLayer(3);
@@ -620,7 +620,7 @@ int Stage::AddedCallback(Stage *stage)
     stage->cameraPos.z = 0.0f;
     stage->spellCardState = 0;
     stage->fogFadeFrames = 0;
-    switch (g_Unknown626270.stage)
+    switch (g_GameManager.stage)
     {
     case 1:
         if (g_SpriteEngine->LoadAnm(5, "data/stg1bg.anm", 0x300) != 0)
@@ -687,7 +687,7 @@ int Stage::AddedCallback(Stage *stage)
         }
         break;
     }
-    if (stage->Load(g_StageDataFiles[g_Unknown626270.stage]) != 0)
+    if (stage->Load(g_StageDataFiles[g_GameManager.stage]) != 0)
     {
         return -1;
     }
@@ -731,34 +731,34 @@ int Stage::DeletedCallback(Stage *stage)
 
 int Stage::RegisterChain(int stage)
 {
-    Stage *s = &g_Unknown1347b00;
+    Stage *s = &g_Stage;
 
     memset(s, 0, sizeof(Stage));
     s->data = NULL;
     s->unk_4c4 = 0;
     s->stage = stage;
-    g_Unknown1347b00CalcChain.SetCallback((ChainCallback)Stage::OnUpdate);
-    g_Unknown1347b00CalcChain.addedCallback = (ChainCallback)Stage::AddedCallback;
-    g_Unknown1347b00CalcChain.deletedCallback = (ChainCallback)Stage::DeletedCallback;
-    g_Unknown1347b00CalcChain.arg = s;
-    if (g_Chain.AddToCalcChain(&g_Unknown1347b00CalcChain, 7) != 0)
+    g_StageCalcChain.SetCallback((ChainCallback)Stage::OnUpdate);
+    g_StageCalcChain.addedCallback = (ChainCallback)Stage::AddedCallback;
+    g_StageCalcChain.deletedCallback = (ChainCallback)Stage::DeletedCallback;
+    g_StageCalcChain.arg = s;
+    if (g_Chain.AddToCalcChain(&g_StageCalcChain, 7) != 0)
     {
         return -1;
     }
-    g_Unknown1347b00DrawChain.SetCallback((ChainCallback)Stage::OnDraw);
-    g_Unknown1347b00DrawChain.arg = s;
-    g_Chain.AddToDrawChain(&g_Unknown1347b00DrawChain, 3);
-    g_Unknown1347b00DrawChain2.SetCallback((ChainCallback)Stage::OnDraw2);
-    g_Unknown1347b00DrawChain2.arg = s;
-    g_Chain.AddToDrawChain(&g_Unknown1347b00DrawChain2, 4);
+    g_StageDrawChain.SetCallback((ChainCallback)Stage::OnDraw);
+    g_StageDrawChain.arg = s;
+    g_Chain.AddToDrawChain(&g_StageDrawChain, 3);
+    g_StageDrawChain2.SetCallback((ChainCallback)Stage::OnDraw2);
+    g_StageDrawChain2.arg = s;
+    g_Chain.AddToDrawChain(&g_StageDrawChain2, 4);
     return 0;
 }
 
 void Stage::RemoveChain()
 {
-    g_Chain.Remove(&g_Unknown1347b00CalcChain);
-    g_Chain.Remove(&g_Unknown1347b00DrawChain);
-    g_Chain.Remove(&g_Unknown1347b00DrawChain2);
+    g_Chain.Remove(&g_StageCalcChain);
+    g_Chain.Remove(&g_StageDrawChain);
+    g_Chain.Remove(&g_StageDrawChain2);
 }
 
 int Stage::Load(char *dataPath)

@@ -110,12 +110,12 @@ int MainMenu::StartTitle()
         this->prevCursor = -1;
         this->subState = 1;
         this->idleFrames = 0;
-        if (g_Unknown626270.unk_93d8Bit3)
+        if (g_GameManager.unk_93d8Bit3)
         {
             this->SetState(7);
             g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 13);
             this->helpSprite->SetPendingInterrupt(2);
-            g_Unknown626270.SetUnk93d8Bit3(0);
+            g_GameManager.SetUnk93d8Bit3(0);
             return 1;
         }
         if (this->unk_68 != 0)
@@ -133,7 +133,7 @@ int MainMenu::StartTitle()
         i = this->MoveMenuCursor(8);
         if (i != 0)
         {
-            while (!g_Unknown626270.AnyShotHasExtraOpen() && this->cursor == 1)
+            while (!g_GameManager.AnyShotHasExtraOpen() && this->cursor == 1)
             {
                 this->cursor += i;
             }
@@ -151,10 +151,10 @@ int MainMenu::StartTitle()
         }
         if (this->idleFrames > 900)
         {
-            g_Unknown626270.demoIndex++;
-            g_Unknown626270.demoIndex %= 3;
-            strcpy(g_Unknown626270.replayFile, g_DemoReplayPaths[g_Unknown626270.demoIndex]);
-            this->loadedReplay = (ReplayHeader *)LoadFileData(g_Unknown626270.replayFile, 0);
+            g_GameManager.demoIndex++;
+            g_GameManager.demoIndex %= 3;
+            strcpy(g_GameManager.replayFile, g_DemoReplayPaths[g_GameManager.demoIndex]);
+            this->loadedReplay = (ReplayHeader *)LoadFileData(g_GameManager.replayFile, 0);
             this->loadedReplay = ValidateReplay(this->loadedReplay, g_FileSize);
             if (this->loadedReplay == NULL)
             {
@@ -163,23 +163,23 @@ int MainMenu::StartTitle()
             }
             else
             {
-                g_Unknown626270.SetUnk93d8Bit3(1);
-                g_Unknown626270.unk_93d8 |= 2;
-                g_Unknown626270.demoFrames = 0;
-                g_Unknown626270.difficulty = this->loadedReplay->difficulty;
-                g_Unknown626270.character = this->loadedReplay->shotType / 2;
-                g_Unknown626270.shotType = this->loadedReplay->shotType % 2;
-                g_Unknown626270.shotIndex = this->loadedReplay->shotType;
+                g_GameManager.SetUnk93d8Bit3(1);
+                g_GameManager.unk_93d8 |= 2;
+                g_GameManager.demoFrames = 0;
+                g_GameManager.difficulty = this->loadedReplay->difficulty;
+                g_GameManager.character = this->loadedReplay->shotType / 2;
+                g_GameManager.shotType = this->loadedReplay->shotType % 2;
+                g_GameManager.shotIndex = this->loadedReplay->shotType;
                 i = 0;
                 while (this->loadedReplay->stages[i] == NULL)
                 {
                     i++;
                 }
-                g_Unknown626270.stage = i;
+                g_GameManager.stage = i;
                 MemFree(this->loadedReplay);
                 this->loadedReplay = NULL;
                 g_App.scene = 2;
-                g_Unknown626270.replayMenuChoice = 0;
+                g_GameManager.replayMenuChoice = 0;
                 return 0;
             }
         }
@@ -200,7 +200,7 @@ int MainMenu::StartTitle()
             switch (this->cursor)
             {
             case 0:
-                g_Unknown626270.unk_93d8 &= ~1;
+                g_GameManager.unk_93d8 &= ~1;
                 this->cursor = g_App.defaultDifficulty;
                 if (this->cursor >= 4)
                 {
@@ -211,7 +211,7 @@ int MainMenu::StartTitle()
                 this->helpSprite->SetPendingInterrupt(2);
                 return 1;
             case 2:
-                g_Unknown626270.unk_93d8 |= 1;
+                g_GameManager.unk_93d8 |= 1;
                 this->cursor = g_App.defaultDifficulty;
                 if (this->cursor >= 4)
                 {
@@ -222,9 +222,9 @@ int MainMenu::StartTitle()
                 this->helpSprite->SetPendingInterrupt(2);
                 return 1;
             case 1:
-                if (g_Unknown626270.AnyShotHasExtraOpen())
+                if (g_GameManager.AnyShotHasExtraOpen())
                 {
-                    g_Unknown626270.unk_93d8 &= ~1;
+                    g_GameManager.unk_93d8 &= ~1;
                     this->cursor = g_App.defaultDifficulty == 5;
                     this->SetState(12);
                     g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 5);
@@ -232,7 +232,7 @@ int MainMenu::StartTitle()
                     return 1;
                 }
             case 3:
-                g_Unknown626270.unk_93d8 &= ~1;
+                g_GameManager.unk_93d8 &= ~1;
                 this->SetState(7);
                 g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 13);
                 this->helpSprite->SetPendingInterrupt(2);
@@ -876,7 +876,7 @@ int MainMenu::UpdateDifficultyMenu()
             {
                 g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 7);
             }
-            else if (!g_Unknown626270.IsPhantasmOpen())
+            else if (!g_GameManager.IsPhantasmOpen())
             {
                 g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 12);
                 this->cursor = 4;
@@ -928,7 +928,7 @@ int MainMenu::UpdateDifficultyMenu()
         }
         break;
     case 1:
-        count = this->state != 12 ? 4 : (g_Unknown626270.IsPhantasmOpen() ? 2 : 1);
+        count = this->state != 12 ? 4 : (g_GameManager.IsPhantasmOpen() ? 2 : 1);
         if (this->MoveMenuCursor(count))
         {
             if (this->state != 12)
@@ -964,7 +964,7 @@ int MainMenu::UpdateDifficultyMenu()
             g_SoundPlayer.PlayQueuedSounds();
             if (this->state != 12)
             {
-                if (!(g_Unknown626270.unk_93d8 & 1))
+                if (!(g_GameManager.unk_93d8 & 1))
                 {
                     this->SetState(5);
                 }
@@ -1004,7 +1004,7 @@ int MainMenu::UpdateDifficultyMenu()
             this->SetState(0);
             if (state != 12)
             {
-                if (!(g_Unknown626270.unk_93d8 & 1))
+                if (!(g_GameManager.unk_93d8 & 1))
                 {
                     this->cursor = 0;
                 }
@@ -1017,7 +1017,7 @@ int MainMenu::UpdateDifficultyMenu()
             {
                 this->cursor = 1;
             }
-            g_Unknown626270.unk_93d8 &= ~1;
+            g_GameManager.unk_93d8 &= ~1;
             return 1;
         }
         break;
@@ -1040,7 +1040,7 @@ int MainMenu::UpdateCharacterMenu()
             {
                 this->sprites[g_App.defaultDifficulty + 0x43].SetPendingInterrupt(9);
             }
-            else if (!g_Unknown626270.IsPhantasmOpen())
+            else if (!g_GameManager.IsPhantasmOpen())
             {
                 this->sprites[0xa1].SetPendingInterrupt(9);
             }
@@ -1048,10 +1048,10 @@ int MainMenu::UpdateCharacterMenu()
             {
                 this->sprites[g_App.defaultDifficulty + 0x9e].SetPendingInterrupt(9);
             }
-            this->cursor = g_Unknown626270.character;
+            this->cursor = g_GameManager.character;
             if (g_App.defaultDifficulty == 4)
             {
-                while (!g_Unknown626270.HasExtraOpen(this->cursor * 2) && !g_Unknown626270.HasExtraOpen(this->cursor * 2 + 1))
+                while (!g_GameManager.HasExtraOpen(this->cursor * 2) && !g_GameManager.HasExtraOpen(this->cursor * 2 + 1))
                 {
                     this->cursor++;
                     if (this->cursor >= 3)
@@ -1062,7 +1062,7 @@ int MainMenu::UpdateCharacterMenu()
             }
             else if (g_App.defaultDifficulty == 5)
             {
-                while (!g_Unknown626270.HasPhantasmOpen(this->cursor * 2) && !g_Unknown626270.HasPhantasmOpen(this->cursor * 2 + 1))
+                while (!g_GameManager.HasPhantasmOpen(this->cursor * 2) && !g_GameManager.HasPhantasmOpen(this->cursor * 2 + 1))
                 {
                     this->cursor++;
                     if (this->cursor >= 3)
@@ -1183,7 +1183,7 @@ int MainMenu::UpdateCharacterMenu()
         {
             if (g_App.defaultDifficulty == 4)
             {
-                while (!g_Unknown626270.HasExtraOpen(this->cursor * 2) && !g_Unknown626270.HasExtraOpen(this->cursor * 2 + 1))
+                while (!g_GameManager.HasExtraOpen(this->cursor * 2) && !g_GameManager.HasExtraOpen(this->cursor * 2 + 1))
                 {
                     this->cursor++;
                     if (this->cursor >= 3)
@@ -1194,7 +1194,7 @@ int MainMenu::UpdateCharacterMenu()
             }
             else if (g_App.defaultDifficulty == 5)
             {
-                while (!g_Unknown626270.HasPhantasmOpen(this->cursor * 2) && !g_Unknown626270.HasPhantasmOpen(this->cursor * 2 + 1))
+                while (!g_GameManager.HasPhantasmOpen(this->cursor * 2) && !g_GameManager.HasPhantasmOpen(this->cursor * 2 + 1))
                 {
                     this->cursor++;
                     if (this->cursor >= 3)
@@ -1257,12 +1257,12 @@ int MainMenu::UpdateCharacterMenu()
         }
         if (WAS_PRESSED(0x1001))
         {
-            g_Unknown626270.character = this->cursor;
+            g_GameManager.character = this->cursor;
             g_SoundPlayer.QueueSound(10, 0);
             g_SoundPlayer.PlayQueuedSounds();
             if (this->state != 13)
             {
-                if (!(g_Unknown626270.unk_93d8 & 1))
+                if (!(g_GameManager.unk_93d8 & 1))
                 {
                     this->SetState(6);
                 }
@@ -1282,10 +1282,10 @@ int MainMenu::UpdateCharacterMenu()
         {
             g_SoundPlayer.QueueSound(11, 0);
             g_SoundPlayer.PlayQueuedSounds();
-            g_Unknown626270.character = this->cursor;
+            g_GameManager.character = this->cursor;
             if (this->state != 13)
             {
-                if (!(g_Unknown626270.unk_93d8 & 1))
+                if (!(g_GameManager.unk_93d8 & 1))
                 {
                     this->SetState(4);
                 }
@@ -1321,7 +1321,7 @@ int MainMenu::UpdateShotTypeMenu()
             {
                 this->sprites[g_App.defaultDifficulty + 0x43].SetPendingInterrupt(9);
             }
-            else if (!g_Unknown626270.IsPhantasmOpen())
+            else if (!g_GameManager.IsPhantasmOpen())
             {
                 this->sprites[0xa1].SetPendingInterrupt(9);
             }
@@ -1344,10 +1344,10 @@ int MainMenu::UpdateShotTypeMenu()
             this->sprites[0x4d].flags &= ~2;
             this->sprites[0x52].flags &= ~2;
             this->sprites[0x55].flags &= ~2;
-            this->cursor = g_Unknown626270.shotType;
+            this->cursor = g_GameManager.shotType;
             if (g_App.defaultDifficulty == 4)
             {
-                while (!g_Unknown626270.HasExtraOpen(this->cursor + g_Unknown626270.character * 2))
+                while (!g_GameManager.HasExtraOpen(this->cursor + g_GameManager.character * 2))
                 {
                     this->cursor++;
                     if (this->cursor >= 2)
@@ -1358,7 +1358,7 @@ int MainMenu::UpdateShotTypeMenu()
             }
             else if (g_App.defaultDifficulty == 5)
             {
-                while (!g_Unknown626270.HasPhantasmOpen(this->cursor + g_Unknown626270.character * 2))
+                while (!g_GameManager.HasPhantasmOpen(this->cursor + g_GameManager.character * 2))
                 {
                     this->cursor++;
                     if (this->cursor >= 2)
@@ -1367,7 +1367,7 @@ int MainMenu::UpdateShotTypeMenu()
                     }
                 }
             }
-            switch (g_Unknown626270.character)
+            switch (g_GameManager.character)
             {
             case 0:
                 this->sprites[0x48].flags |= 2;
@@ -1398,7 +1398,7 @@ int MainMenu::UpdateShotTypeMenu()
         {
             this->SetState(11);
             this->unk_68 = 0;
-            this->cursor = g_Unknown626270.stage - 1;
+            this->cursor = g_GameManager.stage - 1;
             return 1;
         }
         if (this->inputLockout == 30)
@@ -1411,7 +1411,7 @@ int MainMenu::UpdateShotTypeMenu()
         {
             if (g_App.defaultDifficulty == 4)
             {
-                while (!g_Unknown626270.HasExtraOpen(this->cursor + g_Unknown626270.character * 2))
+                while (!g_GameManager.HasExtraOpen(this->cursor + g_GameManager.character * 2))
                 {
                     this->cursor++;
                     if (this->cursor >= 2)
@@ -1422,7 +1422,7 @@ int MainMenu::UpdateShotTypeMenu()
             }
             else if (g_App.defaultDifficulty == 5)
             {
-                while (!g_Unknown626270.HasPhantasmOpen(this->cursor + g_Unknown626270.character * 2))
+                while (!g_GameManager.HasPhantasmOpen(this->cursor + g_GameManager.character * 2))
                 {
                     this->cursor++;
                     if (this->cursor >= 2)
@@ -1431,7 +1431,7 @@ int MainMenu::UpdateShotTypeMenu()
                     }
                 }
             }
-            switch (g_Unknown626270.character)
+            switch (g_GameManager.character)
             {
             case 0:
                 g_SpriteEngine->SetSprite(&this->sprites[0x49 - this->cursor], this->sprites[0x49 - this->cursor].baseSpriteIndex + 1);
@@ -1449,22 +1449,22 @@ int MainMenu::UpdateShotTypeMenu()
         }
         if (WAS_PRESSED(0x1001))
         {
-            g_Unknown626270.shotType = this->cursor;
+            g_GameManager.shotType = this->cursor;
             g_SoundPlayer.QueueSound(10, 0);
             g_SoundPlayer.PlayQueuedSounds();
-            if (!(g_Unknown626270.unk_93d8 & 1))
+            if (!(g_GameManager.unk_93d8 & 1))
             {
-                g_Unknown626270.difficulty = g_App.defaultDifficulty;
-                if (g_Unknown626270.difficulty < 4)
+                g_GameManager.difficulty = g_App.defaultDifficulty;
+                if (g_GameManager.difficulty < 4)
                 {
-                    g_Unknown626270.stage = 0;
+                    g_GameManager.stage = 0;
                 }
                 else
                 {
-                    g_Unknown626270.stage = g_Unknown626270.difficulty + 2;
+                    g_GameManager.stage = g_GameManager.difficulty + 2;
                 }
                 g_App.scene = 2;
-                g_Unknown626270.SetUnk93d8Bit3(0);
+                g_GameManager.SetUnk93d8Bit3(0);
                 g_App.StopMusic();
                 while (g_SoundPlayer.PlayQueuedSounds())
                 {
@@ -1478,10 +1478,10 @@ int MainMenu::UpdateShotTypeMenu()
         if (WAS_PRESSED(0xa))
         {
             g_SoundPlayer.QueueSound(11, 0);
-            g_Unknown626270.shotType = this->cursor;
+            g_GameManager.shotType = this->cursor;
             if (this->state != 14)
             {
-                if (!(g_Unknown626270.unk_93d8 & 1))
+                if (!(g_GameManager.unk_93d8 & 1))
                 {
                     this->SetState(5);
                 }
@@ -1544,7 +1544,7 @@ int MainMenu::UpdateGameStartMenu()
             this->sprites[0x4d].flags &= ~2;
             this->sprites[0x52].flags &= ~2;
             this->sprites[0x55].flags &= ~2;
-            switch (g_Unknown626270.character)
+            switch (g_GameManager.character)
             {
             case 0:
                 this->sprites[0x48].flags |= 2;
@@ -1564,7 +1564,7 @@ int MainMenu::UpdateGameStartMenu()
             }
             this->subState = 0;
             this->stateFrames = 0;
-            g_Unknown626270.unk_93d8 |= 1;
+            g_GameManager.unk_93d8 |= 1;
         }
         if (this->inputLockout == 30)
         {
@@ -1572,7 +1572,7 @@ int MainMenu::UpdateGameStartMenu()
         }
         break;
     case 1:
-        count = g_Unknown626270.clrds[g_Unknown626270.character * 2 + g_Unknown626270.shotType]
+        count = g_GameManager.clrds[g_GameManager.character * 2 + g_GameManager.shotType]
                     .stagesCleared[g_App.defaultDifficulty];
         if (count < 0)
         {
@@ -1590,10 +1590,10 @@ int MainMenu::UpdateGameStartMenu()
         if (WAS_PRESSED(0x1001))
         {
             g_SoundPlayer.QueueSound(10, 0);
-            g_Unknown626270.difficulty = g_App.defaultDifficulty;
-            g_Unknown626270.stage = this->cursor;
+            g_GameManager.difficulty = g_App.defaultDifficulty;
+            g_GameManager.stage = this->cursor;
             g_App.scene = 2;
-            g_Unknown626270.SetUnk93d8Bit3(0);
+            g_GameManager.SetUnk93d8Bit3(0);
             g_App.StopMusic();
             while (g_SoundPlayer.PlayQueuedSounds())
             {
@@ -1603,7 +1603,7 @@ int MainMenu::UpdateGameStartMenu()
         if (WAS_PRESSED(0xa))
         {
             g_SoundPlayer.QueueSound(11, 0);
-            this->cursor = g_Unknown626270.shotType;
+            this->cursor = g_GameManager.shotType;
             this->SetState(6);
             this->sprites[0x48].flags |= 2;
             this->sprites[0x49].flags |= 2;
@@ -1837,17 +1837,17 @@ int MainMenu::UpdateReplayMenu()
         }
         if (WAS_PRESSED(0x1001))
         {
-            g_Unknown626270.SetUnk93d8Bit3(1);
-            strcpy(g_Unknown626270.replayFile, this->replayPaths[this->replayCursor]);
-            g_Unknown626270.difficulty = this->loadedReplay->difficulty;
-            g_Unknown626270.character = this->loadedReplay->shotType / 2;
-            g_Unknown626270.shotType = this->loadedReplay->shotType % 2;
-            g_Unknown626270.shotIndex = this->loadedReplay->shotType;
+            g_GameManager.SetUnk93d8Bit3(1);
+            strcpy(g_GameManager.replayFile, this->replayPaths[this->replayCursor]);
+            g_GameManager.difficulty = this->loadedReplay->difficulty;
+            g_GameManager.character = this->loadedReplay->shotType / 2;
+            g_GameManager.shotType = this->loadedReplay->shotType % 2;
+            g_GameManager.shotIndex = this->loadedReplay->shotType;
             MemFree(this->loadedReplay);
             this->loadedReplay = NULL;
-            g_Unknown626270.stage = g_Unknown626270.difficulty >= 5 ? 7 : this->replayStage;
+            g_GameManager.stage = g_GameManager.difficulty >= 5 ? 7 : this->replayStage;
             g_App.scene = 2;
-            g_Unknown626270.replayMenuChoice = this->cursor;
+            g_GameManager.replayMenuChoice = this->cursor;
             g_App.StopMusic();
             while (g_SoundPlayer.PlayQueuedSounds())
             {
@@ -1987,7 +1987,7 @@ int MainMenu::DrawPracticeScores()
     g_AsciiText.AddFormat(&text->pos, "Stage    HI-Score");
     pos = text->pos;
     pos.y += 16.0f;
-    cleared = g_Unknown626270.clrds[g_Unknown626270.character * 2 + g_Unknown626270.shotType]
+    cleared = g_GameManager.clrds[g_GameManager.character * 2 + g_GameManager.shotType]
                   .stagesCleared[g_App.defaultDifficulty];
     if (cleared < 0)
     {
@@ -2010,8 +2010,8 @@ int MainMenu::DrawPracticeScores()
         }
         g_AsciiText.AddFormat(
             &pos, "%s %9d0 (%3d)", g_PracticeStageNames[i],
-            g_Unknown626270.pscrs[g_Unknown626270.character * 2 + g_Unknown626270.shotType][i][g_App.defaultDifficulty].score,
-            g_Unknown626270.pscrs[g_Unknown626270.character * 2 + g_Unknown626270.shotType][i][g_App.defaultDifficulty].playCount);
+            g_GameManager.pscrs[g_GameManager.character * 2 + g_GameManager.shotType][i][g_App.defaultDifficulty].score,
+            g_GameManager.pscrs[g_GameManager.character * 2 + g_GameManager.shotType][i][g_App.defaultDifficulty].playCount);
         pos.y += 16.0f;
     }
     g_AsciiText.SetColor(0xffffffff);
@@ -2131,45 +2131,45 @@ int MainMenu::InitTitleScene()
     ScoreDat *dat;
     int i;
 
-    if (g_Unknown626270.unk_4 != NULL)
+    if (g_GameManager.unk_4 != NULL)
     {
-        delete g_Unknown626270.unk_4;
-        g_Unknown626270.unk_4 = NULL;
+        delete g_GameManager.unk_4;
+        g_GameManager.unk_4 = NULL;
     }
-    g_Unknown626270.unk_4 = new Unknown626270Unk4;
-    if (g_Unknown626270.stats != NULL)
+    g_GameManager.unk_4 = new Unknown626270Unk4;
+    if (g_GameManager.stats != NULL)
     {
-        delete g_Unknown626270.stats;
-        g_Unknown626270.stats = NULL;
+        delete g_GameManager.stats;
+        g_GameManager.stats = NULL;
     }
-    g_Unknown626270.stats = new Unknown626270Stats;
+    g_GameManager.stats = new Unknown626270Stats;
     g_App.gameSpeed = 1.0f;
-    if (g_Unknown626270.unk_93d8 >> 3 & 1)
+    if (g_GameManager.unk_93d8 >> 3 & 1)
     {
-        g_Unknown626270.character = g_Unknown626270.shotIndex = 0;
+        g_GameManager.character = g_GameManager.shotIndex = 0;
     }
-    if (g_Unknown626270.unk_93d8 >> 1 & 1)
+    if (g_GameManager.unk_93d8 >> 1 & 1)
     {
-        g_Unknown626270.unk_93d8 &= ~8;
+        g_GameManager.unk_93d8 &= ~8;
     }
     dat = LoadScoreDat("score.dat");
-    LoadClears(dat, g_Unknown626270.clrds);
-    LoadPracticeScores(dat, &g_Unknown626270.pscrs[0][0][0]);
-    LoadSpellCards(dat, g_Unknown626270.catks);
+    LoadClears(dat, g_GameManager.clrds);
+    LoadPracticeScores(dat, &g_GameManager.pscrs[0][0][0]);
+    LoadSpellCards(dat, g_GameManager.catks);
     ReleaseScoreDat(dat);
-    if ((DWORD)g_Unknown626270.plst.playHours < 7)
+    if ((DWORD)g_GameManager.plst.playHours < 7)
     {
-        g_Unknown626270.maxContinues = 3;
+        g_GameManager.maxContinues = 3;
     }
-    else if ((DWORD)g_Unknown626270.plst.playHours < 14)
+    else if ((DWORD)g_GameManager.plst.playHours < 14)
     {
-        g_Unknown626270.maxContinues = 4;
+        g_GameManager.maxContinues = 4;
     }
     else
     {
-        g_Unknown626270.maxContinues = 5;
+        g_GameManager.maxContinues = 5;
     }
-    if (!g_Unknown626270.phantasmWasOpen && g_Unknown626270.IsPhantasmOpen())
+    if (!g_GameManager.phantasmWasOpen && g_GameManager.IsPhantasmOpen())
     {
         i = 0;
         g_SpriteEngine->LoadSurface(0, "data/title/phantasm.jpg");
@@ -2228,7 +2228,7 @@ int MainMenu::InitTitleScene()
         }
         g_SpriteEngine->ReleaseSurface(0);
     }
-    g_Unknown626270.phantasmWasOpen = g_Unknown626270.IsPhantasmOpen();
+    g_GameManager.phantasmWasOpen = g_GameManager.IsPhantasmOpen();
     this->state = 0;
     g_App.ResetClockDriftCounters();
     switch (g_App.prevScene)
@@ -2236,7 +2236,7 @@ int MainMenu::InitTitleScene()
     case 2:
     case 3:
     case 6:
-        this->cursor = g_Unknown626270.difficulty >= 4;
+        this->cursor = g_GameManager.difficulty >= 4;
         break;
     case 5:
         this->cursor = 4;
@@ -2249,12 +2249,12 @@ int MainMenu::InitTitleScene()
         break;
     }
     this->unk_68 = 0;
-    if (g_Unknown626270.unk_93d8 & 1)
+    if (g_GameManager.unk_93d8 & 1)
     {
         this->cursor = 2;
         this->unk_68 = 1;
     }
-    g_Unknown626270.unk_93d8 &= ~1;
+    g_GameManager.unk_93d8 &= ~1;
     if (g_App.prevScene != 0)
     {
         DrawLoadingScreen();
@@ -2263,7 +2263,7 @@ int MainMenu::InitTitleScene()
     {
         return -1;
     }
-    if (!(g_Unknown626270.unk_93d8 >> 1 & 1))
+    if (!(g_GameManager.unk_93d8 >> 1 & 1))
     {
         if (g_App.prevScene != 5)
         {
@@ -2284,8 +2284,8 @@ int MainMenu::InitTitleScene()
         g_SpriteEngine->SetSprite(&this->helpSprites[j], this->helpSprites[j].spriteIndex + j);
     }
     this->helpSprite = this->helpSprites;
-    g_Unknown626270.unk_93d8 &= ~2;
-    g_Unknown626270.demoFrames = 0;
+    g_GameManager.unk_93d8 &= ~2;
+    g_GameManager.demoFrames = 0;
     return 0;
 }
 
@@ -2333,7 +2333,7 @@ int SetUpTitleScene(int unk)
     MainMenu *menu = new MainMenu;
 
     memset(menu, 0, sizeof(MainMenu));
-    g_Unknown626270.isPaused = 0;
+    g_GameManager.isPaused = 0;
     menu->calcChain = g_Chain.CreateElem((ChainCallback)MainMenu::OnUpdate);
     menu->calcChain->arg = menu;
     menu->calcChain->addedCallback = (ChainCallback)MainMenu::AddedCallback;

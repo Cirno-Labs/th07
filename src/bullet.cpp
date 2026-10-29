@@ -756,7 +756,7 @@ void BounceOffWalls(Bullet *bullet)
 {
     float speed;
 
-    if (!g_Unknown626270.IsInPlayArea(bullet->pos.x, bullet->pos.y, bullet->sprites.sprite0.spriteData->width, bullet->sprites.sprite0.spriteData->height))
+    if (!g_GameManager.IsInPlayArea(bullet->pos.x, bullet->pos.y, bullet->sprites.sprite0.spriteData->width, bullet->sprites.sprite0.spriteData->height))
     {
         if (bullet->sound >= 0)
         {
@@ -887,7 +887,7 @@ int BulletManager::OnUpdate(BulletManager *mgr)
 
     order = 0;
     bullet = mgr->bullets;
-    if (g_Unknown626270.isFrozen != 0)
+    if (g_GameManager.isFrozen != 0)
     {
         return 1;
     }
@@ -947,7 +947,7 @@ int BulletManager::OnUpdate(BulletManager *mgr)
             bullet->pos += bullet->velocity;
             if (bullet->boundsCheckDelay == 0)
             {
-                if (!g_Unknown626270.IsInPlayArea(bullet->pos.x, bullet->pos.y, bullet->sprites.sprite0.spriteData->width,
+                if (!g_GameManager.IsInPlayArea(bullet->pos.x, bullet->pos.y, bullet->sprites.sprite0.spriteData->width,
                                                   bullet->sprites.sprite0.spriteData->height))
                 {
                     if (bullet->activeFlags & 0xdc0)
@@ -1196,8 +1196,8 @@ void DrawBullet(Bullet *bullet)
     default:
         sprite = &bullet->sprites.sprite0;
     }
-    sprite->pos.x = g_Unknown626270.arena[0] + bullet->pos.x;
-    sprite->pos.y = g_Unknown626270.arena[1] + bullet->pos.y;
+    sprite->pos.x = g_GameManager.arena[0] + bullet->pos.x;
+    sprite->pos.y = g_GameManager.arena[1] + bullet->pos.y;
     sprite->pos.z = 0.05f;
     sprite->color = sprite->color & 0xff000000 | 0xffffff;
     if (sprite->autoRotate != 0)
@@ -1229,8 +1229,8 @@ int BulletManager::OnDraw(BulletManager *mgr)
         laser->sprite0.pos.y = s * len + laser->pos.y;
         laser->sprite0.pos.z = 0.05f;
         laser->color = laser->color & 0xff000000 | 0xffffff;
-        laser->sprite0.pos.x = g_Unknown626270.arena[0] + laser->sprite0.pos.x;
-        laser->sprite0.pos.y = g_Unknown626270.arena[1] + laser->sprite0.pos.y;
+        laser->sprite0.pos.x = g_GameManager.arena[0] + laser->sprite0.pos.x;
+        laser->sprite0.pos.y = g_GameManager.arena[1] + laser->sprite0.pos.y;
         g_SpriteEngine->Draw(&laser->sprite0);
         if ((laser->startOffset < 16.0f || laser->speed == 0.0f) && (laser->unk_4e9 == 0 || laser->state != 0))
         {
@@ -1247,8 +1247,8 @@ int BulletManager::OnDraw(BulletManager *mgr)
                 laser->sprite1.scaleY = laser->width / 10.0f;
                 laser->sprite1.scaleX = laser->sprite1.scaleY;
             }
-            laser->sprite1.pos.x = g_Unknown626270.arena[0] + laser->sprite1.pos.x;
-            laser->sprite1.pos.y = g_Unknown626270.arena[1] + laser->sprite1.pos.y;
+            laser->sprite1.pos.x = g_GameManager.arena[0] + laser->sprite1.pos.x;
+            laser->sprite1.pos.y = g_GameManager.arena[1] + laser->sprite1.pos.y;
             g_SpriteEngine->Draw(&laser->sprite1);
         }
     }

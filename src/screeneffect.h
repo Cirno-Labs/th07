@@ -30,7 +30,7 @@ public:
     static int OnUpdateFadeIn(ScreenEffect *effect);
     // Type 1's update callback: shakes the screen, moving SpriteEngine's
     // shake offset at random by from shakeFrom to shakeTo pixels over
-    // `duration` frames. Holds still while g_Unknown626270.isFrozen is
+    // `duration` frames. Holds still while g_GameManager.isFrozen is
     // set. Returns 0 when done, else 1.
     static int OnUpdateShake(ScreenEffect *effect);
     // Type 2's update callback: fades `alpha` from 0 to 255 over

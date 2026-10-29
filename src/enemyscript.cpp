@@ -88,15 +88,15 @@ int GetIntOperand(Enemy *enemy, int id)
     case 10015:
         return enemy->ctx.vars.ints2[3];
     case 10016:
-        return g_Unknown626270.difficulty;
+        return g_GameManager.difficulty;
     case 10017:
-        return g_Unknown626270.rank;
+        return g_GameManager.rank;
     case 10025:
         return enemy->callbackTimer.current;
     case 10027:
         return enemy->life;
     case 10028:
-        return g_Unknown626270.shotIndex;
+        return g_GameManager.shotIndex;
     case 10072:
         return enemy->ctx.vars.floats2[0];
     case 10073:
@@ -126,21 +126,21 @@ int GetIntOperand(Enemy *enemy, int id)
     case 10036:
         return enemy->ctx.vars.floats3[3];
     case 10037:
-        return g_Unknown1347938.globalInts[0];
+        return g_EnemyScripts.globalInts[0];
     case 10038:
-        return g_Unknown1347938.globalInts[1];
+        return g_EnemyScripts.globalInts[1];
     case 10039:
-        return g_Unknown1347938.globalInts[2];
+        return g_EnemyScripts.globalInts[2];
     case 10040:
-        return g_Unknown1347938.globalInts[3];
+        return g_EnemyScripts.globalInts[3];
     case 10041:
-        return g_Unknown1347938.globalFloats[0];
+        return g_EnemyScripts.globalFloats[0];
     case 10042:
-        return g_Unknown1347938.globalFloats[1];
+        return g_EnemyScripts.globalFloats[1];
     case 10043:
-        return g_Unknown1347938.globalFloats[2];
+        return g_EnemyScripts.globalFloats[2];
     case 10044:
-        return g_Unknown1347938.globalFloats[3];
+        return g_EnemyScripts.globalFloats[3];
     case 10018:
         return enemy->pos.x;
     case 10019:
@@ -240,9 +240,9 @@ int *ResolveOperand(Enemy *enemy, int *operand, WORD mask, int bit)
     case 10015:
         return &enemy->ctx.vars.ints2[3];
     case 10016:
-        return &g_Unknown626270.difficulty;
+        return &g_GameManager.difficulty;
     case 10017:
-        return &g_Unknown626270.rank;
+        return &g_GameManager.rank;
     case 10025:
         return &enemy->callbackTimer.current;
     case 10027:
@@ -252,13 +252,13 @@ int *ResolveOperand(Enemy *enemy, int *operand, WORD mask, int bit)
     case 10071:
         return &enemy->score;
     case 10037:
-        return &g_Unknown1347938.globalInts[0];
+        return &g_EnemyScripts.globalInts[0];
     case 10038:
-        return &g_Unknown1347938.globalInts[1];
+        return &g_EnemyScripts.globalInts[1];
     case 10039:
-        return &g_Unknown1347938.globalInts[2];
+        return &g_EnemyScripts.globalInts[2];
     case 10040:
-        return &g_Unknown1347938.globalInts[3];
+        return &g_EnemyScripts.globalInts[3];
     }
     return operand;
 }
@@ -292,35 +292,35 @@ float GetFloatOperand(Enemy *enemy, float id)
     case 10015:
         return enemy->ctx.vars.ints2[3];
     case 10016:
-        return g_Unknown626270.difficulty;
+        return g_GameManager.difficulty;
     case 10017:
-        return g_Unknown626270.rank;
+        return g_GameManager.rank;
     case 10025:
         return enemy->callbackTimer.current;
     case 10027:
         return enemy->life;
     case 10028:
-        return g_Unknown626270.shotIndex;
+        return g_GameManager.shotIndex;
     case 10070:
         return enemy->item;
     case 10071:
         return enemy->score;
     case 10037:
-        return g_Unknown1347938.globalInts[0];
+        return g_EnemyScripts.globalInts[0];
     case 10038:
-        return g_Unknown1347938.globalInts[1];
+        return g_EnemyScripts.globalInts[1];
     case 10039:
-        return g_Unknown1347938.globalInts[2];
+        return g_EnemyScripts.globalInts[2];
     case 10040:
-        return g_Unknown1347938.globalInts[3];
+        return g_EnemyScripts.globalInts[3];
     case 10041:
-        return g_Unknown1347938.globalFloats[0];
+        return g_EnemyScripts.globalFloats[0];
     case 10042:
-        return g_Unknown1347938.globalFloats[1];
+        return g_EnemyScripts.globalFloats[1];
     case 10043:
-        return g_Unknown1347938.globalFloats[2];
+        return g_EnemyScripts.globalFloats[2];
     case 10044:
-        return g_Unknown1347938.globalFloats[3];
+        return g_EnemyScripts.globalFloats[3];
     case 10004:
         return enemy->ctx.vars.floats[0];
     case 10005:
@@ -468,13 +468,13 @@ float *ResolveFloatOperand(Enemy *enemy, float *operand, WORD mask, int bit)
     case 10073:
         return &enemy->ctx.vars.floats2[1];
     case 10041:
-        return &g_Unknown1347938.globalFloats[0];
+        return &g_EnemyScripts.globalFloats[0];
     case 10042:
-        return &g_Unknown1347938.globalFloats[1];
+        return &g_EnemyScripts.globalFloats[1];
     case 10043:
-        return &g_Unknown1347938.globalFloats[2];
+        return &g_EnemyScripts.globalFloats[2];
     case 10044:
-        return &g_Unknown1347938.globalFloats[3];
+        return &g_EnemyScripts.globalFloats[3];
     case 10050:
         return &enemy->moveStart.x;
     case 10051:
@@ -605,13 +605,13 @@ void StartSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
     {
         cardName.text[i] ^= 0xaa;
     }
-    g_Unknown49fbf0.ShowSpellCardName(*(short *)&instr->args[0], (char *)cardName.text);
+    g_Gui.ShowSpellCardName(*(short *)&instr->args[0], (char *)cardName.text);
     g_BulletManager.ClearAll(1);
-    g_Unknown1347b00.spellCardState = 1;
-    g_Unknown1347b00.spellCardFrames = 0;
-    for (i = 0; i < g_Unknown1347b00.dialogueSpriteCount; i++)
+    g_Stage.spellCardState = 1;
+    g_Stage.spellCardFrames = 0;
+    for (i = 0; i < g_Stage.dialogueSpriteCount; i++)
     {
-        g_SpriteEngine->StartScript(&g_Unknown1347b00.dialogueSprites[i], i + g_Unknown1347b00.dialogueScriptOffset + 0x2dc);
+        g_SpriteEngine->StartScript(&g_Stage.dialogueSprites[i], i + g_Stage.dialogueScriptOffset + 0x2dc);
     }
     g_Unknown12fe0c8 = 1;
     g_Unknown12fe0c4 = 1;
@@ -619,7 +619,7 @@ void StartSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
     g_Unknown12fe0cc = g_SpellCardBonuses[g_Unknown12fe0d8];
     g_Unknown12fe0d0 = 0;
     g_Unknown12fe0d4 = g_Unknown12fe0cc / (enemy->timerCallbackTime / 60 + 10);
-    g_Unknown9a9b00.spellCardBonusTimer.Set(0);
+    g_EnemyManager.spellCardBonusTimer.Set(0);
     enemy->rankSpeedLow = -0.5f;
     enemy->rankSpeedHigh = 0.5f;
     enemy->rankCount1Low = 0;
@@ -635,9 +635,9 @@ void StartSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
     enemy->effects[24]->sprite.colorTween.x = 0.125f;
     enemy->effects[24]->pos = enemy->pos;
     enemy->flags.unk_19 = 0;
-    if (!g_Unknown626270.unk_93d8Bit3)
+    if (!g_GameManager.unk_93d8Bit3)
     {
-        rec = &g_Unknown626270.catks[g_Unknown12fe0d8];
+        rec = &g_GameManager.catks[g_Unknown12fe0d8];
         sum = 0;
         strcpy(rec->name, (char *)cardName.text);
         len = strlen(rec->name);
@@ -662,9 +662,9 @@ void StartSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
                 rec->maxBonus[len] = 0;
             }
         }
-        if (rec->attempts[g_Unknown626270.shotIndex] < 9999)
+        if (rec->attempts[g_GameManager.shotIndex] < 9999)
         {
-            rec->attempts[g_Unknown626270.shotIndex]++;
+            rec->attempts[g_GameManager.shotIndex]++;
         }
         if (rec->attempts[6] < 9999)
         {
@@ -692,23 +692,23 @@ void EndSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
 
     if (g_Unknown12fe0c8 != 0)
     {
-        g_Unknown49fbf0.EndSpellCardName();
+        g_Gui.EndSpellCardName();
         if (g_Unknown12fe0c8 == 1)
         {
             bonus = g_BulletManager.ClearAllWithBonus(8000, 1);
-            bonus = g_Unknown9a9b00.ClearEnemiesForBonus(8000, bonus);
+            bonus = g_EnemyManager.ClearEnemiesForBonus(8000, bonus);
             if (bonus != 0)
             {
-                g_Unknown626270.AddScore(bonus);
-                g_Unknown49fbf0.ShowBonusPopup(bonus);
+                g_GameManager.AddScore(bonus);
+                g_Gui.ShowBonusPopup(bonus);
             }
             if (g_Unknown12fe0c4 != 0)
             {
-                rec = &g_Unknown626270.catks[g_Unknown12fe0d8];
+                rec = &g_GameManager.catks[g_Unknown12fe0d8];
                 bonus = g_Unknown12fe0cc + g_Unknown12fe0d0;
-                g_Unknown49fbf0.ShowSpellCardBonus(bonus);
-                g_Unknown626270.AddScore(bonus);
-                if (!g_Unknown626270.unk_93d8Bit3)
+                g_Gui.ShowSpellCardBonus(bonus);
+                g_GameManager.AddScore(bonus);
+                if (!g_GameManager.unk_93d8Bit3)
                 {
                     sum = 0;
                     len = strlen(rec->name);
@@ -733,7 +733,7 @@ void EndSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
                             rec->maxBonus[len] = 0;
                         }
                     }
-                    shot = g_Unknown626270.shotIndex;
+                    shot = g_GameManager.shotIndex;
                     if (rec->maxBonus[shot] < bonus)
                     {
                         rec->maxBonus[shot] = bonus;
@@ -758,33 +758,33 @@ void EndSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
                     }
                     rec->checksum = sum2;
                 }
-                g_Unknown626270.stats->spellCardsCaptured++;
+                g_GameManager.stats->spellCardsCaptured++;
             }
         }
         g_Unknown12fe0c8 = 0;
         for (bossIdx = 0; bossIdx < 8; bossIdx++)
         {
-            if (g_Unknown9a9b00.bosses[bossIdx] != NULL && g_Unknown9a9b00.bosses[bossIdx]->effects[24] != NULL)
+            if (g_EnemyManager.bosses[bossIdx] != NULL && g_EnemyManager.bosses[bossIdx]->effects[24] != NULL)
             {
-                g_Unknown9a9b00.bosses[bossIdx]->effects[24]->active = 0;
-                g_Unknown9a9b00.bosses[bossIdx]->effects[24] = NULL;
+                g_EnemyManager.bosses[bossIdx]->effects[24]->active = 0;
+                g_EnemyManager.bosses[bossIdx]->effects[24] = NULL;
             }
         }
         g_SoundPlayer.QueueSound(0xf, 0);
     }
-    g_Unknown1347b00.spellCardState = 0;
+    g_Stage.spellCardState = 0;
 }
 
 // Moves `lo` towards `hi` with the rank: lo at rank 0, hi at rank 32, as
 // th06's.
 inline int RankLerp(int lo, int hi)
 {
-    return g_Unknown626270.rank * (hi - lo) / 32 + lo;
+    return g_GameManager.rank * (hi - lo) / 32 + lo;
 }
 
 inline float RankLerpF(float lo, float hi)
 {
-    return g_Unknown626270.rank * (hi - lo) / 32.0f + lo;
+    return g_GameManager.rank * (hi - lo) / 32.0f + lo;
 }
 
 // The variable argument `n` of `instr` names, through ResolveOperand.
@@ -815,7 +815,7 @@ restart:
             enemy->periodicSubTimer.Set(0);
             enemy->savedCtx[enemy->stackDepth] = enemy->ctx;
             enemy->ctx.vars = enemy->periodicSubVars;
-            g_Unknown1347938.StartSub(&enemy->ctx, enemy->periodicSubIndex);
+            g_EnemyScripts.StartSub(&enemy->ctx, enemy->periodicSubIndex);
             if (enemy->stackDepth < 15)
             {
                 enemy->stackDepth++;
@@ -833,7 +833,7 @@ loop:
     }
     if (enemy->ctx.timer == instr->time)
     {
-        if ((instr->difficultyMask & g_Unknown626270.difficultyMask) == 0)
+        if ((instr->difficultyMask & g_GameManager.difficultyMask) == 0)
         {
             goto next;
         }
@@ -889,12 +889,12 @@ loop:
             INT_VAR(0)--;
             break;
         case 43:
-            INT_VAR(0) = (instr->paramMask & 2) ? GetIntOperand(g_Unknown9a9b00.bosses[INT_ARG(2)], instr->args[1].i)
+            INT_VAR(0) = (instr->paramMask & 2) ? GetIntOperand(g_EnemyManager.bosses[INT_ARG(2)], instr->args[1].i)
                                                 : instr->args[1].i;
             break;
         case 44:
             FLOAT_VAR(0) = (instr->paramMask & 2)
-                               ? GetFloatOperand(g_Unknown9a9b00.bosses[INT_ARG(2)], instr->args[1].f)
+                               ? GetFloatOperand(g_EnemyManager.bosses[INT_ARG(2)], instr->args[1].f)
                                : instr->args[1].f;
             break;
         case 12:
@@ -1052,8 +1052,8 @@ loop:
             {
                 enemy->savedCtx[enemy->stackDepth] = enemy->ctx;
             }
-            g_Unknown1347938.StartSub(&enemy->ctx, value);
-            memcpy(enemy->ctx.vars.ints3, g_Unknown1347938.globalInts, sizeof(int) * 8);
+            g_EnemyScripts.StartSub(&enemy->ctx, value);
+            memcpy(enemy->ctx.vars.ints3, g_EnemyScripts.globalInts, sizeof(int) * 8);
             if (!enemy->flags.disableCallStack && enemy->stackDepth < 15)
             {
                 enemy->stackDepth++;
@@ -1365,14 +1365,14 @@ loop:
             }
             break;
         case 147:
-            g_Unknown9a9b00.unk_9545f0 = INT_ARG(0);
+            g_EnemyManager.unk_9545f0 = INT_ARG(0);
             break;
         case 99:
             if (INT_ARG(0) >= 0)
             {
-                g_Unknown9a9b00.bosses[INT_ARG(0)] = enemy;
-                g_Unknown49fbf0.bossPresent = 1;
-                g_Unknown49fbf0.bossHealth = 1.0f;
+                g_EnemyManager.bosses[INT_ARG(0)] = enemy;
+                g_Gui.bossPresent = 1;
+                g_Gui.bossHealth = 1.0f;
                 enemy->flags.isBoss = 1;
                 enemy->bossIndex = INT_ARG(0);
                 g_AsciiText.SetUnkB7cInterrupt(enemy->bossIndex, 1);
@@ -1381,9 +1381,9 @@ loop:
             {
                 if (enemy->bossIndex < 4)
                 {
-                    g_Unknown49fbf0.bossPresent = 0;
+                    g_Gui.bossPresent = 0;
                 }
-                g_Unknown9a9b00.bosses[enemy->bossIndex] = NULL;
+                g_EnemyManager.bosses[enemy->bossIndex] = NULL;
                 enemy->flags.isBoss = 0;
                 g_AsciiText.SetUnkB7cInterrupt(enemy->bossIndex, 2);
                 ReleaseEnemyEffects(enemy);
@@ -1541,7 +1541,7 @@ loop:
             {
                 enemy->savedCtx[enemy->stackDepth] = enemy->ctx;
             }
-            g_Unknown1347938.StartSub(&enemy->ctx, enemy->interrupts[enemy->pendingInterrupt]);
+            g_EnemyScripts.StartSub(&enemy->ctx, enemy->interrupts[enemy->pendingInterrupt]);
             if (enemy->stackDepth < 15)
             {
                 enemy->stackDepth++;
@@ -1557,8 +1557,8 @@ loop:
             {
                 for (i = 0; i < 8; i++)
                 {
-                    g_Unknown49fbf0.sectionEnds[i] = 0.0f;
-                    g_Unknown49fbf0.sectionStarts[i] = 0.0f;
+                    g_Gui.sectionEnds[i] = 0.0f;
+                    g_Gui.sectionStarts[i] = 0.0f;
                 }
             }
             break;
@@ -1568,9 +1568,9 @@ loop:
             int idx;
 
             idx = INT_ARG(0);
-            g_Unknown49fbf0.SetBossSection(idx, INT_ARG(1) / (float)enemy->maxLife,
+            g_Gui.SetBossSection(idx, INT_ARG(1) / (float)enemy->maxLife,
                                            INT_ARG(2) / (float)enemy->maxLife);
-            g_Unknown49fbf0.SetBossSectionColor(idx, INT_ARG(3));
+            g_Gui.SetBossSectionColor(idx, INT_ARG(3));
             break;
         }
         case 90:
@@ -1633,7 +1633,7 @@ loop:
                 pos = enemy->pos;
                 pos[0] += g_Rng.GetRandomF32InRange(128.0f) - 64.0f;
                 pos[1] += g_Rng.GetRandomF32InRange(128.0f) - 64.0f;
-                if ((int)g_Unknown626270.stats->power < 0x80)
+                if ((int)g_GameManager.stats->power < 0x80)
                 {
                     g_ItemManager.SpawnItem(&pos, i == 0 ? 2 : 0, 0);
                 }
@@ -1684,11 +1684,11 @@ loop:
             g_ItemManager.SpawnItem(&enemy->pos, INT_ARG(0), 0);
             break;
         case 125:
-            g_Unknown1347b00.waitLabel = INT_ARG(0);
+            g_Stage.waitLabel = INT_ARG(0);
             break;
         case 126:
-            g_Unknown49fbf0.SetBossLives(INT_ARG(0));
-            g_Unknown626270.progressFrames += 1800;
+            g_Gui.SetBossLives(INT_ARG(0));
+            g_GameManager.progressFrames += 1800;
             break;
         case 92:
         {
@@ -1702,7 +1702,7 @@ loop:
                 pos.x = FLOAT_OP(spawn.pos.x, 2);
                 pos.y = FLOAT_OP(spawn.pos.y, 4);
                 pos.z = FLOAT_OP(spawn.pos.z, 8);
-                child = g_Unknown9a9b00.SpawnWithVars(spawn.sub, &pos, INT_ARG(4), INT_ARG(5), INT_ARG(6),
+                child = g_EnemyManager.SpawnWithVars(spawn.sub, &pos, INT_ARG(4), INT_ARG(5), INT_ARG(6),
                                                         &enemy->ctx.vars);
             }
             break;
@@ -1720,13 +1720,13 @@ loop:
                 pos.y = FLOAT_OP(spawn.pos.y, 4);
                 pos.z = FLOAT_OP(spawn.pos.z, 8);
                 pos += enemy->pos;
-                child = g_Unknown9a9b00.SpawnWithVars(spawn.sub, &pos, INT_ARG(4), INT_ARG(5), INT_ARG(6),
+                child = g_EnemyManager.SpawnWithVars(spawn.sub, &pos, INT_ARG(4), INT_ARG(5), INT_ARG(6),
                                                          &enemy->ctx.vars);
             }
             break;
         }
         case 94:
-            g_Unknown9a9b00.ClearEnemiesForBonus(8000, 0);
+            g_EnemyManager.ClearEnemiesForBonus(8000, 0);
             break;
         case 128:
             enemy->sprite.pendingInterrupt = INT_ARG(0);
@@ -1801,9 +1801,9 @@ loop:
             g_BulletManager.ConvertBulletsToItems(&enemy->pos, FLOAT_ARG(0));
             break;
         case 145:
-            if (g_Unknown9a9b00.bosses[INT_ARG(0)] != NULL)
+            if (g_EnemyManager.bosses[INT_ARG(0)] != NULL)
             {
-                g_Unknown9a9b00.bosses[INT_ARG(0)]->pendingInterrupt = INT_ARG(1);
+                g_EnemyManager.bosses[INT_ARG(0)]->pendingInterrupt = INT_ARG(1);
             }
             break;
         case 146:
@@ -1836,7 +1836,7 @@ loop:
             }
             break;
         case 160:
-            g_Unknown626270.AddBonusPoints(INT_ARG(0));
+            g_GameManager.AddBonusPoints(INT_ARG(0));
             break;
         case 161:
             enemy->flags.haltedByBomb = INT_ARG(0);
@@ -2082,12 +2082,12 @@ done:
         if (!enemy->flags.keepSpellCard)
         {
             g_Unknown12fe0cc = g_SpellCardBonuses[g_Unknown12fe0d8] -
-                               g_Unknown12fe0d4 * g_Unknown9a9b00.spellCardBonusTimer.AsFloat() / 60.0f;
+                               g_Unknown12fe0d4 * g_EnemyManager.spellCardBonusTimer.AsFloat() / 60.0f;
             g_Unknown12fe0cc -= g_Unknown12fe0cc % 10;
         }
-        g_Unknown9a9b00.spellCardBonusTimer.Tick();
+        g_EnemyManager.spellCardBonusTimer.Tick();
     }
-    if (enemy->flags.isBoss && g_Unknown626270.stage >= 7)
+    if (enemy->flags.isBoss && g_GameManager.stage >= 7)
     {
         if (g_Player.bomb.running && g_Unknown12fe0c8 && g_Unknown12fe0d8 >= 0x76)
         {
@@ -2111,9 +2111,9 @@ void WarpToBoss(Enemy *enemy, EnemyScriptInstr *instr)
     int boss;
 
     boss = instr->args[1].i;
-    enemy->pos = g_Unknown9a9b00.bosses[boss]->pos;
-    enemy->velocity = g_Unknown9a9b00.bosses[boss]->velocity;
-    enemy->angle = g_Unknown9a9b00.bosses[boss]->angle;
+    enemy->pos = g_EnemyManager.bosses[boss]->pos;
+    enemy->velocity = g_EnemyManager.bosses[boss]->velocity;
+    enemy->angle = g_EnemyManager.bosses[boss]->angle;
     enemy->flags.isWarpingToBoss = 1;
 }
 
@@ -2160,7 +2160,7 @@ void ShakeAndSpinBullets(Enemy *enemy, EnemyScriptInstr *instr)
             }
             curBullet->speed = 0.3f;
             memset(curBullet->commands, 0, sizeof(curBullet->commands));
-            if (g_Unknown626270.difficulty < 3)
+            if (g_GameManager.difficulty < 3)
             {
                 curBullet->SetTurnCommand(0, 0, 60, angle, 1.0f / 60.0f);
             }
@@ -2264,7 +2264,7 @@ void CopyBossMoveStart(Enemy *enemy, EnemyScriptInstr *instr)
 {
     Enemy *boss;
 
-    boss = g_Unknown9a9b00.bosses[0];
+    boss = g_EnemyManager.bosses[0];
     enemy->moveStart = boss->pos;
     enemy->orbitRadius = boss->orbitRadius;
     enemy->orbitAngularVelocity = boss->orbitAngularVelocity;
@@ -2295,7 +2295,7 @@ void FireBackwardFans(Enemy *enemy, EnemyScriptInstr *instr)
             shooter.angle1 = AddNormalizeAngle(bullet->angle, 3.1415927f);
             shooter.angle2 = 0.5235988f;
             shooter.speed1 = bullet->speed * 1.1f;
-            if (g_Unknown626270.difficulty < 3)
+            if (g_GameManager.difficulty < 3)
             {
                 shooter.count1 = 4;
             }
@@ -2313,7 +2313,7 @@ void FireBackwardFans(Enemy *enemy, EnemyScriptInstr *instr)
             }
             else if (instr->args[1].i == 1)
             {
-                if (g_Unknown626270.difficulty != 3)
+                if (g_GameManager.difficulty != 3)
                 {
                     shooter.flags = 2;
                 }
@@ -2337,7 +2337,7 @@ void FireBackwardFans(Enemy *enemy, EnemyScriptInstr *instr)
             }
             else if (instr->args[1].i == 1)
             {
-                if (g_Unknown626270.difficulty != 3)
+                if (g_GameManager.difficulty != 3)
                 {
                     shooter.flags = 0;
                 }
@@ -2494,7 +2494,7 @@ void DeflectBulletsOffLasers(Enemy *enemy, EnemyScriptInstr *instr)
                 if (blt->sprites.sprite0.spriteData != NULL && blt->unk_c08 != li + 1 && blt->unk_c08 >= 0 &&
                     PointInRotatedBox(&blt->pos, &middle, &size, &l->pos, s, c))
                 {
-                    if (g_Unknown626270.difficulty < 2)
+                    if (g_GameManager.difficulty < 2)
                     {
                         blt->speed *= g_Rng.GetRandomF32ZeroToOne() * 0.3f + 0.7f;
                     }
@@ -2517,7 +2517,7 @@ void DeflectBulletsOffLasers(Enemy *enemy, EnemyScriptInstr *instr)
                     g_SpriteEngine->SetSprite(&blt->sprites.sprite0, blt->sprites.sprite0.spriteIndex + blt->color);
                     blt->angle = atan2f(blt->velocity.y, blt->velocity.x);
                     ((Vector2 *)&blt->velocity)->SetPolar(blt->angle, blt->speed);
-                    if (g_Unknown626270.difficulty < 2)
+                    if (g_GameManager.difficulty < 2)
                     {
                         blt->unk_c08 = -1;
                     }
@@ -2543,8 +2543,8 @@ void StartSlowdown(Enemy *enemy, EnemyScriptInstr *instr)
     int i;
 
     g_App.gameSpeed = 1.0f / instr->args[1].i;
-    g_Unknown1347b00.dialogueSprites[0].pendingInterrupt = 2;
-    g_Unknown1347b00.dialogueSprites[1].pendingInterrupt = 2;
+    g_Stage.dialogueSprites[0].pendingInterrupt = 2;
+    g_Stage.dialogueSprites[1].pendingInterrupt = 2;
     bullet = g_BulletManager.bullets;
     for (i = 0; i < 0x400; i++, bullet++)
     {
@@ -2585,8 +2585,8 @@ void EndSlowdown(Enemy *enemy, EnemyScriptInstr *instr)
         g_App.stateFlags |= 0x20;
     }
     g_App.gameSpeed = 1.0f;
-    g_Unknown1347b00.dialogueSprites[0].pendingInterrupt = 1;
-    g_Unknown1347b00.dialogueSprites[1].pendingInterrupt = 1;
+    g_Stage.dialogueSprites[0].pendingInterrupt = 1;
+    g_Stage.dialogueSprites[1].pendingInterrupt = 1;
 }
 
 void BurstBulletsByDifficulty(Enemy *enemy, EnemyScriptInstr *instr)
@@ -2598,9 +2598,9 @@ void BurstBulletsByDifficulty(Enemy *enemy, EnemyScriptInstr *instr)
     int j;
 
     ScreenEffect::StartEffect(3, 8, 1, 0x50cfcfff, 0);
-    count = g_Unknown626270.difficulty == 0   ? 10
-            : g_Unknown626270.difficulty == 1 ? 18
-            : g_Unknown626270.difficulty == 2 ? 22
+    count = g_GameManager.difficulty == 0   ? 10
+            : g_GameManager.difficulty == 1 ? 18
+            : g_GameManager.difficulty == 2 ? 22
                                               : 25;
     for (i = 0; i < 0x400; i++, bullet++)
     {
@@ -2608,9 +2608,9 @@ void BurstBulletsByDifficulty(Enemy *enemy, EnemyScriptInstr *instr)
         {
             continue;
         }
-        if ((g_Unknown626270.difficulty < 2 && bullet->sprites.sprite0.spriteData->height > 48.0f &&
+        if ((g_GameManager.difficulty < 2 && bullet->sprites.sprite0.spriteData->height > 48.0f &&
              enemy->pos.y - 64.0f < bullet->pos.y && enemy->pos.y + 64.0f > bullet->pos.y) ||
-            (g_Unknown626270.difficulty >= 2 && bullet->sprites.sprite0.spriteData->height > 48.0f &&
+            (g_GameManager.difficulty >= 2 && bullet->sprites.sprite0.spriteData->height > 48.0f &&
              enemy->pos.y - 48.0f < bullet->pos.y && enemy->pos.y + 48.0f > bullet->pos.y))
         {
             for (j = 0; j < count; j++)
@@ -2688,7 +2688,7 @@ void BurstBulletsFixedCount(Enemy *enemy, EnemyScriptInstr *instr)
     float w;
     int j;
 
-    w = g_Unknown626270.difficulty == 2 ? 128.0f : 180.0f;
+    w = g_GameManager.difficulty == 2 ? 128.0f : 180.0f;
     ScreenEffect::StartEffect(3, 8, 1, 0x50cfcfff, 0);
     for (i = 0; i < 0x400; i++, bullet++)
     {
@@ -2825,7 +2825,7 @@ void ReplaceBulletsWithEnemies(Enemy *enemy, EnemyScriptInstr *instr)
             childVars.floats[0] = blt->angle;
             childVars.floats[7] = theta;
             theta += 0.7853982f;
-            g_Unknown9a9b00.SpawnWithVars(enemy->ctx.sub + 1, &blt->pos, 1, -2, 10, &childVars);
+            g_EnemyManager.SpawnWithVars(enemy->ctx.sub + 1, &blt->pos, 1, -2, 10, &childVars);
             blt->FreeBullet();
         }
         else if (blt->sprites.sprite0.spriteIndex >= 0x278 && blt->sprites.sprite0.spriteIndex <= 0x27f)

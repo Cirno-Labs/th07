@@ -93,7 +93,7 @@ void CopySpriteToTexture(int sprite)
 
 int Gui::OnUpdate(Gui *gui)
 {
-    if (g_Unknown626270.isFrozen)
+    if (g_GameManager.isFrozen)
     {
         return 1;
     }
@@ -105,7 +105,7 @@ int Gui::OnUpdate(Gui *gui)
     gui->UpdateInterface();
     gui->impl->RunMsg();
     gui->frameCounter++;
-    if (g_Unknown626270.stage == 6 && gui->frameCounter == 300)
+    if (g_GameManager.stage == 6 && gui->frameCounter == 300)
     {
         g_App.PlayMidi(0);
     }
@@ -129,7 +129,7 @@ int Gui::OnDraw(Gui *gui)
         cursor.y = 128.0f;
         cursor.z = 0.0f;
         g_AsciiText.color = 0xffffff40;
-        if (g_Unknown626270.stage < 6)
+        if (g_GameManager.stage < 6)
         {
             g_AsciiText.AddFormat(&cursor, "Stage Clear");
         }
@@ -139,7 +139,7 @@ int Gui::OnDraw(Gui *gui)
         }
         cursor.y += 32.0f;
         g_AsciiText.color = 0xffffffff;
-        g_AsciiText.AddFormat(&cursor, "Clear  = %8d", g_Unknown626270.stage * 1000000);
+        g_AsciiText.AddFormat(&cursor, "Clear  = %8d", g_GameManager.stage * 1000000);
         cursor.y += 16.0f;
         g_AsciiText.color = 0xffe0e0ff;
         g_AsciiText.AddFormat(&cursor, "Point  = %8d", gui->impl->stageClearPoints * 50000);
@@ -149,19 +149,19 @@ int Gui::OnDraw(Gui *gui)
         cursor.y += 16.0f;
         g_AsciiText.color = 0xffd0d0ff;
         g_AsciiText.AddFormat(&cursor, "Cherry = %8d", gui->impl->stageClearCherry * 10);
-        if (g_Unknown626270.stage >= 7 ||
-            (g_Unknown626270.stage == 6 && !(g_Unknown626270.unk_93d8 & 1) &&
-             (!g_Unknown626270.unk_93d8Bit3 || g_ReplayManager->data->stages[4] != NULL)))
+        if (g_GameManager.stage >= 7 ||
+            (g_GameManager.stage == 6 && !(g_GameManager.unk_93d8 & 1) &&
+             (!g_GameManager.unk_93d8Bit3 || g_ReplayManager->data->stages[4] != NULL)))
         {
             cursor.y += 16.0f;
             g_AsciiText.color = 0xffffff80;
-            g_AsciiText.AddFormat(&cursor, "Player =%9d", (int)g_Unknown626270.stats->lives * 20000000);
+            g_AsciiText.AddFormat(&cursor, "Player =%9d", (int)g_GameManager.stats->lives * 20000000);
             cursor.y += 16.0f;
             g_AsciiText.color = 0xffffff80;
-            g_AsciiText.AddFormat(&cursor, "Bomb   = %8d", (int)g_Unknown626270.stats->bombs * 4000000);
+            g_AsciiText.AddFormat(&cursor, "Bomb   = %8d", (int)g_GameManager.stats->bombs * 4000000);
         }
         cursor.y += 32.0f;
-        switch (g_Unknown626270.difficulty)
+        switch (g_GameManager.difficulty)
         {
         case 0:
             g_AsciiText.color = 0xffff8080;
@@ -189,9 +189,9 @@ int Gui::OnDraw(Gui *gui)
             break;
         }
         cursor.y += 16.0f;
-        if (g_Unknown626270.difficulty < 4 && !(g_Unknown626270.unk_93d8 & 1))
+        if (g_GameManager.difficulty < 4 && !(g_GameManager.unk_93d8 & 1))
         {
-            switch (g_Unknown626270.unk_4->lifeCount)
+            switch (g_GameManager.unk_4->lifeCount)
             {
             case 3:
                 g_AsciiText.color = 0xffff8080;
@@ -338,7 +338,7 @@ int Gui::LoadResources()
             return -1;
         }
         this->HideInterface();
-        switch (g_Unknown626270.character)
+        switch (g_GameManager.character)
         {
         case 0:
             if (g_SpriteEngine->LoadAnm(0x19, "data/face_rm00.anm", 0x4a0) != 0)
@@ -396,7 +396,7 @@ int Gui::LoadResources()
         }
         this->impl->backgroundTileCount = 0xa8;
     }
-    switch (g_Unknown626270.stage)
+    switch (g_GameManager.stage)
     {
     case 1:
         CopySpriteToTexture(0x60e);
@@ -632,11 +632,11 @@ void GuiImpl::StartMsgScript(int index)
     this->msg.shadowColors[1] = 0;
     this->msg.skippable = 1;
     g_BulletManager.ClearAll(1);
-    g_Unknown9a9b00.ClearEnemiesForBonus(0, 0);
+    g_EnemyManager.ClearEnemiesForBonus(0, 0);
     g_ItemManager.CollectAll();
     if (index % 10 == 0)
     {
-        switch (g_Unknown626270.stage)
+        switch (g_GameManager.stage)
         {
         case 1:
             CopySpriteToTexture(0x60f);
@@ -655,18 +655,18 @@ void GuiImpl::StartMsgScript(int index)
             break;
         case 6:
             CopySpriteToTexture(0x619);
-            g_Unknown1347b00.dialogueScriptOffset = 2;
+            g_Stage.dialogueScriptOffset = 2;
             g_Unknown9a9ab8 = 9;
             break;
         case 7:
             CopySpriteToTexture(0x61b);
-            g_Unknown1347b00.dialogueScriptOffset = 1;
-            g_Unknown1347b00.dialogueSpriteCount = 2;
+            g_Stage.dialogueScriptOffset = 1;
+            g_Stage.dialogueSpriteCount = 2;
             g_Unknown9a9ab8 = 9;
             break;
         case 8:
             CopySpriteToTexture(0x61d);
-            g_Unknown1347b00.dialogueScriptOffset = 2;
+            g_Stage.dialogueScriptOffset = 2;
             g_Unknown9a9ab8 = 9;
             break;
         }
@@ -775,7 +775,7 @@ int GuiImpl::RunMsg()
             this->msg.timelineRelease++;
             break;
         case 7:
-            if (g_Unknown626270.stage != 6)
+            if (g_GameManager.stage != 6)
             {
                 g_SpriteEngine->StartScript(&this->trackNumberSprites[0], 0x804);
             }
@@ -786,7 +786,7 @@ int GuiImpl::RunMsg()
             g_SpriteEngine->SetSprite(&this->trackNumberSprites[0], this->msg.instr->i + 0x803);
             if (g_App.PlayMidi(this->msg.instr->i) != 0)
             {
-                g_App.PlayMusic(g_Unknown1347b00.data->songPaths[this->msg.instr->i]);
+                g_App.PlayMusic(g_Stage.data->songPaths[this->msg.instr->i]);
             }
             break;
         case 8:
@@ -797,12 +797,12 @@ int GuiImpl::RunMsg()
             this->msg.waitFrames = 0;
             break;
         case 9:
-            this->stageClearPower = g_Unknown626270.stats->power;
-            this->stageClearPoints = g_Unknown626270.stats->stageClearPoints;
-            this->stageClearCherry = g_Unknown626270.bonusPointsCap - g_Unknown626270.stats->grazeCount;
-            this->stageClearGraze = g_Unknown626270.stats->graze;
+            this->stageClearPower = g_GameManager.stats->power;
+            this->stageClearPoints = g_GameManager.stats->stageClearPoints;
+            this->stageClearCherry = g_GameManager.bonusPointsCap - g_GameManager.stats->grazeCount;
+            this->stageClearGraze = g_GameManager.stats->graze;
             this->stageClearShown = 1;
-            if (g_Unknown626270.stage < 6)
+            if (g_GameManager.stage < 6)
             {
                 g_SpriteEngine->StartScript(&this->unk_6e44, 0x61e);
                 g_SpriteEngine->StartScript(&this->unk_72dc, 0x725);
@@ -813,7 +813,7 @@ int GuiImpl::RunMsg()
             }
             else
             {
-                g_Unknown626270.stats->checksumKeyStage = -1;
+                g_GameManager.stats->checksumKeyStage = -1;
             }
             break;
         case 10:
@@ -827,16 +827,16 @@ int GuiImpl::RunMsg()
             break;
         case 11:
             g_App.clockMeasurementPending = 0;
-            g_Unknown626270.stats->guiScore = g_Unknown626270.stats->score;
-            if (g_Unknown626270.unk_93d8 & 1)
+            g_GameManager.stats->guiScore = g_GameManager.stats->score;
+            if (g_GameManager.unk_93d8 & 1)
             {
-                g_Unknown626270.stats->guiScore = g_Unknown626270.stats->score;
+                g_GameManager.stats->guiScore = g_GameManager.stats->score;
                 g_App.scene = 6;
                 goto stepSprites;
             }
-            if (g_Unknown626270.stage < 6)
+            if (g_GameManager.stage < 6)
             {
-                if ((g_Unknown626270.unk_93d8 >> 3 & 1) && !g_ReplayManager->HasStage(g_Unknown626270.stage))
+                if ((g_GameManager.unk_93d8 >> 3 & 1) && !g_ReplayManager->HasStage(g_GameManager.stage))
                 {
                     g_App.scene = 7;
                     goto stepSprites;
@@ -845,31 +845,31 @@ int GuiImpl::RunMsg()
                 this->returnToTitleRequested = 1;
                 this->msg.scriptIndex = -2;
             }
-            else if (!(g_Unknown626270.unk_93d8 >> 3 & 1))
+            else if (!(g_GameManager.unk_93d8 >> 3 & 1))
             {
-                if (g_Unknown626270.difficulty >= 4)
+                if (g_GameManager.difficulty >= 4)
                 {
-                    if (g_Unknown626270.difficulty == 4)
+                    if (g_GameManager.difficulty == 4)
                     {
-                        g_Unknown626270.clrds[g_Unknown626270.shotIndex]
-                            .stagesClearedNoContinue[g_Unknown626270.difficulty] = 99;
+                        g_GameManager.clrds[g_GameManager.shotIndex]
+                            .stagesClearedNoContinue[g_GameManager.difficulty] = 99;
                     }
-                    g_Unknown626270.plst.counts[g_Unknown626270.difficulty].clears++;
-                    g_Unknown626270.unk_93d8Bit4 = 1;
-                    g_Unknown626270.stats->guiScore = g_Unknown626270.stats->score;
+                    g_GameManager.plst.counts[g_GameManager.difficulty].clears++;
+                    g_GameManager.unk_93d8Bit4 = 1;
+                    g_GameManager.stats->guiScore = g_GameManager.stats->score;
                     g_App.scene = 6;
                     goto stepSprites;
                 }
-                g_Unknown626270.unk_93d8Bit4 = 1;
-                g_Unknown626270.stats->guiScore = g_Unknown626270.stats->score;
+                g_GameManager.unk_93d8Bit4 = 1;
+                g_GameManager.stats->guiScore = g_GameManager.stats->score;
                 g_App.scene = 9;
                 goto stepSprites;
             }
             else
             {
-                if (g_Unknown626270.stage == 8 && g_Unknown626270.stats->score != g_ReplayManager->data->score)
+                if (g_GameManager.stage == 8 && g_GameManager.stats->score != g_ReplayManager->data->score)
                 {
-                    ResaveReplay(g_Unknown626270.replayFile);
+                    ResaveReplay(g_GameManager.replayFile);
                 }
                 g_App.scene = 7;
             }
@@ -946,31 +946,31 @@ int Gui::DeletedCallback(Gui *gui)
 
 int Gui::RegisterChain()
 {
-    Gui *gui = &g_Unknown49fbf0;
+    Gui *gui = &g_Gui;
 
     if ((g_App.scene != 3 && g_App.scene != 0xb && g_App.scene != 0xc) != 0)
     {
         memset(gui, 0, sizeof(Gui));
         gui->impl = new GuiImpl;
     }
-    g_Unknown49fbf0CalcChain.SetCallback((ChainCallback)Gui::OnUpdate);
-    g_Unknown49fbf0CalcChain.addedCallback = (ChainCallback)Gui::AddedCallback;
-    g_Unknown49fbf0CalcChain.deletedCallback = (ChainCallback)Gui::DeletedCallback;
-    g_Unknown49fbf0CalcChain.arg = gui;
-    if (g_Chain.AddToCalcChain(&g_Unknown49fbf0CalcChain, 13) != 0)
+    g_GuiCalcChain.SetCallback((ChainCallback)Gui::OnUpdate);
+    g_GuiCalcChain.addedCallback = (ChainCallback)Gui::AddedCallback;
+    g_GuiCalcChain.deletedCallback = (ChainCallback)Gui::DeletedCallback;
+    g_GuiCalcChain.arg = gui;
+    if (g_Chain.AddToCalcChain(&g_GuiCalcChain, 13) != 0)
     {
         return -1;
     }
-    g_Unknown49fbf0DrawChain.SetCallback((ChainCallback)Gui::OnDraw);
-    g_Unknown49fbf0DrawChain.arg = gui;
-    g_Chain.AddToDrawChain(&g_Unknown49fbf0DrawChain, 12);
+    g_GuiDrawChain.SetCallback((ChainCallback)Gui::OnDraw);
+    g_GuiDrawChain.arg = gui;
+    g_Chain.AddToDrawChain(&g_GuiDrawChain, 12);
     return 0;
 }
 
 void Gui::RemoveChain()
 {
-    g_Chain.Remove(&g_Unknown49fbf0CalcChain);
-    g_Chain.Remove(&g_Unknown49fbf0DrawChain);
+    g_Chain.Remove(&g_GuiCalcChain);
+    g_Chain.Remove(&g_GuiDrawChain);
 }
 
 int GuiImpl::DrawMsg()
@@ -982,7 +982,7 @@ int GuiImpl::DrawMsg()
     {
         return -1;
     }
-    if (g_Unknown626270.stage == 6 && (this->msg.scriptIndex == 1 || this->msg.scriptIndex == 11))
+    if (g_GameManager.stage == 6 && (this->msg.scriptIndex == 1 || this->msg.scriptIndex == 11))
     {
         return 0;
     }
@@ -995,10 +995,10 @@ int GuiImpl::DrawMsg()
         height = 48.0f;
     }
     VertexDiffuseXyzrwh vertices[4];
-    vertices[0].pos = D3DXVECTOR3(g_Unknown626270.arena[0] + 16.0f, 384.0f, 0.0f);
-    vertices[1].pos = D3DXVECTOR3(g_Unknown626270.arena[0] + 384.0f - 16.0f, 384.0f, 0.0f);
-    vertices[2].pos = D3DXVECTOR3(g_Unknown626270.arena[0] + 16.0f, 384.0f + height, 0.0f);
-    vertices[3].pos = D3DXVECTOR3(g_Unknown626270.arena[0] + 384.0f - 16.0f, 384.0f + height, 0.0f);
+    vertices[0].pos = D3DXVECTOR3(g_GameManager.arena[0] + 16.0f, 384.0f, 0.0f);
+    vertices[1].pos = D3DXVECTOR3(g_GameManager.arena[0] + 384.0f - 16.0f, 384.0f, 0.0f);
+    vertices[2].pos = D3DXVECTOR3(g_GameManager.arena[0] + 16.0f, 384.0f + height, 0.0f);
+    vertices[3].pos = D3DXVECTOR3(g_GameManager.arena[0] + 384.0f - 16.0f, 384.0f + height, 0.0f);
     vertices[0].diffuse = vertices[1].diffuse = 0xd0000000;
     vertices[2].diffuse = vertices[3].diffuse = 0x90000000;
     vertices[0].w = vertices[1].w = vertices[2].w = vertices[3].w = 1.0f;
@@ -1192,18 +1192,18 @@ void Gui::UpdateInterface()
     if (this->impl->stageClearShown == 1)
     {
         bonus = 0;
-        bonus += g_Unknown626270.stage * 100000;
+        bonus += g_GameManager.stage * 100000;
         bonus += this->impl->stageClearGraze * 50;
         bonus += this->impl->stageClearPoints * 5000;
         bonus += this->impl->stageClearCherry;
-        if (g_Unknown626270.stage >= 7 ||
-            (g_Unknown626270.stage == 6 && !(g_Unknown626270.unk_93d8 & 1) &&
-             (!g_Unknown626270.unk_93d8Bit3 || g_ReplayManager->data->stages[4] != NULL)))
+        if (g_GameManager.stage >= 7 ||
+            (g_GameManager.stage == 6 && !(g_GameManager.unk_93d8 & 1) &&
+             (!g_GameManager.unk_93d8Bit3 || g_ReplayManager->data->stages[4] != NULL)))
         {
-            bonus += (int)g_Unknown626270.stats->lives * 2000000;
-            bonus += (int)g_Unknown626270.stats->bombs * 400000;
+            bonus += (int)g_GameManager.stats->lives * 2000000;
+            bonus += (int)g_GameManager.stats->bombs * 400000;
         }
-        switch (g_Unknown626270.difficulty)
+        switch (g_GameManager.difficulty)
         {
         case 0:
             bonus /= 2;
@@ -1221,7 +1221,7 @@ void Gui::UpdateInterface()
             bonus *= 2;
             break;
         }
-        switch (g_Unknown626270.unk_4->lifeCount)
+        switch (g_GameManager.unk_4->lifeCount)
         {
         case 3:
             bonus = bonus * 5 / 10;
@@ -1231,16 +1231,16 @@ void Gui::UpdateInterface()
             break;
         }
         this->impl->stageClearTotal = bonus;
-        g_Unknown626270.AddScore(bonus);
-        g_Unknown626270.AddScore(bonus);
-        g_Unknown626270.AddScore(bonus);
-        g_Unknown626270.AddScore(bonus);
-        g_Unknown626270.AddScore(bonus);
-        g_Unknown626270.AddScore(bonus);
-        g_Unknown626270.AddScore(bonus);
-        g_Unknown626270.AddScore(bonus);
-        g_Unknown626270.AddScore(bonus);
-        g_Unknown626270.AddScore(bonus);
+        g_GameManager.AddScore(bonus);
+        g_GameManager.AddScore(bonus);
+        g_GameManager.AddScore(bonus);
+        g_GameManager.AddScore(bonus);
+        g_GameManager.AddScore(bonus);
+        g_GameManager.AddScore(bonus);
+        g_GameManager.AddScore(bonus);
+        g_GameManager.AddScore(bonus);
+        g_GameManager.AddScore(bonus);
+        g_GameManager.AddScore(bonus);
         this->impl->stageClearShown++;
     }
 }
@@ -1336,7 +1336,7 @@ void Gui::DrawHud()
     if (this->livesChanged)
     {
         vm = &this->impl->sprites[9];
-        for (idx = 0, xx = 496.0f; idx < (int)g_Unknown626270.stats->lives; idx++, xx += 16.0f)
+        for (idx = 0, xx = 496.0f; idx < (int)g_GameManager.stats->lives; idx++, xx += 16.0f)
         {
             vm->pos = D3DXVECTOR3(xx, 96.0f, 0.46f);
             g_SpriteEngine->DrawUnrotated(vm);
@@ -1345,7 +1345,7 @@ void Gui::DrawHud()
     if (this->bombsChanged)
     {
         vm = &this->impl->sprites[10];
-        for (idx = 0, xx = 496.0f; idx < (int)g_Unknown626270.stats->bombs; idx++, xx += 16.0f)
+        for (idx = 0, xx = 496.0f; idx < (int)g_GameManager.stats->bombs; idx++, xx += 16.0f)
         {
             vm->pos = D3DXVECTOR3(xx, 112.0f, 0.46f);
             g_SpriteEngine->DrawUnrotated(vm);
@@ -1360,53 +1360,53 @@ void Gui::DrawHud()
     {
         D3DXVECTOR3 scorePos(496.0f, 64.0f, 0.0f);
 
-        if (g_Unknown626270.stats->guiScore < 100000000)
+        if (g_GameManager.stats->guiScore < 100000000)
         {
-            g_AsciiText.AddFormat(&scorePos, "%.8d", g_Unknown626270.stats->guiScore);
+            g_AsciiText.AddFormat(&scorePos, "%.8d", g_GameManager.stats->guiScore);
             scorePos.x += 112.0f;
-            g_AsciiText.AddFormat(&scorePos, "%1d", g_Unknown626270.stats->continuesUsed);
+            g_AsciiText.AddFormat(&scorePos, "%1d", g_GameManager.stats->continuesUsed);
         }
         else
         {
             g_AsciiText.scaleX = 0.9f;
             g_AsciiText.scaleY = 1.0f;
-            g_AsciiText.AddFormat(&scorePos, "%.9d", g_Unknown626270.stats->guiScore);
+            g_AsciiText.AddFormat(&scorePos, "%.9d", g_GameManager.stats->guiScore);
             // Nine digits 14 wide at the 0.9 scale; the folded product is
             // one ulp below 113.4f.
             scorePos.x += 126.0f * 0.9f;
-            g_AsciiText.AddFormat(&scorePos, "%1d", g_Unknown626270.stats->continuesUsed);
+            g_AsciiText.AddFormat(&scorePos, "%1d", g_GameManager.stats->continuesUsed);
             g_AsciiText.scaleX = 1.0f;
             g_AsciiText.scaleY = 1.0f;
         }
         scorePos = D3DXVECTOR3(496.0f, 48.0f, 0.0f);
-        if (g_Unknown626270.stats->highScore < 100000000)
+        if (g_GameManager.stats->highScore < 100000000)
         {
-            g_AsciiText.AddFormat(&scorePos, "%.8d", g_Unknown626270.stats->highScore);
+            g_AsciiText.AddFormat(&scorePos, "%.8d", g_GameManager.stats->highScore);
             scorePos.x += 112.0f;
-            g_AsciiText.AddFormat(&scorePos, "%1d", g_Unknown626270.stats->bestContinuesUsed);
+            g_AsciiText.AddFormat(&scorePos, "%1d", g_GameManager.stats->bestContinuesUsed);
         }
         else
         {
             g_AsciiText.scaleX = 0.9f;
             g_AsciiText.scaleY = 1.0f;
-            g_AsciiText.AddFormat(&scorePos, "%.9d", g_Unknown626270.stats->highScore);
+            g_AsciiText.AddFormat(&scorePos, "%.9d", g_GameManager.stats->highScore);
             // Nine digits 14 wide at the 0.9 scale; the folded product is
             // one ulp below 113.4f.
             scorePos.x += 126.0f * 0.9f;
-            g_AsciiText.AddFormat(&scorePos, "%1d", g_Unknown626270.stats->bestContinuesUsed);
+            g_AsciiText.AddFormat(&scorePos, "%1d", g_GameManager.stats->bestContinuesUsed);
             g_AsciiText.scaleX = 1.0f;
             g_AsciiText.scaleY = 1.0f;
         }
         if (this->grazeChanged || g_App.flags.noFrameItems)
         {
             scorePos = D3DXVECTOR3(496.0f, 160.0f, 0.0f);
-            g_AsciiText.AddFormat(&scorePos, "%d", g_Unknown626270.stats->grazeTotal);
+            g_AsciiText.AddFormat(&scorePos, "%d", g_GameManager.stats->grazeTotal);
         }
         if (this->unk_4_8 || g_App.flags.noFrameItems)
         {
             scorePos = D3DXVECTOR3(496.0f, 176.0f, 0.0f);
-            g_AsciiText.AddFormat(&scorePos, "%d/%d", g_Unknown626270.stats->pointItemsTotal,
-                                  g_Unknown626270.stats->checksumKeyPoints);
+            g_AsciiText.AddFormat(&scorePos, "%d/%d", g_GameManager.stats->pointItemsTotal,
+                                  g_GameManager.stats->checksumKeyPoints);
         }
     }
     g_SpriteEngine->FlushQuadBatch();
@@ -1414,12 +1414,12 @@ void Gui::DrawHud()
     {
         VertexDiffuseXyzrwh vertices[4];
 
-        if ((int)g_Unknown626270.stats->power > 0)
+        if ((int)g_GameManager.stats->power > 0)
         {
             vertices[0].pos = D3DXVECTOR3(496.0f, 144.0f, 0.1f);
-            vertices[1].pos = D3DXVECTOR3((int)g_Unknown626270.stats->power + 496 + 0.0f, 144.0f, 0.1f);
+            vertices[1].pos = D3DXVECTOR3((int)g_GameManager.stats->power + 496 + 0.0f, 144.0f, 0.1f);
             vertices[2].pos = D3DXVECTOR3(496.0f, 160.0f, 0.1f);
-            vertices[3].pos = D3DXVECTOR3((int)g_Unknown626270.stats->power + 496 + 0.0f, 160.0f, 0.1f);
+            vertices[3].pos = D3DXVECTOR3((int)g_GameManager.stats->power + 496 + 0.0f, 160.0f, 0.1f);
             vertices[0].diffuse = vertices[2].diffuse = 0xe0e0e0ff;
             vertices[1].diffuse = vertices[3].diffuse = 0x80e0e0ff;
             vertices[0].w = vertices[1].w = vertices[2].w = vertices[3].w = 1.0f;
@@ -1448,9 +1448,9 @@ void Gui::DrawHud()
             g_App.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
             g_App.d3dDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
         }
-        if ((int)g_Unknown626270.stats->power < 128)
+        if ((int)g_GameManager.stats->power < 128)
         {
-            g_AsciiText.AddFormat(&D3DXVECTOR3(496.0f, 144.0f, 0.0f), "%d", (int)g_Unknown626270.stats->power);
+            g_AsciiText.AddFormat(&D3DXVECTOR3(496.0f, 144.0f, 0.0f), "%d", (int)g_GameManager.stats->power);
         }
         else
         {
@@ -1534,7 +1534,7 @@ void Gui::DrawBanners()
         score = g_Unknown12fe0cc + g_Unknown12fe0d0;
         div2 = 10000000;
         shown = 0;
-        catks = &g_Unknown626270.catks[g_Unknown12fe0d8];
+        catks = &g_GameManager.catks[g_Unknown12fe0d8];
         if (g_Unknown12fe0c4 == 0)
         {
             score = 0;
@@ -1557,7 +1557,7 @@ void Gui::DrawBanners()
             score %= div2;
             div2 /= 10;
         }
-        digit = catks->captures[g_Unknown626270.shotIndex];
+        digit = catks->captures[g_GameManager.shotIndex];
         if (digit > 99)
         {
             digit = 99;
@@ -1571,7 +1571,7 @@ void Gui::DrawBanners()
         this->impl->unk_7528.pos.x += 7.0f;
         this->impl->unk_7528.spriteData = GetSpriteData(digit % 10 + 0x84);
         g_SpriteEngine->DrawUnrotated(&this->impl->unk_7528);
-        digit = catks->attempts[g_Unknown626270.shotIndex];
+        digit = catks->attempts[g_GameManager.shotIndex];
         if (digit > 99)
         {
             digit = 99;

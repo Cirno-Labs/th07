@@ -34,8 +34,8 @@ void DimPlayAreaForBomb(Player *player)
         color.r = color.g;
     }
     g_SpriteEngine->ResetUnk0();
-    g_Unknown1347b00.SetTintColor(color.color);
-    g_Unknown1347b00.keepTintColor = 1;
+    g_Stage.SetTintColor(color.color);
+    g_Stage.keepTintColor = 1;
 }
 
 void SpawnBombAura(Player *player)
@@ -65,8 +65,8 @@ void SetBombDrain(Player *player, int minimum, float share)
 {
     int drain;
 
-    drain = (g_Unknown626270.bonusPoints - g_Unknown626270.stats->grazeCount) * share;
-    switch (g_Unknown626270.difficulty)
+    drain = (g_GameManager.bonusPoints - g_GameManager.stats->grazeCount) * share;
+    switch (g_GameManager.difficulty)
     {
     case 2:
         drain /= 2;
@@ -98,13 +98,13 @@ void UpdateReimuABomb(Player *player)
 
     if (player->bomb.timer >= player->bomb.duration)
     {
-        g_Unknown49fbf0.EndBombName();
+        g_Gui.EndBombName();
         player->bomb.running = 0;
         return;
     }
     if (bomb->timer.HasTicked() && bomb->timer == 0)
     {
-        g_Unknown49fbf0.ShowBombName(0x4a1, "霊符「夢想封印　散」");
+        g_Gui.ShowBombName(0x4a1, "霊符「夢想封印　散」");
         bomb->duration = 140;
         player->stateTimer.Set(200);
         SpawnBombAura(player);
@@ -208,8 +208,8 @@ void UpdateReimuABomb(Player *player)
 // draws it and moves on to the next.
 #define DRAW_BOMB_SPRITE()                                              \
     curSprite->pos = orb->pos + curSprite->posOffset;                   \
-    curSprite->pos.x = g_Unknown626270.arena[0] + curSprite->pos.x;     \
-    curSprite->pos.y = g_Unknown626270.arena[1] + curSprite->pos.y;     \
+    curSprite->pos.x = g_GameManager.arena[0] + curSprite->pos.x;     \
+    curSprite->pos.y = g_GameManager.arena[1] + curSprite->pos.y;     \
     curSprite->pos.z = 0.0f;                                            \
     g_SpriteEngine->DrawUnrotated(curSprite);                           \
     curSprite++;
@@ -249,7 +249,7 @@ void UpdateReimuABombFocused(Player *player)
 
     if (bombs->timer >= bombs->duration)
     {
-        g_Unknown49fbf0.EndBombName();
+        g_Gui.EndBombName();
         bombs->running = 0;
         player->moveScaleY = 1.0f;
         player->moveScaleX = 1.0f;
@@ -257,7 +257,7 @@ void UpdateReimuABombFocused(Player *player)
     }
     if (bombs->timer.HasTicked() && bombs->timer == 0)
     {
-        g_Unknown49fbf0.ShowBombName(0x4a1, "霊符「夢想封印　集」");
+        g_Gui.ShowBombName(0x4a1, "霊符「夢想封印　集」");
         bombs->duration = 300;
         player->stateTimer.Set(360);
         SpawnBombAura(player);
@@ -376,8 +376,8 @@ void UpdateReimuABombFocused(Player *player)
 // The same with th06's own macro's stores, for part i of the bomb.
 #define DRAW_BOMB_PART_SPRITE()                                         \
     curSprite->pos = player->bomb.parts[i].pos + curSprite->posOffset;  \
-    curSprite->pos[0] += g_Unknown626270.arena[0];                      \
-    curSprite->pos[1] += g_Unknown626270.arena[1];                      \
+    curSprite->pos[0] += g_GameManager.arena[0];                      \
+    curSprite->pos[1] += g_GameManager.arena[1];                      \
     curSprite->pos.z = 0.0f;                                            \
     g_SpriteEngine->DrawUnrotated(curSprite);                           \
     curSprite++;
@@ -411,14 +411,14 @@ void UpdateReimuBBomb(Player *player)
 
     if (player->bomb.timer >= player->bomb.duration)
     {
-        g_Unknown49fbf0.EndBombName();
+        g_Gui.EndBombName();
         player->bomb.running = 0;
         return;
     }
     if (player->bomb.timer.HasTicked() && player->bomb.timer == 0)
     {
         g_ItemManager.CollectAll();
-        g_Unknown49fbf0.ShowBombName(0x4a1, "夢符「封魔陣」");
+        g_Gui.ShowBombName(0x4a1, "夢符「封魔陣」");
         player->bomb.duration = 140;
         player->stateTimer.Set(200);
         SpawnBombAura(player);
@@ -481,8 +481,8 @@ void DrawReimuBBomb(Player *player)
     {
         curSprite = player->bomb.parts[i].sprites;
         curSprite->pos = player->bomb.parts[i].pos + curSprite->posOffset;
-        curSprite->pos.x = g_Unknown626270.arena[0] + curSprite->pos.x;
-        curSprite->pos.y = g_Unknown626270.arena[1] + curSprite->pos.y;
+        curSprite->pos.x = g_GameManager.arena[0] + curSprite->pos.x;
+        curSprite->pos.y = g_GameManager.arena[1] + curSprite->pos.y;
         curSprite->pos.z = 0.0f;
         g_SpriteEngine->Draw(curSprite);
     }
@@ -496,7 +496,7 @@ void UpdateReimuBBombFocused(Player *player)
 
     if (player->bomb.timer >= player->bomb.duration)
     {
-        g_Unknown49fbf0.EndBombName();
+        g_Gui.EndBombName();
         player->bomb.running = 0;
         player->moveScaleY = 1.0f;
         player->moveScaleX = 1.0f;
@@ -505,7 +505,7 @@ void UpdateReimuBBombFocused(Player *player)
     if (player->bomb.timer.HasTicked() && player->bomb.timer == 0)
     {
         g_ItemManager.CollectAll();
-        g_Unknown49fbf0.ShowBombName(0x4a1, "夢符「二重結界」");
+        g_Gui.ShowBombName(0x4a1, "夢符「二重結界」");
         player->bomb.duration = 190;
         player->stateTimer.Set(250);
         SpawnBombAura(player);
@@ -549,8 +549,8 @@ void DrawReimuBBombFocused(Player *player)
     {
         curSprite = &player->bomb.parts[0].sprites[i];
         curSprite->pos = player->bomb.startPos + curSprite->posOffset;
-        curSprite->pos.x = g_Unknown626270.arena[0] + curSprite->pos.x;
-        curSprite->pos.y = g_Unknown626270.arena[1] + curSprite->pos.y;
+        curSprite->pos.x = g_GameManager.arena[0] + curSprite->pos.x;
+        curSprite->pos.y = g_GameManager.arena[1] + curSprite->pos.y;
         curSprite->pos.z = 0.0f;
         g_SpriteEngine->Draw(curSprite);
     }
@@ -565,14 +565,14 @@ void UpdateMarisaABomb(Player *player)
 
     if (player->bomb.timer >= player->bomb.duration)
     {
-        g_Unknown49fbf0.EndBombName();
+        g_Gui.EndBombName();
         player->bomb.running = 0;
         return;
     }
     if (player->bomb.timer.HasTicked() && player->bomb.timer == 0)
     {
         g_ItemManager.CollectAll();
-        g_Unknown49fbf0.ShowBombName(0x4a3, "魔符「スターダストレヴァリエ」");
+        g_Gui.ShowBombName(0x4a3, "魔符「スターダストレヴァリエ」");
         player->bomb.duration = 200;
         player->stateTimer.Set(250);
         SpawnBombAura(player);
@@ -619,8 +619,8 @@ void DrawMarisaABomb(Player *player)
     {
         curSprite = player->bomb.parts[i].sprites;
         curSprite->pos = player->bomb.parts[i].pos;
-        curSprite->pos.x = g_Unknown626270.arena[0] + curSprite->pos.x;
-        curSprite->pos.y = g_Unknown626270.arena[1] + curSprite->pos.y;
+        curSprite->pos.x = g_GameManager.arena[0] + curSprite->pos.x;
+        curSprite->pos.y = g_GameManager.arena[1] + curSprite->pos.y;
         curSprite->pos.z = 0.0f;
         curSprite->scaleY = 3.2f;
         curSprite->scaleX = 3.2f;
@@ -658,7 +658,7 @@ void UpdateMarisaABombFocused(Player *player)
 
     if (player->bomb.timer >= player->bomb.duration)
     {
-        g_Unknown49fbf0.EndBombName();
+        g_Gui.EndBombName();
         player->bomb.running = 0;
         player->moveScaleY = 1.0f;
         player->moveScaleX = 1.0f;
@@ -667,7 +667,7 @@ void UpdateMarisaABombFocused(Player *player)
     if (player->bomb.timer.HasTicked() && player->bomb.timer == 0)
     {
         g_ItemManager.CollectAll();
-        g_Unknown49fbf0.ShowBombName(0x4a2, "魔符「ミルキーウェイ」");
+        g_Gui.ShowBombName(0x4a2, "魔符「ミルキーウェイ」");
         player->bomb.duration = 260;
         player->stateTimer.Set(310);
         SpawnBombAura(player);
@@ -749,22 +749,22 @@ void DrawMarisaABombFocused(Player *player)
         }
         curSprite = orb->sprites;
         curSprite->pos = orb->pos;
-        curSprite->pos.x = g_Unknown626270.arena[0] + curSprite->pos.x;
-        curSprite->pos.y = g_Unknown626270.arena[1] + curSprite->pos.y;
+        curSprite->pos.x = g_GameManager.arena[0] + curSprite->pos.x;
+        curSprite->pos.y = g_GameManager.arena[1] + curSprite->pos.y;
         curSprite->pos.z = 0.3f;
         curSprite->scaleY = 3.2f;
         curSprite->scaleX = 3.2f;
         g_SpriteEngine->Draw(curSprite);
         curSprite->pos = orb->trail[3];
-        curSprite->pos.x = g_Unknown626270.arena[0] + curSprite->pos.x;
-        curSprite->pos.y = g_Unknown626270.arena[1] + curSprite->pos.y;
+        curSprite->pos.x = g_GameManager.arena[0] + curSprite->pos.x;
+        curSprite->pos.y = g_GameManager.arena[1] + curSprite->pos.y;
         curSprite->pos.z = 0.32f;
         curSprite->scaleY = 2.2f;
         curSprite->scaleX = 2.2f;
         g_SpriteEngine->Draw(curSprite);
         curSprite->pos = orb->trail[7];
-        curSprite->pos.x = g_Unknown626270.arena[0] + curSprite->pos.x;
-        curSprite->pos.y = g_Unknown626270.arena[1] + curSprite->pos.y;
+        curSprite->pos.x = g_GameManager.arena[0] + curSprite->pos.x;
+        curSprite->pos.y = g_GameManager.arena[1] + curSprite->pos.y;
         curSprite->pos.z = 0.34f;
         curSprite->scaleY = 1.3f;
         curSprite->scaleX = 1.3f;
@@ -785,7 +785,7 @@ void UpdateMarisaBBomb(Player *player)
 
     if (player->bomb.timer >= player->bomb.duration)
     {
-        g_Unknown49fbf0.EndBombName();
+        g_Gui.EndBombName();
         player->bomb.running = 0;
         player->moveScaleY = 1.0f;
         player->moveScaleX = 1.0f;
@@ -795,7 +795,7 @@ void UpdateMarisaBBomb(Player *player)
     {
         g_ItemManager.CollectAll();
         player->bomb.startPos = player->position;
-        g_Unknown49fbf0.ShowBombName(0x4a1, "恋符「ノンディレクショナルレーザー」");
+        g_Gui.ShowBombName(0x4a1, "恋符「ノンディレクショナルレーザー」");
         player->bomb.duration = 300;
         player->stateTimer.Set(300);
         SpawnBombAura(player);
@@ -868,8 +868,8 @@ void DrawMarisaBBomb(Player *player)
         curSprite->pos.x += cosf(theta) * curSprite->spriteData->height * curSprite->scaleX / 2.0f;
         curSprite->pos.y += sinf(theta) * curSprite->spriteData->height * curSprite->scaleX / 2.0f;
         curSprite->SetRotationZ(AddNormalizeAngle(theta, 1.5707964f));
-        curSprite->pos.x = g_Unknown626270.arena[0] + curSprite->pos.x;
-        curSprite->pos.y = g_Unknown626270.arena[1] + curSprite->pos.y;
+        curSprite->pos.x = g_GameManager.arena[0] + curSprite->pos.x;
+        curSprite->pos.y = g_GameManager.arena[1] + curSprite->pos.y;
         curSprite->pos.z = 0.0f;
         g_SpriteEngine->Draw(curSprite);
         curSprite++;
@@ -884,7 +884,7 @@ void UpdateMarisaBBombFocused(Player *player)
 
     if (player->bomb.timer >= player->bomb.duration)
     {
-        g_Unknown49fbf0.EndBombName();
+        g_Gui.EndBombName();
         player->bomb.running = 0;
         player->moveScaleY = 1.0f;
         player->moveScaleX = 1.0f;
@@ -893,7 +893,7 @@ void UpdateMarisaBBombFocused(Player *player)
     if (player->bomb.timer.HasTicked() && player->bomb.timer == 0)
     {
         g_ItemManager.CollectAll();
-        g_Unknown49fbf0.ShowBombName(0x4a2, "恋符「マスタースパーク」");
+        g_Gui.ShowBombName(0x4a2, "恋符「マスタースパーク」");
         player->bomb.duration = 340;
         player->stateTimer.Set(390);
         SpawnBombAura(player);
@@ -950,8 +950,8 @@ void DrawMarisaBBombFocused(Player *player)
         curSprite->pos.x += cosf(angle) * curSprite->spriteData->height * curSprite->scaleX / 2.0f;
         curSprite->pos.y += sinf(angle) * curSprite->spriteData->height * curSprite->scaleX / 2.0f;
         curSprite->SetRotationZ(AddNormalizeAngle(angle, 1.5707964f));
-        curSprite->pos.x = g_Unknown626270.arena[0] + curSprite->pos.x;
-        curSprite->pos.y = g_Unknown626270.arena[1] + curSprite->pos.y;
+        curSprite->pos.x = g_GameManager.arena[0] + curSprite->pos.x;
+        curSprite->pos.y = g_GameManager.arena[1] + curSprite->pos.y;
         curSprite->pos.z = 0.0f;
         g_SpriteEngine->Draw(curSprite);
         curSprite++;
@@ -969,14 +969,14 @@ void UpdateSakuyaABomb(Player *player)
 
     if (player->bomb.timer >= player->bomb.duration)
     {
-        g_Unknown49fbf0.EndBombName();
+        g_Gui.EndBombName();
         player->bomb.running = 0;
         return;
     }
     if (player->bomb.timer.HasTickedTo(0))
     {
         g_ItemManager.CollectAll();
-        g_Unknown49fbf0.ShowBombName(0x4a1, "幻符「インディスクリミネイト」");
+        g_Gui.ShowBombName(0x4a1, "幻符「インディスクリミネイト」");
         player->bomb.duration = 160;
         player->stateTimer.Set(210);
         SpawnBombAura(player);
@@ -1035,7 +1035,7 @@ void UpdateSakuyaABomb(Player *player)
                     g_SpriteEngine->StartScriptAtOrigin(knife->sprites, 0x460);
                     player->bombHitboxes[i].damageDealt = 999;
                 }
-                if (!g_Unknown626270.IsInPlayArea(knife->pos.x, knife->pos.y, 64.0f, 64.0f))
+                if (!g_GameManager.IsInPlayArea(knife->pos.x, knife->pos.y, 64.0f, 64.0f))
                 {
                     knife->state = 0;
                 }
@@ -1076,7 +1076,7 @@ void UpdateSakuyaABombFocused(Player *player)
 
     if (player->bomb.timer >= player->bomb.duration)
     {
-        g_Unknown49fbf0.EndBombName();
+        g_Gui.EndBombName();
         player->bomb.running = 0;
         player->moveScaleY = 1.0f;
         player->moveScaleX = 1.0f;
@@ -1085,7 +1085,7 @@ void UpdateSakuyaABombFocused(Player *player)
     if (player->bomb.timer.HasTickedTo(0))
     {
         g_ItemManager.CollectAll();
-        g_Unknown49fbf0.ShowBombName(0x4a1, "幻符「殺人ドール」");
+        g_Gui.ShowBombName(0x4a1, "幻符「殺人ドール」");
         player->bomb.duration = 250;
         player->stateTimer.Set(290);
         SpawnBombAura(player);
@@ -1191,8 +1191,8 @@ void DrawSakuyaABombFocused(Player *player)
         }
         knife->sprites[0].SetRotationZ(AddNormalizeAngle(knife->angle, 1.5707964f));
         knife->sprites[0].pos = knife->pos;
-        knife->sprites[0].pos.x = g_Unknown626270.arena[0] + knife->sprites[0].pos.x;
-        knife->sprites[0].pos.y = g_Unknown626270.arena[1] + knife->sprites[0].pos.y;
+        knife->sprites[0].pos.x = g_GameManager.arena[0] + knife->sprites[0].pos.x;
+        knife->sprites[0].pos.y = g_GameManager.arena[1] + knife->sprites[0].pos.y;
         knife->sprites[0].pos.z = 0.0f;
         g_SpriteEngine->Draw(knife->sprites);
     }
@@ -1207,7 +1207,7 @@ void UpdateSakuyaBBomb(Player *player)
 
     if (player->bomb.timer >= player->bomb.duration)
     {
-        g_Unknown49fbf0.EndBombName();
+        g_Gui.EndBombName();
         player->bomb.running = 0;
         player->moveScaleY = 1.0f;
         player->moveScaleX = 1.0f;
@@ -1217,7 +1217,7 @@ void UpdateSakuyaBBomb(Player *player)
     if (player->bomb.timer.HasTickedTo(0))
     {
         g_ItemManager.CollectAll();
-        g_Unknown49fbf0.ShowBombName(0x4a3, "時符「パーフェクトスクウェア」");
+        g_Gui.ShowBombName(0x4a3, "時符「パーフェクトスクウェア」");
         player->bomb.duration = 160;
         player->stateTimer.Set(260);
         SpawnBombAura(player);
@@ -1292,12 +1292,12 @@ void DrawSakuyaBBomb(Player *player)
         {
             continue;
         }
-        knife->sprites[0].pos.x = g_Unknown626270.arena[0] + knife->sprites[0].pos.x;
-        knife->sprites[0].pos.y = g_Unknown626270.arena[1] + knife->sprites[0].pos.y;
+        knife->sprites[0].pos.x = g_GameManager.arena[0] + knife->sprites[0].pos.x;
+        knife->sprites[0].pos.y = g_GameManager.arena[1] + knife->sprites[0].pos.y;
         knife->sprites[0].pos.z = 0.0f;
         g_SpriteEngine->Draw(knife->sprites);
-        knife->sprites[0].pos.x -= g_Unknown626270.arena[0];
-        knife->sprites[0].pos.y -= g_Unknown626270.arena[1];
+        knife->sprites[0].pos.x -= g_GameManager.arena[0];
+        knife->sprites[0].pos.y -= g_GameManager.arena[1];
     }
 }
 
@@ -1311,7 +1311,7 @@ void UpdateSakuyaBBombFocused(Player *player)
 
     if (player->bomb.timer >= player->bomb.duration)
     {
-        g_Unknown49fbf0.EndBombName();
+        g_Gui.EndBombName();
         player->bomb.running = 0;
         player->moveScaleY = 1.0f;
         player->moveScaleX = 1.0f;
@@ -1325,7 +1325,7 @@ void UpdateSakuyaBBombFocused(Player *player)
     if (player->bomb.timer.HasTickedTo(0))
     {
         g_ItemManager.CollectAll();
-        g_Unknown49fbf0.ShowBombName(0x4a3, "時符「プライベートスクウェア」");
+        g_Gui.ShowBombName(0x4a3, "時符「プライベートスクウェア」");
         player->bomb.duration = 300;
         player->stateTimer.Set(420);
         SpawnBombAura(player);
@@ -1404,16 +1404,16 @@ void DrawSakuyaBBombFocused(Player *player)
         }
         alpha = knife->sprites[0].alpha;
         knife->sprites[0].pos = knife->pos;
-        knife->sprites[0].pos.x = g_Unknown626270.arena[0] + knife->sprites[0].pos.x;
-        knife->sprites[0].pos.y = g_Unknown626270.arena[1] + knife->sprites[0].pos.y;
+        knife->sprites[0].pos.x = g_GameManager.arena[0] + knife->sprites[0].pos.x;
+        knife->sprites[0].pos.y = g_GameManager.arena[1] + knife->sprites[0].pos.y;
         knife->sprites[0].pos.z = 0.0f;
         g_SpriteEngine->Draw(knife->sprites);
         for (k = 3; k < 32; k += 4)
         {
             knife->sprites[0].pos = knife->trail[k];
             knife->sprites[0].alpha = alpha - alpha * k / 32;
-            knife->sprites[0].pos.x = g_Unknown626270.arena[0] + knife->sprites[0].pos.x;
-            knife->sprites[0].pos.y = g_Unknown626270.arena[1] + knife->sprites[0].pos.y;
+            knife->sprites[0].pos.x = g_GameManager.arena[0] + knife->sprites[0].pos.x;
+            knife->sprites[0].pos.y = g_GameManager.arena[1] + knife->sprites[0].pos.y;
             knife->sprites[0].pos.z = 0.0f;
             g_SpriteEngine->Draw(knife->sprites);
         }

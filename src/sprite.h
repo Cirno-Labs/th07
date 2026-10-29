@@ -649,7 +649,7 @@ public:
     BYTE vertexFormat;
     BYTE zWriteDisabled;
     // Flag bit 14 of the sprite last drawn: which of
-    // g_Unknown1347b00's two set-ups the device has.
+    // g_Stage's two set-ups the device has.
     BYTE lastCameraSetupFlag;
     unsigned char unk_2e4d5[0x3];
     // The sprite data Draw last used, NULL when unknown.

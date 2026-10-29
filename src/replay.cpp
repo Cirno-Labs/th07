@@ -13,11 +13,11 @@ int ReplayManager::RecordOnUpdate2(ReplayManager *replay)
     replay->frameEvents = 0;
     replay->frameSeed = g_Rng.seed;
     g_Rng.generated = 0;
-    if (g_Unknown626270.pauseRequested)
+    if (g_GameManager.pauseRequested)
     {
         replay->frameEvents |= 0x100;
     }
-    g_Unknown626270.pauseRequested = 0;
+    g_GameManager.pauseRequested = 0;
     return 1;
 }
 
@@ -26,13 +26,13 @@ int ReplayManager::RecordOnUpdate(ReplayManager *replay)
     int idx;
     WORD buttons;
 
-    if (!(g_Unknown626270.unk_93d8 >> 2 & 1))
+    if (!(g_GameManager.unk_93d8 >> 2 & 1))
     {
         return 1;
     }
     g_Unknown4b9e58 = g_Unknown4b9e50;
     g_Unknown4b9e50 = g_Buttons;
-    if (g_Unknown626270.unk_4->scoreDisabled != 0)
+    if (g_GameManager.unk_4->scoreDisabled != 0)
     {
         return 1;
     }
@@ -40,7 +40,7 @@ int ReplayManager::RecordOnUpdate(ReplayManager *replay)
     {
         return 1;
     }
-    idx = g_Unknown626270.stage - 1;
+    idx = g_GameManager.stage - 1;
     if (idx >= 7)
     {
         idx = 6;
@@ -64,15 +64,15 @@ int ReplayManager::RecordOnUpdate(ReplayManager *replay)
 
 int ReplayManager::PlayOnUpdate2(ReplayManager *replay)
 {
-    if (!(g_Unknown626270.unk_93d8 >> 2 & 1))
+    if (!(g_GameManager.unk_93d8 >> 2 & 1))
     {
         return 1;
     }
-    if (g_Unknown49fbf0.Func42ad66() && g_Unknown49fbf0.Func427be2() && replay->frame % 3 != 2)
+    if (g_Gui.Func42ad66() && g_Gui.Func427be2() && replay->frame % 3 != 2)
     {
         return 6;
     }
-    if (g_Unknown626270.replayMenuChoice == 2 && !g_Unknown9a9b00.AnyBossActive() && replay->frame % 5 != 4)
+    if (g_GameManager.replayMenuChoice == 2 && !g_EnemyManager.AnyBossActive() && replay->frame % 5 != 4)
     {
         return 6;
     }
@@ -83,11 +83,11 @@ int ReplayManager::PlayOnUpdate(ReplayManager *replay)
 {
     int unused;
 
-    if (!(g_Unknown626270.unk_93d8 >> 2 & 1))
+    if (!(g_GameManager.unk_93d8 >> 2 & 1))
     {
         return 1;
     }
-    if (g_Unknown626270.unk_4->scoreDisabled != 0)
+    if (g_GameManager.unk_4->scoreDisabled != 0)
     {
         return 1;
     }
@@ -138,31 +138,31 @@ int ReplayManager::RecordAddedCallback(ReplayManager *replay)
     {
         replay->data = new ReplayHeader;
         *(DWORD *)replay->data->magic = *(DWORD *)"T7RP";
-        replay->data->shotType = g_Unknown626270.shotIndex;
+        replay->data->shotType = g_GameManager.shotIndex;
         replay->data->version = 0x1100;
         replay->data->unk_6a = 0x100;
         replay->data->unk_55 = 0x62;
         strcpy(replay->data->exeVersion, "0100b");
         replay->data->exeSize = g_App.exeSize;
         replay->data->exeChecksum = g_App.exeChecksum;
-        replay->data->difficulty = g_Unknown626270.difficulty;
+        replay->data->difficulty = g_GameManager.difficulty;
         *(DWORD *)replay->data->name = *(DWORD *)"NO NAME";
-        *(Unknown626270Unk4 *)replay->data->config = *g_Unknown626270.unk_4;
+        *(Unknown626270Unk4 *)replay->data->config = *g_GameManager.unk_4;
         for (idx = 0; idx < 7; idx++)
         {
             replay->data->stages[idx] = NULL;
             replay->data->extras[idx] = NULL;
         }
     }
-    else if (g_Unknown626270.stage - 2 >= 0)
+    else if (g_GameManager.stage - 2 >= 0)
     {
-        earlier = replay->data->stages[g_Unknown626270.stage - 2];
+        earlier = replay->data->stages[g_GameManager.stage - 2];
         if (earlier != NULL)
         {
-            earlier->score = g_Unknown626270.stats->score;
+            earlier->score = g_GameManager.stats->score;
         }
     }
-    idx = g_Unknown626270.stage - 1;
+    idx = g_GameManager.stage - 1;
     if (idx >= 7)
     {
         idx = 6;
@@ -179,20 +179,20 @@ int ReplayManager::RecordAddedCallback(ReplayManager *replay)
     replay->data->extras[idx] = (BYTE *)MemAlloc(0x70800);
     cur = replay->data->stages[idx];
     extras = replay->data->extras[idx];
-    cur->grazeTotal = g_Unknown626270.stats->grazeTotal;
-    cur->bombs = g_Unknown626270.stats->bombs;
-    cur->lives = g_Unknown626270.stats->lives;
-    cur->power = g_Unknown626270.stats->power;
-    cur->unk_25 = g_Unknown626270.rank;
-    cur->pointItemsTotal = g_Unknown626270.stats->pointItemsTotal;
-    cur->rngSeed = g_Unknown626270.rngSeed;
-    cur->unk_26 = g_Unknown626270.powerItemCombo;
-    cur->unk_08 = g_Unknown626270.bonusPoints - g_Unknown626270.stats->grazeCount;
-    cur->unk_0c = g_Unknown626270.bonusPointsCap - g_Unknown626270.stats->grazeCount;
-    cur->unk_10 = g_Unknown626270.invulnerabilityBonus - g_Unknown626270.stats->grazeCount;
-    cur->spellCardsCaptured = g_Unknown626270.stats->spellCardsCaptured;
-    cur->unk_18 = g_Unknown626270.stats->checksumKeyStage;
-    cur->unk_1c = g_Unknown626270.stats->checksumKeyPoints;
+    cur->grazeTotal = g_GameManager.stats->grazeTotal;
+    cur->bombs = g_GameManager.stats->bombs;
+    cur->lives = g_GameManager.stats->lives;
+    cur->power = g_GameManager.stats->power;
+    cur->unk_25 = g_GameManager.rank;
+    cur->pointItemsTotal = g_GameManager.stats->pointItemsTotal;
+    cur->rngSeed = g_GameManager.rngSeed;
+    cur->unk_26 = g_GameManager.powerItemCombo;
+    cur->unk_08 = g_GameManager.bonusPoints - g_GameManager.stats->grazeCount;
+    cur->unk_0c = g_GameManager.bonusPointsCap - g_GameManager.stats->grazeCount;
+    cur->unk_10 = g_GameManager.invulnerabilityBonus - g_GameManager.stats->grazeCount;
+    cur->spellCardsCaptured = g_GameManager.stats->spellCardsCaptured;
+    cur->unk_18 = g_GameManager.stats->checksumKeyStage;
+    cur->unk_1c = g_GameManager.stats->checksumKeyPoints;
     replay->cursor = cur->frames;
     replay->extraCursor = extras;
     replay->cursor->input = 0;
@@ -269,7 +269,7 @@ int ReplayManager::PlayAddedCallback(ReplayManager *replay)
     replay->frame = 0;
     if (replay->data == NULL)
     {
-        replay->data = (ReplayHeader *)LoadFileData(replay->path, !(g_Unknown626270.unk_93d8 >> 1 & 1));
+        replay->data = (ReplayHeader *)LoadFileData(replay->path, !(g_GameManager.unk_93d8 >> 1 & 1));
         replay->data = ValidateReplay(replay->data, g_FileSize);
         if (replay->data == NULL)
         {
@@ -309,7 +309,7 @@ int ReplayManager::PlayAddedCallback(ReplayManager *replay)
             }
         }
     }
-    idx = g_Unknown626270.stage - 1;
+    idx = g_GameManager.stage - 1;
     if (idx >= 7)
     {
         idx = 6;
@@ -320,39 +320,39 @@ int ReplayManager::PlayAddedCallback(ReplayManager *replay)
     }
     cur = replay->data->stages[idx];
     extras = replay->data->extras[idx];
-    g_Unknown626270.character = replay->data->shotType / 2;
-    g_Unknown626270.shotType = replay->data->shotType % 2;
-    g_Unknown626270.shotIndex = replay->data->shotType;
-    g_Unknown626270.difficulty = replay->data->difficulty;
-    g_Unknown626270.stats->pointItemsTotal = cur->pointItemsTotal;
-    g_Unknown626270.rank = cur->unk_25;
-    g_Unknown626270.SetLives(cur->lives);
-    g_Unknown626270.RerollChecksumKeys();
-    g_Unknown626270.SetBombs(cur->bombs);
-    g_Unknown626270.SetPower(cur->power);
-    g_Unknown626270.RerollChecksumKeys();
-    g_Unknown626270.stats->grazeTotal = cur->grazeTotal;
+    g_GameManager.character = replay->data->shotType / 2;
+    g_GameManager.shotType = replay->data->shotType % 2;
+    g_GameManager.shotIndex = replay->data->shotType;
+    g_GameManager.difficulty = replay->data->difficulty;
+    g_GameManager.stats->pointItemsTotal = cur->pointItemsTotal;
+    g_GameManager.rank = cur->unk_25;
+    g_GameManager.SetLives(cur->lives);
+    g_GameManager.RerollChecksumKeys();
+    g_GameManager.SetBombs(cur->bombs);
+    g_GameManager.SetPower(cur->power);
+    g_GameManager.RerollChecksumKeys();
+    g_GameManager.stats->grazeTotal = cur->grazeTotal;
     replay->cursor = cur->frames;
-    g_Unknown626270.powerItemCombo = cur->unk_26;
-    g_Unknown626270.bonusPoints = cur->unk_08 + g_Unknown626270.stats->grazeCount;
-    g_Unknown626270.bonusPointsCap = cur->unk_0c + g_Unknown626270.stats->grazeCount;
-    g_Unknown626270.invulnerabilityBonus = cur->unk_10 + g_Unknown626270.stats->grazeCount;
-    if (g_Unknown626270.invulnerabilityBonus >= g_Unknown626270.stats->grazeCount + 50000)
+    g_GameManager.powerItemCombo = cur->unk_26;
+    g_GameManager.bonusPoints = cur->unk_08 + g_GameManager.stats->grazeCount;
+    g_GameManager.bonusPointsCap = cur->unk_0c + g_GameManager.stats->grazeCount;
+    g_GameManager.invulnerabilityBonus = cur->unk_10 + g_GameManager.stats->grazeCount;
+    if (g_GameManager.invulnerabilityBonus >= g_GameManager.stats->grazeCount + 50000)
     {
-        g_Unknown626270.invulnerabilityBonus = g_Unknown626270.stats->grazeCount + 50000;
+        g_GameManager.invulnerabilityBonus = g_GameManager.stats->grazeCount + 50000;
         StartBombState(&g_Player);
     }
-    *g_Unknown626270.unk_4 = *(Unknown626270Unk4 *)replay->data->config;
+    *g_GameManager.unk_4 = *(Unknown626270Unk4 *)replay->data->config;
     g_Rng.SetSeed(cur->rngSeed);
-    g_Unknown626270.stats->spellCardsCaptured = cur->spellCardsCaptured;
-    g_Unknown626270.stats->checksumKeyStage = cur->unk_18;
-    g_Unknown626270.stats->checksumKeyPoints = cur->unk_1c;
+    g_GameManager.stats->spellCardsCaptured = cur->spellCardsCaptured;
+    g_GameManager.stats->checksumKeyStage = cur->unk_18;
+    g_GameManager.stats->checksumKeyPoints = cur->unk_1c;
     replay->extraCursor = extras;
-    if (g_Unknown626270.stage >= 2 && g_Unknown626270.stage <= 6 &&
-        replay->data->stages[g_Unknown626270.stage - 2] != NULL)
+    if (g_GameManager.stage >= 2 && g_GameManager.stage <= 6 &&
+        replay->data->stages[g_GameManager.stage - 2] != NULL)
     {
-        g_Unknown626270.stats->score = replay->data->stages[g_Unknown626270.stage - 2]->score;
-        g_Unknown626270.stats->guiScore = g_Unknown626270.stats->score;
+        g_GameManager.stats->score = replay->data->stages[g_GameManager.stage - 2]->score;
+        g_GameManager.stats->guiScore = g_GameManager.stats->score;
     }
     return 0;
 }
@@ -460,7 +460,7 @@ void ReplayManager::EndStage()
     {
         replay->cursor++;
         replay->cursor->input = 0;
-        stageIdx = g_Unknown626270.stage - 1;
+        stageIdx = g_GameManager.stage - 1;
         if (stageIdx >= 7)
         {
             stageIdx = 6;
@@ -492,7 +492,7 @@ void SaveReplay(char *path, char *name)
         replayTmp = g_ReplayManager;
         if (replayTmp->GetMode() == 0)
         {
-            if (!(g_Unknown626270.unk_93d8 & 1) && g_Unknown626270.difficulty < 4)
+            if (!(g_GameManager.unk_93d8 & 1) && g_GameManager.difficulty < 4)
             {
                 if (memcmp(&g_App.controllerMapping, replayTmp->data->config, sizeof(replayTmp->data->config)) != 0)
                 {
@@ -509,12 +509,12 @@ void SaveReplay(char *path, char *name)
                 rpyBytes = (BYTE *)MemAlloc(0x100000);
                 hX = *replayTmp->data;
                 ReplayManager::EndStage();
-                i = g_Unknown626270.stage - 1;
+                i = g_GameManager.stage - 1;
                 if (i >= 7)
                 {
                     i = 6;
                 }
-                replayTmp->data->stages[i]->score = g_Unknown626270.stats->score;
+                replayTmp->data->stages[i]->score = g_GameManager.stats->score;
                 offset = 0x54;
                 offset += 0x94;
                 for (i = 0; i < 7; i++)
@@ -537,7 +537,7 @@ void SaveReplay(char *path, char *name)
                         offset += chunk;
                     }
                 }
-                hX.score = g_Unknown626270.stats->guiScore;
+                hX.score = g_GameManager.stats->guiScore;
                 slowdown2 = (g_App.achievedFrames / g_App.expectedFrames - 0.5f) * 2.0f;
                 if (slowdown2 < 0.0f)
                 {
@@ -636,7 +636,7 @@ void ResaveReplay(char *path)
     if (g_ReplayManager != NULL)
     {
         replayTmp = g_ReplayManager;
-        if (!(g_Unknown626270.unk_93d8 & 1) && g_Unknown626270.difficulty < 4)
+        if (!(g_GameManager.unk_93d8 & 1) && g_GameManager.difficulty < 4)
         {
             if (memcmp(&g_App.controllerMapping, replayTmp->data->config, sizeof(replayTmp->data->config)) != 0)
             {
@@ -652,12 +652,12 @@ void ResaveReplay(char *path)
             DebugPrint("info : Replay File rewrite %s\r\n", path);
             rpyBytes = (BYTE *)MemAlloc(0x100000);
             hX = *replayTmp->data;
-            i = g_Unknown626270.stage - 1;
+            i = g_GameManager.stage - 1;
             if (i >= 7)
             {
                 i = 6;
             }
-            replayTmp->data->stages[i]->score = g_Unknown626270.stats->score;
+            replayTmp->data->stages[i]->score = g_GameManager.stats->score;
             offset = 0x54;
             offset += 0x94;
             for (i = 0; i < 7; i++)
@@ -680,7 +680,7 @@ void ResaveReplay(char *path)
                     offset += chunk;
                 }
             }
-            hX.score = g_Unknown626270.stats->guiScore;
+            hX.score = g_GameManager.stats->guiScore;
             hX.size = offset;
             hX.key = g_Rng.GetRandomU16InRange(128) + 64;
             hX.unk_54 = g_Rng.GetRandomU16InRange(256);

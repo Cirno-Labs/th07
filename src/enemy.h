@@ -441,11 +441,11 @@ public:
     Enemy *drawListHeads[4];
 };
 ASSERT_SIZE(EnemyManager, 0x954710);
-extern EnemyManager g_Unknown9a9b00;
+extern EnemyManager g_EnemyManager;
 // The items the enemies without one of their own drop in turn, every
 // third, as th06's.
 extern BYTE g_EnemyItemDrops[0x20];
 // Its statically allocated chain elements.
-extern ChainElem g_Unknown9a9b00CalcChain;
-extern ChainElem g_Unknown9a9b00DrawChain;
-extern ChainElem g_Unknown9a9b00DrawChain2;
+extern ChainElem g_EnemyManagerCalcChain;
+extern ChainElem g_EnemyManagerDrawChain;
+extern ChainElem g_EnemyManagerDrawChain2;

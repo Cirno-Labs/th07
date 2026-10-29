@@ -132,7 +132,7 @@ restart:
         }
     }
 release:
-    if (g_Unknown626270.plst.magic != 0)
+    if (g_GameManager.plst.magic != 0)
     {
         ResultScreen::RegisterChain(2);
     }
