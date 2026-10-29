@@ -526,3 +526,22 @@ void ScriptMoveAngle(Enemy *enemy, EnemyScriptInstr *instr)
         enemy->moveDelta.x = -enemy->moveDelta.x;
     }
 }
+
+void ScriptMovePos(Enemy *enemy, EnemyScriptInstr *instr)
+{
+    D3DXVECTOR3 target;
+
+    target.x = FLOAT_ARG(2);
+    target.y = FLOAT_ARG(3);
+    target.z = FLOAT_ARG(4);
+    enemy->moveDelta = target - enemy->pos;
+    enemy->moveStart = enemy->pos;
+    enemy->moveTimer.Set(enemy->moveDuration = INT_ARG(0));
+    enemy->flags.moveEasing = INT_ARG(1);
+    enemy->flags.moveMode = 2;
+    enemy->velocity = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+    if (enemy->flags.mirrored)
+    {
+        enemy->moveDelta.x = -enemy->moveDelta.x;
+    }
+}

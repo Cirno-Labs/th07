@@ -1508,6 +1508,10 @@ float *ResolveFloatOperand(Enemy *enemy, float *operand, WORD mask, int bit);
 // ScriptMoveAngle: moveDelta is argument 3 times argument 0, the
 // duration; argument 1 picks the easing. Mirrored with flags.mirrored.
 void ScriptMoveAngle(Enemy *enemy, EnemyScriptInstr *instr);
+// Starts a timed move to arguments 2 to 4, as th06's ScriptMovePos,
+// with ScriptMoveAngle's duration, easing and mirroring; stops the
+// velocity.
+void ScriptMovePos(Enemy *enemy, EnemyScriptInstr *instr);
 
 // Set to 9 as the dialogue of stages 6 to 8 starts.
 extern int g_Unknown9a9ab8;
