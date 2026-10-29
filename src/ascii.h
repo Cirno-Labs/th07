@@ -16,6 +16,9 @@ public:
     static void RemoveChain();
     // Not named yet; called where th06 calls AsciiText::Initialize.
     void Func401a00();
+    // Runs the scripts of unk_498, unk_6e4, unk_b7c[] and unk_930 for a
+    // frame.
+    void RunScripts();
 
     // Queues `text` to be drawn at `pos`.
     void AddString(D3DXVECTOR3 *pos, char *text);
@@ -57,9 +60,10 @@ public:
     unsigned char unk_0[0x498];
     // Player::DeletedCallback sends these interrupt 99.
     Sprite unk_498;
-    unsigned char unk_6e4[0x498];
-    Sprite unk_b7c[3];
-    unsigned char unk_1260[0x6260];
+    Sprite unk_6e4;
+    Sprite unk_930;
+    Sprite unk_b7c[4];
+    unsigned char unk_14ac[0x6014];
     // The color text is queued with.
     D3DCOLOR color;
     // The scale of the characters added next.
