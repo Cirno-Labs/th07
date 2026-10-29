@@ -81,6 +81,11 @@ public:
     // Starts an effect of `type` at `pos` in `color` in reserved slot
     // `slot` (from 400 on). `count` is unused. Returns it.
     Effect *SpawnReservedEffect(int type, D3DXVECTOR3 *pos, int slot, int count, D3DCOLOR color);
+    // The update chain element's callback: runs the active effects
+    // (all but the spare) and sorts them into the draw lists; every 300
+    // frames checks the player's numbers. Returns 4 if they were
+    // tampered with, otherwise 1.
+    static int OnUpdate(EffectManager *mgr);
 
     // Where SpawnEffect looks for a free effect next.
     int next;

@@ -157,3 +157,68 @@ Effect *EffectManager::SpawnReservedEffect(int type, D3DXVECTOR3 *pos, int slot,
     }
     return effect;
 }
+
+int EffectManager::OnUpdate(EffectManager *mgr)
+{
+    Effect *eff = mgr->effects;
+    int i;
+
+    mgr->activeCount = 0;
+    mgr->drawListTails[0] = &mgr->drawList0;
+    mgr->drawListTails[1] = &mgr->drawList1;
+    mgr->drawListTails[2] = &mgr->drawList2;
+    mgr->drawListTails[3] = &mgr->drawList3;
+    mgr->drawList0.next = NULL;
+    mgr->drawList1.next = NULL;
+    mgr->drawList2.next = NULL;
+    mgr->drawList3.next = NULL;
+    for (i = 0; i < 0x198; i++, eff++)
+    {
+        if (!eff->active)
+        {
+            continue;
+        }
+        mgr->activeCount++;
+        if (eff->update != NULL && eff->update(eff) != 1)
+        {
+            eff->active = 0;
+            continue;
+        }
+        if (g_SpriteEngine->Step(&eff->sprite) != 0)
+        {
+            eff->active = 0;
+            continue;
+        }
+        eff->timer.Tick();
+        eff->next = NULL;
+        if (eff->drawList == 1 || eff->drawList == 3)
+        {
+            mgr->drawListTails[1]->next = eff;
+            mgr->drawListTails[1] = eff;
+        }
+        else if (eff->drawList == 0)
+        {
+            if (eff->sprite.flags >> 4 & 1)
+            {
+                mgr->drawListTails[3]->next = eff;
+                mgr->drawListTails[3] = eff;
+            }
+            else
+            {
+                mgr->drawListTails[0]->next = eff;
+                mgr->drawListTails[0] = eff;
+            }
+        }
+        else
+        {
+            mgr->drawListTails[2]->next = eff;
+            mgr->drawListTails[2] = eff;
+        }
+    }
+    mgr->frames++;
+    if (mgr->frames % 300 == 100 && g_Unknown626270.Func404fe0())
+    {
+        return 4;
+    }
+    return 1;
+}
