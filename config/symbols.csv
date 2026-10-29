@@ -49,7 +49,7 @@ address,size,name,symbol
 0x004077f0,263,Unknown1347b00::StepObjects,?StepObjects@Unknown1347b00@@QAEHXZ
 0x00407900,2167,Func407900,
 0x00408180,304,Unknown1347b00::SetupFixedCamera,?SetupFixedCamera@Unknown1347b00@@QAEXXZ
-0x004082b0,315,Unknown1347b00::Func4082b0,?Func4082b0@Unknown1347b00@@QAEXXZ
+0x004082b0,315,Unknown1347b00::SetupCamera,?SetupCamera@Unknown1347b00@@QAEXXZ
 0x004083f0,243,Func4083f0,
 0x004084f0,286,Func4084f0,
 0x00408610,234,Func408610,

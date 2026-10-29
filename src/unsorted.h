@@ -1563,7 +1563,10 @@ public:
     // viewport's centre along z, with y down, a field of view of pi / 10
     // and planes at 1 and 10000.
     void SetupFixedCamera();
-    void Func4082b0();
+    // The other: looks from camera.eye along camera.at, with a field of
+    // view of camera.fov and planes at 30 and 1800, then sets
+    // camera.unk_30 to the unit vector across at and up.
+    void SetupCamera();
 
     // One Sprite per object sprite in the data, malloc'd.
     Sprite *sprites;

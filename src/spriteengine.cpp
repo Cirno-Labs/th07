@@ -653,7 +653,7 @@ void SpriteEngine::SetRenderStateForSprite(Sprite *vm)
         }
         else
         {
-            g_Unknown1347b00.Func4082b0();
+            g_Unknown1347b00.SetupCamera();
             g_App.d3dDevice->SetViewport(&g_App.viewport);
         }
     }
