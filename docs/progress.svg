@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">97.26% (675)</tspan> · <tspan class="decompiled">0.43% (3)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">2.16% (15)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">97.41% (676)</tspan> · <tspan class="decompiled">0.43% (3)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">2.02% (14)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="726.55" height="6" x="0" y="0" class="named"/>
-<rect width="3.23" height="6" x="726.55" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="729.78" y="0" class="nonmatching"/>
-<rect width="16.15" height="6" x="730.85" y="0" class="todo"/>
+<rect width="727.63" height="6" x="0" y="0" class="named"/>
+<rect width="3.23" height="6" x="727.63" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="730.85" y="0" class="nonmatching"/>
+<rect width="15.07" height="6" x="731.93" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="named"><title>0x00401000 D3DXMatrixIdentity (173 bytes)</title></rect>
@@ -334,7 +334,7 @@
 <rect width="12" height="12" x="180" y="75" class="named"><title>0x0042d75a ChecksumBytes (100 bytes)</title></rect>
 <rect width="12" height="12" x="195" y="75" class="named"><title>0x0042d7be GameManager::ComputeChecksum (124 bytes)</title></rect>
 <rect width="12" height="12" x="210" y="75" class="named"><title>0x0042d83a GameManager::AddLifeOrBomb (155 bytes)</title></rect>
-<rect width="12" height="12" x="225" y="75" class="todo"><title>0x0042d8d5 GameManager::OnUpdate (2303 bytes)</title></rect>
+<rect width="12" height="12" x="225" y="75" class="named"><title>0x0042d8d5 GameManager::OnUpdate (2303 bytes)</title></rect>
 <rect width="12" height="12" x="240" y="75" class="named"><title>0x0042e1d4 GameManager::OnDraw (36 bytes)</title></rect>
 <rect width="12" height="12" x="255" y="75" class="named"><title>0x0042e1f8 DrawLoadingScreen (404 bytes)</title></rect>
 <rect width="12" height="12" x="270" y="75" class="named"><title>0x0042e38c GameManager::SetRankForDifficulty (78 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">77.69%</tspan> · <tspan class="decompiled">0.06%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">22.16%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">78.30%</tspan> · <tspan class="decompiled">0.06%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">21.55%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="580.37" height="6" x="0" y="0" class="named"/>
-<rect width="0.44" height="6" x="580.37" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="580.81" y="0" class="nonmatching"/>
-<rect width="165.52" height="6" x="581.48" y="0" class="todo"/>
+<rect width="584.88" height="6" x="0" y="0" class="named"/>
+<rect width="0.44" height="6" x="584.88" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="585.33" y="0" class="nonmatching"/>
+<rect width="161.01" height="6" x="585.99" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 EnemyScripts::RunEnemy (29464 bytes)</title></rect>
@@ -802,7 +802,7 @@
 <rect width="29.69" height="29.41" x="245.98" y="34.95" class="named"><title>0x00403b60 ContinueMenu::UpdateContinueMenu (2528 bytes)</title></rect>
 <rect width="29.69" height="27.64" x="245.98" y="67.35" class="named"><title>0x0040ca50 UpdateSakuyaABombFocused (2390 bytes)</title></rect>
 <rect width="29.69" height="27.32" x="245.98" y="97.99" class="named"><title>0x00456f6b MainMenu::UpdateKeyConfig (2365 bytes)</title></rect>
-<rect width="29.69" height="26.52" x="245.98" y="128.31" class="todo"><title>0x0042d8d5 GameManager::OnUpdate (2303 bytes)</title></rect>
+<rect width="29.69" height="26.52" x="245.98" y="128.31" class="named"><title>0x0042d8d5 GameManager::OnUpdate (2303 bytes)</title></rect>
 <rect width="29.69" height="24.78" x="245.98" y="157.84" class="named"><title>0x00407900 Stage::DrawLayer (2167 bytes)</title></rect>
 <rect width="29.69" height="24.38" x="245.98" y="185.62" class="named"><title>0x0042adab Gui::UpdateInterface (2136 bytes)</title></rect>
 <rect width="24.57" height="28.51" x="278.67" y="0" class="named"><title>0x0044c9c0 SoundPlayer::PlayQueuedSounds (2073 bytes)</title></rect>

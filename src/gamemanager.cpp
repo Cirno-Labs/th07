@@ -11,6 +11,7 @@
 #include "midi.h"
 #include "player.h"
 #include "replay.h"
+#include "screeneffect.h"
 #include "sprite.h"
 #include "unsorted.h"
 
@@ -119,6 +120,182 @@ void GameManager::AddLifeOrBomb()
         this->AddSubRank(200);
         g_Unknown49fbf0.bombsChanged = 2;
     }
+}
+
+int GameManager::OnUpdate(GameManager *mgr)
+{
+    int check;
+    DWORD i;
+    DWORD step;
+
+    if (!mgr->isInContinueMenu && !mgr->unk_93dc && !((mgr->unk_93d8 >> 1) & 1) && !mgr->unk_d && WAS_PRESSED(8))
+    {
+        mgr->unk_93dc = 1;
+        g_Unknown626270.arena[0] = 32.0f;
+        g_Unknown626270.arena[1] = 16.0f;
+        g_Unknown626270.arena[2] = 384.0f;
+        g_Unknown626270.arena[3] = 448.0f;
+        mgr->unk_93d0 = 1;
+        if (g_Unknown626270.stage != 6 || g_Unknown49fbf0.unk_0 >= 300)
+        {
+            g_SoundPlayer.QueueSoundCommand(6, 0, "Pause");
+        }
+        g_SoundPlayer.QueueSound(0x25, 0);
+        g_App.AddTotalPlayTime();
+    }
+    g_App.viewport.X = mgr->arena[0];
+    g_App.viewport.Y = mgr->arena[1];
+    g_App.viewport.Width = mgr->arena[2];
+    g_App.viewport.Height = mgr->arena[3];
+    g_App.viewport.MinZ = 0.0f;
+    g_App.viewport.MaxZ = 1.0f;
+    g_SpriteEngine->ClearUnk2e4d4();
+    if ((g_Unknown626270.unk_93d8 >> 3) & 1 && g_Unknown626270.unk_93df == 1 && !g_Unknown49fbf0.Func42ad66())
+    {
+        mgr->unk_962c++;
+        if ((g_App.unk_188 < 20 && mgr->unk_962c % 3 != 0) ||
+            (g_App.unk_188 >= 20 && g_App.unk_188 < 30 && mgr->unk_962c % 2 != 0) ||
+            (g_App.unk_188 >= 30 && g_App.unk_188 < 40 && mgr->unk_962c % 3 == 0) ||
+            (g_App.unk_188 >= 40 && g_App.unk_188 < 50 && mgr->unk_962c % 6 == 0))
+        {
+            return 3;
+        }
+    }
+    if ((mgr->unk_93d8 >> 1) & 1)
+    {
+        if (WAS_PRESSED(0xffff))
+        {
+            g_App.scene = 1;
+        }
+        mgr->unk_93e0++;
+        if ((mgr->demoIndex == 0 && mgr->unk_93e0 == 8100) || (mgr->demoIndex == 1 && mgr->unk_93e0 == 7020) ||
+            (mgr->demoIndex == 2 && mgr->unk_93e0 == 4620))
+        {
+            ScreenEffect::StartEffect(2, 120, 0, 0, 0);
+            g_App.FadeOutMusic(3.0f);
+        }
+        if ((mgr->demoIndex == 0 && mgr->unk_93e0 >= 8220) || (mgr->demoIndex == 1 && mgr->unk_93e0 >= 7140) ||
+            (mgr->demoIndex == 2 && mgr->unk_93e0 >= 4740))
+        {
+            g_App.scene = 1;
+            return 3;
+        }
+    }
+    g_Unknown626270.stats->unk_ac = g_Unknown626270.stats->unk_34[2];
+    check = mgr->ComputeChecksum();
+    g_Unknown626270.unk_9614 = (float)check + g_Unknown626270.stats->unk_8c[3];
+    for (i = 0; i < 7; i++)
+    {
+        if ((int)mgr->stats->unk_34[i] < 6543 || (int)mgr->stats->unk_34[i] > 106543)
+        {
+            g_Unknown626270.unk_9614 = -9999.0f;
+        }
+    }
+    for (i = 0; i < 2; i++)
+    {
+        if (mgr->stats->unk_60[i] < 6543.0f || mgr->stats->unk_60[i] > 106543.0f)
+        {
+            g_Unknown626270.unk_9614 = -9999.0f;
+        }
+    }
+    mgr->unk_93d8Bit2 = !mgr->isInContinueMenu && !mgr->unk_93dc ? 1 : 0;
+    for (i = 0; i < 2; i++)
+    {
+        if (mgr->stats->unk_54[i] < 6543.0f || mgr->stats->unk_54[i] > 106543.0f)
+        {
+            g_Unknown626270.unk_9614 = -9999.0f;
+        }
+    }
+    for (i = 0; i < 8; i++)
+    {
+        if (mgr->stats->unk_8c[i] < 6543 || mgr->stats->unk_8c[i] > 106543)
+        {
+            g_Unknown626270.unk_9614 = -9999.0f;
+        }
+    }
+    g_App.d3dDevice->Clear(0, NULL, D3DCLEAR_ZBUFFER, g_Unknown1347b00.fog.color, 1.0f, 0);
+    if (mgr->unk_93dc == 1 || mgr->unk_93dc == 2 || mgr->isInContinueMenu)
+    {
+        return 3;
+    }
+    if (mgr->stats->score >= 1000000000)
+    {
+        mgr->stats->score = 999999999;
+    }
+    if (mgr->stats->guiScore != mgr->stats->score)
+    {
+        if (mgr->stats->score < mgr->stats->guiScore)
+        {
+            mgr->stats->score = mgr->stats->guiScore;
+        }
+        step = (mgr->stats->score - mgr->stats->guiScore) >> 5;
+        if (step >= 0x8d55e)
+        {
+            step = 0x8d55e;
+        }
+        else if (step == 0)
+        {
+            step = 1;
+        }
+        if (mgr->stats->unk_8 < step)
+        {
+            mgr->stats->unk_8 = step;
+        }
+        if (mgr->stats->guiScore + mgr->stats->unk_8 > mgr->stats->score)
+        {
+            mgr->stats->unk_8 = mgr->stats->score - mgr->stats->guiScore;
+        }
+        mgr->stats->guiScore += mgr->stats->unk_8;
+        if (mgr->stats->guiScore >= mgr->stats->score)
+        {
+            mgr->stats->unk_8 = 0;
+            mgr->stats->guiScore = mgr->stats->score;
+        }
+        if (mgr->stats->highScore < mgr->stats->guiScore)
+        {
+            mgr->stats->highScore = mgr->stats->guiScore;
+            mgr->stats->unk_10 = mgr->stats->continuesUsed;
+        }
+    }
+    for (i = 0; i < 3; i++)
+    {
+        if (mgr->stats->unk_70[i] < 6543.0f || mgr->stats->unk_70[i] > 106543.0f)
+        {
+            g_Unknown626270.unk_9614 = -9999.0f;
+        }
+    }
+    for (i = 0; i < 2; i++)
+    {
+        if (mgr->stats->unk_80[i] < 6543.0f || mgr->stats->unk_80[i] > 106543.0f)
+        {
+            g_Unknown626270.unk_9614 = -9999.0f;
+        }
+    }
+    for (i = 0; i < 5; i++)
+    {
+        if ((int)mgr->stats->unk_b4[i] < 6543 || (int)mgr->stats->unk_b4[i] > 106543)
+        {
+            g_Unknown626270.unk_9614 = -9999.0f;
+        }
+    }
+    if (g_Unknown626270.unk_4->unk_25)
+    {
+        g_Unknown626270.unk_d = 0;
+        mgr->unk_962c++;
+        if ((g_BulletManager.bulletCount >= 320 && mgr->unk_962c % 3 == 0) ||
+            (g_BulletManager.bulletCount < 320 && g_BulletManager.bulletCount >= 224 && mgr->unk_962c % 4 == 0) ||
+            (g_BulletManager.bulletCount < 224 && g_BulletManager.bulletCount >= 128 && mgr->unk_962c % 5 == 0))
+        {
+            g_Unknown626270.unk_d = 1;
+            return 3;
+        }
+        if (g_BulletManager.bulletCount < 128)
+        {
+            mgr->unk_962c = 0;
+        }
+    }
+    mgr->unk_95e8++;
+    return 1;
 }
 
 int GameManager::OnDraw(GameManager *mgr)

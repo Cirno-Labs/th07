@@ -1086,7 +1086,10 @@ public:
         DWORD unk_93d8;
         struct
         {
-            unsigned int unk_93d8Bits0 : 3;
+            unsigned int unk_93d8Bits0 : 2;
+            // Set by OnUpdate while the game is neither paused nor in
+            // the continue menu, as th06's isPlaying.
+            unsigned int unk_93d8Bit2 : 1;
             unsigned int unk_93d8Bit3 : 1;
         };
     };
@@ -1099,7 +1102,9 @@ public:
     BYTE demoIndex;
     // Set from the replay menu's last choice when a replay starts.
     BYTE unk_93df;
-    DWORD unk_93e0;
+    // The frames a demo replay has played; OnUpdate fades out at 8100,
+    // 7020 or 4620 by demoIndex and returns to the title soon after.
+    int unk_93e0;
     // The replay to play.
     char replayFile[0x200];
     // A replay stage keeps it.
@@ -1128,7 +1133,9 @@ public:
     int unk_9624;
     // The frames played, which the result screen shows as progress.
     int progressFrames;
-    unsigned char unk_962c[0x4];
+    // Counts frames for OnUpdate's slowdowns: of a replay played slowly
+    // (unk_93df 1) and, while unk_4->unk_25 is set, by bullet count.
+    DWORD unk_962c;
     // Set by the title menu from the play time: 3 under 7 hours, 4
     // under 14, else 5.
     int unk_9630;
