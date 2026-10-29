@@ -81,6 +81,11 @@ int EffectInitDriftFast(Effect *effect);
 // An effect init: puts it in the third draw list. Returns 0.
 int EffectInitForeground(Effect *effect);
 
+// An effect update, as th06's EffectUpdateOrbit: circles origin at
+// `radius` about `axis`, at `angle` (flattened); once fadeOut is set,
+// fades out and grows over 16 frames, then ends.
+int EffectUpdateOrbit(Effect *effect);
+
 // The effects, at 0x12fe250: 400 started in turn, 8 reserved slots and
 // a spare.
 class EffectManager
