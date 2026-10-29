@@ -14,6 +14,10 @@ BulletManager::BulletManager()
     this->Reset();
 }
 
+BulletTypeSprites::BulletTypeSprites()
+{
+}
+
 void ShowSpawnSprite(Sprite *dst, Sprite *src, Bullet *bullet, int color)
 {
     if (dst->spriteIndex != src->spriteIndex + color)

@@ -191,7 +191,7 @@ address,size,name,symbol
 0x004232a0,64,EnemyManager::AnyBossActive,?AnyBossActive@EnemyManager@@QAEHXZ
 0x004232e0,67,BulletManager::Reset,?Reset@BulletManager@@QAEXXZ
 0x00423330,236,BulletManager::BulletManager,??0BulletManager@@QAE@XZ
-0x00423420,225,Func423420,
+0x00423420,225,BulletTypeSprites::BulletTypeSprites,??0BulletTypeSprites@@QAE@XZ
 0x00423510,186,Bullet::Bullet,??0Bullet@@QAE@XZ
 0x004235d0,134,Laser::Laser,??0Laser@@QAE@XZ
 0x00423660,204,ShowSpawnSprite,?ShowSpawnSprite@@YIXPAVSprite@@0PAUBullet@@H@Z

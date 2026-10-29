@@ -9,13 +9,25 @@
 #include "sprite.h"
 #include "timer.h"
 
+// A Sprite of its own type: BulletTypeSprites' constructor only reserves
+// its unused slots as in the original when the third sprite's
+// constructor is one more inline call deep.
+struct BulletSprite : Sprite
+{
+};
+
 // A bullet type's sprites: the bullet's and those of its spawning
-// effects, as th06's. Its implicit constructor is 0x423420.
+// effects, as th06's.
 struct BulletTypeSprites
 {
+    // Out of line: as an inline that isn't expanded, its BulletSprite
+    // would reserve more slots in BulletManager's and Bullet's
+    // constructors than the original's.
+    BulletTypeSprites();
+
     Sprite sprite0;
     Sprite sprite1;
-    Sprite sprite2;
+    BulletSprite sprite2;
     Sprite sprite3;
     Sprite sprite4;
     // The size of the bullet's hitbox.
