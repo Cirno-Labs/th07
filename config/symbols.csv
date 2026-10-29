@@ -479,7 +479,7 @@ address,size,name,symbol
 0x004429d0,312,Player::RegisterChain,?RegisterChain@Player@@SIHH@Z
 0x00442b10,85,Player::RemoveChain,?RemoveChain@Player@@SIXXZ
 0x00442b70,231,LoadShotTypeFile,?LoadShotTypeFile@@YIHPAPAUShotTypeData@@PAD@Z
-0x00442c60,100,Func442c60,
+0x00442c60,100,ReplayManager::RecordOnUpdate2,?RecordOnUpdate2@ReplayManager@@SIHPAV1@@Z
 0x00442cd0,378,Func442cd0,
 0x00442e50,142,Func442e50,
 0x00442ee0,341,Func442ee0,

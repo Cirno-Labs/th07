@@ -986,7 +986,9 @@ public:
     // The "PLST" chunk. When its magic is set on exit, WinMain calls
     // ResultScreen::RegisterChain(2) to save the score file.
     Plst plst;
-    unsigned char unk_93d0[0x4];
+    // ReplayManager::RecordOnUpdate2 marks 0x100 in the frame's replay bits
+    // while it is set, and clears it.
+    int unk_93d0;
     // Cleared by Player's UpdateDyingState when the player dies.
     BYTE unk_93d4;
     BYTE character;

@@ -50,7 +50,15 @@ void SaveReplay(char *path, char *name);
 class ReplayManager
 {
 public:
-    unsigned char unk_0[0xd6];
+    // The second update callback while recording, run before the game's
+    // own: clears unk_d6 (marking 0x100 when Unknown626270::unk_93d0 is
+    // set, which it clears), keeps the random seed in unk_d4 and clears
+    // the count of random numbers. Returns 1. Not in th06.
+    static int RecordOnUpdate2(ReplayManager *replay);
+
+    unsigned char unk_0[0xd4];
+    // The random seed at the start of the frame.
+    WORD unk_d4;
     // Bits set during a frame: 2 when the player is hit.
     WORD unk_d6;
 };
