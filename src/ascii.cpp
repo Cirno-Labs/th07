@@ -104,3 +104,14 @@ void AsciiText::Initialize()
     this->unk_74d8 = 14;
     this->SetUnk74d4(this->unk_74d4);
 }
+
+void AsciiText::StartScripts()
+{
+    g_SpriteEngine->StartScript(&this->unk_498, 4);
+    g_SpriteEngine->StartScript(&this->unk_6e4, 3);
+    g_SpriteEngine->StartScript(&this->unk_930, 5);
+    g_SpriteEngine->StartScript(&this->unk_b7c[0], 6);
+    g_SpriteEngine->StartScript(&this->unk_b7c[1], 6);
+    g_SpriteEngine->StartScript(&this->unk_b7c[2], 6);
+    g_SpriteEngine->StartScript(&this->unk_b7c[3], 6);
+}

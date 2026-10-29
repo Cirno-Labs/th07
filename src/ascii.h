@@ -87,6 +87,9 @@ public:
     // Runs the scripts of unk_498, unk_6e4, unk_b7c[] and unk_930 for a
     // frame.
     void RunScripts();
+    // Starts the scripts of unk_498 (4), unk_6e4 (3), unk_930 (5) and
+    // unk_b7c[] (6).
+    void StartScripts();
     // The update element's callback: moves the active popups along
     // unless g_Unknown626270 is paused or in the continue menu, then
     // runs the menus as th06's. Also shows unk_9e50 (script 7) while bit
