@@ -648,3 +648,7 @@ void DrawReimuBBombFocused(Player *player);
 // speed 2, each an area (AddHitboxAreaCircle, 96) and a 128 box of 8
 // damage on two frames out of three.
 void UpdateMarisaABomb(Player *player);
+
+// Draws Marisa A's bomb, as th06's DrawMarisaABomb: the stage tint,
+// then each star three times, at shrinking sizes along its trail.
+void DrawMarisaABomb(Player *player);

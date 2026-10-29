@@ -607,3 +607,41 @@ void UpdateMarisaABomb(Player *player)
     player->playerState = 3;
     player->bomb.timer.Tick();
 }
+
+void DrawMarisaABomb(Player *player)
+{
+    Sprite *curSprite;
+    int i;
+
+    DimPlayAreaForBomb(player);
+    for (i = 0; i < 8; i++)
+    {
+        curSprite = player->bomb.parts[i].sprites;
+        curSprite->pos = player->bomb.parts[i].pos;
+        curSprite->pos.x = g_Unknown626270.arena[0] + curSprite->pos.x;
+        curSprite->pos.y = g_Unknown626270.arena[1] + curSprite->pos.y;
+        curSprite->pos.z = 0.0f;
+        curSprite->scaleY = 3.2f;
+        curSprite->scaleX = 3.2f;
+        g_SpriteEngine->Draw(curSprite);
+        curSprite->pos -= player->bomb.parts[i].velocity * 6.0f;
+        curSprite->pos.x += -32.0f;
+        curSprite->pos.y += -32.0f;
+        curSprite->pos.z = 0.0f;
+        curSprite->scaleY = 2.2f;
+        curSprite->scaleX = 2.2f;
+        g_SpriteEngine->Draw(curSprite);
+        curSprite->pos -= player->bomb.parts[i].velocity * 2.0f;
+        curSprite->pos.x += 64.0f;
+        curSprite->pos.y += 64.0f;
+        curSprite->pos.z = 0.0f;
+        curSprite->pos -= player->bomb.parts[i].velocity * 2.0f;
+        curSprite->pos.x += -32.0f;
+        curSprite->pos.y += -32.0f;
+        curSprite->pos.z = 0.0f;
+        curSprite->scaleY = 1.0f;
+        curSprite->scaleX = 1.0f;
+        g_SpriteEngine->Draw(curSprite);
+        curSprite++;
+    }
+}
