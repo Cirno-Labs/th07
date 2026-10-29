@@ -137,6 +137,10 @@ int EffectInitPetal20(Effect *effect);
 // sprite 0x2d8 in white as in EffectInitPetal20. Returns 0.
 int EffectInitPetal26(Effect *effect);
 
+// EffectInitPetal26 for petal type 27, with a z step of -0.06 to -0.26 and
+// always shown as sprite 0x2d8 in white. Returns 0.
+int EffectInitPetal27(Effect *effect);
+
 // The effects, at 0x12fe250: 400 started in turn, 8 reserved slots and
 // a spare.
 class EffectManager

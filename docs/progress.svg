@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">68.16% (473)</tspan> · <tspan class="decompiled">7.78% (54)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">23.92% (166)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">68.30% (474)</tspan> · <tspan class="decompiled">7.78% (54)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">23.78% (165)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="509.12" height="6" x="0" y="0" class="named"/>
-<rect width="58.12" height="6" x="509.12" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="567.25" y="0" class="nonmatching"/>
-<rect width="178.68" height="6" x="568.32" y="0" class="todo"/>
+<rect width="510.20" height="6" x="0" y="0" class="named"/>
+<rect width="58.12" height="6" x="510.20" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="568.32" y="0" class="nonmatching"/>
+<rect width="177.60" height="6" x="569.40" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="named"><title>0x00401000 D3DXMatrixIdentity (173 bytes)</title></rect>
@@ -206,7 +206,7 @@
 <rect width="12" height="12" x="510" y="30" class="named"><title>0x0041aef0 EffectUpdatePetal (436 bytes)</title></rect>
 <rect width="12" height="12" x="525" y="30" class="named"><title>0x0041b0b0 EffectInitPetal20 (997 bytes)</title></rect>
 <rect width="12" height="12" x="540" y="30" class="named"><title>0x0041b4a0 EffectInitPetal26 (710 bytes)</title></rect>
-<rect width="12" height="12" x="555" y="30" class="todo"><title>0x0041b770 Func41b770 (628 bytes)</title></rect>
+<rect width="12" height="12" x="555" y="30" class="named"><title>0x0041b770 EffectInitPetal27 (628 bytes)</title></rect>
 <rect width="12" height="12" x="570" y="30" class="todo"><title>0x0041b9f0 Func41b9f0 (559 bytes)</title></rect>
 <rect width="12" height="12" x="585" y="30" class="todo"><title>0x0041bc20 Func41bc20 (668 bytes)</title></rect>
 <rect width="12" height="12" x="600" y="30" class="todo"><title>0x0041bec0 Func41bec0 (263 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">51.65%</tspan> · <tspan class="decompiled">2.79%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">45.47%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">51.81%</tspan> · <tspan class="decompiled">2.79%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">45.31%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="385.80" height="6" x="0" y="0" class="named"/>
-<rect width="20.87" height="6" x="385.80" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="406.67" y="0" class="nonmatching"/>
-<rect width="339.67" height="6" x="407.33" y="0" class="todo"/>
+<rect width="387.03" height="6" x="0" y="0" class="named"/>
+<rect width="20.87" height="6" x="387.03" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="407.90" y="0" class="nonmatching"/>
+<rect width="338.44" height="6" x="408.56" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -917,7 +917,7 @@
 <rect width="12.85" height="14.34" x="520.34" y="0" class="named"><title>0x004383d8 InitDirectInput (656 bytes)</title></rect>
 <rect width="12.85" height="14.32" x="520.34" y="17.34" class="named"><title>0x00443aa0 ReplayManager::RegisterChain (655 bytes)</title></rect>
 <rect width="12.85" height="14.05" x="520.34" y="34.66" class="named"><title>0x0045fb50 DatArchive::ReadTable (645 bytes)</title></rect>
-<rect width="12.85" height="13.60" x="520.34" y="51.72" class="todo"><title>0x0041b770 Func41b770 (628 bytes)</title></rect>
+<rect width="12.85" height="13.60" x="520.34" y="51.72" class="named"><title>0x0041b770 EffectInitPetal27 (628 bytes)</title></rect>
 <rect width="12.85" height="13.52" x="520.34" y="68.32" class="named"><title>0x0041c790 EffectManager::OnUpdate (625 bytes)</title></rect>
 <rect width="12.85" height="13.37" x="520.34" y="84.85" class="named"><title>0x00436ce0 MidiPlayer::OnTimer (619 bytes)</title></rect>
 <rect width="12.85" height="13.29" x="520.34" y="101.21" class="named"><title>0x0044f9a0 SpriteEngine::Draw (616 bytes)</title></rect>

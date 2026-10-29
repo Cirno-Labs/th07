@@ -267,6 +267,29 @@ int EffectInitPetal26(Effect *effect)
     return 0;
 }
 
+int EffectInitPetal27(Effect *effect)
+{
+    effect->unk_27c.x = g_Rng.GetRandomF32ZeroToOne() * 160.0f - 80.0f;
+    effect->unk_27c.y = g_Rng.GetRandomF32ZeroToOne() * 160.0f - 80.0f;
+    effect->unk_27c.z = g_Rng.GetRandomF32ZeroToOne() * 100.0f - 50.0f;
+    effect->step.x = -effect->unk_27c.y / effect->velocity.x;
+    effect->step.y = effect->unk_27c.x / effect->velocity.x;
+    effect->step.z = -(g_Rng.GetRandomF32ZeroToOne() * 0.2f) - 0.06f;
+    effect->unk_27c += g_Unknown134cd04 / 2.0f + g_Unknown134ccf8;
+    effect->step = effect->step * g_App.unk_178;
+    effect->drawList = 1;
+    effect->sprite.rotationZ = g_Rng.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
+    effect->sprite.rotationX = g_Rng.GetRandomF32ZeroToOne() * 0.06283186f - 0.031415928f;
+    g_SpriteEngine->SetSprite(&effect->sprite, 0x2d8);
+    effect->sprite.unk_rgb[2] = 0xff;
+    effect->sprite.unk_rgb[1] = 0xff;
+    effect->sprite.unk_rgb[0] = 0xff;
+    effect->acceleration.x = 0.0f;
+    effect->acceleration.y = 0.0f;
+    effect->acceleration.z = 0.0f;
+    return 0;
+}
+
 Effect *EffectManager::SpawnEffect(int type, D3DXVECTOR3 *pos, int count, D3DCOLOR color)
 {
     Effect *effect;
