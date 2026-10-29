@@ -25,3 +25,15 @@ void Unknown626270::AddBombs(int bombs)
     this->stats->bombs += bombs;
     this->Func4012b0();
 }
+
+void Unknown626270::SetPlayArea()
+{
+    this->arena[0] = 32.0f;
+    this->arena[1] = 16.0f;
+    this->arena[2] = 384.0f;
+    this->arena[3] = 448.0f;
+    this->unk_9604[0] = 8.0f;
+    this->unk_9604[1] = 16.0f;
+    this->unk_9604[2] = 368.0f;
+    this->unk_9604[3] = 416.0f;
+}

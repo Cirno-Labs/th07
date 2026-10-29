@@ -942,6 +942,9 @@ public:
     // Whether a `width` by `height` box centred on (`x`, `y`) touches the
     // play area, as th06's GameManager::IsInPlayArea.
     BOOL IsInPlayArea(float x, float y, float width, float height);
+    // Sets arena to th06's play area (32, 16, 384, 448) and unk_9604
+    // to (8, 16, 368, 416).
+    void SetPlayArea();
     // Adds `power` to stats->power and recomputes the checksums; wipes
     // g_App with 0xff first if the checksums were already wrong.
     void AddPower(int power);
@@ -1039,7 +1042,10 @@ public:
     // byte replay file name, the stage) are th06's GameManager's, so
     // this is probably th07's GameManager.
     float arena[4];
-    unsigned char unk_9604[0x14];
+    // A second rectangle, set with arena by SetPlayArea: x, y, width
+    // and height.
+    float unk_9604[4];
+    unsigned char unk_9614[0x4];
     int unk_9618;
     // Added to (up to unk_9618) by Func42f736.
     int unk_961c;

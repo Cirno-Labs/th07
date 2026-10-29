@@ -259,7 +259,7 @@ address,size,name,symbol
 0x0042d560,109,Func42d560,
 0x0042d5cd,69,Unknown626270::AddLives,?AddLives@Unknown626270@@QAEXH@Z
 0x0042d612,69,Unknown626270::AddBombs,?AddBombs@Unknown626270@@QAEXH@Z
-0x0042d657,129,Func42d657,
+0x0042d657,129,Unknown626270::SetPlayArea,?SetPlayArea@Unknown626270@@QAEXXZ
 0x0042d6d8,130,Unknown626270::IsInPlayArea,?IsInPlayArea@Unknown626270@@QAEHMMMM@Z
 0x0042d75a,100,Func42d75a,
 0x0042d7be,124,Func42d7be,
