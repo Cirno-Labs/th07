@@ -237,18 +237,18 @@ int GameManager::OnUpdate(GameManager *mgr)
         {
             step = 1;
         }
-        if (mgr->stats->unk_8 < step)
+        if (mgr->stats->scoreIncrement < step)
         {
-            mgr->stats->unk_8 = step;
+            mgr->stats->scoreIncrement = step;
         }
-        if (mgr->stats->guiScore + mgr->stats->unk_8 > mgr->stats->score)
+        if (mgr->stats->guiScore + mgr->stats->scoreIncrement > mgr->stats->score)
         {
-            mgr->stats->unk_8 = mgr->stats->score - mgr->stats->guiScore;
+            mgr->stats->scoreIncrement = mgr->stats->score - mgr->stats->guiScore;
         }
-        mgr->stats->guiScore += mgr->stats->unk_8;
+        mgr->stats->guiScore += mgr->stats->scoreIncrement;
         if (mgr->stats->guiScore >= mgr->stats->score)
         {
-            mgr->stats->unk_8 = 0;
+            mgr->stats->scoreIncrement = 0;
             mgr->stats->guiScore = mgr->stats->score;
         }
         if (mgr->stats->highScore < mgr->stats->guiScore)
@@ -497,7 +497,7 @@ int GameManager::AddedCallback(GameManager *mgr)
         mgr->progressFrames = 0;
         mgr->stats->guiScore = 0;
         mgr->stats->score = 0;
-        mgr->stats->unk_8 = 0;
+        mgr->stats->scoreIncrement = 0;
         mgr->stats->highScore = 100000;
         mgr->stats->continuesUsed = 0;
         mgr->stats->grazeTotal = 0;
@@ -616,7 +616,7 @@ int GameManager::AddedCallback(GameManager *mgr)
     else
     {
         mgr->stats->guiScore = mgr->stats->score;
-        mgr->stats->unk_8 = 0;
+        mgr->stats->scoreIncrement = 0;
         if (Player::RegisterChain(0) != 0)
         {
             LogPrintf(&g_Log, "error : プレイヤーの初期化に失敗しました\r\n");

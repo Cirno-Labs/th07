@@ -884,7 +884,7 @@ struct GameStats
     DWORD guiScore;
     DWORD score;
     // Cleared when a game continues.
-    DWORD unk_8;
+    DWORD scoreIncrement;
     // The high score to beat, from the score file.
     DWORD highScore;
     // What LoadHighScores stores from the best entry; cleared in a

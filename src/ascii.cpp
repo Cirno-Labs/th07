@@ -937,7 +937,7 @@ int ContinueMenu::UpdateContinueMenu()
             }
             g_GameManager.stats->continuesUsed++;
             g_GameManager.stats->guiScore = g_GameManager.stats->continuesUsed;
-            g_GameManager.stats->unk_8 = 0;
+            g_GameManager.stats->scoreIncrement = 0;
             g_GameManager.stats->score = g_GameManager.stats->guiScore;
             g_GameManager.SetLives(g_GameManager.savedConfig->lifeCount);
             g_GameManager.RerollChecksumKeys();
