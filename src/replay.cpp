@@ -380,3 +380,8 @@ int ReplayManager::DeletedCallback(ReplayManager *replay)
     g_ReplayManager = NULL;
     return 0;
 }
+
+int ReplayManager::OnDraw(ReplayManager *replay)
+{
+    return 1;
+}

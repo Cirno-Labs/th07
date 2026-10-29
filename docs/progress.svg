@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">48.99% (340)</tspan> · <tspan class="decompiled">1.59% (11)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">49.28% (342)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">49.14% (341)</tspan> · <tspan class="decompiled">1.59% (11)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">49.14% (341)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="365.97" height="6" x="0" y="0" class="named"/>
-<rect width="11.84" height="6" x="365.97" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="377.81" y="0" class="nonmatching"/>
-<rect width="368.12" height="6" x="378.88" y="0" class="todo"/>
+<rect width="367.04" height="6" x="0" y="0" class="named"/>
+<rect width="11.84" height="6" x="367.04" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="378.88" y="0" class="nonmatching"/>
+<rect width="367.04" height="6" x="379.96" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="todo"><title>0x00401000 Func401000 (173 bytes)</title></rect>
@@ -212,7 +212,7 @@
 <rect width="12" height="12" x="600" y="30" class="todo"><title>0x0041bec0 Func41bec0 (263 bytes)</title></rect>
 <rect width="12" height="12" x="615" y="30" class="todo"><title>0x0041bfd0 Func41bfd0 (301 bytes)</title></rect>
 <rect width="12" height="12" x="630" y="30" class="todo"><title>0x0041c100 Func41c100 (173 bytes)</title></rect>
-<rect width="12" height="12" x="645" y="30" class="todo"><title>0x0041c1b0 Func41c1b0 (16 bytes)</title></rect>
+<rect width="12" height="12" x="645" y="30" class="named"><title>0x0041c1b0 ReplayManager::OnDraw (16 bytes)</title></rect>
 <rect width="12" height="12" x="660" y="30" class="todo"><title>0x0041c1c0 EffectManager::SpawnEffect (564 bytes)</title></rect>
 <rect width="12" height="12" x="675" y="30" class="todo"><title>0x0041c400 Func41c400 (521 bytes)</title></rect>
 <rect width="12" height="12" x="690" y="30" class="todo"><title>0x0041c610 EffectManager::Func41c610 (374 bytes)</title></rect>
@@ -769,10 +769,10 @@
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
 <text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">37.99%</tspan> · <tspan class="decompiled">0.21%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">61.71%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="283.78" height="6" x="0" y="0" class="named"/>
-<rect width="1.55" height="6" x="283.78" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="285.33" y="0" class="nonmatching"/>
-<rect width="461.01" height="6" x="285.99" y="0" class="todo"/>
+<rect width="283.81" height="6" x="0" y="0" class="named"/>
+<rect width="1.55" height="6" x="283.81" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="285.36" y="0" class="nonmatching"/>
+<rect width="460.98" height="6" x="286.02" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1465,7 +1465,7 @@
 <rect width="0.10" height="0.10" x="745.16" y="205.47" class="named"><title>0x0045c4c8 MainMenu::AddedCallback (17 bytes)</title></rect>
 <rect width="0.10" height="0.10" x="747.58" y="205.47" class="named"><title>0x0045e1f0 CWaveFile::GetSize (17 bytes)</title></rect>
 <rect width="0.10" height="0.10" x="745.16" y="208.41" class="todo"><title>0x00418110 Func418110 (16 bytes)</title></rect>
-<rect width="0.10" height="0.10" x="745.16" y="210.71" class="todo"><title>0x0041c1b0 Func41c1b0 (16 bytes)</title></rect>
+<rect width="0.10" height="0.10" x="745.16" y="210.71" class="named"><title>0x0041c1b0 ReplayManager::OnDraw (16 bytes)</title></rect>
 <rect width="0.10" height="0.10" x="748.08" y="208.41" class="named"><title>0x0044d620 MmTimer::OnTimer (11 bytes)</title></rect>
 <rect width="0.10" height="0.10" x="748.08" y="210.82" class="named"><title>0x00437903 DebugPrint2 (5 bytes)</title></rect>
 <rect width="0.10" height="0.10" x="748.08" y="211.91" class="named"><title>0x0045e4f0 DebugPrint (5 bytes)</title></rect>

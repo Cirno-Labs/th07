@@ -152,6 +152,8 @@ public:
     // Removes the chain elements but the update one, frees the replay
     // data and unk_40 and deletes the ReplayManager. Returns 0.
     static int DeletedCallback(ReplayManager *replay);
+    // The draw callback; does nothing. Returns 1.
+    static int OnDraw(ReplayManager *replay);
 
     // The current frame.
     int frame;
