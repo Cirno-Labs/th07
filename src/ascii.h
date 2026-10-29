@@ -129,7 +129,13 @@ public:
     // The second draw element's callback: draws the popups. th06 picked
     // DrawPopups or DrawPopups2 by g_App.hardwareTnL. Returns 1.
     static int OnDraw2(AsciiText *text);
-    // Draws the active popups, as th06's.
+    // Draws the active popups, as th06's, with fog off (unless the
+    // config has it off already) and the z test always passing. Their
+    // alpha grows with the distance to the player, and their digits
+    // show other sprites from frame 52 and 56. Then, while unk_498 is
+    // shown, draws it with three numbers through unk_6e4: unk_961c,
+    // unk_9618 and unk_9620 of g_Unknown626270, each less
+    // stats->unk_88, and unk_930 while Player::unk_240d is 1.
     void DrawPopups();
 
     // Queues `text` to be drawn at `pos`.

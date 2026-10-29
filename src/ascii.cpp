@@ -482,3 +482,202 @@ void ContinueMenu::DrawContinueMenu()
         }
     }
 }
+
+void AsciiText::DrawPopups()
+{
+    AsciiPopup *p = this->popups;
+    int count;
+    float dx2;
+    float dy;
+    int alpha;
+    int i;
+    BYTE *digitPtr;
+    int amount;
+    D3DXVECTOR3 unusedPos;
+    int step;
+    int div;
+    int nonzero;
+
+    if (!g_App.flags.noFog)
+    {
+        g_App.DisableFog();
+    }
+    g_App.SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
+    for (i = 0; i < 0x2d3; i++, p++)
+    {
+        if (!p->active)
+        {
+            continue;
+        }
+        this->digit.pos.x = p->pos.x - (p->digitCount << 2);
+        this->digit.pos.y = p->pos.y;
+        this->digit.color = p->color;
+        dx2 = g_Player.position.x - p->pos.x;
+        dy = g_Player.position.y - p->pos.y;
+        alpha = dx2 * dx2 + dy * dy;
+        if (alpha > 0x1000)
+        {
+            alpha = 0xd0;
+        }
+        else if (alpha > 0x400)
+        {
+            alpha = ((alpha - 0x400) * 0x80) / 0xc00 + 0x50;
+        }
+        else
+        {
+            alpha = 0x50;
+        }
+        digitPtr = p->digits + p->digitCount - 1;
+        for (count = p->digitCount; count > 0; count--)
+        {
+            if (p->timer < 0x34 || *digitPtr == 10)
+            {
+                this->digit.spriteData = &g_SpriteEngine->sprites[*digitPtr];
+                this->digit.alpha = alpha;
+            }
+            else if (p->timer < 0x38)
+            {
+                this->digit.spriteData = &g_SpriteEngine->sprites[*digitPtr + 0xb];
+                this->digit.alpha = alpha;
+            }
+            else
+            {
+                this->digit.spriteData = &g_SpriteEngine->sprites[*digitPtr + 0x15];
+                this->digit.alpha = alpha;
+            }
+            g_SpriteEngine->DrawUnrotated(&this->digit);
+            this->digit.pos.x += 8.0f;
+            digitPtr--;
+        }
+    }
+    if (this->unk_498.flags & 1)
+    {
+        div = 100000;
+        nonzero = 0;
+        amount = g_Unknown626270.unk_961c - g_Unknown626270.stats->unk_88;
+        g_SpriteEngine->DrawUnrotated(&this->unk_498);
+        this->unk_6e4.pos.x = this->unk_498.pos.x + 40.0f + 6.0f;
+        this->unk_6e4.pos.y = this->unk_498.pos.y + 11.0f;
+        this->unk_6e4.pos.z = this->unk_498.pos.z;
+        this->unk_6e4.alpha = this->unk_498.alpha;
+        if ((g_Unknown626270.unk_961c >= g_Unknown626270.unk_9618) != 0)
+        {
+            this->unk_6e4.unk_rgb[2] = 0xff;
+            this->unk_6e4.unk_rgb[1] = 0xd0;
+            this->unk_6e4.unk_rgb[0] = 0x80;
+        }
+        else if (amount >= 50000)
+        {
+            this->unk_6e4.unk_rgb[2] = 0xff;
+            this->unk_6e4.unk_rgb[1] = 0xff;
+            this->unk_6e4.unk_rgb[0] = 0x80;
+        }
+        else
+        {
+            this->unk_6e4.unk_rgb[2] = 0xff;
+            this->unk_6e4.unk_rgb[1] = 0xff;
+            this->unk_6e4.unk_rgb[0] = 0xff;
+        }
+        for (i = 0; i < 6; i++, div /= 10)
+        {
+            count = amount / div;
+            amount = amount % div;
+            if (count != 0)
+            {
+                nonzero = 1;
+            }
+            if (nonzero != 0 || div == 1)
+            {
+                g_SpriteEngine->SetSprite(&this->unk_6e4, count + 0x84);
+                g_SpriteEngine->DrawUnrotated(&this->unk_6e4);
+            }
+            this->unk_6e4.pos.x += 7.0f;
+        }
+        nonzero = 0;
+        amount = g_Unknown626270.unk_9618 - g_Unknown626270.stats->unk_88;
+        this->unk_6e4.unk_rgb[2] = 0xf0;
+        this->unk_6e4.unk_rgb[1] = 0xd0;
+        this->unk_6e4.unk_rgb[0] = 0xe0;
+        this->unk_6e4.pos.x += 9.0f;
+        if (amount < 1000000)
+        {
+            div = 100000;
+            i = 6;
+        }
+        else
+        {
+            div = 1000000;
+            i = 7;
+        }
+        for (; i > 0; i--, div /= 10)
+        {
+            count = amount / div;
+            amount = amount % div;
+            if (count != 0)
+            {
+                nonzero = 1;
+            }
+            if (nonzero != 0 || div == 1)
+            {
+                g_SpriteEngine->SetSprite(&this->unk_6e4, count + 0x84);
+                g_SpriteEngine->DrawUnrotated(&this->unk_6e4);
+            }
+            this->unk_6e4.pos.x += 7.0f;
+        }
+        this->unk_6e4.scaleY = 1.0f;
+        this->unk_6e4.scaleX = 1.0f;
+        nonzero = 0;
+        this->unk_6e4.pos.x = this->unk_498.pos.x + 40.0f + 6.0f + 7.0f;
+        this->unk_6e4.pos.y = this->unk_498.pos.y + 2.0f;
+        amount = g_Unknown626270.unk_9620 - g_Unknown626270.stats->unk_88;
+        if (g_Player.unk_240d)
+        {
+            this->unk_6e4.unk_rgb[2] = 0xff;
+            div = amount % 4000;
+            if (div >= 2000)
+            {
+                div = 4000 - div;
+            }
+            this->unk_6e4.unk_rgb[1] = amount * 0xc0 / 50000 + div * 0x40 / 2000;
+            this->unk_6e4.unk_rgb[0] = amount * 0xc0 / 50000 + div * 0x40 / 2000;
+            this->unk_6e4.scaleY = 1.41f;
+            this->unk_6e4.scaleX = 1.41f;
+            step = 10;
+            this->unk_6e4.pos.x += 2.0f;
+            this->unk_6e4.pos.y -= 2.0f;
+        }
+        else
+        {
+            this->unk_6e4.unk_rgb[2] = 0xc0;
+            this->unk_6e4.unk_rgb[1] = 0x80;
+            this->unk_6e4.unk_rgb[0] = 0xb0;
+            step = 7;
+        }
+        div = 10000;
+        for (i = 0; i < 5; i++, div /= 10)
+        {
+            count = amount / div;
+            amount = amount % div;
+            if (count != 0)
+            {
+                nonzero = 1;
+            }
+            if (nonzero != 0 || div == 1)
+            {
+                g_SpriteEngine->SetSprite(&this->unk_6e4, count + 0x84);
+                g_SpriteEngine->DrawUnrotated(&this->unk_6e4);
+            }
+            this->unk_6e4.pos.x += step;
+        }
+        this->unk_6e4.scaleY = 1.0f;
+        this->unk_6e4.scaleX = 1.0f;
+        if (g_Player.unk_240d == 1)
+        {
+            this->unk_930.pos = this->unk_498.pos;
+            this->unk_930.pos.x += 24.0f;
+            this->unk_930.pos.y += 8.0f;
+            this->unk_930.color = this->unk_498.color;
+            g_SpriteEngine->DrawUnrotated(&this->unk_930);
+        }
+    }
+}
