@@ -1430,16 +1430,6 @@ public:
 };
 extern Unknown1347938 g_Unknown1347938;
 
-// The object at 0x9a9b00. Placeholder name; only what is known so far.
-class Unknown9a9b00
-{
-public:
-    // GuiImpl::StartMsgScript calls it with (0, 0) as a dialogue starts.
-    void Func423090(int unk0, int unk1);
-    // Whether one of the eight pointers at +0x954598 is set.
-    int Func4232a0();
-};
-extern Unknown9a9b00 g_Unknown9a9b00;
 // Set to 9 as the dialogue of stages 6 to 8 starts.
 extern int g_Unknown9a9ab8;
 

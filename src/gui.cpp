@@ -7,6 +7,7 @@
 
 #include "ascii.h"
 #include "bullet.h"
+#include "enemy.h"
 #include "item.h"
 #include "replay.h"
 #include "unsorted.h"

@@ -2,6 +2,7 @@
 
 #include <string.h>
 
+#include "enemy.h"
 #include "lzss.h"
 #include "player.h"
 #include "replay.h"

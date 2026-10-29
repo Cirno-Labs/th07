@@ -5,7 +5,10 @@
 #include <d3dx8math.h>
 
 #include "common.h"
+#include "bullet.h"
 #include "effect.h"
+#include "sprite.h"
+#include "timer.h"
 
 // Enemy's flags, in bytes. The first byte is th06's.
 struct EnemyFlags
@@ -17,10 +20,41 @@ struct EnemyFlags
     unsigned char mirrored : 1;
     // In use.
     unsigned char active : 1;
-    unsigned char unk_8 : 3;
-    // Hides the effects that follow the enemy (th06's isBoss bit).
+    // Can be shot and killed, as th06's.
+    unsigned char shootable : 1;
+    unsigned char unk_9 : 1;
+    unsigned char unk_a : 1;
+    // Hides the effects that follow the enemy.
     unsigned char unk_b : 1;
+    unsigned char unk_c : 1;
+    unsigned char unk_d : 1;
+    // A boss, as th06's isBoss.
+    unsigned char isBoss : 1;
+    // Keeps the position within lowerBound and upperBound, as th06's.
+    unsigned char clampPos : 1;
+    // What dying does, as th06's.
+    unsigned char deathMode : 3;
+    unsigned char unk_13 : 1;
+    // Turns the main sprite with the enemy's angle, as th06's.
+    unsigned char rotateSprite : 1;
 };
+
+// Where one enemy is in its script (0x218 bytes), th06's grown. Its
+// implicit constructor is 0x41f220.
+struct EnemyScriptState
+{
+    unsigned char unk_0[0x218];
+};
+ASSERT_SIZE(EnemyScriptState, 0x218);
+
+// One of Enemy's 0x122 boxes (0x1c bytes); Initialize hides the first
+// 0x60 at x -999.
+struct EnemyBox
+{
+    D3DXVECTOR3 pos;
+    unsigned char unk_c[0x10];
+};
+ASSERT_SIZE(EnemyBox, 0x1c);
 
 // One enemy (0x4f48 bytes).
 struct Enemy
@@ -30,22 +64,105 @@ struct Enemy
     // and the position in prevPos.
     void Move();
 
-    unsigned char unk_0[0x2b0c];
+    Sprite sprite;
+    Sprite sprites[2];
+    EnemyScriptState ctx;
+    // Contexts saved by calls, as th06's.
+    EnemyScriptState savedCtx[16];
+    int stackDepth;
+    int unk_2a80;
+    // The subroutine the script runs when the enemy dies; negative for
+    // none.
+    int deathSub;
+    int interrupts[0x20];
+    // The interrupt to run next; negative for none.
+    int pendingInterrupt;
     D3DXVECTOR3 pos;
     D3DXVECTOR3 velocity;
     // Where Move found the enemy, and how far it had moved since the
     // call before.
     D3DXVECTOR3 prevPos;
     D3DXVECTOR3 posDelta;
-    unsigned char unk_2b3c[0x2ec];
+    // The size of the enemy's hitbox.
+    D3DXVECTOR3 hitboxSize;
+    unsigned char unk_2b48[0xc];
+    float angle;
+    float angularVelocity;
+    unsigned char unk_2b5c[0x8];
+    float speed;
+    float acceleration;
+    unsigned char unk_2b6c[0x8];
+    // Where shots start, from the position.
+    D3DXVECTOR3 shootOffset;
+    unsigned char unk_2b80[0x18];
+    Timer moveTimer;
+    int unk_2ba4;
+    // How the shots' speed and counts grow with the rank, as th06's.
+    float rankSpeedLow;
+    float rankSpeedHigh;
+    short rankCount1Low;
+    short rankCount1High;
+    short rankCount2Low;
+    short rankCount2High;
+    int life;
+    int maxLife;
+    int score;
+    Timer callbackTimer;
+    // The sprite's color when spawned.
+    D3DCOLOR color;
+    BulletShooter shooter;
+    // Fires `shooter` every shootInterval frames, counted by shootTimer.
+    int shootInterval;
+    Timer shootTimer;
+    BulletShooter laserShooter;
+    Laser *lasers[0x20];
+    int laserIndex;
+    int item;
+    BYTE deathEffect;
+    BYTE unk_2e15;
+    BYTE unk_2e16;
+    // The enemy's slot in Unknown9a9b00::bosses, while it is one.
+    BYTE bossIndex;
+    BYTE hitFlashTimer;
+    unsigned char unk_2e19[0x3];
+    Timer unk_2e1c;
     EnemyFlags flags;
-    unsigned char unk_2e2a[0x26];
+    unsigned char unk_2e2b[0x5];
+    // The sprite scripts for turning, as th06's.
+    short turnStill;
+    short turnStillFromLeft;
+    short turnStillFromRight;
+    short turnLeft;
+    short turnRight;
+    short unk_2e3a;
+    // The bounds of the position, with flags.clampPos.
+    float lowerBound[2];
+    float upperBound[2];
+    unsigned char unk_2e4c[0x4];
     // Effects that follow the enemy, as th06's.
     Effect *effects[25];
     int effectCount;
     // How far the effects following the enemy widen.
     float effectRadius;
-    unsigned char unk_2ebc[0x208c];
+    // When the life falls below one of lifeCallbackLife, the script
+    // runs the matching lifeCallbackSub; -1 for none.
+    int lifeCallbackLife[4];
+    int lifeCallbackSub[4];
+    // When callbackTimer reaches timerCallbackTime, the script runs
+    // timerCallbackSub; -1 for none.
+    int timerCallbackTime;
+    int timerCallbackSub;
+    int unk_2ee4;
+    unsigned char unk_2ee8[0x68];
+    Timer unk_2f50;
+    Timer unk_2f5c;
+    int unk_2f68;
+    Timer unk_2f6c;
+    EnemyBox unk_2f78[0x60];
+    EnemyBox unk_39f8[0xc2];
+    unsigned char unk_4f30[0x8];
+    Timer unk_4f38;
+    unsigned char unk_4f44[0x4];
 };
 ASSERT_SIZE(Enemy, 0x4f48);
 
@@ -55,3 +172,26 @@ ASSERT_SIZE(Enemy, 0x4f48);
 void MoveEnemyEffects(Enemy *enemy);
 // Lets go of the effects following `enemy`: each fades out, as th06's.
 void ReleaseEnemyEffects(Enemy *enemy);
+
+// The enemies, at 0x9a9b00, th06's EnemyManager. Placeholder name; only
+// what is known so far.
+class Unknown9a9b00
+{
+public:
+    // Zeroes everything and sets the template up, as th06's Initialize.
+    void Initialize();
+    // GuiImpl::StartMsgScript calls it with (0, 0) as a dialogue starts.
+    void Func423090(int unk0, int unk1);
+    // Whether one of the eight pointers at +0x954598 is set.
+    int Func4232a0();
+
+    // The stage's two enemy sprite files.
+    char *anmPath;
+    char *anmPath2;
+    // The template new enemies start from, and the enemies.
+    Enemy enemyTemplate;
+    Enemy enemies[0x1e1];
+    unsigned char unk_954598[0x178];
+};
+ASSERT_SIZE(Unknown9a9b00, 0x954710);
+extern Unknown9a9b00 g_Unknown9a9b00;
