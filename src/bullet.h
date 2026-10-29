@@ -192,6 +192,9 @@ public:
     // items only with `toItems`. Unlike th06's it adds nothing to the
     // score and shows no total. Returns the total.
     int ClearAllWithBonus(int maxBonus, int toItems);
+    // Turns every bullet of g_BulletManager within `radius` of `pos` into
+    // an item of type 6. Not in th06.
+    void ConvertBulletsToItems(D3DXVECTOR3 *pos, float radius);
     // Spawns bullet (`col`, `row`) of `shooter`'s pattern, aimed at
     // `aimAngle` by the aiming modes that use it. Returns 0, or 1 if no
     // bullet is free.
