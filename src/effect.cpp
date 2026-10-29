@@ -163,7 +163,7 @@ void OffsetPetalEffects(D3DXVECTOR3 *offset)
     {
         if (eff->type == 20 || eff->type == 31)
         {
-            eff->unk_27c += *offset;
+            eff->truePos += *offset;
         }
     }
 }
@@ -188,8 +188,8 @@ int EffectUpdatePetal(Effect *effect)
     float cosine;
 
     effect->step += effect->acceleration;
-    effect->unk_27c += effect->step;
-    effect->pos = effect->unk_27c;
+    effect->truePos += effect->step;
+    effect->pos = effect->truePos;
     v = effect->pos - g_Unknown134ccf8;
     D3DXVec3Normalize(&v, &v);
     cosine = D3DXVec3Dot(&g_Unknown134cd1c, &v);
@@ -211,10 +211,10 @@ int EffectInitPetal20(Effect *effect)
     int percent;
 
     back = -g_Unknown134cd04;
-    effect->unk_27c = g_Unknown134cd04 + g_Unknown134ccf8;
-    effect->unk_27c.x += g_Rng.GetRandomF32ZeroToOne() * 120.0f - 60.0f + back.x / 2.0f;
-    effect->unk_27c.y += g_Rng.GetRandomF32ZeroToOne() * 200.0f - 100.0f + back.y / 2.0f;
-    effect->unk_27c.z += g_Rng.GetRandomF32ZeroToOne() * 100.0f - 100.0f + back.z / 2.0f;
+    effect->truePos = g_Unknown134cd04 + g_Unknown134ccf8;
+    effect->truePos.x += g_Rng.GetRandomF32ZeroToOne() * 120.0f - 60.0f + back.x / 2.0f;
+    effect->truePos.y += g_Rng.GetRandomF32ZeroToOne() * 200.0f - 100.0f + back.y / 2.0f;
+    effect->truePos.z += g_Rng.GetRandomF32ZeroToOne() * 100.0f - 100.0f + back.z / 2.0f;
     effect->step.x = g_Rng.GetRandomF32ZeroToOne() * 0.06f - 0.03f + effect->velocity.x;
     effect->step.y = g_Rng.GetRandomF32ZeroToOne() * 0.06f - 0.03f + effect->velocity.y;
     effect->step.z = g_Rng.GetRandomF32ZeroToOne() * 0.1f + 0.03f + effect->velocity.z;
@@ -241,13 +241,13 @@ int EffectInitPetal26(Effect *effect)
 {
     int percent;
 
-    effect->unk_27c.x = g_Rng.GetRandomF32ZeroToOne() * 160.0f - 80.0f;
-    effect->unk_27c.y = g_Rng.GetRandomF32ZeroToOne() * 160.0f - 80.0f;
-    effect->unk_27c.z = g_Rng.GetRandomF32ZeroToOne() * 100.0f - 50.0f;
-    effect->step.x = -effect->unk_27c.y / effect->velocity.x;
-    effect->step.y = effect->unk_27c.x / effect->velocity.x;
+    effect->truePos.x = g_Rng.GetRandomF32ZeroToOne() * 160.0f - 80.0f;
+    effect->truePos.y = g_Rng.GetRandomF32ZeroToOne() * 160.0f - 80.0f;
+    effect->truePos.z = g_Rng.GetRandomF32ZeroToOne() * 100.0f - 50.0f;
+    effect->step.x = -effect->truePos.y / effect->velocity.x;
+    effect->step.y = effect->truePos.x / effect->velocity.x;
     effect->step.z = g_Rng.GetRandomF32ZeroToOne() * 0.1f + 0.09f;
-    effect->unk_27c += g_Unknown134cd04 / 2.0f + g_Unknown134ccf8;
+    effect->truePos += g_Unknown134cd04 / 2.0f + g_Unknown134ccf8;
     effect->step = effect->step * g_App.gameSpeed;
     effect->drawList = 1;
     effect->sprite.rotationZ = g_Rng.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
@@ -269,13 +269,13 @@ int EffectInitPetal26(Effect *effect)
 
 int EffectInitPetal27(Effect *effect)
 {
-    effect->unk_27c.x = g_Rng.GetRandomF32ZeroToOne() * 160.0f - 80.0f;
-    effect->unk_27c.y = g_Rng.GetRandomF32ZeroToOne() * 160.0f - 80.0f;
-    effect->unk_27c.z = g_Rng.GetRandomF32ZeroToOne() * 100.0f - 50.0f;
-    effect->step.x = -effect->unk_27c.y / effect->velocity.x;
-    effect->step.y = effect->unk_27c.x / effect->velocity.x;
+    effect->truePos.x = g_Rng.GetRandomF32ZeroToOne() * 160.0f - 80.0f;
+    effect->truePos.y = g_Rng.GetRandomF32ZeroToOne() * 160.0f - 80.0f;
+    effect->truePos.z = g_Rng.GetRandomF32ZeroToOne() * 100.0f - 50.0f;
+    effect->step.x = -effect->truePos.y / effect->velocity.x;
+    effect->step.y = effect->truePos.x / effect->velocity.x;
     effect->step.z = -(g_Rng.GetRandomF32ZeroToOne() * 0.2f) - 0.06f;
-    effect->unk_27c += g_Unknown134cd04 / 2.0f + g_Unknown134ccf8;
+    effect->truePos += g_Unknown134cd04 / 2.0f + g_Unknown134ccf8;
     effect->step = effect->step * g_App.gameSpeed;
     effect->drawList = 1;
     effect->sprite.rotationZ = g_Rng.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
@@ -292,13 +292,13 @@ int EffectInitPetal27(Effect *effect)
 
 int EffectInitPetal30(Effect *effect)
 {
-    effect->unk_27c.x = g_Rng.GetRandomF32ZeroToOne() * 160.0f - 80.0f;
-    effect->unk_27c.y = g_Rng.GetRandomF32ZeroToOne() * 160.0f - 80.0f;
-    effect->unk_27c.z = g_Rng.GetRandomF32ZeroToOne() * 100.0f - 100.0f;
+    effect->truePos.x = g_Rng.GetRandomF32ZeroToOne() * 160.0f - 80.0f;
+    effect->truePos.y = g_Rng.GetRandomF32ZeroToOne() * 160.0f - 80.0f;
+    effect->truePos.z = g_Rng.GetRandomF32ZeroToOne() * 100.0f - 100.0f;
     effect->step.x = g_Rng.GetRandomF32ZeroToOne() * 0.06f - 0.03f + effect->velocity.x;
     effect->step.y = g_Rng.GetRandomF32ZeroToOne() * 0.06f - 0.03f + effect->velocity.y;
     effect->step.z = g_Rng.GetRandomF32ZeroToOne() * 0.02f + 0.01f + effect->velocity.z;
-    effect->unk_27c += g_Unknown134cd04 / 2.0f + g_Unknown134ccf8;
+    effect->truePos += g_Unknown134cd04 / 2.0f + g_Unknown134ccf8;
     effect->drawList = 1;
     effect->sprite.rotationZ = g_Rng.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
     effect->sprite.rotationX = g_Rng.GetRandomF32ZeroToOne() * 0.06283186f - 0.031415928f;
@@ -314,13 +314,13 @@ int EffectInitPetal30(Effect *effect)
 
 int EffectInitPetal31(Effect *effect)
 {
-    effect->unk_27c.x = g_Rng.GetRandomF32ZeroToOne() * 160.0f - 80.0f;
-    effect->unk_27c.y = g_Rng.GetRandomF32ZeroToOne() * 160.0f - 80.0f;
-    effect->unk_27c.z = g_Rng.GetRandomF32ZeroToOne() * 200.0f - 0.0f;
+    effect->truePos.x = g_Rng.GetRandomF32ZeroToOne() * 160.0f - 80.0f;
+    effect->truePos.y = g_Rng.GetRandomF32ZeroToOne() * 160.0f - 80.0f;
+    effect->truePos.z = g_Rng.GetRandomF32ZeroToOne() * 200.0f - 0.0f;
     effect->step.x = g_Rng.GetRandomF32ZeroToOne() * 0.06f - 0.03f + effect->velocity.x;
     effect->step.y = g_Rng.GetRandomF32ZeroToOne() * 0.06f - 0.03f + effect->velocity.y;
     effect->step.z = -(g_Rng.GetRandomF32ZeroToOne() * 0.1f) + effect->velocity.z;
-    effect->unk_27c += g_Unknown134cd04 / 2.0f + g_Unknown134ccf8;
+    effect->truePos += g_Unknown134cd04 / 2.0f + g_Unknown134ccf8;
     effect->step = effect->step * g_App.gameSpeed;
     effect->drawList = 1;
     effect->sprite.rotationZ = g_Rng.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
@@ -371,8 +371,8 @@ int EffectUpdateDivergeEased(Effect *effect)
 int EffectUpdateFixedPos(Effect *effect)
 {
     effect->drawList = 1;
-    effect->unk_27c = g_Unknown134cd04 + g_Unknown134ccf8;
-    effect->pos = effect->unk_27c;
+    effect->truePos = g_Unknown134cd04 + g_Unknown134ccf8;
+    effect->pos = effect->truePos;
     effect->pos.z = 0.0f;
     effect->drawList = 3;
     return 1;

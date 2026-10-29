@@ -23,7 +23,7 @@ struct Effect
     // velocity, and changed by acceleration.
     D3DXVECTOR3 step;
     D3DXVECTOR3 acceleration;
-    D3DXVECTOR3 unk_27c;
+    D3DXVECTOR3 truePos;
     // The point an effect circles or comes in to, and its axis or
     // direction, as th06's. The vector and quaternion types are
     // load-bearing: with fewer, the Effect constructor copy (0x41a2f0)
