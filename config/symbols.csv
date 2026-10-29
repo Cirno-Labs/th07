@@ -77,7 +77,7 @@ address,size,name,symbol
 0x0040d9a0,216,Func40d9a0,
 0x0040da80,2048,Func40da80,
 0x0040e280,406,Func40e280,
-0x0040e420,197,Func40e420,
+0x0040e420,197,Unknown1347938::Load,?Load@Unknown1347938@@QAEHPAD@Z
 0x0040e4f0,50,Unknown1347938::Func40e4f0,?Func40e4f0@Unknown1347938@@QAEXXZ
 0x0040e530,128,Unknown1347938::StartSub,?StartSub@Unknown1347938@@QAEHPAUEnemyScriptState@@F@Z
 0x0040e5b0,1310,Func40e5b0,

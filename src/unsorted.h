@@ -1427,11 +1427,23 @@ extern int g_Unknown12fe0dc;
 struct Enemy;
 struct EnemyScriptState;
 
+// The head of an enemy script file: the subroutine count, then the
+// offsets of sixteen timelines, then those of the subroutines.
+struct EnemyScriptHeader
+{
+    short subCount;
+    short unk_2;
+    void *timelines[16];
+};
+
 // The object at 0x1347938, where th06 has its EnemyScripts.
 // Placeholder name; only what is known so far.
 class Unknown1347938
 {
 public:
+    // Loads the script file at `path` and turns its offsets into
+    // pointers, as th06's Load. Returns 0, or -1 if loading fails.
+    int Load(char *path);
     // Starts subroutine `sub` in `ctx`, from its first instruction with
     // both timers at 0, as th06's StartSub. Returns 0.
     int StartSub(EnemyScriptState *ctx, short sub);
@@ -1440,6 +1452,9 @@ public:
     int RunEnemy(Enemy *enemy);
     // Called where th06 calls EnemyScripts::Release.
     void Func40e4f0();
+
+    EnemyScriptHeader *file;
+    void **subs;
 };
 extern Unknown1347938 g_Unknown1347938;
 
