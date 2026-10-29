@@ -601,7 +601,8 @@ void RenderTextToTexture(int x, int y, int width, int unused, int fontHeight, in
                          COLORREF shadowColor, char *text, IDirect3DTexture8 *texture);
 
 // A 2D vector with a polar setter, out of line in the item file. Its
-// callers use it on fields of several objects. Placeholder name.
+// callers use it on fields of several objects. Named for what it is;
+// th06 has no counterpart.
 struct Vector2
 {
     // Sets x and y to `radius` along `angle`, with one fsincos.
@@ -680,8 +681,8 @@ struct GameConfig
     unsigned char pad_26[0x12];
 };
 
-// Holds the player's numbers (at 0x626270), with checksums against
-// tampering. Placeholder name.
+// The game's state and the player's numbers (at 0x626270), with checksums
+// against tampering, as th06's GameManager.
 class GameManager
 {
 public:
@@ -1080,8 +1081,7 @@ struct GuiImpl
 };
 ASSERT_SIZE(GuiImpl, 0x20a30);
 
-// The object at 0x49fbf0, th06's Gui. Placeholder name; only what is
-// known so far.
+// The in-game interface, at 0x49fbf0, as th06's Gui.
 class Gui
 {
 public:
@@ -1312,17 +1312,16 @@ struct EnemySpawnArgs
 
 struct EnemyTimelineEntry;
 
-// Something of 0x160 bytes in EnemyScripts. Unknown, except that it
-// ends with eight vectors: the original's static initializer runs their
-// (empty) constructors.
-struct EnemyScriptsUnknown8
+// 0x160 bytes in EnemyScripts that no code reads or writes. It ends
+// with eight vectors, whose (empty) constructors the original's static
+// initializer runs.
+struct EnemyScriptsUnusedBlock
 {
     unsigned char pad_0[0x100];
     D3DXVECTOR3 vectors[8];
 };
 
-// The object at 0x1347938, where th06 has its EnemyScripts.
-// Placeholder name; only what is known so far.
+// The enemy scripts (ECL), at 0x1347938, as th06's EnemyScripts.
 class EnemyScripts
 {
 public:
@@ -1351,7 +1350,7 @@ public:
 
     EnemyScriptHeader *file;
     void **subs;
-    EnemyScriptsUnknown8 unknown8;
+    EnemyScriptsUnusedBlock unused8;
     // The scripts' shared variables, 10037 to 10040 and 10041 to 10044.
     int globalInts[4];
     float globalFloats[4];

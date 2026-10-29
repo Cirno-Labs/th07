@@ -347,8 +347,7 @@ struct EnemyTimeline
     EnemyTimelineEntry *pos;
 };
 
-// The enemies, at 0x9a9b00, th06's EnemyManager. Placeholder name; only
-// what is known so far.
+// The enemies, at 0x9a9b00, as th06's EnemyManager.
 class EnemyManager
 {
 public:
