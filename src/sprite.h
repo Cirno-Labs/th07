@@ -215,6 +215,9 @@ public:
     // rectangle at (`dstLeft`, `dstTop`) of texture `texture`.
     void CopyBackBufferToTexture(int texture, int srcLeft, int srcTop, int srcWidth, int srcHeight, int dstLeft,
                                  int dstTop, int dstWidth, int dstHeight);
+    // Copies rectangle `srcRect` of texture `srcTexture` into rectangle
+    // `dstRect` of texture `dstTexture`. Not in th06.
+    void CopyTextureRect(int dstTexture, int srcTexture, RECT *dstRect, RECT *srcRect);
     // Does the copy CopyBackBufferToTexture that `pendingCopy` asks for,
     // if any, and clears it.
     void DoPendingCopy();

@@ -295,3 +295,36 @@ void SpriteEngine::CopyBackBufferToTexture(int texture, int srcLeft, int srcTop,
     dest->Release();
     backBuffer->Release();
 }
+
+void SpriteEngine::CopyTextureRect(int dstTexture, int srcTexture, RECT *dstRect, RECT *srcRect)
+{
+    IDirect3DSurface8 *dest;
+    IDirect3DSurface8 *src;
+
+    if (this->textures[dstTexture] == NULL)
+    {
+        return;
+    }
+    if (this->textures[srcTexture] == NULL)
+    {
+        return;
+    }
+    this->Func44f5c0();
+    if (this->textures[dstTexture]->GetSurfaceLevel(0, &dest) != D3D_OK)
+    {
+        return;
+    }
+    if (this->textures[srcTexture]->GetSurfaceLevel(0, &src) != D3D_OK)
+    {
+        dest->Release();
+        return;
+    }
+    if (D3DXLoadSurfaceFromSurface(dest, NULL, dstRect, src, NULL, srcRect, D3DX_DEFAULT, 0) != D3D_OK)
+    {
+        dest->Release();
+        src->Release();
+        return;
+    }
+    dest->Release();
+    src->Release();
+}
