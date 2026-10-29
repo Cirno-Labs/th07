@@ -90,3 +90,13 @@ BulletCommand *Bullet::RestartCommand(int idx, int unk_14, DWORD flag)
     this->commandIndex = 0;
     return cmd;
 }
+
+BulletCommand *BulletShooter::StartCommand(int idx, int unk_14, DWORD flag)
+{
+    BulletCommand *cmd = &this->commands[idx];
+
+    cmd->flag = flag;
+    cmd->unk_14 = unk_14;
+    this->flags |= flag;
+    return cmd;
+}

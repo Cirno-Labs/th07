@@ -102,6 +102,10 @@ ASSERT_SIZE(Bullet, 0xd68);
 // What a bullet pattern fires, as th06's.
 struct BulletShooter
 {
+    // Sets command `idx` to run under `flag` and adds `flag` to flags.
+    // Returns the command.
+    BulletCommand *StartCommand(int idx, int unk_14, DWORD flag);
+
     // The bullet type, and its color.
     short sprite;
     short color;
