@@ -123,7 +123,7 @@ address,size,name,symbol
 0x0041a350,25,EffectManager::Reset,?Reset@EffectManager@@QAEXXZ
 0x0041a370,375,EffectInitDrift,?EffectInitDrift@@YIHPAUEffect@@@Z
 0x0041a4f0,166,EffectUpdateMove,?EffectUpdateMove@@YIHPAUEffect@@@Z
-0x0041a5a0,387,Func41a5a0,
+0x0041a5a0,387,EffectInitDriftFast,?EffectInitDriftFast@@YIHPAUEffect@@@Z
 0x0041a730,23,Func41a730,
 0x0041a750,773,Func41a750,
 0x0041aa60,136,Func41aa60,

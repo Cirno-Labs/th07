@@ -37,6 +37,17 @@ int EffectUpdateMove(Effect *effect)
     return 1;
 }
 
+int EffectInitDriftFast(Effect *effect)
+{
+    effect->step.x = (g_Rng.GetRandomF32ZeroToOne() * 256.0f - 128.0f) * 4.0f / 33.0f;
+    effect->step.y = (g_Rng.GetRandomF32ZeroToOne() * 256.0f - 128.0f) * 4.0f / 33.0f;
+    effect->step.z = 0.0f;
+    effect->acceleration = -effect->step / 20.0f;
+    effect->step *= g_App.unk_178;
+    effect->acceleration *= g_App.unk_178;
+    return 0;
+}
+
 Effect *EffectManager::SpawnEffect(int type, D3DXVECTOR3 *pos, int count, D3DCOLOR color)
 {
     Effect *effect;

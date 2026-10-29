@@ -74,6 +74,10 @@ int EffectInitDrift(Effect *effect);
 // th06's (without frameAdvance). Returns 1.
 int EffectUpdateMove(Effect *effect);
 
+// Like EffectInitDrift, faster, slowing to a stop over 20 frames, as
+// th06's EffectUpdateDriftFast.
+int EffectInitDriftFast(Effect *effect);
+
 // The effects, at 0x12fe250: 400 started in turn, 8 reserved slots and
 // a spare.
 class EffectManager
