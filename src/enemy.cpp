@@ -22,7 +22,7 @@ void MoveEnemyEffects(Enemy *enemy)
         {
             continue;
         }
-        eff->sprite.visible = !enemy->flags.unk_b;
+        eff->sprite.visible = !enemy->flags.hideFollowEffects;
         eff->origin = enemy->pos;
         if (eff->radius < enemy->effectRadius)
         {
@@ -82,7 +82,7 @@ void EnemyManager::Initialize()
     }
     enemy->flags.active = 1;
     enemy->callbackTimer.Set(0);
-    enemy->flags.unk_13 = 0;
+    enemy->flags.onScreen = 0;
     enemy->hitboxSize = D3DXVECTOR3(12.0f, 12.0f, 12.0f);
     enemy->velocity = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
     enemy->angularVelocity = 0.0f;
@@ -106,11 +106,11 @@ void EnemyManager::Initialize()
     enemy->turnRight = -1;
     enemy->turnStill = -1;
     enemy->flags.shootable = 1;
-    enemy->flags.unk_9 = 1;
+    enemy->flags.contactDamage = 1;
     enemy->flags.unk_a = 1;
-    enemy->flags.unk_b = 0;
-    enemy->flags.unk_c = 1;
-    enemy->flags.unk_d = 0;
+    enemy->flags.hideFollowEffects = 0;
+    enemy->flags.takesDamage = 1;
+    enemy->flags.grazeable = 0;
     enemy->flags.deathMode = 0;
     enemy->deathSub = -1;
     enemy->flags.clampPos = 0;
@@ -565,13 +565,13 @@ void Enemy::CheckPlayerContact(D3DXVECTOR3 *pos, D3DXVECTOR3 *size)
     D3DXVECTOR3 box;
 
     box = *size / 0.7f;
-    if (this->flags.unk_d && this->callbackTimer.HasTicked() && this->callbackTimer.current % 6 == 0)
+    if (this->flags.grazeable && this->callbackTimer.HasTicked() && this->callbackTimer.current % 6 == 0)
     {
         g_Player.CheckGraze(pos, &box);
     }
     box = *size / 1.5f;
     if (g_Player.CheckHit(pos, &box) == 1 && this->flags.shootable && !this->flags.isBoss &&
-        !this->flags.unk_d)
+        !this->flags.grazeable)
     {
         this->life -= 10;
     }
@@ -654,7 +654,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
             continue;
         }
         mgr->enemyCount++;
-        if (enemy->flags.unk_1b && (g_Player.bomb.running || g_Player.playerState))
+        if (enemy->flags.haltedByBomb && (g_Player.bomb.running || g_Player.playerState))
         {
             enemy->callbackTimer.Sub(1);
             goto flash;
@@ -666,7 +666,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
             enemy->Despawn();
             continue;
         }
-        if (!enemy->flags.unk_18)
+        if (!enemy->flags.isWarpingToBoss)
         {
             enemy->ClampPos();
             enemy->Move();
@@ -690,15 +690,15 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
         }
         if (enemy->sprite.spriteData == NULL)
         {
-            enemy->flags.unk_b = 1;
+            enemy->flags.hideFollowEffects = 1;
         }
-        if (!enemy->flags.unk_b && !enemy->flags.unk_13 &&
+        if (!enemy->flags.hideFollowEffects && !enemy->flags.onScreen &&
             g_Unknown626270.IsInPlayArea(enemy->pos.x, enemy->pos.y, enemy->sprite.spriteData->width,
                                          enemy->sprite.spriteData->height))
         {
-            enemy->flags.unk_13 = 1;
+            enemy->flags.onScreen = 1;
         }
-        if (enemy->flags.unk_13 == 1 &&
+        if (enemy->flags.onScreen == 1 &&
             ((!enemy->trailFlags &&
               !g_Unknown626270.IsInPlayArea(enemy->pos.x, enemy->pos.y, enemy->sprite.spriteData->width,
                                             enemy->sprite.spriteData->height)) ||
@@ -709,7 +709,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                                             enemy->trailBoxes[enemy->trailSegmentCount - 1].pos.y,
                                             enemy->sprite.spriteData->width,
                                             enemy->sprite.spriteData->height))) &&
-            !enemy->flags.unk_17)
+            !enemy->flags.staysOffscreen)
         {
             enemy->flags.active = 0;
             enemy->Despawn();
@@ -735,9 +735,9 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
         }
         bomb = 0;
         hit = 0;
-        if (!enemy->flags.unk_b && !enemy->flags.unk_1a)
+        if (!enemy->flags.hideFollowEffects && !enemy->flags.unk_1a)
         {
-            if (enemy->flags.shootable && enemy->flags.unk_9)
+            if (enemy->flags.shootable && enemy->flags.contactDamage)
             {
                 enemy->CheckPlayerContact(&enemy->pos, &enemy->hitboxSize);
                 if (enemy->trailFlags)
@@ -754,7 +754,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                 }
             }
             enemy->lastDamage = 0;
-            if (enemy->flags.shootable && enemy->flags.unk_c)
+            if (enemy->flags.shootable && enemy->flags.takesDamage)
             {
                 hurt = g_Player.CalcDamage(&enemy->pos, &enemy->hitboxSize, &bomb);
                 if (enemy->extraHitboxSize.x > 0.0f)
@@ -1033,7 +1033,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
             {
                 D3DXVECTOR3 markerPos;
 
-                if (!enemy->flags.unk_b)
+                if (!enemy->flags.hideFollowEffects)
                 {
                     markerPos.x = enemy->pos.x + 32.0f;
                 }
@@ -1056,7 +1056,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
         {
             enemy->invulnTimer.Sub(1);
         }
-        if (!enemy->flags.unk_b && enemy->flags.active)
+        if (!enemy->flags.hideFollowEffects && enemy->flags.active)
         {
             enemy->nextInDrawList = mgr->unk_954700[enemy->drawListIndex];
             mgr->unk_954700[enemy->drawListIndex] = enemy;
@@ -1373,7 +1373,7 @@ int EnemyManager::ClearEnemiesForBonus(int maxBonus, int start)
             continue;
         }
         enemy->life = 0;
-        if (enemy->flags.unk_d)
+        if (enemy->flags.grazeable)
         {
             g_ItemManager.SpawnItem(&enemy->pos, 6, 1);
             g_AsciiText.AddPopup(&enemy->pos, bonus, bonus >= maxBonus ? 0xffffff00 : 0xffffffff);

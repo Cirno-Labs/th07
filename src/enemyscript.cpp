@@ -1048,19 +1048,19 @@ loop:
         case 41:
             value = instr->args[0].i;
             enemy->ctx.code = (char *)instr + instr->size;
-            if (!enemy->flags.unk_15)
+            if (!enemy->flags.disableCallStack)
             {
                 enemy->savedCtx[enemy->stackDepth] = enemy->ctx;
             }
             g_Unknown1347938.StartSub(&enemy->ctx, value);
             memcpy(enemy->ctx.vars.ints3, g_Unknown1347938.globalInts, sizeof(int) * 8);
-            if (!enemy->flags.unk_15 && enemy->stackDepth < 15)
+            if (!enemy->flags.disableCallStack && enemy->stackDepth < 15)
             {
                 enemy->stackDepth++;
             }
             goto restart;
         case 42:
-            if (enemy->flags.unk_15)
+            if (enemy->flags.disableCallStack)
             {
                 DebugPrint("error : no Stack Ret\r\n");
             }
@@ -1513,13 +1513,13 @@ loop:
             enemy->extraHitboxSize.z = FLOAT_ARG(2);
             break;
         case 102:
-            enemy->flags.unk_9 = instr->args[0].i;
+            enemy->flags.contactDamage = instr->args[0].i;
             break;
         case 103:
             enemy->flags.unk_a = instr->args[0].i;
             break;
         case 104:
-            enemy->flags.unk_c = instr->args[0].i;
+            enemy->flags.takesDamage = instr->args[0].i;
             break;
         case 105:
             g_SoundPlayer.QueueSound(INT_ARG(0), 0);
@@ -1537,7 +1537,7 @@ loop:
             enemy->pendingInterrupt = INT_ARG(0);
         interrupt:
             enemy->ctx.code = (char *)instr + instr->size;
-            if (!enemy->flags.unk_15)
+            if (!enemy->flags.disableCallStack)
             {
                 enemy->savedCtx[enemy->stackDepth] = enemy->ctx;
             }
@@ -1750,7 +1750,7 @@ loop:
             enemy->shooter.unk_cc = INT_ARG(1);
             break;
         case 130:
-            enemy->flags.unk_15 = instr->args[0].i;
+            enemy->flags.disableCallStack = instr->args[0].i;
             break;
         case 131:
             enemy->rankSpeedLow = FLOAT_ARG(0);
@@ -1761,7 +1761,7 @@ loop:
             enemy->rankCount2High = INT_ARG(5);
             break;
         case 132:
-            enemy->flags.unk_b = instr->args[0].i;
+            enemy->flags.hideFollowEffects = instr->args[0].i;
             break;
         case 133:
             enemy->timerCallbackSub = enemy->deathSub;
@@ -1771,11 +1771,11 @@ loop:
             enemy->flags.keepSpellCard = instr->args[0].i;
             break;
         case 136:
-            enemy->flags.unk_d = instr->args[0].i;
+            enemy->flags.grazeable = instr->args[0].i;
             enemy->drawListIndex = 2;
             break;
         case 137:
-            enemy->flags.unk_17 = instr->args[0].i;
+            enemy->flags.staysOffscreen = instr->args[0].i;
             break;
         case 138:
             enemy->trailFlags = instr->args[0].i;
@@ -1839,7 +1839,7 @@ loop:
             g_Unknown626270.AddBonusPoints(INT_ARG(0));
             break;
         case 161:
-            enemy->flags.unk_1b = INT_ARG(0);
+            enemy->flags.haltedByBomb = INT_ARG(0);
             break;
         }
     next:
@@ -2114,7 +2114,7 @@ void WarpToBoss(Enemy *enemy, EnemyScriptInstr *instr)
     enemy->pos = g_Unknown9a9b00.bosses[boss]->pos;
     enemy->velocity = g_Unknown9a9b00.bosses[boss]->velocity;
     enemy->angle = g_Unknown9a9b00.bosses[boss]->angle;
-    enemy->flags.unk_18 = 1;
+    enemy->flags.isWarpingToBoss = 1;
 }
 
 void ShakeAndSpinBullets(Enemy *enemy, EnemyScriptInstr *instr)

@@ -23,35 +23,35 @@ struct EnemyFlags
     unsigned char active : 1;
     // Can be shot and killed, as th06's.
     unsigned char shootable : 1;
-    unsigned char unk_9 : 1;
+    unsigned char contactDamage : 1;
     unsigned char unk_a : 1;
     // Hides the effects that follow the enemy.
-    unsigned char unk_b : 1;
-    unsigned char unk_c : 1;
-    unsigned char unk_d : 1;
+    unsigned char hideFollowEffects : 1;
+    unsigned char takesDamage : 1;
+    unsigned char grazeable : 1;
     // A boss, as th06's isBoss.
     unsigned char isBoss : 1;
     // Keeps the position within lowerBound and upperBound, as th06's.
     unsigned char clampPos : 1;
     // What dying does, as th06's.
     unsigned char deathMode : 3;
-    unsigned char unk_13 : 1;
+    unsigned char onScreen : 1;
     // Turns the main sprite with the enemy's angle, as th06's.
     unsigned char rotateSprite : 1;
-    unsigned char unk_15 : 1;
+    unsigned char disableCallStack : 1;
     // CheckTimerCallback leaves the spell card and the bullets alone, as
     // th06's.
     unsigned char keepSpellCard : 1;
-    unsigned char unk_17 : 1;
+    unsigned char staysOffscreen : 1;
     // Set by WarpToBoss.
-    unsigned char unk_18 : 1;
+    unsigned char isWarpingToBoss : 1;
     // Cleared as a spell card starts.
     unsigned char unk_19 : 1;
     unsigned char unk_1a : 1;
     // While a bomb runs or the player is not in playerState 0, OnUpdate
     // skips the enemy's script, movement and damage, and holds
     // callbackTimer back.
-    unsigned char unk_1b : 1;
+    unsigned char haltedByBomb : 1;
 };
 
 // The variables of an enemy's script, by number from 10000: 10000 to
