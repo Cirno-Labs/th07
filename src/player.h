@@ -266,6 +266,18 @@ public:
     // A draw callback, as th06's: draws the bullets that hit
     // (DrawHitBullets). Returns 1.
     static int OnDraw2(Player *player);
+    // The damage the player's bullets and bomb hitboxes deal to an
+    // enemy's `size` box at `pos`, as th06's; none while stateTimer
+    // has not ticked. A flying bullet (or a hit one of type 3) that
+    // meets it deals its damage (a third, at least 1, while a bomb
+    // runs), unless it is of type 4 or 5 on an odd frame or its hit
+    // callback returns nonzero; then, unless of type 4 or 5, it is
+    // marked hit (restarting its script 0x20 on and bursting effect 5
+    // if it was flying) and, unless of type 3, slowed to an eighth.
+    // Each unk_9dc box that meets it deals its unk_18 and adds it to
+    // its unk_1c; every fourth such hit bursts effect 3 at `pos` (5
+    // for the last 0x10 boxes), and during a bomb sets *hitByBomb.
+    int CalcDamage(D3DXVECTOR3 *pos, D3DXVECTOR3 *size, int *hitByBomb);
     // Whether a `size` box at `pos` meets one of unk_17dc's areas: a box
     // while its width is set, else a circle of radius unk_10 if that is
     // set. Keeps the area's unk_1c in unk_2404 and returns 2 if so, else

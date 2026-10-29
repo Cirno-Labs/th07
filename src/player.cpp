@@ -682,6 +682,114 @@ void Player::StartFiring(Player *player)
     }
 }
 
+// The corners of a `size` box centred on `pos`.
+inline void GetBox(D3DXVECTOR3 *pos, D3DXVECTOR3 *size, D3DXVECTOR3 &min, D3DXVECTOR3 &max)
+{
+    min.x = pos->x - size->x * 0.5f;
+    min.y = pos->y - size->y * 0.5f;
+    max.x = size->x * 0.5f + pos->x;
+    max.y = size->y * 0.5f + pos->y;
+}
+
+int Player::CalcDamage(D3DXVECTOR3 *pos, D3DXVECTOR3 *size, int *hitByBomb)
+{
+    PlayerBullet *cur;
+    int idx;
+    // The enemy's box, and the box of the bullet or bomb hitbox tested.
+    D3DXVECTOR3 eMin;
+    D3DXVECTOR3 eMax;
+    D3DXVECTOR3 targetLo;
+    D3DXVECTOR3 targetHi;
+    int damage;
+
+    damage = 0;
+    if (!this->stateTimer.HasTicked())
+    {
+        return 0;
+    }
+    GetBox(pos, size, eMin, eMax);
+    cur = this->bullets;
+    if (hitByBomb != NULL)
+    {
+        *hitByBomb = 0;
+    }
+    for (idx = 0; idx < 0x60; idx++, cur++)
+    {
+        if (cur->state == 0 || (cur->state != 1 && cur->type != 3))
+        {
+            continue;
+        }
+        GetBox(&cur->pos, &cur->size, targetLo, targetHi);
+        if (targetLo.y > eMax.y || targetLo.x > eMax.x || targetHi.y < eMin.y || targetHi.x < eMin.x)
+        {
+            continue;
+        }
+        if ((cur->type == 4 || cur->type == 5) && cur->timer.current % 2 != 0)
+        {
+            continue;
+        }
+        if (cur->hit != NULL && cur->hit(this, cur, pos))
+        {
+            continue;
+        }
+        if (!this->bomb.running)
+        {
+            damage += cur->damage;
+        }
+        else
+        {
+            damage += (cur->damage / 3 != 0) ? cur->damage / 3 : 1;
+        }
+        if (cur->type != 4 && cur->type != 5)
+        {
+            if (cur->state == 1)
+            {
+                g_SpriteEngine->StartScript(&cur->sprite, cur->sprite.scriptIndex + 0x20);
+                g_EffectManager.SpawnEffect(5, &cur->pos, 1, 0xffffffff);
+                cur->pos.z = 0.1f;
+            }
+            cur->state = 2;
+            if (cur->type != 3)
+            {
+                cur->velocity.x /= 8.0f;
+                cur->velocity.y /= 8.0f;
+            }
+        }
+    }
+    for (idx = 0; idx < 0x70; idx++)
+    {
+        if (this->unk_9dc[idx].size.x <= 0.0f)
+        {
+            continue;
+        }
+        targetLo = this->unk_9dc[idx].pos - this->unk_9dc[idx].size / 2.0f;
+        targetHi = this->unk_9dc[idx].size / 2.0f + this->unk_9dc[idx].pos;
+        if (targetLo.x > eMax.x || targetHi.x < eMin.x || targetLo.y > eMax.y || targetHi.y < eMin.y)
+        {
+            continue;
+        }
+        damage += this->unk_9dc[idx].unk_18;
+        this->unk_9dc[idx].unk_1c += this->unk_9dc[idx].unk_18;
+        this->hitCounter++;
+        if (this->hitCounter % 4 == 0)
+        {
+            if (idx < 0x60)
+            {
+                g_EffectManager.SpawnEffect(3, pos, 1, 0xffffffff);
+            }
+            else
+            {
+                g_EffectManager.SpawnEffect(5, pos, 1, 0xffffffff);
+            }
+        }
+        if (this->bomb.running && hitByBomb != NULL)
+        {
+            *hitByBomb = 1;
+        }
+    }
+    return damage;
+}
+
 int Player::CheckAreaHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size)
 {
     int idx;

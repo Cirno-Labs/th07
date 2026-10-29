@@ -450,7 +450,7 @@ address,size,name,symbol
 0x0043d790,229,DrawHitBullets,?DrawHitBullets@@YIXPAVPlayer@@@Z
 0x0043d880,264,UpdateFiring,?UpdateFiring@@YIHPAVPlayer@@@Z
 0x0043d990,72,Player::StartFiring,?StartFiring@Player@@SIXPAV1@@Z
-0x0043d9e0,1724,Func43d9e0,
+0x0043d9e0,1724,Player::CalcDamage,?CalcDamage@Player@@QAEHPAUD3DXVECTOR3@@0PAH@Z
 0x0043e0a0,442,Player::CheckAreaHit,?CheckAreaHit@Player@@QAEHPAUD3DXVECTOR3@@0@Z
 0x0043e260,324,Player::CheckHit,?CheckHit@Player@@QAEHPAUD3DXVECTOR3@@0@Z
 0x0043e3b0,293,Player::CheckGraze,?CheckGraze@Player@@QAEHPAUD3DXVECTOR3@@0@Z
