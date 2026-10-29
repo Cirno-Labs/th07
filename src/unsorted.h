@@ -1251,6 +1251,11 @@ public:
     // stage clear bonus once impl->stageClearShown is set, the dialogue,
     // DrawBanners, DrawHud and the popups. Returns 1.
     static int OnDraw(Unknown49fbf0 *gui);
+    // Shows the player's bomb, spell card `name`, with sprite `sprite`
+    // in bombPortrait (script 0x4a1), scripts 0x4a4 and 0x4a6 with
+    // sprite 0x4ac, and bombName (script 0x704); sends bombNameBar
+    // interrupt 1, plays sound 14 and sets g_App.redrawFrames to 2.
+    void ShowBombName(int sprite, char *name);
     // As th06's DrawBanners and DrawHud.
     void DrawBanners();
     void DrawHud();
@@ -1292,6 +1297,8 @@ public:
     unsigned int grazeChanged : 2;
     unsigned int unk_4_8 : 2;
     GuiImpl *impl;
+    // The width of the text ShowBombName shows, from its length.
+    float bombNameWidth;
 };
 extern Unknown49fbf0 g_Unknown49fbf0;
 // Copies the rectangle of sprite `sprite` in texture 0x16 into sprite

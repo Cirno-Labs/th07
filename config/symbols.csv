@@ -236,7 +236,7 @@ address,size,name,symbol
 0x00427d92,234,CopySpriteToTexture,?CopySpriteToTexture@@YIXH@Z
 0x00427e7c,166,Unknown49fbf0::OnUpdate,?OnUpdate@Unknown49fbf0@@SIHPAV1@@Z
 0x00427f22,1899,Unknown49fbf0::OnDraw,?OnDraw@Unknown49fbf0@@SIHPAV1@@Z
-0x0042868d,506,Func42868d,
+0x0042868d,506,Unknown49fbf0::ShowBombName,?ShowBombName@Unknown49fbf0@@QAEXHPAD@Z
 0x00428887,658,Func428887,
 0x00428b19,3580,Func428b19,
 0x00429935,195,Func429935,

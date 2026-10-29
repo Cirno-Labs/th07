@@ -264,3 +264,19 @@ int Unknown49fbf0::OnDraw(Unknown49fbf0 *gui)
     g_AsciiText.inArena = 0;
     return 1;
 }
+
+void Unknown49fbf0::ShowBombName(int sprite, char *name)
+{
+    g_SpriteEngine->StartScript(&this->impl->bombPortrait, 0x4a1);
+    g_SpriteEngine->SetSprite(&this->impl->bombPortrait, sprite);
+    g_SpriteEngine->StartScript(&this->impl->unk_5be4, 0x4a4);
+    g_SpriteEngine->SetSprite(&this->impl->unk_5be4, 0x4ac);
+    g_SpriteEngine->StartScript(&this->impl->unk_607c, 0x4a6);
+    g_SpriteEngine->SetSprite(&this->impl->unk_607c, 0x4ac);
+    g_SpriteEngine->StartScript(&this->impl->bombName, 0x704);
+    g_SpriteEngine->RenderText(&this->impl->bombName, 0xf0f0ff, 0, name);
+    this->bombNameWidth = strlen(name) * 15 / 2.0f + 16.0f;
+    this->impl->bombNameBar.SetPendingInterrupt(1);
+    g_SoundPlayer.QueueSound(14, 0);
+    g_App.redrawFrames = 2;
+}
