@@ -12,7 +12,7 @@ The standalone exe links src/ without src/dll/ but with src/exe/ (the
 game's data and global objects, which the DLL takes from the original)
 against the real libraries, plus the original's resources.
 """
-import collections, csv, glob, os, struct, subprocess, sys
+import collections, csv, glob, json, os, struct, subprocess, sys
 from concurrent.futures import ThreadPoolExecutor
 
 import coff
@@ -91,6 +91,8 @@ def compile_all(target=DLL):
 
     Sources are UTF-8, but the game's strings are Shift-JIS and MSVC 7
     copies string bytes as they are, so each file is converted first.
+    An object is rebuilt when its source or any header is newer, or when
+    its flags changed: build/obj/flags.json records them.
     """
     os.makedirs(OBJ, exist_ok=True)
     for src in glob.glob("src/**/*.*", recursive=True):
@@ -102,25 +104,39 @@ def compile_all(target=DLL):
             with open(copy, "wb") as f:
                 f.write(to_sjis(text))
     headers = max((os.path.getmtime(h) for h in glob.glob("src/**/*.h", recursive=True)), default=0)
+    record = os.path.join(OBJ, "flags.json")
+    try:
+        with open(record) as f:
+            built = json.load(f)
+    except (OSError, ValueError):
+        built = {}
     objs, stale = [], []
     for src, obj in sources(target):
         objs.append(obj)
-        if not (os.path.exists(obj) and os.path.getmtime(obj) > max(os.path.getmtime(src), headers)):
-            stale.append((src, obj))
+        flags = file_flags(src)
+        if not (os.path.exists(obj) and os.path.getmtime(obj) > max(os.path.getmtime(src), headers)
+                and built.get(obj) == flags):
+            stale.append((src, obj, flags))
 
     def compile_one(job):
-        src, obj = job
-        return run_tool("cl", "/c", *file_flags(src), "/I" + win(SJIS), "/Fo" + win(obj),
+        src, obj, flags = job
+        return run_tool("cl", "/c", *flags, "/I" + win(SJIS), "/Fo" + win(obj),
                         win(os.path.join(SJIS, os.path.relpath(src, "src"))))
 
     failed = 0
     with ThreadPoolExecutor(JOBS) as pool:
         # Results come back in source order, so the output reads as before.
-        for (src, obj), (code, out) in zip(stale, pool.map(compile_one, stale)):
+        for (src, obj, flags), (code, out) in zip(stale, pool.map(compile_one, stale)):
             print("cl", src)
             if out:
                 print(out)
-            failed = failed or code
+            if code:
+                built.pop(obj, None)
+                failed = failed or code
+            else:
+                built[obj] = flags
+    with open(record, "w") as f:
+        json.dump(built, f, indent=1, sort_keys=True)
     if failed:
         sys.exit(failed)
     return objs
