@@ -708,6 +708,11 @@ class Rng
 public:
     // Advances the generator and returns 16 random bits.
     WORD GetRandomU16();
+    // `generated`, read through a temporary.
+    DWORD GetGenerated()
+    {
+        return this->generated;
+    }
     // Unlike th06's, leaves `generated` alone.
     void SetSeed(WORD seed)
     {
@@ -1049,7 +1054,9 @@ public:
         this->unk_93d8Bit3 = value;
     }
 
-    unsigned char unk_0[0x4];
+    // A block of random size that AddedCallback allocates and frees
+    // before it allocates unk_4 and stats.
+    void *unk_0;
     Unknown626270Unk4 *unk_4;
     Unknown626270Stats *stats;
     // Set while the game is paused: the screen shake holds still. As
@@ -1059,7 +1066,8 @@ public:
     char unk_d;
     unsigned char unk_e[0x2];
     int difficulty;
-    unsigned char unk_14[0x4];
+    // 1 << difficulty, set by AddedCallback.
+    int unk_14;
     // The spell card chunks of the score file, by card.
     Catk catks[0x8d];
     // A copy of catks, put back when no score is recorded.
@@ -1163,6 +1171,17 @@ struct RankSettings
 };
 // By difficulty.
 extern RankSettings g_Ranks[6];
+
+// The enemy ANM files of a stage, as th06's.
+struct EnemyAnmPaths
+{
+    char *anmPath;
+    char *anmPath2;
+};
+// By stage, from "dummy" for stage 0.
+extern EnemyAnmPaths g_EnemyAnmPaths[];
+// The enemy script files, by stage.
+extern char *g_EclPaths[];
 
 // The sum of the `size` bytes at `data`. Adds
 // g_Unknown626270.stats->unk_b4[2] to its unk_ac for every byte.

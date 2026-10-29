@@ -438,6 +438,294 @@ void IncrementStatCounter(DWORD *count, DWORD max)
     }
 }
 
+int GameManager::AddedCallback(GameManager *mgr)
+{
+    int size;
+    int shot;
+    WORD seed;
+
+    g_App.unk_2b8 = 0;
+    mgr->unk_14 = 1 << mgr->difficulty;
+    mgr->unk_93d7 = mgr->character * 2 + mgr->shotType;
+    g_App.unk_194 = timeGetTime();
+    g_App.unk_178 = 1.0f;
+    if (g_App.scene != 3)
+    {
+        DrawLoadingScreen();
+        if (mgr->unk_4 != NULL)
+        {
+            delete mgr->unk_4;
+            mgr->unk_4 = NULL;
+        }
+        if (mgr->stats != NULL)
+        {
+            delete mgr->stats;
+            mgr->stats = NULL;
+        }
+        size = g_Rng.GetRandomU32InRange(0xffff) + 0x10;
+        mgr->unk_0 = malloc(size);
+        mgr->unk_4 = new Unknown626270Unk4;
+        mgr->stats = new Unknown626270Stats;
+        RerollStatsChecksumKeys();
+        *mgr->unk_4 = *(Unknown626270Unk4 *)&g_App.controllerMapping;
+        MemFree(mgr->unk_0);
+        mgr->unk_93d4 = 0;
+        mgr->unk_961c = mgr->stats->unk_88;
+        mgr->unk_9620 = mgr->stats->unk_88;
+        if (g_Unknown626270.difficulty >= 4)
+        {
+            mgr->unk_4->lifeCount = 2;
+        }
+        if (g_Unknown626270.unk_93d8 & 1)
+        {
+            mgr->unk_4->lifeCount = 8;
+        }
+        if (Player::RegisterChain(0) != 0)
+        {
+            LogPrintf(&g_Log, "error : プレイヤーの初期化に失敗しました\r\n");
+            return -1;
+        }
+        if (!((g_Unknown626270.unk_93d8 >> 3) & 1))
+        {
+            g_Unknown626270.SetLives(mgr->unk_4->lifeCount);
+            g_Unknown626270.RerollChecksumKeys();
+            g_Unknown626270.SetBombs(g_Player.shotType->bombs);
+        }
+        mgr->SetPlayArea();
+        mgr->stats->power = 0.0f;
+        mgr->RerollChecksumKeys();
+        mgr->progressFrames = 0;
+        mgr->stats->guiScore = 0;
+        mgr->stats->score = 0;
+        mgr->stats->unk_8 = 0;
+        mgr->stats->highScore = 100000;
+        mgr->stats->continuesUsed = 0;
+        mgr->stats->grazeTotal = 0;
+        mgr->stats->pointItemsTotal = 0;
+        if (mgr->difficulty < 4)
+        {
+            mgr->stats->unk_30 = 50;
+        }
+        else
+        {
+            mgr->stats->unk_30 = 200;
+            mgr->unk_4->unk_25 = 0;
+        }
+        mgr->stats->unk_2c = 0;
+        if (LoadScoreFile() != 0)
+        {
+            return -1;
+        }
+        mgr->SetRankForDifficulty();
+        mgr->stats->deaths = 0.0f;
+        mgr->RerollChecksumKeys();
+        mgr->stats->bombsUsed = 0.0f;
+        mgr->RerollChecksumKeys();
+        mgr->stats->spellCardsCaptured = 0;
+        if (!(g_Unknown626270.unk_93d8 & 1))
+        {
+            switch (mgr->difficulty)
+            {
+            case 0:
+                mgr->unk_9618 = mgr->stats->unk_88 + 200000;
+                break;
+            case 1:
+                mgr->unk_9618 = mgr->stats->unk_88 + 200000;
+                break;
+            case 2:
+                mgr->unk_9618 = mgr->stats->unk_88 + 250000;
+                break;
+            case 3:
+                mgr->unk_9618 = mgr->stats->unk_88 + 300000;
+                break;
+            case 4:
+                mgr->unk_9618 = mgr->stats->unk_88 + 400000;
+                mgr->unk_961c = mgr->stats->unk_88 + 200000;
+                break;
+            case 5:
+                mgr->unk_9618 = mgr->stats->unk_88 + 400000;
+                mgr->unk_961c = mgr->stats->unk_88 + 300000;
+                break;
+            }
+        }
+        else
+        {
+            switch (mgr->difficulty)
+            {
+            case 0:
+                mgr->unk_9618 = mgr->stats->unk_88 + 200000;
+                break;
+            case 1:
+                mgr->unk_9618 = mgr->stats->unk_88 + 200000;
+                break;
+            case 2:
+                mgr->unk_9618 = mgr->stats->unk_88 + 250000;
+                break;
+            case 3:
+                mgr->unk_9618 = mgr->stats->unk_88 + 300000;
+                break;
+            }
+            switch (mgr->stage + 1)
+            {
+            case 2:
+                mgr->unk_961c = mgr->unk_9618;
+                break;
+            case 3:
+                mgr->unk_9618 += 50000;
+                mgr->unk_961c = mgr->unk_9618;
+                break;
+            case 4:
+                mgr->unk_9618 += 100000;
+                mgr->unk_961c = mgr->unk_9618;
+                break;
+            case 5:
+                mgr->unk_9618 += 150000;
+                mgr->unk_961c = mgr->unk_9618;
+                break;
+            case 6:
+                mgr->unk_9618 += 200000;
+                mgr->unk_961c = mgr->unk_9618;
+                break;
+            }
+        }
+        if (!((g_Unknown626270.unk_93d8 >> 3) & 1))
+        {
+            if (!mgr->unk_4->unk_25)
+            {
+                IncrementStatCounter((DWORD *)&g_Unknown626270.plst.counts[g_Unknown626270.difficulty].plays[0], 999999);
+                IncrementStatCounter((DWORD *)&g_Unknown626270.plst.counts[6].plays[0], 999999);
+                IncrementStatCounter((DWORD *)&g_Unknown626270.plst.counts[g_Unknown626270.difficulty].plays[mgr->unk_93d7 + 1], 999999);
+                IncrementStatCounter((DWORD *)&g_Unknown626270.plst.counts[6].plays[mgr->unk_93d7 + 1], 999999);
+                if (g_App.scene == 10)
+                {
+                    IncrementStatCounter((DWORD *)&g_Unknown626270.plst.counts[g_Unknown626270.difficulty].retries, 999999);
+                    IncrementStatCounter((DWORD *)&g_Unknown626270.plst.counts[6].retries, 999999);
+                }
+                if (g_Unknown626270.unk_93d8 & 1)
+                {
+                    IncrementStatCounter((DWORD *)&g_Unknown626270.plst.counts[g_Unknown626270.difficulty].practices, 999999);
+                    IncrementStatCounter((DWORD *)&g_Unknown626270.plst.counts[6].practices, 999999);
+                }
+            }
+        }
+        else
+        {
+            mgr->unk_4->unk_25 = 0;
+        }
+    }
+    else
+    {
+        mgr->stats->guiScore = mgr->stats->score;
+        mgr->stats->unk_8 = 0;
+        if (Player::RegisterChain(0) != 0)
+        {
+            LogPrintf(&g_Log, "error : プレイヤーの初期化に失敗しました\r\n");
+            return -1;
+        }
+    }
+    mgr->subRank = 0;
+    mgr->stats->unk_24 = 0;
+    mgr->stats->graze = 0;
+    mgr->unk_93dc = 0;
+    mgr->stage++;
+    if (!((g_Unknown626270.unk_93d8 >> 3) & 1))
+    {
+        shot = g_Unknown626270.unk_93d7;
+        if (!mgr->stats->continuesUsed && mgr->clrds[shot].stagesClearedNoContinue[g_Unknown626270.difficulty] < mgr->stage - 1)
+        {
+            mgr->clrds[shot].stagesClearedNoContinue[g_Unknown626270.difficulty] = mgr->stage - 1;
+        }
+        if (mgr->clrds[shot].stagesCleared[g_Unknown626270.difficulty] < mgr->stage - 1)
+        {
+            mgr->clrds[shot].stagesCleared[g_Unknown626270.difficulty] = mgr->stage - 1;
+        }
+    }
+    if (mgr->unk_93d8 & 1)
+    {
+        switch (mgr->stage)
+        {
+        case 1:
+            break;
+        default:
+            mgr->stats->power = 128.0f;
+            mgr->RerollChecksumKeys();
+            break;
+        }
+    }
+    if ((g_Unknown626270.unk_93d8 >> 3) & 1)
+    {
+        mgr->SetRankForDifficulty();
+        ReplayManager::RegisterChain(1, g_Unknown626270.replayFile);
+        seed = g_Rng.seed;
+        mgr->RerollChecksumKeys();
+        g_Rng.seed = seed;
+    }
+    mgr->unk_95e4 = g_Rng.seed;
+    if (Stage::RegisterChain(mgr->stage) != 0)
+    {
+        LogPrintf(&g_Log, "error : 背景データの初期化に失敗しました\r\n");
+        return -1;
+    }
+    if (BulletManager::RegisterChain("data/etama.anm") != 0)
+    {
+        LogPrintf(&g_Log, "error : 敵弾の初期化に失敗しました\r\n");
+        return -1;
+    }
+    if (EnemyManager::RegisterChain(g_EnemyAnmPaths[mgr->stage].anmPath, g_EnemyAnmPaths[mgr->stage].anmPath2) != 0)
+    {
+        LogPrintf(&g_Log, "error : 敵の初期化に失敗しました\r\n");
+        return -1;
+    }
+    if (g_Unknown1347938.Load(g_EclPaths[mgr->stage]) != 0)
+    {
+        LogPrintf(&g_Log, "error : 敵頭脳の初期化に失敗しました\r\n");
+        return -1;
+    }
+    if (EffectManager::RegisterChain() != 0)
+    {
+        LogPrintf(&g_Log, "error : エフェクトの初期化に失敗しました\r\n");
+        return -1;
+    }
+    if (Gui::RegisterChain() != 0)
+    {
+        LogPrintf(&g_Log, "error : 2D表示の初期化に失敗しました\r\n");
+        return -1;
+    }
+    if (!((g_Unknown626270.unk_93d8 >> 3) & 1))
+    {
+        ReplayManager::RegisterChain(0, "replay/th7_00.rpy");
+    }
+    g_App.LoadMidi(0, g_Unknown1347b00.data->songPaths[0]);
+    g_App.LoadMidi(1, g_Unknown1347b00.data->songPaths[1]);
+    if (mgr->stage != 6)
+    {
+        g_App.PlayMidi(0);
+    }
+    else
+    {
+        g_App.StopMusic();
+        g_App.LoadMidi(2, "bgm/th07_13b.mid");
+    }
+    while (g_SoundPlayer.PlayQueuedSounds())
+    {
+    }
+    mgr->isInContinueMenu = 0;
+    mgr->unk_93d8 |= 4;
+    if (g_App.scene != 3)
+    {
+        g_App.unk_180 = 0.0f;
+        g_App.unk_184 = 0.0f;
+    }
+    mgr->isFrozen = 0;
+    mgr->stats->score = 0;
+    mgr->unk_93d8 &= ~0x10;
+    g_AsciiText.Initialize();
+    g_Unknown626270.unk_d = 0;
+    DrawFps(0);
+    DebugPrint2("random seed %d %d\r\n", g_Rng.seed, g_Rng.GetGenerated());
+    return 0;
+}
+
 int GameManager::DeletedCallback(GameManager *mgr)
 {
     g_App.StopMusic();

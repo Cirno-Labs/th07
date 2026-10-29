@@ -1769,6 +1769,8 @@ address,size,name,symbol
 0x0049f518,,g_DifficultyNames,?g_DifficultyNames@@3PAPADA
 0x0049f530,,g_ShotFiles,?g_ShotFiles@@3PAPADA
 0x0049f548,,g_ShotFilesFocused,?g_ShotFilesFocused@@3PAPADA
+0x0049f560,,g_EclPaths,?g_EclPaths@@3PAPADA
+0x0049f588,,g_EnemyAnmPaths,?g_EnemyAnmPaths@@3PAUEnemyAnmPaths@@A
 0x0049f5d0,,g_Ranks,?g_Ranks@@3PAURankSettings@@A
 0x0049f628,,g_BadEndingFiles,?g_BadEndingFiles@@3PAPADA
 0x0049f634,,g_EndingFiles,?g_EndingFiles@@3PAPADA
