@@ -818,17 +818,17 @@ int Player::CheckAreaHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size)
             areaMax.y = area->height / 2.0f + area->y;
             if (!(areaMin.x > end.x || areaMax.x < start.x || areaMin.y > end.y || areaMax.y < start.y))
             {
-                this->areaItemType = area->unk_1c;
+                this->areaItemType = area->itemType;
                 return 2;
             }
         }
-        else if (area->unk_10 != 0.0)
+        else if (area->radius != 0.0)
         {
             rel.x = pos->x - area->x;
             rel.y = pos->y - area->y;
-            if (rel.x * rel.x + rel.y * rel.y < area->unk_10 * area->unk_10)
+            if (rel.x * rel.x + rel.y * rel.y < area->radius * area->radius)
             {
-                this->areaItemType = area->unk_1c;
+                this->areaItemType = area->itemType;
                 return 2;
             }
         }
@@ -1446,15 +1446,15 @@ void UpdateHitboxAreas(Player *player)
     area = player->hitAreas;
     for (i = 0; i < 0x60; i++, area++)
     {
-        if (area->unk_18 <= 0)
+        if (area->framesLeft <= 0)
         {
-            area->unk_10 = 0.0f;
+            area->radius = 0.0f;
             area->width = 0.0f;
         }
         else
         {
-            area->unk_18--;
-            area->unk_10 += area->unk_14;
+            area->framesLeft--;
+            area->radius += area->radiusGrowth;
         }
     }
 }
@@ -1844,7 +1844,7 @@ PlayerArea *Player::AddHitboxArea(D3DXVECTOR3 *pos, float width, float height, i
 
     for (i = 0; i < 0x5f; i++, area++)
     {
-        if (area->width == 0.0f && area->unk_10 == 0.0f)
+        if (area->width == 0.0f && area->radius == 0.0f)
         {
             break;
         }
@@ -1853,8 +1853,8 @@ PlayerArea *Player::AddHitboxArea(D3DXVECTOR3 *pos, float width, float height, i
     area->y = pos->y;
     area->width = width;
     area->height = height;
-    area->unk_18 = 0;
-    area->unk_1c = unk_1c;
+    area->framesLeft = 0;
+    area->itemType = unk_1c;
     return area;
 }
 
@@ -1865,17 +1865,17 @@ PlayerArea *Player::AddHitboxAreaCircle(D3DXVECTOR3 *pos, float unk_10, float un
 
     for (i = 0; i < 0x5f; i++, area++)
     {
-        if (area->width == 0.0f && area->unk_10 == 0.0f)
+        if (area->width == 0.0f && area->radius == 0.0f)
         {
             break;
         }
     }
     area->x = pos->x;
     area->y = pos->y;
-    area->unk_10 = unk_10;
-    area->unk_14 = unk_14;
-    area->unk_18 = unk_18;
-    area->unk_1c = unk_1c;
+    area->radius = unk_10;
+    area->radiusGrowth = unk_14;
+    area->framesLeft = unk_18;
+    area->itemType = unk_1c;
     return area;
 }
 

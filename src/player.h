@@ -324,10 +324,10 @@ struct PlayerArea
     float y;
     float width;
     float height;
-    float unk_10;
-    float unk_14;
-    int unk_18;
-    int unk_1c;
+    float radius;
+    float radiusGrowth;
+    int framesLeft;
+    int itemType;
 };
 ASSERT_SIZE(PlayerArea, 0x20);
 
