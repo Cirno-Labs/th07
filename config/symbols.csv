@@ -213,7 +213,7 @@ address,size,name,symbol
 0x00426b00,289,Func426b00,
 0x00426c40,796,Func426c40,
 0x00426f60,1703,Func426f60,
-0x00427620,116,Func427620,
+0x00427620,116,BulletManager::DeletedCallback,?DeletedCallback@BulletManager@@SIHPAV1@@Z
 0x004276a0,192,Func4276a0,
 0x00427760,51,Func427760,?Func427760@@YIXXZ
 0x004277a0,266,Func4277a0,
