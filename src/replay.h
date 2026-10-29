@@ -54,7 +54,19 @@ struct ReplayHeader
     char magic[4];
     // 0x1100, 0x100 in its low 12 bits.
     WORD version;
-    BYTE unk_06[0x16];
+    BYTE unk_06[0x2];
+    // 0x3f000318 plus the bytes from `key` on.
+    int checksum;
+    BYTE unk_0c;
+    // The bytes from `size` on are stored plus key, key + 7, key + 14,
+    // ...
+    BYTE key;
+    BYTE unk_0e[0x2];
+    BYTE unk_10[0x4];
+    // In the file, the size of the compressed data after the first 0x54
+    // bytes, and its size decompressed.
+    int compressedSize;
+    int dataSize;
     // Indexed by stage. In the file, the offsets of the stages' data.
     ReplayStage *stages[7];
     // The same for the frame rates kept every 30 frames.
@@ -86,8 +98,11 @@ struct ReplayHeader
 };
 ASSERT_SIZE(ReplayHeader, 0xe8);
 
-// Checks and decodes the replay file `data` of `size` bytes. Returns a
-// new copy, or NULL if it is not a valid replay.
+// Checks and decodes the replay file `data` of `size` bytes: its magic,
+// version and checksum, then decompresses it into a new copy, which it
+// returns unless the config's unk_25 is set or App::CheckVersionFile rejects
+// the executable it was recorded with. Frees `data`, and returns NULL
+// if it is not a valid replay.
 ReplayHeader *ValidateReplay(void *data, int size);
 // Saves the replay being recorded to `path`, under `name`.
 void SaveReplay(char *path, char *name);

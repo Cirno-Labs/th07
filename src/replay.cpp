@@ -2,6 +2,7 @@
 
 #include <string.h>
 
+#include "lzss.h"
 #include "replay.h"
 #include "unsorted.h"
 
@@ -195,4 +196,64 @@ int ReplayManager::RecordAddedCallback(ReplayManager *replay)
     replay->cursor->input = 0;
     replay->unk_82 = 0;
     return 0;
+}
+
+ReplayHeader *ValidateReplay(void *data, int size)
+{
+    BYTE *ptr2;
+    int sum;
+    BYTE *bytes;
+    BYTE b;
+    ReplayHeader *file;
+    int i;
+    ReplayHeader *decoded;
+
+    file = (ReplayHeader *)data;
+    if (file == NULL)
+    {
+        goto fail;
+    }
+    if (*(DWORD *)file->magic != *(DWORD *)"T7RP")
+    {
+        goto fail;
+    }
+    if (file->version != 0x1100)
+    {
+        goto fail;
+    }
+    bytes = (BYTE *)file + 0x10;
+    b = file->key;
+    for (i = 0; i < size - 0x10; i++, bytes++)
+    {
+        *bytes -= b;
+        b += 7;
+    }
+    ptr2 = &file->key;
+    sum = 0x3f000318;
+    for (i = 0; i < size - 0xd; i++, ptr2++)
+    {
+        sum += *ptr2;
+    }
+    if (sum != file->checksum)
+    {
+        goto fail;
+    }
+    decoded = (ReplayHeader *)MemAlloc(file->dataSize + 0x54);
+    memcpy(decoded, data, 0x54);
+    LzssDecompress((BYTE *)file + 0x54, file->compressedSize, (BYTE *)decoded + 0x54, file->dataSize);
+    file = decoded;
+    if (file->config[0x25] != 0)
+    {
+        goto fail;
+    }
+    if (g_App.CheckVersionFile(file->exeVersion, file->exeSize, file->exeChecksum) != 0)
+    {
+        goto fail;
+    }
+    free(data);
+    return decoded;
+
+fail:
+    free(data);
+    return NULL;
 }
