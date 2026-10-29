@@ -193,7 +193,7 @@ address,size,name,symbol
 0x00423330,236,BulletManager::BulletManager,??0BulletManager@@QAE@XZ
 0x00423420,225,Func423420,
 0x00423510,186,Bullet::Bullet,??0Bullet@@QAE@XZ
-0x004235d0,134,Func4235d0,
+0x004235d0,134,Laser::Laser,??0Laser@@QAE@XZ
 0x00423660,204,Func423660,
 0x00423730,2875,Func423730,
 0x00424290,1113,Func424290,
