@@ -1589,6 +1589,13 @@ void StartSlowdown(Enemy *enemy, EnemyScriptInstr *instr);
 // App::unk_18c if 1 / argument 1 is below 1, and puts the game speed
 // and the stage sprites' interrupts back to 1.
 void EndSlowdown(Enemy *enemy, EnemyScriptInstr *instr);
+// Flashes the screen 0x50cfcfff for 8 frames. Each bullet with a sprite
+// over 48 high within 64 (difficulty 0 and 1) or 48 of the enemy in y
+// bursts into 10, 18, 22 or 25 bullets (by difficulty) around it at
+// speed 0.1 with a flag 0x20 command, of three random sprite and color
+// pairs, at a random angle in a 3 pi / 2 arc from -pi / 2 (argument 1
+// = 0) or from pi / 4, every other one with flag 2, and is removed.
+void BurstBulletsByDifficulty(Enemy *enemy, EnemyScriptInstr *instr);
 // Flashes the screen 0x50cfcfff for 0x10 frames; each bullet turned
 // once (unk_c08 1) gets a flag 0x10 command 0 for 0x5a frames with its
 // angle to the player, clears command 1's flag and is marked 2.

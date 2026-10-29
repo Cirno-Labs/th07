@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">91.93% (638)</tspan> · <tspan class="decompiled">1.44% (10)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">6.48% (45)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">92.07% (639)</tspan> · <tspan class="decompiled">1.44% (10)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">6.34% (44)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="686.72" height="6" x="0" y="0" class="named"/>
-<rect width="10.76" height="6" x="686.72" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="697.49" y="0" class="nonmatching"/>
-<rect width="48.44" height="6" x="698.56" y="0" class="todo"/>
+<rect width="687.80" height="6" x="0" y="0" class="named"/>
+<rect width="10.76" height="6" x="687.80" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="698.56" y="0" class="nonmatching"/>
+<rect width="47.36" height="6" x="699.64" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="named"><title>0x00401000 D3DXMatrixIdentity (173 bytes)</title></rect>
@@ -176,7 +176,7 @@
 <rect width="12" height="12" x="60" y="30" class="named"><title>0x00418e80 ShakeAndStartFallingPetals (42 bytes)</title></rect>
 <rect width="12" height="12" x="75" y="30" class="named"><title>0x00418eb0 StartSlowdown (262 bytes)</title></rect>
 <rect width="12" height="12" x="90" y="30" class="named"><title>0x00418fc0 EndSlowdown (298 bytes)</title></rect>
-<rect width="12" height="12" x="105" y="30" class="todo"><title>0x004190f0 Func4190f0 (998 bytes)</title></rect>
+<rect width="12" height="12" x="105" y="30" class="named"><title>0x004190f0 BurstBulletsByDifficulty (998 bytes)</title></rect>
 <rect width="12" height="12" x="120" y="30" class="named"><title>0x004194e0 TurnNearbyBullets (301 bytes)</title></rect>
 <rect width="12" height="12" x="135" y="30" class="named"><title>0x00419610 AimTurnedBulletsAtPlayer (197 bytes)</title></rect>
 <rect width="12" height="12" x="150" y="30" class="named"><title>0x004196e0 FlashScreen (41 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">69.14%</tspan> · <tspan class="decompiled">0.11%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">30.67%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">69.40%</tspan> · <tspan class="decompiled">0.11%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">30.40%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="516.46" height="6" x="0" y="0" class="named"/>
-<rect width="0.80" height="6" x="516.46" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="517.26" y="0" class="nonmatching"/>
-<rect width="229.08" height="6" x="517.92" y="0" class="todo"/>
+<rect width="518.41" height="6" x="0" y="0" class="named"/>
+<rect width="0.80" height="6" x="518.41" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="519.21" y="0" class="nonmatching"/>
+<rect width="227.12" height="6" x="519.88" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 EnemyScripts::RunEnemy (29464 bytes)</title></rect>
@@ -860,7 +860,7 @@
 <rect width="16.63" height="19.09" x="427.18" y="22.13" class="named"><title>0x004069d0 Stage::OnDraw (1035 bytes)</title></rect>
 <rect width="16.63" height="18.37" x="427.18" y="44.23" class="named"><title>0x00407000 Stage::AddedCallback (1001 bytes)</title></rect>
 <rect width="16.63" height="18.34" x="427.18" y="65.59" class="named"><title>0x0045db60 CStreamingSound::HandleWaveStreamNotification (1000 bytes)</title></rect>
-<rect width="16.63" height="18.30" x="427.18" y="86.94" class="todo"><title>0x004190f0 Func4190f0 (998 bytes)</title></rect>
+<rect width="16.63" height="18.30" x="427.18" y="86.94" class="named"><title>0x004190f0 BurstBulletsByDifficulty (998 bytes)</title></rect>
 <rect width="16.63" height="18.28" x="427.18" y="108.24" class="named"><title>0x0041b0b0 EffectInitPetal20 (997 bytes)</title></rect>
 <rect width="16.63" height="18.17" x="427.18" y="129.52" class="named"><title>0x0044eae0 SpriteEngine::SetRenderStateForSprite (992 bytes)</title></rect>
 <rect width="16.63" height="17.90" x="427.18" y="150.69" class="todo"><title>0x0040a7c0 Func40a7c0 (979 bytes)</title></rect>

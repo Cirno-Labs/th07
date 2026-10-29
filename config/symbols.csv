@@ -106,7 +106,7 @@ address,size,name,symbol
 0x00418e80,42,ShakeAndStartFallingPetals,?ShakeAndStartFallingPetals@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x00418eb0,262,StartSlowdown,?StartSlowdown@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x00418fc0,298,EndSlowdown,?EndSlowdown@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
-0x004190f0,998,Func4190f0,
+0x004190f0,998,BurstBulletsByDifficulty,?BurstBulletsByDifficulty@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x004194e0,301,TurnNearbyBullets,?TurnNearbyBullets@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x00419610,197,AimTurnedBulletsAtPlayer,?AimTurnedBulletsAtPlayer@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x004196e0,41,FlashScreen,?FlashScreen@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
