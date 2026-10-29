@@ -618,7 +618,7 @@ public:
     // The world matrix ProjectSprite3D last projected with.
     D3DXMATRIX lastWorldMatrix;
     SpriteData sprites[0xa00];
-    Sprite unk_28060;
+    Sprite unusedSprite28060;
     // The textures of the loaded ANM files, by slot.
     IDirect3DTexture8 *textures[0x108];
     // The image files the textures were created from, kept loaded.
