@@ -10,6 +10,10 @@
 #include "player.h"
 #include "unsorted.h"
 
+AsciiText::AsciiText()
+{
+}
+
 void AsciiText::RunScripts()
 {
     g_SpriteEngine->Step(&this->unk_498);

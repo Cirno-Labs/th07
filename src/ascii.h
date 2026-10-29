@@ -76,6 +76,8 @@ ASSERT_SIZE(AsciiPopup, 0x28);
 class AsciiText
 {
 public:
+    // Constructs the members, for g_AsciiText's static initialization.
+    AsciiText();
     // Adds AsciiText's update element (priority 1) and its draw
     // elements (0x10 and 0xb), as th06's. Returns 0, or -1 if adding
     // the update element fails.

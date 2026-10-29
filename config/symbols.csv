@@ -7,7 +7,7 @@ address,size,name,symbol
 0x004012b0,212,Unknown626270::Func4012b0,?Func4012b0@Unknown626270@@QAEXXZ
 0x00401390,107,Unknown626270::SetBombs,?SetBombs@Unknown626270@@QAEXH@Z
 0x00401400,155,AsciiText::RunScripts,?RunScripts@AsciiText@@QAEXXZ
-0x004014a0,496,Func4014a0,
+0x004014a0,496,AsciiText::AsciiText,??0AsciiText@@QAE@XZ
 0x00401690,143,Func401690,
 0x00401720,143,Func401720,
 0x004017b0,40,Func4017b0,
