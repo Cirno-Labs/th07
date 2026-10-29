@@ -664,18 +664,18 @@ void GuiImpl::StartMsgScript(int index)
         case 6:
             CopySpriteToTexture(0x619);
             g_Stage.dialogueScriptOffset = 2;
-            g_ClearedBulletItem = 9;
+            g_BulletManager.clearItemType = 9;
             break;
         case 7:
             CopySpriteToTexture(0x61b);
             g_Stage.dialogueScriptOffset = 1;
             g_Stage.dialogueSpriteCount = 2;
-            g_ClearedBulletItem = 9;
+            g_BulletManager.clearItemType = 9;
             break;
         case 8:
             CopySpriteToTexture(0x61d);
             g_Stage.dialogueScriptOffset = 2;
-            g_ClearedBulletItem = 9;
+            g_BulletManager.clearItemType = 9;
             break;
         }
     }

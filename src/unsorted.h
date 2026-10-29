@@ -1511,9 +1511,6 @@ void FireAimedBulletPattern2(Enemy *enemy, EnemyScriptInstr *instr);
 int PointInRotatedBox(D3DXVECTOR3 *point, D3DXVECTOR3 *center, D3DXVECTOR3 *size, D3DXVECTOR3 *origin,
                float sinAngle, float cosAngle);
 
-// Set to 9 as the dialogue of stages 6 to 8 starts.
-extern int g_ClearedBulletItem;
-
 // A run of quads in the stage data, ended by one with a negative type,
 // as th06's.
 struct StageQuad

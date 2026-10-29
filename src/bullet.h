@@ -285,7 +285,8 @@ public:
     Bullet *drawLists[6];
     // Where SpawnBullet looks for a free bullet first.
     Bullet *nextBullet;
-    // The item type cleared bullets turn into (g_ClearedBulletItem).
+    // The item type cleared bullets turn into. Set to 9 as the dialogue
+    // of stages 6 to 8 starts.
     int clearItemType;
 };
 ASSERT_SIZE(BulletManager, 0x37a164);
