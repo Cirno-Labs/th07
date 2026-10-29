@@ -1591,6 +1591,8 @@ void StartSlowdown(Enemy *enemy, EnemyScriptInstr *instr);
 void EndSlowdown(Enemy *enemy, EnemyScriptInstr *instr);
 // Flashes the screen 0xd0cfcfff for argument 1 frames.
 void FlashScreen(Enemy *enemy, EnemyScriptInstr *instr);
+// Fades the music out over 3 seconds.
+void ScriptFadeOutMusic(Enemy *enemy, EnemyScriptInstr *instr);
 // Whether `point`, turned about `origin` by the angle with sine
 // `sinAngle` and cosine `cosAngle`, lies in the `size` box centred on
 // `center` (x and y only).

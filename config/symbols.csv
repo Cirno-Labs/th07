@@ -114,7 +114,7 @@ address,size,name,symbol
 0x00419880,312,Func419880,
 0x004199c0,144,Func4199c0,
 0x00419a50,800,Func419a50,
-0x00419d70,31,Func419d70,
+0x00419d70,31,ScriptFadeOutMusic,?ScriptFadeOutMusic@@YIXPAUEnemy@@PAUEnemyScriptInstr@@@Z
 0x00419d90,47,Func419d90,
 0x00419dc0,546,Func419dc0,
 0x00419ff0,542,Func419ff0,

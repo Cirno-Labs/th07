@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">90.49% (628)</tspan> · <tspan class="decompiled">1.44% (10)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">7.93% (55)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">90.63% (629)</tspan> · <tspan class="decompiled">1.44% (10)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">7.78% (54)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="675.96" height="6" x="0" y="0" class="named"/>
-<rect width="10.76" height="6" x="675.96" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="686.72" y="0" class="nonmatching"/>
-<rect width="59.20" height="6" x="687.80" y="0" class="todo"/>
+<rect width="677.04" height="6" x="0" y="0" class="named"/>
+<rect width="10.76" height="6" x="677.04" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="687.80" y="0" class="nonmatching"/>
+<rect width="58.12" height="6" x="688.88" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="named"><title>0x00401000 D3DXMatrixIdentity (173 bytes)</title></rect>
@@ -184,7 +184,7 @@
 <rect width="12" height="12" x="180" y="30" class="todo"><title>0x00419880 Func419880 (312 bytes)</title></rect>
 <rect width="12" height="12" x="195" y="30" class="todo"><title>0x004199c0 Func4199c0 (144 bytes)</title></rect>
 <rect width="12" height="12" x="210" y="30" class="todo"><title>0x00419a50 Func419a50 (800 bytes)</title></rect>
-<rect width="12" height="12" x="225" y="30" class="todo"><title>0x00419d70 Func419d70 (31 bytes)</title></rect>
+<rect width="12" height="12" x="225" y="30" class="named"><title>0x00419d70 ScriptFadeOutMusic (31 bytes)</title></rect>
 <rect width="12" height="12" x="240" y="30" class="todo"><title>0x00419d90 Func419d90 (47 bytes)</title></rect>
 <rect width="12" height="12" x="255" y="30" class="todo"><title>0x00419dc0 Func419dc0 (546 bytes)</title></rect>
 <rect width="12" height="12" x="270" y="30" class="todo"><title>0x00419ff0 Func419ff0 (542 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">68.28%</tspan> · <tspan class="decompiled">0.11%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">31.53%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">68.29%</tspan> · <tspan class="decompiled">0.11%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">31.52%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="510.04" height="6" x="0" y="0" class="named"/>
-<rect width="0.80" height="6" x="510.04" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="510.84" y="0" class="nonmatching"/>
-<rect width="235.49" height="6" x="511.51" y="0" class="todo"/>
+<rect width="510.10" height="6" x="0" y="0" class="named"/>
+<rect width="0.80" height="6" x="510.10" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="510.90" y="0" class="nonmatching"/>
+<rect width="235.43" height="6" x="511.57" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 EnemyScripts::RunEnemy (29464 bytes)</title></rect>
@@ -1438,7 +1438,7 @@
 <rect width="0.32" height="1.17" x="746.68" y="192.08" class="named"><title>0x00417af0 SinCos (33 bytes)</title></rect>
 <rect width="0.85" height="0.59" x="732.59" y="196.24" class="named"><title>0x00436110 MidiDevice::MidiDevice (33 bytes)</title></rect>
 <rect width="0.85" height="0.48" x="732.59" y="199.83" class="decompiled"><title>0x004325c0 Unknown4325c0::SetPolar (32 bytes)</title></rect>
-<rect width="0.85" height="0.37" x="732.59" y="203.32" class="todo"><title>0x00419d70 Func419d70 (31 bytes)</title></rect>
+<rect width="0.85" height="0.37" x="732.59" y="203.32" class="named"><title>0x00419d70 ScriptFadeOutMusic (31 bytes)</title></rect>
 <rect width="0.85" height="0.26" x="732.59" y="206.69" class="named"><title>0x004363e0 SwapBytes16 (30 bytes)</title></rect>
 <rect width="0.85" height="0.10" x="732.59" y="209.95" class="named"><title>0x0045dab0 CStreamingSound::~CStreamingSound (28 bytes)</title></rect>
 <rect width="0.46" height="0.15" x="736.45" y="196.24" class="named"><title>0x00422cc0 EnemyManager::OnDraw2 (26 bytes)</title></rect>
