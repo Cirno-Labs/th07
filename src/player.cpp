@@ -1029,7 +1029,7 @@ void Player::Graze(D3DXVECTOR3 *pos)
 void Player::Die()
 {
     g_Unknown626270.RerollChecksumKeys();
-    g_EffectManager.Func41c610(0xc, &this->position, 3, 1, 0xff4040ff);
+    g_EffectManager.SpawnReservedEffect(0xc, &this->position, 3, 1, 0xff4040ff);
     g_EffectManager.SpawnEffect(6, &this->position, 16, 0xffffffff);
     this->playerState = 2;
     this->stateTimer.Set(0);
@@ -1390,7 +1390,7 @@ void StartBombState(Player *player)
         player->unk_b7e68->active = 0;
         player->unk_b7e68 = NULL;
     }
-    effect = g_EffectManager.Func41c610(0x1c, &player->position, 4, 1, 0xffffffff);
+    effect = g_EffectManager.SpawnReservedEffect(0x1c, &player->position, 4, 1, 0xffffffff);
     effect->sprite.unk_48[4].Set(0);
     effect->sprite.unk_84[4].Set(player->stateTimer.AsFrames());
     effect->sprite.unk_c4 = 0;
@@ -1492,7 +1492,7 @@ void Player::StopBombState(int unk)
         this->unk_b7e6c->active = 0;
         this->unk_b7e6c = NULL;
     }
-    eff = g_EffectManager.Func41c610(0x1c, &this->position, 4, 1, 0xffffffff);
+    eff = g_EffectManager.SpawnReservedEffect(0x1c, &this->position, 4, 1, 0xffffffff);
     eff->sprite.unk_48[4].Set(0);
     eff->sprite.unk_84[4].Set(30);
     eff->sprite.unk_c4 = 0;

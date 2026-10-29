@@ -61,12 +61,12 @@
 </g>
 <g transform="translate(0 116)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the physical function order:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">64.70% (449)</tspan> · <tspan class="decompiled">7.78% (54)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">27.38% (190)</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">64.84% (450)</tspan> · <tspan class="decompiled">7.78% (54)</tspan> · <tspan class="nonmatching">0.14% (1)</tspan> · <tspan class="todo">27.23% (189)</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="483.29" height="6" x="0" y="0" class="named"/>
-<rect width="58.12" height="6" x="483.29" y="0" class="decompiled"/>
-<rect width="1.08" height="6" x="541.41" y="0" class="nonmatching"/>
-<rect width="204.51" height="6" x="542.49" y="0" class="todo"/>
+<rect width="484.37" height="6" x="0" y="0" class="named"/>
+<rect width="58.12" height="6" x="484.37" y="0" class="decompiled"/>
+<rect width="1.08" height="6" x="542.49" y="0" class="nonmatching"/>
+<rect width="203.43" height="6" x="543.57" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="12" height="12" x="0" y="0" class="named"><title>0x00401000 D3DXMatrixIdentity (173 bytes)</title></rect>
@@ -215,7 +215,7 @@
 <rect width="12" height="12" x="645" y="30" class="named"><title>0x0041c1b0 ReplayManager::OnDraw (16 bytes)</title></rect>
 <rect width="12" height="12" x="660" y="30" class="named"><title>0x0041c1c0 EffectManager::SpawnEffect (564 bytes)</title></rect>
 <rect width="12" height="12" x="675" y="30" class="named"><title>0x0041c400 EffectManager::SpawnEffectWithVelocity (521 bytes)</title></rect>
-<rect width="12" height="12" x="690" y="30" class="todo"><title>0x0041c610 EffectManager::Func41c610 (374 bytes)</title></rect>
+<rect width="12" height="12" x="690" y="30" class="named"><title>0x0041c610 EffectManager::SpawnReservedEffect (374 bytes)</title></rect>
 <rect width="12" height="12" x="705" y="30" class="todo"><title>0x0041c790 Func41c790 (625 bytes)</title></rect>
 <rect width="12" height="12" x="720" y="30" class="todo"><title>0x0041ca10 Func41ca10 (354 bytes)</title></rect>
 <rect width="12" height="12" x="735" y="30" class="todo"><title>0x0041cb80 Func41cb80 (596 bytes)</title></rect>
@@ -767,12 +767,12 @@
 </g>
 <g transform="translate(0 381)">
 <text x="0" y="7.50">東方妖々夢 1.00b progress according to the function sizes:</text>
-<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">49.58%</tspan> · <tspan class="decompiled">2.79%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">47.53%</tspan></tspan></text>
+<text class="todo" style="font-size: 12px; " x="747" y="9"><tspan text-anchor="end"><tspan class="named">49.68%</tspan> · <tspan class="decompiled">2.79%</tspan> · <tspan class="nonmatching">0.09%</tspan> · <tspan class="todo">47.43%</tspan></tspan></text>
 <g transform="translate(0 20)">
-<rect width="370.40" height="6" x="0" y="0" class="named"/>
-<rect width="20.87" height="6" x="370.40" y="0" class="decompiled"/>
-<rect width="0.66" height="6" x="391.27" y="0" class="nonmatching"/>
-<rect width="355.07" height="6" x="391.93" y="0" class="todo"/>
+<rect width="371.13" height="6" x="0" y="0" class="named"/>
+<rect width="20.87" height="6" x="371.13" y="0" class="decompiled"/>
+<rect width="0.66" height="6" x="392" y="0" class="nonmatching"/>
+<rect width="354.34" height="6" x="392.66" y="0" class="todo"/>
 </g>
 <g transform="translate(0 31)">
 <rect width="80.90" height="144.17" x="0" y="0" class="todo"><title>0x00410520 Func410520 (29464 bytes)</title></rect>
@@ -1007,7 +1007,7 @@
 <rect width="9.07" height="10.12" x="690.02" y="29.55" class="todo"><title>0x00425400 Func425400 (378 bytes)</title></rect>
 <rect width="9.07" height="10.12" x="702.09" y="29.55" class="named"><title>0x00442cd0 ReplayManager::RecordOnUpdate (378 bytes)</title></rect>
 <rect width="8.98" height="10.12" x="714.17" y="29.55" class="todo"><title>0x0041a370 Func41a370 (375 bytes)</title></rect>
-<rect width="8.94" height="10.12" x="726.14" y="29.55" class="todo"><title>0x0041c610 EffectManager::Func41c610 (374 bytes)</title></rect>
+<rect width="8.94" height="10.12" x="726.14" y="29.55" class="named"><title>0x0041c610 EffectManager::SpawnReservedEffect (374 bytes)</title></rect>
 <rect width="8.91" height="10.12" x="738.09" y="29.55" class="named"><title>0x0043a27f App::AddPlayTime (373 bytes)</title></rect>
 <rect width="9.33" height="9.68" x="578.75" y="42.67" class="named"><title>0x0043a3f4 App::AddTotalPlayTime (373 bytes)</title></rect>
 <rect width="9.33" height="9.64" x="578.75" y="55.35" class="todo"><title>0x0040bca0 Func40bca0 (372 bytes)</title></rect>

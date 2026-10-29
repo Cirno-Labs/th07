@@ -80,7 +80,7 @@ public:
     Effect *SpawnEffectWithVelocity(int type, D3DXVECTOR3 *pos, D3DXVECTOR3 *velocity, int count, D3DCOLOR color);
     // Starts an effect of `type` at `pos` in `color` in reserved slot
     // `slot` (from 400 on). `count` is unused. Returns it.
-    Effect *Func41c610(int type, D3DXVECTOR3 *pos, int slot, int count, D3DCOLOR color);
+    Effect *SpawnReservedEffect(int type, D3DXVECTOR3 *pos, int slot, int count, D3DCOLOR color);
 
     // Where SpawnEffect looks for a free effect next.
     int next;
