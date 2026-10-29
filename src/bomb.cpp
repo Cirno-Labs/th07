@@ -1387,3 +1387,36 @@ void UpdateSakuyaBBombFocused(Player *player)
     player->playerState = 3;
     player->bomb.timer.Tick();
 }
+
+void DrawSakuyaBBombFocused(Player *player)
+{
+    int alpha;
+    int i;
+    PlayerBombPart *knife;
+    int k;
+
+    DimPlayAreaForBomb(player);
+    for (knife = player->bomb.parts, i = 0; i < 2; i++, knife++)
+    {
+        if (knife->state == 0)
+        {
+            continue;
+        }
+        alpha = knife->sprites[0].alpha;
+        knife->sprites[0].pos = knife->pos;
+        knife->sprites[0].pos.x = g_Unknown626270.arena[0] + knife->sprites[0].pos.x;
+        knife->sprites[0].pos.y = g_Unknown626270.arena[1] + knife->sprites[0].pos.y;
+        knife->sprites[0].pos.z = 0.0f;
+        g_SpriteEngine->Draw(knife->sprites);
+        for (k = 3; k < 32; k += 4)
+        {
+            knife->sprites[0].pos = knife->trail[k];
+            knife->sprites[0].alpha = alpha - alpha * k / 32;
+            knife->sprites[0].pos.x = g_Unknown626270.arena[0] + knife->sprites[0].pos.x;
+            knife->sprites[0].pos.y = g_Unknown626270.arena[1] + knife->sprites[0].pos.y;
+            knife->sprites[0].pos.z = 0.0f;
+            g_SpriteEngine->Draw(knife->sprites);
+        }
+        knife->sprites[0].alpha = alpha;
+    }
+}

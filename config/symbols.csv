@@ -76,7 +76,7 @@ address,size,name,symbol
 0x0040d4c0,1242,UpdateSakuyaBBomb,?UpdateSakuyaBBomb@@YIXPAVPlayer@@@Z
 0x0040d9a0,216,DrawSakuyaBBomb,?DrawSakuyaBBomb@@YIXPAVPlayer@@@Z
 0x0040da80,2048,UpdateSakuyaBBombFocused,?UpdateSakuyaBBombFocused@@YIXPAVPlayer@@@Z
-0x0040e280,406,Func40e280,
+0x0040e280,406,DrawSakuyaBBombFocused,?DrawSakuyaBBombFocused@@YIXPAVPlayer@@@Z
 0x0040e420,197,EnemyScripts::Load,?Load@EnemyScripts@@QAEHPAD@Z
 0x0040e4f0,50,EnemyScripts::Release,?Release@EnemyScripts@@QAEXXZ
 0x0040e530,128,EnemyScripts::StartSub,?StartSub@EnemyScripts@@QAEHPAUEnemyScriptState@@F@Z

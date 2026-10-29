@@ -742,3 +742,8 @@ void DrawSakuyaBBomb(Player *player);
 // (800) and sets unk_17dc[0] to a 448 by 512 box at the play area's
 // middle.
 void UpdateSakuyaBBombFocused(Player *player);
+
+// Draws Sakuya B's focused bomb: the stage tint, then each sprite at
+// its position and at every fourth trail position from trail[3],
+// fading out along the trail.
+void DrawSakuyaBBombFocused(Player *player);
