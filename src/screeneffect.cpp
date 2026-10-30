@@ -10,8 +10,15 @@
 // the original's copies instead.
 #ifdef TH07_EXE
 // Constructed, never used; which of replay.cpp, resultscreen.cpp and
-// screeneffect.cpp defines it is a guess.
-Timer g_Timer4bdac8;
+// screeneffect.cpp defines it is a guess. Its initializer keeps the
+// address of the Timer in a local, which the compiler only does for a
+// member at an offset: a Timer behind 0x24 bytes nothing refers to.
+struct UnusedTimer
+{
+    BYTE pad_0[0x24];
+    Timer timer;
+};
+UnusedTimer g_UnusedTimer;
 #endif // TH07_EXE
 
 void ClearScreen(D3DCOLOR color)
