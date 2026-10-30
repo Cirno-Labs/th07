@@ -306,3 +306,28 @@ char *DatArchive::DuplicateString(char *str)
     }
     return copy;
 }
+
+#ifdef TH07_EXE
+// Unused: the original also mentioned five more KERNEL32 functions after
+// file.obj's, from code /LTCG discarded. The Rich header counts their
+// import objects and the IAT order needs five more KERNEL32 entries in
+// the linker's import sort (the dropped ones are still sorted) after
+// DeleteFileA. Which five is unknown; th06's file helpers stand in.
+BOOL UnusedReplaceFile(char *path, char *backup, char *tempDir)
+{
+    if (GetTempPathA(MAX_PATH, tempDir) == 0)
+    {
+        return FALSE;
+    }
+    if (GetFileAttributesA(path) == INVALID_FILE_ATTRIBUTES)
+    {
+        return FALSE;
+    }
+    SetFileAttributesA(path, FILE_ATTRIBUTE_NORMAL);
+    if (!CopyFileA(path, backup, FALSE))
+    {
+        return FALSE;
+    }
+    return MoveFileA(backup, path);
+}
+#endif // TH07_EXE

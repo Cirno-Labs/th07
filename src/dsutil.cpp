@@ -925,3 +925,14 @@ HRESULT CWaveFile::Close()
 
     return S_OK;
 }
+
+#ifdef TH07_EXE
+// Unused: the original's object also wrote to a wave file, from code
+// /LTCG discarded (the SDK's dsutil can write wave files; the game's copy
+// only reads). The Rich header counts one more WINMM import object, and
+// the IAT order needs it in the linker's import sort after midiOutReset.
+LONG UnusedWriteWave(HMMIO hmmio, char *data, LONG size)
+{
+    return mmioWrite(hmmio, data, size);
+}
+#endif // TH07_EXE

@@ -336,3 +336,17 @@ void UnusedMemmove(void *dst, const void *src, size_t size)
     memmove(dst, src, size);
 }
 #endif // TH07_EXE
+
+// Unused: the original's object also drew text into a rectangle with
+// DrawTextA, from code /LTCG discarded. The Rich header counts two more
+// USER32 import objects, and the IAT order needs them in the linker's
+// import sort between SetKeyboardState and MoveWindow.
+#ifdef TH07_EXE
+void UnusedDrawText(HDC hdc, char *text, int x, int y, int width, int height)
+{
+    RECT rect;
+
+    SetRect(&rect, x, y, x + width, y + height);
+    DrawTextA(hdc, text, -1, &rect, DT_LEFT);
+}
+#endif // TH07_EXE
