@@ -33,7 +33,7 @@ void DimPlayAreaForBomb(Player *player)
         color.g = color.b;
         color.r = color.g;
     }
-    g_SpriteEngine->ResetColorModulation();
+    g_SpriteRenderer->ResetColorModulation();
     g_Stage.SetTintColor(color.color);
     g_Stage.keepTintColor = 1;
 }
@@ -138,7 +138,7 @@ void UpdateReimuABomb(Player *player)
         player->bombHitboxes[i].damageDealt = 0;
         for (sprite = orb->sprites, k = 0; k < 4; k++, sprite++)
         {
-            g_SpriteEngine->StartScriptAtOrigin(sprite, k + 0x485);
+            g_SpriteRenderer->StartScriptAtOrigin(sprite, k + 0x485);
         }
         g_SoundPlayer.QueueSound(0xd, 0);
     }
@@ -196,10 +196,10 @@ void UpdateReimuABomb(Player *player)
         }
         orb->pos.x += g_App.gameSpeed * orb->velocity.x;
         orb->pos.y += g_App.gameSpeed * orb->velocity.y;
-        g_SpriteEngine->Step(&orb->sprites[0]);
-        g_SpriteEngine->Step(&orb->sprites[1]);
-        g_SpriteEngine->Step(&orb->sprites[2]);
-        g_SpriteEngine->Step(&orb->sprites[3]);
+        g_SpriteRenderer->Step(&orb->sprites[0]);
+        g_SpriteRenderer->Step(&orb->sprites[1]);
+        g_SpriteRenderer->Step(&orb->sprites[2]);
+        g_SpriteRenderer->Step(&orb->sprites[3]);
     }
     bomb->timer.Tick();
 }
@@ -211,7 +211,7 @@ void UpdateReimuABomb(Player *player)
     curSprite->pos.x = g_GameManager.arena[0] + curSprite->pos.x;     \
     curSprite->pos.y = g_GameManager.arena[1] + curSprite->pos.y;     \
     curSprite->pos.z = 0.0f;                                            \
-    g_SpriteEngine->DrawUnrotated(curSprite);                           \
+    g_SpriteRenderer->DrawUnrotated(curSprite);                           \
     curSprite++;
 
 void DrawReimuABomb(Player *player)
@@ -289,7 +289,7 @@ void UpdateReimuABombFocused(Player *player)
                 player->bombHitboxes[i].damageDealt = 0;
                 for (spr = orb->sprites, k = 0; k < 4; k++, spr++)
                 {
-                    g_SpriteEngine->StartScriptAtOrigin(spr, k + 0x485);
+                    g_SpriteRenderer->StartScriptAtOrigin(spr, k + 0x485);
                 }
                 g_SoundPlayer.QueueSound(0xd, 0);
             }
@@ -365,10 +365,10 @@ void UpdateReimuABombFocused(Player *player)
         }
         orb->pos.x += g_App.gameSpeed * orb->velocity.x;
         orb->pos.y += g_App.gameSpeed * orb->velocity.y;
-        g_SpriteEngine->Step(&orb->sprites[0]);
-        g_SpriteEngine->Step(&orb->sprites[1]);
-        g_SpriteEngine->Step(&orb->sprites[2]);
-        g_SpriteEngine->Step(&orb->sprites[3]);
+        g_SpriteRenderer->Step(&orb->sprites[0]);
+        g_SpriteRenderer->Step(&orb->sprites[1]);
+        g_SpriteRenderer->Step(&orb->sprites[2]);
+        g_SpriteRenderer->Step(&orb->sprites[3]);
     }
     bombs->timer.Tick();
 }
@@ -379,7 +379,7 @@ void UpdateReimuABombFocused(Player *player)
     curSprite->pos[0] += g_GameManager.arena[0];                      \
     curSprite->pos[1] += g_GameManager.arena[1];                      \
     curSprite->pos.z = 0.0f;                                            \
-    g_SpriteEngine->DrawUnrotated(curSprite);                           \
+    g_SpriteRenderer->DrawUnrotated(curSprite);                           \
     curSprite++;
 
 void DrawReimuABombFocused(Player *player)
@@ -425,7 +425,7 @@ void UpdateReimuBBomb(Player *player)
         for (i = 0; i < 4; i++)
         {
             sprite = player->bomb.parts[i].sprites;
-            g_SpriteEngine->StartScriptAtOrigin(sprite, i + 0x489);
+            g_SpriteRenderer->StartScriptAtOrigin(sprite, i + 0x489);
         }
         g_SoundPlayer.QueueSound(6, 0);
         player->bomb.parts[0].pos.x = player->position.x;
@@ -455,7 +455,7 @@ void UpdateReimuBBomb(Player *player)
         area[3] = player->AddHitboxArea(&player->position, 384.0f, 62.0f, 6);
         for (i = 0; i < 4; i++)
         {
-            g_SpriteEngine->Step(player->bomb.parts[i].sprites);
+            g_SpriteRenderer->Step(player->bomb.parts[i].sprites);
             if (player->bomb.timer.HasTicked() && player->bomb.timer.AsFrames() % 2 != 0)
             {
                 area[i]->x = player->bomb.parts[i].pos.x + player->bomb.parts[i].sprites[0].posOffset.x;
@@ -484,7 +484,7 @@ void DrawReimuBBomb(Player *player)
         curSprite->pos.x = g_GameManager.arena[0] + curSprite->pos.x;
         curSprite->pos.y = g_GameManager.arena[1] + curSprite->pos.y;
         curSprite->pos.z = 0.0f;
-        g_SpriteEngine->Draw(curSprite);
+        g_SpriteRenderer->Draw(curSprite);
     }
 }
 
@@ -511,7 +511,7 @@ void UpdateReimuBBombFocused(Player *player)
         SpawnBombAura(player);
         for (sprite = player->bomb.parts[0].sprites, i = 0; i < 3; i++, sprite++)
         {
-            g_SpriteEngine->StartScriptAtOrigin(sprite, i + 0x48d);
+            g_SpriteRenderer->StartScriptAtOrigin(sprite, i + 0x48d);
         }
         g_SoundPlayer.QueueSound(6, 0);
         ScreenEffect::StartEffect(1, 60, 2, 6, 0);
@@ -527,9 +527,9 @@ void UpdateReimuBBombFocused(Player *player)
         {
             ScreenEffect::StartEffect(1, 80, 20, 0, 0);
         }
-        g_SpriteEngine->Step(&player->bomb.parts[0].sprites[0]);
-        g_SpriteEngine->Step(&player->bomb.parts[0].sprites[1]);
-        g_SpriteEngine->Step(&player->bomb.parts[0].sprites[2]);
+        g_SpriteRenderer->Step(&player->bomb.parts[0].sprites[0]);
+        g_SpriteRenderer->Step(&player->bomb.parts[0].sprites[1]);
+        g_SpriteRenderer->Step(&player->bomb.parts[0].sprites[2]);
         player->bombHitboxes[0].size.x = 256.0f;
         player->bombHitboxes[0].size.y = 256.0f;
         player->bombHitboxes[0].pos = player->bomb.startPos + player->bomb.parts[0].sprites[0].posOffset;
@@ -552,7 +552,7 @@ void DrawReimuBBombFocused(Player *player)
         curSprite->pos.x = g_GameManager.arena[0] + curSprite->pos.x;
         curSprite->pos.y = g_GameManager.arena[1] + curSprite->pos.y;
         curSprite->pos.z = 0.0f;
-        g_SpriteEngine->Draw(curSprite);
+        g_SpriteRenderer->Draw(curSprite);
     }
 }
 
@@ -579,7 +579,7 @@ void UpdateMarisaABomb(Player *player)
         for (i = 0; i < 8; i++, sprite++)
         {
             sprite = player->bomb.parts[i].sprites;
-            g_SpriteEngine->StartScriptAtOrigin(sprite, i % 3 + 0x405);
+            g_SpriteRenderer->StartScriptAtOrigin(sprite, i % 3 + 0x405);
             player->bomb.parts[i].pos = player->position;
             theta = (float)i * 6.2831855f / 8.0f;
             ((Vector2 *)&player->bomb.parts[i].velocity)->SetPolar(theta, 2.0f);
@@ -602,7 +602,7 @@ void UpdateMarisaABomb(Player *player)
                 player->bombHitboxes[i].pos = player->bomb.parts[i].pos;
                 player->bombHitboxes[i].damage = 8;
             }
-            g_SpriteEngine->Step(player->bomb.parts[i].sprites);
+            g_SpriteRenderer->Step(player->bomb.parts[i].sprites);
         }
     }
     player->playerState = 3;
@@ -624,14 +624,14 @@ void DrawMarisaABomb(Player *player)
         curSprite->pos.z = 0.0f;
         curSprite->scaleY = 3.2f;
         curSprite->scaleX = 3.2f;
-        g_SpriteEngine->Draw(curSprite);
+        g_SpriteRenderer->Draw(curSprite);
         curSprite->pos -= player->bomb.parts[i].velocity * 6.0f;
         curSprite->pos.x += -32.0f;
         curSprite->pos.y += -32.0f;
         curSprite->pos.z = 0.0f;
         curSprite->scaleY = 2.2f;
         curSprite->scaleX = 2.2f;
-        g_SpriteEngine->Draw(curSprite);
+        g_SpriteRenderer->Draw(curSprite);
         curSprite->pos -= player->bomb.parts[i].velocity * 2.0f;
         curSprite->pos.x += 64.0f;
         curSprite->pos.y += 64.0f;
@@ -642,7 +642,7 @@ void DrawMarisaABomb(Player *player)
         curSprite->pos.z = 0.0f;
         curSprite->scaleY = 1.0f;
         curSprite->scaleX = 1.0f;
-        g_SpriteEngine->Draw(curSprite);
+        g_SpriteRenderer->Draw(curSprite);
         curSprite++;
     }
 }
@@ -685,7 +685,7 @@ void UpdateMarisaABombFocused(Player *player)
         if (i < 24)
         {
             sprite = player->bomb.parts[i].sprites;
-            g_SpriteEngine->StartScriptAtOrigin(sprite, i % 3 + 0x405);
+            g_SpriteRenderer->StartScriptAtOrigin(sprite, i % 3 + 0x405);
             player->bomb.parts[i].pos = player->position;
             for (k = 0; k < 8; k++)
             {
@@ -728,7 +728,7 @@ void UpdateMarisaABombFocused(Player *player)
             player->bombHitboxes[i].pos = orb->pos;
             player->bombHitboxes[i].damage = 12;
         }
-        g_SpriteEngine->Step(orb->sprites);
+        g_SpriteRenderer->Step(orb->sprites);
     }
     player->playerState = 3;
     player->bomb.timer.Tick();
@@ -754,21 +754,21 @@ void DrawMarisaABombFocused(Player *player)
         curSprite->pos.z = 0.3f;
         curSprite->scaleY = 3.2f;
         curSprite->scaleX = 3.2f;
-        g_SpriteEngine->Draw(curSprite);
+        g_SpriteRenderer->Draw(curSprite);
         curSprite->pos = orb->trail[3];
         curSprite->pos.x = g_GameManager.arena[0] + curSprite->pos.x;
         curSprite->pos.y = g_GameManager.arena[1] + curSprite->pos.y;
         curSprite->pos.z = 0.32f;
         curSprite->scaleY = 2.2f;
         curSprite->scaleX = 2.2f;
-        g_SpriteEngine->Draw(curSprite);
+        g_SpriteRenderer->Draw(curSprite);
         curSprite->pos = orb->trail[7];
         curSprite->pos.x = g_GameManager.arena[0] + curSprite->pos.x;
         curSprite->pos.y = g_GameManager.arena[1] + curSprite->pos.y;
         curSprite->pos.z = 0.34f;
         curSprite->scaleY = 1.3f;
         curSprite->scaleX = 1.3f;
-        g_SpriteEngine->Draw(curSprite);
+        g_SpriteRenderer->Draw(curSprite);
         curSprite++;
     }
 }
@@ -801,7 +801,7 @@ void UpdateMarisaBBomb(Player *player)
         SpawnBombAura(player);
         for (laser = player->bomb.parts, i = 0; i < 3; i++, laser++)
         {
-            g_SpriteEngine->StartScriptAtOrigin(laser->sprites, i + 0x40c);
+            g_SpriteRenderer->StartScriptAtOrigin(laser->sprites, i + 0x40c);
             laser->pos = player->position;
             laser->laserAngle = i * 6.2831855f / 3.0f + -1.5707964f;
         }
@@ -838,7 +838,7 @@ void UpdateMarisaBBomb(Player *player)
                 player->AddHitboxAreaCircle(&hit->pos, 64.0f, 0.0f, 0, 6);
                 len += laser->sprites[0].spriteData->height * laser->sprites[0].scaleX / 5.0f;
             }
-            g_SpriteEngine->Step(laser->sprites);
+            g_SpriteRenderer->Step(laser->sprites);
         }
         if (player->bomb.timer == 20)
         {
@@ -871,7 +871,7 @@ void DrawMarisaBBomb(Player *player)
         curSprite->pos.x = g_GameManager.arena[0] + curSprite->pos.x;
         curSprite->pos.y = g_GameManager.arena[1] + curSprite->pos.y;
         curSprite->pos.z = 0.0f;
-        g_SpriteEngine->Draw(curSprite);
+        g_SpriteRenderer->Draw(curSprite);
         curSprite++;
     }
 }
@@ -899,7 +899,7 @@ void UpdateMarisaBBombFocused(Player *player)
         SpawnBombAura(player);
         for (sprite = player->bomb.parts[0].sprites, i = 0; i < 4; i++, sprite++)
         {
-            g_SpriteEngine->StartScriptAtOrigin(sprite, i + 0x408);
+            g_SpriteRenderer->StartScriptAtOrigin(sprite, i + 0x408);
             player->bomb.parts[i].pos = player->position;
         }
         g_SoundPlayer.QueueSound(0x13, 0);
@@ -926,10 +926,10 @@ void UpdateMarisaBBombFocused(Player *player)
             player->bombHitboxes[0].damage = 23;
             player->AddHitboxArea(&player->bombHitboxes[0].pos, 384.0f, player->position.y, 6);
         }
-        g_SpriteEngine->Step(&player->bomb.parts[0].sprites[0]);
-        g_SpriteEngine->Step(&player->bomb.parts[0].sprites[1]);
-        g_SpriteEngine->Step(&player->bomb.parts[0].sprites[2]);
-        g_SpriteEngine->Step(&player->bomb.parts[0].sprites[3]);
+        g_SpriteRenderer->Step(&player->bomb.parts[0].sprites[0]);
+        g_SpriteRenderer->Step(&player->bomb.parts[0].sprites[1]);
+        g_SpriteRenderer->Step(&player->bomb.parts[0].sprites[2]);
+        g_SpriteRenderer->Step(&player->bomb.parts[0].sprites[3]);
     }
     player->playerState = 3;
     player->bomb.timer.Tick();
@@ -953,7 +953,7 @@ void DrawMarisaBBombFocused(Player *player)
         curSprite->pos.x = g_GameManager.arena[0] + curSprite->pos.x;
         curSprite->pos.y = g_GameManager.arena[1] + curSprite->pos.y;
         curSprite->pos.z = 0.0f;
-        g_SpriteEngine->Draw(curSprite);
+        g_SpriteRenderer->Draw(curSprite);
         curSprite++;
     }
 }
@@ -1000,7 +1000,7 @@ void UpdateSakuyaABomb(Player *player)
                 {
                     knife->state = 1;
                     spr = knife->sprites;
-                    g_SpriteEngine->StartScriptAtOrigin(spr, (i & 1) + 0x405);
+                    g_SpriteRenderer->StartScriptAtOrigin(spr, (i & 1) + 0x405);
                     angle = g_Rng.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
                     knife->angle = angle;
                     knife->speed = g_Rng.GetRandomF32ZeroToOne() * 6.0f + 5.5f;
@@ -1032,14 +1032,14 @@ void UpdateSakuyaABomb(Player *player)
                 }
                 else if (player->bombHitboxes[i].damageDealt < 999)
                 {
-                    g_SpriteEngine->StartScriptAtOrigin(knife->sprites, 0x460);
+                    g_SpriteRenderer->StartScriptAtOrigin(knife->sprites, 0x460);
                     player->bombHitboxes[i].damageDealt = 999;
                 }
                 if (!g_GameManager.IsInPlayArea(knife->pos.x, knife->pos.y, 64.0f, 64.0f))
                 {
                     knife->state = 0;
                 }
-                g_SpriteEngine->Step(knife->sprites);
+                g_SpriteRenderer->Step(knife->sprites);
             }
         }
     }
@@ -1062,7 +1062,7 @@ void DrawSakuyaABomb(Player *player)
         knife->sprites[0].SetRotationZ(AddNormalizeAngle(knife->angle, 1.5707964f));
         knife->sprites[0].pos = knife->pos;
         knife->sprites[0].pos.z = 0.0f;
-        g_SpriteEngine->Draw(knife->sprites);
+        g_SpriteRenderer->Draw(knife->sprites);
     }
 }
 
@@ -1113,7 +1113,7 @@ void UpdateSakuyaABombFocused(Player *player)
             }
             knife->state = 1;
             spr = knife->sprites;
-            g_SpriteEngine->StartScriptAtOrigin(spr, (i & 1) + 0x407);
+            g_SpriteRenderer->StartScriptAtOrigin(spr, (i & 1) + 0x407);
             angle = i * 6.2831855f / 96.0f - 3.1415927f;
             knife->angle = angle;
             knife->speed = g_Rng.GetRandomF32ZeroToOne() * 1.0f + 0.5f;
@@ -1166,11 +1166,11 @@ void UpdateSakuyaABombFocused(Player *player)
         }
         else if (player->bombHitboxes[i].damageDealt < 999)
         {
-            g_SpriteEngine->StartScriptAtOrigin(knife->sprites, 0x460);
+            g_SpriteRenderer->StartScriptAtOrigin(knife->sprites, 0x460);
             player->bombHitboxes[i].damageDealt = 999;
             g_EffectManager.SpawnEffect(0, &player->bomb.parts[i].pos, 1, 0xffff80ff);
         }
-        g_SpriteEngine->Step(knife->sprites);
+        g_SpriteRenderer->Step(knife->sprites);
         knife->timer.Tick();
     }
     player->playerState = 3;
@@ -1194,7 +1194,7 @@ void DrawSakuyaABombFocused(Player *player)
         knife->sprites[0].pos.x = g_GameManager.arena[0] + knife->sprites[0].pos.x;
         knife->sprites[0].pos.y = g_GameManager.arena[1] + knife->sprites[0].pos.y;
         knife->sprites[0].pos.z = 0.0f;
-        g_SpriteEngine->Draw(knife->sprites);
+        g_SpriteRenderer->Draw(knife->sprites);
     }
 }
 
@@ -1245,7 +1245,7 @@ void UpdateSakuyaBBomb(Player *player)
         {
             knife->state = 1;
             spr = knife->sprites;
-            g_SpriteEngine->StartScriptAtOrigin(spr, i + 0x409);
+            g_SpriteRenderer->StartScriptAtOrigin(spr, i + 0x409);
             spr->pos.x = 192.0f + ((i & 1) ? 128.0f : -128.0f);
             spr->pos.y = 224.0f + ((i / 2) ? 128.0f : -128.0f);
             spr->pos.z = 0.49f;
@@ -1274,7 +1274,7 @@ void UpdateSakuyaBBomb(Player *player)
         {
             continue;
         }
-        g_SpriteEngine->Step(knife->sprites);
+        g_SpriteRenderer->Step(knife->sprites);
     }
     player->playerState = 3;
     player->bomb.timer.Tick();
@@ -1295,7 +1295,7 @@ void DrawSakuyaBBomb(Player *player)
         knife->sprites[0].pos.x = g_GameManager.arena[0] + knife->sprites[0].pos.x;
         knife->sprites[0].pos.y = g_GameManager.arena[1] + knife->sprites[0].pos.y;
         knife->sprites[0].pos.z = 0.0f;
-        g_SpriteEngine->Draw(knife->sprites);
+        g_SpriteRenderer->Draw(knife->sprites);
         knife->sprites[0].pos.x -= g_GameManager.arena[0];
         knife->sprites[0].pos.y -= g_GameManager.arena[1];
     }
@@ -1334,7 +1334,7 @@ void UpdateSakuyaBBombFocused(Player *player)
         {
             knife->state = 1;
             spr = knife->sprites;
-            g_SpriteEngine->StartScriptAtOrigin(spr, i + 0x40d);
+            g_SpriteRenderer->StartScriptAtOrigin(spr, i + 0x40d);
             knife->pos = player->position;
             for (k = 31; k >= 0; k--)
             {
@@ -1382,7 +1382,7 @@ void UpdateSakuyaBBombFocused(Player *player)
         }
         knife->trail[0] = knife->pos;
         knife->pos += knife->velocity * g_App.gameSpeed;
-        g_SpriteEngine->Step(knife->sprites);
+        g_SpriteRenderer->Step(knife->sprites);
     }
     player->playerState = 3;
     player->bomb.timer.Tick();
@@ -1407,7 +1407,7 @@ void DrawSakuyaBBombFocused(Player *player)
         knife->sprites[0].pos.x = g_GameManager.arena[0] + knife->sprites[0].pos.x;
         knife->sprites[0].pos.y = g_GameManager.arena[1] + knife->sprites[0].pos.y;
         knife->sprites[0].pos.z = 0.0f;
-        g_SpriteEngine->Draw(knife->sprites);
+        g_SpriteRenderer->Draw(knife->sprites);
         for (k = 3; k < 32; k += 4)
         {
             knife->sprites[0].pos = knife->trail[k];
@@ -1415,7 +1415,7 @@ void DrawSakuyaBBombFocused(Player *player)
             knife->sprites[0].pos.x = g_GameManager.arena[0] + knife->sprites[0].pos.x;
             knife->sprites[0].pos.y = g_GameManager.arena[1] + knife->sprites[0].pos.y;
             knife->sprites[0].pos.z = 0.0f;
-            g_SpriteEngine->Draw(knife->sprites);
+            g_SpriteRenderer->Draw(knife->sprites);
         }
         knife->sprites[0].alpha = alpha;
     }

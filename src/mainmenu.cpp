@@ -83,10 +83,10 @@ int MainMenu::OnUpdate(MainMenu *menu)
         status = menu->UpdateGameStartMenu();
         break;
     }
-    g_SpriteEngine->StepSprites(menu->sprites, menu->spriteCount);
+    g_SpriteRenderer->StepSprites(menu->sprites, menu->spriteCount);
     if (menu->helpSprite != NULL)
     {
-        g_SpriteEngine->Step(menu->helpSprite);
+        g_SpriteRenderer->Step(menu->helpSprite);
     }
     return status;
 }
@@ -116,7 +116,7 @@ int MainMenu::StartTitle()
         }
         if ((this->prevState == 0 || this->prevState == 4 || this->prevState == 7 || this->prevState == 8 ||
              this->prevState == 12) &&
-            g_SpriteEngine->LoadSurface(0, "data/title/title00.jpg") != 0)
+            g_SpriteRenderer->LoadSurface(0, "data/title/title00.jpg") != 0)
         {
             return 0;
         }
@@ -124,14 +124,14 @@ int MainMenu::StartTitle()
         {
             this->spriteCount = 0xa4;
             this->sprites = new Sprite[this->spriteCount];
-            g_SpriteEngine->StartSpriteSeries(this->sprites, 0x900, this->spriteCount);
+            g_SpriteRenderer->StartSpriteSeries(this->sprites, 0x900, this->spriteCount);
         }
-        g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 2);
+        g_SpriteRenderer->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 2);
         for (i = 0; i < 8; i++)
         {
-            g_SpriteEngine->SetSprite(&this->sprites[i + 1], this->sprites[i + 1].baseSpriteIndex + 1);
+            g_SpriteRenderer->SetSprite(&this->sprites[i + 1], this->sprites[i + 1].baseSpriteIndex + 1);
         }
-        g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 1], this->sprites[this->cursor + 1].baseSpriteIndex);
+        g_SpriteRenderer->SetSprite(&this->sprites[this->cursor + 1], this->sprites[this->cursor + 1].baseSpriteIndex);
         this->subState = 0;
         this->stateFrames = 0;
         this->prevCursor = -1;
@@ -140,7 +140,7 @@ int MainMenu::StartTitle()
         if (g_GameManager.isInReplay)
         {
             this->SetState(7);
-            g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 13);
+            g_SpriteRenderer->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 13);
             this->helpSprite->SetPendingInterrupt(2);
             g_GameManager.SetIsInReplay(0);
             return 1;
@@ -148,13 +148,13 @@ int MainMenu::StartTitle()
         if (this->returningFromPractice != 0)
         {
             this->SetState(8);
-            g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 5);
+            g_SpriteRenderer->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 5);
             this->helpSprite->SetPendingInterrupt(2);
             return 1;
         }
         for (i = 0; i < ARRAY_SIZE(g_TitleHelpTexts); i++)
         {
-            g_SpriteEngine->RenderTextCentered(&this->helpSprites[i], 0xfff0e0, 0x300000, g_TitleHelpTexts[i]);
+            g_SpriteRenderer->RenderTextCentered(&this->helpSprites[i], 0xfff0e0, 0x300000, g_TitleHelpTexts[i]);
         }
     case 1:
         i = this->MoveMenuCursor(8);
@@ -166,9 +166,9 @@ int MainMenu::StartTitle()
             }
             for (i = 0; i < 8; i++)
             {
-                g_SpriteEngine->SetSprite(&this->sprites[i + 1], this->sprites[i + 1].baseSpriteIndex + 1);
+                g_SpriteRenderer->SetSprite(&this->sprites[i + 1], this->sprites[i + 1].baseSpriteIndex + 1);
             }
-            g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 1],
+            g_SpriteRenderer->SetSprite(&this->sprites[this->cursor + 1],
                                       this->sprites[this->cursor + 1].baseSpriteIndex);
         }
         this->idleFrames++;
@@ -182,7 +182,7 @@ int MainMenu::StartTitle()
             g_GameManager.demoIndex %= 3;
             strcpy(g_GameManager.replayFile, g_DemoReplayPaths[g_GameManager.demoIndex]);
             this->loadedReplay = (ReplayHeader *)LoadFileData(g_GameManager.replayFile, 0);
-            this->loadedReplay = ValidateReplay(this->loadedReplay, g_FileSize);
+            this->loadedReplay = ValidateReplay(this->loadedReplay, g_LastFileSize);
             if (this->loadedReplay == NULL)
             {
                 DebugPrint2("error : Demo Play is not ready\r\n");
@@ -234,7 +234,7 @@ int MainMenu::StartTitle()
                     this->cursor = 2;
                 }
                 this->SetState(4);
-                g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 5);
+                g_SpriteRenderer->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 5);
                 this->helpSprite->SetPendingInterrupt(2);
                 return 1;
             case 2:
@@ -245,7 +245,7 @@ int MainMenu::StartTitle()
                     this->cursor = 2;
                 }
                 this->SetState(8);
-                g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 5);
+                g_SpriteRenderer->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 5);
                 this->helpSprite->SetPendingInterrupt(2);
                 return 1;
             case 1:
@@ -254,14 +254,14 @@ int MainMenu::StartTitle()
                     g_GameManager.stateFlags &= ~1;
                     this->cursor = g_App.defaultDifficulty == 5;
                     this->SetState(12);
-                    g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 5);
+                    g_SpriteRenderer->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 5);
                     this->helpSprite->SetPendingInterrupt(2);
                     return 1;
                 }
             case 3:
                 g_GameManager.stateFlags &= ~1;
                 this->SetState(7);
-                g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 13);
+                g_SpriteRenderer->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 13);
                 this->helpSprite->SetPendingInterrupt(2);
                 return 1;
             case 5:
@@ -285,7 +285,7 @@ int MainMenu::StartTitle()
             case 7:
                 this->subState = 2;
                 this->stateFrames = 0;
-                g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 1);
+                g_SpriteRenderer->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 1);
                 if (g_App.musicMode == 2)
                 {
                     g_App.midi->Restart(30);
@@ -294,10 +294,10 @@ int MainMenu::StartTitle()
         }
         if (WAS_PRESSED(10))
         {
-            g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 1],
+            g_SpriteRenderer->SetSprite(&this->sprites[this->cursor + 1],
                                       this->sprites[this->cursor + 1].baseSpriteIndex + 1);
             this->cursor = 7;
-            g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 1],
+            g_SpriteRenderer->SetSprite(&this->sprites[this->cursor + 1],
                                       this->sprites[this->cursor + 1].baseSpriteIndex);
             g_SoundPlayer.QueueSound(11, 0);
             g_SoundPlayer.PlayQueuedSounds();
@@ -352,12 +352,12 @@ int MainMenu::UpdateOptions()
     case 0:
         if (this->inputLockout == 0)
         {
-            g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 3);
+            g_SpriteRenderer->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 3);
             for (i = 0; i < 9; i++)
             {
-                g_SpriteEngine->SetSprite(&this->sprites[i + 9], this->sprites[i + 9].baseSpriteIndex + 1);
+                g_SpriteRenderer->SetSprite(&this->sprites[i + 9], this->sprites[i + 9].baseSpriteIndex + 1);
             }
-            g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 9],
+            g_SpriteRenderer->SetSprite(&this->sprites[this->cursor + 9],
                                       this->sprites[this->cursor + 9].baseSpriteIndex);
             this->subState = 0;
             this->stateFrames = 0;
@@ -366,16 +366,16 @@ int MainMenu::UpdateOptions()
         this->subState = 1;
         for (i = 0; i < ARRAY_SIZE(g_OptionsHelpTexts); i++)
         {
-            g_SpriteEngine->RenderTextCentered(&this->helpSprites[i], 0xfff0e0, 0x300000, g_OptionsHelpTexts[i]);
+            g_SpriteRenderer->RenderTextCentered(&this->helpSprites[i], 0xfff0e0, 0x300000, g_OptionsHelpTexts[i]);
         }
     case 1:
         if (this->MoveMenuCursor(9))
         {
             for (i = 0; i < 9; i++)
             {
-                g_SpriteEngine->SetSprite(&this->sprites[i + 9], this->sprites[i + 9].baseSpriteIndex + 1);
+                g_SpriteRenderer->SetSprite(&this->sprites[i + 9], this->sprites[i + 9].baseSpriteIndex + 1);
             }
-            g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 9],
+            g_SpriteRenderer->SetSprite(&this->sprites[this->cursor + 9],
                                       this->sprites[this->cursor + 9].baseSpriteIndex);
         }
         if (this->prevCursor != this->cursor)
@@ -386,40 +386,40 @@ int MainMenu::UpdateOptions()
         this->prevCursor = this->cursor;
         for (i = 0x12; i <= 0x16; i++)
         {
-            g_SpriteEngine->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex + 1);
+            g_SpriteRenderer->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex + 1);
         }
         i = g_App.lifeCount + 0x12;
-        g_SpriteEngine->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex);
+        g_SpriteRenderer->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex);
         for (i = 0x17; i <= 0x18; i++)
         {
-            g_SpriteEngine->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex + 1);
+            g_SpriteRenderer->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex + 1);
         }
         i = g_App.colorMode16Bits + 0x17;
-        g_SpriteEngine->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex);
+        g_SpriteRenderer->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex);
         for (i = 0x19; i <= 0x1b; i++)
         {
-            g_SpriteEngine->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex + 1);
+            g_SpriteRenderer->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex + 1);
         }
         i = g_App.musicMode + 0x19;
-        g_SpriteEngine->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex);
+        g_SpriteRenderer->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex);
         for (i = 0x1c; i <= 0x1d; i++)
         {
-            g_SpriteEngine->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex + 1);
+            g_SpriteRenderer->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex + 1);
         }
         i = g_App.playSounds + 0x1c;
-        g_SpriteEngine->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex);
+        g_SpriteRenderer->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex);
         for (i = 0x1e; i <= 0x1f; i++)
         {
-            g_SpriteEngine->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex + 1);
+            g_SpriteRenderer->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex + 1);
         }
         i = g_App.windowed + 0x1e;
-        g_SpriteEngine->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex);
+        g_SpriteRenderer->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex);
         for (i = 0x20; i <= 0x21; i++)
         {
-            g_SpriteEngine->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex + 1);
+            g_SpriteRenderer->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex + 1);
         }
         i = g_App.optionsMenuCursor + 0x20;
-        g_SpriteEngine->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex);
+        g_SpriteRenderer->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex);
         if (this->inputLockout < 4)
         {
             break;
@@ -627,10 +627,10 @@ int MainMenu::UpdateOptions()
             {
                 goto leave;
             }
-            g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 9],
+            g_SpriteRenderer->SetSprite(&this->sprites[this->cursor + 9],
                                       this->sprites[this->cursor + 9].baseSpriteIndex + 1);
             this->cursor = 8;
-            g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 9],
+            g_SpriteRenderer->SetSprite(&this->sprites[this->cursor + 9],
                                       this->sprites[this->cursor + 9].baseSpriteIndex);
             g_SoundPlayer.QueueSound(11, 0);
             g_SoundPlayer.PlayQueuedSounds();
@@ -711,12 +711,12 @@ int MainMenu::UpdateKeyConfig()
     case 0:
         if (this->inputLockout == 0)
         {
-            g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 4);
+            g_SpriteRenderer->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 4);
             for (i = 0; i < 12; i++)
             {
-                g_SpriteEngine->SetSprite(&this->sprites[i + 0x23], this->sprites[i + 0x23].baseSpriteIndex + 1);
+                g_SpriteRenderer->SetSprite(&this->sprites[i + 0x23], this->sprites[i + 0x23].baseSpriteIndex + 1);
             }
-            g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 0x23],
+            g_SpriteRenderer->SetSprite(&this->sprites[this->cursor + 0x23],
                                       this->sprites[this->cursor + 0x23].baseSpriteIndex);
             this->subState = 0;
             this->stateFrames = 0;
@@ -746,16 +746,16 @@ int MainMenu::UpdateKeyConfig()
         this->subState = 1;
         for (i = 0; i < ARRAY_SIZE(g_KeyConfigHelpTexts); i++)
         {
-            g_SpriteEngine->RenderTextCentered(&this->helpSprites[i], 0xfff0e0, 0x300000, g_KeyConfigHelpTexts[i]);
+            g_SpriteRenderer->RenderTextCentered(&this->helpSprites[i], 0xfff0e0, 0x300000, g_KeyConfigHelpTexts[i]);
         }
     case 1:
         if (this->MoveMenuCursor(12))
         {
             for (i = 0; i < 12; i++)
             {
-                g_SpriteEngine->SetSprite(&this->sprites[i + 0x23], this->sprites[i + 0x23].baseSpriteIndex + 1);
+                g_SpriteRenderer->SetSprite(&this->sprites[i + 0x23], this->sprites[i + 0x23].baseSpriteIndex + 1);
             }
-            g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 0x23],
+            g_SpriteRenderer->SetSprite(&this->sprites[this->cursor + 0x23],
                                       this->sprites[this->cursor + 0x23].baseSpriteIndex);
         }
         if (this->prevCursor != this->cursor)
@@ -784,10 +784,10 @@ int MainMenu::UpdateKeyConfig()
         this->ShowButtonDigits(digit, this->controllerMapping.rightButton);
         for (i = 0x41; i <= 0x42; i++)
         {
-            g_SpriteEngine->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex + 1);
+            g_SpriteRenderer->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex + 1);
         }
         i = g_App.shootFocuses + 0x41;
-        g_SpriteEngine->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex);
+        g_SpriteRenderer->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex);
         pad = GetPadButtons();
         for (key = 0; key < 0x20; key++)
         {
@@ -904,8 +904,8 @@ int MainMenu::ShowButtonDigits(Sprite *vm, short value)
     }
     else
     {
-        g_SpriteEngine->SetSprite(&vm[0], vm[0].baseSpriteIndex + value / 10 * 2);
-        g_SpriteEngine->SetSprite(&vm[1], vm[1].baseSpriteIndex + value % 10 * 2);
+        g_SpriteRenderer->SetSprite(&vm[0], vm[0].baseSpriteIndex + value / 10 * 2);
+        g_SpriteRenderer->SetSprite(&vm[1], vm[1].baseSpriteIndex + value % 10 * 2);
         vm[0].flags |= 2;
         vm[1].flags |= 2;
     }
@@ -924,23 +924,23 @@ int MainMenu::UpdateDifficultyMenu()
         if (this->inputLockout == 0)
         {
             if (this->prevState != 5 && this->prevState != 9 && this->prevState != 13 &&
-                g_SpriteEngine->LoadSurface(0, "data/title/select00.jpg") != 0)
+                g_SpriteRenderer->LoadSurface(0, "data/title/select00.jpg") != 0)
             {
                 return 0;
             }
             this->cursor = g_App.defaultDifficulty;
             if (this->state != 12)
             {
-                g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 7);
+                g_SpriteRenderer->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 7);
             }
             else if (!g_GameManager.IsPhantasmOpen())
             {
-                g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 12);
+                g_SpriteRenderer->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 12);
                 this->cursor = 4;
             }
             else
             {
-                g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 22);
+                g_SpriteRenderer->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 22);
             }
             if (this->state != 12)
             {
@@ -950,9 +950,9 @@ int MainMenu::UpdateDifficultyMenu()
                 }
                 for (i = 0; i < 4; i++)
                 {
-                    g_SpriteEngine->SetSprite(&this->sprites[i + 0x43], this->sprites[i + 0x43].baseSpriteIndex + 1);
+                    g_SpriteRenderer->SetSprite(&this->sprites[i + 0x43], this->sprites[i + 0x43].baseSpriteIndex + 1);
                 }
-                g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 0x43],
+                g_SpriteRenderer->SetSprite(&this->sprites[this->cursor + 0x43],
                                           this->sprites[this->cursor + 0x43].baseSpriteIndex);
             }
             else
@@ -964,9 +964,9 @@ int MainMenu::UpdateDifficultyMenu()
                 }
                 for (i = 0; i < 2; i++)
                 {
-                    g_SpriteEngine->SetSprite(&this->sprites[i + 0xa2], this->sprites[i + 0xa2].baseSpriteIndex + 1);
+                    g_SpriteRenderer->SetSprite(&this->sprites[i + 0xa2], this->sprites[i + 0xa2].baseSpriteIndex + 1);
                 }
-                g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 0xa2],
+                g_SpriteRenderer->SetSprite(&this->sprites[this->cursor + 0xa2],
                                           this->sprites[this->cursor + 0xa2].baseSpriteIndex);
             }
             this->subState = 0;
@@ -992,18 +992,18 @@ int MainMenu::UpdateDifficultyMenu()
             {
                 for (i = 0; i < 4; i++)
                 {
-                    g_SpriteEngine->SetSprite(&this->sprites[i + 0x43], this->sprites[i + 0x43].baseSpriteIndex + 1);
+                    g_SpriteRenderer->SetSprite(&this->sprites[i + 0x43], this->sprites[i + 0x43].baseSpriteIndex + 1);
                 }
-                g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 0x43],
+                g_SpriteRenderer->SetSprite(&this->sprites[this->cursor + 0x43],
                                           this->sprites[this->cursor + 0x43].baseSpriteIndex);
             }
             else if (count == 2)
             {
                 for (i = 0; i < 2; i++)
                 {
-                    g_SpriteEngine->SetSprite(&this->sprites[i + 0xa2], this->sprites[i + 0xa2].baseSpriteIndex + 1);
+                    g_SpriteRenderer->SetSprite(&this->sprites[i + 0xa2], this->sprites[i + 0xa2].baseSpriteIndex + 1);
                 }
-                g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 0xa2],
+                g_SpriteRenderer->SetSprite(&this->sprites[this->cursor + 0xa2],
                                           this->sprites[this->cursor + 0xa2].baseSpriteIndex);
             }
         }
@@ -1051,7 +1051,7 @@ int MainMenu::UpdateDifficultyMenu()
             g_SoundPlayer.PlayQueuedSounds();
             this->subState = 3;
             this->stateFrames = 0;
-            g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 6);
+            g_SpriteRenderer->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 6);
         }
         break;
     case 3:
@@ -1092,7 +1092,7 @@ int MainMenu::UpdateCharacterMenu()
     case 0:
         if (this->inputLockout == 0)
         {
-            g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 8);
+            g_SpriteRenderer->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 8);
             if (g_App.defaultDifficulty < 4)
             {
                 this->sprites[g_App.defaultDifficulty + 0x43].SetPendingInterrupt(9);
@@ -1373,7 +1373,7 @@ int MainMenu::UpdateShotTypeMenu()
     case 0:
         if (this->inputLockout == 0)
         {
-            g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 10);
+            g_SpriteRenderer->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 10);
             if (g_App.defaultDifficulty < 4)
             {
                 this->sprites[g_App.defaultDifficulty + 0x43].SetPendingInterrupt(9);
@@ -1430,22 +1430,22 @@ int MainMenu::UpdateShotTypeMenu()
                 this->sprites[0x48].flags |= 2;
                 this->sprites[0x49].flags |= 2;
                 this->sprites[0x47].flags |= 2;
-                g_SpriteEngine->SetSprite(&this->sprites[0x49 - this->cursor], this->sprites[0x49 - this->cursor].baseSpriteIndex + 1);
-                g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 0x48], this->sprites[this->cursor + 0x48].baseSpriteIndex);
+                g_SpriteRenderer->SetSprite(&this->sprites[0x49 - this->cursor], this->sprites[0x49 - this->cursor].baseSpriteIndex + 1);
+                g_SpriteRenderer->SetSprite(&this->sprites[this->cursor + 0x48], this->sprites[this->cursor + 0x48].baseSpriteIndex);
                 break;
             case 1:
                 this->sprites[0x4b].flags |= 2;
                 this->sprites[0x4c].flags |= 2;
                 this->sprites[0x4a].flags |= 2;
-                g_SpriteEngine->SetSprite(&this->sprites[0x4c - this->cursor], this->sprites[0x4c - this->cursor].baseSpriteIndex + 1);
-                g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 0x4b], this->sprites[this->cursor + 0x4b].baseSpriteIndex);
+                g_SpriteRenderer->SetSprite(&this->sprites[0x4c - this->cursor], this->sprites[0x4c - this->cursor].baseSpriteIndex + 1);
+                g_SpriteRenderer->SetSprite(&this->sprites[this->cursor + 0x4b], this->sprites[this->cursor + 0x4b].baseSpriteIndex);
                 break;
             case 2:
                 this->sprites[0x4e].flags |= 2;
                 this->sprites[0x4f].flags |= 2;
                 this->sprites[0x4d].flags |= 2;
-                g_SpriteEngine->SetSprite(&this->sprites[0x4f - this->cursor], this->sprites[0x4f - this->cursor].baseSpriteIndex + 1);
-                g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 0x4e], this->sprites[this->cursor + 0x4e].baseSpriteIndex);
+                g_SpriteRenderer->SetSprite(&this->sprites[0x4f - this->cursor], this->sprites[0x4f - this->cursor].baseSpriteIndex + 1);
+                g_SpriteRenderer->SetSprite(&this->sprites[this->cursor + 0x4e], this->sprites[this->cursor + 0x4e].baseSpriteIndex);
                 break;
             }
             this->subState = 0;
@@ -1491,16 +1491,16 @@ int MainMenu::UpdateShotTypeMenu()
             switch (g_GameManager.character)
             {
             case 0:
-                g_SpriteEngine->SetSprite(&this->sprites[0x49 - this->cursor], this->sprites[0x49 - this->cursor].baseSpriteIndex + 1);
-                g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 0x48], this->sprites[this->cursor + 0x48].baseSpriteIndex);
+                g_SpriteRenderer->SetSprite(&this->sprites[0x49 - this->cursor], this->sprites[0x49 - this->cursor].baseSpriteIndex + 1);
+                g_SpriteRenderer->SetSprite(&this->sprites[this->cursor + 0x48], this->sprites[this->cursor + 0x48].baseSpriteIndex);
                 break;
             case 1:
-                g_SpriteEngine->SetSprite(&this->sprites[0x4c - this->cursor], this->sprites[0x4c - this->cursor].baseSpriteIndex + 1);
-                g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 0x4b], this->sprites[this->cursor + 0x4b].baseSpriteIndex);
+                g_SpriteRenderer->SetSprite(&this->sprites[0x4c - this->cursor], this->sprites[0x4c - this->cursor].baseSpriteIndex + 1);
+                g_SpriteRenderer->SetSprite(&this->sprites[this->cursor + 0x4b], this->sprites[this->cursor + 0x4b].baseSpriteIndex);
                 break;
             case 2:
-                g_SpriteEngine->SetSprite(&this->sprites[0x4f - this->cursor], this->sprites[0x4f - this->cursor].baseSpriteIndex + 1);
-                g_SpriteEngine->SetSprite(&this->sprites[this->cursor + 0x4e], this->sprites[this->cursor + 0x4e].baseSpriteIndex);
+                g_SpriteRenderer->SetSprite(&this->sprites[0x4f - this->cursor], this->sprites[0x4f - this->cursor].baseSpriteIndex + 1);
+                g_SpriteRenderer->SetSprite(&this->sprites[this->cursor + 0x4e], this->sprites[this->cursor + 0x4e].baseSpriteIndex);
                 break;
             }
         }
@@ -1585,7 +1585,7 @@ int MainMenu::UpdateGameStartMenu()
     case 0:
         if (this->inputLockout == 0)
         {
-            g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 18);
+            g_SpriteRenderer->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 18);
             this->sprites[0x48].flags &= ~2;
             this->sprites[0x49].flags &= ~2;
             this->sprites[0x47].flags &= ~2;
@@ -1701,11 +1701,11 @@ int MainMenu::UpdateReplayMenu()
     case 0:
         if (this->inputLockout == 0)
         {
-            if (this->prevState != 7 && g_SpriteEngine->LoadSurface(0, "data/title/select00.jpg") != 0)
+            if (this->prevState != 7 && g_SpriteRenderer->LoadSurface(0, "data/title/select00.jpg") != 0)
             {
                 return 0;
             }
-            g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 14);
+            g_SpriteRenderer->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 14);
             this->cursor = 0;
             this->subState = 0;
             this->stateFrames = 0;
@@ -1719,7 +1719,7 @@ int MainMenu::UpdateReplayMenu()
                 {
                     continue;
                 }
-                data = ValidateReplay(data, g_FileSize);
+                data = ValidateReplay(data, g_LastFileSize);
                 if (data != NULL)
                 {
                     this->replays[replayCount] = *data;
@@ -1741,7 +1741,7 @@ int MainMenu::UpdateReplayMenu()
                     {
                         continue;
                     }
-                    data = ValidateReplay(data, g_FileSize);
+                    data = ValidateReplay(data, g_LastFileSize);
                     if (data != NULL)
                     {
                         this->replays[replayCount] = *data;
@@ -1803,10 +1803,10 @@ int MainMenu::UpdateReplayMenu()
             }
             g_SoundPlayer.QueueSound(10, 0);
             this->subState = 2;
-            g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 15);
+            g_SpriteRenderer->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 15);
             this->sprites[this->replayCursor % 15 + 0x87].SetPendingInterrupt(17);
             this->loadedReplay = (ReplayHeader *)LoadFileData(this->replayPaths[this->replayCursor], 1);
-            this->loadedReplay = ValidateReplay(this->loadedReplay, g_FileSize);
+            this->loadedReplay = ValidateReplay(this->loadedReplay, g_LastFileSize);
             for (i = 0; i < 7; i++)
             {
                 if (this->loadedReplay->stages[i] != NULL)
@@ -1832,7 +1832,7 @@ int MainMenu::UpdateReplayMenu()
             g_SoundPlayer.QueueSound(11, 0);
             this->subState = 4;
             this->stateFrames = 0;
-            g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 16);
+            g_SpriteRenderer->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 16);
         }
         break;
     case 2:
@@ -1862,7 +1862,7 @@ int MainMenu::UpdateReplayMenu()
         this->replayStage = this->cursor;
         if (WAS_PRESSED(0x1001))
         {
-            g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 19);
+            g_SpriteRenderer->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 19);
             this->sprites[this->replayCursor % 15 + 0x87].SetPendingInterrupt(17);
             this->subState = 3;
             this->cursor = 0;
@@ -1878,7 +1878,7 @@ int MainMenu::UpdateReplayMenu()
             this->loadedReplay = NULL;
             this->subState = 1;
             this->inputLockout = 0;
-            g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 14);
+            g_SpriteRenderer->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 14);
             this->cursor = this->replayCursor;
             break;
         }
@@ -1916,7 +1916,7 @@ int MainMenu::UpdateReplayMenu()
             this->subState = 2;
             this->inputLockout = 0;
             this->cursor = this->replayStage;
-            g_SpriteEngine->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 15);
+            g_SpriteRenderer->SendInterruptToLoadedSprites(this->sprites, this->spriteCount, 15);
             this->sprites[this->replayCursor % 15 + 0x87].SetPendingInterrupt(17);
             break;
         }
@@ -2185,8 +2185,8 @@ int MainMenu::OnDraw(MainMenu *menu)
     int i;
     Sprite *vm;
 
-    g_SpriteEngine->ClearTexture();
-    g_SpriteEngine->CopySurfaceToBackBuffer(0, 0, 0, 0, 0);
+    g_SpriteRenderer->ClearTexture();
+    g_SpriteRenderer->CopySurfaceToBackBuffer(0, 0, 0, 0, 0);
     switch (menu->state)
     {
     case 7:
@@ -2205,18 +2205,18 @@ int MainMenu::OnDraw(MainMenu *menu)
             vm->pos += vm->posOffset;
             if (vm->rotationZ != 0.0f)
             {
-                g_SpriteEngine->Draw(vm);
+                g_SpriteRenderer->Draw(vm);
             }
             else
             {
-                g_SpriteEngine->DrawUnrotated(vm);
+                g_SpriteRenderer->DrawUnrotated(vm);
             }
             vm->pos = savedPos;
         }
     }
     if (menu->helpSprite != NULL)
     {
-        g_SpriteEngine->DrawUnrotated(menu->helpSprite);
+        g_SpriteRenderer->DrawUnrotated(menu->helpSprite);
     }
     return 1;
 }
@@ -2267,20 +2267,20 @@ int MainMenu::InitTitleScene()
     if (!g_GameManager.phantasmWasOpen && g_GameManager.IsPhantasmOpen())
     {
         i = 0;
-        g_SpriteEngine->LoadSurface(0, "data/title/phantasm.jpg");
+        g_SpriteRenderer->LoadSurface(0, "data/title/phantasm.jpg");
         while (i < 900)
         {
-            g_SpriteEngine->ClearVertexFormat();
-            g_SpriteEngine->ClearSpriteData();
-            g_SpriteEngine->ClearTexture();
-            g_SpriteEngine->ClearColorOp();
-            g_SpriteEngine->ClearBlendMode();
-            g_SpriteEngine->ClearZWrite();
-            g_SpriteEngine->ClearDrawStats();
-            g_SpriteEngine->ClearLastCameraSetupFlag();
-            g_SpriteEngine->ResetColorModulation();
+            g_SpriteRenderer->ClearVertexFormat();
+            g_SpriteRenderer->ClearSpriteData();
+            g_SpriteRenderer->ClearTexture();
+            g_SpriteRenderer->ClearColorOp();
+            g_SpriteRenderer->ClearBlendMode();
+            g_SpriteRenderer->ClearZWrite();
+            g_SpriteRenderer->ClearDrawStats();
+            g_SpriteRenderer->ClearLastCameraSetupFlag();
+            g_SpriteRenderer->ResetColorModulation();
             g_App.d3dDevice->BeginScene();
-            g_SpriteEngine->CopySurfaceToBackBuffer(0, 0, 0, 0, 0);
+            g_SpriteRenderer->CopySurfaceToBackBuffer(0, 0, 0, 0, 0);
             if (i < 60)
             {
                 float rect[4];
@@ -2321,7 +2321,7 @@ int MainMenu::InitTitleScene()
             i++;
             g_SoundPlayer.PlayQueuedSounds();
         }
-        g_SpriteEngine->ReleaseSurface(0);
+        g_SpriteRenderer->ReleaseSurface(0);
     }
     g_GameManager.phantasmWasOpen = g_GameManager.IsPhantasmOpen();
     this->state = 0;
@@ -2354,7 +2354,7 @@ int MainMenu::InitTitleScene()
     {
         DrawLoadingScreen();
     }
-    if (g_SpriteEngine->LoadAnm(0x20, "data/title01.anm", 0x900) != 0)
+    if (g_SpriteRenderer->LoadAnm(0x20, "data/title01.anm", 0x900) != 0)
     {
         return -1;
     }
@@ -2375,8 +2375,8 @@ int MainMenu::InitTitleScene()
     }
     for (int j = 0; j < 0xe; j++)
     {
-        g_SpriteEngine->StartScript(&this->helpSprites[j], 0x706);
-        g_SpriteEngine->SetSprite(&this->helpSprites[j], this->helpSprites[j].spriteIndex + j);
+        g_SpriteRenderer->StartScript(&this->helpSprites[j], 0x706);
+        g_SpriteRenderer->SetSprite(&this->helpSprites[j], this->helpSprites[j].spriteIndex + j);
     }
     this->helpSprite = this->helpSprites;
     g_GameManager.stateFlags &= ~2;
@@ -2412,9 +2412,9 @@ int MainMenu::DeletedCallback(MainMenu *menu)
     g_App.d3dDevice->ResourceManagerDiscardBytes(0);
     for (i = 0x20; i <= 0x29; i++)
     {
-        g_SpriteEngine->ReleaseAnm(i);
+        g_SpriteRenderer->ReleaseAnm(i);
     }
-    g_SpriteEngine->ReleaseSurface(0);
+    g_SpriteRenderer->ReleaseSurface(0);
     g_Chain.Remove(menu->drawChain);
     menu->drawChain = NULL;
     menu->ReleaseTitleScene();

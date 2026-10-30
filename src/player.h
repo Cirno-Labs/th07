@@ -236,7 +236,7 @@ int UpdateFiring(Player *player);
 // while respawning or when UpdateDyingState returns nonzero.
 //
 // th06's HandleInput: moves the player by the buttons the game plays by
-// (g_GameButtons) at the shot type's speeds, within
+// (g_GameInputs) at the shot type's speeds, within
 // GameManager::arena2, sets the boxes and moves the options in and
 // out while focused, with effect 0x18 (optionEffect) on the way in. Sakuya B
 // (character 2, shot type 1) fans her options around aimedShotAngle
@@ -257,14 +257,14 @@ void UpdateHitboxAreas(Player *player);
 // grazeCount) and runs. Else, with button 2 held, deathbombFrames left,
 // bombs left, bombCooldown at 0, intact checksums and no
 // g_Gui.IsMsgRunning(), starts a bomb: marks bit 1 of
-// g_ReplayManager->frameEvents, uses a bomb, runs it for the player's
+// g_ReplaySystem->frameEvents, uses a bomb, runs it for the player's
 // focus, takes 2 from the rank and gives 6 more deathbombFrames (up to
 // the shot type's). bombJustStarted is 1 on the frame a bomb starts, else 0.
 void UpdateBombState(Player *player);
 // OnUpdate's dying step, the dying part of th06's: while
 // deathbombFrames run, ends playerState 4 at once (StopBombState(0)) if
 // bombState is 1, else counts them down and at 0 loses a life: marks bit
-// 4 of g_ReplayManager->frameEvents, counts the death, and with lives left
+// 4 of g_ReplaySystem->frameEvents, counts the death, and with lives left
 // drops 16 power and spawns six power items and takes a share of
 // GameManager::bonusPoints (at most 100000, or 60000 for character 2);
 // without, drops all power and spawns five type 4 items; then takes 16
@@ -281,7 +281,7 @@ int UpdateDyingState(Player *player);
 // stateTimer (kept in bombStateTimerSnapshot), with bombState 1: ends invulnerabilityEffect (and
 // lets bombInvulnerabilityEffect end), starts effect 0x1c in slot 4 to follow the
 // player in bombInvulnerabilityEffect, calls Gui's ShowFullPowerPopup(0, 2), plays
-// sounds 0x20 and 0x24 and marks bit 8 of g_ReplayManager->frameEvents.
+// sounds 0x20 and 0x24 and marks bit 8 of g_ReplaySystem->frameEvents.
 void StartBombState(Player *player);
 // OnUpdate's respawning step, as th06's: for 60 frames clears bullets
 // (respawnClearFrames), fades the player in over 30 frames of
@@ -434,7 +434,7 @@ public:
     // Whether a `size` box at `pos` hits the player, as th06's: 2 if it
     // meets one of hitAreas's areas (CheckAreaHit, areaItemType 6 otherwise),
     // else 1 if it meets the hitbox, else 0. A hit marks bit 2 of
-    // g_ReplayManager->frameEvents; it calls StopBombState(0) while playerState
+    // g_ReplaySystem->frameEvents; it calls StopBombState(0) while playerState
     // is 4 and kills the player while it is 0.
     int CheckHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size);
     // Whether a `size` box at `pos`, grown by 20 on each side, grazes the
@@ -458,7 +458,7 @@ public:
     int TouchesGrazeBox(D3DXVECTOR3 *pos, D3DXVECTOR3 *size);
     // Whether a laser hits or grazes the player, as th06's: `pos` and
     // `size` are its box in its own frame, into which the hitbox is
-    // turned by `angle` around `origin`. On a hit, marks bit 2 of g_ReplayManager->frameEvents, then
+    // turned by `angle` around `origin`. On a hit, marks bit 2 of g_ReplaySystem->frameEvents, then
     // calls StopBombState(0) while playerState is 4 and kills the player
     // while it is 0, returning 1 in both cases, else 0. Otherwise, with
     // `canGraze`, grazes the player within 48 of the box unless it is
@@ -479,7 +479,7 @@ public:
     // bombState 0, resets GameManager::invulnerabilityBonus, adds an area at the
     // player (AddHitboxAreaCircle with 32, 16, 0x32 and 8), bursts 32 effects
     // 0x1d in a circle and plays sounds 7 and 0x21, marking bit 0x10 of
-    // g_ReplayManager->frameEvents. The argument is unused.
+    // g_ReplaySystem->frameEvents. The argument is unused.
     void StopBombState(int unused);
     // Ends playerState 4 (UpdateInvulnerability calls it when it runs out): calls
     // GameManager's IncreaseBonusCap and AddBonusPointsCapped with 10000, scores ten

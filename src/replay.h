@@ -227,4 +227,4 @@ public:
     // Bits set during a frame: 2 when the player is hit.
     WORD frameEvents;
 };
-extern ReplayManager *g_ReplayManager;
+extern ReplayManager *g_ReplaySystem;

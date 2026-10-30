@@ -37,9 +37,9 @@ void ClearScreen(D3DCOLOR color)
 
 void ClearViewport(D3DCOLOR color)
 {
-    if (g_SpriteEngine != NULL)
+    if (g_SpriteRenderer != NULL)
     {
-        g_SpriteEngine->FlushQuadBatch();
+        g_SpriteRenderer->FlushQuadBatch();
     }
     g_App.viewport.X = 0;
     g_App.viewport.Y = 0;
@@ -71,7 +71,7 @@ int ScreenEffect::OnUpdateFadeIn(ScreenEffect *effect)
 
 void DrawColorRect(float *rect, D3DCOLOR color)
 {
-    g_SpriteEngine->FlushQuadBatch();
+    g_SpriteRenderer->FlushQuadBatch();
     VertexDiffuseXyzrwh vertices[4];
 
     vertices[0].pos = D3DXVECTOR3(rect[0], rect[1], 0.0f);
@@ -94,12 +94,12 @@ void DrawColorRect(float *rect, D3DCOLOR color)
     g_App.d3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
     g_App.d3dDevice->SetVertexShader(D3DFVF_XYZRHW | D3DFVF_DIFFUSE);
     g_App.d3dDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, vertices, sizeof(VertexDiffuseXyzrwh));
-    g_SpriteEngine->ClearVertexFormat();
-    g_SpriteEngine->ClearSpriteData();
-    g_SpriteEngine->ClearTexture();
-    g_SpriteEngine->ClearColorOp();
-    g_SpriteEngine->ClearBlendMode();
-    g_SpriteEngine->ClearZWrite();
+    g_SpriteRenderer->ClearVertexFormat();
+    g_SpriteRenderer->ClearSpriteData();
+    g_SpriteRenderer->ClearTexture();
+    g_SpriteRenderer->ClearColorOp();
+    g_SpriteRenderer->ClearBlendMode();
+    g_SpriteRenderer->ClearZWrite();
     if (!g_App.flags.noColorBlending)
     {
         g_App.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
@@ -111,7 +111,7 @@ void DrawColorRect(float *rect, D3DCOLOR color)
 
 void DrawGradientRect(float *rect, D3DCOLOR topLeft, D3DCOLOR topRight, D3DCOLOR bottomLeft, D3DCOLOR bottomRight)
 {
-    g_SpriteEngine->FlushQuadBatch();
+    g_SpriteRenderer->FlushQuadBatch();
     VertexDiffuseXyzrwh vertices[4];
 
     vertices[0].pos = D3DXVECTOR3(rect[0], rect[1], 0.0f);
@@ -137,12 +137,12 @@ void DrawGradientRect(float *rect, D3DCOLOR topLeft, D3DCOLOR topRight, D3DCOLOR
     g_App.d3dDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
     g_App.d3dDevice->SetVertexShader(D3DFVF_XYZRHW | D3DFVF_DIFFUSE);
     g_App.d3dDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, vertices, sizeof(VertexDiffuseXyzrwh));
-    g_SpriteEngine->ClearVertexFormat();
-    g_SpriteEngine->ClearSpriteData();
-    g_SpriteEngine->ClearTexture();
-    g_SpriteEngine->ClearColorOp();
-    g_SpriteEngine->ClearBlendMode();
-    g_SpriteEngine->ClearZWrite();
+    g_SpriteRenderer->ClearVertexFormat();
+    g_SpriteRenderer->ClearSpriteData();
+    g_SpriteRenderer->ClearTexture();
+    g_SpriteRenderer->ClearColorOp();
+    g_SpriteRenderer->ClearBlendMode();
+    g_SpriteRenderer->ClearZWrite();
     if (!g_App.flags.noColorBlending)
     {
         g_App.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
@@ -160,7 +160,7 @@ int ScreenEffect::OnDrawScreen(ScreenEffect *effect)
     area[1] = 0.0f;
     area[2] = 640.0f;
     area[3] = 480.0f;
-    g_SpriteEngine->FlushQuadBatch();
+    g_SpriteRenderer->FlushQuadBatch();
     g_App.viewport.X = 0;
     g_App.viewport.Y = 0;
     g_App.viewport.Width = 640;
@@ -260,25 +260,25 @@ int ScreenEffect::OnUpdateShake(ScreenEffect *effect)
     switch (g_Rng.GetRandomU32InRange(3))
     {
     case 0:
-        g_SpriteEngine->shakeX = 0.0f;
+        g_SpriteRenderer->shakeX = 0.0f;
         break;
     case 1:
-        g_SpriteEngine->shakeX = shake;
+        g_SpriteRenderer->shakeX = shake;
         break;
     case 2:
-        g_SpriteEngine->shakeX = -shake;
+        g_SpriteRenderer->shakeX = -shake;
         break;
     }
     switch (g_Rng.GetRandomU32InRange(3))
     {
     case 0:
-        g_SpriteEngine->shakeY = 0.0f;
+        g_SpriteRenderer->shakeY = 0.0f;
         break;
     case 1:
-        g_SpriteEngine->shakeY = shake;
+        g_SpriteRenderer->shakeY = shake;
         break;
     case 2:
-        g_SpriteEngine->shakeY = -shake;
+        g_SpriteRenderer->shakeY = -shake;
         break;
     }
     return 1;

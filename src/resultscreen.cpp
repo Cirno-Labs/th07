@@ -93,13 +93,13 @@ ScoreDat *LoadScoreDat(char *path)
         dat->fileSize = sizeof(ScoreDat);
         goto done;
     }
-    if (g_FileSize < sizeof(ScoreDat))
+    if (g_LastFileSize < sizeof(ScoreDat))
     {
         DebugPrint2("warning : score.dat size is short\r\n");
         free(dat);
         goto fail;
     }
-    remaining0 = g_FileSize - 2;
+    remaining0 = g_LastFileSize - 2;
     checksumVal0 = 0;
     key = 0;
     n = 0;
@@ -860,7 +860,7 @@ int ResultScreen::OnUpdate(ResultScreen *screen)
         if (screen->character != screen->cursor && screen->frame == 20)
         {
             screen->character = screen->cursor;
-            g_SpriteEngine->RenderTextCentered(&screen->textSprites[0], 0xffffff, 0, g_ShotNames[screen->character]);
+            g_SpriteRenderer->RenderTextCentered(&screen->textSprites[0], 0xffffff, 0, g_ShotNames[screen->character]);
             screen->textSprites[0].alpha = 0xff;
         }
         if (screen->frame < 30)
@@ -904,16 +904,16 @@ int ResultScreen::OnUpdate(ResultScreen *screen)
                 }
                 if (g_GameManager.catks[i].attempts[6] == 0)
                 {
-                    g_SpriteEngine->RenderText(&screen->textSprites[i % 10], 0xffffff, 0, "？？？？？");
+                    g_SpriteRenderer->RenderText(&screen->textSprites[i % 10], 0xffffff, 0, "？？？？？");
                 }
                 else
                 {
-                    g_SpriteEngine->RenderText(&screen->textSprites[i % 10], 0xffffff, 0,
+                    g_SpriteRenderer->RenderText(&screen->textSprites[i % 10], 0xffffff, 0,
                                                g_GameManager.catks[i].name);
                 }
                 screen->textSprites[i % 10].alpha = 0xff;
             }
-            g_SpriteEngine->RenderText(&screen->textSprites[10], 0xffffff, 0,
+            g_SpriteRenderer->RenderText(&screen->textSprites[10], 0xffffff, 0,
                                        "%s %3d枚中%3d枚取得（キャラ切り替え↓↑）", g_ShotNames[screen->shownShotType], 0x8d,
                                        screen->capturedSpellCounts[screen->spellCursor]);
             screen->textSprites[10].alpha = 0xff;
@@ -977,7 +977,7 @@ int ResultScreen::OnUpdate(ResultScreen *screen)
     sprite = screen->sprites;
     for (i = 0; i < 0x29; i++, sprite++)
     {
-        g_SpriteEngine->Step(sprite);
+        g_SpriteRenderer->Step(sprite);
     }
     screen->frame++;
     return 1;
@@ -1005,7 +1005,7 @@ int ResultScreen::HandleNameEntry()
         {
             sprite->pendingInterrupt = this->difficulty + 3;
         }
-        g_SpriteEngine->RenderTextCentered(&this->textSprites[0], 0xffffff, 0, g_ShotNames[this->character]);
+        g_SpriteRenderer->RenderTextCentered(&this->textSprites[0], 0xffffff, 0, g_ShotNames[this->character]);
         this->textSprites[0].alpha = 0xff;
         this->entry.shot = this->character;
         this->entry.difficulty = this->difficulty;
@@ -1299,7 +1299,7 @@ int ResultScreen::HandleReplaySaving()
                 {
                     continue;
                 }
-                replay = ValidateReplay(replay, g_FileSize);
+                replay = ValidateReplay(replay, g_LastFileSize);
                 if (replay != NULL)
                 {
                     this->replays[k] = *replay;
@@ -1588,26 +1588,26 @@ int ResultScreen::RunStatisticsMenu()
             sprite0 = &this->textSprites[0];
             sprite0->pos = pos2;
             g_App.AddPlayTime();
-            g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "総起動時間   %.2d:%.2d:%.2d", g_GameManager.plst.runHours,
+            g_SpriteRenderer->RenderText(sprite0, 0xffffff, 0, "総起動時間   %.2d:%.2d:%.2d", g_GameManager.plst.runHours,
                                        g_GameManager.plst.runMinutes, g_GameManager.plst.runSeconds);
             g_App.AddPlayTime();
             this->shownRunSeconds = g_GameManager.plst.runSeconds;
             sprite0++;
             pos2.y += 17.0f;
             sprite0->pos = pos2;
-            g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "総プレイ時間 %.2d:%.2d:%.2d", g_GameManager.plst.playHours,
+            g_SpriteRenderer->RenderText(sprite0, 0xffffff, 0, "総プレイ時間 %.2d:%.2d:%.2d", g_GameManager.plst.playHours,
                                        g_GameManager.plst.playMinutes, g_GameManager.plst.playSeconds);
             sprite0++;
             pos2.y += 17.0f;
             sprite0->pos = pos2;
             if (g_GameManager.IsPhantasmOpen())
             {
-                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0,
+                g_SpriteRenderer->RenderText(sprite0, 0xffffff, 0,
                                            "プレイ回数　　　 　Easy 　Norm 　Hard 　Luna  Extra Phants  Total");
             }
             else
             {
-                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "プレイ回数　　　 　Easy 　Norm 　Hard 　Luna  Extra  Total");
+                g_SpriteRenderer->RenderText(sprite0, 0xffffff, 0, "プレイ回数　　　 　Easy 　Norm 　Hard 　Luna  Extra  Total");
             }
             for (i = 0; i < 6; i++)
             {
@@ -1616,7 +1616,7 @@ int ResultScreen::RunStatisticsMenu()
                 sprite0->pos = pos2;
                 if (g_GameManager.IsPhantasmOpen())
                 {
-                    g_SpriteEngine->RenderText(
+                    g_SpriteRenderer->RenderText(
                         sprite0, 0xffffff, 0, "%s %6d %6d %6d %6d %6d %6d %6d", g_ShotNames[i],
                         g_GameManager.plst.counts[0].plays[i + 1], g_GameManager.plst.counts[1].plays[i + 1],
                         g_GameManager.plst.counts[2].plays[i + 1], g_GameManager.plst.counts[3].plays[i + 1],
@@ -1625,7 +1625,7 @@ int ResultScreen::RunStatisticsMenu()
                 }
                 else
                 {
-                    g_SpriteEngine->RenderText(
+                    g_SpriteRenderer->RenderText(
                         sprite0, 0xffffff, 0, "%s %6d %6d %6d %6d %6d %6d", g_ShotNames[i],
                         g_GameManager.plst.counts[0].plays[i + 1], g_GameManager.plst.counts[1].plays[i + 1],
                         g_GameManager.plst.counts[2].plays[i + 1], g_GameManager.plst.counts[3].plays[i + 1],
@@ -1637,7 +1637,7 @@ int ResultScreen::RunStatisticsMenu()
             sprite0->pos = pos2;
             if (g_GameManager.IsPhantasmOpen())
             {
-                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "%s %6d %6d %6d %6d %6d %6d %6d", g_ShotNames[6],
+                g_SpriteRenderer->RenderText(sprite0, 0xffffff, 0, "%s %6d %6d %6d %6d %6d %6d %6d", g_ShotNames[6],
                                            g_GameManager.plst.counts[0].plays[0], g_GameManager.plst.counts[1].plays[0],
                                            g_GameManager.plst.counts[2].plays[0], g_GameManager.plst.counts[3].plays[0],
                                            g_GameManager.plst.counts[4].plays[0], g_GameManager.plst.counts[5].plays[0],
@@ -1645,7 +1645,7 @@ int ResultScreen::RunStatisticsMenu()
             }
             else
             {
-                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "%s %6d %6d %6d %6d %6d %6d", g_ShotNames[6],
+                g_SpriteRenderer->RenderText(sprite0, 0xffffff, 0, "%s %6d %6d %6d %6d %6d %6d", g_ShotNames[6],
                                            g_GameManager.plst.counts[0].plays[0], g_GameManager.plst.counts[1].plays[0],
                                            g_GameManager.plst.counts[2].plays[0], g_GameManager.plst.counts[3].plays[0],
                                            g_GameManager.plst.counts[4].plays[0], g_GameManager.plst.counts[6].plays[0]);
@@ -1659,44 +1659,44 @@ int ResultScreen::RunStatisticsMenu()
                 g_GameManager.plst.counts[4].clears + g_GameManager.plst.counts[5].clears;
             if (g_GameManager.IsPhantasmOpen())
             {
-                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "クリア回数  　　 %6d %6d %6d %6d %6d %6d %6d", g_GameManager.plst.counts[0].clears, g_GameManager.plst.counts[1].clears, g_GameManager.plst.counts[2].clears, g_GameManager.plst.counts[3].clears, g_GameManager.plst.counts[4].clears, g_GameManager.plst.counts[5].clears, g_GameManager.plst.counts[6].clears);
+                g_SpriteRenderer->RenderText(sprite0, 0xffffff, 0, "クリア回数  　　 %6d %6d %6d %6d %6d %6d %6d", g_GameManager.plst.counts[0].clears, g_GameManager.plst.counts[1].clears, g_GameManager.plst.counts[2].clears, g_GameManager.plst.counts[3].clears, g_GameManager.plst.counts[4].clears, g_GameManager.plst.counts[5].clears, g_GameManager.plst.counts[6].clears);
             }
             else
             {
-                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "クリア回数  　　 %6d %6d %6d %6d %6d %6d", g_GameManager.plst.counts[0].clears, g_GameManager.plst.counts[1].clears, g_GameManager.plst.counts[2].clears, g_GameManager.plst.counts[3].clears, g_GameManager.plst.counts[4].clears, g_GameManager.plst.counts[6].clears);
+                g_SpriteRenderer->RenderText(sprite0, 0xffffff, 0, "クリア回数  　　 %6d %6d %6d %6d %6d %6d", g_GameManager.plst.counts[0].clears, g_GameManager.plst.counts[1].clears, g_GameManager.plst.counts[2].clears, g_GameManager.plst.counts[3].clears, g_GameManager.plst.counts[4].clears, g_GameManager.plst.counts[6].clears);
             }
             sprite0++;
             pos2.y += 17.0f;
             sprite0->pos = pos2;
             if (g_GameManager.IsPhantasmOpen())
             {
-                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "コンティニュー   %6d %6d %6d %6d %6d %6d %6d", g_GameManager.plst.counts[0].continues, g_GameManager.plst.counts[1].continues, g_GameManager.plst.counts[2].continues, g_GameManager.plst.counts[3].continues, g_GameManager.plst.counts[4].continues, g_GameManager.plst.counts[5].continues, g_GameManager.plst.counts[6].continues);
+                g_SpriteRenderer->RenderText(sprite0, 0xffffff, 0, "コンティニュー   %6d %6d %6d %6d %6d %6d %6d", g_GameManager.plst.counts[0].continues, g_GameManager.plst.counts[1].continues, g_GameManager.plst.counts[2].continues, g_GameManager.plst.counts[3].continues, g_GameManager.plst.counts[4].continues, g_GameManager.plst.counts[5].continues, g_GameManager.plst.counts[6].continues);
             }
             else
             {
-                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "コンティニュー   %6d %6d %6d %6d %6d %6d", g_GameManager.plst.counts[0].continues, g_GameManager.plst.counts[1].continues, g_GameManager.plst.counts[2].continues, g_GameManager.plst.counts[3].continues, g_GameManager.plst.counts[4].continues, g_GameManager.plst.counts[6].continues);
+                g_SpriteRenderer->RenderText(sprite0, 0xffffff, 0, "コンティニュー   %6d %6d %6d %6d %6d %6d", g_GameManager.plst.counts[0].continues, g_GameManager.plst.counts[1].continues, g_GameManager.plst.counts[2].continues, g_GameManager.plst.counts[3].continues, g_GameManager.plst.counts[4].continues, g_GameManager.plst.counts[6].continues);
             }
             sprite0++;
             pos2.y += 17.0f;
             sprite0->pos = pos2;
             if (g_GameManager.IsPhantasmOpen())
             {
-                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "プラクティス　   %6d %6d %6d %6d %6d %6d %6d", g_GameManager.plst.counts[0].practices, g_GameManager.plst.counts[1].practices, g_GameManager.plst.counts[2].practices, g_GameManager.plst.counts[3].practices, g_GameManager.plst.counts[4].practices, g_GameManager.plst.counts[5].practices, g_GameManager.plst.counts[6].practices);
+                g_SpriteRenderer->RenderText(sprite0, 0xffffff, 0, "プラクティス　   %6d %6d %6d %6d %6d %6d %6d", g_GameManager.plst.counts[0].practices, g_GameManager.plst.counts[1].practices, g_GameManager.plst.counts[2].practices, g_GameManager.plst.counts[3].practices, g_GameManager.plst.counts[4].practices, g_GameManager.plst.counts[5].practices, g_GameManager.plst.counts[6].practices);
             }
             else
             {
-                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "プラクティス　   %6d %6d %6d %6d %6d %6d", g_GameManager.plst.counts[0].practices, g_GameManager.plst.counts[1].practices, g_GameManager.plst.counts[2].practices, g_GameManager.plst.counts[3].practices, g_GameManager.plst.counts[4].practices, g_GameManager.plst.counts[6].practices);
+                g_SpriteRenderer->RenderText(sprite0, 0xffffff, 0, "プラクティス　   %6d %6d %6d %6d %6d %6d", g_GameManager.plst.counts[0].practices, g_GameManager.plst.counts[1].practices, g_GameManager.plst.counts[2].practices, g_GameManager.plst.counts[3].practices, g_GameManager.plst.counts[4].practices, g_GameManager.plst.counts[6].practices);
             }
             sprite0++;
             pos2.y += 17.0f;
             sprite0->pos = pos2;
             if (g_GameManager.IsPhantasmOpen())
             {
-                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "リトライ回数  　 %6d %6d %6d %6d %6d %6d %6d", g_GameManager.plst.counts[0].retries, g_GameManager.plst.counts[1].retries, g_GameManager.plst.counts[2].retries, g_GameManager.plst.counts[3].retries, g_GameManager.plst.counts[4].retries, g_GameManager.plst.counts[5].retries, g_GameManager.plst.counts[6].retries);
+                g_SpriteRenderer->RenderText(sprite0, 0xffffff, 0, "リトライ回数  　 %6d %6d %6d %6d %6d %6d %6d", g_GameManager.plst.counts[0].retries, g_GameManager.plst.counts[1].retries, g_GameManager.plst.counts[2].retries, g_GameManager.plst.counts[3].retries, g_GameManager.plst.counts[4].retries, g_GameManager.plst.counts[5].retries, g_GameManager.plst.counts[6].retries);
             }
             else
             {
-                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "リトライ回数  　 %6d %6d %6d %6d %6d %6d", g_GameManager.plst.counts[0].retries, g_GameManager.plst.counts[1].retries, g_GameManager.plst.counts[2].retries, g_GameManager.plst.counts[3].retries, g_GameManager.plst.counts[4].retries, g_GameManager.plst.counts[6].retries);
+                g_SpriteRenderer->RenderText(sprite0, 0xffffff, 0, "リトライ回数  　 %6d %6d %6d %6d %6d %6d", g_GameManager.plst.counts[0].retries, g_GameManager.plst.counts[1].retries, g_GameManager.plst.counts[2].retries, g_GameManager.plst.counts[3].retries, g_GameManager.plst.counts[4].retries, g_GameManager.plst.counts[6].retries);
             }
         }
         if (this->frame < 40)
@@ -1719,7 +1719,7 @@ int ResultScreen::RunStatisticsMenu()
             if (g_GameManager.plst.runSeconds != this->shownRunSeconds)
             {
                 sprite0 = &this->textSprites[0];
-                g_SpriteEngine->RenderText(sprite0, 0xffffff, 0, "総起動時間   %.2d:%.2d:%.2d",
+                g_SpriteRenderer->RenderText(sprite0, 0xffffff, 0, "総起動時間   %.2d:%.2d:%.2d",
                                            g_GameManager.plst.runHours, g_GameManager.plst.runMinutes,
                                            g_GameManager.plst.runSeconds);
                 this->shownRunSeconds = g_GameManager.plst.runSeconds;
@@ -1913,18 +1913,18 @@ int ResultScreen::OnDraw(ResultScreen *screen)
     D3DXVECTOR3 charPos;
 
     sprite = screen->sprites;
-    g_SpriteEngine->FlushQuadBatch();
+    g_SpriteRenderer->FlushQuadBatch();
     g_App.viewport.X = 0;
     g_App.viewport.Y = 0;
     g_App.viewport.Width = 640;
     g_App.viewport.Height = 480;
     g_App.d3dDevice->SetViewport(&g_App.viewport);
-    g_SpriteEngine->CopySurfaceToBackBuffer(0, 0, 0, 0, 0);
+    g_SpriteRenderer->CopySurfaceToBackBuffer(0, 0, 0, 0, 0);
     for (i = 0; i < 0x29; i++, sprite++)
     {
         pos3 = sprite->pos;
         sprite->pos += sprite->posOffset;
-        g_SpriteEngine->DrawUnrotated(sprite);
+        g_SpriteRenderer->DrawUnrotated(sprite);
         sprite->pos = pos3;
     }
     sprite = &screen->sprites[0x10];
@@ -1935,7 +1935,7 @@ int ResultScreen::OnDraw(ResultScreen *screen)
             pos3 = sprite->pos;
             screen->textSprites[0].pos = pos3;
             screen->textSprites[0].pos.x += 64.0f;
-            g_SpriteEngine->DrawUnrotated(&screen->textSprites[0]);
+            g_SpriteRenderer->DrawUnrotated(&screen->textSprites[0]);
             pos3[1] += 18.0f;
             pos3[0] += 24.0f;
             g_AsciiText.color = 0xffe0e0ef;
@@ -1995,7 +1995,7 @@ int ResultScreen::OnDraw(ResultScreen *screen)
         {
             pos3 = sprite->pos;
             screen->textSprites[10].pos = pos3;
-            g_SpriteEngine->DrawUnrotated(&screen->textSprites[10]);
+            g_SpriteRenderer->DrawUnrotated(&screen->textSprites[10]);
             pos3[1] += 16.0f;
             for (i = 0; i < 10; i++)
             {
@@ -2009,7 +2009,7 @@ int ResultScreen::OnDraw(ResultScreen *screen)
                 pos3[1] += 16.0f;
                 screen->spellCardRowDivider.pos = pos3;
                 screen->spellCardRowDivider.scaleY = 2.375f;
-                g_SpriteEngine->DrawUnrotated(&screen->spellCardRowDivider);
+                g_SpriteRenderer->DrawUnrotated(&screen->spellCardRowDivider);
                 pos3[1] -= 16.0f;
                 pos3.x = x0;
                 screen->textSprites[i].pos = pos3;
@@ -2027,7 +2027,7 @@ int ResultScreen::OnDraw(ResultScreen *screen)
                 }
                 g_AsciiText.AddFormat(&pos3, "No.%.2d", card + 1);
                 screen->textSprites[i].pos[0] += 96.0f;
-                g_SpriteEngine->DrawUnrotated(&screen->textSprites[i]);
+                g_SpriteRenderer->DrawUnrotated(&screen->textSprites[i]);
                 pos3[0] += 496.0f;
                 if (g_GameManager.catks[card].attempts[screen->shownShotType] == 0)
                 {
@@ -2132,7 +2132,7 @@ int ResultScreen::OnDraw(ResultScreen *screen)
         sprite = &screen->sprites[0x12];
         for (i = 0; i < 6; i++, sprite++)
         {
-            g_SpriteEngine->DrawUnrotated(sprite);
+            g_SpriteRenderer->DrawUnrotated(sprite);
         }
         sprite = &screen->sprites[0x18];
         pos3 = sprite->pos;
@@ -2182,7 +2182,7 @@ int ResultScreen::OnDraw(ResultScreen *screen)
         sprite = screen->textSprites;
         for (i = 0; i < 0xe; i++, sprite++)
         {
-            g_SpriteEngine->DrawUnrotated(sprite);
+            g_SpriteRenderer->DrawUnrotated(sprite);
         }
     }
     return 1;
@@ -2222,11 +2222,11 @@ int ResultScreen::AddedCallback(ResultScreen *screen)
     }
     if (screen->state != 0x13)
     {
-        if (g_SpriteEngine->LoadSurface(0, "data/result/result.jpg") != 0)
+        if (g_SpriteRenderer->LoadSurface(0, "data/result/result.jpg") != 0)
         {
             return -1;
         }
-        if (g_SpriteEngine->LoadAnm(0x2a, "data/result00.anm", 0x900) != 0)
+        if (g_SpriteRenderer->LoadAnm(0x2a, "data/result00.anm", 0x900) != 0)
         {
             return -1;
         }
@@ -2235,13 +2235,13 @@ int ResultScreen::AddedCallback(ResultScreen *screen)
         {
             sprite->pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
             sprite->posOffset = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-            g_SpriteEngine->StartScript(sprite, i + 0x900);
+            g_SpriteRenderer->StartScript(sprite, i + 0x900);
         }
-        g_SpriteEngine->InitSprite(&screen->spellCardRowDivider, 0x910);
+        g_SpriteRenderer->InitSprite(&screen->spellCardRowDivider, 0x910);
         sprite = screen->textSprites;
         for (i = 0; i < 0xf; i++, sprite++)
         {
-            g_SpriteEngine->InitSprite(sprite, i + 0x715);
+            g_SpriteRenderer->InitSprite(sprite, i + 0x715);
             sprite->pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
             sprite->flags |= 0xc00;
             sprite->fontWidth = 15;
@@ -2331,11 +2331,11 @@ int ResultScreen::DeletedCallback(ResultScreen *screen)
             screen->ReleaseScores(i, j);
         }
     }
-    g_SpriteEngine->ReleaseAnm(0x2a);
-    g_SpriteEngine->ReleaseAnm(0x2b);
-    g_SpriteEngine->ReleaseAnm(0x2c);
-    g_SpriteEngine->ReleaseAnm(0x2d);
-    g_SpriteEngine->ReleaseSurface(0);
+    g_SpriteRenderer->ReleaseAnm(0x2a);
+    g_SpriteRenderer->ReleaseAnm(0x2b);
+    g_SpriteRenderer->ReleaseAnm(0x2c);
+    g_SpriteRenderer->ReleaseAnm(0x2d);
+    g_SpriteRenderer->ReleaseSurface(0);
     g_Chain.Remove(screen->drawChain);
     screen->drawChain = NULL;
     delete screen;

@@ -300,7 +300,7 @@ loop:
         case 29:
             if (*(int *)&cmd->args.x >= 0)
             {
-                g_SpriteEngine->StartScriptAtOrigin(&stage->backgroundLayer0, *(int *)&cmd->args.x + 0x300);
+                g_SpriteRenderer->StartScriptAtOrigin(&stage->backgroundLayer0, *(int *)&cmd->args.x + 0x300);
             }
             else
             {
@@ -311,7 +311,7 @@ loop:
             // Hides backgroundLayer0, not backgroundLayer1, for a negative script.
             if (*(int *)&cmd->args.x >= 0)
             {
-                g_SpriteEngine->StartScriptAtOrigin(&stage->backgroundLayer1, *(int *)&cmd->args.x + 0x300);
+                g_SpriteRenderer->StartScriptAtOrigin(&stage->backgroundLayer1, *(int *)&cmd->args.x + 0x300);
             }
             else
             {
@@ -422,16 +422,16 @@ done:
         stage->spellCardFrames++;
         for (k = 0; k < stage->dialogueSpriteCount; k++)
         {
-            g_SpriteEngine->Step(&stage->dialogueSprites[k]);
+            g_SpriteRenderer->Step(&stage->dialogueSprites[k]);
         }
     }
     if (stage->backgroundLayer0.spriteIndex > 0)
     {
-        g_SpriteEngine->Step(&stage->backgroundLayer0);
+        g_SpriteRenderer->Step(&stage->backgroundLayer0);
     }
     if (stage->backgroundLayer1.spriteIndex > 0)
     {
-        g_SpriteEngine->Step(&stage->backgroundLayer1);
+        g_SpriteRenderer->Step(&stage->backgroundLayer1);
     }
     stage->checksumCheckFrames++;
     if (stage->checksumCheckFrames % 500 == 250 && g_GameManager.ChecksumMismatch())
@@ -479,20 +479,20 @@ int Stage::OnDraw(Stage *stage)
     D3DVIEWPORT8 viewport;
     D3DCOLOR fogColor;
 
-    g_SpriteEngine->BeginQuadBatch();
-    g_SpriteEngine->ClearVertexFormat();
-    g_SpriteEngine->ClearSpriteData();
-    g_SpriteEngine->ClearTexture();
-    g_SpriteEngine->ClearColorOp();
-    g_SpriteEngine->ClearBlendMode();
-    g_SpriteEngine->ClearZWrite();
-    g_SpriteEngine->ClearDrawStats();
-    g_SpriteEngine->ClearLastCameraSetupFlag();
+    g_SpriteRenderer->BeginQuadBatch();
+    g_SpriteRenderer->ClearVertexFormat();
+    g_SpriteRenderer->ClearSpriteData();
+    g_SpriteRenderer->ClearTexture();
+    g_SpriteRenderer->ClearColorOp();
+    g_SpriteRenderer->ClearBlendMode();
+    g_SpriteRenderer->ClearZWrite();
+    g_SpriteRenderer->ClearDrawStats();
+    g_SpriteRenderer->ClearLastCameraSetupFlag();
     if (!g_App.flags.noFog)
     {
         g_App.DisableFog();
     }
-    g_SpriteEngine->FlushQuadBatch();
+    g_SpriteRenderer->FlushQuadBatch();
     if (stage->clearScreenOnce != 0)
     {
         viewport.X = 32;
@@ -506,7 +506,7 @@ int Stage::OnDraw(Stage *stage)
     g_App.d3dDevice->SetViewport(&g_App.viewport);
     if (stage->tintColor.a > 0)
     {
-        g_SpriteEngine->SetColorModulation(stage->tintColor.color);
+        g_SpriteRenderer->SetColorModulation(stage->tintColor.color);
     }
     stage->tintColor.a = 0;
     stage->tintColor.r = 0x80;
@@ -516,11 +516,11 @@ int Stage::OnDraw(Stage *stage)
     {
         if (stage->backgroundLayer0.spriteIndex > 0)
         {
-            g_SpriteEngine->DrawAndFlush(&stage->backgroundLayer0);
+            g_SpriteRenderer->DrawAndFlush(&stage->backgroundLayer0);
         }
         if (stage->backgroundLayer1.spriteIndex > 0)
         {
-            g_SpriteEngine->DrawAndFlush(&stage->backgroundLayer1);
+            g_SpriteRenderer->DrawAndFlush(&stage->backgroundLayer1);
         }
     }
     if (stage->clearColor != 0)
@@ -532,16 +532,16 @@ int Stage::OnDraw(Stage *stage)
         g_App.d3dDevice->Clear(0, NULL, D3DCLEAR_ZBUFFER, stage->clearColor, 1.0f, 0);
     }
     g_App.SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
-    if (g_SpriteEngine->modulateColorEnabled == 0)
+    if (g_SpriteRenderer->modulateColorEnabled == 0)
     {
         g_App.SetRenderState(D3DRS_FOGCOLOR, stage->fog.color);
     }
     else
     {
         fogColor = stage->fog.color;
-        MODULATE_CHANNEL(fogColor, g_SpriteEngine->modulateColor, 2);
-        MODULATE_CHANNEL(fogColor, g_SpriteEngine->modulateColor, 1);
-        MODULATE_CHANNEL(fogColor, g_SpriteEngine->modulateColor, 0);
+        MODULATE_CHANNEL(fogColor, g_SpriteRenderer->modulateColor, 2);
+        MODULATE_CHANNEL(fogColor, g_SpriteRenderer->modulateColor, 1);
+        MODULATE_CHANNEL(fogColor, g_SpriteRenderer->modulateColor, 0);
         g_App.SetRenderState(D3DRS_FOGCOLOR, fogColor);
     }
     g_App.SetRenderState(D3DRS_FOGSTART, *(DWORD *)&stage->fog.nearPlane);
@@ -581,7 +581,7 @@ int Stage::OnDraw2(Stage *stage)
             area[2] = 416.0f;
             area[3] = 464.0f;
             opacity = stage->spellCardFrames * 0xff / 60;
-            g_SpriteEngine->FlushQuadBatch();
+            g_SpriteRenderer->FlushQuadBatch();
             g_App.SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
             if (!g_App.flags.noFog)
             {
@@ -590,7 +590,7 @@ int Stage::OnDraw2(Stage *stage)
             DrawColorRect(area, opacity << 24);
         }
     }
-    g_SpriteEngine->FlushQuadBatch();
+    g_SpriteRenderer->FlushQuadBatch();
     g_App.SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
     if (!g_App.flags.noFog)
     {
@@ -600,10 +600,10 @@ int Stage::OnDraw2(Stage *stage)
     {
         for (j = 0; j < stage->dialogueSpriteCount; j++)
         {
-            g_SpriteEngine->DrawAndFlush(&stage->dialogueSprites[j]);
+            g_SpriteRenderer->DrawAndFlush(&stage->dialogueSprites[j]);
         }
     }
-    g_SpriteEngine->SetLastCameraSetupFlag(0);
+    g_SpriteRenderer->SetLastCameraSetupFlag(0);
     stage->SetupFixedCamera();
     g_App.d3dDevice->SetViewport(&g_App.viewport);
     fog = 1000.0f;
@@ -612,7 +612,7 @@ int Stage::OnDraw2(Stage *stage)
     g_App.SetRenderState(D3DRS_FOGEND, *(DWORD *)&fog);
     if (stage->keepTintColor == 0)
     {
-        g_SpriteEngine->ResetColorModulation();
+        g_SpriteRenderer->ResetColorModulation();
     }
     stage->keepTintColor = 0;
     return 1;
@@ -645,65 +645,65 @@ int Stage::AddedCallback(Stage *stage)
     switch (g_GameManager.stage)
     {
     case 1:
-        if (g_SpriteEngine->LoadAnm(5, "data/stg1bg.anm", 0x300) != 0)
+        if (g_SpriteRenderer->LoadAnm(5, "data/stg1bg.anm", 0x300) != 0)
         {
             return -1;
         }
         break;
     case 2:
-        if (g_SpriteEngine->LoadAnm(5, "data/stg2bg.anm", 0x300) != 0)
+        if (g_SpriteRenderer->LoadAnm(5, "data/stg2bg.anm", 0x300) != 0)
         {
             return -1;
         }
         break;
     case 3:
-        if (g_SpriteEngine->LoadAnm(5, "data/stg3bg.anm", 0x300) != 0)
+        if (g_SpriteRenderer->LoadAnm(5, "data/stg3bg.anm", 0x300) != 0)
         {
             return -1;
         }
         break;
     case 4:
-        if (g_SpriteEngine->LoadAnm(5, "data/stg4bg.anm", 0x300) != 0)
+        if (g_SpriteRenderer->LoadAnm(5, "data/stg4bg.anm", 0x300) != 0)
         {
             return -1;
         }
-        if (g_SpriteEngine->LoadAnm(6, "data/stg4bg2.anm", 0x310) != 0)
+        if (g_SpriteRenderer->LoadAnm(6, "data/stg4bg2.anm", 0x310) != 0)
         {
             return -1;
         }
-        if (g_SpriteEngine->LoadAnm(7, "data/stg4bg3.anm", 0x320) != 0)
+        if (g_SpriteRenderer->LoadAnm(7, "data/stg4bg3.anm", 0x320) != 0)
         {
             return -1;
         }
-        if (g_SpriteEngine->LoadAnm(8, "data/stg4bg4.anm", 0x330) != 0)
+        if (g_SpriteRenderer->LoadAnm(8, "data/stg4bg4.anm", 0x330) != 0)
         {
             return -1;
         }
-        if (g_SpriteEngine->LoadAnm(9, "data/stg4bg5.anm", 0x340) != 0)
+        if (g_SpriteRenderer->LoadAnm(9, "data/stg4bg5.anm", 0x340) != 0)
         {
             return -1;
         }
         break;
     case 5:
-        if (g_SpriteEngine->LoadAnm(5, "data/stg5bg.anm", 0x300) != 0)
+        if (g_SpriteRenderer->LoadAnm(5, "data/stg5bg.anm", 0x300) != 0)
         {
             return -1;
         }
         break;
     case 6:
-        if (g_SpriteEngine->LoadAnm(5, "data/stg6bg.anm", 0x300) != 0)
+        if (g_SpriteRenderer->LoadAnm(5, "data/stg6bg.anm", 0x300) != 0)
         {
             return -1;
         }
         break;
     case 7:
-        if (g_SpriteEngine->LoadAnm(5, "data/stg7bg.anm", 0x300) != 0)
+        if (g_SpriteRenderer->LoadAnm(5, "data/stg7bg.anm", 0x300) != 0)
         {
             return -1;
         }
         break;
     case 8:
-        if (g_SpriteEngine->LoadAnm(5, "data/stg8bg.anm", 0x300) != 0)
+        if (g_SpriteRenderer->LoadAnm(5, "data/stg8bg.anm", 0x300) != 0)
         {
             return -1;
         }
@@ -733,11 +733,11 @@ int Stage::AddedCallback(Stage *stage)
 
 int Stage::DeletedCallback(Stage *stage)
 {
-    g_SpriteEngine->ReleaseAnm(5);
-    g_SpriteEngine->ReleaseAnm(6);
-    g_SpriteEngine->ReleaseAnm(7);
-    g_SpriteEngine->ReleaseAnm(8);
-    g_SpriteEngine->ReleaseAnm(9);
+    g_SpriteRenderer->ReleaseAnm(5);
+    g_SpriteRenderer->ReleaseAnm(6);
+    g_SpriteRenderer->ReleaseAnm(7);
+    g_SpriteRenderer->ReleaseAnm(8);
+    g_SpriteRenderer->ReleaseAnm(9);
     if (stage->sprites != NULL)
     {
         MemFree(stage->sprites);
@@ -813,7 +813,7 @@ int Stage::Load(char *dataPath)
         quad = ob->quads;
         while (quad->type >= 0)
         {
-            g_SpriteEngine->StartScriptAtOrigin(&this->sprites[count], quad->script + 0x300);
+            g_SpriteRenderer->StartScriptAtOrigin(&this->sprites[count], quad->script + 0x300);
             quad->spriteIndex = count;
             count++;
             quad = (StageQuad *)((char *)quad + quad->size);
@@ -844,11 +844,11 @@ int Stage::StepObjects()
                 switch (piece->type)
                 {
                 case 0:
-                    g_SpriteEngine->Step(sprite);
+                    g_SpriteRenderer->Step(sprite);
                     break;
                 case 1:
                     altQuad = piece;
-                    g_SpriteEngine->Step(sprite);
+                    g_SpriteRenderer->Step(sprite);
                     break;
                 }
                 if (sprite->scriptPos != NULL)
@@ -893,7 +893,7 @@ int Stage::DrawLayer(int layer)
     origin.z = 0.0f;
     fog = 0xff;
     this->SetupCamera();
-    g_SpriteEngine->SetLastCameraSetupFlag(1);
+    g_SpriteRenderer->SetLastCameraSetupFlag(1);
     D3DXMatrixIdentity(&mat);
     while (placement->id >= 0)
     {
@@ -990,7 +990,7 @@ int Stage::DrawLayer(int layer)
                                 }
                                 fog = 0;
                             }
-                            g_SpriteEngine->DrawNoRound(spr);
+                            g_SpriteRenderer->DrawNoRound(spr);
                         }
                         spr->color = colVal;
                     }
@@ -1004,7 +1004,7 @@ int Stage::DrawLayer(int layer)
                             }
                             fog = 1;
                         }
-                        g_SpriteEngine->Draw3D(spr);
+                        g_SpriteRenderer->Draw3D(spr);
                     }
                     break;
                 }

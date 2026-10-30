@@ -101,7 +101,7 @@ restart:
     g_SoundPlayer.Initialize(g_GameWindow.hwnd);
     InitJoystick();
     ResetKeyboard();
-    g_SpriteEngine = new SpriteEngine();
+    g_SpriteRenderer = new SpriteEngine();
     if (!g_App.windowed)
     {
         WINNLSEnableIME(NULL, FALSE);
@@ -140,7 +140,7 @@ restart:
             }
             else if (testResult == D3DERR_DEVICENOTRESET)
             {
-                g_SpriteEngine->ReleaseSurfaces();
+                g_SpriteRenderer->ReleaseSurfaces();
                 if (g_App.d3dDevice->Reset(&g_App.presentParams) != 0)
                 {
                     break;
@@ -162,8 +162,8 @@ release:
     }
 stop:
     g_SoundPlayer.Release();
-    delete g_SpriteEngine;
-    g_SpriteEngine = NULL;
+    delete g_SpriteRenderer;
+    g_SpriteRenderer = NULL;
     if (g_App.d3dDevice != NULL)
     {
         g_App.d3dDevice->Reset(&g_App.presentParams);
@@ -273,13 +273,13 @@ void PresentFrame()
 
     if (g_App.d3dDevice->Present(NULL, NULL, NULL, NULL) < 0)
     {
-        g_SpriteEngine->ReleaseSurfaces();
+        g_SpriteRenderer->ReleaseSurfaces();
         g_App.d3dDevice->Reset(&g_App.presentParams);
         SetDefaultRenderStates();
         g_App.redrawFrames = 2;
     }
-    g_SpriteEngine->DoPendingCopy();
-    if ((g_Buttons & 0x800) && (g_Buttons & 0x800) != (g_PrevButtons & 0x800))
+    g_SpriteRenderer->DoPendingCopy();
+    if ((g_Buttons & 0x800) && (g_Buttons & 0x800) != (g_LastButtons & 0x800))
     {
         _mkdir("snapshot");
         for (i = 0; i < 1000; i++)
@@ -323,15 +323,15 @@ int GameWindow::RunFrame()
         if (g_App.frameSkip <= this->curFrame)
         {
             g_App.d3dDevice->BeginScene();
-            g_SpriteEngine->BeginQuadBatch();
+            g_SpriteRenderer->BeginQuadBatch();
             g_App.fogState = 0xff;
             g_App.DisableFog();
             g_Chain.RunDrawChain();
-            g_SpriteEngine->FlushQuadBatch();
+            g_SpriteRenderer->FlushQuadBatch();
             g_App.d3dDevice->SetTexture(0, NULL);
             g_App.d3dDevice->EndScene();
         }
-        g_SpriteEngine->FlushQuadBatch();
+        g_SpriteRenderer->FlushQuadBatch();
         g_App.viewport.X = 0;
         g_App.viewport.Y = 0;
         g_App.viewport.Width = 640;
@@ -808,13 +808,13 @@ void SetDefaultRenderStates()
     g_App.d3dDevice->SetTextureStageState(0, D3DTSS_ADDRESSW, D3DTADDRESS_CLAMP);
     g_App.d3dDevice->SetTextureStageState(0, D3DTSS_ADDRESSU, D3DTADDRESS_WRAP);
     g_App.d3dDevice->SetTextureStageState(0, D3DTSS_ADDRESSV, D3DTADDRESS_WRAP);
-    if (g_SpriteEngine != NULL)
+    if (g_SpriteRenderer != NULL)
     {
-        g_SpriteEngine->ClearBlendMode();
-        g_SpriteEngine->ClearColorOp();
-        g_SpriteEngine->ClearVertexFormat();
-        g_SpriteEngine->ClearTexture();
-        g_SpriteEngine->ClearLastCameraSetupFlag();
+        g_SpriteRenderer->ClearBlendMode();
+        g_SpriteRenderer->ClearColorOp();
+        g_SpriteRenderer->ClearVertexFormat();
+        g_SpriteRenderer->ClearTexture();
+        g_SpriteRenderer->ClearLastCameraSetupFlag();
     }
     g_Stage.fogColorChanged = 1;
 }
@@ -900,14 +900,14 @@ int ChecksumExecutable()
         {
             return -1;
         }
-        for (idx = 0; idx < (DWORD)g_FileSize / 4 - 1; idx++, words++)
+        for (idx = 0; idx < (DWORD)g_LastFileSize / 4 - 1; idx++, words++)
         {
             sum += *words;
         }
         DebugPrint("main sum %d\r\n", sum);
         free(data);
         g_App.exeChecksum = sum;
-        g_App.exeSize = g_FileSize;
+        g_App.exeSize = g_LastFileSize;
         return sum;
     }
     return -1;

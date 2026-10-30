@@ -355,7 +355,7 @@ void *LoadFileData(char *path, int isExternal)
             name++;
         }
         dataSize = g_Archive.GetEntrySize(name);
-        g_FileSize = dataSize;
+        g_LastFileSize = dataSize;
         if (dataSize == 0)
         {
             LogError(&g_Log, "error : %s is not found in arcfile.\r\n", name);
@@ -389,7 +389,7 @@ void *LoadFileData(char *path, int isExternal)
         return NULL;
     }
     ReadFile(handle, buffer, dataSize, &dataSize, NULL);
-    g_FileSize = dataSize;
+    g_LastFileSize = dataSize;
     CloseHandle(handle);
     return buffer;
 }

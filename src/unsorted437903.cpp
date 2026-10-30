@@ -100,17 +100,17 @@ void SpriteEngine::ReleaseVertexBuffer()
 
 int App::OnUpdate(App *arg)
 {
-    g_SpriteEngine->ClearVertexFormat();
-    g_SpriteEngine->ClearSpriteData();
-    g_SpriteEngine->ClearTexture();
-    g_SpriteEngine->ClearColorOp();
-    g_SpriteEngine->ClearBlendMode();
-    g_SpriteEngine->ClearZWrite();
-    g_SpriteEngine->ClearDrawStats();
-    g_SpriteEngine->ClearLastCameraSetupFlag();
-    g_SpriteEngine->ResetColorModulation();
-    g_SpriteEngine->shakeY = 0.0f;
-    g_SpriteEngine->shakeX = 0.0f;
+    g_SpriteRenderer->ClearVertexFormat();
+    g_SpriteRenderer->ClearSpriteData();
+    g_SpriteRenderer->ClearTexture();
+    g_SpriteRenderer->ClearColorOp();
+    g_SpriteRenderer->ClearBlendMode();
+    g_SpriteRenderer->ClearZWrite();
+    g_SpriteRenderer->ClearDrawStats();
+    g_SpriteRenderer->ClearLastCameraSetupFlag();
+    g_SpriteRenderer->ResetColorModulation();
+    g_SpriteRenderer->shakeY = 0.0f;
+    g_SpriteRenderer->shakeX = 0.0f;
     g_App.fogState = 0xff;
     if (g_SoundPlayer.bgm != NULL)
     {
@@ -118,27 +118,27 @@ int App::OnUpdate(App *arg)
     }
     if (g_GameManager.skipFpsMeasure == 0)
     {
-        g_PrevButtons = g_Buttons;
+        g_LastButtons = g_Buttons;
         g_Buttons = ReadButtons();
-        g_ButtonRepeat = 0;
-        if (g_PrevButtons == g_Buttons)
+        g_RepeatButtons = 0;
+        if (g_LastButtons == g_Buttons)
         {
-            if (g_ButtonFrames >= 30)
+            if (g_ButtonHeldFrames >= 30)
             {
-                if (g_ButtonFrames % 8 == 0)
+                if (g_ButtonHeldFrames % 8 == 0)
                 {
-                    g_ButtonRepeat = 1;
+                    g_RepeatButtons = 1;
                 }
-                if (g_ButtonFrames >= 38)
+                if (g_ButtonHeldFrames >= 38)
                 {
-                    g_ButtonFrames = 30;
+                    g_ButtonHeldFrames = 30;
                 }
             }
-            g_ButtonFrames++;
+            g_ButtonHeldFrames++;
         }
         else
         {
-            g_ButtonFrames = 0;
+            g_ButtonHeldFrames = 0;
         }
     }
     else
@@ -323,7 +323,7 @@ int App::OnUpdate(App *arg)
                 }
             }
         }
-        g_Buttons = g_PrevButtons = g_ButtonRepeat = 0;
+        g_Buttons = g_LastButtons = g_RepeatButtons = 0;
     }
     arg->curScene = arg->scene;
     arg->frames++;
@@ -457,7 +457,7 @@ int OpenGameArchive()
     {
         sprintf(path, "th07_%.4x%c.ver", 0x100, 'b');
         g_App.verFile = LoadFileData(path, 0);
-        g_App.verFileSize = g_FileSize;
+        g_App.verFileSize = g_LastFileSize;
         if (g_App.verFile == NULL)
         {
             LogError(&g_Log, "error : データのバージョンが違います\r\n");
@@ -496,7 +496,7 @@ int MeasureRefreshRate()
     while (count < 1800 && validCount < 8)
     {
         g_App.d3dDevice->BeginScene();
-        g_SpriteEngine->CopySurfaceToBackBuffer(0, 0, 0, 0, 0);
+        g_SpriteRenderer->CopySurfaceToBackBuffer(0, 0, 0, 0, 0);
         g_App.d3dDevice->EndScene();
         if (FAILED(g_App.d3dDevice->Present(NULL, NULL, NULL, NULL)))
         {
@@ -584,13 +584,13 @@ int App::AddedCallback(App *arg)
     }
     // Shows the logo while the refresh rate is measured, or for four
     // frames.
-    g_SpriteEngine->LoadSurface(0, "data/title/th07logo.jpg");
+    g_SpriteRenderer->LoadSurface(0, "data/title/th07logo.jpg");
     g_App.hideFps = 1;
     if (g_App.presentImmediate == 0)
     {
         if (MeasureRefreshRate() != 0)
         {
-            g_SpriteEngine->ReleaseSurface(0);
+            g_SpriteRenderer->ReleaseSurface(0);
             return -2;
         }
     }
@@ -600,7 +600,7 @@ int App::AddedCallback(App *arg)
         while (i < 4)
         {
             g_App.d3dDevice->BeginScene();
-            g_SpriteEngine->CopySurfaceToBackBuffer(0, 0, 0, 0, 0);
+            g_SpriteRenderer->CopySurfaceToBackBuffer(0, 0, 0, 0, 0);
             g_App.d3dDevice->EndScene();
             if (FAILED(g_App.d3dDevice->Present(NULL, NULL, NULL, NULL)))
             {
@@ -609,7 +609,7 @@ int App::AddedCallback(App *arg)
             i++;
         }
     }
-    g_SpriteEngine->ReleaseSurface(0);
+    g_SpriteRenderer->ReleaseSurface(0);
     arg->hideFps = 0;
     arg->redrawFrames = 0;
     arg->lastPlayTimeTick = timeGetTime();
@@ -624,7 +624,7 @@ int App::AddedCallback(App *arg)
         arg->midi->LoadFile(0x1e, "bgm/init.mid");
     }
     g_SoundPlayer.LoadSounds();
-    if (g_SpriteEngine->LoadAnm(0, "data/text.anm", 0x700) != 0)
+    if (g_SpriteRenderer->LoadAnm(0, "data/text.anm", 0x700) != 0)
     {
         return -1;
     }
@@ -633,7 +633,7 @@ int App::AddedCallback(App *arg)
         LogPrintf(&g_Log, "error : 文字の初期化に失敗しました\r\n");
         return -1;
     }
-    g_SpriteEngine->CreateQuad();
+    g_SpriteRenderer->CreateQuad();
     CreateTextSurface();
     if (g_SoundPlayer.LoadBgmFormat("bgm/thbgm.fmt") != 0)
     {
@@ -687,8 +687,8 @@ int App::DeletedCallback(App *arg)
         FreeData(g_App.verFile);
         g_App.verFile = NULL;
     }
-    g_SpriteEngine->ReleaseVertexBuffer();
-    g_SpriteEngine->ReleaseAnm(0);
+    g_SpriteRenderer->ReleaseVertexBuffer();
+    g_SpriteRenderer->ReleaseAnm(0);
     AsciiText::RemoveChain();
     g_SoundPlayer.QueueSoundCommand(4, 0, "dummy");
     if (arg->midi != NULL)
@@ -1146,7 +1146,7 @@ int App::LoadConfig(char *path)
         if (g_App.lifeCount >= 5 || g_App.bombCount >= 4 || g_App.colorMode16Bits >= 2 || g_App.musicMode >= 3 ||
             g_App.defaultDifficulty >= 6 || g_App.playSounds >= 2 || g_App.windowed >= 2 || g_App.frameSkip >= 3 ||
             g_App.effectsQuality >= 3 || g_App.optionsMenuCursor >= 2 || g_App.shootFocuses >= 2 || g_App.version != 0x70002 ||
-            g_FileSize != sizeof(ConfigCopy))
+            g_LastFileSize != sizeof(ConfigCopy))
         {
             LogPrintf(&g_Log, "コンフィグデータが異常でしたので再初期化しました\r\n");
             goto reset;
@@ -1374,7 +1374,7 @@ int App::IsScoreDisabled()
 
 int App::EnableFog()
 {
-    g_SpriteEngine->FlushQuadBatch();
+    g_SpriteRenderer->FlushQuadBatch();
     if (this->fogState != 1)
     {
         this->fogState = 1;
@@ -1385,7 +1385,7 @@ int App::EnableFog()
 
 int App::DisableFog()
 {
-    g_SpriteEngine->FlushQuadBatch();
+    g_SpriteRenderer->FlushQuadBatch();
     if (this->fogState != 0)
     {
         this->fogState = 0;
@@ -1396,7 +1396,7 @@ int App::DisableFog()
 
 int App::SetRenderState(D3DRENDERSTATETYPE state, DWORD value)
 {
-    g_SpriteEngine->FlushQuadBatch();
+    g_SpriteRenderer->FlushQuadBatch();
     return this->d3dDevice->SetRenderState(state, value);
 }
 

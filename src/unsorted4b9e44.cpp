@@ -10,15 +10,23 @@
 #include "unsorted.h"
 
 #ifdef TH07_EXE
-SpriteEngine *g_SpriteEngine;
-ReplayManager *g_ReplayManager;
+// The linker lays out an object's uninitialized globals by a hash of
+// their names (tools/locals.py name_hash % 1024, ascending), so these
+// names were picked to hash in the original's order, which is the order
+// below. The original's names are unknown.
+//
+// Unused, a stand-in (name and type invented): the original has four
+// unreferenced bytes before g_SpriteRenderer.
+DWORD g_UnusedGlobal;
+SpriteEngine *g_SpriteRenderer;
+ReplayManager *g_ReplaySystem;
 WORD g_Buttons;
-WORD g_GameButtons;
-WORD g_PrevButtons;
-WORD g_PrevGameButtons;
-WORD g_ButtonRepeat;
-WORD g_ButtonFrames;
-int g_FileSize;
+WORD g_GameInputs;
+WORD g_LastButtons;
+WORD g_PreviousGameInputs;
+WORD g_RepeatButtons;
+WORD g_ButtonHeldFrames;
+int g_LastFileSize;
 // Constructed and destroyed, never used.
 DatArchive g_Archives4b9e68[20];
 #endif // TH07_EXE

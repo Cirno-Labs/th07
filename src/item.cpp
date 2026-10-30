@@ -109,7 +109,7 @@ Item *ItemManager::SpawnItem(D3DXVECTOR3 *pos, int type, int state)
         {
             item->state = 0;
         }
-        g_SpriteEngine->StartScript(&item->sprite, type + 0x2c4);
+        g_SpriteRenderer->StartScript(&item->sprite, type + 0x2c4);
         item->sprite.color = 0xffffffff;
         item->sprite.flags |= 0x1000;
         item->countsFullValue = 0;
@@ -211,7 +211,7 @@ void ItemManager::UpdateItems()
     touch:
         if (g_Player.TouchesGrazeBox(&entry->pos, &catchSize))
         {
-            g_ReplayManager->frameEvents |= 0x40;
+            g_ReplaySystem->frameEvents |= 0x40;
             switch (entry->type)
             {
             case 0:
@@ -497,7 +497,7 @@ void ItemManager::UpdateItems()
         entry->timer.Tick();
         if (entry->sprite.scriptPos != NULL)
         {
-            g_SpriteEngine->Step(&entry->sprite);
+            g_SpriteRenderer->Step(&entry->sprite);
         }
         this->drawListTail->next = entry;
         entry->next = NULL;
@@ -546,7 +546,7 @@ void ItemManager::ConvertPowerItems(int except)
             }
             g_EffectManager.SpawnEffect(0, &entry->pos, 1, 0xffffffff);
             entry->type = 7;
-            g_SpriteEngine->StartScript(&entry->sprite, 0x2cb);
+            g_SpriteRenderer->StartScript(&entry->sprite, 0x2cb);
         }
     }
 }
@@ -587,7 +587,7 @@ void ItemManager::DrawItems()
             entry->sprite.pos.y = 8.0f + g_GameManager.arena[1];
             if (entry->onScreen)
             {
-                g_SpriteEngine->SetSprite(&entry->sprite, entry->type + 0x2b6);
+                g_SpriteRenderer->SetSprite(&entry->sprite, entry->type + 0x2b6);
                 entry->onScreen = 0;
                 entry->sprite.flags |= 0x1000;
             }
@@ -600,12 +600,12 @@ void ItemManager::DrawItems()
         }
         else if (!entry->onScreen)
         {
-            g_SpriteEngine->SetSprite(&entry->sprite, entry->type + 0x2ac);
+            g_SpriteRenderer->SetSprite(&entry->sprite, entry->type + 0x2ac);
             entry->onScreen = 1;
             entry->sprite.color = 0xffffffff;
             entry->sprite.flags |= 0x1000;
         }
-        g_SpriteEngine->Draw(&entry->sprite);
+        g_SpriteRenderer->Draw(&entry->sprite);
         entry = entry->next;
     }
 }

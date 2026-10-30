@@ -83,10 +83,10 @@ void Gui::ShowSpellCardBonus(int value)
 // The rectangle of sprite `sprite` in its texture, in pixels.
 __forceinline void GetSpriteRect(RECT *rect, int sprite)
 {
-    rect->left = g_SpriteEngine->sprites[sprite].startX;
-    rect->top = g_SpriteEngine->sprites[sprite].startY;
-    rect->right = g_SpriteEngine->sprites[sprite].endX;
-    rect->bottom = g_SpriteEngine->sprites[sprite].endY;
+    rect->left = g_SpriteRenderer->sprites[sprite].startX;
+    rect->top = g_SpriteRenderer->sprites[sprite].startY;
+    rect->right = g_SpriteRenderer->sprites[sprite].endX;
+    rect->bottom = g_SpriteRenderer->sprites[sprite].endY;
 }
 
 void CopySpriteToTexture(int sprite)
@@ -96,7 +96,7 @@ void CopySpriteToTexture(int sprite)
 
     GetSpriteRect(&dstRect, 0x609);
     GetSpriteRect(&spriteRect, sprite);
-    g_SpriteEngine->CopyTextureRect(0x15, 0x16, &dstRect, &spriteRect);
+    g_SpriteRenderer->CopyTextureRect(0x15, 0x16, &dstRect, &spriteRect);
 }
 
 int Gui::OnUpdate(Gui *gui)
@@ -129,8 +129,8 @@ int Gui::OnDraw(Gui *gui)
     D3DXVECTOR3 cursor;
     char buf[32];
 
-    g_SpriteEngine->shakeY = 0.0f;
-    g_SpriteEngine->shakeX = 0.0f;
+    g_SpriteRenderer->shakeY = 0.0f;
+    g_SpriteRenderer->shakeX = 0.0f;
     if (gui->impl->stageClearShown != 0)
     {
         cursor.x = 144.0f;
@@ -159,7 +159,7 @@ int Gui::OnDraw(Gui *gui)
         g_AsciiText.AddFormat(&cursor, "Cherry = %8d", gui->impl->stageClearCherry * 10);
         if (g_GameManager.stage >= 7 ||
             (g_GameManager.stage == 6 && !(g_GameManager.stateFlags & 1) &&
-             (!g_GameManager.isInReplay || g_ReplayManager->data->stages[4] != NULL)))
+             (!g_GameManager.isInReplay || g_ReplaySystem->data->stages[4] != NULL)))
         {
             cursor.y += 16.0f;
             g_AsciiText.color = 0xffffff80;
@@ -285,14 +285,14 @@ int Gui::OnDraw(Gui *gui)
 
 void Gui::ShowBombName(int sprite, char *name)
 {
-    g_SpriteEngine->StartScript(&this->impl->bombPortrait, 0x4a1);
-    g_SpriteEngine->SetSprite(&this->impl->bombPortrait, sprite);
-    g_SpriteEngine->StartScript(&this->impl->bombPortraitGlow, 0x4a4);
-    g_SpriteEngine->SetSprite(&this->impl->bombPortraitGlow, 0x4ac);
-    g_SpriteEngine->StartScript(&this->impl->bombPortraitFrame, 0x4a6);
-    g_SpriteEngine->SetSprite(&this->impl->bombPortraitFrame, 0x4ac);
-    g_SpriteEngine->StartScript(&this->impl->bombName, 0x704);
-    g_SpriteEngine->RenderText(&this->impl->bombName, 0xf0f0ff, 0, name);
+    g_SpriteRenderer->StartScript(&this->impl->bombPortrait, 0x4a1);
+    g_SpriteRenderer->SetSprite(&this->impl->bombPortrait, sprite);
+    g_SpriteRenderer->StartScript(&this->impl->bombPortraitGlow, 0x4a4);
+    g_SpriteRenderer->SetSprite(&this->impl->bombPortraitGlow, 0x4ac);
+    g_SpriteRenderer->StartScript(&this->impl->bombPortraitFrame, 0x4a6);
+    g_SpriteRenderer->SetSprite(&this->impl->bombPortraitFrame, 0x4ac);
+    g_SpriteRenderer->StartScript(&this->impl->bombName, 0x704);
+    g_SpriteRenderer->RenderText(&this->impl->bombName, 0xf0f0ff, 0, name);
     this->bombNameWidth = strlen(name) * 15 / 2.0f + 16.0f;
     this->impl->bombNameBar.SetPendingInterrupt(1);
     g_SoundPlayer.QueueSound(14, 0);
@@ -303,8 +303,8 @@ void Gui::ShowSpellCardName(int sprite, char *text)
 {
     if (sprite >= 0)
     {
-        g_SpriteEngine->StartScript(&this->impl->spellPortrait, 0x4a3);
-        g_SpriteEngine->SetSprite(&this->impl->spellPortrait, sprite + 0x4ad);
+        g_SpriteRenderer->StartScript(&this->impl->spellPortrait, 0x4a3);
+        g_SpriteRenderer->SetSprite(&this->impl->spellPortrait, sprite + 0x4ad);
         if (this->impl->spellPortrait.spriteData->width > 256.0f)
         {
             this->impl->spellPortrait.posOffset.x = -288.0f;
@@ -318,12 +318,12 @@ void Gui::ShowSpellCardName(int sprite, char *text)
             this->impl->spellPortrait.posOffset.x = 0.0f;
         }
     }
-    g_SpriteEngine->StartScript(&this->impl->spellPortraitGlow, 0x4a5);
-    g_SpriteEngine->SetSprite(&this->impl->spellPortraitGlow, 0x4ac);
-    g_SpriteEngine->StartScript(&this->impl->spellPortraitFrame, 0x4a7);
-    g_SpriteEngine->SetSprite(&this->impl->spellPortraitFrame, 0x4ac);
-    g_SpriteEngine->StartScript(&this->impl->spellName, 0x705);
-    g_SpriteEngine->RenderTextRightAligned(&this->impl->spellName, 0xfff0f0, 0, text);
+    g_SpriteRenderer->StartScript(&this->impl->spellPortraitGlow, 0x4a5);
+    g_SpriteRenderer->SetSprite(&this->impl->spellPortraitGlow, 0x4ac);
+    g_SpriteRenderer->StartScript(&this->impl->spellPortraitFrame, 0x4a7);
+    g_SpriteRenderer->SetSprite(&this->impl->spellPortraitFrame, 0x4ac);
+    g_SpriteRenderer->StartScript(&this->impl->spellName, 0x705);
+    g_SpriteRenderer->RenderTextRightAligned(&this->impl->spellName, 0xfff0f0, 0, text);
     this->spellNameWidth = strlen(text) * 15 / 2.0f + 16.0f;
     this->impl->spellNameBar.SetPendingInterrupt(1);
     this->impl->spellScoreBar.SetPendingInterrupt(1);
@@ -341,7 +341,7 @@ int Gui::LoadResources()
     if ((g_App.scene != 3 && g_App.scene != 0xb && g_App.scene != 0xc) != 0)
     {
         memset(this->impl, 0, sizeof(GuiImpl));
-        if (g_SpriteEngine->LoadAnm(0x15, "data/front.anm", 0x600) != 0)
+        if (g_SpriteRenderer->LoadAnm(0x15, "data/front.anm", 0x600) != 0)
         {
             return -1;
         }
@@ -349,31 +349,31 @@ int Gui::LoadResources()
         switch (g_GameManager.character)
         {
         case 0:
-            if (g_SpriteEngine->LoadAnm(0x19, "data/face_rm00.anm", 0x4a0) != 0)
+            if (g_SpriteRenderer->LoadAnm(0x19, "data/face_rm00.anm", 0x4a0) != 0)
             {
                 return -1;
             }
-            if (g_SpriteEngine->LoadAnm(0x17, "data/loading.anm", 0x61e) != 0)
+            if (g_SpriteRenderer->LoadAnm(0x17, "data/loading.anm", 0x61e) != 0)
             {
                 return -1;
             }
             break;
         case 1:
-            if (g_SpriteEngine->LoadAnm(0x19, "data/face_mr00.anm", 0x4a0) != 0)
+            if (g_SpriteRenderer->LoadAnm(0x19, "data/face_mr00.anm", 0x4a0) != 0)
             {
                 return -1;
             }
-            if (g_SpriteEngine->LoadAnm(0x17, "data/loading2.anm", 0x61e) != 0)
+            if (g_SpriteRenderer->LoadAnm(0x17, "data/loading2.anm", 0x61e) != 0)
             {
                 return -1;
             }
             break;
         case 2:
-            if (g_SpriteEngine->LoadAnm(0x19, "data/face_sk00.anm", 0x4a0) != 0)
+            if (g_SpriteRenderer->LoadAnm(0x19, "data/face_sk00.anm", 0x4a0) != 0)
             {
                 return -1;
             }
-            if (g_SpriteEngine->LoadAnm(0x17, "data/loading3.anm", 0x61e) != 0)
+            if (g_SpriteRenderer->LoadAnm(0x17, "data/loading3.anm", 0x61e) != 0)
             {
                 return -1;
             }
@@ -383,9 +383,9 @@ int Gui::LoadResources()
     else
     {
         this->HideInterface();
-        g_SpriteEngine->StartScript(&this->impl->loadingBar, 0x725);
+        g_SpriteRenderer->StartScript(&this->impl->loadingBar, 0x725);
         this->impl->loadingBar.pendingInterrupt = 1;
-        g_SpriteEngine->SetPendingCopy(4, 0x20, 0x10, 0x180, 0x1c0, this->impl->loadingBar.spriteData->startX,
+        g_SpriteRenderer->SetPendingCopy(4, 0x20, 0x10, 0x180, 0x1c0, this->impl->loadingBar.spriteData->startX,
                                        this->impl->loadingBar.spriteData->startY,
                                        this->impl->loadingBar.spriteData->width,
                                        this->impl->loadingBar.spriteData->height);
@@ -393,7 +393,7 @@ int Gui::LoadResources()
         {
             for (x = 0; x < 0xc; x++)
             {
-                g_SpriteEngine->StartScript(&this->impl->backgroundTiles[y * 0xc + x], ((y + x) & 1) + 0x726);
+                g_SpriteRenderer->StartScript(&this->impl->backgroundTiles[y * 0xc + x], ((y + x) & 1) + 0x726);
                 this->impl->backgroundTiles[y * 0xc + x].scriptVar8 = y + x * 2;
                 this->impl->backgroundTiles[y * 0xc + x].pos.x = x * 32.0f - 0.5f + 16.0f;
                 this->impl->backgroundTiles[y * 0xc + x].pos.y = y * 32.0f - 0.5f + 16.0f;
@@ -408,11 +408,11 @@ int Gui::LoadResources()
     {
     case 1:
         CopySpriteToTexture(0x60e);
-        if (g_SpriteEngine->LoadAnm(0x1c, "data/face_01_00.anm", 0x4ad) != 0)
+        if (g_SpriteRenderer->LoadAnm(0x1c, "data/face_01_00.anm", 0x4ad) != 0)
         {
             return -1;
         }
-        if (g_SpriteEngine->LoadAnm(0x18, "data/std1txt.anm", 0x800) != 0)
+        if (g_SpriteRenderer->LoadAnm(0x18, "data/std1txt.anm", 0x800) != 0)
         {
             return -1;
         }
@@ -423,11 +423,11 @@ int Gui::LoadResources()
         break;
     case 2:
         CopySpriteToTexture(0x610);
-        if (g_SpriteEngine->LoadAnm(0x1c, "data/face_02_00.anm", 0x4ad) != 0)
+        if (g_SpriteRenderer->LoadAnm(0x1c, "data/face_02_00.anm", 0x4ad) != 0)
         {
             return -1;
         }
-        if (g_SpriteEngine->LoadAnm(0x18, "data/std2txt.anm", 0x800) != 0)
+        if (g_SpriteRenderer->LoadAnm(0x18, "data/std2txt.anm", 0x800) != 0)
         {
             return -1;
         }
@@ -438,11 +438,11 @@ int Gui::LoadResources()
         break;
     case 3:
         CopySpriteToTexture(0x612);
-        if (g_SpriteEngine->LoadAnm(0x1c, "data/face_03_00.anm", 0x4ad) != 0)
+        if (g_SpriteRenderer->LoadAnm(0x1c, "data/face_03_00.anm", 0x4ad) != 0)
         {
             return -1;
         }
-        if (g_SpriteEngine->LoadAnm(0x18, "data/std3txt.anm", 0x800) != 0)
+        if (g_SpriteRenderer->LoadAnm(0x18, "data/std3txt.anm", 0x800) != 0)
         {
             return -1;
         }
@@ -453,11 +453,11 @@ int Gui::LoadResources()
         break;
     case 4:
         CopySpriteToTexture(0x614);
-        if (g_SpriteEngine->LoadAnm(0x1c, "data/face_04_00.anm", 0x4ad) != 0)
+        if (g_SpriteRenderer->LoadAnm(0x1c, "data/face_04_00.anm", 0x4ad) != 0)
         {
             return -1;
         }
-        if (g_SpriteEngine->LoadAnm(0x18, "data/std4txt.anm", 0x800) != 0)
+        if (g_SpriteRenderer->LoadAnm(0x18, "data/std4txt.anm", 0x800) != 0)
         {
             return -1;
         }
@@ -468,11 +468,11 @@ int Gui::LoadResources()
         break;
     case 5:
         CopySpriteToTexture(0x616);
-        if (g_SpriteEngine->LoadAnm(0x1c, "data/face_05_00.anm", 0x4ad) != 0)
+        if (g_SpriteRenderer->LoadAnm(0x1c, "data/face_05_00.anm", 0x4ad) != 0)
         {
             return -1;
         }
-        if (g_SpriteEngine->LoadAnm(0x18, "data/std5txt.anm", 0x800) != 0)
+        if (g_SpriteRenderer->LoadAnm(0x18, "data/std5txt.anm", 0x800) != 0)
         {
             return -1;
         }
@@ -483,11 +483,11 @@ int Gui::LoadResources()
         break;
     case 6:
         CopySpriteToTexture(0x618);
-        if (g_SpriteEngine->LoadAnm(0x1c, "data/face_06_00.anm", 0x4ad) != 0)
+        if (g_SpriteRenderer->LoadAnm(0x1c, "data/face_06_00.anm", 0x4ad) != 0)
         {
             return -1;
         }
-        if (g_SpriteEngine->LoadAnm(0x18, "data/std6txt.anm", 0x800) != 0)
+        if (g_SpriteRenderer->LoadAnm(0x18, "data/std6txt.anm", 0x800) != 0)
         {
             return -1;
         }
@@ -498,11 +498,11 @@ int Gui::LoadResources()
         break;
     case 7:
         CopySpriteToTexture(0x61a);
-        if (g_SpriteEngine->LoadAnm(0x1c, "data/face_07_00.anm", 0x4ad) != 0)
+        if (g_SpriteRenderer->LoadAnm(0x1c, "data/face_07_00.anm", 0x4ad) != 0)
         {
             return -1;
         }
-        if (g_SpriteEngine->LoadAnm(0x18, "data/std7txt.anm", 0x800) != 0)
+        if (g_SpriteRenderer->LoadAnm(0x18, "data/std7txt.anm", 0x800) != 0)
         {
             return -1;
         }
@@ -513,11 +513,11 @@ int Gui::LoadResources()
         break;
     case 8:
         CopySpriteToTexture(0x61c);
-        if (g_SpriteEngine->LoadAnm(0x1c, "data/face_08_00.anm", 0x4ad) != 0)
+        if (g_SpriteRenderer->LoadAnm(0x1c, "data/face_08_00.anm", 0x4ad) != 0)
         {
             return -1;
         }
-        if (g_SpriteEngine->LoadAnm(0x18, "data/std8txt.anm", 0x800) != 0)
+        if (g_SpriteRenderer->LoadAnm(0x18, "data/std8txt.anm", 0x800) != 0)
         {
             return -1;
         }
@@ -533,22 +533,22 @@ int Gui::LoadResources()
     {
         for (i = 0; i < 0x21; i++)
         {
-            g_SpriteEngine->StartScript(&this->impl->sprites[i], i + 0x600);
+            g_SpriteRenderer->StartScript(&this->impl->sprites[i], i + 0x600);
         }
     }
     this->bossPresent = 0;
     this->impl->bossBarState = 0;
     this->bossHealth = 0.0f;
     this->bossHealthShown = 0.0f;
-    g_SpriteEngine->StartScript(&this->impl->bombPortrait, 0x4a1);
-    g_SpriteEngine->StartScript(&this->impl->spellPortrait, 0x4a3);
-    g_SpriteEngine->StartScript(&this->impl->bombName, 0x704);
-    g_SpriteEngine->StartScript(&this->impl->spellName, 0x705);
-    g_SpriteEngine->StartSpriteSeries(this->impl->trackNumberSprites, 0x800, 5);
-    g_SpriteEngine->StartScript(&this->impl->bombNameBar, 1);
-    g_SpriteEngine->StartScript(&this->impl->spellNameBar, 0);
-    g_SpriteEngine->StartScript(&this->impl->spellScoreBar, 2);
-    g_SpriteEngine->StartScript(&this->impl->spellScoreDigit, 3);
+    g_SpriteRenderer->StartScript(&this->impl->bombPortrait, 0x4a1);
+    g_SpriteRenderer->StartScript(&this->impl->spellPortrait, 0x4a3);
+    g_SpriteRenderer->StartScript(&this->impl->bombName, 0x704);
+    g_SpriteRenderer->StartScript(&this->impl->spellName, 0x705);
+    g_SpriteRenderer->StartSpriteSeries(this->impl->trackNumberSprites, 0x800, 5);
+    g_SpriteRenderer->StartScript(&this->impl->bombNameBar, 1);
+    g_SpriteRenderer->StartScript(&this->impl->spellNameBar, 0);
+    g_SpriteRenderer->StartScript(&this->impl->spellScoreBar, 2);
+    g_SpriteRenderer->StartScript(&this->impl->spellScoreDigit, 3);
     this->impl->bombPortrait.scriptPos = NULL;
     this->impl->bombPortraitGlow.scriptPos = NULL;
     this->impl->bombPortraitFrame.scriptPos = NULL;
@@ -693,7 +693,7 @@ int GuiImpl::RunMsg()
     {
         this->msg.timelineRelease--;
     }
-    if (this->msg.skippable && (g_GameButtons & 0x100))
+    if (this->msg.skippable && (g_GameInputs & 0x100))
     {
         this->msg.timer.Set(this->msg.instr->time);
     }
@@ -714,7 +714,7 @@ int GuiImpl::RunMsg()
             return -1;
         case 1:
             args = &this->msg.instr->args;
-            g_SpriteEngine->StartScript(&this->msg.portraits[args->who],
+            g_SpriteRenderer->StartScript(&this->msg.portraits[args->who],
                                         args->index + (args->who != 0 ? 0x4a2 : 0x4a0));
             if (this->msg.portraits[args->who].spriteData->width > 128.0f)
             {
@@ -727,7 +727,7 @@ int GuiImpl::RunMsg()
             break;
         case 2:
             args = &this->msg.instr->args;
-            g_SpriteEngine->SetSprite(&this->msg.portraits[args->who], args->index + (args->who != 0 ? 0x4ad : 0x4a0));
+            g_SpriteRenderer->SetSprite(&this->msg.portraits[args->who], args->index + (args->who != 0 ? 0x4ad : 0x4a0));
             if (this->msg.portraits[args->who].spriteData->width > 256.0f)
             {
                 this->msg.portraits[args->who].posOffset.x = -208.0f;
@@ -746,19 +746,19 @@ int GuiImpl::RunMsg()
             args = &this->msg.instr->args;
             if (args->index == 0 && this->msg.text[1].scriptIndex >= 0)
             {
-                g_SpriteEngine->RenderText(&this->msg.text[1], this->msg.textColors[args->who],
+                g_SpriteRenderer->RenderText(&this->msg.text[1], this->msg.textColors[args->who],
                                            this->msg.shadowColors[args->who], " ");
             }
-            g_SpriteEngine->StartScript(&this->msg.text[args->index], args->index + 0x700);
+            g_SpriteRenderer->StartScript(&this->msg.text[args->index], args->index + 0x700);
             this->msg.text[args->index].fontHeight = this->msg.fontSize;
             this->msg.text[args->index].fontWidth = this->msg.text[args->index].fontHeight;
-            g_SpriteEngine->RenderText(&this->msg.text[args->index], this->msg.textColors[args->who],
+            g_SpriteRenderer->RenderText(&this->msg.text[args->index], this->msg.textColors[args->who],
                                        this->msg.shadowColors[args->who], args->text);
             this->msg.waitFrames = 0;
             break;
         case 4:
-            if ((!this->msg.skippable || !(g_GameButtons & 0x100)) &&
-                (!(g_GameButtons & 1) || (g_GameButtons & 1) == (g_PrevGameButtons & 1) || this->msg.waitFrames < 12))
+            if ((!this->msg.skippable || !(g_GameInputs & 0x100)) &&
+                (!(g_GameInputs & 1) || (g_GameInputs & 1) == (g_PreviousGameInputs & 1) || this->msg.waitFrames < 12))
             {
                 if (this->msg.waitFrames >= this->msg.instr->i)
                 {
@@ -785,13 +785,13 @@ int GuiImpl::RunMsg()
         case 7:
             if (g_GameManager.stage != 6)
             {
-                g_SpriteEngine->StartScript(&this->trackNumberSprites[0], 0x804);
+                g_SpriteRenderer->StartScript(&this->trackNumberSprites[0], 0x804);
             }
             else
             {
-                g_SpriteEngine->StartScript(&this->trackNumberSprites[0], 0x805);
+                g_SpriteRenderer->StartScript(&this->trackNumberSprites[0], 0x805);
             }
-            g_SpriteEngine->SetSprite(&this->trackNumberSprites[0], this->msg.instr->i + 0x803);
+            g_SpriteRenderer->SetSprite(&this->trackNumberSprites[0], this->msg.instr->i + 0x803);
             if (g_App.PlayMidi(this->msg.instr->i) != 0)
             {
                 g_App.PlayMusic(g_Stage.data->songPaths[this->msg.instr->i]);
@@ -799,8 +799,8 @@ int GuiImpl::RunMsg()
             break;
         case 8:
             args = &this->msg.instr->args;
-            g_SpriteEngine->StartScript(&this->msg.nameplates[args->index], args->index + 0x702);
-            g_SpriteEngine->RenderTextRightAligned(&this->msg.nameplates[args->index], this->msg.textColors[args->who],
+            g_SpriteRenderer->StartScript(&this->msg.nameplates[args->index], args->index + 0x702);
+            g_SpriteRenderer->RenderTextRightAligned(&this->msg.nameplates[args->index], this->msg.textColors[args->who],
                                                    this->msg.shadowColors[args->who], args->text);
             this->msg.waitFrames = 0;
             break;
@@ -812,9 +812,9 @@ int GuiImpl::RunMsg()
             this->stageClearShown = 1;
             if (g_GameManager.stage < 6)
             {
-                g_SpriteEngine->StartScript(&this->loadingIcon, 0x61e);
-                g_SpriteEngine->StartScript(&this->loadingBar, 0x725);
-                g_SpriteEngine->SetPendingCopy(4, 0x20, 0x10, 0x180, 0x1c0, this->loadingBar.spriteData->startX,
+                g_SpriteRenderer->StartScript(&this->loadingIcon, 0x61e);
+                g_SpriteRenderer->StartScript(&this->loadingBar, 0x725);
+                g_SpriteRenderer->SetPendingCopy(4, 0x20, 0x10, 0x180, 0x1c0, this->loadingBar.spriteData->startX,
                                                this->loadingBar.spriteData->startY,
                                                this->loadingBar.spriteData->width,
                                                this->loadingBar.spriteData->height);
@@ -844,12 +844,12 @@ int GuiImpl::RunMsg()
             }
             if (g_GameManager.stage < 6)
             {
-                if ((g_GameManager.stateFlags >> 3 & 1) && !g_ReplayManager->HasStage(g_GameManager.stage))
+                if ((g_GameManager.stateFlags >> 3 & 1) && !g_ReplaySystem->HasStage(g_GameManager.stage))
                 {
                     g_App.scene = 7;
                     goto stepSprites;
                 }
-                g_SpriteEngine->InitSprite(&this->loadingCaption, 0x10c);
+                g_SpriteRenderer->InitSprite(&this->loadingCaption, 0x10c);
                 this->returnToTitleRequested = 1;
                 this->msg.scriptIndex = -2;
             }
@@ -875,7 +875,7 @@ int GuiImpl::RunMsg()
             }
             else
             {
-                if (g_GameManager.stage == 8 && g_GameManager.stats->score != g_ReplayManager->data->score)
+                if (g_GameManager.stage == 8 && g_GameManager.stats->score != g_ReplaySystem->data->score)
                 {
                     ResaveReplay(g_GameManager.replayFile);
                 }
@@ -890,13 +890,13 @@ int GuiImpl::RunMsg()
     }
     this->msg.timer.NextTick();
 stepSprites:
-    g_SpriteEngine->Step(&this->msg.portraits[0]);
-    g_SpriteEngine->Step(&this->msg.portraits[1]);
-    g_SpriteEngine->Step(&this->msg.text[0]);
-    g_SpriteEngine->Step(&this->msg.text[1]);
-    g_SpriteEngine->Step(&this->msg.nameplates[0]);
-    g_SpriteEngine->Step(&this->msg.nameplates[1]);
-    if (this->msg.timer < 60 && this->msg.skippable && (g_GameButtons & 0x100))
+    g_SpriteRenderer->Step(&this->msg.portraits[0]);
+    g_SpriteRenderer->Step(&this->msg.portraits[1]);
+    g_SpriteRenderer->Step(&this->msg.text[0]);
+    g_SpriteRenderer->Step(&this->msg.text[1]);
+    g_SpriteRenderer->Step(&this->msg.nameplates[0]);
+    g_SpriteRenderer->Step(&this->msg.nameplates[1]);
+    if (this->msg.timer < 60 && this->msg.skippable && (g_GameInputs & 0x100))
     {
         this->msg.timer.Set(60);
     }
@@ -932,12 +932,12 @@ int GuiImpl::DrawMsg()
     vertices[0].diffuse = vertices[1].diffuse = 0xd0000000;
     vertices[2].diffuse = vertices[3].diffuse = 0x90000000;
     vertices[0].w = vertices[1].w = vertices[2].w = vertices[3].w = 1.0f;
-    g_SpriteEngine->DrawUnrotated(&this->msg.portraits[0]);
+    g_SpriteRenderer->DrawUnrotated(&this->msg.portraits[0]);
     pos = this->msg.portraits[1].pos;
     this->msg.portraits[1].pos += this->msg.portraits[1].posOffset;
-    g_SpriteEngine->DrawUnrotated(&this->msg.portraits[1]);
+    g_SpriteRenderer->DrawUnrotated(&this->msg.portraits[1]);
     this->msg.portraits[1].pos = pos;
-    g_SpriteEngine->FlushQuadBatch();
+    g_SpriteRenderer->FlushQuadBatch();
     if (!g_App.flags.noColorBlending)
     {
         g_App.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
@@ -951,10 +951,10 @@ int GuiImpl::DrawMsg()
     }
     g_App.d3dDevice->SetVertexShader(D3DFVF_XYZRHW | D3DFVF_DIFFUSE);
     g_App.d3dDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, vertices, sizeof(VertexDiffuseXyzrwh));
-    g_SpriteEngine->ClearVertexFormat();
-    g_SpriteEngine->ClearColorOp();
-    g_SpriteEngine->ClearBlendMode();
-    g_SpriteEngine->ClearZWrite();
+    g_SpriteRenderer->ClearVertexFormat();
+    g_SpriteRenderer->ClearColorOp();
+    g_SpriteRenderer->ClearBlendMode();
+    g_SpriteRenderer->ClearZWrite();
     if (!g_App.flags.noColorBlending)
     {
         g_App.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
@@ -962,10 +962,10 @@ int GuiImpl::DrawMsg()
     }
     g_App.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
     g_App.d3dDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
-    g_SpriteEngine->DrawUnrotated(&this->msg.text[0]);
-    g_SpriteEngine->DrawUnrotated(&this->msg.text[1]);
-    g_SpriteEngine->DrawUnrotated(&this->msg.nameplates[0]);
-    g_SpriteEngine->DrawUnrotated(&this->msg.nameplates[1]);
+    g_SpriteRenderer->DrawUnrotated(&this->msg.text[0]);
+    g_SpriteRenderer->DrawUnrotated(&this->msg.text[1]);
+    g_SpriteRenderer->DrawUnrotated(&this->msg.nameplates[0]);
+    g_SpriteRenderer->DrawUnrotated(&this->msg.nameplates[1]);
     return 0;
 }
 
@@ -1065,26 +1065,26 @@ void Gui::UpdateInterface()
             }
         }
     }
-    g_SpriteEngine->StepSprites(this->impl->sprites, 0x21);
-    g_SpriteEngine->StepSprites(this->impl->trackNumberSprites, 5);
-    g_SpriteEngine->Step(&this->impl->bombPortrait);
-    g_SpriteEngine->Step(&this->impl->bombPortraitGlow);
-    g_SpriteEngine->Step(&this->impl->bombPortraitFrame);
-    g_SpriteEngine->Step(&this->impl->bombName);
-    g_SpriteEngine->Step(&this->impl->spellPortrait);
-    g_SpriteEngine->Step(&this->impl->spellPortraitGlow);
-    g_SpriteEngine->Step(&this->impl->spellPortraitFrame);
-    g_SpriteEngine->Step(&this->impl->spellName);
-    g_SpriteEngine->Step(&this->impl->bombNameBar);
-    g_SpriteEngine->Step(&this->impl->spellNameBar);
-    g_SpriteEngine->Step(&this->impl->spellScoreBar);
+    g_SpriteRenderer->StepSprites(this->impl->sprites, 0x21);
+    g_SpriteRenderer->StepSprites(this->impl->trackNumberSprites, 5);
+    g_SpriteRenderer->Step(&this->impl->bombPortrait);
+    g_SpriteRenderer->Step(&this->impl->bombPortraitGlow);
+    g_SpriteRenderer->Step(&this->impl->bombPortraitFrame);
+    g_SpriteRenderer->Step(&this->impl->bombName);
+    g_SpriteRenderer->Step(&this->impl->spellPortrait);
+    g_SpriteRenderer->Step(&this->impl->spellPortraitGlow);
+    g_SpriteRenderer->Step(&this->impl->spellPortraitFrame);
+    g_SpriteRenderer->Step(&this->impl->spellName);
+    g_SpriteRenderer->Step(&this->impl->bombNameBar);
+    g_SpriteRenderer->Step(&this->impl->spellNameBar);
+    g_SpriteRenderer->Step(&this->impl->spellScoreBar);
     if (this->impl->loadingIcon.spriteIndex >= 0)
     {
-        if (g_SpriteEngine->Step(&this->impl->loadingIcon) != 0)
+        if (g_SpriteRenderer->Step(&this->impl->loadingIcon) != 0)
         {
             this->impl->loadingIcon.spriteIndex = -1;
         }
-        if (g_SpriteEngine->Step(&this->impl->loadingBar) != 0)
+        if (g_SpriteRenderer->Step(&this->impl->loadingBar) != 0)
         {
             this->impl->loadingBar.spriteIndex = -1;
         }
@@ -1094,7 +1094,7 @@ void Gui::UpdateInterface()
         count = 0xa8;
         for (i = 0; i < 0xa8; i++)
         {
-            if (g_SpriteEngine->Step(&this->impl->backgroundTiles[i]) != 0)
+            if (g_SpriteRenderer->Step(&this->impl->backgroundTiles[i]) != 0)
             {
                 count--;
             }
@@ -1150,7 +1150,7 @@ void Gui::UpdateInterface()
         bonus += this->impl->stageClearCherry;
         if (g_GameManager.stage >= 7 ||
             (g_GameManager.stage == 6 && !(g_GameManager.stateFlags & 1) &&
-             (!g_GameManager.isInReplay || g_ReplayManager->data->stages[4] != NULL)))
+             (!g_GameManager.isInReplay || g_ReplaySystem->data->stages[4] != NULL)))
         {
             bonus += (int)g_GameManager.stats->lives * 2000000;
             bonus += (int)g_GameManager.stats->bombs * 400000;
@@ -1204,7 +1204,7 @@ void Gui::DrawHud()
     int idx;
     Sprite *vm;
 
-    g_SpriteEngine->FlushQuadBatch();
+    g_SpriteRenderer->FlushQuadBatch();
     g_App.viewport.X = 0;
     g_App.viewport.Y = 0;
     g_App.viewport.Width = 640;
@@ -1216,33 +1216,33 @@ void Gui::DrawHud()
         for (y = 0.0f; y < 464.0f; y += 32.0f)
         {
             vm->pos = D3DXVECTOR3(0.0f, y, 0.49f);
-            g_SpriteEngine->DrawUnrotated(vm);
+            g_SpriteRenderer->DrawUnrotated(vm);
         }
         for (xx = 416.0f; xx < 624.0f; xx += 32.0f)
         {
             for (y = 16.0f; y < 464.0f; y += 32.0f)
             {
                 vm->pos = D3DXVECTOR3(xx, y, 0.49f);
-                g_SpriteEngine->DrawUnrotated(vm);
+                g_SpriteRenderer->DrawUnrotated(vm);
             }
         }
         vm = &this->impl->sprites[13];
         for (xx = 0.0f; xx < 624.0f; xx += 128.0f)
         {
             vm->pos = D3DXVECTOR3(xx, 0.0f, 0.49f);
-            g_SpriteEngine->DrawUnrotated(vm);
+            g_SpriteRenderer->DrawUnrotated(vm);
             vm->pos = D3DXVECTOR3(xx, 464.0f, 0.49f);
-            g_SpriteEngine->DrawUnrotated(vm);
+            g_SpriteRenderer->DrawUnrotated(vm);
         }
-        g_SpriteEngine->DrawUnrotated(&this->impl->sprites[0]);
-        g_SpriteEngine->Draw(&this->impl->sprites[1]);
-        g_SpriteEngine->DrawUnrotated(&this->impl->sprites[2]);
-        g_SpriteEngine->DrawUnrotated(&this->impl->sprites[3]);
-        g_SpriteEngine->DrawUnrotated(&this->impl->sprites[4]);
-        g_SpriteEngine->DrawUnrotated(&this->impl->sprites[5]);
-        g_SpriteEngine->DrawUnrotated(&this->impl->sprites[6]);
-        g_SpriteEngine->DrawUnrotated(&this->impl->sprites[7]);
-        g_SpriteEngine->DrawUnrotated(&this->impl->sprites[8]);
+        g_SpriteRenderer->DrawUnrotated(&this->impl->sprites[0]);
+        g_SpriteRenderer->Draw(&this->impl->sprites[1]);
+        g_SpriteRenderer->DrawUnrotated(&this->impl->sprites[2]);
+        g_SpriteRenderer->DrawUnrotated(&this->impl->sprites[3]);
+        g_SpriteRenderer->DrawUnrotated(&this->impl->sprites[4]);
+        g_SpriteRenderer->DrawUnrotated(&this->impl->sprites[5]);
+        g_SpriteRenderer->DrawUnrotated(&this->impl->sprites[6]);
+        g_SpriteRenderer->DrawUnrotated(&this->impl->sprites[7]);
+        g_SpriteRenderer->DrawUnrotated(&this->impl->sprites[8]);
         this->livesChanged = 2;
         this->bombsChanged = 2;
         this->grazeChanged = 2;
@@ -1254,36 +1254,36 @@ void Gui::DrawHud()
         vm = &this->impl->sprites[13];
         xx = 496.0f;
         vm->pos = D3DXVECTOR3(xx, 48.0f, 0.49f);
-        g_SpriteEngine->DrawUnrotated(vm);
+        g_SpriteRenderer->DrawUnrotated(vm);
         vm->pos = D3DXVECTOR3(xx, 64.0f, 0.49f);
-        g_SpriteEngine->DrawUnrotated(vm);
+        g_SpriteRenderer->DrawUnrotated(vm);
         if (this->livesChanged)
         {
             vm->pos = D3DXVECTOR3(xx, 96.0f, 0.48f);
-            g_SpriteEngine->DrawUnrotated(vm);
+            g_SpriteRenderer->DrawUnrotated(vm);
         }
         if (this->bombsChanged)
         {
             vm->pos = D3DXVECTOR3(xx, 112.0f, 0.48f);
-            g_SpriteEngine->DrawUnrotated(vm);
+            g_SpriteRenderer->DrawUnrotated(vm);
         }
         if (this->powerChanged)
         {
             vm->pos = D3DXVECTOR3(xx, 144.0f, 0.48f);
-            g_SpriteEngine->DrawUnrotated(vm);
+            g_SpriteRenderer->DrawUnrotated(vm);
         }
         if (this->grazeChanged)
         {
             vm->pos = D3DXVECTOR3(xx, 160.0f, 0.48f);
-            g_SpriteEngine->DrawUnrotated(vm);
+            g_SpriteRenderer->DrawUnrotated(vm);
         }
         if (this->frameItemsHideTimer)
         {
             vm->pos = D3DXVECTOR3(xx, 176.0f, 0.48f);
-            g_SpriteEngine->DrawUnrotated(vm);
+            g_SpriteRenderer->DrawUnrotated(vm);
         }
         vm->pos = D3DXVECTOR3(512.0f, 464.0f, 0.48f);
-        g_SpriteEngine->DrawUnrotated(vm);
+        g_SpriteRenderer->DrawUnrotated(vm);
     }
     if (this->livesChanged)
     {
@@ -1291,7 +1291,7 @@ void Gui::DrawHud()
         for (idx = 0, xx = 496.0f; idx < (int)g_GameManager.stats->lives; idx++, xx += 16.0f)
         {
             vm->pos = D3DXVECTOR3(xx, 96.0f, 0.46f);
-            g_SpriteEngine->DrawUnrotated(vm);
+            g_SpriteRenderer->DrawUnrotated(vm);
         }
     }
     if (this->bombsChanged)
@@ -1300,14 +1300,14 @@ void Gui::DrawHud()
         for (idx = 0, xx = 496.0f; idx < (int)g_GameManager.stats->bombs; idx++, xx += 16.0f)
         {
             vm->pos = D3DXVECTOR3(xx, 112.0f, 0.46f);
-            g_SpriteEngine->DrawUnrotated(vm);
+            g_SpriteRenderer->DrawUnrotated(vm);
         }
     }
     vm = &this->impl->sprites[13];
     for (xx = 32.0f; xx < 368.0f; xx += 128.0f)
     {
         vm->pos = D3DXVECTOR3(xx, 464.0f, 0.49f);
-        g_SpriteEngine->DrawUnrotated(vm);
+        g_SpriteRenderer->DrawUnrotated(vm);
     }
     {
         D3DXVECTOR3 scorePos(496.0f, 64.0f, 0.0f);
@@ -1361,7 +1361,7 @@ void Gui::DrawHud()
                                   g_GameManager.stats->checksumKeyPoints);
         }
     }
-    g_SpriteEngine->FlushQuadBatch();
+    g_SpriteRenderer->FlushQuadBatch();
     if (this->powerChanged || g_App.flags.noFrameItems)
     {
         VertexDiffuseXyzrwh vertices[4];
@@ -1388,10 +1388,10 @@ void Gui::DrawHud()
             }
             g_App.d3dDevice->SetVertexShader(D3DFVF_XYZRHW | D3DFVF_DIFFUSE);
             g_App.d3dDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, vertices, sizeof(VertexDiffuseXyzrwh));
-            g_SpriteEngine->ClearVertexFormat();
-            g_SpriteEngine->ClearColorOp();
-            g_SpriteEngine->ClearBlendMode();
-            g_SpriteEngine->ClearZWrite();
+            g_SpriteRenderer->ClearVertexFormat();
+            g_SpriteRenderer->ClearColorOp();
+            g_SpriteRenderer->ClearBlendMode();
+            g_SpriteRenderer->ClearZWrite();
             if (!g_App.flags.noColorBlending)
             {
                 g_App.d3dDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
@@ -1430,7 +1430,7 @@ void Gui::DrawHud()
 // Sprite `sprite`'s entry in the sprite engine.
 inline SpriteData *GetSpriteData(int sprite)
 {
-    return &g_SpriteEngine->sprites[sprite];
+    return &g_SpriteRenderer->sprites[sprite];
 }
 
 void Gui::DrawBanners()
@@ -1459,35 +1459,35 @@ void Gui::DrawBanners()
 
     for (iVal = 0; iVal < 5; iVal++)
     {
-        g_SpriteEngine->Draw(&this->impl->trackNumberSprites[iVal]);
+        g_SpriteRenderer->Draw(&this->impl->trackNumberSprites[iVal]);
     }
     if (this->impl->bombPortrait.shown)
     {
-        g_SpriteEngine->DrawUnrotated(&this->impl->bombPortrait);
-        g_SpriteEngine->DrawUnrotated(&this->impl->bombPortraitGlow);
-        g_SpriteEngine->Draw(&this->impl->bombPortraitFrame);
+        g_SpriteRenderer->DrawUnrotated(&this->impl->bombPortrait);
+        g_SpriteRenderer->DrawUnrotated(&this->impl->bombPortraitGlow);
+        g_SpriteRenderer->Draw(&this->impl->bombPortraitFrame);
     }
     if (this->impl->spellPortrait.shown)
     {
         oldPos2 = this->impl->spellPortrait.pos;
         this->impl->spellPortrait.pos += this->impl->spellPortrait.posOffset;
-        g_SpriteEngine->DrawUnrotated(&this->impl->spellPortrait);
+        g_SpriteRenderer->DrawUnrotated(&this->impl->spellPortrait);
         this->impl->spellPortrait.pos = oldPos2;
-        g_SpriteEngine->DrawUnrotated(&this->impl->spellPortraitGlow);
-        g_SpriteEngine->Draw(&this->impl->spellPortraitFrame);
+        g_SpriteRenderer->DrawUnrotated(&this->impl->spellPortraitGlow);
+        g_SpriteRenderer->Draw(&this->impl->spellPortraitFrame);
     }
     if (this->impl->bombName.shown)
     {
         this->impl->bombNameBar.pos = this->impl->bombName.pos;
-        g_SpriteEngine->DrawUnrotated(&this->impl->bombNameBar);
-        g_SpriteEngine->Draw(&this->impl->bombName);
+        g_SpriteRenderer->DrawUnrotated(&this->impl->bombNameBar);
+        g_SpriteRenderer->Draw(&this->impl->bombName);
     }
     if (this->impl->spellName.shown)
     {
         this->impl->spellNameBar.pos = this->impl->spellName.pos;
-        g_SpriteEngine->DrawUnrotated(&this->impl->spellNameBar);
-        g_SpriteEngine->Draw(&this->impl->spellName);
-        g_SpriteEngine->DrawUnrotated(&this->impl->spellScoreBar);
+        g_SpriteRenderer->DrawUnrotated(&this->impl->spellNameBar);
+        g_SpriteRenderer->Draw(&this->impl->spellName);
+        g_SpriteRenderer->DrawUnrotated(&this->impl->spellScoreBar);
         score = g_EnemyManager.spellCardBonus + g_EnemyManager.spellCardGrazeBonus;
         div2 = 10000000;
         shown = 0;
@@ -1508,7 +1508,7 @@ void Gui::DrawBanners()
             if (shown || div2 == 1)
             {
                 this->impl->spellScoreDigit.spriteData = GetSpriteData(digit + 0x84);
-                g_SpriteEngine->DrawUnrotated(&this->impl->spellScoreDigit);
+                g_SpriteRenderer->DrawUnrotated(&this->impl->spellScoreDigit);
             }
             this->impl->spellScoreDigit.pos.x += 7.0f;
             score %= div2;
@@ -1523,11 +1523,11 @@ void Gui::DrawBanners()
         if (digit / 10 != 0)
         {
             this->impl->spellScoreDigit.spriteData = GetSpriteData(digit / 10 + 0x84);
-            g_SpriteEngine->DrawUnrotated(&this->impl->spellScoreDigit);
+            g_SpriteRenderer->DrawUnrotated(&this->impl->spellScoreDigit);
         }
         this->impl->spellScoreDigit.pos.x += 7.0f;
         this->impl->spellScoreDigit.spriteData = GetSpriteData(digit % 10 + 0x84);
-        g_SpriteEngine->DrawUnrotated(&this->impl->spellScoreDigit);
+        g_SpriteRenderer->DrawUnrotated(&this->impl->spellScoreDigit);
         digit = catks->attempts[g_GameManager.shotIndex];
         if (digit > 99)
         {
@@ -1537,28 +1537,28 @@ void Gui::DrawBanners()
         if (digit / 10 != 0)
         {
             this->impl->spellScoreDigit.spriteData = GetSpriteData(digit / 10 + 0x84);
-            g_SpriteEngine->DrawUnrotated(&this->impl->spellScoreDigit);
+            g_SpriteRenderer->DrawUnrotated(&this->impl->spellScoreDigit);
         }
         this->impl->spellScoreDigit.pos.x += 7.0f;
         this->impl->spellScoreDigit.spriteData = GetSpriteData(digit % 10 + 0x84);
-        g_SpriteEngine->DrawUnrotated(&this->impl->spellScoreDigit);
+        g_SpriteRenderer->DrawUnrotated(&this->impl->spellScoreDigit);
     }
     if (this->impl->loadingIcon.spriteIndex >= 0)
     {
-        g_SpriteEngine->DrawUnrotated(&this->impl->loadingIcon);
-        g_SpriteEngine->DrawUnrotated(&this->impl->loadingBar);
+        g_SpriteRenderer->DrawUnrotated(&this->impl->loadingIcon);
+        g_SpriteRenderer->DrawUnrotated(&this->impl->loadingBar);
         if (this->impl->loadingCaption.spriteIndex >= 0)
         {
             this->impl->loadingCaption.pos = D3DXVECTOR3(304.0f, 448.0f, 0.0f);
-            g_SpriteEngine->DrawUnrotated(&this->impl->loadingCaption);
+            g_SpriteRenderer->DrawUnrotated(&this->impl->loadingCaption);
         }
     }
     if (this->impl->backgroundTileCount != 0)
     {
         for (iVal = 0; iVal < 0xa8; iVal++)
         {
-            g_SpriteEngine->DrawProjected3D(&this->impl->backgroundTiles[iVal]);
-            g_SpriteEngine->ClearSpriteData();
+            g_SpriteRenderer->DrawProjected3D(&this->impl->backgroundTiles[iVal]);
+            g_SpriteRenderer->ClearSpriteData();
         }
     }
     if (this->impl->msg.scriptIndex < 0 && this->bossPresent + this->impl->bossBarState > 0)
@@ -1596,7 +1596,7 @@ void Gui::DrawBanners()
             dark = this->bossBarAlpha << 24 | (this->sectionColors[index2] >> 2 & 0x3f3f3f);
             DrawGradientRect(r2, colorA2, colorA2, dark, dark);
         }
-        g_SpriteEngine->DrawUnrotated(&this->impl->sprites[11]);
+        g_SpriteRenderer->DrawUnrotated(&this->impl->sprites[11]);
         r2[0] = 33.0f;
         r2[1] = 19.0f;
         r2[2] = r2[0] + 3.0f;
@@ -1647,20 +1647,20 @@ int Gui::AddedCallback(Gui *gui)
 
 int Gui::DeletedCallback(Gui *gui)
 {
-    g_SpriteEngine->ReleaseAnm(0x18);
-    g_SpriteEngine->ReleaseAnm(0x1c);
-    g_SpriteEngine->ReleaseAnm(0x1d);
-    g_SpriteEngine->ReleaseAnm(0x1e);
-    g_SpriteEngine->ReleaseAnm(0x1f);
+    g_SpriteRenderer->ReleaseAnm(0x18);
+    g_SpriteRenderer->ReleaseAnm(0x1c);
+    g_SpriteRenderer->ReleaseAnm(0x1d);
+    g_SpriteRenderer->ReleaseAnm(0x1e);
+    g_SpriteRenderer->ReleaseAnm(0x1f);
     gui->FreeMsgFile();
     if ((g_App.scene != 3 && g_App.scene != 0xb && g_App.scene != 0xc) != 0)
     {
-        g_SpriteEngine->ReleaseAnm(0x15);
-        g_SpriteEngine->ReleaseAnm(0x17);
-        g_SpriteEngine->ReleaseAnm(0x19);
-        g_SpriteEngine->ReleaseAnm(0x1a);
-        g_SpriteEngine->ReleaseAnm(0x1b);
-        g_SpriteEngine->ReleaseAnm(0x16);
+        g_SpriteRenderer->ReleaseAnm(0x15);
+        g_SpriteRenderer->ReleaseAnm(0x17);
+        g_SpriteRenderer->ReleaseAnm(0x19);
+        g_SpriteRenderer->ReleaseAnm(0x1a);
+        g_SpriteRenderer->ReleaseAnm(0x1b);
+        g_SpriteRenderer->ReleaseAnm(0x16);
         delete gui->impl;
         gui->impl = NULL;
     }

@@ -361,7 +361,7 @@ void UpdateLaserEdgeBullets(Enemy *enemy, EnemyScriptInstr *instr)
                         ((Vector2 *)&blt->velocity)->SetPolar(blt->angle, g_App.gameSpeed * blt->speed);
                         blt->scriptFuncState = 10;
                         blt->sprites = g_BulletManager.typeSprites[5];
-                        g_SpriteEngine->SetSprite(&blt->sprites.sprite0, blt->sprites.sprite0.spriteIndex + blt->color);
+                        g_SpriteRenderer->SetSprite(&blt->sprites.sprite0, blt->sprites.sprite0.spriteIndex + blt->color);
                     }
                 }
             }
@@ -433,7 +433,7 @@ void DeflectBulletsOffLasers(Enemy *enemy, EnemyScriptInstr *instr)
                         blt->velocity.y = -ny;
                     }
                     blt->sprites = g_BulletManager.typeSprites[5];
-                    g_SpriteEngine->SetSprite(&blt->sprites.sprite0, blt->sprites.sprite0.spriteIndex + blt->color);
+                    g_SpriteRenderer->SetSprite(&blt->sprites.sprite0, blt->sprites.sprite0.spriteIndex + blt->color);
                     blt->angle = atan2f(blt->velocity.y, blt->velocity.x);
                     ((Vector2 *)&blt->velocity)->SetPolar(blt->angle, blt->speed);
                     if (g_GameManager.difficulty < 2)
@@ -475,7 +475,7 @@ void StartSlowdown(Enemy *enemy, EnemyScriptInstr *instr)
         bullet->sprites.sprite0.baseSpriteIndex = bullet->sprites.sprite0.spriteIndex;
         if (bullet->sprites.sprite0.spriteIndex >= 0x260 && bullet->sprites.sprite0.spriteIndex <= 0x26f)
         {
-            g_SpriteEngine->SetSprite(&bullet->sprites.sprite0, 0x26f);
+            g_SpriteRenderer->SetSprite(&bullet->sprites.sprite0, 0x26f);
         }
     }
 }
@@ -495,7 +495,7 @@ void EndSlowdown(Enemy *enemy, EnemyScriptInstr *instr)
         bullet->velocity *= scale;
         if (bullet->sprites.sprite0.spriteIndex >= 0x260 && bullet->sprites.sprite0.spriteIndex <= 0x26f)
         {
-            g_SpriteEngine->SetSprite(&bullet->sprites.sprite0, bullet->sprites.sprite0.baseSpriteIndex);
+            g_SpriteRenderer->SetSprite(&bullet->sprites.sprite0, bullet->sprites.sprite0.baseSpriteIndex);
         }
     }
     g_App.gameSpeed = 1.0f / instr->args[1].i;

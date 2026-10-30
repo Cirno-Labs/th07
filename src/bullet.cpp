@@ -110,15 +110,15 @@ void ShowSpawnSprite(Sprite *dst, Sprite *src, Bullet *bullet, int color)
     {
         if (bullet->sprites.sprite0.spriteData->height <= 16.0f)
         {
-            g_SpriteEngine->SetSprite(dst, src->spriteIndex + g_BulletColorOffsets16[color]);
+            g_SpriteRenderer->SetSprite(dst, src->spriteIndex + g_BulletColorOffsets16[color]);
         }
         else if (bullet->sprites.sprite0.spriteData->height <= 32.0f)
         {
-            g_SpriteEngine->SetSprite(dst, src->spriteIndex + g_BulletColorOffsets32[color]);
+            g_SpriteRenderer->SetSprite(dst, src->spriteIndex + g_BulletColorOffsets32[color]);
         }
         else
         {
-            g_SpriteEngine->SetSprite(dst, src->spriteIndex + color);
+            g_SpriteRenderer->SetSprite(dst, src->spriteIndex + color);
         }
     }
 }
@@ -229,21 +229,21 @@ int BulletManager::SpawnBullet(BulletShooter *shooter, int col, int row, float a
     cur->boundsCheckDelay = 0;
     if (cur->sprites.sprite0.spriteIndex != shooter->typeSprites->sprite0.spriteIndex + shooter->color)
     {
-        g_SpriteEngine->SetSprite(&cur->sprites.sprite0, shooter->typeSprites->sprite0.spriteIndex + shooter->color);
+        g_SpriteRenderer->SetSprite(&cur->sprites.sprite0, shooter->typeSprites->sprite0.spriteIndex + shooter->color);
     }
     if (cur->sprites.sprite4.spriteIndex != shooter->typeSprites->sprite4.spriteIndex + shooter->color)
     {
         if (cur->sprites.sprite0.spriteData->height <= 16.0f)
         {
-            g_SpriteEngine->SetSprite(&cur->sprites.sprite4, shooter->typeSprites->sprite4.spriteIndex + g_BulletColorOffsets16[shooter->color]);
+            g_SpriteRenderer->SetSprite(&cur->sprites.sprite4, shooter->typeSprites->sprite4.spriteIndex + g_BulletColorOffsets16[shooter->color]);
         }
         else if (cur->sprites.sprite0.spriteData->height <= 32.0f)
         {
-            g_SpriteEngine->SetSprite(&cur->sprites.sprite4, shooter->typeSprites->sprite4.spriteIndex + g_BulletColorOffsets32[shooter->color]);
+            g_SpriteRenderer->SetSprite(&cur->sprites.sprite4, shooter->typeSprites->sprite4.spriteIndex + g_BulletColorOffsets32[shooter->color]);
         }
         else
         {
-            g_SpriteEngine->SetSprite(&cur->sprites.sprite4, shooter->typeSprites->sprite4.spriteIndex + shooter->color);
+            g_SpriteRenderer->SetSprite(&cur->sprites.sprite4, shooter->typeSprites->sprite4.spriteIndex + shooter->color);
         }
     }
     bulletFlags = shooter->flags;
@@ -591,9 +591,9 @@ Laser *BulletManager::SpawnLaser(BulletShooter *shooter)
         {
             continue;
         }
-        g_SpriteEngine->StartScript(&laser->sprite0, shooter->sprite + 0x20a);
-        g_SpriteEngine->SetSprite(&laser->sprite0, laser->sprite0.spriteIndex + shooter->color);
-        g_SpriteEngine->InitSprite(&laser->sprite1, g_BulletColorOffsets16[shooter->color] + 0x292);
+        g_SpriteRenderer->StartScript(&laser->sprite0, shooter->sprite + 0x20a);
+        g_SpriteRenderer->SetSprite(&laser->sprite0, laser->sprite0.spriteIndex + shooter->color);
+        g_SpriteRenderer->InitSprite(&laser->sprite1, g_BulletColorOffsets16[shooter->color] + 0x292);
         laser->sprite1.flags |= 0x10;
         laser->pos = shooter->pos;
         laser->color = shooter->color;
@@ -923,13 +923,13 @@ int BulletManager::OnUpdate(BulletManager *mgr)
             }
             if (bullet->sprites.sprite0.scriptPos != NULL)
             {
-                g_SpriteEngine->Step(&bullet->sprites.sprite0);
+                g_SpriteRenderer->Step(&bullet->sprites.sprite0);
             }
             break;
         case 2:
             bullet->grazeDelayTimer.Sub(1);
             bullet->pos += bullet->velocity / 2.0f;
-            if (g_SpriteEngine->Step(&bullet->sprites.sprite1) == 0)
+            if (g_SpriteRenderer->Step(&bullet->sprites.sprite1) == 0)
             {
                 break;
             }
@@ -937,7 +937,7 @@ int BulletManager::OnUpdate(BulletManager *mgr)
         case 3:
             bullet->grazeDelayTimer.Sub(1);
             bullet->pos += bullet->velocity / 2.5f;
-            if (g_SpriteEngine->Step(&bullet->sprites.sprite2) == 0)
+            if (g_SpriteRenderer->Step(&bullet->sprites.sprite2) == 0)
             {
                 break;
             }
@@ -945,14 +945,14 @@ int BulletManager::OnUpdate(BulletManager *mgr)
         case 4:
             bullet->grazeDelayTimer.Sub(1);
             bullet->pos += bullet->velocity / 3.0f;
-            if (g_SpriteEngine->Step(&bullet->sprites.sprite3) == 0)
+            if (g_SpriteRenderer->Step(&bullet->sprites.sprite3) == 0)
             {
                 break;
             }
             goto spawned;
         case 5:
             bullet->pos += bullet->velocity / 2.0f;
-            if (g_SpriteEngine->Step(&bullet->sprites.sprite4) != 0)
+            if (g_SpriteRenderer->Step(&bullet->sprites.sprite4) != 0)
             {
                 bullet->FreeBullet();
                 goto next;
@@ -1077,7 +1077,7 @@ int BulletManager::OnUpdate(BulletManager *mgr)
             las->active = 0;
         }
         las->timer.Tick();
-        g_SpriteEngine->Step(&las->sprite0);
+        g_SpriteRenderer->Step(&las->sprite0);
     }
     if (mgr->clearAllFrames != 0)
     {
@@ -1117,7 +1117,7 @@ void DrawBullet(Bullet *bullet)
     {
         sprite->SetRotationZ(AddNormalizeAngle(1.5707964f + bullet->angle, 0.0f));
     }
-    g_SpriteEngine->Draw(sprite);
+    g_SpriteRenderer->Draw(sprite);
 }
 
 int BulletManager::OnDraw(BulletManager *mgr)
@@ -1144,7 +1144,7 @@ int BulletManager::OnDraw(BulletManager *mgr)
         laser->color = laser->color & 0xff000000 | 0xffffff;
         laser->sprite0.pos.x = g_GameManager.arena[0] + laser->sprite0.pos.x;
         laser->sprite0.pos.y = g_GameManager.arena[1] + laser->sprite0.pos.y;
-        g_SpriteEngine->Draw(&laser->sprite0);
+        g_SpriteRenderer->Draw(&laser->sprite0);
         if ((laser->startOffset < 16.0f || laser->speed == 0.0f) && (laser->drawDelayFlag == 0 || laser->state != 0))
         {
             laser->sprite1.pos.x = ca * laser->startOffset + laser->pos.x;
@@ -1162,7 +1162,7 @@ int BulletManager::OnDraw(BulletManager *mgr)
             }
             laser->sprite1.pos.x = g_GameManager.arena[0] + laser->sprite1.pos.x;
             laser->sprite1.pos.y = g_GameManager.arena[1] + laser->sprite1.pos.y;
-            g_SpriteEngine->Draw(&laser->sprite1);
+            g_SpriteRenderer->Draw(&laser->sprite1);
         }
     }
     g_ItemManager.DrawItems();
@@ -1184,18 +1184,18 @@ int BulletManager::AddedCallback(BulletManager *mgr)
 
     if ((g_App.scene != 3 && g_App.scene != 0xb && g_App.scene != 0xc) != 0)
     {
-        if (g_SpriteEngine->LoadAnm(0xb, "data/etama.anm", 0x200) != 0)
+        if (g_SpriteRenderer->LoadAnm(0xb, "data/etama.anm", 0x200) != 0)
         {
             return -1;
         }
     }
     for (i = 0; i < ARRAY_SIZE(g_BulletTypeScripts); i++)
     {
-        g_SpriteEngine->StartScript(&mgr->typeSprites[i].sprite0, g_BulletTypeScripts[i][0]);
-        g_SpriteEngine->StartScript(&mgr->typeSprites[i].sprite1, g_BulletTypeScripts[i][1]);
-        g_SpriteEngine->StartScript(&mgr->typeSprites[i].sprite2, g_BulletTypeScripts[i][2]);
-        g_SpriteEngine->StartScript(&mgr->typeSprites[i].sprite3, g_BulletTypeScripts[i][3]);
-        g_SpriteEngine->StartScript(&mgr->typeSprites[i].sprite4, g_BulletTypeScripts[i][4]);
+        g_SpriteRenderer->StartScript(&mgr->typeSprites[i].sprite0, g_BulletTypeScripts[i][0]);
+        g_SpriteRenderer->StartScript(&mgr->typeSprites[i].sprite1, g_BulletTypeScripts[i][1]);
+        g_SpriteRenderer->StartScript(&mgr->typeSprites[i].sprite2, g_BulletTypeScripts[i][2]);
+        g_SpriteRenderer->StartScript(&mgr->typeSprites[i].sprite3, g_BulletTypeScripts[i][3]);
+        g_SpriteRenderer->StartScript(&mgr->typeSprites[i].sprite4, g_BulletTypeScripts[i][4]);
         mgr->typeSprites[i].sprite0.flags |= 0x1000;
         mgr->typeSprites[i].sprite1.flags |= 0x1000;
         mgr->typeSprites[i].sprite2.flags |= 0x1000;
@@ -1270,10 +1270,10 @@ int BulletManager::DeletedCallback(BulletManager *mgr)
 {
     if ((g_App.scene != 3 && g_App.scene != 0xb && g_App.scene != 0xc) != 0)
     {
-        g_SpriteEngine->ReleaseAnm(0xb);
-        g_SpriteEngine->ReleaseAnm(0xc);
-        g_SpriteEngine->ReleaseAnm(0xd);
-        g_SpriteEngine->ReleaseAnm(0xe);
+        g_SpriteRenderer->ReleaseAnm(0xb);
+        g_SpriteRenderer->ReleaseAnm(0xc);
+        g_SpriteRenderer->ReleaseAnm(0xd);
+        g_SpriteRenderer->ReleaseAnm(0xe);
     }
     return 0;
 }
@@ -1324,7 +1324,7 @@ void BulletManager::StopAllBullets()
         bullet->accelSpeed = 0.0f;
         bullet->speed = 0.0f;
         bullet->color = 0;
-        g_SpriteEngine->SetSprite(&bullet->sprites.sprite0, bullet->sprites.sprite0.baseSpriteIndex + bullet->color);
+        g_SpriteRenderer->SetSprite(&bullet->sprites.sprite0, bullet->sprites.sprite0.baseSpriteIndex + bullet->color);
     }
 }
 

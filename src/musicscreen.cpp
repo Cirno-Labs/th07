@@ -110,7 +110,7 @@ int MusicScreen::UpdateList()
             if (str[0] != '\0')
             {
                 this->comment[i].flags |= 2;
-                g_SpriteEngine->RenderText(&this->comment[i], 0xffe0c0, 0x300000, str);
+                g_SpriteRenderer->RenderText(&this->comment[i], 0xffe0c0, 0x300000, str);
             }
             else
             {
@@ -157,14 +157,14 @@ again:
     {
         screen->stateFrames++;
     }
-    g_SpriteEngine->Step(&screen->bgSprite[0]);
+    g_SpriteRenderer->Step(&screen->bgSprite[0]);
     for (i = 0; i < 0x1f; i++)
     {
-        g_SpriteEngine->Step(&screen->titles[i]);
+        g_SpriteRenderer->Step(&screen->titles[i]);
     }
     for (i = 0; i < 8; i++)
     {
-        g_SpriteEngine->Step(&screen->comment[i]);
+        g_SpriteRenderer->Step(&screen->comment[i]);
     }
     return 1;
 }
@@ -175,9 +175,9 @@ int MusicScreen::OnDraw(MusicScreen *screen)
     D3DXVECTOR3 pos;
     int i;
 
-    g_SpriteEngine->ClearTexture();
-    g_SpriteEngine->CopySurfaceToBackBuffer(0, 0, 0, 0, 0);
-    g_SpriteEngine->DrawUnrotated(&screen->bgSprite[0]);
+    g_SpriteRenderer->ClearTexture();
+    g_SpriteRenderer->CopySurfaceToBackBuffer(0, 0, 0, 0, 0);
+    g_SpriteRenderer->DrawUnrotated(&screen->bgSprite[0]);
     for (i = screen->listTop; i < screen->listTop + 10; i++)
     {
         if (i >= screen->tuneCount)
@@ -188,7 +188,7 @@ int MusicScreen::OnDraw(MusicScreen *screen)
         screen->titles[i].pos.x = 93.0f;
         screen->titles[i].pos.y = 104.0f + (i + 1 - screen->listTop) * 18 - 20.0f;
         screen->titles[i].pos.z = 0.0f;
-        g_SpriteEngine->DrawUnrotated(&screen->titles[i]);
+        g_SpriteRenderer->DrawUnrotated(&screen->titles[i]);
         // The number left of the title, and the arrow left of that.
         pos = screen->titles[i].pos;
         pos.x -= 60.0f;
@@ -203,7 +203,7 @@ int MusicScreen::OnDraw(MusicScreen *screen)
     i++;
     for (i = 0; i < 8; i++)
     {
-        g_SpriteEngine->DrawUnrotated(&screen->comment[i]);
+        g_SpriteRenderer->DrawUnrotated(&screen->comment[i]);
     }
     g_AsciiText.color = 0xffffffff;
     return 1;
@@ -220,15 +220,15 @@ int MusicScreen::AddedCallback(MusicScreen *screen)
     char *data;
     char str[0x42];
 
-    if (g_SpriteEngine->LoadSurface(0, "data/result/music.jpg") != 0)
+    if (g_SpriteRenderer->LoadSurface(0, "data/result/music.jpg") != 0)
     {
         return -1;
     }
-    if (g_SpriteEngine->LoadAnm(0x2e, "data/music00.anm", 0x900) != 0)
+    if (g_SpriteRenderer->LoadAnm(0x2e, "data/music00.anm", 0x900) != 0)
     {
         return -1;
     }
-    g_SpriteEngine->StartScript(&screen->bgSprite[0], 0x900);
+    g_SpriteRenderer->StartScript(&screen->bgSprite[0], 0x900);
     screen->stateFrames = 0;
     data = rp = (char *)LoadFileData("data/musiccmt.txt", 0);
     if (rp == NULL)
@@ -237,7 +237,7 @@ int MusicScreen::AddedCallback(MusicScreen *screen)
     }
     screen->tunes = new MusicTune[0x20];
     i = -1;
-    while ((DWORD)(rp - data) < (DWORD)g_FileSize)
+    while ((DWORD)(rp - data) < (DWORD)g_LastFileSize)
     {
         if (*rp == '@')
         {
@@ -249,7 +249,7 @@ int MusicScreen::AddedCallback(MusicScreen *screen)
                 screen->tunes[i].path[k] = *rp;
                 rp++;
                 k++;
-                if ((DWORD)(rp - data) >= (DWORD)g_FileSize)
+                if ((DWORD)(rp - data) >= (DWORD)g_LastFileSize)
                 {
                     goto done;
                 }
@@ -257,7 +257,7 @@ int MusicScreen::AddedCallback(MusicScreen *screen)
             while (*rp == '\n' || *rp == '\r')
             {
                 rp++;
-                if ((DWORD)(rp - data) >= (DWORD)g_FileSize)
+                if ((DWORD)(rp - data) >= (DWORD)g_LastFileSize)
                 {
                     goto done;
                 }
@@ -268,7 +268,7 @@ int MusicScreen::AddedCallback(MusicScreen *screen)
                 screen->tunes[i].title[k] = *rp;
                 rp++;
                 k++;
-                if ((DWORD)(rp - data) >= (DWORD)g_FileSize)
+                if ((DWORD)(rp - data) >= (DWORD)g_LastFileSize)
                 {
                     goto done;
                 }
@@ -278,7 +278,7 @@ int MusicScreen::AddedCallback(MusicScreen *screen)
             while (*rp == '\n' && *rp == '\r')
             {
                 rp++;
-                if ((DWORD)(rp - data) >= (DWORD)g_FileSize)
+                if ((DWORD)(rp - data) >= (DWORD)g_LastFileSize)
                 {
                     goto done;
                 }
@@ -296,7 +296,7 @@ int MusicScreen::AddedCallback(MusicScreen *screen)
                     screen->tunes[i].comment[row][k] = *rp;
                     rp++;
                     k++;
-                    if ((DWORD)(rp - data) >= (DWORD)g_FileSize)
+                    if ((DWORD)(rp - data) >= (DWORD)g_LastFileSize)
                     {
                         goto done;
                     }
@@ -304,7 +304,7 @@ int MusicScreen::AddedCallback(MusicScreen *screen)
                 while (*rp == '\n' || *rp == '\r')
                 {
                     rp++;
-                    if ((DWORD)(rp - data) >= (DWORD)g_FileSize)
+                    if ((DWORD)(rp - data) >= (DWORD)g_LastFileSize)
                     {
                         goto done;
                     }
@@ -321,8 +321,8 @@ done:
     screen->tuneCount = i + 1;
     for (i = 0; i < screen->tuneCount; i++)
     {
-        g_SpriteEngine->StartScript(&screen->titles[i], i + 0x901);
-        g_SpriteEngine->RenderText(&screen->titles[i], 0xc0e0ff, 0x302080, screen->tunes[i].title);
+        g_SpriteRenderer->StartScript(&screen->titles[i], i + 0x901);
+        g_SpriteRenderer->RenderText(&screen->titles[i], 0xc0e0ff, 0x302080, screen->tunes[i].title);
         screen->titles[i].pos.x = 93.0f;
         screen->titles[i].pos.y = 104.0f + (i + 1) * 18 - 20.0f;
         screen->titles[i].pos.z = 0.0f;
@@ -331,13 +331,13 @@ done:
     // The comment of the tune playing, as UpdateList shows it.
     for (i = 0; i < 8; i++)
     {
-        g_SpriteEngine->StartScript(&screen->comment[i], i + 0x707);
+        g_SpriteRenderer->StartScript(&screen->comment[i], i + 0x707);
         memset(str, 0, sizeof(str));
         memcpy(str, screen->tunes[screen->playing].comment[i], 0x40);
         if (str[0] != '\0')
         {
             screen->comment[i].flags |= 2;
-            g_SpriteEngine->RenderText(&screen->comment[i], 0xffe0c0, 0x300000, str);
+            g_SpriteRenderer->RenderText(&screen->comment[i], 0xffe0c0, 0x300000, str);
         }
         else
         {
@@ -352,9 +352,9 @@ int MusicScreen::DeletedCallback(MusicScreen *screen)
 {
     delete screen->tunes;
     screen->tunes = NULL;
-    g_SpriteEngine->ReleaseSurface(0);
-    g_SpriteEngine->ReleaseAnm(0x2e);
-    g_SpriteEngine->ReleaseAnm(0x2f);
+    g_SpriteRenderer->ReleaseSurface(0);
+    g_SpriteRenderer->ReleaseAnm(0x2e);
+    g_SpriteRenderer->ReleaseAnm(0x2f);
     g_Chain.Remove(screen->drawChain);
     screen->drawChain = NULL;
     return 0;

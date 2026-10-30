@@ -157,7 +157,7 @@ int GameManager::OnUpdate(GameManager *mgr)
     g_App.viewport.Height = mgr->arena[3];
     g_App.viewport.MinZ = 0.0f;
     g_App.viewport.MaxZ = 1.0f;
-    g_SpriteEngine->ClearLastCameraSetupFlag();
+    g_SpriteRenderer->ClearLastCameraSetupFlag();
     if ((g_GameManager.stateFlags >> 3) & 1 && g_GameManager.replayMenuChoice == 1 && !g_Gui.IsMsgRunning())
     {
         mgr->slowdownCounter++;
@@ -324,12 +324,12 @@ void DrawLoadingScreen()
     rect[1] = 0.0f;
     rect[2] = 640.0f;
     rect[3] = 480.0f;
-    g_SpriteEngine->InitSprite(&sprite, 0x10c);
+    g_SpriteRenderer->InitSprite(&sprite, 0x10c);
     sprite.pos = D3DXVECTOR3(528.0f, 448.0f, 0.0f);
     g_App.d3dDevice->BeginScene();
     DrawColorRect(rect, 0xa0000000);
-    g_SpriteEngine->DrawUnrotated(&sprite);
-    g_SpriteEngine->FlushQuadBatch();
+    g_SpriteRenderer->DrawUnrotated(&sprite);
+    g_SpriteRenderer->FlushQuadBatch();
     g_App.d3dDevice->EndScene();
     if (FAILED(g_App.d3dDevice->Present(NULL, NULL, NULL, NULL)))
     {
@@ -337,8 +337,8 @@ void DrawLoadingScreen()
     }
     g_App.d3dDevice->BeginScene();
     DrawColorRect(rect, 0xa0000000);
-    g_SpriteEngine->DrawUnrotated(&sprite);
-    g_SpriteEngine->FlushQuadBatch();
+    g_SpriteRenderer->DrawUnrotated(&sprite);
+    g_SpriteRenderer->FlushQuadBatch();
     g_App.d3dDevice->EndScene();
     if (FAILED(g_App.d3dDevice->Present(NULL, NULL, NULL, NULL)))
     {

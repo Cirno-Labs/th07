@@ -18,7 +18,7 @@ loop:
     }
     for (i = 0; i < 0xf; i++)
     {
-        g_SpriteEngine->Step(&ending->sprites[i]);
+        g_SpriteRenderer->Step(&ending->sprites[i]);
     }
     if (ending->canSkip != 0 && (g_Buttons & 0x100) != 0 && extra < 4)
     {
@@ -32,10 +32,10 @@ int Ending::OnDraw(Ending *ending)
 {
     int i;
 
-    g_SpriteEngine->CopySurfaceRectToBackBuffer(0, 0, 0, ending->scrollX, ending->scrollY, 640, 480);
+    g_SpriteRenderer->CopySurfaceRectToBackBuffer(0, 0, 0, ending->scrollX, ending->scrollY, 640, 480);
     for (i = 0; i < 0xf; i++)
     {
-        g_SpriteEngine->Draw(&ending->sprites[i]);
+        g_SpriteRenderer->Draw(&ending->sprites[i]);
     }
     ending->DrawFade();
     return 1;
@@ -193,7 +193,7 @@ int Ending::RunScript()
             switch (*this->cursor)
             {
             case 'b':
-                if (g_SpriteEngine->LoadSurface(0, this->cursor + 1) != 0)
+                if (g_SpriteRenderer->LoadSurface(0, this->cursor + 1) != 0)
                 {
                     return -1;
                 }
@@ -203,8 +203,8 @@ int Ending::RunScript()
                 a2 = this->ReadInt();
                 sprite2 = this->ReadInt();
                 spr2 = this->ReadInt();
-                g_SpriteEngine->StartScriptAtOrigin(&this->sprites[a2], sprite2 + 0x600);
-                g_SpriteEngine->SetSprite(&this->sprites[a2], spr2 + 0x600);
+                g_SpriteRenderer->StartScriptAtOrigin(&this->sprites[a2], sprite2 + 0x600);
+                g_SpriteRenderer->SetSprite(&this->sprites[a2], spr2 + 0x600);
                 break;
             case 'V':
                 this->cursor++;
@@ -305,7 +305,7 @@ int Ending::RunScript()
         case '\r':
             if (lineLen3 != 0)
             {
-                g_SpriteEngine->RenderText(&this->sprites[this->line], this->textColor, 0xffffffff, text3);
+                g_SpriteRenderer->RenderText(&this->sprites[this->line], this->textColor, 0xffffffff, text3);
                 this->sprites[this->line].SetPendingInterrupt(1);
             }
             while (*this->cursor == '\n' || *this->cursor == '\0' || *this->cursor == '\r')
@@ -375,11 +375,11 @@ int Ending::AddedCallback(Ending *ending)
 
     g_GameManager.stateFlags |= 0x10;
     g_App.hideFps = 1;
-    g_SpriteEngine->LoadAnm(0x31, "data/staff01.anm", 0x600);
-    g_SpriteEngine->ClearTexture();
-    g_SpriteEngine->ClearSpriteData();
-    g_SpriteEngine->ClearBlendMode();
-    g_SpriteEngine->ClearVertexFormat();
+    g_SpriteRenderer->LoadAnm(0x31, "data/staff01.anm", 0x600);
+    g_SpriteRenderer->ClearTexture();
+    g_SpriteRenderer->ClearSpriteData();
+    g_SpriteRenderer->ClearBlendMode();
+    g_SpriteRenderer->ClearVertexFormat();
     si = g_GameManager.shotIndex;
     ending->canSkip = 0;
     if (g_GameManager.stats->continuesUsed == 0)
@@ -397,7 +397,7 @@ int Ending::AddedCallback(Ending *ending)
     g_GameManager.clrds[si].stagesCleared[g_GameManager.difficulty] = 'c';
     for (j = 0; j < 0xf; j++)
     {
-        g_SpriteEngine->StartScriptAtOrigin(&ending->sprites[j], j + 0x70f);
+        g_SpriteRenderer->StartScriptAtOrigin(&ending->sprites[j], j + 0x70f);
         ending->sprites[j].pos = D3DXVECTOR3(64.0f, (float)j * 16.0f + 392.0f, 0.0f);
     }
 #ifdef TH07_EXE
@@ -432,9 +432,9 @@ int Ending::AddedCallback(Ending *ending)
 
 int Ending::DeletedCallback(Ending *ending)
 {
-    g_SpriteEngine->ReleaseAnm(0x31);
+    g_SpriteRenderer->ReleaseAnm(0x31);
     g_App.scene = 6;
-    g_SpriteEngine->ReleaseSurface(0);
+    g_SpriteRenderer->ReleaseSurface(0);
     MemFree(ending->file);
     g_Chain.Remove(ending->drawChain);
     ending->drawChain = NULL;

@@ -327,7 +327,7 @@ void DebugPrint2(const char *fmt, ...);
 // disk rather than from the archives.
 void *LoadFileData(char *path, int isExternal);
 // The size of the file LoadFileData loaded last.
-extern int g_FileSize;
+extern int g_LastFileSize;
 
 // The object error messages go to, e.g. "error : MIDI File が読み込めない".
 // Larger than th06's: the text buffer holds 0x2000 bytes, not 0x800.
@@ -407,22 +407,22 @@ void DrawLoadingScreen();
 
 // The buttons held this frame and the frame before, as bits.
 extern WORD g_Buttons;
-extern WORD g_PrevButtons;
+extern WORD g_LastButtons;
 // The buttons the game plays by this frame: g_Buttons, or a replay's.
-extern WORD g_GameButtons;
-// g_GameButtons the frame before.
-extern WORD g_PrevGameButtons;
+extern WORD g_GameInputs;
+// g_GameInputs the frame before.
+extern WORD g_PreviousGameInputs;
 // 1 on every 8th frame once the buttons have been held unchanged for 30
 // frames, for key repeat.
-extern WORD g_ButtonRepeat;
+extern WORD g_RepeatButtons;
 // How many frames the buttons have been held unchanged, cycling from 38
 // back to 30.
-extern WORD g_ButtonFrames;
+extern WORD g_ButtonHeldFrames;
 
 // Whether a button in `mask` went down this frame.
-#define WAS_PRESSED(mask) ((g_Buttons & (mask)) && (g_Buttons & (mask)) != (g_PrevButtons & (mask)))
+#define WAS_PRESSED(mask) ((g_Buttons & (mask)) && (g_Buttons & (mask)) != (g_LastButtons & (mask)))
 // Also while they are held, once the repeat delay has passed.
-#define WAS_PRESSED_OR_HELD(mask) (WAS_PRESSED(mask) || ((g_Buttons & (mask)) && g_ButtonRepeat))
+#define WAS_PRESSED_OR_HELD(mask) (WAS_PRESSED(mask) || ((g_Buttons & (mask)) && g_RepeatButtons))
 
 // Clears the down bit (0x80) of every key in the thread's keyboard
 // state.

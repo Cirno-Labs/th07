@@ -111,7 +111,7 @@ void SpriteEngine::CreateQuad()
         this->vertexBuffer->Lock(0, 0, (BYTE **)&data, 0);
         memcpy(data, this->quad, sizeof(this->quad));
         this->vertexBuffer->Unlock();
-        g_App.d3dDevice->SetStreamSource(0, g_SpriteEngine->vertexBuffer, sizeof(VertexTex1Xyz));
+        g_App.d3dDevice->SetStreamSource(0, g_SpriteRenderer->vertexBuffer, sizeof(VertexTex1Xyz));
     }
 }
 
@@ -136,7 +136,7 @@ int SpriteEngine::LoadTexture(int index, char *path, int format, D3DCOLOR colorK
     {
         return -1;
     }
-    if (D3DXCreateTextureFromFileInMemoryEx(g_App.d3dDevice, data, g_FileSize, 0, 0, 0, 0, g_TextureFormats[format],
+    if (D3DXCreateTextureFromFileInMemoryEx(g_App.d3dDevice, data, g_LastFileSize, 0, 0, 0, 0, g_TextureFormats[format],
                                             D3DPOOL_MANAGED, D3DX_FILTER_LINEAR, D3DX_DEFAULT, colorKey, NULL, NULL,
                                             &this->textures[index]) != D3D_OK)
     {
@@ -244,7 +244,7 @@ int SpriteEngine::LoadTextureAlpha(int index, char *path, int format, D3DCOLOR c
         LogError(&g_Log, "error : イメージがαを持っていません\r\n");
         goto fail;
     }
-    if (D3DXCreateTextureFromFileInMemoryEx(g_App.d3dDevice, fileData, g_FileSize, 0, 0, 0, 0, desc.Format,
+    if (D3DXCreateTextureFromFileInMemoryEx(g_App.d3dDevice, fileData, g_LastFileSize, 0, 0, 0, 0, desc.Format,
                                             D3DPOOL_SYSTEMMEM, D3DX_FILTER_LINEAR, D3DX_DEFAULT, colorKey, NULL, NULL,
                                             &srcTexture) != D3D_OK)
     {
@@ -688,7 +688,7 @@ void SpriteEngine::SetRenderStateForSprite(Sprite *vm)
     }
     if (this->lastCameraSetupFlag != (vm->flags >> 14 & 1))
     {
-        g_SpriteEngine->FlushQuadBatch();
+        g_SpriteRenderer->FlushQuadBatch();
         this->lastCameraSetupFlag = vm->flags >> 14 & 1;
         if (this->lastCameraSetupFlag == 0)
         {
@@ -2070,7 +2070,7 @@ int SpriteEngine::LoadSurface(int surface, char *path)
     {
         return -1;
     }
-    if (D3DXLoadSurfaceFromFileInMemory(srcSurface, NULL, NULL, fileData, g_FileSize, NULL, D3DX_FILTER_NONE, 0,
+    if (D3DXLoadSurfaceFromFileInMemory(srcSurface, NULL, NULL, fileData, g_LastFileSize, NULL, D3DX_FILTER_NONE, 0,
                                         &this->surfaceInfos[surface]) != D3D_OK)
     {
         goto fail;
@@ -2332,7 +2332,7 @@ void SpriteEngine::StepSprites(Sprite *vms, int count)
     {
         if (vms->scriptIndex >= 0)
         {
-            g_SpriteEngine->Step(vms);
+            g_SpriteRenderer->Step(vms);
         }
         vms++;
         count--;
@@ -2343,7 +2343,7 @@ void SpriteEngine::StartSpriteSeries(Sprite *vms, int script, int count)
 {
     while (count != 0)
     {
-        g_SpriteEngine->StartScriptAtOrigin(vms, script);
+        g_SpriteRenderer->StartScriptAtOrigin(vms, script);
         vms->baseSpriteIndex = vms->spriteIndex;
         script++;
         vms++;

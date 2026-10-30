@@ -30,8 +30,8 @@ int ReplayManager::RecordOnUpdate(ReplayManager *replay)
     {
         return 1;
     }
-    g_PrevGameButtons = g_GameButtons;
-    g_GameButtons = g_Buttons;
+    g_PreviousGameInputs = g_GameInputs;
+    g_GameInputs = g_Buttons;
     if (g_GameManager.savedConfig->scoreDisabled != 0)
     {
         return 1;
@@ -46,7 +46,7 @@ int ReplayManager::RecordOnUpdate(ReplayManager *replay)
         idx = 6;
     }
     buttons = g_Buttons;
-    g_GameButtons = buttons;
+    g_GameInputs = buttons;
     replay->cursor++;
     replay->stageEnds[idx] = replay->cursor + 1;
     replay->cursor->input = buttons;
@@ -92,28 +92,28 @@ int ReplayManager::PlayOnUpdate(ReplayManager *replay)
         return 1;
     }
     unused = 0;
-    g_PrevGameButtons = g_GameButtons;
-    g_GameButtons = replay->cursor->input;
+    g_PreviousGameInputs = g_GameInputs;
+    g_GameInputs = replay->cursor->input;
     replay->cursor++;
-    g_ButtonRepeat = 0;
-    if (g_PrevGameButtons == g_GameButtons)
+    g_RepeatButtons = 0;
+    if (g_PreviousGameInputs == g_GameInputs)
     {
-        if (g_ButtonFrames >= 30)
+        if (g_ButtonHeldFrames >= 30)
         {
-            if (g_ButtonFrames % 8 == 0)
+            if (g_ButtonHeldFrames % 8 == 0)
             {
-                g_ButtonRepeat = 1;
+                g_RepeatButtons = 1;
             }
-            if (g_ButtonFrames >= 38)
+            if (g_ButtonHeldFrames >= 38)
             {
-                g_ButtonFrames = 30;
+                g_ButtonHeldFrames = 30;
             }
         }
-        g_ButtonFrames++;
+        g_ButtonHeldFrames++;
     }
     else
     {
-        g_ButtonFrames = 0;
+        g_ButtonHeldFrames = 0;
     }
     if (replay->frame % 30 == 0)
     {
@@ -270,7 +270,7 @@ int ReplayManager::PlayAddedCallback(ReplayManager *replay)
     if (replay->data == NULL)
     {
         replay->data = (ReplayHeader *)LoadFileData(replay->path, !(g_GameManager.stateFlags >> 1 & 1));
-        replay->data = ValidateReplay(replay->data, g_FileSize);
+        replay->data = ValidateReplay(replay->data, g_LastFileSize);
         if (replay->data == NULL)
         {
             return -1;
@@ -371,14 +371,14 @@ int ReplayManager::DeletedCallback(ReplayManager *replay)
         g_Chain.Remove(replay->calcChain3);
         replay->calcChain3 = NULL;
     }
-    MemFree(g_ReplayManager->data);
+    MemFree(g_ReplaySystem->data);
     if (replay->bufferFreedOnDelete != NULL)
     {
         MemFree(replay->bufferFreedOnDelete);
     }
-    delete g_ReplayManager;
-    g_ReplayManager = NULL;
-    g_ReplayManager = NULL;
+    delete g_ReplaySystem;
+    g_ReplaySystem = NULL;
+    g_ReplaySystem = NULL;
     return 0;
 }
 
@@ -386,12 +386,12 @@ int ReplayManager::RegisterChain(int mode, char *path)
 {
     ReplayManager *replay;
 
-    g_PrevGameButtons = 0;
-    g_GameButtons = 0;
-    if (g_ReplayManager == NULL)
+    g_PreviousGameInputs = 0;
+    g_GameInputs = 0;
+    if (g_ReplaySystem == NULL)
     {
         replay = new ReplayManager;
-        g_ReplayManager = replay;
+        g_ReplaySystem = replay;
         replay->data = NULL;
         replay->mode = mode;
         replay->path = path;
@@ -436,10 +436,10 @@ int ReplayManager::RegisterChain(int mode, char *path)
         switch (mode)
         {
         case 0:
-            ReplayManager::RecordAddedCallback(g_ReplayManager);
+            ReplayManager::RecordAddedCallback(g_ReplaySystem);
             break;
         case 1:
-            ReplayManager::PlayAddedCallback(g_ReplayManager);
+            ReplayManager::PlayAddedCallback(g_ReplaySystem);
             break;
         }
     }
@@ -449,7 +449,7 @@ int ReplayManager::RegisterChain(int mode, char *path)
 void ReplayManager::EndStage()
 {
     int stageIdx;
-    ReplayManager *replay = g_ReplayManager;
+    ReplayManager *replay = g_ReplaySystem;
 
     if (replay != NULL)
     {
@@ -482,9 +482,9 @@ void SaveReplay(char *path, char *name)
     ReplayManager *replayTmp;
     int i;
 
-    if (g_ReplayManager != NULL)
+    if (g_ReplaySystem != NULL)
     {
-        replayTmp = g_ReplayManager;
+        replayTmp = g_ReplaySystem;
         if (replayTmp->GetMode() == 0)
         {
             if (!(g_GameManager.stateFlags & 1) && g_GameManager.difficulty < 4)
@@ -597,17 +597,17 @@ void SaveReplay(char *path, char *name)
         freeStages:
             for (i = 0; i < 7; i++)
             {
-                if (g_ReplayManager->data->stages[i] != NULL)
+                if (g_ReplaySystem->data->stages[i] != NULL)
                 {
-                    MemFree(g_ReplayManager->data->stages[i]);
+                    MemFree(g_ReplaySystem->data->stages[i]);
                 }
                 if (replayTmp->data->extras[i] != NULL)
                 {
-                    MemFree(g_ReplayManager->data->extras[i]);
+                    MemFree(g_ReplaySystem->data->extras[i]);
                 }
             }
         }
-        g_Chain.Remove(g_ReplayManager->calcChain);
+        g_Chain.Remove(g_ReplaySystem->calcChain);
     }
 }
 
@@ -628,9 +628,9 @@ void ResaveReplay(char *path)
     ReplayManager *replayTmp;
     int i;
 
-    if (g_ReplayManager != NULL)
+    if (g_ReplaySystem != NULL)
     {
-        replayTmp = g_ReplayManager;
+        replayTmp = g_ReplaySystem;
         if (!(g_GameManager.stateFlags & 1) && g_GameManager.difficulty < 4)
         {
             if (memcmp(&g_App.controllerMapping, replayTmp->data->config, sizeof(replayTmp->data->config)) != 0)
@@ -726,6 +726,6 @@ void ResaveReplay(char *path)
             GlobalFree(compressedData);
         }
     done:
-        g_Chain.Remove(g_ReplayManager->calcChain);
+        g_Chain.Remove(g_ReplaySystem->calcChain);
     }
 }

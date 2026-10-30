@@ -678,7 +678,7 @@ public:
     int pendingCopyDstHeight;
 };
 ASSERT_SIZE(SpriteEngine, 0x17e560);
-extern SpriteEngine *g_SpriteEngine;
+extern SpriteEngine *g_SpriteRenderer;
 // The quad Draw draws with a color, without the vertex buffer.
 extern VertexTex1DiffuseXyzrwh g_DiffuseQuad[4];
 // A transformed quad without a color, as in th06.
@@ -703,7 +703,7 @@ inline BOOL Sprite::HasTexture()
     {
         return FALSE;
     }
-    return g_SpriteEngine->textures[this->spriteData->sourceFileIndex] != NULL;
+    return g_SpriteRenderer->textures[this->spriteData->sourceFileIndex] != NULL;
 }
 
 // A vertex with a transformed position and a color, as
