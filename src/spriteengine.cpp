@@ -342,6 +342,16 @@ int SpriteEngine::CreateTexture(int index, int width, int height, int format)
     return 0;
 }
 
+#ifdef TH07_EXE
+// A stand-in, exe only: invented, see UnusedSpriteMix. The original
+// referenced tan (libcmt's _CItan, an /Oi intrinsic) after _ftol2 and
+// before atan, so unused code generated before atanf called it.
+double UnusedSpriteTan(double a, double b)
+{
+    return tan(a) * tan(b);
+}
+#endif // TH07_EXE
+
 int SpriteEngine::LoadAnm(int slot, char *path, int firstSprite)
 {
     AnmFile *anmFile;
