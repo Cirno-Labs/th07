@@ -431,6 +431,27 @@ int WriteToFile(char *path, void *data, int size)
     return 0;
 }
 
+#ifdef TH07_EXE
+// Unused: the original's object also loaded a DLL, looked a function up in
+// it and asked for the Windows version, from code /LTCG discarded. The
+// hint/name table shows GetProcAddress, LoadLibraryA and GetVersionExA
+// loaded between ReadFile and CloseHandle, which is where this object's
+// references put them (descending name hash).
+FARPROC UnusedLoadProc(LPCSTR dll, LPCSTR name)
+{
+    return GetProcAddress(LoadLibraryA(dll), name);
+}
+
+DWORD UnusedGetPlatform()
+{
+    OSVERSIONINFOA info;
+
+    info.dwOSVersionInfoSize = sizeof(info);
+    GetVersionExA(&info);
+    return info.dwPlatformId;
+}
+#endif // TH07_EXE
+
 int LogPrintf(Log *log, const char *fmt, ...)
 {
     int len2;
