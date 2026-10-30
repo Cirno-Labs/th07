@@ -2168,6 +2168,23 @@ void SpriteEngine::CopySurfaceToBackBuffer(int surface, int left, int top, int x
 }
 
 
+#ifdef TH07_EXE
+// A stand-in, exe only: the name and body are invented. Unused code
+// (dropped by /OPT:REF) still goes into /OPT:ICF's sort of the code
+// sections, so the original's lost unused code decided which of several
+// identical D3DX8 functions the linker keeps. Nothing in the exe shows
+// what that code was. This function and the others marked like it only
+// reproduce the original's choices: their position, size and number of
+// references matter, their content does not.
+int UnusedSpriteMix(int a, int b)
+{
+    int mix = a * b + (a - b) * 0x300;
+    mix ^= a << 4;
+    mix += b >> 2;
+    return mix | (b << 3);
+}
+#endif // TH07_EXE
+
 void SpriteEngine::CopySurfaceRectToBackBuffer(int surface, int x, int y, int left, int top, int width, int height)
 {
     IDirect3DSurface8 *backBuffer;

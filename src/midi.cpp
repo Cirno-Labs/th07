@@ -669,3 +669,11 @@ void UnusedDeleteArray(void *p)
     operator delete[](p);
 }
 #endif // TH07_EXE
+
+#ifdef TH07_EXE
+// A stand-in, exe only: invented, see UnusedSpriteMix (spriteengine.cpp).
+int UnusedMidiMix(int a)
+{
+    return a * 3 + (int)g_App.hwnd;
+}
+#endif // TH07_EXE

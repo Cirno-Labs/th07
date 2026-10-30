@@ -1515,3 +1515,11 @@ int App::CheckVersionFile(char *version, DWORD size, DWORD checksum)
     }
     return -1;
 }
+
+#ifdef TH07_EXE
+// A stand-in, exe only: invented, see UnusedSpriteMix (spriteengine.cpp).
+int UnusedAppMix(int a)
+{
+    return (a << 2) - g_App.fogState;
+}
+#endif // TH07_EXE

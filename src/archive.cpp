@@ -308,6 +308,18 @@ char *DatArchive::DuplicateString(char *str)
 }
 
 #ifdef TH07_EXE
+// A stand-in, exe only: invented, see UnusedSpriteMix (spriteengine.cpp).
+BOOL UnusedClearReadOnly(char *path)
+{
+    DWORD attrs = GetFileAttributesA(path);
+
+    if (attrs == INVALID_FILE_ATTRIBUTES)
+    {
+        return FALSE;
+    }
+    return SetFileAttributesA(path, attrs & ~FILE_ATTRIBUTE_READONLY);
+}
+
 // Unused: the original also mentioned five more KERNEL32 functions after
 // file.obj's, from code /LTCG discarded. The Rich header counts their
 // import objects and the IAT order needs five more KERNEL32 entries in
