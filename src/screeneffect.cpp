@@ -354,3 +354,12 @@ ScreenEffect *ScreenEffect::StartEffect(int type, int duration, int a, int b, in
     effect->drawElem = drawElem;
     return effect;
 }
+
+#ifdef TH07_EXE
+#include <new>
+// Unused: pulls libcmt's new2.obj, see UnusedDeleteNothrow (bomb.cpp).
+void *UnusedNewArray(size_t size)
+{
+    return operator new[](size);
+}
+#endif // TH07_EXE

@@ -2169,3 +2169,12 @@ done:
     }
     return 0;
 }
+
+#ifdef TH07_EXE
+#include <new.h>
+// Unused: pulls libcmt's new_mode.obj, see UnusedDeleteNothrow (bomb.cpp).
+int UnusedSetNewMode(int mode)
+{
+    return _set_new_mode(mode);
+}
+#endif // TH07_EXE

@@ -1420,3 +1420,17 @@ void DrawSakuyaBBombFocused(Player *player)
         knife->sprites[0].alpha = alpha;
     }
 }
+
+#ifdef TH07_EXE
+#include <new>
+// Unused, like UnusedSetNewMode (enemyscript.cpp), UnusedDeleteArray
+// (midi.cpp) and UnusedNewArray (screeneffect.cpp): the Rich header
+// counts four more plain C++ objects than libcmt's C++ members we load,
+// so discarded code in the original pulled four more, ones without data
+// (no .data/.rdata byte tells them apart). Which four, and from where,
+// is a guess: these keep the original's Utc13_CPP count.
+void UnusedDeleteNothrow(void *p, const std::nothrow_t &nothrow)
+{
+    operator delete(p, nothrow);
+}
+#endif // TH07_EXE

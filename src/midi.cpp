@@ -660,3 +660,12 @@ void MidiTimer::StopTimer()
 {
     this->Stop();
 }
+
+#ifdef TH07_EXE
+#include <new>
+// Unused: pulls libcmt's delete2.obj, see UnusedDeleteNothrow (bomb.cpp).
+void UnusedDeleteArray(void *p)
+{
+    operator delete[](p);
+}
+#endif // TH07_EXE
