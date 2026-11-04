@@ -227,7 +227,23 @@ public:
     AsciiPopup popups[0x2d3];
 };
 ASSERT_SIZE(AsciiText, 0x11194);
+#ifdef TH07_EXE
+// Source-only static-construction layout adapter. The original initializer
+// reserves 20 otherwise-unused stack bytes after failed inlining. These locals
+// are never read or written; object storage and the game ctor stay unchanged.
+// This adapter is a reconstruction aid, not claimed original source.
+struct AsciiTextStorage : public AsciiText
+{
+    __forceinline AsciiTextStorage() : AsciiText()
+    {
+        int reserved[5];
+    }
+};
+ASSERT_SIZE(AsciiTextStorage, sizeof(AsciiText));
+extern AsciiTextStorage g_AsciiText;
+#else
 extern AsciiText g_AsciiText;
+#endif // TH07_EXE
 
 // Adds 1 to `*count` unless it reached 999999; `max` goes unused.
 // ContinueMenu::UpdateContinueMenu calls it on six counters of
@@ -236,6 +252,6 @@ void IncrementCounterCapped(DWORD *count, DWORD max);
 
 // AsciiText's chain elements, statically allocated as in th06: the
 // update element and the two draw elements.
-extern ChainElem g_AsciiCalcChain;
-extern ChainElem g_AsciiDrawChain;
-extern ChainElem g_AsciiDrawChain2;
+extern ChainElem g_AsciiUpdate;
+extern ChainElem g_AsciiRenderChain;
+extern ChainElem g_AsciiRenderChain2;

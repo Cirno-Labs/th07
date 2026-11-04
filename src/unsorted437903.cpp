@@ -391,7 +391,7 @@ int InitDirectInput(App *game)
     if (FAILED(DirectInput8Create(hInst, DIRECTINPUT_VERSION, IID_IDirectInput8, (VOID **)&game->dinput, NULL)))
     {
         game->dinput = NULL;
-        LogPrintf(&g_Log, "DirectInput が使用できません\r\n");
+        LogPrintf(&g_Logger, "DirectInput が使用できません\r\n");
         return -1;
     }
     if (FAILED(game->dinput->CreateDevice(GUID_SysKeyboard, &game->keyboard, NULL)))
@@ -401,7 +401,7 @@ int InitDirectInput(App *game)
             game->dinput->Release();
             game->dinput = NULL;
         }
-        LogPrintf(&g_Log, "DirectInput が使用できません\r\n");
+        LogPrintf(&g_Logger, "DirectInput が使用できません\r\n");
         return -1;
     }
     if (FAILED(game->keyboard->SetDataFormat(&c_dfDIKeyboard)))
@@ -416,7 +416,7 @@ int InitDirectInput(App *game)
             game->dinput->Release();
             game->dinput = NULL;
         }
-        LogPrintf(&g_Log, "DirectInput SetDataFormat が使用できません\r\n");
+        LogPrintf(&g_Logger, "DirectInput SetDataFormat が使用できません\r\n");
         return -1;
     }
     if (FAILED(game->keyboard->SetCooperativeLevel(game->hwnd, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND | DISCL_NOWINKEY)))
@@ -431,11 +431,11 @@ int InitDirectInput(App *game)
             game->dinput->Release();
             game->dinput = NULL;
         }
-        LogPrintf(&g_Log, "DirectInput SetCooperativeLevel が使用できません\r\n");
+        LogPrintf(&g_Logger, "DirectInput SetCooperativeLevel が使用できません\r\n");
         return -1;
     }
     game->keyboard->Acquire();
-    LogPrintf(&g_Log, "DirectInput は正常に初期化されました\r\n");
+    LogPrintf(&g_Logger, "DirectInput は正常に初期化されました\r\n");
     game->dinput->EnumDevices(DI8DEVCLASS_GAMECTRL, EnumJoysticksCallback, NULL, DIEDFL_ATTACHEDONLY);
     if (game->joystick)
     {
@@ -444,7 +444,7 @@ int InitDirectInput(App *game)
         g_App.joystickCaps.dwSize = sizeof(DIDEVCAPS);
         game->joystick->GetCapabilities(&g_App.joystickCaps);
         game->joystick->EnumObjects(EnumAxesCallback, NULL, DIDFT_ALL);
-        LogPrintf(&g_Log, "有効なパッドを発見しました\r\n");
+        LogPrintf(&g_Logger, "有効なパッドを発見しました\r\n");
     }
     return 0;
 }
@@ -460,13 +460,13 @@ int OpenGameArchive()
         g_App.verFileSize = g_LastFileSize;
         if (g_App.verFile == NULL)
         {
-            LogError(&g_Log, "error : データのバージョンが違います\r\n");
+            LogError(&g_Logger, "error : データのバージョンが違います\r\n");
             return -1;
         }
     }
     else
     {
-        LogError(&g_Log, "error : データファイルが存在しません\r\n");
+        LogError(&g_Logger, "error : データファイルが存在しません\r\n");
         return -1;
     }
     return 0;
@@ -543,14 +543,14 @@ int MeasureRefreshRate()
         }
         if (sum > 160.0f)
         {
-            LogPrintf(&g_Log, "垂直同期が取れてないか、リフレッシュレートが高すぎます\r\n");
-            LogPrintf(&g_Log, "強制６０フレームモードで動作します\r\n");
+            LogPrintf(&g_Logger, "垂直同期が取れてないか、リフレッシュレートが高すぎます\r\n");
+            LogPrintf(&g_Logger, "強制６０フレームモードで動作します\r\n");
             g_App.presentImmediate = 1;
         }
         else if (sum >= 65.0f)
         {
-            LogPrintf(&g_Log, "垂直同期が取れてないか、リフレッシュレートが高すぎます。\r\n");
-            LogPrintf(&g_Log, "強制６０フレームモードで動作します\r\n");
+            LogPrintf(&g_Logger, "垂直同期が取れてないか、リフレッシュレートが高すぎます。\r\n");
+            LogPrintf(&g_Logger, "強制６０フレームモードで動作します\r\n");
             g_App.presentImmediate = 1;
             return -2;
         }
@@ -630,14 +630,14 @@ int App::AddedCallback(App *arg)
     }
     if (AsciiText::RegisterChain() != 0)
     {
-        LogPrintf(&g_Log, "error : 文字の初期化に失敗しました\r\n");
+        LogPrintf(&g_Logger, "error : 文字の初期化に失敗しました\r\n");
         return -1;
     }
     g_SpriteRenderer->CreateQuad();
     CreateTextSurface();
     if (g_SoundPlayer.LoadBgmFormat("bgm/thbgm.fmt") != 0)
     {
-        LogPrintf(&g_Log, "error : BGM の初期化に失敗しました\r\n");
+        LogPrintf(&g_Logger, "error : BGM の初期化に失敗しました\r\n");
         return -1;
     }
     if (g_SoundPlayer.bgmFileOffset == 0)
@@ -768,11 +768,13 @@ int App::RegisterChain()
 
 void DrawFps(int draw)
 {
-    static DWORD frames;
-    static char fpsText[0x100];
+    // Explicit zero initializers use the compiler's initialized-static
+    // allocation pass, in reverse declaration order.
+    static DWORD frames = 0;
+    static char fpsText[0x100] = {0};
     static LARGE_INTEGER lastCounter;
-    static DWORD measures;
-    static char speedText[0x100];
+    static char speedText[0x100] = {0};
+    static DWORD measures = 0;
     float fps;
     float duration;
 
@@ -976,7 +978,7 @@ int App::SaveScreenshot(char *path)
     switch (this->presentParams.BackBufferFormat)
     {
     case D3DFMT_R5G6B5:
-        LogPrintf(&g_Log, "16bit は取り込めない\r\n");
+        LogPrintf(&g_Logger, "16bit は取り込めない\r\n");
         break;
     case D3DFMT_X8R8G8B8:
     {
@@ -995,7 +997,7 @@ int App::SaveScreenshot(char *path)
         bmi = (BITMAPINFO *)malloc(size);
         if (bmi == NULL)
         {
-            LogPrintf(&g_Log, "snapShotScreen : 確保しくり\r\n");
+            LogPrintf(&g_Logger, "snapShotScreen : 確保しくり\r\n");
             break;
         }
         memset(bmi, 0, sizeof(BITMAPINFO));
@@ -1003,7 +1005,7 @@ int App::SaveScreenshot(char *path)
         bits = (BYTE *)malloc(widthBytes * 480);
         if (bits == NULL)
         {
-            LogPrintf(&g_Log, "snapShotScreen : 確保しくり\r\n");
+            LogPrintf(&g_Logger, "snapShotScreen : 確保しくり\r\n");
             break;
         }
         fileHdr.bfSize += widthBytes * 480;
@@ -1046,7 +1048,7 @@ int App::SaveScreenshot(char *path)
         break;
     }
     default:
-        LogPrintf(&g_Log, "error ? mother.cpp\r\n");
+        LogPrintf(&g_Logger, "error ? mother.cpp\r\n");
         return 1;
     }
     if (buffer != NULL)
@@ -1079,7 +1081,7 @@ int App::LoadConfig(char *path)
     file = (ConfigCopy *)LoadFileData(path, 1);
     if (file == NULL)
     {
-        LogPrintf(&g_Log, "コンフィグデータが見つからないので初期化しました\r\n");
+        LogPrintf(&g_Logger, "コンフィグデータが見つからないので初期化しました\r\n");
     reset:
         g_App.lifeCount = 2;
         g_App.bombCount = 3;
@@ -1101,7 +1103,7 @@ int App::LoadConfig(char *path)
                 CloseHandle(bgmFile);
                 if (bgmHeader.magic != 'VAWZ' || bgmHeader.version != 1 || bgmHeader.gameVersion != 0x700)
                 {
-                    LogError(&g_Log, "BGM データのバージョンが違います\r\n");
+                    LogError(&g_Logger, "BGM データのバージョンが違います\r\n");
                     return -1;
                 }
                 g_App.musicMode = 1;
@@ -1138,7 +1140,7 @@ int App::LoadConfig(char *path)
                 CloseHandle(bgmFile);
                 if (bgmHeader.magic != 'VAWZ' || bgmHeader.version != 1 || bgmHeader.gameVersion != 0x700)
                 {
-                    LogError(&g_Log, "BGM データのバージョンが違います\r\n");
+                    LogError(&g_Logger, "BGM データのバージョンが違います\r\n");
                     return -1;
                 }
             }
@@ -1148,7 +1150,7 @@ int App::LoadConfig(char *path)
             g_App.effectsQuality >= 3 || g_App.optionsMenuCursor >= 2 || g_App.shootFocuses >= 2 || g_App.version != 0x70002 ||
             g_LastFileSize != sizeof(ConfigCopy))
         {
-            LogPrintf(&g_Log, "コンフィグデータが異常でしたので再初期化しました\r\n");
+            LogPrintf(&g_Logger, "コンフィグデータが異常でしたので再初期化しました\r\n");
             goto reset;
         }
         g_DefaultControllerMapping = g_App.controllerMapping;
@@ -1156,31 +1158,31 @@ int App::LoadConfig(char *path)
     g_App.flags.emulateColorAdd = 1;
     if (this->flags.noVertexBuffer)
     {
-        LogPrintf(&g_Log, "頂点バッファの使用を抑制します\r\n");
+        LogPrintf(&g_Logger, "頂点バッファの使用を抑制します\r\n");
     }
     if (this->flags.noFog)
     {
-        LogPrintf(&g_Log, "フォグの使用を抑制します\r\n");
+        LogPrintf(&g_Logger, "フォグの使用を抑制します\r\n");
     }
     if (this->flags.force16BitTextures)
     {
-        LogPrintf(&g_Log, "16Bit のテクスチャの使用を強制します\r\n");
+        LogPrintf(&g_Logger, "16Bit のテクスチャの使用を強制します\r\n");
     }
     if (this->ClearsBackBuffer())
     {
-        LogPrintf(&g_Log, "バックバッファの消去を強制します\r\n");
+        LogPrintf(&g_Logger, "バックバッファの消去を強制します\r\n");
     }
     if (this->flags.noFrameItems)
     {
-        LogPrintf(&g_Log, "ゲーム周りのアイテムの描画を抑制します\r\n");
+        LogPrintf(&g_Logger, "ゲーム周りのアイテムの描画を抑制します\r\n");
     }
     if (this->flags.noGouraudShading)
     {
-        LogPrintf(&g_Log, "グーローシェーディングを抑制します\r\n");
+        LogPrintf(&g_Logger, "グーローシェーディングを抑制します\r\n");
     }
     if (this->flags.noDepthTest)
     {
-        LogPrintf(&g_Log, "デプステストを抑制します\r\n");
+        LogPrintf(&g_Logger, "デプステストを抑制します\r\n");
     }
     // th06's 60 frame mode is gone: the bit is cleared.
     this->presentImmediate = 0;
@@ -1188,37 +1190,37 @@ int App::LoadConfig(char *path)
     if (this->flags.noColorBlending)
     {
         // Sic: the message ends in "n", not a line break.
-        LogPrintf(&g_Log, "テクスチャの色合成を抑制しますn");
+        LogPrintf(&g_Logger, "テクスチャの色合成を抑制しますn");
     }
     if (this->windowed)
     {
-        LogPrintf(&g_Log, "ウィンドウモードで起動します\r\n");
+        LogPrintf(&g_Logger, "ウィンドウモードで起動します\r\n");
     }
     if (this->flags.referenceRasterizer)
     {
-        LogPrintf(&g_Log, "リファレンスラスタライザを強制します\r\n");
+        LogPrintf(&g_Logger, "リファレンスラスタライザを強制します\r\n");
     }
     if (this->flags.noDirectInput)
     {
-        LogPrintf(&g_Log, "パッド、キーボードの入力に DirectInput を使用しません\r\n");
+        LogPrintf(&g_Logger, "パッド、キーボードの入力に DirectInput を使用しません\r\n");
     }
     if (this->flags.redrawHudEveryFrame)
     {
-        LogPrintf(&g_Log, "画面周りを毎回描画します\r\n");
+        LogPrintf(&g_Logger, "画面周りを毎回描画します\r\n");
     }
     if (this->flags.preloadBgm)
     {
-        LogPrintf(&g_Log, "ＢＧＭをメモリに読み込みます\r\n");
+        LogPrintf(&g_Logger, "ＢＧＭをメモリに読み込みます\r\n");
     }
     if (this->flags.noVsync)
     {
-        LogPrintf(&g_Log, "垂直同期を取りません\r\n");
+        LogPrintf(&g_Logger, "垂直同期を取りません\r\n");
         g_App.presentImmediate = 1;
     }
     if (WriteToFile(path, &g_App.controllerMapping, sizeof(ConfigCopy)) != 0)
     {
-        LogError(&g_Log, "ファイルが書き出せません %s\r\n", path);
-        LogError(&g_Log, "フォルダが書込み禁止属性になっているか、ディスクがいっぱいいっぱいになってませんか？\r\n");
+        LogError(&g_Logger, "ファイルが書き出せません %s\r\n", path);
+        LogError(&g_Logger, "フォルダが書込み禁止属性になっているか、ディスクがいっぱいいっぱいになってませんか？\r\n");
         return -1;
     }
     return 0;

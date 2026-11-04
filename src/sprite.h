@@ -370,7 +370,7 @@ public:
     // DrawUnrotated without rounding to pixels, as th06's DrawNoRound.
     int DrawNoRound(Sprite *vm);
     // Sets g_DiffuseQuad to `vm` projected from its 3D position, rotated,
-    // its size scaled by how far g_Stage.camera.cameraRight from it reaches on the
+    // its size scaled by how far g_StageManager.camera.cameraRight from it reaches on the
     // screen. Returns 0, or -1 when it is outside the depth range. Not in
     // th06.
     int ProjectSprite(Sprite *vm);
@@ -649,7 +649,7 @@ public:
     BYTE vertexFormat;
     BYTE zWriteDisabled;
     // Flag bit 14 of the sprite last drawn: which of
-    // g_Stage's two set-ups the device has.
+    // g_StageManager's two set-ups the device has.
     BYTE lastCameraSetupFlag;
     unsigned char pad_2e4d5[0x3];
     // The sprite data Draw last used, NULL when unknown.
@@ -682,7 +682,7 @@ extern SpriteEngine *g_SpriteRenderer;
 // The quad Draw draws with a color, without the vertex buffer.
 extern VertexTex1DiffuseXyzrwh g_DiffuseQuad[4];
 // A transformed quad without a color, as in th06.
-extern VertexTex1Xyzrwh g_Quad[4];
+extern VertexTex1Xyzrwh g_QuadVertices[4];
 // 0.5, for DrawQuad's rounding.
 extern const float g_Half;
 // CreateQuad's quad with a color, for drawing without the vertex

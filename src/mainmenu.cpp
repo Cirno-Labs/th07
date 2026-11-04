@@ -812,27 +812,27 @@ int MainMenu::UpdateKeyConfig()
                 this->ReassignButton(key, this->controllerMapping.focusButton, 1);
                 this->controllerMapping.focusButton = key;
                 break;
-            case 3:
+            case 4:
                 this->ReassignButton(key, this->controllerMapping.menuButton, 0);
                 this->controllerMapping.menuButton = key;
                 break;
-            case 4:
+            case 5:
                 this->ReassignButton(key, this->controllerMapping.upButton, 0);
                 this->controllerMapping.upButton = key;
                 break;
-            case 5:
+            case 6:
                 this->ReassignButton(key, this->controllerMapping.downButton, 0);
                 this->controllerMapping.downButton = key;
                 break;
-            case 6:
+            case 7:
                 this->ReassignButton(key, this->controllerMapping.leftButton, 0);
                 this->controllerMapping.leftButton = key;
                 break;
-            case 7:
+            case 8:
                 this->ReassignButton(key, this->controllerMapping.rightButton, 0);
                 this->controllerMapping.rightButton = key;
                 break;
-            case 8:
+            case 3:
                 this->ReassignButton(key, this->controllerMapping.skipButton, 0);
                 this->controllerMapping.skipButton = key;
                 break;
@@ -1821,7 +1821,7 @@ int MainMenu::UpdateReplayMenu()
                 this->cursor++;
                 if (this->cursor >= 7)
                 {
-                    LogError(&g_Log, "リプレイデータが異常\r\n");
+                    LogError(&g_Logger, "リプレイデータが異常\r\n");
                     return 0;
                 }
             }
@@ -1939,15 +1939,13 @@ int MainMenu::UpdateReplayMenu()
 int MainMenu::DrawReplayMenu()
 {
 #ifdef TH07_EXE
-    static char *g_MenuStageNames[8] = {
-        "Stage1  ",
-        "Stage2  ",
-        "Stage3  ",
-        "Stage4  ",
-        "Stage5  ",
-        "Stage6  ",
-        "Extra   ",
-        "Phantasm",
+    static char *g_MenuShotTypeNames[6] = {
+        "ReimuA ",
+        "ReimuB ",
+        "MarisaA",
+        "MarisaB",
+        "SakuyaA",
+        "SakuyaB",
     };
     static char *g_MenuDifficultyNames[6] = {
         "Easy    ",
@@ -1957,13 +1955,15 @@ int MainMenu::DrawReplayMenu()
         "Extra   ",
         "Phantasm",
     };
-    static char *g_MenuShotTypeNames[6] = {
-        "ReimuA ",
-        "ReimuB ",
-        "MarisaA",
-        "MarisaB",
-        "SakuyaA",
-        "SakuyaB",
+    static char *g_MenuStageNames[8] = {
+        "Stage1  ",
+        "Stage2  ",
+        "Stage3  ",
+        "Stage4  ",
+        "Stage5  ",
+        "Stage6  ",
+        "Extra   ",
+        "Phantasm",
     };
 #endif // TH07_EXE
     Sprite *text;

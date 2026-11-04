@@ -462,8 +462,8 @@ void StartSlowdown(Enemy *enemy, EnemyScriptInstr *instr)
     int i;
 
     g_App.gameSpeed = 1.0f / instr->args[1].i;
-    g_Stage.dialogueSprites[0].pendingInterrupt = 2;
-    g_Stage.dialogueSprites[1].pendingInterrupt = 2;
+    g_StageManager.dialogueSprites[0].pendingInterrupt = 2;
+    g_StageManager.dialogueSprites[1].pendingInterrupt = 2;
     bullet = g_BulletManager.bullets;
     for (i = 0; i < 0x400; i++, bullet++)
     {
@@ -504,8 +504,8 @@ void EndSlowdown(Enemy *enemy, EnemyScriptInstr *instr)
         g_App.stateFlags |= 0x20;
     }
     g_App.gameSpeed = 1.0f;
-    g_Stage.dialogueSprites[0].pendingInterrupt = 1;
-    g_Stage.dialogueSprites[1].pendingInterrupt = 1;
+    g_StageManager.dialogueSprites[0].pendingInterrupt = 1;
+    g_StageManager.dialogueSprites[1].pendingInterrupt = 1;
 }
 
 void BurstBulletsByDifficulty(Enemy *enemy, EnemyScriptInstr *instr)

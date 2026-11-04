@@ -25,6 +25,26 @@ DatArchive::~DatArchive()
     this->Release();
 }
 
+
+#ifdef TH07_EXE
+// Discarded construction paths: preserve exception-section ordering.
+
+
+#include "chain.h"
+#pragma optimize("s", on)
+void UnusedPairFirst()
+{
+    new ChainElem;
+    new ChainElem;
+}
+void UnusedPairSecond()
+{
+    new ChainElem;
+    new ChainElem;
+}
+#pragma optimize("s", off)
+#endif // TH07_EXE
+
 bool DatArchive::Open(char *path)
 {
     this->Release();

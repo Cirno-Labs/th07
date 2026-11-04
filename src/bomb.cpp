@@ -34,8 +34,8 @@ void DimPlayAreaForBomb(Player *player)
         color.r = color.g;
     }
     g_SpriteRenderer->ResetColorModulation();
-    g_Stage.SetTintColor(color.color);
-    g_Stage.keepTintColor = 1;
+    g_StageManager.SetTintColor(color.color);
+    g_StageManager.keepTintColor = 1;
 }
 
 void SpawnBombAura(Player *player)

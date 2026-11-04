@@ -48,7 +48,7 @@ EffectInfo g_EffectInfos[34] = {
 };
 EffectManager g_EffectManager;
 ChainElem g_EffectCalcChain;
-ChainElem g_EffectDrawChain;
+ChainElem g_EffectDraw;
 #endif // TH07_EXE
 
 EXE_INLINE EffectManager::EffectManager()
@@ -99,6 +99,16 @@ int EffectInitForeground(Effect *effect)
     effect->drawList = 2;
     return 0;
 }
+
+#ifdef TH07_EXE
+// Synthetic discarded function: reproduce the linker ICF layout.
+int UnusedScalarBulletMarker(int a)
+{
+    int value = g_LastFileSize ^ a;
+    value += 3;
+    return value;
+}
+#endif // TH07_EXE
 
 int EffectUpdateOrbit(Effect *effect)
 {
@@ -181,6 +191,19 @@ int EffectUpdateFollowPlayer(Effect *effect)
     return 1;
 }
 
+#ifdef TH07_EXE
+// Synthetic discarded function: reproduce the linker ICF layout.
+int UnusedScalarMusicState(int a)
+{
+    int value = g_LastFileSize ^ a;
+    value += g_LastFileSize;
+    value += 3;
+    value += 3;
+    value += 3;
+    return value;
+}
+#endif // TH07_EXE
+
 int EffectUpdateConvergeSlow(Effect *effect)
 {
     float f;
@@ -235,9 +258,9 @@ int EffectUpdatePetal(Effect *effect)
     effect->step += effect->acceleration;
     effect->truePos += effect->step;
     effect->pos = effect->truePos;
-    v = effect->pos - g_Stage.camera.eye;
+    v = effect->pos - g_StageManager.camera.eye;
     D3DXVec3Normalize(&v, &v);
-    cosine = D3DXVec3Dot(&g_Stage.camera.dir, &v);
+    cosine = D3DXVec3Dot(&g_StageManager.camera.dir, &v);
     if (cosine < 0.94f)
     {
         return 0;
@@ -255,8 +278,8 @@ int EffectInitPetal20(Effect *effect)
     D3DXVECTOR3 back;
     int percent;
 
-    back = -g_Stage.camera.at;
-    effect->truePos = g_Stage.camera.at + g_Stage.camera.eye;
+    back = -g_StageManager.camera.at;
+    effect->truePos = g_StageManager.camera.at + g_StageManager.camera.eye;
     effect->truePos.x += g_Rng.GetRandomF32ZeroToOne() * 120.0f - 60.0f + back.x / 2.0f;
     effect->truePos.y += g_Rng.GetRandomF32ZeroToOne() * 200.0f - 100.0f + back.y / 2.0f;
     effect->truePos.z += g_Rng.GetRandomF32ZeroToOne() * 100.0f - 100.0f + back.z / 2.0f;
@@ -292,7 +315,7 @@ int EffectInitPetal26(Effect *effect)
     effect->step.x = -effect->truePos.y / effect->velocity.x;
     effect->step.y = effect->truePos.x / effect->velocity.x;
     effect->step.z = g_Rng.GetRandomF32ZeroToOne() * 0.1f + 0.09f;
-    effect->truePos += g_Stage.camera.at / 2.0f + g_Stage.camera.eye;
+    effect->truePos += g_StageManager.camera.at / 2.0f + g_StageManager.camera.eye;
     effect->step = effect->step * g_App.gameSpeed;
     effect->drawList = 1;
     effect->sprite.rotationZ = g_Rng.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
@@ -320,7 +343,7 @@ int EffectInitPetal27(Effect *effect)
     effect->step.x = -effect->truePos.y / effect->velocity.x;
     effect->step.y = effect->truePos.x / effect->velocity.x;
     effect->step.z = -(g_Rng.GetRandomF32ZeroToOne() * 0.2f) - 0.06f;
-    effect->truePos += g_Stage.camera.at / 2.0f + g_Stage.camera.eye;
+    effect->truePos += g_StageManager.camera.at / 2.0f + g_StageManager.camera.eye;
     effect->step = effect->step * g_App.gameSpeed;
     effect->drawList = 1;
     effect->sprite.rotationZ = g_Rng.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
@@ -343,7 +366,7 @@ int EffectInitPetal30(Effect *effect)
     effect->step.x = g_Rng.GetRandomF32ZeroToOne() * 0.06f - 0.03f + effect->velocity.x;
     effect->step.y = g_Rng.GetRandomF32ZeroToOne() * 0.06f - 0.03f + effect->velocity.y;
     effect->step.z = g_Rng.GetRandomF32ZeroToOne() * 0.02f + 0.01f + effect->velocity.z;
-    effect->truePos += g_Stage.camera.at / 2.0f + g_Stage.camera.eye;
+    effect->truePos += g_StageManager.camera.at / 2.0f + g_StageManager.camera.eye;
     effect->drawList = 1;
     effect->sprite.rotationZ = g_Rng.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
     effect->sprite.rotationX = g_Rng.GetRandomF32ZeroToOne() * 0.06283186f - 0.031415928f;
@@ -365,7 +388,7 @@ int EffectInitPetal31(Effect *effect)
     effect->step.x = g_Rng.GetRandomF32ZeroToOne() * 0.06f - 0.03f + effect->velocity.x;
     effect->step.y = g_Rng.GetRandomF32ZeroToOne() * 0.06f - 0.03f + effect->velocity.y;
     effect->step.z = -(g_Rng.GetRandomF32ZeroToOne() * 0.1f) + effect->velocity.z;
-    effect->truePos += g_Stage.camera.at / 2.0f + g_Stage.camera.eye;
+    effect->truePos += g_StageManager.camera.at / 2.0f + g_StageManager.camera.eye;
     effect->step = effect->step * g_App.gameSpeed;
     effect->drawList = 1;
     effect->sprite.rotationZ = g_Rng.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
@@ -416,7 +439,7 @@ int EffectUpdateDivergeEased(Effect *effect)
 int EffectUpdateFixedPos(Effect *effect)
 {
     effect->drawList = 1;
-    effect->truePos = g_Stage.camera.at + g_Stage.camera.eye;
+    effect->truePos = g_StageManager.camera.at + g_StageManager.camera.eye;
     effect->pos = effect->truePos;
     effect->pos.z = 0.0f;
     effect->drawList = 3;
@@ -733,33 +756,33 @@ int EffectManager::OnDraw2()
 int EffectManager::AddedCallback(EffectManager *mgr)
 {
     mgr->Reset();
-    g_Stage.dialogueScriptOffset = 0;
+    g_StageManager.dialogueScriptOffset = 0;
     switch (g_GameManager.stage)
     {
     case 0:
     case 1:
-        g_Stage.dialogueSpriteCount = 1;
+        g_StageManager.dialogueSpriteCount = 1;
         if (g_SpriteRenderer->LoadAnm(0x11, "data/eff01.anm", 0x2dc) != 0)
         {
             return -1;
         }
         break;
     case 2:
-        g_Stage.dialogueSpriteCount = 1;
+        g_StageManager.dialogueSpriteCount = 1;
         if (g_SpriteRenderer->LoadAnm(0x11, "data/eff02.anm", 0x2dc) != 0)
         {
             return -1;
         }
         break;
     case 3:
-        g_Stage.dialogueSpriteCount = 1;
+        g_StageManager.dialogueSpriteCount = 1;
         if (g_SpriteRenderer->LoadAnm(0x11, "data/eff03.anm", 0x2dc) != 0)
         {
             return -1;
         }
         break;
     case 4:
-        g_Stage.dialogueSpriteCount = 2;
+        g_StageManager.dialogueSpriteCount = 2;
         if (g_SpriteRenderer->LoadAnm(0x11, "data/eff04.anm", 0x2dc) != 0)
         {
             return -1;
@@ -770,14 +793,14 @@ int EffectManager::AddedCallback(EffectManager *mgr)
         }
         break;
     case 5:
-        g_Stage.dialogueSpriteCount = 2;
+        g_StageManager.dialogueSpriteCount = 2;
         if (g_SpriteRenderer->LoadAnm(0x11, "data/eff05.anm", 0x2dc) != 0)
         {
             return -1;
         }
         break;
     case 6:
-        g_Stage.dialogueSpriteCount = 2;
+        g_StageManager.dialogueSpriteCount = 2;
         if (g_SpriteRenderer->LoadAnm(0x11, "data/eff05.anm", 0x2dc) != 0)
         {
             return -1;
@@ -788,7 +811,7 @@ int EffectManager::AddedCallback(EffectManager *mgr)
         }
         break;
     case 7:
-        g_Stage.dialogueSpriteCount = 1;
+        g_StageManager.dialogueSpriteCount = 1;
         if (g_SpriteRenderer->LoadAnm(0x11, "data/eff02.anm", 0x2dc) != 0)
         {
             return -1;
@@ -799,7 +822,7 @@ int EffectManager::AddedCallback(EffectManager *mgr)
         }
         break;
     case 8:
-        g_Stage.dialogueSpriteCount = 2;
+        g_StageManager.dialogueSpriteCount = 2;
         if (g_SpriteRenderer->LoadAnm(0x11, "data/eff07.anm", 0x2dc) != 0)
         {
             return -1;
@@ -835,14 +858,14 @@ int EffectManager::RegisterChain()
     {
         return -1;
     }
-    g_EffectDrawChain.SetCallback((ChainCallback)EffectManager::OnDraw);
-    g_EffectDrawChain.arg = mgr;
-    g_Chain.AddToDrawChain(&g_EffectDrawChain, 9);
+    g_EffectDraw.SetCallback((ChainCallback)EffectManager::OnDraw);
+    g_EffectDraw.arg = mgr;
+    g_Chain.AddToDrawChain(&g_EffectDraw, 9);
     return 0;
 }
 
 void EffectManager::RemoveChain()
 {
     g_Chain.Remove(&g_EffectCalcChain);
-    g_Chain.Remove(&g_EffectDrawChain);
+    g_Chain.Remove(&g_EffectDraw);
 }

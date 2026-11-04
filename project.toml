@@ -16,6 +16,7 @@ functions = "build/functions_100b.csv"
 
 [build]
 cflags = ["/Od", "/Ob1", "/Gr", "/GX", "/Oi", "/Gy", "/GF", "/MT"]
+hook = "scripts/build_hook.py"
 
 [exe]
 # Like the original, the exe's objects are compiled with /GL and linked
@@ -24,14 +25,20 @@ obj_dir = "build/obj_gl"
 cflags = ["/GL", "/DTH07_EXE"]
 link_order = "median"
 ldflags = ["/LTCG", "/SUBSYSTEM:WINDOWS", "/FIXED", "/OPT:REF", "/OPT:ICF", "/OPT:NOWIN98",
-           "/NODEFAULTLIB:libc.lib"]
+           "/NODEFAULTLIB:libc.lib", "/NODEFAULTLIB:LIBCMT",
+           "/INCLUDE:?UnusedAppAddedCallback@@YIHPAVApp@@@Z"]
 # The original's import table lists DINPUT8, DSOUND and d3d8 first and
 # ole32 last; D3DX8 follows the game code and the CRT comes last.
 libs = ["dinput8.lib", "dsound.lib", "d3d8.lib", "d3dx8.lib", "dxguid.lib", "winmm.lib",
-        "kernel32.lib", "user32.lib", "gdi32.lib", "ole32.lib", "uuid.lib", "libcmt.lib"]
+        "kernel32.lib", "user32.lib", "gdi32.lib", "ole32.lib", "uuid.lib",
+        "build\\crt_archives\\libcmt_ordered.lib",
+        "build\\crt_archives\\libcmt_throw.lib"]
 
 [psdk]
 libs = ["Gdi32.Lib", "Kernel32.Lib", "Ole32.Lib", "User32.Lib", "Uuid.Lib", "WinMM.Lib"]
 
 [hooks]
 progress = true
+
+[replay]
+hook = "scripts/replay_hook.py"

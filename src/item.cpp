@@ -24,8 +24,8 @@ int g_PowerLevels[9] = {
 };
 ItemManager g_ItemManager;
 // Constructed, never used.
-ChainElem g_ChainElem6241ec;
 ChainElem g_ChainElem575c4c;
+ChainElem g_ChainElem6241ec;
 #endif // TH07_EXE
 
 void Vector2::SetPolar(float angle, float radius)

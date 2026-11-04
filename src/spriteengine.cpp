@@ -22,7 +22,7 @@ const int g_TextureFormatSizes[7] = {
 // (__real@3f000000), which inline asm can't name. As a selectany
 // constant, /OPT:ICF folds g_Half into it.
 __declspec(selectany) extern const float g_Half = 0.5f;
-VertexTex1Xyzrwh g_Quad[4];
+VertexTex1Xyzrwh g_QuadVertices[4];
 VertexTex1DiffuseXyzrwh g_DiffuseQuad[4];
 VertexTex1DiffuseXyz g_DiffuseQuadXyz[4];
 #endif // TH07_EXE
@@ -36,15 +36,15 @@ SpriteEngine::SpriteEngine()
     {
         this->sprites[i].sourceFileIndex = -1;
     }
-    g_Quad[0].w = g_Quad[1].w = g_Quad[2].w = g_Quad[3].w = 1.0f;
-    g_Quad[0].uv.x = 0.0f;
-    g_Quad[0].uv.y = 0.0f;
-    g_Quad[1].uv.x = 1.0f;
-    g_Quad[1].uv.y = 0.0f;
-    g_Quad[2].uv.x = 0.0f;
-    g_Quad[2].uv.y = 1.0f;
-    g_Quad[3].uv.x = 1.0f;
-    g_Quad[3].uv.y = 1.0f;
+    g_QuadVertices[0].w = g_QuadVertices[1].w = g_QuadVertices[2].w = g_QuadVertices[3].w = 1.0f;
+    g_QuadVertices[0].uv.x = 0.0f;
+    g_QuadVertices[0].uv.y = 0.0f;
+    g_QuadVertices[1].uv.x = 1.0f;
+    g_QuadVertices[1].uv.y = 0.0f;
+    g_QuadVertices[2].uv.x = 0.0f;
+    g_QuadVertices[2].uv.y = 1.0f;
+    g_QuadVertices[3].uv.x = 1.0f;
+    g_QuadVertices[3].uv.y = 1.0f;
     g_DiffuseQuad[0].w = g_DiffuseQuad[1].w = g_DiffuseQuad[2].w = g_DiffuseQuad[3].w = 1.0f;
     g_DiffuseQuad[0].uv.x = 0.0f;
     g_DiffuseQuad[0].uv.y = 0.0f;
@@ -241,7 +241,7 @@ int SpriteEngine::LoadTextureAlpha(int index, char *path, int format, D3DCOLOR c
     this->textures[index]->GetLevelDesc(0, &desc);
     if (desc.Format != D3DFMT_A8R8G8B8 && desc.Format != D3DFMT_A4R4G4B4 && desc.Format != D3DFMT_A1R5G5B5)
     {
-        LogError(&g_Log, "error : イメージがαを持っていません\r\n");
+        LogError(&g_Logger, "error : イメージがαを持っていません\r\n");
         goto fail;
     }
     if (D3DXCreateTextureFromFileInMemoryEx(g_App.d3dDevice, fileData, g_LastFileSize, 0, 0, 0, 0, desc.Format,
@@ -364,7 +364,7 @@ int SpriteEngine::LoadAnm(int slot, char *path, int firstSprite)
     firstSlot = slot;
     if (anmFile == NULL)
     {
-        LogError(&g_Log, "アニメが読み込めません。データが失われてるか壊れています\r\n");
+        LogError(&g_Logger, "アニメが読み込めません。データが失われてるか壊れています\r\n");
         return -1;
     }
     while (1)
@@ -401,19 +401,19 @@ int SpriteEngine::LoadAnmSprites(int slot, AnmFile *anm, int firstSprite, int ow
     highest = 0;
     if (anm == NULL)
     {
-        LogError(&g_Log, "アニメが読み込めません。データが失われてるか壊れています\r\n");
+        LogError(&g_Logger, "アニメが読み込めません。データが失われてるか壊れています\r\n");
         return -1;
     }
     if (slot >= 0x32)
     {
-        LogError(&g_Log, "テクスチャ格納先が足りません\r\n");
+        LogError(&g_Logger, "テクスチャ格納先が足りません\r\n");
         return -1;
     }
     this->ReleaseAnm(slot);
     anmHeader = anm;
     if (anmHeader->version != 2)
     {
-        LogError(&g_Log, "アニメのバージョンが違います\r\n");
+        LogError(&g_Logger, "アニメのバージョンが違います\r\n");
         return -1;
     }
     anmHeader->textureIndex = slot;
@@ -427,7 +427,7 @@ int SpriteEngine::LoadAnmSprites(int slot, AnmFile *anm, int firstSprite, int ow
         }
         else if (this->LoadTexture(anmHeader->textureIndex, name, anmHeader->format, anmHeader->colorKey) != 0)
         {
-            LogError(&g_Log, "テクスチャ %s が読み込めません。データが失われてるか壊れています\r\n", name);
+            LogError(&g_Logger, "テクスチャ %s が読み込めません。データが失われてるか壊れています\r\n", name);
             return -1;
         }
         if (anmHeader->alphaNameOffset != 0)
@@ -435,7 +435,7 @@ int SpriteEngine::LoadAnmSprites(int slot, AnmFile *anm, int firstSprite, int ow
             name = (char *)anmHeader + anmHeader->alphaNameOffset;
             if (this->LoadTextureAlpha(anmHeader->textureIndex, name, anmHeader->format, anmHeader->colorKey) != 0)
             {
-                LogError(&g_Log, "テクスチャ %s が読み込めません。データが失われてるか壊れています\r\n", name);
+                LogError(&g_Logger, "テクスチャ %s が読み込めません。データが失われてるか壊れています\r\n", name);
                 return -1;
             }
         }
@@ -443,7 +443,7 @@ int SpriteEngine::LoadAnmSprites(int slot, AnmFile *anm, int firstSprite, int ow
     else if (this->CreateTextureFromImage(anmHeader->textureIndex, (AnmImage *)((BYTE *)anmHeader + anmHeader->imageOffset),
                               anmHeader->format) != 0)
     {
-        LogError(&g_Log, "テクスチャが読み込めません。データが失われてるか壊れています\r\n");
+        LogError(&g_Logger, "テクスチャが読み込めません。データが失われてるか壊れています\r\n");
         return -1;
     }
     this->anmImageNames[slot] = (char *)anmHeader + anmHeader->nameOffset;
@@ -470,7 +470,7 @@ int SpriteEngine::LoadAnmSprites(int slot, AnmFile *anm, int firstSprite, int ow
         }
         if (rawSprite->id + firstSprite >= 0xa00)
         {
-            LogError(&g_Log, "スプライトが格納できません。テーブルが不足しています\r\n");
+            LogError(&g_Logger, "スプライトが格納できません。テーブルが不足しています\r\n");
             return -1;
         }
         this->LoadSprite(rawSprite->id + firstSprite, &data);
@@ -479,7 +479,7 @@ int SpriteEngine::LoadAnmSprites(int slot, AnmFile *anm, int firstSprite, int ow
     {
         if (entries[0] + firstSprite >= 0xa00)
         {
-            LogError(&g_Log, "アニメが格納できません。テーブルが不足しています\r\n");
+            LogError(&g_Logger, "アニメが格納できません。テーブルが不足しています\r\n");
             return -1;
         }
         if (highest < entries[0])
@@ -692,12 +692,12 @@ void SpriteEngine::SetRenderStateForSprite(Sprite *vm)
         this->lastCameraSetupFlag = vm->flags >> 14 & 1;
         if (this->lastCameraSetupFlag == 0)
         {
-            g_Stage.SetupFixedCamera();
+            g_StageManager.SetupFixedCamera();
             g_App.d3dDevice->SetViewport(&g_App.viewport);
         }
         else
         {
-            g_Stage.SetupCamera();
+            g_StageManager.SetupCamera();
             g_App.d3dDevice->SetViewport(&g_App.viewport);
         }
     }
@@ -1050,7 +1050,7 @@ int SpriteEngine::ProjectSprite(Sprite *vm)
     {
         return -1;
     }
-    D3DXVec3Project(&edge, &g_Stage.camera.cameraRight, &g_App.viewport, &g_App.projectionMatrix, &g_App.viewMatrix, &world);
+    D3DXVec3Project(&edge, &g_StageManager.camera.cameraRight, &g_App.viewport, &g_App.projectionMatrix, &g_App.viewMatrix, &world);
     d = edge - projPos;
     x = D3DXVec3Length(&d) * 0.5f;
     w = x * vm->spriteData->width * vm->scaleY;
@@ -2063,7 +2063,7 @@ int SpriteEngine::LoadSurface(int surface, char *path)
     fileData = LoadFileData(path, 0);
     if (fileData == NULL)
     {
-        LogError(&g_Log, "%sが読み込めないです。\r\n", path);
+        LogError(&g_Logger, "%sが読み込めないです。\r\n", path);
         return -1;
     }
     if (g_App.d3dDevice->CreateImageSurface(640, 1024, g_App.presentParams.BackBufferFormat, &srcSurface) != D3D_OK)

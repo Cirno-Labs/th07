@@ -11,7 +11,7 @@
 // The game's data, as the original defines it here. The DLL build uses
 // the original's copies instead.
 #ifdef TH07_EXE
-Stage g_Stage;
+Stage g_StageManager;
 ChainElem g_StageCalcChain;
 ChainElem g_StageDrawChain;
 ChainElem g_StageDrawChain2;
@@ -36,8 +36,8 @@ EXE_INLINE Stage::Stage()
     this->camera.at = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
     this->camera.up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
     this->camera.fov = 0.5235988f;
-    this->cameraFrom = this->camera;
-    this->cameraTo = this->camera;
+    memcpy(&this->cameraFrom, &this->camera, sizeof(this->camera));
+    memcpy(&this->cameraTo, &this->camera, sizeof(this->camera));
 }
 
 float HermiteInterpolate(float p0, float p1, float m0, float m1, float t)
@@ -753,7 +753,7 @@ int Stage::DeletedCallback(Stage *stage)
 
 int Stage::RegisterChain(int stage)
 {
-    Stage *s = &g_Stage;
+    Stage *s = &g_StageManager;
 
     memset(s, 0, sizeof(Stage));
     s->data = NULL;
@@ -793,7 +793,7 @@ int Stage::Load(char *dataPath)
     this->data = (StageData *)LoadFileData(dataPath, 0);
     if (this->data == NULL)
     {
-        LogPrintf(&g_Log, "ステージデータが見つかりません。データが壊れています\r\n");
+        LogPrintf(&g_Logger, "ステージデータが見つかりません。データが壊れています\r\n");
         return -1;
     }
     this->objectCount = this->data->objectCount;

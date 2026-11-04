@@ -23,14 +23,28 @@ int Timer::NextTick()
 #include "player.h"
 #include "unsorted.h"
 
+#ifdef TH07_EXE
+// Seed the existing literal pool in its original order. The unused pointer
+// table is discarded by /OPT:REF; only the game's existing strings remain.
+extern __declspec(selectany) const char *const g_UnusedAsciiStringOrder[] = {
+    "Pause",
+    "UnPause",
+    "data/ascii.anm",
+    "data/capture.anm",
+};
+#endif // TH07_EXE
+
+
 // The game's data, as the original defines it here. The DLL build uses
 // the original's copies instead.
 #ifdef TH07_EXE
-AsciiText g_AsciiText;
-ChainElem g_AsciiCalcChain;
-ChainElem g_AsciiDrawChain;
-ChainElem g_AsciiDrawChain2;
+AsciiTextStorage g_AsciiText;
+ChainElem g_AsciiUpdate;
+ChainElem g_AsciiRenderChain;
+ChainElem g_AsciiRenderChain2;
 #endif // TH07_EXE
+
+
 
 // Probably an inline of unsorted.h whose out-of-line copy the original
 // keeps with this file's (0x401000-0x4013f0); defined here, not inline,
@@ -206,27 +220,27 @@ int AsciiText::RegisterChain()
 {
     AsciiText *text = &g_AsciiText;
 
-    g_AsciiCalcChain.SetCallback((ChainCallback)AsciiText::OnUpdate);
-    g_AsciiCalcChain.addedCallback = (ChainCallback)AsciiText::AddedCallback;
-    g_AsciiCalcChain.deletedCallback = (ChainCallback)AsciiText::DeletedCallback;
-    g_AsciiCalcChain.arg = text;
-    if (g_Chain.AddToCalcChain(&g_AsciiCalcChain, 1) != 0)
+    g_AsciiUpdate.SetCallback((ChainCallback)AsciiText::OnUpdate);
+    g_AsciiUpdate.addedCallback = (ChainCallback)AsciiText::AddedCallback;
+    g_AsciiUpdate.deletedCallback = (ChainCallback)AsciiText::DeletedCallback;
+    g_AsciiUpdate.arg = text;
+    if (g_Chain.AddToCalcChain(&g_AsciiUpdate, 1) != 0)
     {
         return -1;
     }
-    g_AsciiDrawChain.SetCallback((ChainCallback)AsciiText::OnDraw);
-    g_AsciiDrawChain.arg = text;
-    g_Chain.AddToDrawChain(&g_AsciiDrawChain, 0x10);
-    g_AsciiDrawChain2.SetCallback((ChainCallback)AsciiText::OnDraw2);
-    g_AsciiDrawChain2.arg = text;
-    g_Chain.AddToDrawChain(&g_AsciiDrawChain2, 0xb);
+    g_AsciiRenderChain.SetCallback((ChainCallback)AsciiText::OnDraw);
+    g_AsciiRenderChain.arg = text;
+    g_Chain.AddToDrawChain(&g_AsciiRenderChain, 0x10);
+    g_AsciiRenderChain2.SetCallback((ChainCallback)AsciiText::OnDraw2);
+    g_AsciiRenderChain2.arg = text;
+    g_Chain.AddToDrawChain(&g_AsciiRenderChain2, 0xb);
     return 0;
 }
 
 void AsciiText::RemoveChain()
 {
-    g_Chain.Remove(&g_AsciiCalcChain);
-    g_Chain.Remove(&g_AsciiDrawChain);
+    g_Chain.Remove(&g_AsciiUpdate);
+    g_Chain.Remove(&g_AsciiRenderChain);
 }
 
 void AsciiText::AddString(D3DXVECTOR3 *pos, char *text)
@@ -1224,3 +1238,10 @@ void AsciiText::DrawPopups()
         }
     }
 }
+
+#ifdef TH07_EXE
+// Load the UUID member supplying both ShellLink identifiers. This unused
+// reference is discarded by /OPT:REF and contributes no retained storage.
+extern "C" const GUID CLSID_ShellLink;
+extern __declspec(selectany) const GUID *const g_UnusedShellLinkClass = &CLSID_ShellLink;
+#endif

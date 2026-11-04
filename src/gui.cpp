@@ -17,8 +17,8 @@
 // The game's data, as the original defines it here. The DLL build uses
 // the original's copies instead.
 #ifdef TH07_EXE
-ChainElem g_GuiCalcChain;
-ChainElem g_GuiDrawChain;
+ChainElem g_GuiUpdateChain;
+ChainElem g_GuiDraw;
 Gui g_Gui;
 #endif // TH07_EXE
 
@@ -592,7 +592,7 @@ int Gui::LoadMsg(char *path)
     this->impl->msg.msgFile = (MsgFile *)LoadFileData(path, 0);
     if (this->impl->msg.msgFile == NULL)
     {
-        LogPrintf(&g_Log, "error : メッセージファイル %s が読み込めませんでした\r\n", path);
+        LogPrintf(&g_Logger, "error : メッセージファイル %s が読み込めませんでした\r\n", path);
         return -1;
     }
     this->impl->msg.scriptIndex = -1;
@@ -663,18 +663,18 @@ void GuiImpl::StartMsgScript(int index)
             break;
         case 6:
             CopySpriteToTexture(0x619);
-            g_Stage.dialogueScriptOffset = 2;
+            g_StageManager.dialogueScriptOffset = 2;
             g_BulletManager.clearItemType = 9;
             break;
         case 7:
             CopySpriteToTexture(0x61b);
-            g_Stage.dialogueScriptOffset = 1;
-            g_Stage.dialogueSpriteCount = 2;
+            g_StageManager.dialogueScriptOffset = 1;
+            g_StageManager.dialogueSpriteCount = 2;
             g_BulletManager.clearItemType = 9;
             break;
         case 8:
             CopySpriteToTexture(0x61d);
-            g_Stage.dialogueScriptOffset = 2;
+            g_StageManager.dialogueScriptOffset = 2;
             g_BulletManager.clearItemType = 9;
             break;
         }
@@ -794,7 +794,7 @@ int GuiImpl::RunMsg()
             g_SpriteRenderer->SetSprite(&this->trackNumberSprites[0], this->msg.instr->i + 0x803);
             if (g_App.PlayMidi(this->msg.instr->i) != 0)
             {
-                g_App.PlayMusic(g_Stage.data->songPaths[this->msg.instr->i]);
+                g_App.PlayMusic(g_StageManager.data->songPaths[this->msg.instr->i]);
             }
             break;
         case 8:
@@ -1676,22 +1676,22 @@ int Gui::RegisterChain()
         memset(gui, 0, sizeof(Gui));
         gui->impl = new GuiImpl;
     }
-    g_GuiCalcChain.SetCallback((ChainCallback)Gui::OnUpdate);
-    g_GuiCalcChain.addedCallback = (ChainCallback)Gui::AddedCallback;
-    g_GuiCalcChain.deletedCallback = (ChainCallback)Gui::DeletedCallback;
-    g_GuiCalcChain.arg = gui;
-    if (g_Chain.AddToCalcChain(&g_GuiCalcChain, 13) != 0)
+    g_GuiUpdateChain.SetCallback((ChainCallback)Gui::OnUpdate);
+    g_GuiUpdateChain.addedCallback = (ChainCallback)Gui::AddedCallback;
+    g_GuiUpdateChain.deletedCallback = (ChainCallback)Gui::DeletedCallback;
+    g_GuiUpdateChain.arg = gui;
+    if (g_Chain.AddToCalcChain(&g_GuiUpdateChain, 13) != 0)
     {
         return -1;
     }
-    g_GuiDrawChain.SetCallback((ChainCallback)Gui::OnDraw);
-    g_GuiDrawChain.arg = gui;
-    g_Chain.AddToDrawChain(&g_GuiDrawChain, 12);
+    g_GuiDraw.SetCallback((ChainCallback)Gui::OnDraw);
+    g_GuiDraw.arg = gui;
+    g_Chain.AddToDrawChain(&g_GuiDraw, 12);
     return 0;
 }
 
 void Gui::RemoveChain()
 {
-    g_Chain.Remove(&g_GuiCalcChain);
-    g_Chain.Remove(&g_GuiDrawChain);
+    g_Chain.Remove(&g_GuiUpdateChain);
+    g_Chain.Remove(&g_GuiDraw);
 }

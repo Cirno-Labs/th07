@@ -23,7 +23,7 @@ WORD InitJoystick()
     joyInfo.dwFlags = JOY_RETURNALL;
     if (joyGetPosEx(JOYSTICKID1, &joyInfo) != JOYERR_NOERROR)
     {
-        LogPrintf(&g_Log, "使えるパッドが存在しないようです、残念\r\n");
+        LogPrintf(&g_Logger, "使えるパッドが存在しないようです、残念\r\n");
         return 1;
     }
     joyGetDevCapsA(JOYSTICKID1, &g_JoyCaps, sizeof(g_JoyCaps));
@@ -358,7 +358,7 @@ void *LoadFileData(char *path, int isExternal)
         g_LastFileSize = dataSize;
         if (dataSize == 0)
         {
-            LogError(&g_Log, "error : %s is not found in arcfile.\r\n", name);
+            LogError(&g_Logger, "error : %s is not found in arcfile.\r\n", name);
             return NULL;
         }
         if (dataSize != 0)

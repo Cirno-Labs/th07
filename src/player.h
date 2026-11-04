@@ -612,7 +612,23 @@ public:
     ShotTypeData *shotTypeFocused;
 };
 ASSERT_SIZE(Player, 0xb7e78);
+#ifdef TH07_EXE
+// Source-only static-construction layout adapter. The original initializer
+// reserves 4 otherwise-unused stack bytes after failed inlining. These locals
+// are never read or written; object storage and the game ctor stay unchanged.
+// This adapter is a reconstruction aid, not claimed original source.
+struct PlayerStorage : public Player
+{
+    __forceinline PlayerStorage() : Player()
+    {
+        int reserved;
+    }
+};
+ASSERT_SIZE(PlayerStorage, sizeof(Player));
+extern PlayerStorage g_Player;
+#else
 extern Player g_Player;
+#endif // TH07_EXE
 
 // Bomb helpers, in bomb.cpp.
 

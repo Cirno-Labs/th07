@@ -18,12 +18,32 @@ our own analysis or, for library code, from the libraries themselves.
 
 ## Status
 
-All 694 of the game's functions are decompiled and match the original,
-all 381,170 bytes, and all of them are named. The standalone exe
-(`just exe`) is the whole game, built from source; it runs, and 89.2% of
-its bytes are identical to the original's. The rest is the order in
-which link-time code generation emits functions, which decides the
-copies the linker keeps of identical library functions.
+The standalone executable (`just exe`) now achieves **100% byte identity**:
+all **650,752 bytes** match the original retail 1.00b executable, including
+code, data, resources, headers and Rich metadata. Both files have SHA-1
+`80cbf99382c81ea0a9b7b85c7f9e059a75a52725`.
+
+All 694 game functions are decompiled and named, sit at their original
+addresses, and match raw. Ordinary-object comparison passes 702/702
+functions. A cold rebuild of 37 ordinary objects plus 37 `/GL` inputs
+reproduces the same hash, and all 30 Python regression tests pass.
+**`just check-exe`** builds and enforces whole-file equality;
+`just compare-exe` gives the detailed report.
+
+The match uses documented compiler/linker layout aids, including discarded
+helpers and static-construction adapters with 20/4 unused stack bytes.
+It is not a claim to have recovered the original source, and no generated
+code/data bytes are patched from the game executable. See
+[executable parity](docs/exe-parity.md) for the reconstruction details,
+validation and earlier checkpoints.
+
+`just replay` uses th06's shared replay harness with th07's format and
+tracer to compare complete playback runs. See [replay parity](docs/replay.md)
+for setup, the 36-recording corpus, saved-trace audits and validation
+limits. Replay checks require natural completion and recorded stage
+scores as well as exact original/rebuild trace equality.
+The final audit matches all 36 traces; 26 recordings pass full-route
+validation, while the same ten fail in the original executable.
 
 Ghidra finds 1561 functions. As in th06, the game code is compiled
 without optimization, so its functions start with `push ebp; mov ebp,

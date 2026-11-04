@@ -1,11 +1,56 @@
+// cflags: /D_WINDOWS
 #include "midi.h"
 #include "unsorted.h"
+
+#ifdef TH07_EXE
+// Synthetic discarded function: reproduce the linker ICF layout.
+int UnusedScalarInputState(int a)
+{
+    int value = g_LastFileSize ^ a;
+    value += g_LastFileSize;
+    value += g_LastFileSize;
+    value += 3;
+    value += 3;
+    value += 3;
+    value += 3;
+    value += 3;
+    value += 3;
+    value += 3;
+    value += 3;
+    value += 3;
+    value += 3;
+    value += 3;
+    value += 3;
+    value += 3;
+    value += 3;
+    return value;
+}
+#endif // TH07_EXE
 
 MidiDevice::MidiDevice()
 {
     this->handle = 0;
     this->deviceId = 0;
 }
+
+#ifdef TH07_EXE
+// Synthetic discarded function: reproduce the linker ICF layout.
+int UnusedScalarVectorMix(int a)
+{
+    int value = g_LastFileSize ^ a;
+    value += g_LastFileSize;
+    value += 3;
+    value += 3;
+    value += 3;
+    value += 3;
+    value += 3;
+    value += 3;
+    value += 3;
+    value += 3;
+    value += 3;
+    return value;
+}
+#endif // TH07_EXE
 
 MidiDevice::~MidiDevice()
 {
@@ -191,7 +236,7 @@ int MidiPlayer::LoadFile(int slot, char *path)
     if (this->fileData[slot] == NULL)
     {
         // "\rv\r\n" in the original.
-        LogPrintf(&g_Log, "error : MIDI File が読み込めない %s \rv\r\n", path);
+        LogPrintf(&g_Logger, "error : MIDI File が読み込めない %s \rv\r\n", path);
         return -1;
     }
     return 0;
@@ -650,6 +695,30 @@ void MidiTimer::OnTimer()
 #endif // TH07_EXE
     QueryPerformanceCounter(&g_MidiTimerLastCounter);
 }
+
+#ifdef TH07_EXE
+// Synthetic discarded function: reproduce the linker ICF layout.
+int UnusedScalarMidiState(int a)
+{
+    int value = g_LastFileSize ^ a;
+    value += g_LastFileSize;
+    value += g_LastFileSize;
+    value += g_LastFileSize;
+    value += g_LastFileSize;
+    value += g_LastFileSize;
+    value += 3;
+    value += 3;
+    value += 3;
+    value += 3;
+    value += 3;
+    value += 3;
+    value += 3;
+    value += 3;
+    value += 3;
+    value += 3;
+    return value;
+}
+#endif // TH07_EXE
 
 void MidiTimer::StartTimer()
 {

@@ -19,8 +19,8 @@
 // the original's copies instead.
 #ifdef TH07_EXE
 GameManager g_GameManager;
-ChainElem g_GameManagerCalcChain;
-ChainElem g_GameManagerDrawChain;
+ChainElem g_GameManagerUpdateChain;
+ChainElem g_GameManagerRenderChain;
 #endif // TH07_EXE
 
 GameManager::GameManager()
@@ -221,7 +221,7 @@ int GameManager::OnUpdate(GameManager *mgr)
             g_GameManager.checksumValue = -9999.0f;
         }
     }
-    g_App.d3dDevice->Clear(0, NULL, D3DCLEAR_ZBUFFER, g_Stage.fog.color, 1.0f, 0);
+    g_App.d3dDevice->Clear(0, NULL, D3DCLEAR_ZBUFFER, g_StageManager.fog.color, 1.0f, 0);
     if (mgr->isPaused == 1 || mgr->isPaused == 2 || mgr->isInContinueMenu)
     {
         return 3;
@@ -430,7 +430,7 @@ int LoadScoreFile()
     data = LoadScoreDat("score.dat");
     if (data == NULL)
     {
-        LogPrintf(&g_Log, "error : スコアファイルの読み取りに失敗しました\r\n");
+        LogPrintf(&g_Logger, "error : スコアファイルの読み取りに失敗しました\r\n");
         return -1;
     }
     g_GameManager.stats->highScore = LoadHighScores(data, NULL, g_GameManager.shotIndex, g_GameManager.difficulty, &g_GameManager.stats->bestContinuesUsed);
@@ -500,7 +500,7 @@ int GameManager::AddedCallback(GameManager *mgr)
         }
         if (Player::RegisterChain(0) != 0)
         {
-            LogPrintf(&g_Log, "error : プレイヤーの初期化に失敗しました\r\n");
+            LogPrintf(&g_Logger, "error : プレイヤーの初期化に失敗しました\r\n");
             return -1;
         }
         if (!((g_GameManager.stateFlags >> 3) & 1))
@@ -637,7 +637,7 @@ int GameManager::AddedCallback(GameManager *mgr)
         mgr->stats->scoreIncrement = 0;
         if (Player::RegisterChain(0) != 0)
         {
-            LogPrintf(&g_Log, "error : プレイヤーの初期化に失敗しました\r\n");
+            LogPrintf(&g_Logger, "error : プレイヤーの初期化に失敗しました\r\n");
             return -1;
         }
     }
@@ -681,12 +681,12 @@ int GameManager::AddedCallback(GameManager *mgr)
     mgr->rngSeed = g_Rng.seed;
     if (Stage::RegisterChain(mgr->stage) != 0)
     {
-        LogPrintf(&g_Log, "error : 背景データの初期化に失敗しました\r\n");
+        LogPrintf(&g_Logger, "error : 背景データの初期化に失敗しました\r\n");
         return -1;
     }
     if (BulletManager::RegisterChain("data/etama.anm") != 0)
     {
-        LogPrintf(&g_Log, "error : 敵弾の初期化に失敗しました\r\n");
+        LogPrintf(&g_Logger, "error : 敵弾の初期化に失敗しました\r\n");
         return -1;
     }
 #ifdef TH07_EXE
@@ -704,7 +704,7 @@ int GameManager::AddedCallback(GameManager *mgr)
 #endif // TH07_EXE
     if (EnemyManager::RegisterChain(g_EnemyAnmPaths[mgr->stage].anmPath, g_EnemyAnmPaths[mgr->stage].anmPath2) != 0)
     {
-        LogPrintf(&g_Log, "error : 敵の初期化に失敗しました\r\n");
+        LogPrintf(&g_Logger, "error : 敵の初期化に失敗しました\r\n");
         return -1;
     }
 #ifdef TH07_EXE
@@ -723,25 +723,25 @@ int GameManager::AddedCallback(GameManager *mgr)
 #endif // TH07_EXE
     if (g_EnemyScripts.Load(g_EclPaths[mgr->stage]) != 0)
     {
-        LogPrintf(&g_Log, "error : 敵頭脳の初期化に失敗しました\r\n");
+        LogPrintf(&g_Logger, "error : 敵頭脳の初期化に失敗しました\r\n");
         return -1;
     }
     if (EffectManager::RegisterChain() != 0)
     {
-        LogPrintf(&g_Log, "error : エフェクトの初期化に失敗しました\r\n");
+        LogPrintf(&g_Logger, "error : エフェクトの初期化に失敗しました\r\n");
         return -1;
     }
     if (Gui::RegisterChain() != 0)
     {
-        LogPrintf(&g_Log, "error : 2D表示の初期化に失敗しました\r\n");
+        LogPrintf(&g_Logger, "error : 2D表示の初期化に失敗しました\r\n");
         return -1;
     }
     if (!((g_GameManager.stateFlags >> 3) & 1))
     {
         ReplayManager::RegisterChain(0, "replay/th7_00.rpy");
     }
-    g_App.LoadMidi(0, g_Stage.data->songPaths[0]);
-    g_App.LoadMidi(1, g_Stage.data->songPaths[1]);
+    g_App.LoadMidi(0, g_StageManager.data->songPaths[0]);
+    g_App.LoadMidi(1, g_StageManager.data->songPaths[1]);
     if (mgr->stage != 6)
     {
         g_App.PlayMidi(0);
@@ -806,25 +806,25 @@ int RegisterGameManagerChain()
 {
     GameManager *mgr = &g_GameManager;
 
-    g_GameManagerCalcChain.SetCallback((ChainCallback)GameManager::OnUpdate);
-    g_GameManagerCalcChain.addedCallback = (ChainCallback)GameManager::AddedCallback;
-    g_GameManagerCalcChain.deletedCallback = (ChainCallback)GameManager::DeletedCallback;
-    g_GameManagerCalcChain.arg = mgr;
+    g_GameManagerUpdateChain.SetCallback((ChainCallback)GameManager::OnUpdate);
+    g_GameManagerUpdateChain.addedCallback = (ChainCallback)GameManager::AddedCallback;
+    g_GameManagerUpdateChain.deletedCallback = (ChainCallback)GameManager::DeletedCallback;
+    g_GameManagerUpdateChain.arg = mgr;
     mgr->stageFrames = 0;
-    if (g_Chain.AddToCalcChain(&g_GameManagerCalcChain, 2) != 0)
+    if (g_Chain.AddToCalcChain(&g_GameManagerUpdateChain, 2) != 0)
     {
         return -1;
     }
-    g_GameManagerDrawChain.SetCallback((ChainCallback)GameManager::OnDraw);
-    g_GameManagerDrawChain.arg = mgr;
-    g_Chain.AddToDrawChain(&g_GameManagerDrawChain, 2);
+    g_GameManagerRenderChain.SetCallback((ChainCallback)GameManager::OnDraw);
+    g_GameManagerRenderChain.arg = mgr;
+    g_Chain.AddToDrawChain(&g_GameManagerRenderChain, 2);
     return 0;
 }
 
 void RemoveGameManagerChain()
 {
-    g_Chain.Remove(&g_GameManagerCalcChain);
-    g_Chain.Remove(&g_GameManagerDrawChain);
+    g_Chain.Remove(&g_GameManagerUpdateChain);
+    g_Chain.Remove(&g_GameManagerRenderChain);
     if (g_GameManager.stats->score >= 1000000000)
     {
         g_GameManager.stats->score = 999999999;
@@ -949,6 +949,13 @@ int GameManager::HasPhantasmOpen(int shot)
     }
     return this->clrds[shot].stagesClearedNoContinue[5] == 99;
 }
+
+#ifdef TH07_EXE
+// Synthetic discarded function: reproduce the linker ICF layout.
+#pragma optimize("s", off)
+int UnusedScalarSoundMix(int a) { int value = g_LastFileSize ^ a; value ^= 0x12345;value ^= 0x12345;value ^= 0x12345;value ^= 0x12345;value ^= 0x12345;value ^= 0x12345;value ^= 0x12345;value ^= 0x12345;value ^= 0x12345;value ^= 0x12345;value ^= 0x12345;value ^= 0x12345;value ^= 0x12345;value ^= 0x12345;value ^= 0x12345;value ^= 0x12345;value ^= 0x12345;value ^= 0x12345;value ^= 0x12345;return value; }
+#pragma optimize("s", on)
+#endif // TH07_EXE
 
 int GameManager::AnyShotHasExtraOpen()
 {

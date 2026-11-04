@@ -17,9 +17,9 @@ BYTE g_EnemyItemDrops[0x20] = {
     0, 0, 1, 0, 1, 0, 0, 7, 1, 1, 0, 0, 7, 1, 1, 0,
     1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 7, 1, 1, 1, 0, 2,
 };
-ChainElem g_EnemyManagerCalcChain;
-ChainElem g_EnemyManagerDrawChain;
-ChainElem g_EnemyManagerDrawChain2;
+ChainElem g_EnemyManagerUpdate;
+ChainElem g_EnemyManagerRenderChain;
+ChainElem g_EnemyManagerRenderChain2;
 EnemyManager g_EnemyManager;
 #endif // TH07_EXE
 
@@ -1323,23 +1323,23 @@ int EnemyManager::RegisterChain(char *anmPath, char *anmPath2)
     mgr->Initialize();
     mgr->anmPath = anmPath;
     mgr->anmPath2 = anmPath2;
-    g_EnemyManagerCalcChain.SetCallback((ChainCallback)EnemyManager::OnUpdate);
-    g_EnemyManagerCalcChain.addedCallback = (ChainCallback)EnemyManager::AddedCallback;
-    g_EnemyManagerCalcChain.deletedCallback = (ChainCallback)EnemyManager::DeletedCallback;
-    g_EnemyManagerCalcChain.arg = mgr;
-    if (g_Chain.AddToCalcChain(&g_EnemyManagerCalcChain, 10) != 0)
+    g_EnemyManagerUpdate.SetCallback((ChainCallback)EnemyManager::OnUpdate);
+    g_EnemyManagerUpdate.addedCallback = (ChainCallback)EnemyManager::AddedCallback;
+    g_EnemyManagerUpdate.deletedCallback = (ChainCallback)EnemyManager::DeletedCallback;
+    g_EnemyManagerUpdate.arg = mgr;
+    if (g_Chain.AddToCalcChain(&g_EnemyManagerUpdate, 10) != 0)
     {
         return -1;
     }
-    g_EnemyManagerDrawChain.SetCallback((ChainCallback)EnemyManager::OnDraw);
-    g_EnemyManagerDrawChain.arg = mgr;
-    if (g_Chain.AddToDrawChain(&g_EnemyManagerDrawChain, 5) != 0)
+    g_EnemyManagerRenderChain.SetCallback((ChainCallback)EnemyManager::OnDraw);
+    g_EnemyManagerRenderChain.arg = mgr;
+    if (g_Chain.AddToDrawChain(&g_EnemyManagerRenderChain, 5) != 0)
     {
         return -1;
     }
-    g_EnemyManagerDrawChain2.SetCallback((ChainCallback)EnemyManager::OnDraw2);
-    g_EnemyManagerDrawChain2.arg = mgr;
-    if (g_Chain.AddToDrawChain(&g_EnemyManagerDrawChain2, 7) != 0)
+    g_EnemyManagerRenderChain2.SetCallback((ChainCallback)EnemyManager::OnDraw2);
+    g_EnemyManagerRenderChain2.arg = mgr;
+    if (g_Chain.AddToDrawChain(&g_EnemyManagerRenderChain2, 7) != 0)
     {
         return -1;
     }
@@ -1348,9 +1348,9 @@ int EnemyManager::RegisterChain(char *anmPath, char *anmPath2)
 
 void EnemyManager::RemoveChain()
 {
-    g_Chain.Remove(&g_EnemyManagerCalcChain);
-    g_Chain.Remove(&g_EnemyManagerDrawChain);
-    g_Chain.Remove(&g_EnemyManagerDrawChain2);
+    g_Chain.Remove(&g_EnemyManagerUpdate);
+    g_Chain.Remove(&g_EnemyManagerRenderChain);
+    g_Chain.Remove(&g_EnemyManagerRenderChain2);
 }
 
 int EnemyManager::ClearEnemiesForBonus(int maxBonus, int start)

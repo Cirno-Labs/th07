@@ -49,7 +49,7 @@ ShotHitFunc g_ShotHitFuncs[4] = {
     BurstHitEffect,
     (ShotHitFunc)1,
 };
-Player g_Player;
+PlayerStorage g_Player;
 #endif // TH07_EXE
 
 void GameManager::RerollLifeChecksumKeys()
@@ -1783,7 +1783,7 @@ void UpdateInvulnerability(Player *player)
                 color.g = color.b;
                 color.r = color.g;
             }
-            g_Stage.SetTintColor(color.color);
+            g_StageManager.SetTintColor(color.color);
         }
     }
     else
@@ -2090,7 +2090,7 @@ int Player::OnDraw(Player *player)
             color.g = color.b;
             color.r = color.g;
         }
-        g_Stage.SetTintColor(color.color);
+        g_StageManager.SetTintColor(color.color);
     }
     return 1;
 }
@@ -2118,21 +2118,35 @@ float Player::AngleFrom(D3DXVECTOR3 *pos)
 int Player::AddedCallback(Player *player)
 {
 #ifdef TH07_EXE
-    static char *g_ShotFiles[6] = {
-        "data/ply00a.sht",
-        "data/ply00b.sht",
-        "data/ply01a.sht",
-        "data/ply01b.sht",
-        "data/ply02a.sht",
-        "data/ply02b.sht",
-    };
+    // Keep filename storage independent of the pointer-table order. The
+    // compiler allocates initialized static tables in reverse declaration order.
+    static const char s_ReimuAShot[] = "data/ply00a.sht";
+    static const char s_ReimuBShot[] = "data/ply00b.sht";
+    static const char s_MarisaAShot[] = "data/ply01a.sht";
+    static const char s_MarisaBShot[] = "data/ply01b.sht";
+    static const char s_SakuyaAShot[] = "data/ply02a.sht";
+    static const char s_SakuyaBShot[] = "data/ply02b.sht";
+    static const char s_ReimuAFocusedShot[] = "data/ply00as.sht";
+    static const char s_ReimuBFocusedShot[] = "data/ply00bs.sht";
+    static const char s_MarisaAFocusedShot[] = "data/ply01as.sht";
+    static const char s_MarisaBFocusedShot[] = "data/ply01bs.sht";
+    static const char s_SakuyaAFocusedShot[] = "data/ply02as.sht";
+    static const char s_SakuyaBFocusedShot[] = "data/ply02bs.sht";
     static char *g_ShotFilesFocused[6] = {
-        "data/ply00as.sht",
-        "data/ply00bs.sht",
-        "data/ply01as.sht",
-        "data/ply01bs.sht",
-        "data/ply02as.sht",
-        "data/ply02bs.sht",
+        (char *)s_ReimuAFocusedShot,
+        (char *)s_ReimuBFocusedShot,
+        (char *)s_MarisaAFocusedShot,
+        (char *)s_MarisaBFocusedShot,
+        (char *)s_SakuyaAFocusedShot,
+        (char *)s_SakuyaBFocusedShot,
+    };
+    static char *g_ShotFiles[6] = {
+        (char *)s_ReimuAShot,
+        (char *)s_ReimuBShot,
+        (char *)s_MarisaAShot,
+        (char *)s_MarisaBShot,
+        (char *)s_SakuyaAShot,
+        (char *)s_SakuyaBShot,
     };
 #endif // TH07_EXE
     int i;
@@ -2310,3 +2324,142 @@ int LoadShotTypeFile(ShotTypeData **out, char *path)
     }
     return 0;
 }
+
+#ifdef TH07_EXE
+// Discarded construction paths: preserve exception-section ordering.
+
+#include "midi.h"
+#include "dsutil.h"
+#include "sprite.h"
+#pragma optimize("s", on)
+int UnusedAppAddedCallback(App *arg)
+{
+    int i;
+    ScoreDat *scoreDat;
+
+    QueryPerformanceFrequency((LARGE_INTEGER *)arg->perfFrequency);
+    g_App.d3dDevice->BeginScene();
+    g_App.d3dDevice->Clear(0, NULL, D3DCLEAR_TARGET, 0xff000000, 1.0f, 0);
+    g_App.d3dDevice->EndScene();
+    if (FAILED(g_App.d3dDevice->Present(NULL, NULL, NULL, NULL)))
+    {
+        g_App.d3dDevice->Reset(&g_App.presentParams);
+    }
+    g_App.d3dDevice->BeginScene();
+    g_App.d3dDevice->Clear(0, NULL, D3DCLEAR_TARGET, 0xff000000, 1.0f, 0);
+    g_App.d3dDevice->EndScene();
+    if (FAILED(g_App.d3dDevice->Present(NULL, NULL, NULL, NULL)))
+    {
+        g_App.d3dDevice->Reset(&g_App.presentParams);
+    }
+    if (OpenGameArchive() != 0)
+    {
+        return -1;
+    }
+    // Shows the logo while the refresh rate is measured, or for four
+    // frames.
+    g_SpriteRenderer->LoadSurface(0, "data/title/th07logo.jpg");
+    g_App.hideFps = 1;
+    if (g_App.presentImmediate == 0)
+    {
+        if (MeasureRefreshRate() != 0)
+        {
+            g_SpriteRenderer->ReleaseSurface(0);
+            return -2;
+        }
+    }
+    else
+    {
+        i = 0;
+        while (i < 4)
+        {
+            g_App.d3dDevice->BeginScene();
+            g_SpriteRenderer->CopySurfaceToBackBuffer(0, 0, 0, 0, 0);
+            g_App.d3dDevice->EndScene();
+            if (FAILED(g_App.d3dDevice->Present(NULL, NULL, NULL, NULL)))
+            {
+                g_App.d3dDevice->Reset(&g_App.presentParams);
+            }
+            i++;
+        }
+    }
+    g_SpriteRenderer->ReleaseSurface(0);
+    arg->hideFps = 0;
+    arg->redrawFrames = 0;
+    arg->lastPlayTimeTick = timeGetTime();
+    g_Rng.SetSeed(arg->lastPlayTimeTick);
+    InitDirectInput(arg);
+    if (arg->midi == NULL)
+    {
+        arg->midi = new MidiPlayer();
+    }
+    if (arg->midi != NULL)
+    {
+        arg->midi->LoadFile(0x1e, "bgm/init.mid");
+    }
+    g_SoundPlayer.LoadSounds();
+    if (g_SpriteRenderer->LoadAnm(0, "data/text.anm", 0x700) != 0)
+    {
+        return -1;
+    }
+    if (AsciiText::RegisterChain() != 0)
+    {
+        LogPrintf(&g_Logger, "error : 文字の初期化に失敗しました\r\n");
+        return -1;
+    }
+    g_SpriteRenderer->CreateQuad();
+    CreateTextSurface();
+    if (g_SoundPlayer.LoadBgmFormat("bgm/thbgm.fmt") != 0)
+    {
+        LogPrintf(&g_Logger, "error : BGM の初期化に失敗しました\r\n");
+        return -1;
+    }
+    if (g_SoundPlayer.bgmFileOffset == 0)
+    {
+        if (!g_App.flags.preloadBgm)
+        {
+            g_SoundPlayer.LoadBgm("thbgm.dat");
+        }
+        else
+        {
+            strcpy(g_SoundPlayer.bgmPath, "thbgm.dat");
+        }
+    }
+    else
+    {
+        if (!g_App.flags.preloadBgm)
+        {
+            g_SoundPlayer.LoadBgm("th07.dat");
+        }
+        else
+        {
+            strcpy(g_SoundPlayer.bgmPath, "th07.dat");
+        }
+    }
+    scoreDat = LoadScoreDat("score.dat");
+    memset(&g_GameManager.plst, 0, sizeof(Plst));
+    g_GameManager.plst.size = sizeof(Plst);
+    g_GameManager.plst.size2 = g_GameManager.plst.size;
+    g_GameManager.plst.magic = 'TSLP';
+    g_GameManager.plst.version = 1;
+    LoadPlstChunk(scoreDat, &g_GameManager.plst);
+    ReleaseScoreDat(scoreDat);
+    g_App.timer = new MidiTimer();
+    if (g_App.timer != NULL)
+    {
+        g_App.timer->StartTimer();
+    }
+    return 0;
+}
+
+#pragma optimize("s", off)
+
+#pragma optimize("s", on)
+void UnusedLateAllocation()
+{
+    App::AddedCallback(NULL);
+    new ChainElem;
+}
+#pragma optimize("s", off)
+
+#endif // TH07_EXE

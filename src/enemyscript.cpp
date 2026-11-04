@@ -73,7 +73,7 @@ EnemyScriptInterp g_EnemyScriptInterps[8] = {
     ScriptMoveHermite,
 };
 // Constructed, never used.
-ChainElem g_ChainElem1347ac0;
+ChainElem g_UnusedEnemyScriptCalcChain;
 EnemyScripts g_EnemyScripts;
 #endif // TH07_EXE
 
@@ -90,7 +90,7 @@ int EnemyScripts::Load(char *path)
     this->file = (EnemyScriptHeader *)LoadFileData(path, 0);
     if (this->file == NULL)
     {
-        LogPrintf(&g_Log, "敵データの読み込みに失敗しました、データが壊れてるか失われています\r\n");
+        LogPrintf(&g_Logger, "敵データの読み込みに失敗しました、データが壊れてるか失われています\r\n");
         return -1;
     }
     for (i = 0; i < 16; i++)
@@ -671,11 +671,11 @@ void StartSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
     }
     g_Gui.ShowSpellCardName(*(short *)&instr->args[0], (char *)cardName.text);
     g_BulletManager.ClearAll(1);
-    g_Stage.spellCardState = 1;
-    g_Stage.spellCardFrames = 0;
-    for (i = 0; i < g_Stage.dialogueSpriteCount; i++)
+    g_StageManager.spellCardState = 1;
+    g_StageManager.spellCardFrames = 0;
+    for (i = 0; i < g_StageManager.dialogueSpriteCount; i++)
     {
-        g_SpriteRenderer->StartScript(&g_Stage.dialogueSprites[i], i + g_Stage.dialogueScriptOffset + 0x2dc);
+        g_SpriteRenderer->StartScript(&g_StageManager.dialogueSprites[i], i + g_StageManager.dialogueScriptOffset + 0x2dc);
     }
     g_EnemyManager.spellCardActive = 1;
     g_EnemyManager.spellCardCapture = 1;
@@ -836,7 +836,7 @@ void EndSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
         }
         g_SoundPlayer.QueueSound(0xf, 0);
     }
-    g_Stage.spellCardState = 0;
+    g_StageManager.spellCardState = 0;
 }
 
 // Moves `lo` towards `hi` with the rank: lo at rank 0, hi at rank 32, as
@@ -1748,7 +1748,7 @@ loop:
             g_ItemManager.SpawnItem(&enemy->pos, INT_ARG(0), 0);
             break;
         case 125:
-            g_Stage.waitLabel = INT_ARG(0);
+            g_StageManager.waitLabel = INT_ARG(0);
             break;
         case 126:
             g_Gui.SetBossLives(INT_ARG(0));
@@ -2172,9 +2172,4 @@ done:
 
 #ifdef TH07_EXE
 #include <new.h>
-// Unused: pulls libcmt's new_mode.obj, see UnusedDeleteNothrow (bomb.cpp).
-int UnusedSetNewMode(int mode)
-{
-    return _set_new_mode(mode);
-}
 #endif // TH07_EXE

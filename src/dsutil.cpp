@@ -1,3 +1,4 @@
+// cflags: /DWIN32
 // The file from 0x45c6f0: the DirectX 8 SDK's dsutil.cpp, as the game
 // builds it.
 
@@ -51,6 +52,15 @@ HRESULT CSoundManager::Initialize(HWND hWnd, DWORD dwCoopLevel, DWORD dwPrimaryC
 
     return S_OK;
 }
+
+#ifdef TH07_EXE
+// Synthetic discarded function: reproduce the linker ICF layout.
+int UnusedScalarNoop(int a)
+{
+    int value = g_LastFileSize ^ a;
+    return value;
+}
+#endif // TH07_EXE
 
 HRESULT CSoundManager::SetPrimaryBufferFormat(DWORD dwPrimaryChannels, DWORD dwPrimaryFreq, DWORD dwPrimaryBitRate)
 {
@@ -811,6 +821,17 @@ HRESULT CWaveFile::SwitchTrack(BgmFormat *format)
 
     return S_OK;
 }
+
+#ifdef TH07_EXE
+// Synthetic discarded function: reproduce the linker ICF layout.
+int UnusedScalarWaveMix(int a, int b)
+{
+    int mix = a * b + (a - b) * 0x300;
+    mix ^= a << 4;
+    mix += b >> 2;
+    return mix | (b << 3);
+}
+#endif // TH07_EXE
 
 HRESULT CWaveFile::OpenFromMemory(BYTE *pbData, ULONG ulDataSize, BgmFormat *format, DWORD dwFlags)
 {

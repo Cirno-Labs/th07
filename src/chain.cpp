@@ -21,7 +21,7 @@ struct Unknown626268
 };
 Unknown626268 g_Unknown626268;
 DatArchive g_Archive;
-Log g_Log;
+Log g_Logger;
 #endif // TH07_EXE
 
 Chain::~Chain()

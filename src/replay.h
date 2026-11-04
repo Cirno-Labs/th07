@@ -20,7 +20,8 @@ struct ReplayFrame
 // Only the fields known so far.
 struct ReplayStage
 {
-    // The score the stage started with, divided by 10.
+    // The score the stage ended with, divided by 10. Playback restores
+    // the previous stage's value when starting the next stage.
     int score;
     // GameStats::pointItemsTotal.
     int pointItemsTotal;

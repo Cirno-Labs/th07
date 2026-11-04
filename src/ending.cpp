@@ -351,7 +351,7 @@ int Ending::Load(char *path)
     this->file = (char *)LoadFileData(path, 0);
     if (this->file == NULL)
     {
-        LogPrintf(&g_Log, "error : エンディングファイルが読み込めない、ファイルが破壊されています\r\n");
+        LogPrintf(&g_Logger, "error : エンディングファイルが読み込めない、ファイルが破壊されています\r\n");
         return -1;
     }
     this->cursor = this->file;
@@ -401,18 +401,28 @@ int Ending::AddedCallback(Ending *ending)
         ending->sprites[j].pos = D3DXVECTOR3(64.0f, (float)j * 16.0f + 392.0f, 0.0f);
     }
 #ifdef TH07_EXE
-    static char *g_BadEndingFiles[3] = {
-        "data/end00b.end",
-        "data/end10b.end",
-        "data/end20b.end",
-    };
+    // Keep filename storage independent of the reversed pointer-table order.
+    static const char s_ReimuBadEnding[] = "data/end00b.end";
+    static const char s_MarisaBadEnding[] = "data/end10b.end";
+    static const char s_SakuyaBadEnding[] = "data/end20b.end";
+    static const char s_ReimuAEnding[] = "data/end00.end";
+    static const char s_ReimuBEnding[] = "data/end01.end";
+    static const char s_MarisaAEnding[] = "data/end10.end";
+    static const char s_MarisaBEnding[] = "data/end11.end";
+    static const char s_SakuyaAEnding[] = "data/end20.end";
+    static const char s_SakuyaBEnding[] = "data/end21.end";
     static char *g_EndingFiles[6] = {
-        "data/end00.end",
-        "data/end01.end",
-        "data/end10.end",
-        "data/end11.end",
-        "data/end20.end",
-        "data/end21.end",
+        (char *)s_ReimuAEnding,
+        (char *)s_ReimuBEnding,
+        (char *)s_MarisaAEnding,
+        (char *)s_MarisaBEnding,
+        (char *)s_SakuyaAEnding,
+        (char *)s_SakuyaBEnding,
+    };
+    static char *g_BadEndingFiles[3] = {
+        (char *)s_ReimuBadEnding,
+        (char *)s_MarisaBadEnding,
+        (char *)s_SakuyaBadEnding,
     };
 #endif // TH07_EXE
     if (g_GameManager.stats->continuesUsed != 0)

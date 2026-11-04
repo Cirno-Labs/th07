@@ -335,7 +335,7 @@ class Log
 {
 public:
     // Empties the log and logs its header line. Inline: the original
-    // runs it as g_Log's static initializer.
+    // runs it as g_Logger's static initializer.
     Log();
     ~Log()
     {
@@ -352,7 +352,7 @@ public:
     // error.
     void Flush();
 };
-extern Log g_Log;
+extern Log g_Logger;
 
 // Logs a printf-style message to a log object.
 int LogPrintf(Log *log, const char *fmt, ...);
@@ -898,8 +898,8 @@ ASSERT_SIZE(GameManager, 0x9644);
 extern GameManager g_GameManager;
 
 // The update and draw chain elements of g_GameManager, after it.
-extern ChainElem g_GameManagerCalcChain;
-extern ChainElem g_GameManagerDrawChain;
+extern ChainElem g_GameManagerUpdateChain;
+extern ChainElem g_GameManagerRenderChain;
 
 // The rank a game starts at and its bounds, as th06's.
 struct RankSettings
@@ -1254,8 +1254,8 @@ public:
 };
 ASSERT_SIZE(Gui, 0x94);
 extern Gui g_Gui;
-extern ChainElem g_GuiCalcChain;
-extern ChainElem g_GuiDrawChain;
+extern ChainElem g_GuiUpdateChain;
+extern ChainElem g_GuiDraw;
 // The colors of the boss timer: 20 seconds and more, 10, 5 and under 5.
 extern D3DCOLOR g_BossTimerColors[4];
 // Copies the rectangle of sprite `sprite` in texture 0x16 into sprite
@@ -1739,7 +1739,7 @@ public:
     int keepTintColor;
 };
 ASSERT_SIZE(Stage, 0x52b4);
-extern Stage g_Stage;
+extern Stage g_StageManager;
 // The stage data file of each stage; stage 0 has a "dummy" one.
 extern char *g_StageDataFiles[];
 // Stage's statically allocated chain elements.
