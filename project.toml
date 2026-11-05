@@ -39,6 +39,7 @@ libs = ["Gdi32.Lib", "Kernel32.Lib", "Ole32.Lib", "User32.Lib", "Uuid.Lib", "Win
 
 [hooks]
 progress = true
+readme = true
 
 [replay]
 hook = "scripts/replay_hook.py"
