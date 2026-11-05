@@ -37,13 +37,14 @@ code/data bytes are patched from the game executable. See
 [executable parity](docs/exe-parity.md) for the reconstruction details,
 validation and earlier checkpoints.
 
-`just replay` uses th06's shared replay harness with th07's format and
-tracer to compare complete playback runs. See [replay parity](docs/replay.md)
-for setup, the 36-recording corpus, saved-trace audits and validation
-limits. Replay checks require natural completion and recorded stage
-scores as well as exact original/rebuild trace equality.
-The final audit matches all 36 traces; 26 recordings pass full-route
-validation, while the same ten fail in the original executable.
+`just replay` uses the shared replay harness (`tools/replay/`, from
+th06) with th07's format and tracer to compare complete playback runs.
+See [replay parity](docs/replay.md) for setup, the 36-recording world
+record corpus, saved-trace audits and validation limits. Replay checks
+require natural completion and recorded stage scores as well as exact
+original/rebuild trace equality. The final audit matches all 36
+traces; 26 recordings pass full-route validation, while the same ten
+fail in the original executable.
 
 Ghidra finds 1561 functions. As in th06, the game code is compiled
 without optimization, so its functions start with `push ebp; mov ebp,
@@ -141,6 +142,7 @@ Everything runs headless, so it works over SSH. `just` lists the recipes.
    game's data and global objects are defined in the files that own
    them, under `TH07_EXE`; the DLL uses the original's instead.
    `just exe STEPS` runs it like `just run`.
+   [`docs/exe-parity.md`](docs/exe-parity.md) has how it matches.
 
 ### Hooking
 
@@ -163,12 +165,12 @@ orig/     your game files (not tracked) and their checksums
 src/      decompiled source; src/dll/ is the hook DLL's own code
 config/   symbols.csv: address, size, name and mangled symbol
 tools/    the shared decomp-tools: build, compare, exe patcher, symbol
-          seeding, Ghidra scripts and the just recipes
-scripts/  th07's own: build hook, CRT archives, replay hook
-          and tracer
-replays/  world record replays for just replay, and their manifest
-docs/     progress image, executable and replay parity
+          seeding, Ghidra scripts, the replay harness and the just recipes
 project.toml  th07's settings for the tools: exe, flags, link order
+scripts/  th07's own: its build hook, the CRT archives, the replay
+          hook, tracer, fixtures, audit and tests
+replays/  world record replays for just replay, their manifest and README
+docs/     progress image, executable and replay parity
 build/    outputs; build/game/ is a runnable copy of the patched game
 ```
 
@@ -183,10 +185,11 @@ other games' changes. Either way, commit the new `tools` pointer here.
 
 - Wine (32-bit, with its `msidb`), Python 3,
   [just](https://github.com/casey/just), binutils (`objdump`), 7-Zip
-- For `just run`: Xvfb, xdotool, ImageMagick, 32-bit Mesa OpenGL
-  (`libgl1-mesa-dri:i386`, `libglx-mesa0:i386`) and the `ja_JP.UTF-8`
-  locale
-- The original toolchain in the Wine prefix at `.wine/` (bring your own
+- For `just run` and `just replay`: Xvfb, xdotool, ImageMagick, 32-bit
+  Mesa OpenGL (`libgl1-mesa-dri:i386`, `libglx-mesa0:i386`) and the
+  `ja_JP.UTF-8` locale
+- Visual C++ .NET 2002, the Windows XP SP2 Platform SDK and the
+  DirectX 8.0 SDK in the Wine prefix at `.wine/` (bring your own
   copies)
 - Ghidra (for analysis, optional)
 
