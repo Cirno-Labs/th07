@@ -164,7 +164,7 @@ src/      decompiled source; src/dll/ is the hook DLL's own code
 config/   symbols.csv: address, size, name and mangled symbol
 tools/    the shared decomp-tools: build, compare, exe patcher, symbol
           seeding, Ghidra scripts and the just recipes
-scripts/  th07's own: build hook, exe check, CRT archives, replay hook
+scripts/  th07's own: build hook, CRT archives, replay hook
           and tracer
 replays/  world record replays for just replay, and their manifest
 docs/     progress image, executable and replay parity

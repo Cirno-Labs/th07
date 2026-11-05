@@ -6,14 +6,14 @@ Both `build/th07.exe` and `build/th07_100b.exe` have SHA-1
 `80cbf99382c81ea0a9b7b85c7f9e059a75a52725`.
 
 ```sh
-just check-exe             # builds the exe, then requires exact equality
+just check-exe            # builds the exe, then requires exact equality
 just compare              # ordinary-object function comparison
 just compare-exe          # detailed headers/sections/symbol report
 ```
 
-`scripts/check_exe.py` compares every byte and the file lengths. It exits
-nonzero on any mismatch, including headers, padding, tables and metadata;
-it does not mask addresses. Ordinary comparison passes **702/702
+`just check-exe` (decomp-tools' `project.py check-exe`) compares every
+byte and the file lengths. It exits nonzero on any mismatch, including
+headers, padding, tables and metadata; it does not mask addresses. Ordinary comparison passes **702/702
 functions, 381,300 bytes**. All **694 standalone game functions** sit at
 their original addresses and match **raw**, as do the complete D3DX and
 CRT regions. Headers, Rich metadata, initialized data and resources also
