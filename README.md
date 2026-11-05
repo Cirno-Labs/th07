@@ -137,8 +137,9 @@ Everything runs headless, so it works over SSH. `just` lists the recipes.
    into `build/obj_gl/` and links them with `/LTCG`, without the hook
    DLL, into `build/th07.exe`, a game that needs nothing from the
    original executable. `/GL` objects hold no machine code, so the DLL
-   and `just compare` keep using the plain objects in `build/obj/`. It
-   needs the game's data and global objects in `src/exe/`.
+   and `just compare` keep using the plain objects in `build/obj/`. The
+   game's data and global objects are defined in the files that own
+   them, under `TH07_EXE`; the DLL uses the original's instead.
    `just exe STEPS` runs it like `just run`.
 
 ### Hooking
@@ -163,6 +164,10 @@ src/      decompiled source; src/dll/ is the hook DLL's own code
 config/   symbols.csv: address, size, name and mangled symbol
 tools/    the shared decomp-tools: build, compare, exe patcher, symbol
           seeding, Ghidra scripts and the just recipes
+scripts/  th07's own: build hook, exe check, CRT archives, replay hook
+          and tracer
+replays/  world record replays for just replay, and their manifest
+docs/     progress image, executable and replay parity
 project.toml  th07's settings for the tools: exe, flags, link order
 build/    outputs; build/game/ is a runnable copy of the patched game
 ```
