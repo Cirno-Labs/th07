@@ -156,7 +156,7 @@ stage-1 calculation and natural death in stage 2. This rules out skipped
 rasterization as that recording's failure cause; other harness/platform
 effects remain unproven. It remains excluded from route coverage.
 
-The Python suites pass **30 tests**: 23 project tests and seven shared
+The Python suites pass **31 tests**: 23 project tests and eight shared
 harness tests. They cover real bundled recordings, checksums, bounded
 multi-stage/Phantasm layouts, complete-input markers, corrupt/incomplete
 traces, private writable files, actual binary hook sites, concurrent hook

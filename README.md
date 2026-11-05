@@ -22,11 +22,14 @@ The standalone executable (`just exe`) now achieves **100% byte identity**:
 all **650,752 bytes** match the original retail 1.00b executable, including
 code, data, resources, headers and Rich metadata. Both files have SHA-1
 `80cbf99382c81ea0a9b7b85c7f9e059a75a52725`.
+Only the link timestamp is copied from the original, and the
+resources, the game's data, are taken from it; the code, data, imports,
+headers and Rich header come out of the build.
 
 All 694 game functions are decompiled and named, sit at their original
 addresses, and match raw. Ordinary-object comparison passes 702/702
 functions. A cold rebuild of 37 ordinary objects plus 37 `/GL` inputs
-reproduces the same hash, and all 30 Python regression tests pass.
+reproduces the same hash, and all 31 Python regression tests pass.
 **`just check-exe`** builds and enforces whole-file equality;
 `just compare-exe` gives the detailed report.
 

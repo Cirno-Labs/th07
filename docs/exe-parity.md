@@ -40,7 +40,7 @@ original addresses, including the storage symbol aliases. The saved reports
 are `build/parity_final/clean_rebuild.log`, `functions.txt` and
 `executable.txt`.
 
-All **30 Python regression tests pass**: 23 project tests and seven shared
+All **31 Python regression tests pass**: 23 project tests and eight shared
 harness tests. Independent cold/cache-hit CRT preparation checks confirm
 the 715-member order, every member's bytes, the intact throw tail, and an
 unchanged installed toolchain archive. The exact executable's replay audit
