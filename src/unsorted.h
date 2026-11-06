@@ -1313,13 +1313,13 @@ struct EnemySpawnArgs
 
 struct EnemyTimelineEntry;
 
-// 0x160 bytes in EnemyScripts that no code reads or writes. It ends
-// with eight vectors, whose (empty) constructors the original's static
-// initializer runs.
-struct EnemyScriptsUnusedBlock
+// th06's ScriptStarPattern keeps its star here; in th07 no code reads
+// or writes the 0x160 bytes. It ends with eight vectors, whose (empty)
+// constructors the original's static initializer runs.
+struct EnemyScriptsStar
 {
     unsigned char pad_0[0x100];
-    D3DXVECTOR3 vectors[8];
+    D3DXVECTOR3 ends[8];
 };
 
 // The enemy scripts (ECL), at 0x1347938, as th06's EnemyScripts.
@@ -1351,7 +1351,7 @@ public:
 
     EnemyScriptHeader *file;
     void **subs;
-    EnemyScriptsUnusedBlock unused8;
+    EnemyScriptsStar star;
     // The scripts' shared variables, 10037 to 10040 and 10041 to 10044.
     int globalInts[4];
     float globalFloats[4];
