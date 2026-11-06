@@ -65,8 +65,8 @@ public:
     // stop.
     int UpdateList();
 
-    ChainElem *calcChain;
-    ChainElem *drawChain;
+    ChainElem *calcElem;
+    ChainElem *drawElem;
     // Frames spent in `state`.
     int stateFrames;
     int state;

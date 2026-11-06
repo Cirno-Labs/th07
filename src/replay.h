@@ -220,10 +220,10 @@ public:
     BYTE *extraEnds[7];
     // The update element, the draw element, the second update element
     // when playing and when recording.
-    ChainElem *calcChain;
-    ChainElem *drawChain;
-    ChainElem *calcChain2;
-    ChainElem *calcChain3;
+    ChainElem *calcElem;
+    ChainElem *drawElem;
+    ChainElem *calcElem2;
+    ChainElem *calcElem3;
     // The random seed at the start of the frame.
     WORD frameSeed;
     // Bits set during a frame: 2 when the player is hit.

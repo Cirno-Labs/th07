@@ -413,8 +413,8 @@ public:
     // The "TH7K" chunk SaveScoreDat writes.
     Th7k th7k;
     Lsnm lsnm;
-    ChainElem *calcChain;
-    ChainElem *drawChain;
+    ChainElem *calcElem;
+    ChainElem *drawElem;
     // The headers of "./replay/th7_01.rpy" to "th7_15.rpy", where they
     // are valid.
     ReplayHeader replays[0xf];

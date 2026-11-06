@@ -2336,8 +2336,8 @@ int ResultScreen::DeletedCallback(ResultScreen *screen)
     g_SpriteRenderer->ReleaseAnm(0x2c);
     g_SpriteRenderer->ReleaseAnm(0x2d);
     g_SpriteRenderer->ReleaseSurface(0);
-    g_Chain.Remove(screen->drawChain);
-    screen->drawChain = NULL;
+    g_Chain.Remove(screen->drawElem);
+    screen->drawElem = NULL;
     delete screen;
     screen = NULL;
     return 0;
@@ -2365,16 +2365,16 @@ int ResultScreen::RegisterChain(int mode)
         ResultScreen::AddedCallback(screen);
         return 0;
     }
-    screen->calcChain = g_Chain.CreateElem((ChainCallback)ResultScreen::OnUpdate);
-    screen->calcChain->addedCallback = (ChainCallback)ResultScreen::AddedCallback;
-    screen->calcChain->deletedCallback = (ChainCallback)ResultScreen::DeletedCallback;
-    screen->calcChain->arg = screen;
-    if (g_Chain.AddToCalcChain(screen->calcChain, 0xe) != 0)
+    screen->calcElem = g_Chain.CreateElem((ChainCallback)ResultScreen::OnUpdate);
+    screen->calcElem->addedCallback = (ChainCallback)ResultScreen::AddedCallback;
+    screen->calcElem->deletedCallback = (ChainCallback)ResultScreen::DeletedCallback;
+    screen->calcElem->arg = screen;
+    if (g_Chain.AddToCalcChain(screen->calcElem, 0xe) != 0)
     {
         return -1;
     }
-    screen->drawChain = g_Chain.CreateElem((ChainCallback)ResultScreen::OnDraw);
-    screen->drawChain->arg = screen;
-    g_Chain.AddToDrawChain(screen->drawChain, 0xd);
+    screen->drawElem = g_Chain.CreateElem((ChainCallback)ResultScreen::OnDraw);
+    screen->drawElem->arg = screen;
+    g_Chain.AddToDrawChain(screen->drawElem, 0xd);
     return 0;
 }

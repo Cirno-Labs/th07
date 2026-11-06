@@ -446,8 +446,8 @@ int Ending::DeletedCallback(Ending *ending)
     g_App.scene = 6;
     g_SpriteRenderer->ReleaseSurface(0);
     MemFree(ending->file);
-    g_Chain.Remove(ending->drawChain);
-    ending->drawChain = NULL;
+    g_Chain.Remove(ending->drawElem);
+    ending->drawElem = NULL;
     delete ending;
     ending = NULL;
     g_App.hideFps = 0;
@@ -458,16 +458,16 @@ int Ending::RegisterChain()
 {
     Ending *ending = new Ending();
 
-    ending->calcChain = g_Chain.CreateElem((ChainCallback)Ending::OnUpdate);
-    ending->calcChain->arg = ending;
-    ending->calcChain->addedCallback = (ChainCallback)Ending::AddedCallback;
-    ending->calcChain->deletedCallback = (ChainCallback)Ending::DeletedCallback;
-    if (g_Chain.AddToCalcChain(ending->calcChain, 4) != 0)
+    ending->calcElem = g_Chain.CreateElem((ChainCallback)Ending::OnUpdate);
+    ending->calcElem->arg = ending;
+    ending->calcElem->addedCallback = (ChainCallback)Ending::AddedCallback;
+    ending->calcElem->deletedCallback = (ChainCallback)Ending::DeletedCallback;
+    if (g_Chain.AddToCalcChain(ending->calcElem, 4) != 0)
     {
         return -1;
     }
-    ending->drawChain = g_Chain.CreateElem((ChainCallback)Ending::OnDraw);
-    ending->drawChain->arg = ending;
-    g_Chain.AddToDrawChain(ending->drawChain, 1);
+    ending->drawElem = g_Chain.CreateElem((ChainCallback)Ending::OnDraw);
+    ending->drawElem->arg = ending;
+    g_Chain.AddToDrawChain(ending->drawElem, 1);
     return 0;
 }

@@ -601,9 +601,9 @@ public:
     float aimedShotAngle;
     // The update element and the two draw elements, as in th06
     // (removed together by RemoveChain).
-    ChainElem *calcChain;
-    ChainElem *drawChain;
-    ChainElem *drawChain2;
+    ChainElem *calcElem;
+    ChainElem *drawElem;
+    ChainElem *drawElem2;
     // Effects that follow the player while playerState is 3 and 4.
     Effect *invulnerabilityEffect;
     Effect *bombInvulnerabilityEffect;
