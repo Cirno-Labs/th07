@@ -169,8 +169,8 @@ void AsciiText::Initialize()
     this->nextPopup2 = 0;
     this->unusedAfterInit74e4 = 0;
     this->color = 0xffffffff;
-    this->scaleX = 1.0f;
     this->scaleY = 1.0f;
+    this->scaleX = 1.0f;
     this->digit.flags |= 0xc00;
     g_SpriteRenderer->InitSprite(&this->digit, 0);
     g_SpriteRenderer->InitSprite(&this->glyph, 0x20);
@@ -256,8 +256,8 @@ void AsciiText::AddString(D3DXVECTOR3 *pos, char *text)
     strcpy(str->text, text);
     str->pos = *pos;
     str->color = this->color;
-    str->scaleX = this->scaleX;
     str->scaleY = this->scaleY;
+    str->scaleX = this->scaleX;
     str->inArena = this->inArena;
     if (g_App.HasFlag0Or8())
     {
@@ -296,9 +296,9 @@ void AsciiText::DrawStrings()
     {
         this->glyph.pos = string->pos;
         c = (BYTE *)string->text;
-        this->glyph.scaleY = string->scaleX;
         this->glyph.scaleX = string->scaleY;
-        advance = this->glyphWidth * string->scaleX;
+        this->glyph.scaleY = string->scaleX;
+        advance = this->glyphWidth * string->scaleY;
         if (clipped != string->inArena)
         {
             clipped = string->inArena;
@@ -324,7 +324,7 @@ void AsciiText::DrawStrings()
         {
             if (*c == '\n')
             {
-                this->glyph.pos.y += 16.0f * string->scaleY;
+                this->glyph.pos.y += 16.0f * string->scaleX;
                 this->glyph.pos.x = string->pos.x;
             }
             else if (*c == ' ')
@@ -1181,8 +1181,8 @@ void AsciiText::DrawPopups()
             }
             this->summaryDigit.pos.x += 7.0f;
         }
-        this->summaryDigit.scaleY = 1.0f;
         this->summaryDigit.scaleX = 1.0f;
+        this->summaryDigit.scaleY = 1.0f;
         nonzero = 0;
         this->summaryDigit.pos.x = this->summaryPopup.pos.x + 40.0f + 6.0f + 7.0f;
         this->summaryDigit.pos.y = this->summaryPopup.pos.y + 2.0f;
@@ -1197,8 +1197,8 @@ void AsciiText::DrawPopups()
             }
             this->summaryDigit.colorRgb[1] = amount * 0xc0 / 50000 + div * 0x40 / 2000;
             this->summaryDigit.colorRgb[0] = amount * 0xc0 / 50000 + div * 0x40 / 2000;
-            this->summaryDigit.scaleY = 1.41f;
             this->summaryDigit.scaleX = 1.41f;
+            this->summaryDigit.scaleY = 1.41f;
             step = 10;
             this->summaryDigit.pos.x += 2.0f;
             this->summaryDigit.pos.y -= 2.0f;
@@ -1226,8 +1226,8 @@ void AsciiText::DrawPopups()
             }
             this->summaryDigit.pos.x += step;
         }
-        this->summaryDigit.scaleY = 1.0f;
         this->summaryDigit.scaleX = 1.0f;
+        this->summaryDigit.scaleY = 1.0f;
         if (g_Player.bombState == 1)
         {
             this->summaryBombIcon.pos = this->summaryPopup.pos;

@@ -2008,7 +2008,7 @@ int ResultScreen::OnDraw(ResultScreen *screen)
                 pos3[0] += 320.0f;
                 pos3[1] += 16.0f;
                 screen->spellCardRowDivider.pos = pos3;
-                screen->spellCardRowDivider.scaleY = 2.375f;
+                screen->spellCardRowDivider.scaleX = 2.375f;
                 g_SpriteRenderer->DrawUnrotated(&screen->spellCardRowDivider);
                 pos3[1] -= 16.0f;
                 pos3.x = x0;
@@ -2043,16 +2043,16 @@ int ResultScreen::OnDraw(ResultScreen *screen)
                 pos3[0] += 424.0f;
                 pos3[1] -= 13.0f;
                 g_AsciiText.color = 0xffa08090;
-                g_AsciiText.scaleX = 0.8f;
                 g_AsciiText.scaleY = 0.8f;
+                g_AsciiText.scaleX = 0.8f;
                 if (g_GameManager.catks[card].attempts[screen->shownShotType] != 0)
                 {
                     g_AsciiText.AddFormat(&pos3, "MaxBonus %8d", g_GameManager.catks[card].maxBonus[screen->shownShotType]);
                 }
                 pos3[0] -= 424.0f;
                 pos3[1] += 13.0f;
-                g_AsciiText.scaleX = 1.0f;
                 g_AsciiText.scaleY = 1.0f;
+                g_AsciiText.scaleX = 1.0f;
                 if (screen->spellInfoSliding == 0)
                 {
                     pos3[1] += 33.0f;
@@ -2092,15 +2092,15 @@ int ResultScreen::OnDraw(ResultScreen *screen)
                     {
                         scale3 = 2.0f - 0.8f * (screen->frame % 32) / 32.0f;
                     }
-                    g_AsciiText.scaleX = scale3;
                     g_AsciiText.scaleY = scale3;
+                    g_AsciiText.scaleX = scale3;
                     shift = scale3 = -(scale3 - 1.0f) * 8.0f;
                 }
                 else
                 {
                     g_AsciiText.color = 0xc0c0c0c0;
-                    g_AsciiText.scaleX = 1.0f;
                     g_AsciiText.scaleY = 1.0f;
+                    g_AsciiText.scaleX = 1.0f;
                 }
                 charPos = pos3;
                 charPos.x += scale3;
@@ -2125,8 +2125,8 @@ int ResultScreen::OnDraw(ResultScreen *screen)
             pos3[1] += 18.0f;
         }
     }
-    g_AsciiText.scaleX = 1.0f;
     g_AsciiText.scaleY = 1.0f;
+    g_AsciiText.scaleX = 1.0f;
     if (screen->state >= 11 && screen->state <= 15)
     {
         sprite = &screen->sprites[0x12];

@@ -991,9 +991,9 @@ int BulletManager::OnUpdate(BulletManager *mgr)
         extent5.x = las->endOffset - las->startOffset;
         center2.x = (las->endOffset - las->startOffset) / 2.0f + las->startOffset + las->pos.x;
         center2.y = las->pos.y;
-        las->sprite0.scaleY = las->width / las->sprite0.spriteData->width;
+        las->sprite0.scaleX = las->width / las->sprite0.spriteData->width;
         scale3 = las->endOffset - las->startOffset;
-        las->sprite0.scaleX = scale3 / las->sprite0.spriteData->height;
+        las->sprite0.scaleY = scale3 / las->sprite0.spriteData->height;
         las->sprite0.SetRotationZ(AddNormalizeAngle(1.5707964f + las->angle, 0.0f));
         switch (las->state)
         {
@@ -1019,7 +1019,7 @@ int BulletManager::OnUpdate(BulletManager *mgr)
                     scale3 = 1.2f;
                 }
                 las->baseWidth = scale3;
-                las->sprite0.scaleY = scale3 / 16.0f;
+                las->sprite0.scaleX = scale3 / 16.0f;
                 extent5.x = scale3 / 2.0f;
             }
             if (las->timer >= las->hitStartFrame)
@@ -1058,7 +1058,7 @@ int BulletManager::OnUpdate(BulletManager *mgr)
             }
             else if (las->endFrames > 0)
             {
-                las->sprite0.scaleY = (scale3 = las->width - las->timer.AsFloat() * las->width / las->endFrames) / 16.0f;
+                las->sprite0.scaleX = (scale3 = las->width - las->timer.AsFloat() * las->width / las->endFrames) / 16.0f;
                 extent5.x = scale3 / 2.0f;
             }
             if (las->timer < las->endHitFrames)
@@ -1153,12 +1153,12 @@ int BulletManager::OnDraw(BulletManager *mgr)
             laser->sprite1.color = laser->sprite0.color;
             laser->sprite1.flags |= 0x20;
             laser->sprite1.color = laser->sprite1.color & 0xffffff | 0xff000000;
-            laser->sprite1.scaleY = laser->width / 10.0f * ((16.0f - laser->startOffset) / 16.0f);
-            laser->sprite1.scaleX = laser->sprite1.scaleY;
-            if (laser->sprite1.scaleX <= 0.0f)
+            laser->sprite1.scaleX = laser->width / 10.0f * ((16.0f - laser->startOffset) / 16.0f);
+            laser->sprite1.scaleY = laser->sprite1.scaleX;
+            if (laser->sprite1.scaleY <= 0.0f)
             {
-                laser->sprite1.scaleY = laser->width / 10.0f;
-                laser->sprite1.scaleX = laser->sprite1.scaleY;
+                laser->sprite1.scaleX = laser->width / 10.0f;
+                laser->sprite1.scaleY = laser->sprite1.scaleX;
             }
             laser->sprite1.pos.x = g_GameManager.arena[0] + laser->sprite1.pos.x;
             laser->sprite1.pos.y = g_GameManager.arena[1] + laser->sprite1.pos.y;

@@ -50,7 +50,7 @@ void SpawnBombAura(Player *player)
     effect->sprite.interpDuration[4].Set(0);
     effect->sprite.interpFrame[4] = player->stateTimer;
     effect->sprite.scaleInterpEasing = 0;
-    *(D3DXVECTOR2 *)&effect->sprite.scaleTween = *(D3DXVECTOR2 *)&effect->sprite.scaleY;
+    *(D3DXVECTOR2 *)&effect->sprite.scaleTween = *(D3DXVECTOR2 *)&effect->sprite.scaleX;
     effect->sprite.scaleTween.z = 0.0625f;
     effect->sprite.colorTween.x = 0.0625f;
     effect->sprite.scriptVar0 = player->stateTimer.AsFrames();
@@ -622,15 +622,15 @@ void DrawMarisaABomb(Player *player)
         curSprite->pos.x = g_GameManager.arena[0] + curSprite->pos.x;
         curSprite->pos.y = g_GameManager.arena[1] + curSprite->pos.y;
         curSprite->pos.z = 0.0f;
-        curSprite->scaleY = 3.2f;
         curSprite->scaleX = 3.2f;
+        curSprite->scaleY = 3.2f;
         g_SpriteRenderer->Draw(curSprite);
         curSprite->pos -= player->bomb.parts[i].velocity * 6.0f;
         curSprite->pos.x += -32.0f;
         curSprite->pos.y += -32.0f;
         curSprite->pos.z = 0.0f;
-        curSprite->scaleY = 2.2f;
         curSprite->scaleX = 2.2f;
+        curSprite->scaleY = 2.2f;
         g_SpriteRenderer->Draw(curSprite);
         curSprite->pos -= player->bomb.parts[i].velocity * 2.0f;
         curSprite->pos.x += 64.0f;
@@ -640,8 +640,8 @@ void DrawMarisaABomb(Player *player)
         curSprite->pos.x += -32.0f;
         curSprite->pos.y += -32.0f;
         curSprite->pos.z = 0.0f;
-        curSprite->scaleY = 1.0f;
         curSprite->scaleX = 1.0f;
+        curSprite->scaleY = 1.0f;
         g_SpriteRenderer->Draw(curSprite);
         curSprite++;
     }
@@ -752,22 +752,22 @@ void DrawMarisaABombFocused(Player *player)
         curSprite->pos.x = g_GameManager.arena[0] + curSprite->pos.x;
         curSprite->pos.y = g_GameManager.arena[1] + curSprite->pos.y;
         curSprite->pos.z = 0.3f;
-        curSprite->scaleY = 3.2f;
         curSprite->scaleX = 3.2f;
+        curSprite->scaleY = 3.2f;
         g_SpriteRenderer->Draw(curSprite);
         curSprite->pos = orb->trail[3];
         curSprite->pos.x = g_GameManager.arena[0] + curSprite->pos.x;
         curSprite->pos.y = g_GameManager.arena[1] + curSprite->pos.y;
         curSprite->pos.z = 0.32f;
-        curSprite->scaleY = 2.2f;
         curSprite->scaleX = 2.2f;
+        curSprite->scaleY = 2.2f;
         g_SpriteRenderer->Draw(curSprite);
         curSprite->pos = orb->trail[7];
         curSprite->pos.x = g_GameManager.arena[0] + curSprite->pos.x;
         curSprite->pos.y = g_GameManager.arena[1] + curSprite->pos.y;
         curSprite->pos.z = 0.34f;
-        curSprite->scaleY = 1.3f;
         curSprite->scaleX = 1.3f;
+        curSprite->scaleY = 1.3f;
         g_SpriteRenderer->Draw(curSprite);
         curSprite++;
     }
@@ -824,8 +824,8 @@ void UpdateMarisaBBomb(Player *player)
             }
             theta = laser->laserAngle;
             laser->sprites[0].pos = player->position;
-            laser->sprites[0].pos.x += cosf(theta) * laser->sprites[0].spriteData->height * laser->sprites[0].scaleX / 2.0f;
-            laser->sprites[0].pos.y += sinf(theta) * laser->sprites[0].spriteData->height * laser->sprites[0].scaleX / 2.0f;
+            laser->sprites[0].pos.x += cosf(theta) * laser->sprites[0].spriteData->height * laser->sprites[0].scaleY / 2.0f;
+            laser->sprites[0].pos.y += sinf(theta) * laser->sprites[0].spriteData->height * laser->sprites[0].scaleY / 2.0f;
             len = 32.0f;
             for (k = 0; k < 6; k++, hit++)
             {
@@ -836,7 +836,7 @@ void UpdateMarisaBBomb(Player *player)
                 hit->size.y = 128.0f;
                 hit->damage = 10;
                 player->AddHitboxAreaCircle(&hit->pos, 64.0f, 0.0f, 0, 6);
-                len += laser->sprites[0].spriteData->height * laser->sprites[0].scaleX / 5.0f;
+                len += laser->sprites[0].spriteData->height * laser->sprites[0].scaleY / 5.0f;
             }
             g_SpriteRenderer->Step(laser->sprites);
         }
@@ -865,8 +865,8 @@ void DrawMarisaBBomb(Player *player)
         curSprite = player->bomb.parts[i].sprites;
         theta = player->bomb.parts[i].laserAngle;
         curSprite->pos = player->position;
-        curSprite->pos.x += cosf(theta) * curSprite->spriteData->height * curSprite->scaleX / 2.0f;
-        curSprite->pos.y += sinf(theta) * curSprite->spriteData->height * curSprite->scaleX / 2.0f;
+        curSprite->pos.x += cosf(theta) * curSprite->spriteData->height * curSprite->scaleY / 2.0f;
+        curSprite->pos.y += sinf(theta) * curSprite->spriteData->height * curSprite->scaleY / 2.0f;
         curSprite->SetRotationZ(AddNormalizeAngle(theta, 1.5707964f));
         curSprite->pos.x = g_GameManager.arena[0] + curSprite->pos.x;
         curSprite->pos.y = g_GameManager.arena[1] + curSprite->pos.y;
@@ -947,8 +947,8 @@ void DrawMarisaBBombFocused(Player *player)
     {
         angle = 0.62831855f * (float)i / 3.0f - 3.1415927f + 1.2566371f;
         curSprite->pos = player->position;
-        curSprite->pos.x += cosf(angle) * curSprite->spriteData->height * curSprite->scaleX / 2.0f;
-        curSprite->pos.y += sinf(angle) * curSprite->spriteData->height * curSprite->scaleX / 2.0f;
+        curSprite->pos.x += cosf(angle) * curSprite->spriteData->height * curSprite->scaleY / 2.0f;
+        curSprite->pos.y += sinf(angle) * curSprite->spriteData->height * curSprite->scaleY / 2.0f;
         curSprite->SetRotationZ(AddNormalizeAngle(angle, 1.5707964f));
         curSprite->pos.x = g_GameManager.arena[0] + curSprite->pos.x;
         curSprite->pos.y = g_GameManager.arena[1] + curSprite->pos.y;

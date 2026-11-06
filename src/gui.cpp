@@ -235,14 +235,14 @@ int Gui::OnDraw(Gui *gui)
         g_AsciiText.color = 0xffffffff;
         break;
     case 2:
-        g_AsciiText.scaleX = 0.9f;
-        g_AsciiText.scaleY = 1.0f;
+        g_AsciiText.scaleY = 0.9f;
+        g_AsciiText.scaleX = 1.0f;
         g_AsciiText.glyphWidth = 11;
         g_AsciiText.color = 0xffe0b0ff;
         g_AsciiText.AddFormat(&gui->impl->fullPowerPopup.pos, "Supernatural Border!!");
         g_AsciiText.color = 0xffffffff;
-        g_AsciiText.scaleX = 1.0f;
         g_AsciiText.scaleY = 1.0f;
+        g_AsciiText.scaleX = 1.0f;
         g_AsciiText.glyphWidth = 14;
         break;
     case 3:
@@ -251,14 +251,14 @@ int Gui::OnDraw(Gui *gui)
         g_AsciiText.color = 0xffffffff;
         break;
     case 4:
-        g_AsciiText.scaleX = 0.9f;
-        g_AsciiText.scaleY = 1.0f;
+        g_AsciiText.scaleY = 0.9f;
+        g_AsciiText.scaleX = 1.0f;
         g_AsciiText.glyphWidth = 11;
         g_AsciiText.color = 0xffe0b0ff;
         g_AsciiText.AddFormat(&gui->impl->fullPowerPopup.pos, "Border Bonus %7d", gui->impl->fullPowerPopup.value);
         g_AsciiText.color = 0xffffffff;
-        g_AsciiText.scaleX = 1.0f;
         g_AsciiText.scaleY = 1.0f;
+        g_AsciiText.scaleX = 1.0f;
         g_AsciiText.glyphWidth = 14;
         break;
     }
@@ -271,12 +271,12 @@ int Gui::OnDraw(Gui *gui)
         gui->impl->spellBonusPopup.pos.y += 16.0f;
         sprintf(buf, "+%d", gui->impl->spellBonusPopup.value);
         gui->impl->spellBonusPopup.pos.x = (384.0f - strlen(buf) * 32.0f) / 2.0f + 32.0f;
-        g_AsciiText.scaleX = 2.0f;
         g_AsciiText.scaleY = 2.0f;
+        g_AsciiText.scaleX = 2.0f;
         g_AsciiText.color = 0xffff8080;
         g_AsciiText.AddString(&gui->impl->spellBonusPopup.pos, buf);
-        g_AsciiText.scaleX = 1.0f;
         g_AsciiText.scaleY = 1.0f;
+        g_AsciiText.scaleX = 1.0f;
         g_AsciiText.color = 0xffffffff;
     }
     g_AsciiText.inArena = 0;
@@ -1320,15 +1320,15 @@ void Gui::DrawHud()
         }
         else
         {
-            g_AsciiText.scaleX = 0.9f;
-            g_AsciiText.scaleY = 1.0f;
+            g_AsciiText.scaleY = 0.9f;
+            g_AsciiText.scaleX = 1.0f;
             g_AsciiText.AddFormat(&scorePos, "%.9d", g_GameManager.stats->guiScore);
             // Nine digits 14 wide at the 0.9 scale; the folded product is
             // one ulp below 113.4f.
             scorePos.x += 126.0f * 0.9f;
             g_AsciiText.AddFormat(&scorePos, "%1d", g_GameManager.stats->continuesUsed);
-            g_AsciiText.scaleX = 1.0f;
             g_AsciiText.scaleY = 1.0f;
+            g_AsciiText.scaleX = 1.0f;
         }
         scorePos = D3DXVECTOR3(496.0f, 48.0f, 0.0f);
         if (g_GameManager.stats->highScore < 100000000)
@@ -1339,15 +1339,15 @@ void Gui::DrawHud()
         }
         else
         {
-            g_AsciiText.scaleX = 0.9f;
-            g_AsciiText.scaleY = 1.0f;
+            g_AsciiText.scaleY = 0.9f;
+            g_AsciiText.scaleX = 1.0f;
             g_AsciiText.AddFormat(&scorePos, "%.9d", g_GameManager.stats->highScore);
             // Nine digits 14 wide at the 0.9 scale; the folded product is
             // one ulp below 113.4f.
             scorePos.x += 126.0f * 0.9f;
             g_AsciiText.AddFormat(&scorePos, "%1d", g_GameManager.stats->bestContinuesUsed);
-            g_AsciiText.scaleX = 1.0f;
             g_AsciiText.scaleY = 1.0f;
+            g_AsciiText.scaleX = 1.0f;
         }
         if (this->grazeChanged || g_App.flags.noFrameItems)
         {

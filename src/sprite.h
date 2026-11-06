@@ -73,12 +73,12 @@ struct SpriteBase
     float rotationSpeedY;
     // Player's StartBombState negates it on its effect.
     float rotationSpeedZ;
-    // SpriteEngine::Draw scales the sprite's height and width by these.
-    float scaleY;
+    // SpriteEngine::Draw scales the sprite's width and height by these.
     float scaleX;
-    // The scale speeds, which Step adds to scaleY and scaleX each frame.
-    float scaleSpeedY;
+    float scaleY;
+    // The scale speeds, which Step adds to scaleX and scaleY each frame.
     float scaleSpeedX;
+    float scaleSpeedY;
     // Added to the sprite's texture coordinates, as in th06.
     float uvScrollX;
     float uvScrollY;
@@ -172,8 +172,8 @@ public:
     void Initialize()
     {
         memset(this, 0, sizeof(SpriteBase));
-        this->scaleY = 1.0f;
         this->scaleX = 1.0f;
+        this->scaleY = 1.0f;
         this->color = 0xffffffff;
         D3DXMatrixIdentity(&this->matrix);
         *(WORD *)&this->flags = 7;

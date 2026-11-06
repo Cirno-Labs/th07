@@ -14,8 +14,8 @@ struct AsciiString
     char text[0x40];
     D3DXVECTOR3 pos;
     D3DCOLOR color;
-    float scaleX;
     float scaleY;
+    float scaleX;
     // Drawn with the second glyph set, in white.
     int highlight;
     // Drawn inside the play area's viewport.
@@ -207,8 +207,8 @@ public:
     // The color text is queued with.
     D3DCOLOR color;
     // The scale of the characters added next.
-    float scaleX;
     float scaleY;
+    float scaleX;
     // The strings queued next are drawn inside the play area.
     int inArena;
     // Drawn with the second glyph set, as in th06.

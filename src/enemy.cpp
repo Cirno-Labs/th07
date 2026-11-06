@@ -1152,7 +1152,7 @@ int EnemyManager::DrawEnemies(EnemyManager *mgr, int from, int to)
             }
             if (enemy->trailFlags)
             {
-                savedScale = *(D3DXVECTOR2 *)&enemy->sprite.scaleY;
+                savedScale = *(D3DXVECTOR2 *)&enemy->sprite.scaleX;
                 savedColor = enemy->sprite.color;
                 if (!(enemy->trailFlags & 8))
                 {
@@ -1168,7 +1168,7 @@ int EnemyManager::DrawEnemies(EnemyManager *mgr, int from, int to)
                         }
                         if (enemy->trailFlags & 2)
                         {
-                            enemy->sprite.scaleY = savedScale.x - b * savedScale.x / enemy->trailSegmentCount;
+                            enemy->sprite.scaleX = savedScale.x - b * savedScale.x / enemy->trailSegmentCount;
                         }
                         if (enemy->trailFlags & 4)
                         {
@@ -1262,7 +1262,7 @@ int EnemyManager::DrawEnemies(EnemyManager *mgr, int from, int to)
                         }
                     }
                 }
-                *(D3DXVECTOR2 *)&enemy->sprite.scaleY = savedScale;
+                *(D3DXVECTOR2 *)&enemy->sprite.scaleX = savedScale;
                 enemy->sprite.color = savedColor;
             }
             enemy = enemy->nextInDrawList;

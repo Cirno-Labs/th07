@@ -352,7 +352,7 @@ int UpdateLaserBullet(Player *player, PlayerBullet *bullet)
     {
         return 1;
     }
-    bullet->sprite.scaleX = bullet->pos.y / 14.0f;
+    bullet->sprite.scaleY = bullet->pos.y / 14.0f;
     bullet->size.y = bullet->pos.y;
     bullet->pos.y /= 2.0f;
     return 0;
@@ -403,7 +403,7 @@ int UpdateTrailLaserBullet(Player *player, PlayerBullet *bullet)
     bullet->pos = player->position;
     bullet->pos.x += bullet->velocity.z;
     bullet->pos.z = 0.44f;
-    bullet->sprite.scaleX = (bullet->pos.y + 64.0f) / 14.0f;
+    bullet->sprite.scaleY = (bullet->pos.y + 64.0f) / 14.0f;
     bullet->size.y = player->position.y + 64.0f;
     bullet->pos.y = bullet->pos.y / 2.0f - 32.0f;
     return 0;
@@ -1642,8 +1642,8 @@ int UpdateDyingState(Player *player)
     else
     {
         progress = player->stateTimer.AsFloat() / 30.0f;
-        player->sprite.scaleX = 3.0f * progress + 1.0f;
-        player->sprite.scaleY = 1.0f - 1.0f * progress;
+        player->sprite.scaleY = 3.0f * progress + 1.0f;
+        player->sprite.scaleX = 1.0f - 1.0f * progress;
         player->sprite.color = (int)(255.0f - player->stateTimer.AsFloat() * 255.0f / 30.0f) << 24 | 0xffffff;
         player->sprite.flags |= 0x10;
         player->velocityX = 0.0f;
@@ -1655,8 +1655,8 @@ int UpdateDyingState(Player *player)
             player->position.y = g_GameManager.arena[3] - 64.0f;
             player->position.z = 0.2f;
             player->stateTimer.Set(0);
-            player->sprite.scaleY = 3.0f;
             player->sprite.scaleX = 3.0f;
+            player->sprite.scaleY = 3.0f;
             g_SpriteRenderer->StartScript(&player->sprite, 0x400);
             if ((int)g_GameManager.stats->lives <= 0)
             {
@@ -1681,8 +1681,8 @@ void UpdateRespawningState(Player *player)
 
     player->respawnClearFrames = 60;
     progress = 1.0f - player->stateTimer.AsFloat() / 30.0f;
-    player->sprite.scaleX = 2.0f * progress + 1.0f;
-    player->sprite.scaleY = 1.0f - 1.0f * progress;
+    player->sprite.scaleY = 2.0f * progress + 1.0f;
+    player->sprite.scaleX = 1.0f - 1.0f * progress;
     player->sprite.flags |= 0x10;
     player->moveScaleY = 1.0f;
     player->moveScaleX = 1.0f;
@@ -1691,8 +1691,8 @@ void UpdateRespawningState(Player *player)
     if (player->stateTimer.AsFrames() >= 30)
     {
         player->playerState = 3;
-        player->sprite.scaleY = 1.0f;
         player->sprite.scaleX = 1.0f;
+        player->sprite.scaleY = 1.0f;
         player->sprite.color = 0xffffffff;
         player->sprite.flags &= ~0x10;
         player->stateTimer.Set(240);
@@ -1806,8 +1806,8 @@ void Player::EndBombState()
     g_SoundPlayer.QueueSound(0x21, 0);
     if (this->playerState == 1)
     {
-        this->sprite.scaleY = 1.0f;
         this->sprite.scaleX = 1.0f;
+        this->sprite.scaleY = 1.0f;
         this->sprite.color = 0xffffffff;
         this->sprite.flags &= ~0x10;
         this->stateTimer.Set(240);

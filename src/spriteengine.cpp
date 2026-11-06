@@ -880,8 +880,8 @@ int SpriteEngine::DrawUnrotated(Sprite *vm)
     {
         return -1;
     }
-    w = vm->spriteData->width * vm->scaleY / 2.0f;
-    h = vm->spriteData->height * vm->scaleX / 2.0f;
+    w = vm->spriteData->width * vm->scaleX / 2.0f;
+    h = vm->spriteData->height * vm->scaleY / 2.0f;
     if (((vm->flags >> 10 & 3) & 1) == 0)
     {
         g_DiffuseQuad[0].pos.x = g_DiffuseQuad[2].pos.x = vm->pos.x - w;
@@ -948,8 +948,8 @@ int SpriteEngine::Draw(Sprite *vm)
     }
     x0 = vm->pos.x;
     cy = vm->pos.y;
-    halfWidth = vm->spriteData->width * vm->scaleY / 2.0f;
-    halfH = vm->spriteData->height * vm->scaleX / 2.0f;
+    halfWidth = vm->spriteData->width * vm->scaleX / 2.0f;
+    halfH = vm->spriteData->height * vm->scaleY / 2.0f;
     this->RotatePoint((float *)&g_DiffuseQuad[0].pos, -halfWidth, -halfH, s, cosine, x0, cy);
     this->RotatePoint((float *)&g_DiffuseQuad[1].pos, halfWidth, -halfH, s, cosine, x0, cy);
     this->RotatePoint((float *)&g_DiffuseQuad[2].pos, -halfWidth, halfH, s, cosine, x0, cy);
@@ -989,8 +989,8 @@ int SpriteEngine::DrawNoRound(Sprite *vm)
     {
         return -1;
     }
-    w = vm->spriteData->width * vm->scaleY / 2.0f;
-    h = vm->spriteData->height * vm->scaleX / 2.0f;
+    w = vm->spriteData->width * vm->scaleX / 2.0f;
+    h = vm->spriteData->height * vm->scaleY / 2.0f;
     if (((vm->flags >> 10 & 3) & 1) == 0)
     {
         g_DiffuseQuad[0].pos.x = g_DiffuseQuad[2].pos.x = vm->pos.x - w;
@@ -1053,8 +1053,8 @@ int SpriteEngine::ProjectSprite(Sprite *vm)
     D3DXVec3Project(&edge, &g_StageManager.camera.cameraRight, &g_App.viewport, &g_App.projectionMatrix, &g_App.viewMatrix, &world);
     d = edge - projPos;
     x = D3DXVec3Length(&d) * 0.5f;
-    w = x * vm->spriteData->width * vm->scaleY;
-    h = x * vm->spriteData->height * vm->scaleX;
+    w = x * vm->spriteData->width * vm->scaleX;
+    h = x * vm->spriteData->height * vm->scaleY;
     x = projPos.x;
     y = projPos.y;
     this->RotatePoint((float *)&g_DiffuseQuad[0].pos, -w, -h, s, c, x, y);
@@ -1108,8 +1108,8 @@ void SpriteEngine::ProjectSprite3D(Sprite *vm)
     if ((vm->flags >> 15 & 1) == 0 && ((vm->flags >> 3 & 1) != 0 || (vm->flags >> 2 & 1) != 0))
     {
         vm->drawMatrix = vm->matrix;
-        vm->drawMatrix._11 *= vm->scaleY;
-        vm->drawMatrix._22 *= vm->scaleX;
+        vm->drawMatrix._11 *= vm->scaleX;
+        vm->drawMatrix._22 *= vm->scaleY;
         vm->flags &= ~8;
         if (vm->rotationX != 0.0)
         {
@@ -1135,7 +1135,7 @@ void SpriteEngine::ProjectSprite3D(Sprite *vm)
     }
     else
     {
-        worldMatrix._41 = fabsf(vm->spriteData->width * vm->scaleY / 2.0f) + vm->pos.x;
+        worldMatrix._41 = fabsf(vm->spriteData->width * vm->scaleX / 2.0f) + vm->pos.x;
     }
     if (((vm->flags >> 10 & 3) & 2) == 0)
     {
@@ -1143,7 +1143,7 @@ void SpriteEngine::ProjectSprite3D(Sprite *vm)
     }
     else
     {
-        worldMatrix._42 = fabsf(vm->spriteData->height * vm->scaleX / 2.0f) + vm->pos.y;
+        worldMatrix._42 = fabsf(vm->spriteData->height * vm->scaleY / 2.0f) + vm->pos.y;
     }
     worldMatrix._43 = vm->pos.z;
     D3DXVec3Project(&g_DiffuseQuad[0].pos, &this->quad[0].pos, &g_App.viewport, &g_App.projectionMatrix,
@@ -1200,8 +1200,8 @@ int SpriteEngine::Draw3D(Sprite *vm)
     if ((vm->flags >> 15 & 1) == 0 && ((vm->flags >> 3 & 1) != 0 || (vm->flags >> 2 & 1) != 0))
     {
         vm->drawMatrix = vm->matrix;
-        vm->drawMatrix._11 *= vm->scaleY;
-        vm->drawMatrix._22 *= vm->scaleX;
+        vm->drawMatrix._11 *= vm->scaleX;
+        vm->drawMatrix._22 *= vm->scaleY;
         vm->flags &= ~8;
         if (vm->rotationX != 0.0)
         {
@@ -1227,7 +1227,7 @@ int SpriteEngine::Draw3D(Sprite *vm)
     }
     else
     {
-        worldMatrix._41 = fabsf(vm->spriteData->width * vm->scaleY / 2.0f) + vm->pos.x;
+        worldMatrix._41 = fabsf(vm->spriteData->width * vm->scaleX / 2.0f) + vm->pos.x;
     }
     if (((vm->flags >> 10 & 3) & 2) == 0)
     {
@@ -1235,7 +1235,7 @@ int SpriteEngine::Draw3D(Sprite *vm)
     }
     else
     {
-        worldMatrix._42 = fabsf(vm->spriteData->height * vm->scaleX / 2.0f) + vm->pos.y;
+        worldMatrix._42 = fabsf(vm->spriteData->height * vm->scaleY / 2.0f) + vm->pos.y;
     }
     worldMatrix._41 += this->shakeX;
     worldMatrix._42 += this->shakeY;
@@ -1419,8 +1419,8 @@ int SpriteEngine::Step(Sprite *vm)
             vm->spriteTime = vm->scriptTime.AsFrames();
             break;
         case 7:
-            vm->scaleY = ANM_FLOAT_ARG(0);
-            vm->scaleX = ANM_FLOAT_ARG(1);
+            vm->scaleX = ANM_FLOAT_ARG(0);
+            vm->scaleY = ANM_FLOAT_ARG(1);
             vm->flags |= 8;
             break;
         case 8:
@@ -1444,7 +1444,7 @@ int SpriteEngine::Step(Sprite *vm)
             break;
         case 10:
             vm->flip ^= 1;
-            vm->scaleY *= -1.0f;
+            vm->scaleX *= -1.0f;
             vm->flags |= 8;
             break;
         case 24:
@@ -1452,7 +1452,7 @@ int SpriteEngine::Step(Sprite *vm)
             break;
         case 11:
             vm->flip ^= 2;
-            vm->scaleX *= -1.0f;
+            vm->scaleY *= -1.0f;
             vm->flags |= 8;
             break;
         case 12:
@@ -1468,14 +1468,14 @@ int SpriteEngine::Step(Sprite *vm)
             vm->flags |= 4;
             break;
         case 14:
-            vm->scaleSpeedY = ANM_FLOAT_ARG(0);
-            vm->scaleSpeedX = ANM_FLOAT_ARG(1);
+            vm->scaleSpeedX = ANM_FLOAT_ARG(0);
+            vm->scaleSpeedY = ANM_FLOAT_ARG(1);
             break;
         case 29:
             vm->interpDuration[4].Set(0);
             vm->interpFrame[4].Set(ANM_INT_ARG(2));
             vm->scaleInterpEasing = 0;
-            *(D3DXVECTOR2 *)&vm->scaleTween = *(D3DXVECTOR2 *)&vm->scaleY;
+            *(D3DXVECTOR2 *)&vm->scaleTween = *(D3DXVECTOR2 *)&vm->scaleX;
             vm->scaleTween.z = ANM_FLOAT_ARG(0);
             vm->colorTween.x = ANM_FLOAT_ARG(1);
             break;
@@ -1664,7 +1664,7 @@ int SpriteEngine::Step(Sprite *vm)
             vm->interpDuration[4].Set(0);
             vm->interpFrame[4].Set(ANM_INT_ARG(0));
             vm->scaleInterpEasing = curInstr->args[1].i;
-            *(D3DXVECTOR2 *)&vm->scaleTween = *(D3DXVECTOR2 *)&vm->scaleY;
+            *(D3DXVECTOR2 *)&vm->scaleTween = *(D3DXVECTOR2 *)&vm->scaleX;
             vm->scaleTween.z = ANM_FLOAT_ARG(2);
             vm->colorTween.x = ANM_FLOAT_ARG(3);
             vm->flags |= 8;
@@ -1928,21 +1928,21 @@ done:
                 vm->flags |= 4;
                 break;
             case 4:
-                vm->scaleY = (vm->scaleTween.z - vm->scaleTween.x) * t + vm->scaleTween.x;
-                vm->scaleX = (vm->colorTween.x - vm->scaleTween.y) * t + vm->scaleTween.y;
+                vm->scaleX = (vm->scaleTween.z - vm->scaleTween.x) * t + vm->scaleTween.x;
+                vm->scaleY = (vm->colorTween.x - vm->scaleTween.y) * t + vm->scaleTween.y;
                 vm->flags |= 8;
                 break;
             }
         }
     }
-    if (vm->scaleSpeedX != 0.0f)
-    {
-        vm->scaleX += g_App.gameSpeed * vm->scaleSpeedX;
-        vm->flags |= 8;
-    }
     if (vm->scaleSpeedY != 0.0f)
     {
         vm->scaleY += g_App.gameSpeed * vm->scaleSpeedY;
+        vm->flags |= 8;
+    }
+    if (vm->scaleSpeedX != 0.0f)
+    {
+        vm->scaleX += g_App.gameSpeed * vm->scaleSpeedX;
         vm->flags |= 8;
         vm->flags |= 4;
     }

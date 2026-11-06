@@ -694,7 +694,7 @@ void StartSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
     enemy->effects[24]->sprite.interpDuration[4].Set(0);
     enemy->effects[24]->sprite.interpFrame[4].Set(enemy->timerCallbackTime);
     enemy->effects[24]->sprite.scaleInterpEasing = 0;
-    *(D3DXVECTOR2 *)&enemy->effects[24]->sprite.scaleTween = *(D3DXVECTOR2 *)&enemy->effects[24]->sprite.scaleY;
+    *(D3DXVECTOR2 *)&enemy->effects[24]->sprite.scaleTween = *(D3DXVECTOR2 *)&enemy->effects[24]->sprite.scaleX;
     enemy->effects[24]->sprite.scaleTween.z = 0.125f;
     enemy->effects[24]->sprite.colorTween.x = 0.125f;
     enemy->effects[24]->pos = enemy->pos;

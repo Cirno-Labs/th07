@@ -152,8 +152,8 @@ int EffectUpdateOrbit(Effect *effect)
         }
         a2 = 1.0f - effect->fadeFrames / 16.0f;
         effect->sprite.color = (effect->sprite.color & 0xffffff) | ((int)(a2 * 255.0f) << 24);
-        effect->sprite.scaleX = 2.0f - a2;
-        effect->sprite.scaleY = effect->sprite.scaleX;
+        effect->sprite.scaleY = 2.0f - a2;
+        effect->sprite.scaleX = effect->sprite.scaleY;
     }
     return 1;
 }
