@@ -199,7 +199,7 @@ int Gui::OnDraw(Gui *gui)
         cursor.y += 16.0f;
         if (g_GameManager.difficulty < 4 && !(g_GameManager.stateFlags & 1))
         {
-            switch (g_GameManager.savedConfig->lifeCount)
+            switch (g_GameManager.savedConfig->lives)
             {
             case 3:
                 g_AsciiText.color = 0xffff8080;
@@ -1173,7 +1173,7 @@ void Gui::UpdateInterface()
             bonus *= 2;
             break;
         }
-        switch (g_GameManager.savedConfig->lifeCount)
+        switch (g_GameManager.savedConfig->lives)
         {
         case 3:
             bonus = bonus * 5 / 10;

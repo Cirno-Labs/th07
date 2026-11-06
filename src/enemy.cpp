@@ -273,11 +273,11 @@ void EnemyTimeline::RunTimeline()
                     pos = args->pos;
                     if (args->pos.x <= -990.0f)
                     {
-                        pos.x = g_Rng.GetRandomF32InRange(g_GameManager.arena2[2]);
+                        pos.x = g_Rng.GetRandomF32InRange(g_GameManager.playerArea[2]);
                     }
                     if (args->pos.y <= -990.0f)
                     {
-                        pos.y = g_Rng.GetRandomF32InRange(g_GameManager.arena2[3]);
+                        pos.y = g_Rng.GetRandomF32InRange(g_GameManager.playerArea[3]);
                     }
                     if (args->pos.z <= -990.0f)
                     {
@@ -294,11 +294,11 @@ void EnemyTimeline::RunTimeline()
                     pos = this->pos->args.pos;
                     if (pos.x <= -990.0f)
                     {
-                        pos.x = g_Rng.GetRandomF32InRange(g_GameManager.arena2[2]);
+                        pos.x = g_Rng.GetRandomF32InRange(g_GameManager.playerArea[2]);
                     }
                     if (pos.y <= -990.0f)
                     {
-                        pos.y = g_Rng.GetRandomF32InRange(g_GameManager.arena2[3]);
+                        pos.y = g_Rng.GetRandomF32InRange(g_GameManager.playerArea[3]);
                     }
                     if (pos.z <= -990.0f)
                     {
@@ -316,11 +316,11 @@ void EnemyTimeline::RunTimeline()
                     pos = args->pos;
                     if (args->pos.x <= -990.0f)
                     {
-                        pos.x = g_Rng.GetRandomF32InRange(g_GameManager.arena2[2]);
+                        pos.x = g_Rng.GetRandomF32InRange(g_GameManager.playerArea[2]);
                     }
                     if (args->pos.y <= -990.0f)
                     {
-                        pos.y = g_Rng.GetRandomF32InRange(g_GameManager.arena2[3]);
+                        pos.y = g_Rng.GetRandomF32InRange(g_GameManager.playerArea[3]);
                     }
                     if (args->pos.z <= -990.0f)
                     {
@@ -338,11 +338,11 @@ void EnemyTimeline::RunTimeline()
                     pos = this->pos->args.pos;
                     if (pos.x <= -990.0f)
                     {
-                        pos.x = g_Rng.GetRandomF32InRange(g_GameManager.arena2[2]);
+                        pos.x = g_Rng.GetRandomF32InRange(g_GameManager.playerArea[2]);
                     }
                     if (pos.y <= -990.0f)
                     {
-                        pos.y = g_Rng.GetRandomF32InRange(g_GameManager.arena2[3]);
+                        pos.y = g_Rng.GetRandomF32InRange(g_GameManager.playerArea[3]);
                     }
                     if (pos.z <= -990.0f)
                     {

@@ -201,8 +201,8 @@ public:
     short padThresholdX;
     short padThresholdY;
     // The lives and bombs a game starts with.
-    BYTE lifeCount;
-    BYTE bombCount;
+    BYTE lives;
+    BYTE bombs;
     // 0 for a 32-bit display, 1 for 16 bits, 0xff before the first run
     // picks one.
     BYTE colorMode16Bits;

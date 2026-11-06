@@ -62,7 +62,7 @@ SpriteEngine::SpriteEngine()
     this->vertexFormat = 0;
     this->lastCameraSetupFlag = 0xff;
     this->zWriteDisabled = 0;
-    this->pendingCopyTexture = -1;
+    this->pendingTexCopyTexture = -1;
 }
 
 // Empty. The linker folded it with MmTimer::OnTimer, which has the same
@@ -1500,13 +1500,13 @@ int SpriteEngine::Step(Sprite *vm)
             }
             break;
         case 19:
-            vm->interpEasing = 6;
+            vm->posInterpEasing = 6;
             goto posInterp;
         case 18:
-            vm->interpEasing = 4;
+            vm->posInterpEasing = 4;
             goto posInterp;
         case 17:
-            vm->interpEasing = 0;
+            vm->posInterpEasing = 0;
         posInterp:
             if (!vm->usePosOffset)
             {
@@ -1614,12 +1614,12 @@ int SpriteEngine::Step(Sprite *vm)
             vm->zWriteDisabled = curInstr->args[0].i;
             break;
         case 31:
-            vm->scriptBit14 = curInstr->args[0].i;
+            vm->cameraSetup = curInstr->args[0].i;
             break;
         case 32:
             vm->interpDuration[0].Set(0);
             vm->interpFrame[0].Set(ANM_INT_ARG(0));
-            vm->interpEasing = curInstr->args[1].i;
+            vm->posInterpEasing = curInstr->args[1].i;
             if (!vm->usePosOffset)
             {
                 vm->moveStart = vm->pos;
@@ -1869,7 +1869,7 @@ done:
             {
                 t = vm->interpDuration[k].AsFloat() / vm->interpFrame[k].AsFloat();
             }
-            switch ((&vm->interpEasing)[k])
+            switch ((&vm->posInterpEasing)[k])
             {
             case 1:
                 t = t * t;

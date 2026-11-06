@@ -673,9 +673,9 @@ ASSERT_SIZE(GameStats, 0xc8);
 struct GameConfig
 {
     unsigned char pad_0[0x1c];
-    // The lives a game starts with, as App's lifeCount (+0x1c of the
+    // The lives a game starts with, as App's lives (+0x1c of the
     // config).
-    BYTE lifeCount;
+    BYTE lives;
     unsigned char pad_1d[0x8];
     // App::IsScoreDisabled tests it.
     BYTE scoreDisabled;
@@ -750,7 +750,7 @@ public:
     // Whether a `width` by `height` box centred on (`x`, `y`) touches the
     // play area, as th06's GameManager::IsInPlayArea.
     BOOL IsInPlayArea(float x, float y, float width, float height);
-    // Sets arena to th06's play area (32, 16, 384, 448) and arena2
+    // Sets arena to th06's play area (32, 16, 384, 448) and playerArea
     // to (8, 16, 368, 416).
     void SetPlayArea();
     // Adds `power` to stats->power and recomputes the checksums; wipes
@@ -869,7 +869,7 @@ public:
     float arena[4];
     // A second rectangle, set with arena by SetPlayArea: x, y, width
     // and height.
-    float arena2[4];
+    float playerArea[4];
     // RerollStatsChecksumKeys sets it to the checksum plus stats->checksumKeysD[3].
     float checksumValue;
     int bonusPointsCap;

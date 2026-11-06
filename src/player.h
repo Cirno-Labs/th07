@@ -127,14 +127,14 @@ struct ShotTypeData
 
 // A shot type's bomb callbacks, by character * 2 + shot type: those
 // PlayerBomb runs.
-struct BombData
+struct BombFuncs
 {
     void (*update)(Player *player);
     void (*draw)(Player *player);
     void (*updateFocused)(Player *player);
     void (*drawFocused)(Player *player);
 };
-extern BombData g_Bombs[];
+extern BombFuncs g_BombFuncs[];
 
 // The shot type files, unfocused and focused, by character * 2 + shot
 // type.
@@ -237,7 +237,7 @@ int UpdateFiring(Player *player);
 //
 // th06's HandleInput: moves the player by the buttons the game plays by
 // (g_PlayButtons) at the shot type's speeds, within
-// GameManager::arena2, sets the boxes and moves the options in and
+// GameManager::playerArea, sets the boxes and moves the options in and
 // out while focused, with effect 0x18 (optionEffect) on the way in. Sakuya B
 // (character 2, shot type 1) fans her options around aimedShotAngle
 // instead. On button 1, unless Gui's IsMsgRunning holds, starts firing
@@ -246,9 +246,9 @@ int UpdateFiring(Player *player);
 // -pi/2. Returns 0.
 int HandleInput(Player *player);
 // OnUpdate's first step, as the start of th06's: clears the sizes of
-// the 0x70 bombHitboxes hitboxes, then counts down each PlayerArea's framesLeft,
+// the 0x70 bombHitboxes hitboxes, then counts down each PlayerHitArea's framesLeft,
 // growing radius by radiusGrowth meanwhile, and frees it once it is 0.
-void UpdateHitboxAreas(Player *player);
+void UpdateHitAreas(Player *player);
 // OnUpdate's bomb step, the bomb part of th06's: with bombState set and
 // button 2 held outside a bomb, ends playerState 4 (StopBombState(1)) and
 // collects all items instead. Otherwise tries StartBombState while
@@ -307,18 +307,18 @@ void ResetHomingAndText(Player *player);
 
 // One of the 0x70 entries at Player+0x9dc, probably th06's bomb
 // hitboxes (bombHitPos, bombHitSize, ...) as one struct.
-struct PlayerBombHit
+struct PlayerBombHitbox
 {
     D3DXVECTOR3 pos;
     D3DXVECTOR3 size;
     int damage;
     int damageDealt;
 };
-ASSERT_SIZE(PlayerBombHit, 0x20);
+ASSERT_SIZE(PlayerBombHitbox, 0x20);
 
 // One of the 0x60 entries at Player+0x17dc, maybe th06's
 // bulletClearAreas grown. Free while width and radius are 0.
-struct PlayerArea
+struct PlayerHitArea
 {
     float x;
     float y;
@@ -329,7 +329,7 @@ struct PlayerArea
     int framesLeft;
     int itemType;
 };
-ASSERT_SIZE(PlayerArea, 0x20);
+ASSERT_SIZE(PlayerHitArea, 0x20);
 
 // One of PlayerBomb's 0x80 parts. Its implicit constructor is 0x43bb10.
 struct PlayerBombPart
@@ -424,7 +424,7 @@ public:
     // while its width is set, else a circle of radius `radius` if that is
     // set. Keeps the area's itemType in areaItemType and returns 2 if so, else
     // returns 0. Not in th06.
-    int CheckAreaHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size);
+    int CheckHitAreas(D3DXVECTOR3 *pos, D3DXVECTOR3 *size);
     // The angle from `pos` to the player, pi / 2 when they coincide.
     float AngleFrom(D3DXVECTOR3 *pos);
     // Starts dying, as th06's: rerolls the checksums, bursts the death
@@ -432,7 +432,7 @@ public:
     // sound 4.
     void Die();
     // Whether a `size` box at `pos` hits the player, as th06's: 2 if it
-    // meets one of hitAreas's areas (CheckAreaHit, areaItemType 6 otherwise),
+    // meets one of hitAreas's areas (CheckHitAreas, areaItemType 6 otherwise),
     // else 1 if it meets the hitbox, else 0. A hit marks bit 2 of
     // g_ReplayManager->frameEvents; it calls StopBombState(0) while playerState
     // is 4 and kills the player while it is 0.
@@ -446,9 +446,9 @@ public:
     // Takes the first free one of hitAreas's first 0x5f entries, or the
     // last entry, and sets it to a `width` by `height` area at `pos`
     // with framesLeft 0. Returns it.
-    PlayerArea *AddHitboxArea(D3DXVECTOR3 *pos, float width, float height, int itemType);
+    PlayerHitArea *AddHitArea(D3DXVECTOR3 *pos, float width, float height, int itemType);
     // The same, setting radius to itemType instead of width and height.
-    PlayerArea *AddHitboxAreaCircle(D3DXVECTOR3 *pos, float radius, float radiusGrowth, int framesLeft, int itemType);
+    PlayerHitArea *AddHitAreaCircle(D3DXVECTOR3 *pos, float radius, float radiusGrowth, int framesLeft, int itemType);
     // Clears the player and adds it to the chains (update priority 8,
     // draw 6 and 8), keeping `arg` in registerChainArg. Returns 0, or -1 if
     // adding fails.
@@ -477,7 +477,7 @@ public:
     // starts a new effect 0x1c in slot 4 there, makes the player
     // invulnerable (playerState 3) for 40 frames with bombCooldown 40 and
     // bombState 0, resets GameManager::invulnerabilityBonus, adds an area at the
-    // player (AddHitboxAreaCircle with 32, 16, 0x32 and 8), bursts 32 effects
+    // player (AddHitAreaCircle with 32, 16, 0x32 and 8), bursts 32 effects
     // 0x1d in a circle and plays sounds 7 and 0x21, marking bit 0x10 of
     // g_ReplayManager->frameEvents. The argument is unused.
     void StopBombState(int unused);
@@ -490,7 +490,7 @@ public:
     // bombInvulnerabilityEffect effect.
     void EndBombState();
     // The update callback: unless the game is frozen, runs the steps
-    // (UpdateHitboxAreas on), steps the sprites (the options' while optionState
+    // (UpdateHitAreas on), steps the sprites (the options' while optionState
     // is set), the bullets (UpdateBullets) and the firing (UpdateFiring).
     // Returns 1.
     static int OnUpdate(Player *player);
@@ -540,8 +540,8 @@ public:
     unsigned char pad_9d4[0x4];
     // The effect HandleInput shows while the player is focused.
     Effect *optionEffect;
-    PlayerBombHit bombHitboxes[0x70];
-    PlayerArea hitAreas[0x60];
+    PlayerBombHitbox bombHitboxes[0x70];
+    PlayerHitArea hitAreas[0x60];
     // 1 on the frame a bomb starts, else 0 (UpdateBombState).
     int bombJustStarted;
     // The shot each laser was fired from, by ShotData::phase.
@@ -556,7 +556,7 @@ public:
     int bombCooldown;
     // Frames left of clearing all bullets after a respawn, as th06's.
     int respawnClearFrames;
-    // The itemType of the PlayerArea CheckAreaHit met last.
+    // The itemType of the PlayerHitArea CheckHitAreas met last.
     int areaItemType;
     // As th06's: 0 normally, 1 respawning, 2 dying, 3 invulnerable.
     // Firing stops at 1 and 2.
@@ -652,7 +652,7 @@ void SetBombDrain(Player *player, int minimum, float share);
 
 // Reimu A's bomb, th06's UpdateReimuABomb reworked: 140 frames with
 // stateTimer at 200, an aura (SpawnBombAura), all items collected and
-// an area (AddHitboxAreaCircle); from frame 8 one orb every 6 frames (8), fanned
+// an area (AddHitAreaCircle); from frame 8 one orb every 6 frames (8), fanned
 // out by startPos's side of the play area. Each one slows down by 0.4
 // a frame, flies off backwards and bursts once its speed is below -10
 // (a 256 box of 400 damage, an area, sound 0xf and a shake), then stays
@@ -677,7 +677,7 @@ void DrawReimuABombFocused(Player *player);
 
 // Reimu B's bomb, as th06's UpdateReimuBBomb: 140 frames with
 // stateTimer at 200 and an aura; four barriers, two crossing the play
-// area each way through the player, each an area (AddHitboxArea) and
+// area each way through the player, each an area (AddHitArea) and
 // a box of 16 damage that follow its sprite on odd frames.
 void UpdateReimuBBomb(Player *player);
 
@@ -688,7 +688,7 @@ void DrawReimuBBomb(Player *player);
 // Reimu B's focused bomb: 190 frames with stateTimer at 250, an aura
 // and the player slowed to 0.4; a barrier of three sprites around
 // where the bomb started, a 256 box of 18 damage, and one area
-// (AddHitboxAreaCircle, 192) for the whole bomb.
+// (AddHitAreaCircle, 192) for the whole bomb.
 void UpdateReimuBBombFocused(Player *player);
 
 // Draws Reimu B's focused bomb: the stage tint, then the barrier's
@@ -697,7 +697,7 @@ void DrawReimuBBombFocused(Player *player);
 
 // Marisa A's bomb, as th06's UpdateMarisaABomb: 200 frames with
 // stateTimer at 250 and an aura; eight stars fly out in a circle at
-// speed 2, each an area (AddHitboxAreaCircle, 96) and a 128 box of 8
+// speed 2, each an area (AddHitAreaCircle, 96) and a 128 box of 8
 // damage on two frames out of three.
 void UpdateMarisaABomb(Player *player);
 
@@ -709,7 +709,7 @@ void DrawMarisaABomb(Player *player);
 // and the player slowed to 0.4; a star every 6 frames (24) shot
 // upwards from the player at a slightly random angle and accelerating,
 // keeping a trail of its last 8 positions, each an area
-// (AddHitboxAreaCircle, 96) and, until it has hit 80 times, a 128 box
+// (AddHitAreaCircle, 96) and, until it has hit 80 times, a 128 box
 // of 12 damage. A star ends once its y is below -256.
 void UpdateMarisaABombFocused(Player *player);
 
@@ -721,7 +721,7 @@ void DrawMarisaABombFocused(Player *player);
 // player slowed to 0.4; three lasers from the player, 120 degrees
 // apart, turning faster and faster (one way or the other by startPos's
 // side of the play area), each six 128 boxes of 10 damage and areas
-// (AddHitboxAreaCircle, 64) along its length.
+// (AddHitAreaCircle, 64) along its length.
 void UpdateMarisaBBomb(Player *player);
 
 // Draws Marisa B's bomb: the stage tint, then each laser's sprite
@@ -731,7 +731,7 @@ void DrawMarisaBBomb(Player *player);
 // Marisa B's focused bomb, th06's Master Spark (UpdateMarisaBBomb):
 // 340 frames with stateTimer at 390, an aura and the player slowed to
 // 0.2; on three frames out of four a box of 23 damage and an area
-// (AddHitboxArea) from the player up to the top of the play area.
+// (AddHitArea) from the player up to the top of the play area.
 void UpdateMarisaBBombFocused(Player *player);
 
 // Draws Marisa B's focused bomb, as th06's DrawMarisaBBomb: the stage
@@ -742,7 +742,7 @@ void DrawMarisaBBombFocused(Player *player);
 // Sakuya A's bomb: 160 frames with stateTimer at 210, an aura and an
 // effect 0x15; from frame 60 to 120 five knives a frame (up to 0x60)
 // start 24 out from startPos in random directions, each speeding up
-// and turning at its own random rate, an area (AddHitboxAreaCircle,
+// and turning at its own random rate, an area (AddHitAreaCircle,
 // 32) and a 24 box of 10 damage until it has hit 30 times (then it
 // restarts its sprite at script 0x460 and stops), gone once it leaves
 // the play area.
@@ -757,7 +757,7 @@ void DrawSakuyaABomb(Player *player);
 // slowed to 0.3; from frame 20 to 114 two knives every other frame
 // (0x60, around a ring), which fly out, stop and turn from their frame
 // 30 to 70, then aim at orbHomingTarget (when set) at speed 14 and speed up.
-// Each is an area (AddHitboxAreaCircle, 32) and a 24 box of 22 damage
+// Each is an area (AddHitAreaCircle, 32) and a 24 box of 22 damage
 // until its first hit, then restarts its sprite at script 0x460 and
 // bursts effect 0.
 void UpdateSakuyaABombFocused(Player *player);
@@ -770,7 +770,7 @@ void DrawSakuyaABombFocused(Player *player);
 // player sped up to 2; stops all bullets (BulletManager::StopAllBullets)
 // at frames 0, 60 and 120; from frame 30 four sprites around the play
 // area's middle and, every fourth frame, a box of 3 damage over most
-// of it. Ends with an area (AddHitboxAreaCircle, 800) at the player.
+// of it. Ends with an area (AddHitAreaCircle, 800) at the player.
 void UpdateSakuyaBBomb(Player *player);
 
 // Draws Sakuya B's bomb: the stage tint, then each of the four sprites,
@@ -780,7 +780,7 @@ void DrawSakuyaBBomb(Player *player);
 // Sakuya B's focused bomb: 300 frames with stateTimer at 420, an aura
 // and the player sped up to 1.5; two sprites start at the player and
 // are pulled towards it, keeping a trail of 32 positions; the first is
-// an area (AddHitboxAreaCircle, 96) and a 160 box of 1 damage. Stops
+// an area (AddHitAreaCircle, 96) and a 160 box of 1 damage. Stops
 // all bullets at frames 40 and 100; ends with an area at the player
 // (800) and sets hitAreas[0] to a 448 by 512 box at the play area's
 // middle.

@@ -77,7 +77,7 @@ struct ReplayHeader
     BYTE *extras[7];
     BYTE randomByte;
     // 0x62.
-    BYTE versionByte55;
+    BYTE versionByte;
     // character * 2 + shot type.
     BYTE shotType;
     BYTE difficulty;

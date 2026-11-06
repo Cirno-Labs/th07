@@ -1112,19 +1112,19 @@ loop:
         case 41:
             value = instr->args[0].i;
             enemy->ctx.code = (char *)instr + instr->size;
-            if (!enemy->flags.disableCallStack)
+            if (!enemy->flags.noCallStack)
             {
                 enemy->savedCtx[enemy->stackDepth] = enemy->ctx;
             }
             g_EnemyScripts.StartSub(&enemy->ctx, value);
             memcpy(enemy->ctx.vars.ints3, g_EnemyScripts.globalInts, sizeof(int) * 8);
-            if (!enemy->flags.disableCallStack && enemy->stackDepth < 15)
+            if (!enemy->flags.noCallStack && enemy->stackDepth < 15)
             {
                 enemy->stackDepth++;
             }
             goto restart;
         case 42:
-            if (enemy->flags.disableCallStack)
+            if (enemy->flags.noCallStack)
             {
                 DebugPrint("error : no Stack Ret\r\n");
             }
@@ -1601,7 +1601,7 @@ loop:
             enemy->pendingInterrupt = INT_ARG(0);
         interrupt:
             enemy->ctx.code = (char *)instr + instr->size;
-            if (!enemy->flags.disableCallStack)
+            if (!enemy->flags.noCallStack)
             {
                 enemy->savedCtx[enemy->stackDepth] = enemy->ctx;
             }
@@ -1814,7 +1814,7 @@ loop:
             enemy->shooter.bulletSound = INT_ARG(1);
             break;
         case 130:
-            enemy->flags.disableCallStack = instr->args[0].i;
+            enemy->flags.noCallStack = instr->args[0].i;
             break;
         case 131:
             enemy->rankSpeedLow = FLOAT_ARG(0);

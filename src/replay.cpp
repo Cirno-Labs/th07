@@ -141,7 +141,7 @@ int ReplayManager::RecordAddedCallback(ReplayManager *replay)
         replay->data->shotType = g_GameManager.shotIndex;
         replay->data->version = 0x1100;
         replay->data->subVersion = 0x100;
-        replay->data->versionByte55 = 0x62;
+        replay->data->versionByte = 0x62;
         strcpy(replay->data->exeVersion, "0100b");
         replay->data->exeSize = g_App.exeSize;
         replay->data->exeChecksum = g_App.exeChecksum;

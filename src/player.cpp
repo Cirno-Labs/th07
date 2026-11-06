@@ -15,7 +15,7 @@
 // The game's data, as the original defines it here. The DLL build uses
 // the original's copies instead.
 #ifdef TH07_EXE
-BombData g_Bombs[6] = {
+BombFuncs g_BombFuncs[6] = {
     {UpdateReimuABomb, DrawReimuABomb, UpdateReimuABombFocused, DrawReimuABombFocused},
     {UpdateReimuBBomb, DrawReimuBBomb, UpdateReimuBBombFocused, DrawReimuBBombFocused},
     {UpdateMarisaABomb, DrawMarisaABomb, UpdateMarisaABombFocused, DrawMarisaABombFocused},
@@ -833,12 +833,12 @@ int Player::CalcDamage(D3DXVECTOR3 *pos, D3DXVECTOR3 *size, int *hitByBomb)
     return damage;
 }
 
-int Player::CheckAreaHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size)
+int Player::CheckHitAreas(D3DXVECTOR3 *pos, D3DXVECTOR3 *size)
 {
     int idx;
     D3DXVECTOR3 start;
     D3DXVECTOR3 end;
-    PlayerArea *area;
+    PlayerHitArea *area;
     D3DXVECTOR3 areaMax;
     // The point's offset from a circle's centre.
     D3DXVECTOR2 rel;
@@ -887,7 +887,7 @@ int Player::CheckHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size)
     D3DXVECTOR3 end;
 
     this->areaItemType = 6;
-    if (this->CheckAreaHit(pos, size))
+    if (this->CheckHitAreas(pos, size))
     {
         return 2;
     }
@@ -921,7 +921,7 @@ int Player::CheckGraze(D3DXVECTOR3 *pos, D3DXVECTOR3 *size)
     D3DXVECTOR3 end;
 
     this->areaItemType = 6;
-    if (this->CheckAreaHit(pos, size))
+    if (this->CheckHitAreas(pos, size))
     {
         return 2;
     }
@@ -1220,21 +1220,21 @@ int HandleInput(Player *player)
     player->moveDeltaY = deltaY * player->moveScaleY * g_App.gameSpeed;
     player->position[0] += player->moveDeltaX;
     player->position[1] += player->moveDeltaY;
-    if (player->position.x < g_GameManager.arena2[0])
+    if (player->position.x < g_GameManager.playerArea[0])
     {
-        player->position.x = g_GameManager.arena2[0];
+        player->position.x = g_GameManager.playerArea[0];
     }
-    else if (g_GameManager.arena2[0] + g_GameManager.arena2[2] < player->position.x)
+    else if (g_GameManager.playerArea[0] + g_GameManager.playerArea[2] < player->position.x)
     {
-        player->position.x = g_GameManager.arena2[0] + g_GameManager.arena2[2];
+        player->position.x = g_GameManager.playerArea[0] + g_GameManager.playerArea[2];
     }
-    if (player->position.y < g_GameManager.arena2[1])
+    if (player->position.y < g_GameManager.playerArea[1])
     {
-        player->position.y = g_GameManager.arena2[1];
+        player->position.y = g_GameManager.playerArea[1];
     }
-    else if (g_GameManager.arena2[1] + g_GameManager.arena2[3] < player->position.y)
+    else if (g_GameManager.playerArea[1] + g_GameManager.playerArea[3] < player->position.y)
     {
-        player->position.y = g_GameManager.arena2[1] + g_GameManager.arena2[3];
+        player->position.y = g_GameManager.playerArea[1] + g_GameManager.playerArea[3];
     }
     player->hitboxMin = player->position - player->hitboxSize;
     player->hitboxMax = player->position + player->hitboxSize;
@@ -1475,10 +1475,10 @@ int HandleInput(Player *player)
     return 0;
 }
 
-void UpdateHitboxAreas(Player *player)
+void UpdateHitAreas(Player *player)
 {
     int i;
-    PlayerArea *area;
+    PlayerHitArea *area;
 
     for (i = 0; i < 0x70; i++)
     {
@@ -1824,9 +1824,9 @@ void Player::EndBombState()
     }
 }
 
-PlayerArea *Player::AddHitboxArea(D3DXVECTOR3 *pos, float width, float height, int itemType)
+PlayerHitArea *Player::AddHitArea(D3DXVECTOR3 *pos, float width, float height, int itemType)
 {
-    PlayerArea *area = this->hitAreas;
+    PlayerHitArea *area = this->hitAreas;
     int i;
 
     for (i = 0; i < 0x5f; i++, area++)
@@ -1845,9 +1845,9 @@ PlayerArea *Player::AddHitboxArea(D3DXVECTOR3 *pos, float width, float height, i
     return area;
 }
 
-PlayerArea *Player::AddHitboxAreaCircle(D3DXVECTOR3 *pos, float radius, float radiusGrowth, int framesLeft, int itemType)
+PlayerHitArea *Player::AddHitAreaCircle(D3DXVECTOR3 *pos, float radius, float radiusGrowth, int framesLeft, int itemType)
 {
-    PlayerArea *area = this->hitAreas;
+    PlayerHitArea *area = this->hitAreas;
     int i;
 
     for (i = 0; i < 0x5f; i++, area++)
@@ -1955,7 +1955,7 @@ void Player::StopBombState(int unused)
     this->stateTimer.Set(40);
     this->bombCooldown = 40;
     g_GameManager.invulnerabilityBonus = g_GameManager.stats->grazeCount;
-    this->AddHitboxAreaCircle(&this->position, 32.0f, 16.0f, 0x32, 8);
+    this->AddHitAreaCircle(&this->position, 32.0f, 16.0f, 0x32, 8);
     angle = -D3DX_PI;
     for (i = 0; i < 0x20; i++, angle += D3DX_PI / 16.0f)
     {
@@ -1996,7 +1996,7 @@ int Player::OnUpdate(Player *player)
     {
         return 1;
     }
-    UpdateHitboxAreas(player);
+    UpdateHitAreas(player);
     UpdateBombState(player);
     if (player->playerState == 2)
     {
@@ -2216,10 +2216,10 @@ int Player::AddedCallback(Player *player)
         bullet->state = 0;
     }
     player->fireTimer.Set(-1);
-    player->bomb.update = g_Bombs[g_GameManager.shotIndex].update;
-    player->bomb.draw = g_Bombs[g_GameManager.shotIndex].draw;
-    player->bomb.updateFocused = g_Bombs[g_GameManager.shotIndex].updateFocused;
-    player->bomb.drawFocused = g_Bombs[g_GameManager.shotIndex].drawFocused;
+    player->bomb.update = g_BombFuncs[g_GameManager.shotIndex].update;
+    player->bomb.draw = g_BombFuncs[g_GameManager.shotIndex].draw;
+    player->bomb.updateFocused = g_BombFuncs[g_GameManager.shotIndex].updateFocused;
+    player->bomb.drawFocused = g_BombFuncs[g_GameManager.shotIndex].drawFocused;
     player->bomb.running = 0;
     player->aimedShotAngle = -(D3DX_PI / 2.0f);
     player->moveScaleY = 1.0f;

@@ -388,7 +388,7 @@ int MainMenu::UpdateOptions()
         {
             g_SpriteEngine->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex + 1);
         }
-        i = g_App.lifeCount + 0x12;
+        i = g_App.lives + 0x12;
         g_SpriteEngine->SetSprite(&this->sprites[i], this->sprites[i].baseSpriteIndex);
         for (i = 0x17; i <= 0x18; i++)
         {
@@ -429,13 +429,13 @@ int MainMenu::UpdateOptions()
             switch (this->cursor)
             {
             case 0:
-                if (g_App.lifeCount == 0)
+                if (g_App.lives == 0)
                 {
-                    g_App.lifeCount = 4;
+                    g_App.lives = 4;
                 }
                 else
                 {
-                    g_App.lifeCount--;
+                    g_App.lives--;
                 }
                 break;
             case 1:
@@ -511,13 +511,13 @@ int MainMenu::UpdateOptions()
             switch (this->cursor)
             {
             case 0:
-                if (g_App.lifeCount >= 4)
+                if (g_App.lives >= 4)
                 {
-                    g_App.lifeCount = 0;
+                    g_App.lives = 0;
                 }
                 else
                 {
-                    g_App.lifeCount++;
+                    g_App.lives++;
                 }
                 break;
             case 1:
@@ -593,8 +593,8 @@ int MainMenu::UpdateOptions()
             switch (this->cursor)
             {
             case 6:
-                g_App.lifeCount = 2;
-                g_App.bombCount = 3;
+                g_App.lives = 2;
+                g_App.bombs = 3;
                 g_App.musicMode = 1;
                 g_App.playSounds = 1;
                 g_App.optionsMenuCursor = 0;

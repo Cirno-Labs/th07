@@ -60,10 +60,10 @@ void GameManager::SetPlayArea()
     this->arena[1] = 16.0f;
     this->arena[2] = 384.0f;
     this->arena[3] = 448.0f;
-    this->arena2[0] = 8.0f;
-    this->arena2[1] = 16.0f;
-    this->arena2[2] = 368.0f;
-    this->arena2[3] = 416.0f;
+    this->playerArea[0] = 8.0f;
+    this->playerArea[1] = 16.0f;
+    this->playerArea[2] = 368.0f;
+    this->playerArea[3] = 416.0f;
 }
 
 BOOL GameManager::IsInPlayArea(float x, float y, float width, float height)
@@ -492,11 +492,11 @@ int GameManager::AddedCallback(GameManager *mgr)
         mgr->invulnerabilityBonus = mgr->stats->grazeCount;
         if (g_GameManager.difficulty >= 4)
         {
-            mgr->savedConfig->lifeCount = 2;
+            mgr->savedConfig->lives = 2;
         }
         if (g_GameManager.stateFlags & 1)
         {
-            mgr->savedConfig->lifeCount = 8;
+            mgr->savedConfig->lives = 8;
         }
         if (Player::RegisterChain(0) != 0)
         {
@@ -505,7 +505,7 @@ int GameManager::AddedCallback(GameManager *mgr)
         }
         if (!((g_GameManager.stateFlags >> 3) & 1))
         {
-            g_GameManager.SetLives(mgr->savedConfig->lifeCount);
+            g_GameManager.SetLives(mgr->savedConfig->lives);
             g_GameManager.RerollChecksumKeys();
             g_GameManager.SetBombs(g_Player.shotType->bombs);
         }

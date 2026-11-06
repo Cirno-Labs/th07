@@ -451,7 +451,7 @@ address,size,name,symbol
 0x0043d880,264,UpdateFiring,?UpdateFiring@@YIHPAVPlayer@@@Z
 0x0043d990,72,Player::StartFiring,?StartFiring@Player@@SIXPAV1@@Z
 0x0043d9e0,1724,Player::CalcDamage,?CalcDamage@Player@@QAEHPAUD3DXVECTOR3@@0PAH@Z
-0x0043e0a0,442,Player::CheckAreaHit,?CheckAreaHit@Player@@QAEHPAUD3DXVECTOR3@@0@Z
+0x0043e0a0,442,Player::CheckHitAreas,?CheckHitAreas@Player@@QAEHPAUD3DXVECTOR3@@0@Z
 0x0043e260,324,Player::CheckHit,?CheckHit@Player@@QAEHPAUD3DXVECTOR3@@0@Z
 0x0043e3b0,293,Player::CheckGraze,?CheckGraze@Player@@QAEHPAUD3DXVECTOR3@@0@Z
 0x0043e4e0,456,Player::TouchesGrazeBox,?TouchesGrazeBox@Player@@QAEHPAUD3DXVECTOR3@@0@Z
@@ -459,14 +459,14 @@ address,size,name,symbol
 0x0043eb90,549,Player::Graze,?Graze@Player@@QAEXPAUD3DXVECTOR3@@@Z
 0x0043edc0,143,Player::Die,?Die@Player@@QAEXXZ
 0x0043ee50,6790,HandleInput,?HandleInput@@YIHPAVPlayer@@@Z
-0x00440940,169,UpdateHitboxAreas,?UpdateHitboxAreas@@YIXPAVPlayer@@@Z
+0x00440940,169,UpdateHitAreas,?UpdateHitAreas@@YIXPAVPlayer@@@Z
 0x004409f0,760,UpdateBombState,?UpdateBombState@@YIXPAVPlayer@@@Z
 0x00440cf0,1231,UpdateDyingState,?UpdateDyingState@@YIHPAVPlayer@@@Z
 0x004411c0,353,UpdateRespawningState,?UpdateRespawningState@@YIXPAVPlayer@@@Z
 0x00441330,825,UpdateInvulnerability,?UpdateInvulnerability@@YIXPAVPlayer@@@Z
 0x00441670,394,Player::EndBombState,?EndBombState@Player@@QAEXXZ
-0x00441800,163,Player::AddHitboxArea,?AddHitboxArea@Player@@QAEPAUPlayerArea@@PAUD3DXVECTOR3@@MMH@Z
-0x004418b0,162,Player::AddHitboxAreaCircle,?AddHitboxAreaCircle@Player@@QAEPAUPlayerArea@@PAUD3DXVECTOR3@@MMHH@Z
+0x00441800,163,Player::AddHitArea,?AddHitArea@Player@@QAEPAUPlayerHitArea@@PAUD3DXVECTOR3@@MMH@Z
+0x004418b0,162,Player::AddHitAreaCircle,?AddHitAreaCircle@Player@@QAEPAUPlayerHitArea@@PAUD3DXVECTOR3@@MMHH@Z
 0x00441960,612,StartBombState,?StartBombState@@YIXPAVPlayer@@@Z
 0x00441bd0,680,Player::StopBombState,?StopBombState@Player@@QAEXH@Z
 0x00441e80,290,ResetHomingAndText,?ResetHomingAndText@@YIXPAVPlayer@@@Z
@@ -1743,7 +1743,7 @@ address,size,name,symbol
 0x0049ebb8,,g_SoundPaths,?g_SoundPaths@@3PAPADA
 0x0049ec30,,g_NameAlphabet,?g_NameAlphabet@@3PADA
 0x0049ec34,,g_ShotNames,?g_ShotNames@@3PAPADA
-0x0049ec50,,g_Bombs,?g_Bombs@@3PAUBombData@@A
+0x0049ec50,,g_BombFuncs,?g_BombFuncs@@3PAUBombFuncs@@A
 0x0049ecb0,,g_ShotFireFuncs,?g_ShotFireFuncs@@3PAP6IHPAVPlayer@@PAUPlayerBullet@@HPAUShotData@@@ZA
 0x0049ecc8,,g_ShotUpdateFuncs,?g_ShotUpdateFuncs@@3PAP6IHPAVPlayer@@PAUPlayerBullet@@@ZA
 0x0049ece0,,g_ShotDrawFuncs,?g_ShotDrawFuncs@@3PAP6IHPAVPlayer@@PAUPlayerBullet@@@ZA

@@ -52,12 +52,12 @@ inline void SpriteEngine::ReleaseSurfaces()
 
 void SpriteEngine::DoPendingCopy()
 {
-    if (this->pendingCopyTexture >= 0)
+    if (this->pendingTexCopyTexture >= 0)
     {
-        this->CopyBackBufferToTexture(this->pendingCopyTexture, this->pendingCopySrcLeft, this->pendingCopySrcTop,
+        this->CopyBackBufferToTexture(this->pendingTexCopyTexture, this->pendingCopySrcLeft, this->pendingCopySrcTop,
                                       this->pendingCopySrcWidth, this->pendingCopySrcHeight, this->pendingCopyDstLeft,
                                       this->pendingCopyDstTop, this->pendingCopyDstWidth, this->pendingCopyDstHeight);
-        this->pendingCopyTexture = -1;
+        this->pendingTexCopyTexture = -1;
     }
 }
 

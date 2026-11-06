@@ -41,7 +41,7 @@ struct EnemyFlags
     unsigned char onScreen : 1;
     // Turns the main sprite with the enemy's angle, as th06's.
     unsigned char rotateSprite : 1;
-    unsigned char disableCallStack : 1;
+    unsigned char noCallStack : 1;
     // CheckTimerCallback leaves the spell card and the bullets alone, as
     // th06's.
     unsigned char keepSpellCard : 1;

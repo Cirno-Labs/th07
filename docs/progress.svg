@@ -536,7 +536,7 @@
 <rect width="12" height="12" x="735" y="120" class="named"><title>0x0043d880 UpdateFiring (264 bytes)</title></rect>
 <rect width="12" height="12" x="0" y="135" class="named"><title>0x0043d990 Player::StartFiring (72 bytes)</title></rect>
 <rect width="12" height="12" x="15" y="135" class="named"><title>0x0043d9e0 Player::CalcDamage (1724 bytes)</title></rect>
-<rect width="12" height="12" x="30" y="135" class="named"><title>0x0043e0a0 Player::CheckAreaHit (442 bytes)</title></rect>
+<rect width="12" height="12" x="30" y="135" class="named"><title>0x0043e0a0 Player::CheckHitAreas (442 bytes)</title></rect>
 <rect width="12" height="12" x="45" y="135" class="named"><title>0x0043e260 Player::CheckHit (324 bytes)</title></rect>
 <rect width="12" height="12" x="60" y="135" class="named"><title>0x0043e3b0 Player::CheckGraze (293 bytes)</title></rect>
 <rect width="12" height="12" x="75" y="135" class="named"><title>0x0043e4e0 Player::TouchesGrazeBox (456 bytes)</title></rect>
@@ -544,14 +544,14 @@
 <rect width="12" height="12" x="105" y="135" class="named"><title>0x0043eb90 Player::Graze (549 bytes)</title></rect>
 <rect width="12" height="12" x="120" y="135" class="named"><title>0x0043edc0 Player::Die (143 bytes)</title></rect>
 <rect width="12" height="12" x="135" y="135" class="named"><title>0x0043ee50 HandleInput (6790 bytes)</title></rect>
-<rect width="12" height="12" x="150" y="135" class="named"><title>0x00440940 UpdateHitboxAreas (169 bytes)</title></rect>
+<rect width="12" height="12" x="150" y="135" class="named"><title>0x00440940 UpdateHitAreas (169 bytes)</title></rect>
 <rect width="12" height="12" x="165" y="135" class="named"><title>0x004409f0 UpdateBombState (760 bytes)</title></rect>
 <rect width="12" height="12" x="180" y="135" class="named"><title>0x00440cf0 UpdateDyingState (1231 bytes)</title></rect>
 <rect width="12" height="12" x="195" y="135" class="named"><title>0x004411c0 UpdateRespawningState (353 bytes)</title></rect>
 <rect width="12" height="12" x="210" y="135" class="named"><title>0x00441330 UpdateInvulnerability (825 bytes)</title></rect>
 <rect width="12" height="12" x="225" y="135" class="named"><title>0x00441670 Player::EndBombState (394 bytes)</title></rect>
-<rect width="12" height="12" x="240" y="135" class="named"><title>0x00441800 Player::AddHitboxArea (163 bytes)</title></rect>
-<rect width="12" height="12" x="255" y="135" class="named"><title>0x004418b0 Player::AddHitboxAreaCircle (162 bytes)</title></rect>
+<rect width="12" height="12" x="240" y="135" class="named"><title>0x00441800 Player::AddHitArea (163 bytes)</title></rect>
+<rect width="12" height="12" x="255" y="135" class="named"><title>0x004418b0 Player::AddHitAreaCircle (162 bytes)</title></rect>
 <rect width="12" height="12" x="270" y="135" class="named"><title>0x00441960 StartBombState (612 bytes)</title></rect>
 <rect width="12" height="12" x="285" y="135" class="named"><title>0x00441bd0 Player::StopBombState (680 bytes)</title></rect>
 <rect width="12" height="12" x="300" y="135" class="named"><title>0x00441e80 ResetHomingAndText (290 bytes)</title></rect>
@@ -986,7 +986,7 @@
 <rect width="11.27" height="11.63" x="511.21" y="166.63" class="named"><title>0x0043e4e0 Player::TouchesGrazeBox (456 bytes)</title></rect>
 <rect width="11.27" height="11.40" x="511.21" y="181.26" class="named"><title>0x00431b2d GdiSurface::CreateInFormat (447 bytes)</title></rect>
 <rect width="11.27" height="11.35" x="511.21" y="195.65" class="named"><title>0x00454aa0 SpriteEngine::CopySurfaceToBackBuffer (445 bytes)</title></rect>
-<rect width="10.92" height="11.62" x="525.48" y="0" class="named"><title>0x0043e0a0 Player::CheckAreaHit (442 bytes)</title></rect>
+<rect width="10.92" height="11.62" x="525.48" y="0" class="named"><title>0x0043e0a0 Player::CheckHitAreas (442 bytes)</title></rect>
 <rect width="10.92" height="11.47" x="525.48" y="14.62" class="named"><title>0x0041aef0 EffectUpdatePetal (436 bytes)</title></rect>
 <rect width="10.92" height="11.41" x="525.48" y="29.09" class="named"><title>0x00431330 LoadFileData (434 bytes)</title></rect>
 <rect width="10.92" height="11.41" x="525.48" y="43.50" class="named"><title>0x00433cd0 ItemManager::DrawItems (434 bytes)</title></rect>
@@ -1189,7 +1189,7 @@
 <rect width="6.72" height="7.35" x="701.86" y="70.85" class="named"><title>0x00431540 WriteToFile (172 bytes)</title></rect>
 <rect width="6.68" height="7.35" x="711.59" y="70.85" class="named"><title>0x0045d860 CSound::Stop (171 bytes)</title></rect>
 <rect width="6.60" height="7.35" x="721.27" y="70.85" class="named"><title>0x00404f30 SpriteEngine::StartScriptAtOrigin (169 bytes)</title></rect>
-<rect width="6.60" height="7.35" x="730.87" y="70.85" class="named"><title>0x00440940 UpdateHitboxAreas (169 bytes)</title></rect>
+<rect width="6.60" height="7.35" x="730.87" y="70.85" class="named"><title>0x00440940 UpdateHitAreas (169 bytes)</title></rect>
 <rect width="6.52" height="7.35" x="740.48" y="70.85" class="named"><title>0x00445069 LoadSpellCards (167 bytes)</title></rect>
 <rect width="6.82" height="6.99" x="610.93" y="81.20" class="named"><title>0x00407410 Stage::DeletedCallback (166 bytes)</title></rect>
 <rect width="6.82" height="6.99" x="610.93" y="91.19" class="named"><title>0x0041a4f0 EffectUpdateMove (166 bytes)</title></rect>
@@ -1198,10 +1198,10 @@
 <rect width="6.82" height="6.95" x="610.93" y="121.17" class="named"><title>0x0041d0a0 EffectManager::RegisterChain (165 bytes)</title></rect>
 <rect width="6.82" height="6.95" x="610.93" y="131.12" class="named"><title>0x00439000 App::RegisterChain (165 bytes)</title></rect>
 <rect width="6.82" height="6.95" x="610.93" y="141.07" class="named"><title>0x0044a5a0 ScreenEffect::OnUpdateFadeIn (165 bytes)</title></rect>
-<rect width="6.82" height="6.87" x="610.93" y="151.02" class="named"><title>0x00441800 Player::AddHitboxArea (163 bytes)</title></rect>
+<rect width="6.82" height="6.87" x="610.93" y="151.02" class="named"><title>0x00441800 Player::AddHitArea (163 bytes)</title></rect>
 <rect width="6.82" height="6.87" x="610.93" y="160.88" class="named"><title>0x0045d5b0 CSound::RestoreBuffer (163 bytes)</title></rect>
 <rect width="6.82" height="6.87" x="610.93" y="170.75" class="named"><title>0x0045e080 CWaveFile::Open (163 bytes)</title></rect>
-<rect width="6.82" height="6.82" x="610.93" y="180.61" class="named"><title>0x004418b0 Player::AddHitboxAreaCircle (162 bytes)</title></rect>
+<rect width="6.82" height="6.82" x="610.93" y="180.61" class="named"><title>0x004418b0 Player::AddHitAreaCircle (162 bytes)</title></rect>
 <rect width="6.82" height="6.78" x="610.93" y="190.44" class="named"><title>0x00430090 Chain::CreateElem (161 bytes)</title></rect>
 <rect width="6.82" height="6.78" x="610.93" y="200.22" class="named"><title>0x0043a760 MusicScreen::UpdateIntro (161 bytes)</title></rect>
 <rect width="6.36" height="7.17" x="620.75" y="81.20" class="named"><title>0x0044ae90 ScreenEffect::OnUpdateFadeOut (159 bytes)</title></rect>

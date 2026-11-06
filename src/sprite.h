@@ -88,7 +88,7 @@ struct SpriteBase
     Timer interpFrame[5];
     // How Step eases each of the five interpolations (position, color,
     // alpha, rotation, scale) that interpDuration and interpFrame time.
-    BYTE interpEasing;
+    BYTE posInterpEasing;
     BYTE colorInterpEasing;
     // Player's StopBombState sets it on its effect.
     BYTE alphaInterpEasing;
@@ -155,7 +155,7 @@ struct SpriteBase
             // Set while the script waits for an interrupt.
             DWORD stopped : 1;
             // Bit 14, which Step's instruction 31 sets.
-            DWORD scriptBit14 : 1;
+            DWORD cameraSetup : 1;
         };
     };
     // Whether the bullets' draw functions turn it along their angle, as
@@ -587,11 +587,11 @@ public:
     int SetPendingCopy(int texture, int srcLeft, int srcTop, int srcWidth, int srcHeight, int dstLeft, int dstTop,
                        int dstWidth, int dstHeight)
     {
-        if (this->pendingCopyTexture >= 0)
+        if (this->pendingTexCopyTexture >= 0)
         {
             return -1;
         }
-        this->pendingCopyTexture = texture;
+        this->pendingTexCopyTexture = texture;
         this->pendingCopySrcLeft = srcLeft;
         this->pendingCopySrcTop = srcTop;
         this->pendingCopySrcWidth = srcWidth;
@@ -620,7 +620,7 @@ public:
     // The world matrix ProjectSprite3D last projected with.
     D3DXMATRIX lastWorldMatrix;
     SpriteData sprites[0xa00];
-    Sprite unusedSprite28060;
+    Sprite unk_28060;
     // The textures of the loaded ANM files, by slot.
     IDirect3DTexture8 *textures[0x108];
     // The image files the textures were created from, kept loaded.
@@ -669,7 +669,7 @@ public:
     // A copy of the back buffer into a texture to do after the frame is
     // drawn: CopyBackBufferToTexture's arguments, the texture -1 when
     // there is none.
-    int pendingCopyTexture;
+    int pendingTexCopyTexture;
     int pendingCopySrcLeft;
     int pendingCopySrcTop;
     int pendingCopySrcWidth;

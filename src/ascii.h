@@ -220,7 +220,7 @@ public:
     // As th06's nextPopup and nextPopup2.
     int nextPopup;
     int nextPopup2;
-    int unusedAfterInit74e4;
+    int unk_74e4;
     PauseMenu pauseMenu;
     ContinueMenu continueMenu;
     Sprite demoIcon;
