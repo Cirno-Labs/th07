@@ -279,7 +279,7 @@ void PresentFrame()
         g_App.redrawFrames = 2;
     }
     g_SpriteEngine->DoPendingCopy();
-    if ((g_Buttons & 0x800) && (g_Buttons & 0x800) != (g_LastButtons & 0x800))
+    if ((g_Buttons & 0x800) && (g_Buttons & 0x800) != (g_PreviousButtons & 0x800))
     {
         _mkdir("snapshot");
         for (i = 0; i < 1000; i++)

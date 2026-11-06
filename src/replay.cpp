@@ -30,8 +30,8 @@ int ReplayManager::RecordOnUpdate(ReplayManager *replay)
     {
         return 1;
     }
-    g_PreviousPlayButtons = g_GameInputs;
-    g_GameInputs = g_Buttons;
+    g_PreviousPlayButtons = g_PlayButtons;
+    g_PlayButtons = g_Buttons;
     if (g_GameManager.savedConfig->scoreDisabled != 0)
     {
         return 1;
@@ -46,7 +46,7 @@ int ReplayManager::RecordOnUpdate(ReplayManager *replay)
         idx = 6;
     }
     buttons = g_Buttons;
-    g_GameInputs = buttons;
+    g_PlayButtons = buttons;
     replay->cursor++;
     replay->stageEnds[idx] = replay->cursor + 1;
     replay->cursor->input = buttons;
@@ -92,11 +92,11 @@ int ReplayManager::PlayOnUpdate(ReplayManager *replay)
         return 1;
     }
     unused = 0;
-    g_PreviousPlayButtons = g_GameInputs;
-    g_GameInputs = replay->cursor->input;
+    g_PreviousPlayButtons = g_PlayButtons;
+    g_PlayButtons = replay->cursor->input;
     replay->cursor++;
     g_RepeatButtons = 0;
-    if (g_PreviousPlayButtons == g_GameInputs)
+    if (g_PreviousPlayButtons == g_PlayButtons)
     {
         if (g_ButtonHeldFrames >= 30)
         {
@@ -387,7 +387,7 @@ int ReplayManager::RegisterChain(int mode, char *path)
     ReplayManager *replay;
 
     g_PreviousPlayButtons = 0;
-    g_GameInputs = 0;
+    g_PlayButtons = 0;
     if (g_ReplayManager == NULL)
     {
         replay = new ReplayManager;

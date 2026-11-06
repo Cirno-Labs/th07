@@ -693,7 +693,7 @@ int GuiImpl::RunMsg()
     {
         this->msg.timelineRelease--;
     }
-    if (this->msg.skippable && (g_GameInputs & 0x100))
+    if (this->msg.skippable && (g_PlayButtons & 0x100))
     {
         this->msg.timer.Set(this->msg.instr->time);
     }
@@ -757,8 +757,8 @@ int GuiImpl::RunMsg()
             this->msg.waitFrames = 0;
             break;
         case 4:
-            if ((!this->msg.skippable || !(g_GameInputs & 0x100)) &&
-                (!(g_GameInputs & 1) || (g_GameInputs & 1) == (g_PreviousPlayButtons & 1) || this->msg.waitFrames < 12))
+            if ((!this->msg.skippable || !(g_PlayButtons & 0x100)) &&
+                (!(g_PlayButtons & 1) || (g_PlayButtons & 1) == (g_PreviousPlayButtons & 1) || this->msg.waitFrames < 12))
             {
                 if (this->msg.waitFrames >= this->msg.instr->i)
                 {
@@ -896,7 +896,7 @@ stepSprites:
     g_SpriteEngine->Step(&this->msg.text[1]);
     g_SpriteEngine->Step(&this->msg.nameplates[0]);
     g_SpriteEngine->Step(&this->msg.nameplates[1]);
-    if (this->msg.timer < 60 && this->msg.skippable && (g_GameInputs & 0x100))
+    if (this->msg.timer < 60 && this->msg.skippable && (g_PlayButtons & 0x100))
     {
         this->msg.timer.Set(60);
     }

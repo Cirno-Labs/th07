@@ -239,5 +239,5 @@ extern EffectManager g_EffectManager;
 
 // EffectManager's statically allocated chain elements.
 extern ChainElem g_EffectCalcElem;
-extern ChainElem g_EffectDraw;
+extern ChainElem g_EffectsDrawElem;
 

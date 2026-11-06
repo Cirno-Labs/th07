@@ -382,7 +382,7 @@ int SetButtonFromDirectInput(WORD *buttons, short button, WORD bit, BYTE *rgbBut
 // and g_Rng in .bss as in the original: the exe sorts an object's
 // globals by name_hash(name) % 1024 (tools/locals.py), and of two equal
 // ones puts the name first seen later first.
-extern WORD g_ShotButtonHeldLen;
+extern WORD g_ShotHeldFrames;
 // The joystick's capabilities, from joyGetDevCaps.
 extern JOYCAPSA g_JoyDeviceCaps;
 
@@ -408,10 +408,10 @@ void DrawLoadingScreen();
 
 // The buttons held this frame and the frame before, as bits.
 extern WORD g_Buttons;
-extern WORD g_LastButtons;
+extern WORD g_PreviousButtons;
 // The buttons the game plays by this frame: g_Buttons, or a replay's.
-extern WORD g_GameInputs;
-// g_GameInputs the frame before.
+extern WORD g_PlayButtons;
+// g_PlayButtons the frame before.
 extern WORD g_PreviousPlayButtons;
 // 1 on every 8th frame once the buttons have been held unchanged for 30
 // frames, for key repeat.
@@ -421,7 +421,7 @@ extern WORD g_RepeatButtons;
 extern WORD g_ButtonHeldFrames;
 
 // Whether a button in `mask` went down this frame.
-#define WAS_PRESSED(mask) ((g_Buttons & (mask)) && (g_Buttons & (mask)) != (g_LastButtons & (mask)))
+#define WAS_PRESSED(mask) ((g_Buttons & (mask)) && (g_Buttons & (mask)) != (g_PreviousButtons & (mask)))
 // Also while they are held, once the repeat delay has passed.
 #define WAS_PRESSED_OR_HELD(mask) (WAS_PRESSED(mask) || ((g_Buttons & (mask)) && g_RepeatButtons))
 
@@ -899,8 +899,8 @@ ASSERT_SIZE(GameManager, 0x9644);
 extern GameManager g_GameManager;
 
 // The update and draw chain elements of g_GameManager, after it.
-extern ChainElem g_GameManagerUpdateChain;
-extern ChainElem g_GameManagerRenderChain;
+extern ChainElem g_GameManagerCalcChainElem;
+extern ChainElem g_GameManagerDrawChainElem;
 
 // The rank a game starts at and its bounds, as th06's.
 struct RankSettings
@@ -1744,6 +1744,6 @@ extern Stage g_StageManager;
 // The stage data file of each stage; stage 0 has a "dummy" one.
 extern char *g_StageDataFiles[];
 // Stage's statically allocated chain elements.
-extern ChainElem g_StageCalcChain;
+extern ChainElem g_StageBgCalcElem;
 extern ChainElem g_StageDrawElem;
 extern ChainElem g_StageDrawElem2;

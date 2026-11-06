@@ -236,7 +236,7 @@ int UpdateFiring(Player *player);
 // while respawning or when UpdateDyingState returns nonzero.
 //
 // th06's HandleInput: moves the player by the buttons the game plays by
-// (g_GameInputs) at the shot type's speeds, within
+// (g_PlayButtons) at the shot type's speeds, within
 // GameManager::arena2, sets the boxes and moves the options in and
 // out while focused, with effect 0x18 (optionEffect) on the way in. Sakuya B
 // (character 2, shot type 1) fans her options around aimedShotAngle

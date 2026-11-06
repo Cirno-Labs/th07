@@ -48,7 +48,7 @@ EffectInfo g_EffectInfos[34] = {
 };
 EffectManager g_EffectManager;
 ChainElem g_EffectCalcElem;
-ChainElem g_EffectDraw;
+ChainElem g_EffectsDrawElem;
 #endif // TH07_EXE
 
 EXE_INLINE EffectManager::EffectManager()
@@ -858,14 +858,14 @@ int EffectManager::RegisterChain()
     {
         return -1;
     }
-    g_EffectDraw.SetCallback((ChainCallback)EffectManager::OnDraw);
-    g_EffectDraw.arg = mgr;
-    g_Chain.AddToDrawChain(&g_EffectDraw, 9);
+    g_EffectsDrawElem.SetCallback((ChainCallback)EffectManager::OnDraw);
+    g_EffectsDrawElem.arg = mgr;
+    g_Chain.AddToDrawChain(&g_EffectsDrawElem, 9);
     return 0;
 }
 
 void EffectManager::RemoveChain()
 {
     g_Chain.Remove(&g_EffectCalcElem);
-    g_Chain.Remove(&g_EffectDraw);
+    g_Chain.Remove(&g_EffectsDrawElem);
 }

@@ -52,7 +52,7 @@ int g_BulletColorOffsets16[16] = {
 int g_BulletColorOffsets32[8] = {
     0, 1, 1, 2, 2, 3, 4, 0,
 };
-ChainElem g_BulletUpdateChain;
+ChainElem g_BulletChainCalc;
 ChainElem g_BulletDrawElem;
 BulletManager g_BulletManager;
 #endif // TH07_EXE
@@ -1285,11 +1285,11 @@ int BulletManager::RegisterChain(char *anmPath)
     g_EffectColors = g_EffectColorsPale;
     mgr->Reset();
     mgr->anmPath = anmPath;
-    g_BulletUpdateChain.SetCallback((ChainCallback)BulletManager::OnUpdate);
-    g_BulletUpdateChain.addedCallback = (ChainCallback)BulletManager::AddedCallback;
-    g_BulletUpdateChain.deletedCallback = (ChainCallback)BulletManager::DeletedCallback;
-    g_BulletUpdateChain.arg = mgr;
-    if (g_Chain.AddToCalcChain(&g_BulletUpdateChain, 0xc) != 0)
+    g_BulletChainCalc.SetCallback((ChainCallback)BulletManager::OnUpdate);
+    g_BulletChainCalc.addedCallback = (ChainCallback)BulletManager::AddedCallback;
+    g_BulletChainCalc.deletedCallback = (ChainCallback)BulletManager::DeletedCallback;
+    g_BulletChainCalc.arg = mgr;
+    if (g_Chain.AddToCalcChain(&g_BulletChainCalc, 0xc) != 0)
     {
         return -1;
     }
@@ -1301,7 +1301,7 @@ int BulletManager::RegisterChain(char *anmPath)
 
 void BulletManager::RemoveChain()
 {
-    g_Chain.Remove(&g_BulletUpdateChain);
+    g_Chain.Remove(&g_BulletChainCalc);
     g_Chain.Remove(&g_BulletDrawElem);
     memset(&g_BulletManager, 0, sizeof(BulletManager));
 }

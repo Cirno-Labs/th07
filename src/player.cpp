@@ -1093,42 +1093,42 @@ int HandleInput(Player *player)
     deltaY = 0.0f;
     previous = player->direction;
     player->direction = 0;
-    if (g_GameInputs & 0x10)
+    if (g_PlayButtons & 0x10)
     {
         player->direction = 1;
-        if (g_GameInputs & 0x40)
+        if (g_PlayButtons & 0x40)
         {
             player->direction = 5;
         }
-        if (g_GameInputs & 0x80)
+        if (g_PlayButtons & 0x80)
         {
             player->direction = 6;
         }
     }
-    else if (g_GameInputs & 0x20)
+    else if (g_PlayButtons & 0x20)
     {
         player->direction = 2;
-        if (g_GameInputs & 0x40)
+        if (g_PlayButtons & 0x40)
         {
             player->direction = 7;
         }
-        if (g_GameInputs & 0x80)
+        if (g_PlayButtons & 0x80)
         {
             player->direction = 8;
         }
     }
     else
     {
-        if (g_GameInputs & 0x40)
+        if (g_PlayButtons & 0x40)
         {
             player->direction = 3;
         }
-        if (g_GameInputs & 0x80)
+        if (g_PlayButtons & 0x80)
         {
             player->direction = 4;
         }
     }
-    if (g_GameInputs & 4)
+    if (g_PlayButtons & 4)
     {
         player->focused = 1;
         switch (player->direction)
@@ -1439,13 +1439,13 @@ int HandleInput(Player *player)
             break;
         }
     }
-    if ((g_GameInputs & 1) && !g_Gui.IsMsgRunning())
+    if ((g_PlayButtons & 1) && !g_Gui.IsMsgRunning())
     {
         if (!g_GameManager.ChecksumMismatch())
         {
             Player::StartFiring(player);
         }
-        if (!(g_GameInputs & 4))
+        if (!(g_PlayButtons & 4))
         {
             if (player->moveDeltaX != 0.0f)
             {
@@ -1502,7 +1502,7 @@ void UpdateHitboxAreas(Player *player)
 
 void UpdateBombState(Player *player)
 {
-    if (player->bombState && !player->bomb.running && (g_GameInputs & 2))
+    if (player->bombState && !player->bomb.running && (g_PlayButtons & 2))
     {
         player->StopBombState(1);
         player->bombJustStarted = 0;
@@ -1535,7 +1535,7 @@ void UpdateBombState(Player *player)
         return;
     }
     if (!g_GameManager.ChecksumMismatch() && !g_Gui.IsMsgRunning() && player->deathbombFrames != 0 &&
-        (int)g_GameManager.stats->bombs > 0 && player->bombCooldown == 0 && (g_GameInputs & 2))
+        (int)g_GameManager.stats->bombs > 0 && player->bombCooldown == 0 && (g_PlayButtons & 2))
     {
         g_ReplayManager->frameEvents |= 1;
         g_GameManager.AddBombsUsed(1);

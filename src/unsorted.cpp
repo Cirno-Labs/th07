@@ -11,7 +11,7 @@ ControllerMapping g_ControllerMapping = {
     0, 1, 2, 4, -1, -1, -1, -1, 3,
 };
 JOYCAPSA g_JoyDeviceCaps;
-WORD g_ShotButtonHeldLen;
+WORD g_ShotHeldFrames;
 Rng g_Rng;
 #endif // TH07_EXE
 
@@ -74,23 +74,23 @@ WORD ReadJoystick(WORD buttons)
         {
             if (shotPressed)
             {
-                if (g_ShotButtonHeldLen < 20)
+                if (g_ShotHeldFrames < 20)
                 {
-                    g_ShotButtonHeldLen++;
+                    g_ShotHeldFrames++;
                 }
-                if (g_ShotButtonHeldLen >= 10)
+                if (g_ShotHeldFrames >= 10)
                 {
                     buttons |= 4;
                 }
             }
-            else if (g_ShotButtonHeldLen > 10)
+            else if (g_ShotHeldFrames > 10)
             {
-                g_ShotButtonHeldLen -= 10;
+                g_ShotHeldFrames -= 10;
                 buttons |= 4;
             }
             else
             {
-                g_ShotButtonHeldLen = 0;
+                g_ShotHeldFrames = 0;
             }
         }
         SetButtonFromJoystick(&buttons, g_App.controllerMapping.bombButton, 2, joyInfo.dwButtons);
@@ -141,23 +141,23 @@ WORD ReadJoystick(WORD buttons)
         {
             if (diFire)
             {
-                if (g_ShotButtonHeldLen < 20)
+                if (g_ShotHeldFrames < 20)
                 {
-                    g_ShotButtonHeldLen++;
+                    g_ShotHeldFrames++;
                 }
-                if (g_ShotButtonHeldLen >= 10)
+                if (g_ShotHeldFrames >= 10)
                 {
                     buttons |= 4;
                 }
             }
-            else if (g_ShotButtonHeldLen > 10)
+            else if (g_ShotHeldFrames > 10)
             {
-                g_ShotButtonHeldLen -= 10;
+                g_ShotHeldFrames -= 10;
                 buttons |= 4;
             }
             else
             {
-                g_ShotButtonHeldLen = 0;
+                g_ShotHeldFrames = 0;
             }
         }
         SetButtonFromDirectInput(&buttons, g_App.controllerMapping.bombButton, 2, state.rgbButtons);

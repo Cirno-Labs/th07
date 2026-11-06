@@ -12,7 +12,7 @@
 // the original's copies instead.
 #ifdef TH07_EXE
 Stage g_StageManager;
-ChainElem g_StageCalcChain;
+ChainElem g_StageBgCalcElem;
 ChainElem g_StageDrawElem;
 ChainElem g_StageDrawElem2;
 #endif // TH07_EXE
@@ -759,11 +759,11 @@ int Stage::RegisterChain(int stage)
     s->data = NULL;
     s->checksumCheckFrames = 0;
     s->stage = stage;
-    g_StageCalcChain.SetCallback((ChainCallback)Stage::OnUpdate);
-    g_StageCalcChain.addedCallback = (ChainCallback)Stage::AddedCallback;
-    g_StageCalcChain.deletedCallback = (ChainCallback)Stage::DeletedCallback;
-    g_StageCalcChain.arg = s;
-    if (g_Chain.AddToCalcChain(&g_StageCalcChain, 7) != 0)
+    g_StageBgCalcElem.SetCallback((ChainCallback)Stage::OnUpdate);
+    g_StageBgCalcElem.addedCallback = (ChainCallback)Stage::AddedCallback;
+    g_StageBgCalcElem.deletedCallback = (ChainCallback)Stage::DeletedCallback;
+    g_StageBgCalcElem.arg = s;
+    if (g_Chain.AddToCalcChain(&g_StageBgCalcElem, 7) != 0)
     {
         return -1;
     }
@@ -778,7 +778,7 @@ int Stage::RegisterChain(int stage)
 
 void Stage::RemoveChain()
 {
-    g_Chain.Remove(&g_StageCalcChain);
+    g_Chain.Remove(&g_StageBgCalcElem);
     g_Chain.Remove(&g_StageDrawElem);
     g_Chain.Remove(&g_StageDrawElem2);
 }
