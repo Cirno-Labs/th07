@@ -698,7 +698,7 @@ void StartSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
     enemy->effects[24]->sprite.scaleTween.z = 0.125f;
     enemy->effects[24]->sprite.colorTween.x = 0.125f;
     enemy->effects[24]->pos = enemy->pos;
-    enemy->flags.hidden = 0;
+    enemy->flags.spellCircleDetached = 0;
     if (!g_GameManager.isInReplay)
     {
         rec = &g_GameManager.catks[g_EnemyManager.spellCardIndex];
@@ -1825,7 +1825,7 @@ loop:
             enemy->rankCount2High = INT_ARG(5);
             break;
         case 132:
-            enemy->flags.hideFollowEffects = instr->args[0].i;
+            enemy->flags.hidden = instr->args[0].i;
             break;
         case 133:
             enemy->timerCallbackSub = enemy->deathSub;
@@ -1874,8 +1874,8 @@ loop:
             g_BulletManager.ClearAll(0);
             break;
         case 149:
-            enemy->flags.hidden = INT_ARG(0);
-            if (!enemy->flags.hidden)
+            enemy->flags.spellCircleDetached = INT_ARG(0);
+            if (!enemy->flags.spellCircleDetached)
             {
                 enemy->effects[24]->pos.x = FLOAT_ARG(1);
                 enemy->effects[24]->pos.y = FLOAT_ARG(2);

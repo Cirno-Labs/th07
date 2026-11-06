@@ -26,8 +26,9 @@ struct EnemyFlags
     unsigned char contactDamage : 1;
     // The shots' damage comes off the life, as th06's takesDamage.
     unsigned char takesDamage : 1;
-    // Hides the effects that follow the enemy.
-    unsigned char hideFollowEffects : 1;
+    // Hides the enemy, as th06's: it isn't drawn, touched or shot, and
+    // the effects following it are hidden too. Opcode 132.
+    unsigned char hidden : 1;
     // The player's shots and bombs hit it (Player::CalcDamage).
     unsigned char hitByShots : 1;
     unsigned char grazeable : 1;
@@ -47,8 +48,9 @@ struct EnemyFlags
     unsigned char staysOffscreen : 1;
     // Set by WarpToBoss.
     unsigned char isWarpingToBoss : 1;
-    // Cleared as a spell card starts.
-    unsigned char hidden : 1;
+    // Stops the spell card's circle (effects[24]) following the enemy;
+    // opcode 149 places it instead. Cleared as a spell card starts.
+    unsigned char spellCircleDetached : 1;
     // Set on an Extra or Phantasm boss while a bomb runs during spell
     // card 0x76 or later: hides the main sprite and skips contact and
     // shots.
@@ -301,7 +303,7 @@ ASSERT_SIZE(Enemy, 0x4f48);
 
 // Keeps the effects following `enemy` on it, widening their circle up
 // to effectRadius and turning them, as th06's; they are shown unless
-// flags.hideFollowEffects is set.
+// flags.hidden is set.
 void MoveEnemyEffects(Enemy *enemy);
 // Lets go of the effects following `enemy`: each fades out, as th06's.
 void ReleaseEnemyEffects(Enemy *enemy);

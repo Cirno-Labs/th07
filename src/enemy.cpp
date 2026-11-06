@@ -83,7 +83,7 @@ void EnemyManager::Initialize()
     enemy->flags.shootable = 1;
     enemy->flags.contactDamage = 1;
     enemy->flags.takesDamage = 1;
-    enemy->flags.hideFollowEffects = 0;
+    enemy->flags.hidden = 0;
     enemy->flags.hitByShots = 1;
     enemy->flags.grazeable = 0;
     enemy->flags.deathMode = 0;
@@ -202,7 +202,7 @@ void MoveEnemyEffects(Enemy *enemy)
         {
             continue;
         }
-        eff->sprite.visible = !enemy->flags.hideFollowEffects;
+        eff->sprite.visible = !enemy->flags.hidden;
         eff->origin = enemy->pos;
         if (eff->radius < enemy->effectRadius)
         {
@@ -658,7 +658,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
             enemy->ClampPos();
             enemy->Move();
             enemy->ClampPos();
-            if (enemy->effects[24] != NULL && !enemy->flags.hidden)
+            if (enemy->effects[24] != NULL && !enemy->flags.spellCircleDetached)
             {
                 enemy->effects[24]->pos = (enemy->pos - enemy->effects[24]->pos) / 16.0f + enemy->effects[24]->pos;
             }
@@ -677,9 +677,9 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
         }
         if (enemy->sprite.spriteData == NULL)
         {
-            enemy->flags.hideFollowEffects = 1;
+            enemy->flags.hidden = 1;
         }
-        if (!enemy->flags.hideFollowEffects && !enemy->flags.onScreen &&
+        if (!enemy->flags.hidden && !enemy->flags.onScreen &&
             g_GameManager.IsInPlayArea(enemy->pos.x, enemy->pos.y, enemy->sprite.spriteData->width,
                                          enemy->sprite.spriteData->height))
         {
@@ -722,7 +722,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
         }
         bomb = 0;
         hit = 0;
-        if (!enemy->flags.hideFollowEffects && !enemy->flags.hiddenByBomb)
+        if (!enemy->flags.hidden && !enemy->flags.hiddenByBomb)
         {
             if (enemy->flags.shootable && enemy->flags.contactDamage)
             {
@@ -1020,7 +1020,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
             {
                 D3DXVECTOR3 markerPos;
 
-                if (!enemy->flags.hideFollowEffects)
+                if (!enemy->flags.hidden)
                 {
                     markerPos.x = enemy->pos.x + 32.0f;
                 }
@@ -1043,7 +1043,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
         {
             enemy->invulnTimer.Sub(1);
         }
-        if (!enemy->flags.hideFollowEffects && enemy->flags.active)
+        if (!enemy->flags.hidden && enemy->flags.active)
         {
             enemy->nextInDrawList = mgr->drawListHeads[enemy->drawListIndex];
             mgr->drawListHeads[enemy->drawListIndex] = enemy;
