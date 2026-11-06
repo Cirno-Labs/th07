@@ -1439,7 +1439,7 @@ loop:
                 g_Gui.bossHealth = 1.0f;
                 enemy->flags.isBoss = 1;
                 enemy->bossIndex = INT_ARG(0);
-                g_AsciiText.SetNearbyLabelInterrupt(enemy->bossIndex, 1);
+                g_AsciiText.SetBossMarkerInterrupt(enemy->bossIndex, 1);
             }
             else
             {
@@ -1449,7 +1449,7 @@ loop:
                 }
                 g_EnemyManager.bosses[enemy->bossIndex] = NULL;
                 enemy->flags.isBoss = 0;
-                g_AsciiText.SetNearbyLabelInterrupt(enemy->bossIndex, 2);
+                g_AsciiText.SetBossMarkerInterrupt(enemy->bossIndex, 2);
                 ReleaseEnemyEffects(enemy);
             }
             break;

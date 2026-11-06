@@ -396,10 +396,10 @@ public:
     static int OnDraw2(EnemyManager *mgr);
     // Loads the enemy sprites into slots 0xf and 0x10 (either path may
     // be NULL), picks dropCounter and dropIndex at random, ends the spell
-    // card and hides AsciiText's nearbyLabels sprites at -999. Returns 0, or
+    // card and hides AsciiText's bossMarkers sprites at -999. Returns 0, or
     // -1 if loading fails.
     static int AddedCallback(EnemyManager *mgr);
-    // Frees the enemy sprites and hides AsciiText's nearbyLabels sprites at
+    // Frees the enemy sprites and hides AsciiText's bossMarkers sprites at
     // -999 again. Returns 0.
     static int DeletedCallback(EnemyManager *mgr);
     // Initializes, remembers the stage's two enemy sprite files and adds

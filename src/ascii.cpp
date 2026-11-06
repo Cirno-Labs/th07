@@ -71,10 +71,10 @@ void AsciiText::RunScripts()
 {
     g_SpriteRenderer->Step(&this->summaryPopup);
     g_SpriteRenderer->Step(&this->summaryDigit);
-    g_SpriteRenderer->Step(&this->nearbyLabels[0]);
-    g_SpriteRenderer->Step(&this->nearbyLabels[1]);
-    g_SpriteRenderer->Step(&this->nearbyLabels[2]);
-    g_SpriteRenderer->Step(&this->nearbyLabels[3]);
+    g_SpriteRenderer->Step(&this->bossMarkers[0]);
+    g_SpriteRenderer->Step(&this->bossMarkers[1]);
+    g_SpriteRenderer->Step(&this->bossMarkers[2]);
+    g_SpriteRenderer->Step(&this->bossMarkers[3]);
     g_SpriteRenderer->Step(&this->summaryBombIcon);
 }
 
@@ -185,10 +185,10 @@ void AsciiText::StartScripts()
     g_SpriteRenderer->StartScript(&this->summaryPopup, 4);
     g_SpriteRenderer->StartScript(&this->summaryDigit, 3);
     g_SpriteRenderer->StartScript(&this->summaryBombIcon, 5);
-    g_SpriteRenderer->StartScript(&this->nearbyLabels[0], 6);
-    g_SpriteRenderer->StartScript(&this->nearbyLabels[1], 6);
-    g_SpriteRenderer->StartScript(&this->nearbyLabels[2], 6);
-    g_SpriteRenderer->StartScript(&this->nearbyLabels[3], 6);
+    g_SpriteRenderer->StartScript(&this->bossMarkers[0], 6);
+    g_SpriteRenderer->StartScript(&this->bossMarkers[1], 6);
+    g_SpriteRenderer->StartScript(&this->bossMarkers[2], 6);
+    g_SpriteRenderer->StartScript(&this->bossMarkers[3], 6);
 }
 
 int AsciiText::AddedCallback(AsciiText *text)
@@ -351,31 +351,31 @@ void AsciiText::DrawStrings()
     }
     for (idx = 0; idx < 4; idx++)
     {
-        if (this->nearbyLabels[idx].pos.x >= 56.0f && this->nearbyLabels[idx].pos.x <= 392.0f)
+        if (this->bossMarkers[idx].pos.x >= 56.0f && this->bossMarkers[idx].pos.x <= 392.0f)
         {
-            advance = fabsf(this->nearbyLabels[idx].pos.x - 32.0f - g_Player.position.x);
+            advance = fabsf(this->bossMarkers[idx].pos.x - 32.0f - g_Player.position.x);
             if (advance < 64.0f)
             {
-                this->nearbyLabels[idx].alpha = advance * 128.0f / 64.0f + 48.0f;
+                this->bossMarkers[idx].alpha = advance * 128.0f / 64.0f + 48.0f;
             }
             else
             {
-                this->nearbyLabels[idx].alpha = 0xb0;
+                this->bossMarkers[idx].alpha = 0xb0;
             }
-            if (this->nearbyLabelDimmed[idx])
+            if (this->bossMarkerStates[idx])
             {
-                this->nearbyLabels[idx].alpha = 0x80;
-                this->nearbyLabels[idx].colorRgb[2] = 0x40;
-                this->nearbyLabels[idx].colorRgb[1] = 0x40;
-                this->nearbyLabels[idx].colorRgb[0] = 0xff;
+                this->bossMarkers[idx].alpha = 0x80;
+                this->bossMarkers[idx].colorRgb[2] = 0x40;
+                this->bossMarkers[idx].colorRgb[1] = 0x40;
+                this->bossMarkers[idx].colorRgb[0] = 0xff;
             }
             else
             {
-                this->nearbyLabels[idx].colorRgb[2] = 0xff;
-                this->nearbyLabels[idx].colorRgb[1] = 0xff;
-                this->nearbyLabels[idx].colorRgb[0] = 0xff;
+                this->bossMarkers[idx].colorRgb[2] = 0xff;
+                this->bossMarkers[idx].colorRgb[1] = 0xff;
+                this->bossMarkers[idx].colorRgb[0] = 0xff;
             }
-            g_SpriteRenderer->DrawUnrotated(&this->nearbyLabels[idx]);
+            g_SpriteRenderer->DrawUnrotated(&this->bossMarkers[idx]);
         }
     }
 }

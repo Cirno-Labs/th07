@@ -97,11 +97,11 @@ public:
     // white, the scale to 1, glyphWidth to 14, and the sprites up, digit
     // anchored, then sends summaryPopup interrupt summaryPendingInterrupt.
     void Initialize();
-    // Runs the scripts of summaryPopup, summaryDigit, nearbyLabels[] and summaryBombIcon for a
+    // Runs the scripts of summaryPopup, summaryDigit, bossMarkers[] and summaryBombIcon for a
     // frame.
     void RunScripts();
     // Starts the scripts of summaryPopup (4), summaryDigit (3), summaryBombIcon (5) and
-    // nearbyLabels[] (6).
+    // bossMarkers[] (6).
     void StartScripts();
     // The update element's callback: moves the active popups along
     // unless g_GameManager is paused or in the continue menu, then
@@ -122,9 +122,9 @@ public:
     static int DeletedCallback(AsciiText *text);
     // Draws the queued strings, as th06's, glyphWidth pixels a glyph and
     // flushing SpriteEngine's batch before each viewport change. Then
-    // draws those of nearbyLabels[] whose x is 56 to 392, fading them in
+    // draws those of bossMarkers[] whose x is 56 to 392, fading them in
     // from alpha 48 as they get within 64 pixels of the player, and in
-    // blue while nearbyLabelDimmed[i] is set.
+    // blue while bossMarkerStates[i] is set.
     void DrawStrings();
     // The second draw element's callback: draws the popups. th06 picked
     // DrawPopups or DrawPopups2 by g_App.hardwareTnL. Returns 1.
@@ -156,27 +156,27 @@ public:
     {
         this->highlight = highlight;
     }
-    // Sends nearbyLabels[idx] interrupt 99. Must be an inline: under /Od only
+    // Sends bossMarkers[idx] interrupt 99. Must be an inline: under /Od only
     // an inline's constant argument leaves the index multiplied out at
     // run time, as Player::DeletedCallback does.
-    void InterruptNearbyLabel(int idx)
+    void InterruptBossMarker(int idx)
     {
-        this->nearbyLabels[idx].pendingInterrupt = 99;
+        this->bossMarkers[idx].pendingInterrupt = 99;
     }
-    // Sends nearbyLabels[idx] interrupt `interrupt`, the same way.
-    void SetNearbyLabelInterrupt(int idx, int interrupt)
+    // Sends bossMarkers[idx] interrupt `interrupt`, the same way.
+    void SetBossMarkerInterrupt(int idx, int interrupt)
     {
-        this->nearbyLabels[idx].pendingInterrupt = interrupt;
+        this->bossMarkers[idx].pendingInterrupt = interrupt;
     }
-    // Moves nearbyLabels[idx] to `pos`, the same way.
-    void SetNearbyLabelPos(int idx, D3DXVECTOR3 *pos)
+    // Moves bossMarkers[idx] to `pos`, the same way.
+    void SetBossMarkerPos(int idx, D3DXVECTOR3 *pos)
     {
-        this->nearbyLabels[idx].pos = *pos;
+        this->bossMarkers[idx].pos = *pos;
     }
-    // Sets nearbyLabelDimmed[idx], the same way.
-    void SetNearbyLabelDimmed(int idx, int value)
+    // Sets bossMarkerStates[idx], the same way.
+    void SetBossMarkerState(int idx, int value)
     {
-        this->nearbyLabelDimmed[idx] = value;
+        this->bossMarkerStates[idx] = value;
     }
     // summaryPendingInterrupt, and setting it while sending summaryPopup the same
     // interrupt. Inlines: each read takes a temporary in ResetHomingAndText.
@@ -198,9 +198,9 @@ public:
     Sprite summaryPopup;
     Sprite summaryDigit;
     Sprite summaryBombIcon;
-    Sprite nearbyLabels[4];
-    // Whether nearbyLabels[i] is drawn dimmed in blue by DrawStrings.
-    int nearbyLabelDimmed[4];
+    Sprite bossMarkers[4];
+    // Nonzero draws bossMarkers[i] dimmed in blue (DrawStrings).
+    int bossMarkerStates[4];
     AsciiString strings[0x100];
     // How many strings are queued.
     int stringCount;

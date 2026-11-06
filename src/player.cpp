@@ -2230,9 +2230,9 @@ int Player::AddedCallback(Player *player)
         g_AsciiText.summaryPopup.pendingInterrupt = 1;
         g_AsciiText.summaryPendingInterrupt = 1;
     }
-    g_AsciiText.SetNearbyLabelInterrupt(0, 2);
-    g_AsciiText.SetNearbyLabelInterrupt(1, 2);
-    g_AsciiText.SetNearbyLabelInterrupt(2, 2);
+    g_AsciiText.SetBossMarkerInterrupt(0, 2);
+    g_AsciiText.SetBossMarkerInterrupt(1, 2);
+    g_AsciiText.SetBossMarkerInterrupt(2, 2);
     if (g_GameManager.invulnerabilityBonus >= g_GameManager.stats->grazeCount + 50000)
     {
         g_GameManager.invulnerabilityBonus = g_GameManager.stats->grazeCount + 50000;
@@ -2248,9 +2248,9 @@ int Player::DeletedCallback(Player *player)
         g_SpriteRenderer->ReleaseAnm(10);
         g_AsciiText.summaryPopup.pendingInterrupt = 99;
         g_AsciiText.summaryPendingInterrupt = 99;
-        g_AsciiText.InterruptNearbyLabel(0);
-        g_AsciiText.InterruptNearbyLabel(1);
-        g_AsciiText.InterruptNearbyLabel(2);
+        g_AsciiText.InterruptBossMarker(0);
+        g_AsciiText.InterruptBossMarker(1);
+        g_AsciiText.InterruptBossMarker(2);
     }
     if (g_Player.shotType != NULL)
     {

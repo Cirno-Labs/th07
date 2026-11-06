@@ -507,7 +507,7 @@ public:
     // 12), the character's ANM, then sets up the player, its boxes from
     // the shot type, options, bullets, timers and bomb callbacks, and
     // (outside those scenes) sends g_AsciiText's sprites interrupt 1,
-    // its nearbyLabels interrupt 2. Caps GameManager::invulnerabilityBonus as
+    // its bossMarkers interrupt 2. Caps GameManager::invulnerabilityBonus as
     // PlayAddedCallback does. Returns 0, or -1 if a file fails to load.
     static int AddedCallback(Player *player);
     // Unless the scene is 3, 0xb or 0xc, releases ANM 10 and sets
