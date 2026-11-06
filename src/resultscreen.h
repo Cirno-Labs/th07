@@ -36,7 +36,7 @@ struct Hscr
     // "%m/%d" and a NUL.
     char date[6];
     BYTE continuesUsed;
-    BYTE unusedByte27;
+    BYTE pad_27;
 };
 ASSERT_SIZE(Hscr, 0x28);
 
@@ -133,7 +133,7 @@ struct Pscr
     BYTE shot;
     BYTE difficulty;
     BYTE stage;
-    BYTE unusedByte17;
+    BYTE pad_17;
 };
 ASSERT_SIZE(Pscr, 0x18);
 
@@ -200,7 +200,7 @@ int InsertScore(ListNode *head, Hscr *entry);
 // a key that runs over the bytes before it.
 struct ScoreDat
 {
-    BYTE unusedByte00;
+    BYTE pad_00;
     // Where the key starts; random.
     BYTE key;
     // The sum of the bytes from the fifth on.
@@ -209,7 +209,7 @@ struct ScoreDat
     WORD version;
     // Random, as th06's; never read.
     BYTE randomByte;
-    BYTE unusedByte07;
+    BYTE pad_07;
     // Where the chunks start.
     int dataOffset;
     // The list of the score entries read from the chunks.
@@ -402,7 +402,7 @@ public:
     Sprite sprites[0x29];
     // Text drawn with RenderText; the first holds the shot's name.
     Sprite textSprites[0xf];
-    Sprite unusedSprite8110;
+    Sprite unk_8110;
     Sprite spellCardRowDivider;
     // The high score lists, by difficulty and shot.
     ListNode scores[6][6];

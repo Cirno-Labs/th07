@@ -128,7 +128,7 @@ struct EnemyScriptState
     // variables back into Enemy::periodicSubVars.
     int timedCallActive;
     short sub;
-    short unusedShort216;
+    short pad_216;
 };
 ASSERT_SIZE(EnemyScriptState, 0x218);
 
@@ -187,7 +187,7 @@ struct Enemy
     // Contexts saved by calls, as th06's.
     EnemyScriptState savedCtx[16];
     int stackDepth;
-    int unusedInt2a80;
+    int pad_2a80;
     // The subroutine the script runs when the enemy dies; negative for
     // none.
     int deathSub;
@@ -251,7 +251,7 @@ struct Enemy
     BYTE bossIndex;
     BYTE hitFlashTimer;
     unsigned char pad_2e19[0x3];
-    Timer unusedTimer2e1c;
+    Timer pad_2e1c;
     EnemyFlags flags;
     // Keeps flags.hiddenByBomb set for a frame after the bomb.
     WORD hiddenByBombDelay;
@@ -266,7 +266,7 @@ struct Enemy
     short turnStillFromRight;
     short turnLeft;
     short turnRight;
-    short unusedShort2e3a;
+    short pad_2e3a;
     // The bounds of the position, with flags.clampPos.
     float lowerBound[2];
     float upperBound[2];
@@ -288,8 +288,8 @@ struct Enemy
     EnemyScriptVars periodicSubVars;
     Timer periodicSubInterval;
     Timer periodicSubTimer;
-    int unusedInt2f68;
-    Timer unusedTimer2f6c;
+    int pad_2f68;
+    Timer pad_2f6c;
     EnemyBox trailBoxes[0x60];
     EnemyBox spriteStripVertices[0xc2];
     BYTE trailFlags;

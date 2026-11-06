@@ -340,7 +340,7 @@ ScreenEffect *ScreenEffect::StartEffect(int type, int duration, int a, int b, in
     effect->duration = duration;
     effect->shakeFrom = a;
     effect->shakeTo = b;
-    effect->unusedInt20 = c;
+    effect->unk_20 = c;
     if (g_Chain.AddToCalcChain(calc, 0xf) != 0)
     {
         return NULL;

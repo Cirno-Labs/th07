@@ -53,7 +53,7 @@ public:
     int type;
     ChainElem *calcElem;
     ChainElem *drawElem;
-    DWORD unusedDword0c;
+    DWORD pad_0c;
     int alpha;
     // How many frames the effect lasts.
     int duration;
@@ -74,7 +74,7 @@ public:
         D3DCOLOR flashColor;
     };
     // StartEffect's `c`, which every caller passes as 0.
-    int unusedInt20;
+    int unk_20;
     Timer timer;
 };
 ASSERT_SIZE(ScreenEffect, 0x30);

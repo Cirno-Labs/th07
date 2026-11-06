@@ -144,8 +144,8 @@ struct SpriteBase
             DWORD rotationChanged : 1;
             DWORD scaleChanged : 1;
             DWORD blendMode : 1;
-            DWORD unusedFlag5 : 1;
-            DWORD unusedFlag6 : 1;
+            DWORD pad_bit5 : 1;
+            DWORD pad_bit6 : 1;
             // Step's position instructions move posOffset instead of
             // pos.
             DWORD usePosOffset : 1;
@@ -620,7 +620,7 @@ public:
     // The world matrix ProjectSprite3D last projected with.
     D3DXMATRIX lastWorldMatrix;
     SpriteData sprites[0xa00];
-    Sprite unk_28060;
+    Sprite pad_28060;
     // The textures of the loaded ANM files, by slot.
     IDirect3DTexture8 *textures[0x108];
     // The image files the textures were created from, kept loaded.

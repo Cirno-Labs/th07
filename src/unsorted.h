@@ -255,7 +255,7 @@ public:
     void QueueSoundCommand(int type, int arg, char *path);
 
     IDirectSound8 *dsound;
-    DWORD unusedDword004;
+    DWORD pad_004;
     // The loaded sound files' buffers.
     IDirectSoundBuffer *soundBuffers[0x80];
     // Each sound effect's own buffer.
@@ -272,7 +272,7 @@ public:
     // The thread streaming the wave music and its ID.
     DWORD notifyThreadId;
     HANDLE notifyThread;
-    DWORD unusedDword61c;
+    DWORD pad_61c;
     // The sound effects to play, or -1.
     int queue[5];
     // The thbgm.fmt entries of the preloaded tracks, their data, and
@@ -295,7 +295,7 @@ public:
     CStreamingSound *bgm;
     // Signalled as the wave music plays.
     HANDLE notifyEvent;
-    DWORD unusedDword39c4;
+    DWORD pad_39c4;
     // Added to every BgmFormat offset by CWaveFile::ResetFile.
     DWORD bgmFileOffset;
 };
@@ -1285,7 +1285,7 @@ struct EnemyScriptInstr
     short opcode;
     // The size of the instruction, arguments included.
     short size;
-    BYTE unusedByte8;
+    BYTE pad_8;
     BYTE difficultyMask;
     // Bit n: argument n names a variable.
     WORD paramMask;
@@ -1542,7 +1542,7 @@ struct StageInstr
 {
     int frame;
     short opcode;
-    short unusedShort06;
+    short pad_06;
     D3DXVECTOR3 args;
 };
 
@@ -1571,7 +1571,7 @@ struct StageObject
 struct StageInstance
 {
     short id;
-    short unusedShort02;
+    short pad_02;
     D3DXVECTOR3 pos;
 };
 
@@ -1582,7 +1582,7 @@ struct StageData
     short quadCount;
     int instancesOffset;
     int scriptOffset;
-    DWORD unusedDword0c;
+    DWORD pad_0c;
     char name[0x80];
     char songNames[4][0x80];
     char songPaths[4][0x80];
@@ -1720,7 +1720,7 @@ public:
     int dialogueSpriteCount;
     int dialogueScriptOffset;
     Sprite dialogueSprites[0x20];
-    Sprite unusedSprite4ea8;
+    Sprite pad_4ea8;
     int waitLabel;
     StageCamera cameraFrom;
     StageCamera cameraTo;
