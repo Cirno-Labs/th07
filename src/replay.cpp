@@ -548,7 +548,7 @@ void SaveReplay(char *path, char *name)
                 FormatTodayDate(hX.date);
                 hX.key = g_Rng.GetRandomU16InRange(128) + 64;
                 hX.randomByte = g_Rng.GetRandomU16InRange(256);
-                hX.secondaryKey = g_Rng.GetRandomU16InRange(256);
+                hX.randomFill = g_Rng.GetRandomU16InRange(256);
                 hX.slowdown2 = hX.slowdown + 1.12f;
                 hX.slowdown3 = hX.slowdown + 2.34f;
                 hX.replayFormatVersion = 30;
@@ -679,7 +679,7 @@ void ResaveReplay(char *path)
             hX.size = offset;
             hX.key = g_Rng.GetRandomU16InRange(128) + 64;
             hX.randomByte = g_Rng.GetRandomU16InRange(256);
-            hX.secondaryKey = g_Rng.GetRandomU16InRange(256);
+            hX.randomFill = g_Rng.GetRandomU16InRange(256);
             hX.slowdown2 = hX.slowdown + 1.12f;
             hX.slowdown3 = hX.slowdown + 2.34f;
             hX.replayFormatVersion = 30;
