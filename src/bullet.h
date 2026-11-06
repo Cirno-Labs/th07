@@ -260,7 +260,7 @@ public:
     void StopAllBullets();
 
     // Resets, remembers `anmPath`, points g_EffectColors at
-    // g_EffectColorsFull (th06 picked by an option), and adds the update
+    // g_EffectColorsPale (th06 picked by an option), and adds the update
     // element (priority 0xc) and the draw element (priority 10). Returns
     // 0, or -1 if adding fails.
     static int RegisterChain(char *anmPath);
@@ -346,7 +346,7 @@ void DrawBullet(Bullet *bullet);
 
 // The colors of effect 0xd by index, as th06's; RegisterChain points
 // g_EffectColors at them.
-extern DWORD g_EffectColorsFull[0x1c];
+extern DWORD g_EffectColorsPale[0x1c];
 extern DWORD *g_EffectColors;
 
 // BulletManager's statically allocated chain elements.
