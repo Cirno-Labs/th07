@@ -1275,8 +1275,8 @@ loop:
         }
         case 98:
             enemy->deathEffect = *(char *)instr->args;
-            enemy->deathEffectIndex = ((BYTE *)instr->args)[1];
-            enemy->deathEffectVariant = ((BYTE *)instr->args)[2];
+            enemy->deathEffect2 = ((BYTE *)instr->args)[1];
+            enemy->deathEffect3 = ((BYTE *)instr->args)[2];
             break;
         case 73:
             enemy->shootInterval = INT_ARG(0);

@@ -241,9 +241,12 @@ struct Enemy
     Laser *lasers[0x20];
     int laserIndex;
     int item;
+    // The effects the enemy's death spawns, set together by opcode 98
+    // (th06's 100): deathEffect, and deathEffect2 + 4, which an item drop
+    // also spawns. Nothing reads deathEffect3.
     char deathEffect;
-    BYTE deathEffectIndex;
-    BYTE deathEffectVariant;
+    BYTE deathEffect2;
+    BYTE deathEffect3;
     // The enemy's slot in EnemyManager::bosses, while it is one.
     BYTE bossIndex;
     BYTE hitFlashTimer;
