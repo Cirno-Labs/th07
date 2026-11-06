@@ -238,6 +238,6 @@ ASSERT_SIZE(EffectManager, 0x496a8);
 extern EffectManager g_EffectManager;
 
 // EffectManager's statically allocated chain elements.
-extern ChainElem g_EffectCalcChain;
+extern ChainElem g_EffectCalcElem;
 extern ChainElem g_EffectDraw;
 

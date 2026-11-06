@@ -30,7 +30,7 @@ int ReplayManager::RecordOnUpdate(ReplayManager *replay)
     {
         return 1;
     }
-    g_PreviousGameInputs = g_GameInputs;
+    g_PreviousPlayButtons = g_GameInputs;
     g_GameInputs = g_Buttons;
     if (g_GameManager.savedConfig->scoreDisabled != 0)
     {
@@ -92,11 +92,11 @@ int ReplayManager::PlayOnUpdate(ReplayManager *replay)
         return 1;
     }
     unused = 0;
-    g_PreviousGameInputs = g_GameInputs;
+    g_PreviousPlayButtons = g_GameInputs;
     g_GameInputs = replay->cursor->input;
     replay->cursor++;
     g_RepeatButtons = 0;
-    if (g_PreviousGameInputs == g_GameInputs)
+    if (g_PreviousPlayButtons == g_GameInputs)
     {
         if (g_ButtonHeldFrames >= 30)
         {
@@ -371,14 +371,14 @@ int ReplayManager::DeletedCallback(ReplayManager *replay)
         g_Chain.Remove(replay->calcElem3);
         replay->calcElem3 = NULL;
     }
-    MemFree(g_ReplaySystem->data);
+    MemFree(g_ReplayManager->data);
     if (replay->bufferFreedOnDelete != NULL)
     {
         MemFree(replay->bufferFreedOnDelete);
     }
-    delete g_ReplaySystem;
-    g_ReplaySystem = NULL;
-    g_ReplaySystem = NULL;
+    delete g_ReplayManager;
+    g_ReplayManager = NULL;
+    g_ReplayManager = NULL;
     return 0;
 }
 
@@ -386,12 +386,12 @@ int ReplayManager::RegisterChain(int mode, char *path)
 {
     ReplayManager *replay;
 
-    g_PreviousGameInputs = 0;
+    g_PreviousPlayButtons = 0;
     g_GameInputs = 0;
-    if (g_ReplaySystem == NULL)
+    if (g_ReplayManager == NULL)
     {
         replay = new ReplayManager;
-        g_ReplaySystem = replay;
+        g_ReplayManager = replay;
         replay->data = NULL;
         replay->mode = mode;
         replay->path = path;
@@ -436,10 +436,10 @@ int ReplayManager::RegisterChain(int mode, char *path)
         switch (mode)
         {
         case 0:
-            ReplayManager::RecordAddedCallback(g_ReplaySystem);
+            ReplayManager::RecordAddedCallback(g_ReplayManager);
             break;
         case 1:
-            ReplayManager::PlayAddedCallback(g_ReplaySystem);
+            ReplayManager::PlayAddedCallback(g_ReplayManager);
             break;
         }
     }
@@ -449,7 +449,7 @@ int ReplayManager::RegisterChain(int mode, char *path)
 void ReplayManager::EndStage()
 {
     int stageIdx;
-    ReplayManager *replay = g_ReplaySystem;
+    ReplayManager *replay = g_ReplayManager;
 
     if (replay != NULL)
     {
@@ -482,9 +482,9 @@ void SaveReplay(char *path, char *name)
     ReplayManager *replayTmp;
     int i;
 
-    if (g_ReplaySystem != NULL)
+    if (g_ReplayManager != NULL)
     {
-        replayTmp = g_ReplaySystem;
+        replayTmp = g_ReplayManager;
         if (replayTmp->GetMode() == 0)
         {
             if (!(g_GameManager.stateFlags & 1) && g_GameManager.difficulty < 4)
@@ -597,17 +597,17 @@ void SaveReplay(char *path, char *name)
         freeStages:
             for (i = 0; i < 7; i++)
             {
-                if (g_ReplaySystem->data->stages[i] != NULL)
+                if (g_ReplayManager->data->stages[i] != NULL)
                 {
-                    MemFree(g_ReplaySystem->data->stages[i]);
+                    MemFree(g_ReplayManager->data->stages[i]);
                 }
                 if (replayTmp->data->extras[i] != NULL)
                 {
-                    MemFree(g_ReplaySystem->data->extras[i]);
+                    MemFree(g_ReplayManager->data->extras[i]);
                 }
             }
         }
-        g_Chain.Remove(g_ReplaySystem->calcElem);
+        g_Chain.Remove(g_ReplayManager->calcElem);
     }
 }
 
@@ -628,9 +628,9 @@ void ResaveReplay(char *path)
     ReplayManager *replayTmp;
     int i;
 
-    if (g_ReplaySystem != NULL)
+    if (g_ReplayManager != NULL)
     {
-        replayTmp = g_ReplaySystem;
+        replayTmp = g_ReplayManager;
         if (!(g_GameManager.stateFlags & 1) && g_GameManager.difficulty < 4)
         {
             if (memcmp(&g_App.controllerMapping, replayTmp->data->config, sizeof(replayTmp->data->config)) != 0)
@@ -726,6 +726,6 @@ void ResaveReplay(char *path)
             GlobalFree(compressedData);
         }
     done:
-        g_Chain.Remove(g_ReplaySystem->calcElem);
+        g_Chain.Remove(g_ReplayManager->calcElem);
     }
 }

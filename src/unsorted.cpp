@@ -7,10 +7,10 @@
 // The game's data, as the original defines it here. The DLL build uses
 // the original's copies instead.
 #ifdef TH07_EXE
-ControllerMapping g_DefaultControllerMapping = {
+ControllerMapping g_ControllerMapping = {
     0, 1, 2, 4, -1, -1, -1, -1, 3,
 };
-JOYCAPSA g_JoyCaps;
+JOYCAPSA g_JoyDeviceCaps;
 WORD g_ShotButtonHeldLen;
 Rng g_Rng;
 #endif // TH07_EXE
@@ -26,7 +26,7 @@ WORD InitJoystick()
         LogPrintf(&g_Logger, "使えるパッドが存在しないようです、残念\r\n");
         return 1;
     }
-    joyGetDevCapsA(JOYSTICKID1, &g_JoyCaps, sizeof(g_JoyCaps));
+    joyGetDevCapsA(JOYSTICKID1, &g_JoyDeviceCaps, sizeof(g_JoyDeviceCaps));
     return 0;
 }
 
@@ -101,12 +101,12 @@ WORD ReadJoystick(WORD buttons)
         SetButtonFromJoystick(&buttons, g_App.controllerMapping.leftButton, 0x40, joyInfo.dwButtons);
         SetButtonFromJoystick(&buttons, g_App.controllerMapping.rightButton, 0x80, joyInfo.dwButtons);
         SetButtonFromJoystick(&buttons, g_App.controllerMapping.skipButton, 0x100, joyInfo.dwButtons);
-        margin = (g_JoyCaps.wXmax - g_JoyCaps.wXmin) / 2 / 2;
-        buttons |= ((g_JoyCaps.wXmin + g_JoyCaps.wXmax) / 2 + margin < joyInfo.dwXpos) ? 0x80 : 0;
-        buttons |= (joyInfo.dwXpos < (g_JoyCaps.wXmin + g_JoyCaps.wXmax) / 2 - margin) ? 0x40 : 0;
-        margin = (g_JoyCaps.wYmax - g_JoyCaps.wYmin) / 2 / 2;
-        buttons |= ((g_JoyCaps.wYmin + g_JoyCaps.wYmax) / 2 + margin < joyInfo.dwYpos) ? 0x20 : 0;
-        buttons |= (joyInfo.dwYpos < (g_JoyCaps.wYmin + g_JoyCaps.wYmax) / 2 - margin) ? 0x10 : 0;
+        margin = (g_JoyDeviceCaps.wXmax - g_JoyDeviceCaps.wXmin) / 2 / 2;
+        buttons |= ((g_JoyDeviceCaps.wXmin + g_JoyDeviceCaps.wXmax) / 2 + margin < joyInfo.dwXpos) ? 0x80 : 0;
+        buttons |= (joyInfo.dwXpos < (g_JoyDeviceCaps.wXmin + g_JoyDeviceCaps.wXmax) / 2 - margin) ? 0x40 : 0;
+        margin = (g_JoyDeviceCaps.wYmax - g_JoyDeviceCaps.wYmin) / 2 / 2;
+        buttons |= ((g_JoyDeviceCaps.wYmin + g_JoyDeviceCaps.wYmax) / 2 + margin < joyInfo.dwYpos) ? 0x20 : 0;
+        buttons |= (joyInfo.dwYpos < (g_JoyDeviceCaps.wYmin + g_JoyDeviceCaps.wYmax) / 2 - margin) ? 0x10 : 0;
         return buttons;
     }
     else

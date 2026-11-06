@@ -11,7 +11,7 @@
 
 #ifdef TH07_EXE
 // Unused, a stand-in (name and type invented): the original has four
-// unreferenced bytes before g_SpriteRenderer.
+// unreferenced bytes before g_SpriteEngine.
 DWORD g_UnusedGlobal;
 // Constructed and destroyed, never used.
 DatArchive g_Archives4b9e68[20];

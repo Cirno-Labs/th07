@@ -47,7 +47,7 @@ EffectInfo g_EffectInfos[34] = {
     {0x000002b1, EffectUpdateConverge, EffectInitConverge},
 };
 EffectManager g_EffectManager;
-ChainElem g_EffectCalcChain;
+ChainElem g_EffectCalcElem;
 ChainElem g_EffectDraw;
 #endif // TH07_EXE
 
@@ -297,7 +297,7 @@ int EffectInitPetal20(Effect *effect)
     percent = percent * 100 / g_GameManager.bonusPointsCap;
     if (percent >= g_Rng.GetRandomU32InRange(100))
     {
-        g_SpriteRenderer->SetSprite(&effect->sprite, 0x2d8);
+        g_SpriteEngine->SetSprite(&effect->sprite, 0x2d8);
         effect->sprite.colorRgb[2] = 0xff;
         effect->sprite.colorRgb[1] = 0xff;
         effect->sprite.colorRgb[0] = 0xff;
@@ -324,7 +324,7 @@ int EffectInitPetal26(Effect *effect)
     percent = percent * 100 / g_GameManager.bonusPointsCap;
     if (percent >= g_Rng.GetRandomU32InRange(100))
     {
-        g_SpriteRenderer->SetSprite(&effect->sprite, 0x2d8);
+        g_SpriteEngine->SetSprite(&effect->sprite, 0x2d8);
         effect->sprite.colorRgb[2] = 0xff;
         effect->sprite.colorRgb[1] = 0xff;
         effect->sprite.colorRgb[0] = 0xff;
@@ -348,7 +348,7 @@ int EffectInitPetal27(Effect *effect)
     effect->drawList = 1;
     effect->sprite.rotationZ = g_Rng.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
     effect->sprite.rotationX = g_Rng.GetRandomF32ZeroToOne() * 0.06283186f - 0.031415928f;
-    g_SpriteRenderer->SetSprite(&effect->sprite, 0x2d8);
+    g_SpriteEngine->SetSprite(&effect->sprite, 0x2d8);
     effect->sprite.colorRgb[2] = 0xff;
     effect->sprite.colorRgb[1] = 0xff;
     effect->sprite.colorRgb[0] = 0xff;
@@ -370,7 +370,7 @@ int EffectInitPetal30(Effect *effect)
     effect->drawList = 1;
     effect->sprite.rotationZ = g_Rng.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
     effect->sprite.rotationX = g_Rng.GetRandomF32ZeroToOne() * 0.06283186f - 0.031415928f;
-    g_SpriteRenderer->SetSprite(&effect->sprite, 0x2d8);
+    g_SpriteEngine->SetSprite(&effect->sprite, 0x2d8);
     effect->sprite.colorRgb[2] = 0xff;
     effect->sprite.colorRgb[1] = 0xff;
     effect->sprite.colorRgb[0] = 0xff;
@@ -393,7 +393,7 @@ int EffectInitPetal31(Effect *effect)
     effect->drawList = 1;
     effect->sprite.rotationZ = g_Rng.GetRandomF32ZeroToOne() * 6.2831855f - 3.1415927f;
     effect->sprite.rotationX = g_Rng.GetRandomF32ZeroToOne() * 0.06283186f - 0.031415928f;
-    g_SpriteRenderer->SetSprite(&effect->sprite, 0x2d8);
+    g_SpriteEngine->SetSprite(&effect->sprite, 0x2d8);
     effect->sprite.rotationSpeedZ *= 2.0f;
     effect->sprite.colorRgb[2] = 0xff;
     effect->sprite.colorRgb[1] = 0xff;
@@ -489,7 +489,7 @@ Effect *EffectManager::SpawnEffect(int type, D3DXVECTOR3 *pos, int count, D3DCOL
         effect->active = 1;
         effect->type = type;
         effect->pos = *pos;
-        g_SpriteRenderer->StartScript(&effect->sprite, g_EffectInfos[type].script);
+        g_SpriteEngine->StartScript(&effect->sprite, g_EffectInfos[type].script);
         effect->sprite.flags |= 0x1000;
         effect->sprite.color = color;
         effect->update = g_EffectInfos[type].update;
@@ -547,7 +547,7 @@ Effect *EffectManager::SpawnEffectWithVelocity(int type, D3DXVECTOR3 *pos, D3DXV
         effect->active = 1;
         effect->type = type;
         effect->pos = *pos;
-        g_SpriteRenderer->StartScript(&effect->sprite, g_EffectInfos[type].script);
+        g_SpriteEngine->StartScript(&effect->sprite, g_EffectInfos[type].script);
         effect->sprite.color = color;
         effect->update = g_EffectInfos[type].update;
         effect->timer.Set(0);
@@ -584,7 +584,7 @@ Effect *EffectManager::SpawnReservedEffect(int type, D3DXVECTOR3 *pos, int slot,
     effect->active = 1;
     effect->type = type;
     effect->pos = *pos;
-    g_SpriteRenderer->StartScript(&effect->sprite, g_EffectInfos[type].script);
+    g_SpriteEngine->StartScript(&effect->sprite, g_EffectInfos[type].script);
     effect->sprite.flags |= 0x1000;
     effect->sprite.color = color;
     effect->update = g_EffectInfos[type].update;
@@ -625,7 +625,7 @@ int EffectManager::OnUpdate(EffectManager *mgr)
             eff->active = 0;
             continue;
         }
-        if (g_SpriteRenderer->Step(&eff->sprite) != 0)
+        if (g_SpriteEngine->Step(&eff->sprite) != 0)
         {
             eff->active = 0;
             continue;
@@ -674,14 +674,14 @@ int EffectManager::OnDraw(EffectManager *mgr)
         eff->sprite.pos = eff->pos;
         eff->sprite.pos.x = g_GameManager.arena[0] + eff->sprite.pos.x;
         eff->sprite.pos.y = g_GameManager.arena[1] + eff->sprite.pos.y;
-        g_SpriteRenderer->Draw(&eff->sprite);
+        g_SpriteEngine->Draw(&eff->sprite);
         eff = eff->next;
     }
     eff = mgr->drawList2.next;
     while (eff != NULL)
     {
         eff->sprite.pos = eff->pos;
-        g_SpriteRenderer->DrawProjected(&eff->sprite);
+        g_SpriteEngine->DrawProjected(&eff->sprite);
         eff = eff->next;
     }
     eff = mgr->drawList3.next;
@@ -690,7 +690,7 @@ int EffectManager::OnDraw(EffectManager *mgr)
         eff->sprite.pos = eff->pos;
         eff->sprite.pos.x = g_GameManager.arena[0] + eff->sprite.pos.x;
         eff->sprite.pos.y = g_GameManager.arena[1] + eff->sprite.pos.y;
-        g_SpriteRenderer->Draw(&eff->sprite);
+        g_SpriteEngine->Draw(&eff->sprite);
         eff = eff->next;
     }
     return 1;
@@ -735,11 +735,11 @@ int EffectManager::OnDraw2()
         eff->sprite.pos = eff->pos;
         if (eff->drawList == 1)
         {
-            g_SpriteRenderer->DrawProjected(&eff->sprite);
+            g_SpriteEngine->DrawProjected(&eff->sprite);
         }
         else
         {
-            g_SpriteRenderer->DrawProjected3D(&eff->sprite);
+            g_SpriteEngine->DrawProjected3D(&eff->sprite);
         }
         if (eff->type == 20)
         {
@@ -762,72 +762,72 @@ int EffectManager::AddedCallback(EffectManager *mgr)
     case 0:
     case 1:
         g_StageManager.dialogueSpriteCount = 1;
-        if (g_SpriteRenderer->LoadAnm(0x11, "data/eff01.anm", 0x2dc) != 0)
+        if (g_SpriteEngine->LoadAnm(0x11, "data/eff01.anm", 0x2dc) != 0)
         {
             return -1;
         }
         break;
     case 2:
         g_StageManager.dialogueSpriteCount = 1;
-        if (g_SpriteRenderer->LoadAnm(0x11, "data/eff02.anm", 0x2dc) != 0)
+        if (g_SpriteEngine->LoadAnm(0x11, "data/eff02.anm", 0x2dc) != 0)
         {
             return -1;
         }
         break;
     case 3:
         g_StageManager.dialogueSpriteCount = 1;
-        if (g_SpriteRenderer->LoadAnm(0x11, "data/eff03.anm", 0x2dc) != 0)
+        if (g_SpriteEngine->LoadAnm(0x11, "data/eff03.anm", 0x2dc) != 0)
         {
             return -1;
         }
         break;
     case 4:
         g_StageManager.dialogueSpriteCount = 2;
-        if (g_SpriteRenderer->LoadAnm(0x11, "data/eff04.anm", 0x2dc) != 0)
+        if (g_SpriteEngine->LoadAnm(0x11, "data/eff04.anm", 0x2dc) != 0)
         {
             return -1;
         }
-        if (g_SpriteRenderer->LoadAnm(0x12, "data/eff04b.anm", 0x2dd) != 0)
+        if (g_SpriteEngine->LoadAnm(0x12, "data/eff04b.anm", 0x2dd) != 0)
         {
             return -1;
         }
         break;
     case 5:
         g_StageManager.dialogueSpriteCount = 2;
-        if (g_SpriteRenderer->LoadAnm(0x11, "data/eff05.anm", 0x2dc) != 0)
+        if (g_SpriteEngine->LoadAnm(0x11, "data/eff05.anm", 0x2dc) != 0)
         {
             return -1;
         }
         break;
     case 6:
         g_StageManager.dialogueSpriteCount = 2;
-        if (g_SpriteRenderer->LoadAnm(0x11, "data/eff05.anm", 0x2dc) != 0)
+        if (g_SpriteEngine->LoadAnm(0x11, "data/eff05.anm", 0x2dc) != 0)
         {
             return -1;
         }
-        if (g_SpriteRenderer->LoadAnm(0x13, "data/eff06.anm", 0x2de) != 0)
+        if (g_SpriteEngine->LoadAnm(0x13, "data/eff06.anm", 0x2de) != 0)
         {
             return -1;
         }
         break;
     case 7:
         g_StageManager.dialogueSpriteCount = 1;
-        if (g_SpriteRenderer->LoadAnm(0x11, "data/eff02.anm", 0x2dc) != 0)
+        if (g_SpriteEngine->LoadAnm(0x11, "data/eff02.anm", 0x2dc) != 0)
         {
             return -1;
         }
-        if (g_SpriteRenderer->LoadAnm(0x12, "data/eff07.anm", 0x2dd) != 0)
+        if (g_SpriteEngine->LoadAnm(0x12, "data/eff07.anm", 0x2dd) != 0)
         {
             return -1;
         }
         break;
     case 8:
         g_StageManager.dialogueSpriteCount = 2;
-        if (g_SpriteRenderer->LoadAnm(0x11, "data/eff07.anm", 0x2dc) != 0)
+        if (g_SpriteEngine->LoadAnm(0x11, "data/eff07.anm", 0x2dc) != 0)
         {
             return -1;
         }
-        if (g_SpriteRenderer->LoadAnm(0x13, "data/eff08.anm", 0x2de) != 0)
+        if (g_SpriteEngine->LoadAnm(0x13, "data/eff08.anm", 0x2de) != 0)
         {
             return -1;
         }
@@ -838,10 +838,10 @@ int EffectManager::AddedCallback(EffectManager *mgr)
 
 int EffectManager::DeletedCallback(EffectManager *mgr)
 {
-    g_SpriteRenderer->ReleaseAnm(0x11);
-    g_SpriteRenderer->ReleaseAnm(0x12);
-    g_SpriteRenderer->ReleaseAnm(0x13);
-    g_SpriteRenderer->ReleaseAnm(0x14);
+    g_SpriteEngine->ReleaseAnm(0x11);
+    g_SpriteEngine->ReleaseAnm(0x12);
+    g_SpriteEngine->ReleaseAnm(0x13);
+    g_SpriteEngine->ReleaseAnm(0x14);
     return 0;
 }
 
@@ -850,11 +850,11 @@ int EffectManager::RegisterChain()
     EffectManager *mgr = &g_EffectManager;
 
     mgr->Reset();
-    g_EffectCalcChain.SetCallback((ChainCallback)EffectManager::OnUpdate);
-    g_EffectCalcChain.addedCallback = (ChainCallback)EffectManager::AddedCallback;
-    g_EffectCalcChain.deletedCallback = (ChainCallback)EffectManager::DeletedCallback;
-    g_EffectCalcChain.arg = mgr;
-    if (g_Chain.AddToCalcChain(&g_EffectCalcChain, 11) != 0)
+    g_EffectCalcElem.SetCallback((ChainCallback)EffectManager::OnUpdate);
+    g_EffectCalcElem.addedCallback = (ChainCallback)EffectManager::AddedCallback;
+    g_EffectCalcElem.deletedCallback = (ChainCallback)EffectManager::DeletedCallback;
+    g_EffectCalcElem.arg = mgr;
+    if (g_Chain.AddToCalcChain(&g_EffectCalcElem, 11) != 0)
     {
         return -1;
     }
@@ -866,6 +866,6 @@ int EffectManager::RegisterChain()
 
 void EffectManager::RemoveChain()
 {
-    g_Chain.Remove(&g_EffectCalcChain);
+    g_Chain.Remove(&g_EffectCalcElem);
     g_Chain.Remove(&g_EffectDraw);
 }

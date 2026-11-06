@@ -1,4 +1,4 @@
 class ReplayManager;
 #ifdef TH07_EXE
-ReplayManager *g_ReplaySystem;
+ReplayManager *g_ReplayManager;
 #endif

@@ -100,17 +100,17 @@ void SpriteEngine::ReleaseVertexBuffer()
 
 int App::OnUpdate(App *arg)
 {
-    g_SpriteRenderer->ClearVertexFormat();
-    g_SpriteRenderer->ClearSpriteData();
-    g_SpriteRenderer->ClearTexture();
-    g_SpriteRenderer->ClearColorOp();
-    g_SpriteRenderer->ClearBlendMode();
-    g_SpriteRenderer->ClearZWrite();
-    g_SpriteRenderer->ClearDrawStats();
-    g_SpriteRenderer->ClearLastCameraSetupFlag();
-    g_SpriteRenderer->ResetColorModulation();
-    g_SpriteRenderer->shakeY = 0.0f;
-    g_SpriteRenderer->shakeX = 0.0f;
+    g_SpriteEngine->ClearVertexFormat();
+    g_SpriteEngine->ClearSpriteData();
+    g_SpriteEngine->ClearTexture();
+    g_SpriteEngine->ClearColorOp();
+    g_SpriteEngine->ClearBlendMode();
+    g_SpriteEngine->ClearZWrite();
+    g_SpriteEngine->ClearDrawStats();
+    g_SpriteEngine->ClearLastCameraSetupFlag();
+    g_SpriteEngine->ResetColorModulation();
+    g_SpriteEngine->shakeY = 0.0f;
+    g_SpriteEngine->shakeX = 0.0f;
     g_App.fogState = 0xff;
     if (g_SoundPlayer.bgm != NULL)
     {
@@ -496,7 +496,7 @@ int MeasureRefreshRate()
     while (count < 1800 && validCount < 8)
     {
         g_App.d3dDevice->BeginScene();
-        g_SpriteRenderer->CopySurfaceToBackBuffer(0, 0, 0, 0, 0);
+        g_SpriteEngine->CopySurfaceToBackBuffer(0, 0, 0, 0, 0);
         g_App.d3dDevice->EndScene();
         if (FAILED(g_App.d3dDevice->Present(NULL, NULL, NULL, NULL)))
         {
@@ -584,13 +584,13 @@ int App::AddedCallback(App *arg)
     }
     // Shows the logo while the refresh rate is measured, or for four
     // frames.
-    g_SpriteRenderer->LoadSurface(0, "data/title/th07logo.jpg");
+    g_SpriteEngine->LoadSurface(0, "data/title/th07logo.jpg");
     g_App.hideFps = 1;
     if (g_App.presentImmediate == 0)
     {
         if (MeasureRefreshRate() != 0)
         {
-            g_SpriteRenderer->ReleaseSurface(0);
+            g_SpriteEngine->ReleaseSurface(0);
             return -2;
         }
     }
@@ -600,7 +600,7 @@ int App::AddedCallback(App *arg)
         while (i < 4)
         {
             g_App.d3dDevice->BeginScene();
-            g_SpriteRenderer->CopySurfaceToBackBuffer(0, 0, 0, 0, 0);
+            g_SpriteEngine->CopySurfaceToBackBuffer(0, 0, 0, 0, 0);
             g_App.d3dDevice->EndScene();
             if (FAILED(g_App.d3dDevice->Present(NULL, NULL, NULL, NULL)))
             {
@@ -609,7 +609,7 @@ int App::AddedCallback(App *arg)
             i++;
         }
     }
-    g_SpriteRenderer->ReleaseSurface(0);
+    g_SpriteEngine->ReleaseSurface(0);
     arg->hideFps = 0;
     arg->redrawFrames = 0;
     arg->lastPlayTimeTick = timeGetTime();
@@ -624,7 +624,7 @@ int App::AddedCallback(App *arg)
         arg->midi->LoadFile(0x1e, "bgm/init.mid");
     }
     g_SoundPlayer.LoadSounds();
-    if (g_SpriteRenderer->LoadAnm(0, "data/text.anm", 0x700) != 0)
+    if (g_SpriteEngine->LoadAnm(0, "data/text.anm", 0x700) != 0)
     {
         return -1;
     }
@@ -633,7 +633,7 @@ int App::AddedCallback(App *arg)
         LogPrintf(&g_Logger, "error : 文字の初期化に失敗しました\r\n");
         return -1;
     }
-    g_SpriteRenderer->CreateQuad();
+    g_SpriteEngine->CreateQuad();
     CreateTextSurface();
     if (g_SoundPlayer.LoadBgmFormat("bgm/thbgm.fmt") != 0)
     {
@@ -687,8 +687,8 @@ int App::DeletedCallback(App *arg)
         FreeData(g_App.verFile);
         g_App.verFile = NULL;
     }
-    g_SpriteRenderer->ReleaseVertexBuffer();
-    g_SpriteRenderer->ReleaseAnm(0);
+    g_SpriteEngine->ReleaseVertexBuffer();
+    g_SpriteEngine->ReleaseAnm(0);
     AsciiText::RemoveChain();
     g_SoundPlayer.QueueSoundCommand(4, 0, "dummy");
     if (arg->midi != NULL)
@@ -1118,7 +1118,7 @@ int App::LoadConfig(char *path)
         g_App.defaultDifficulty = 1;
         g_App.windowed = 0;
         g_App.frameSkip = 0;
-        g_App.controllerMapping = g_DefaultControllerMapping;
+        g_App.controllerMapping = g_ControllerMapping;
         g_App.effectsQuality = 2;
         g_App.optionsMenuCursor = 0;
         g_App.shootFocuses = 1;
@@ -1153,7 +1153,7 @@ int App::LoadConfig(char *path)
             LogPrintf(&g_Logger, "コンフィグデータが異常でしたので再初期化しました\r\n");
             goto reset;
         }
-        g_DefaultControllerMapping = g_App.controllerMapping;
+        g_ControllerMapping = g_App.controllerMapping;
     }
     g_App.flags.emulateColorAdd = 1;
     if (this->flags.noVertexBuffer)
@@ -1376,7 +1376,7 @@ int App::IsScoreDisabled()
 
 int App::EnableFog()
 {
-    g_SpriteRenderer->FlushQuadBatch();
+    g_SpriteEngine->FlushQuadBatch();
     if (this->fogState != 1)
     {
         this->fogState = 1;
@@ -1387,7 +1387,7 @@ int App::EnableFog()
 
 int App::DisableFog()
 {
-    g_SpriteRenderer->FlushQuadBatch();
+    g_SpriteEngine->FlushQuadBatch();
     if (this->fogState != 0)
     {
         this->fogState = 0;
@@ -1398,7 +1398,7 @@ int App::DisableFog()
 
 int App::SetRenderState(D3DRENDERSTATETYPE state, DWORD value)
 {
-    g_SpriteRenderer->FlushQuadBatch();
+    g_SpriteEngine->FlushQuadBatch();
     return this->d3dDevice->SetRenderState(state, value);
 }
 

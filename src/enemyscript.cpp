@@ -73,7 +73,7 @@ EnemyScriptInterp g_EnemyScriptInterps[8] = {
     ScriptMoveHermite,
 };
 // Constructed, never used.
-ChainElem g_UnusedEnemyScriptCalcChain;
+ChainElem g_UnusedEnemyScriptElem;
 EnemyScripts g_EnemyScripts;
 #endif // TH07_EXE
 
@@ -675,7 +675,7 @@ void StartSpellCard(Enemy *enemy, EnemyScriptInstr *instr)
     g_StageManager.spellCardFrames = 0;
     for (i = 0; i < g_StageManager.dialogueSpriteCount; i++)
     {
-        g_SpriteRenderer->StartScript(&g_StageManager.dialogueSprites[i], i + g_StageManager.dialogueScriptOffset + 0x2dc);
+        g_SpriteEngine->StartScript(&g_StageManager.dialogueSprites[i], i + g_StageManager.dialogueScriptOffset + 0x2dc);
     }
     g_EnemyManager.spellCardActive = 1;
     g_EnemyManager.spellCardCapture = 1;
@@ -1137,7 +1137,7 @@ loop:
             enemy->ctx = enemy->savedCtx[enemy->stackDepth];
             goto restart;
         case 95:
-            g_SpriteRenderer->StartScript(&enemy->sprite, INT_ARG(0) + 0x900);
+            g_SpriteEngine->StartScript(&enemy->sprite, INT_ARG(0) + 0x900);
             break;
         case 97:
             if (INT_ARG(0) >= 2)
@@ -1146,7 +1146,7 @@ loop:
             }
             if (INT_ARG(1) >= 0)
             {
-                g_SpriteRenderer->StartScript(&enemy->sprites[INT_ARG(0)], INT_ARG(1) + 0x900);
+                g_SpriteEngine->StartScript(&enemy->sprites[INT_ARG(0)], INT_ARG(1) + 0x900);
             }
             else
             {
@@ -1848,7 +1848,7 @@ loop:
             enemy->trailSegmentStep = INT_ARG(3);
             if (enemy->trailFlags & 8)
             {
-                g_SpriteRenderer->FillSpriteStripVertices(&enemy->sprite, (VertexTex1DiffuseXyzrwh *)enemy->spriteStripVertices,
+                g_SpriteEngine->FillSpriteStripVertices(&enemy->sprite, (VertexTex1DiffuseXyzrwh *)enemy->spriteStripVertices,
                                                         enemy->trailSegmentCount / enemy->trailSegmentStep * 2);
             }
             break;
@@ -2049,22 +2049,22 @@ done:
                 case 0:
                     if (enemy->spriteDirection == 0xff)
                     {
-                        g_SpriteRenderer->StartScript(&enemy->sprite, enemy->turnStill + 0x900);
+                        g_SpriteEngine->StartScript(&enemy->sprite, enemy->turnStill + 0x900);
                     }
                     else if (enemy->spriteDirection == 1)
                     {
-                        g_SpriteRenderer->StartScript(&enemy->sprite, enemy->turnStillFromLeft + 0x900);
+                        g_SpriteEngine->StartScript(&enemy->sprite, enemy->turnStillFromLeft + 0x900);
                     }
                     else
                     {
-                        g_SpriteRenderer->StartScript(&enemy->sprite, enemy->turnStillFromRight + 0x900);
+                        g_SpriteEngine->StartScript(&enemy->sprite, enemy->turnStillFromRight + 0x900);
                     }
                     break;
                 case 1:
-                    g_SpriteRenderer->StartScript(&enemy->sprite, enemy->turnLeft + 0x900);
+                    g_SpriteEngine->StartScript(&enemy->sprite, enemy->turnLeft + 0x900);
                     break;
                 case 2:
-                    g_SpriteRenderer->StartScript(&enemy->sprite, enemy->turnRight + 0x900);
+                    g_SpriteEngine->StartScript(&enemy->sprite, enemy->turnRight + 0x900);
                     break;
                 }
                 enemy->spriteDirection = dir;

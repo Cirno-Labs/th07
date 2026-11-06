@@ -252,6 +252,6 @@ void IncrementCounterCapped(DWORD *count, DWORD max);
 
 // AsciiText's chain elements, statically allocated as in th06: the
 // update element and the two draw elements.
-extern ChainElem g_AsciiUpdate;
-extern ChainElem g_AsciiRenderChain;
-extern ChainElem g_AsciiRenderChain2;
+extern ChainElem g_AsciiCalcElem;
+extern ChainElem g_AsciiDrawElem;
+extern ChainElem g_AsciiDrawElem2;

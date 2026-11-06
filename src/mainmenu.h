@@ -155,7 +155,7 @@ extern char *g_KeyConfigHelpTexts[12];
 // button is assigned once.
 extern short g_LastPressedKey;
 // The button mapping the key config's reset entry restores.
-extern ControllerMapping g_DefaultControllerMapping;
+extern ControllerMapping g_ControllerMapping;
 // The demo replays the title menu plays in turn.
 extern char *g_DemoReplayPaths[3];
 // The names the replay menu shows for stages (then Extra and Phantasm),

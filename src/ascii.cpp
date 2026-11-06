@@ -39,9 +39,9 @@ extern __declspec(selectany) const char *const g_UnusedAsciiStringOrder[] = {
 // the original's copies instead.
 #ifdef TH07_EXE
 AsciiTextStorage g_AsciiText;
-ChainElem g_AsciiUpdate;
-ChainElem g_AsciiRenderChain;
-ChainElem g_AsciiRenderChain2;
+ChainElem g_AsciiCalcElem;
+ChainElem g_AsciiDrawElem;
+ChainElem g_AsciiDrawElem2;
 #endif // TH07_EXE
 
 
@@ -69,13 +69,13 @@ void GameManager::SetBombs(int bombs)
 
 void AsciiText::RunScripts()
 {
-    g_SpriteRenderer->Step(&this->summaryPopup);
-    g_SpriteRenderer->Step(&this->summaryDigit);
-    g_SpriteRenderer->Step(&this->bossMarkers[0]);
-    g_SpriteRenderer->Step(&this->bossMarkers[1]);
-    g_SpriteRenderer->Step(&this->bossMarkers[2]);
-    g_SpriteRenderer->Step(&this->bossMarkers[3]);
-    g_SpriteRenderer->Step(&this->summaryBombIcon);
+    g_SpriteEngine->Step(&this->summaryPopup);
+    g_SpriteEngine->Step(&this->summaryDigit);
+    g_SpriteEngine->Step(&this->bossMarkers[0]);
+    g_SpriteEngine->Step(&this->bossMarkers[1]);
+    g_SpriteEngine->Step(&this->bossMarkers[2]);
+    g_SpriteEngine->Step(&this->bossMarkers[3]);
+    g_SpriteEngine->Step(&this->summaryBombIcon);
 }
 
 EXE_INLINE AsciiText::AsciiText()
@@ -124,9 +124,9 @@ int AsciiText::OnUpdate(AsciiText *text)
     {
         if (text->demoIcon.scriptIndex == 0)
         {
-            g_SpriteRenderer->StartScript(&text->demoIcon, 7);
+            g_SpriteEngine->StartScript(&text->demoIcon, 7);
         }
-        g_SpriteRenderer->Step(&text->demoIcon);
+        g_SpriteEngine->Step(&text->demoIcon);
     }
     else
     {
@@ -143,7 +143,7 @@ int AsciiText::OnDraw(AsciiText *text)
     text->continueMenu.DrawContinueMenu();
     if (text->demoIcon.scriptIndex)
     {
-        g_SpriteRenderer->DrawUnrotated(&text->demoIcon);
+        g_SpriteEngine->DrawUnrotated(&text->demoIcon);
     }
     return 1;
 }
@@ -172,8 +172,8 @@ void AsciiText::Initialize()
     this->scaleY = 1.0f;
     this->scaleX = 1.0f;
     this->digit.flags |= 0xc00;
-    g_SpriteRenderer->InitSprite(&this->digit, 0);
-    g_SpriteRenderer->InitSprite(&this->glyph, 0x20);
+    g_SpriteEngine->InitSprite(&this->digit, 0);
+    g_SpriteEngine->InitSprite(&this->glyph, 0x20);
     this->digit.pos.z = 0.1f;
     this->highlight = 0;
     this->glyphWidth = 14;
@@ -182,23 +182,23 @@ void AsciiText::Initialize()
 
 void AsciiText::StartScripts()
 {
-    g_SpriteRenderer->StartScript(&this->summaryPopup, 4);
-    g_SpriteRenderer->StartScript(&this->summaryDigit, 3);
-    g_SpriteRenderer->StartScript(&this->summaryBombIcon, 5);
-    g_SpriteRenderer->StartScript(&this->bossMarkers[0], 6);
-    g_SpriteRenderer->StartScript(&this->bossMarkers[1], 6);
-    g_SpriteRenderer->StartScript(&this->bossMarkers[2], 6);
-    g_SpriteRenderer->StartScript(&this->bossMarkers[3], 6);
+    g_SpriteEngine->StartScript(&this->summaryPopup, 4);
+    g_SpriteEngine->StartScript(&this->summaryDigit, 3);
+    g_SpriteEngine->StartScript(&this->summaryBombIcon, 5);
+    g_SpriteEngine->StartScript(&this->bossMarkers[0], 6);
+    g_SpriteEngine->StartScript(&this->bossMarkers[1], 6);
+    g_SpriteEngine->StartScript(&this->bossMarkers[2], 6);
+    g_SpriteEngine->StartScript(&this->bossMarkers[3], 6);
 }
 
 int AsciiText::AddedCallback(AsciiText *text)
 {
     memset(text, 0, sizeof(AsciiText));
-    if (g_SpriteRenderer->LoadAnm(1, "data/ascii.anm", 0) != 0)
+    if (g_SpriteEngine->LoadAnm(1, "data/ascii.anm", 0) != 0)
     {
         return -1;
     }
-    if (g_SpriteRenderer->LoadAnm(4, "data/capture.anm", 0x724) != 0)
+    if (g_SpriteEngine->LoadAnm(4, "data/capture.anm", 0x724) != 0)
     {
         return -1;
     }
@@ -209,10 +209,10 @@ int AsciiText::AddedCallback(AsciiText *text)
 
 int AsciiText::DeletedCallback(AsciiText *text)
 {
-    g_SpriteRenderer->ReleaseAnm(1);
-    g_SpriteRenderer->ReleaseAnm(2);
-    g_SpriteRenderer->ReleaseAnm(4);
-    g_SpriteRenderer->ReleaseAnm(3);
+    g_SpriteEngine->ReleaseAnm(1);
+    g_SpriteEngine->ReleaseAnm(2);
+    g_SpriteEngine->ReleaseAnm(4);
+    g_SpriteEngine->ReleaseAnm(3);
     return 0;
 }
 
@@ -220,27 +220,27 @@ int AsciiText::RegisterChain()
 {
     AsciiText *text = &g_AsciiText;
 
-    g_AsciiUpdate.SetCallback((ChainCallback)AsciiText::OnUpdate);
-    g_AsciiUpdate.addedCallback = (ChainCallback)AsciiText::AddedCallback;
-    g_AsciiUpdate.deletedCallback = (ChainCallback)AsciiText::DeletedCallback;
-    g_AsciiUpdate.arg = text;
-    if (g_Chain.AddToCalcChain(&g_AsciiUpdate, 1) != 0)
+    g_AsciiCalcElem.SetCallback((ChainCallback)AsciiText::OnUpdate);
+    g_AsciiCalcElem.addedCallback = (ChainCallback)AsciiText::AddedCallback;
+    g_AsciiCalcElem.deletedCallback = (ChainCallback)AsciiText::DeletedCallback;
+    g_AsciiCalcElem.arg = text;
+    if (g_Chain.AddToCalcChain(&g_AsciiCalcElem, 1) != 0)
     {
         return -1;
     }
-    g_AsciiRenderChain.SetCallback((ChainCallback)AsciiText::OnDraw);
-    g_AsciiRenderChain.arg = text;
-    g_Chain.AddToDrawChain(&g_AsciiRenderChain, 0x10);
-    g_AsciiRenderChain2.SetCallback((ChainCallback)AsciiText::OnDraw2);
-    g_AsciiRenderChain2.arg = text;
-    g_Chain.AddToDrawChain(&g_AsciiRenderChain2, 0xb);
+    g_AsciiDrawElem.SetCallback((ChainCallback)AsciiText::OnDraw);
+    g_AsciiDrawElem.arg = text;
+    g_Chain.AddToDrawChain(&g_AsciiDrawElem, 0x10);
+    g_AsciiDrawElem2.SetCallback((ChainCallback)AsciiText::OnDraw2);
+    g_AsciiDrawElem2.arg = text;
+    g_Chain.AddToDrawChain(&g_AsciiDrawElem2, 0xb);
     return 0;
 }
 
 void AsciiText::RemoveChain()
 {
-    g_Chain.Remove(&g_AsciiUpdate);
-    g_Chain.Remove(&g_AsciiRenderChain);
+    g_Chain.Remove(&g_AsciiCalcElem);
+    g_Chain.Remove(&g_AsciiDrawElem);
 }
 
 void AsciiText::AddString(D3DXVECTOR3 *pos, char *text)
@@ -302,7 +302,7 @@ void AsciiText::DrawStrings()
         if (clipped != string->inArena)
         {
             clipped = string->inArena;
-            g_SpriteRenderer->FlushQuadBatch();
+            g_SpriteEngine->FlushQuadBatch();
             if (clipped != 0)
             {
                 g_App.viewport.X = g_GameManager.arena[0];
@@ -335,15 +335,15 @@ void AsciiText::DrawStrings()
             {
                 if (string->highlight == 0)
                 {
-                    this->glyph.spriteData = &g_SpriteRenderer->sprites[*c - 1];
+                    this->glyph.spriteData = &g_SpriteEngine->sprites[*c - 1];
                     this->glyph.color = string->color;
                 }
                 else
                 {
-                    this->glyph.spriteData = &g_SpriteRenderer->sprites[*c + 0x7c];
+                    this->glyph.spriteData = &g_SpriteEngine->sprites[*c + 0x7c];
                     this->glyph.color = 0xffffffff;
                 }
-                g_SpriteRenderer->DrawUnrotated(&this->glyph);
+                g_SpriteEngine->DrawUnrotated(&this->glyph);
                 this->glyph.pos.x += advance;
             }
             c++;
@@ -375,7 +375,7 @@ void AsciiText::DrawStrings()
                 this->bossMarkers[idx].colorRgb[1] = 0xff;
                 this->bossMarkers[idx].colorRgb[0] = 0xff;
             }
-            g_SpriteRenderer->DrawUnrotated(&this->bossMarkers[idx]);
+            g_SpriteEngine->DrawUnrotated(&this->bossMarkers[idx]);
         }
     }
 }
@@ -509,13 +509,13 @@ int PauseMenu::UpdatePauseMenu()
     case 0:
         for (i = 0; i < ARRAY_SIZE(this->sprites); i++)
         {
-            g_SpriteRenderer->StartScript(&this->sprites[i], i + 0xfe);
+            g_SpriteEngine->StartScript(&this->sprites[i], i + 0xfe);
         }
         for (i = 0; i < 4; i++)
         {
             this->sprites[i].pendingInterrupt = 1;
         }
-        g_SpriteRenderer->SetSprite(&this->sprites[7], g_GameManager.difficulty + 0x10d);
+        g_SpriteEngine->SetSprite(&this->sprites[7], g_GameManager.difficulty + 0x10d);
         if (!(g_GameManager.stateFlags & 1))
         {
             this->sprites[8].ClearShown();
@@ -532,8 +532,8 @@ int PauseMenu::UpdatePauseMenu()
         this->stateFrames = 0;
         if ((g_App.stateFlags >> 1) & 1)
         {
-            g_SpriteRenderer->StartScript(&this->background, 0x724);
-            if (g_SpriteRenderer->SetPendingCopy(4, 0x20, 0x10, 0x180, 0x1c0, this->background.spriteData->startX,
+            g_SpriteEngine->StartScript(&this->background, 0x724);
+            if (g_SpriteEngine->SetPendingCopy(4, 0x20, 0x10, 0x180, 0x1c0, this->background.spriteData->startX,
                                                this->background.spriteData->startY,
                                                this->background.spriteData->height,
                                                this->background.spriteData->width) != 0)
@@ -786,11 +786,11 @@ int PauseMenu::UpdatePauseMenu()
     }
     for (i = 0; i < ARRAY_SIZE(this->sprites); i++)
     {
-        g_SpriteRenderer->Step(&this->sprites[i]);
+        g_SpriteEngine->Step(&this->sprites[i]);
     }
     if ((g_App.stateFlags >> 1) & 1)
     {
-        g_SpriteRenderer->Step(&this->background);
+        g_SpriteEngine->Step(&this->background);
     }
     this->stateFrames++;
     return 0;
@@ -802,7 +802,7 @@ void PauseMenu::DrawPauseMenu()
 
     if (g_GameManager.isPaused)
     {
-        g_SpriteRenderer->FlushQuadBatch();
+        g_SpriteEngine->FlushQuadBatch();
         g_App.viewport.X = g_GameManager.arena[0];
         g_App.viewport.Y = g_GameManager.arena[1];
         g_App.viewport.Width = g_GameManager.arena[2];
@@ -813,13 +813,13 @@ void PauseMenu::DrawPauseMenu()
             Sprite sprite = this->background;
 
             sprite.flags |= 0x1000;
-            g_SpriteRenderer->DrawUnrotated(&sprite);
+            g_SpriteEngine->DrawUnrotated(&sprite);
         }
         for (i = 0; i < ARRAY_SIZE(this->sprites); i++)
         {
             if (this->sprites[i].flags & 1)
             {
-                g_SpriteRenderer->DrawUnrotated(&this->sprites[i]);
+                g_SpriteEngine->DrawUnrotated(&this->sprites[i]);
             }
         }
     }
@@ -858,17 +858,17 @@ int ContinueMenu::UpdateContinueMenu()
             g_SoundPlayer.QueueSoundCommand(6, 0, "Pause");
             for (i = 0; i < 4; i++)
             {
-                g_SpriteRenderer->StartScript(&this->sprites[i], i + 0x108);
+                g_SpriteEngine->StartScript(&this->sprites[i], i + 0x108);
                 this->sprites[i].pendingInterrupt = 1;
             }
-            g_SpriteRenderer->StartScript(&this->sprites[4], 0x10c);
-            g_SpriteRenderer->SetSprite(&this->sprites[4], g_GameManager.maxContinues + 0x106 -
+            g_SpriteEngine->StartScript(&this->sprites[4], 0x10c);
+            g_SpriteEngine->SetSprite(&this->sprites[4], g_GameManager.maxContinues + 0x106 -
                                                              g_GameManager.stats->continuesUsed);
             this->sprites[4].pendingInterrupt = 1;
             if ((g_App.stateFlags >> 1) & 1)
             {
-                g_SpriteRenderer->StartScript(&this->background, 0x724);
-                if (g_SpriteRenderer->SetPendingCopy(4, 0x20, 0x10, 0x180, 0x1c0, this->background.spriteData->startX,
+                g_SpriteEngine->StartScript(&this->background, 0x724);
+                if (g_SpriteEngine->SetPendingCopy(4, 0x20, 0x10, 0x180, 0x1c0, this->background.spriteData->startX,
                                                    this->background.spriteData->startY,
                                                    this->background.spriteData->height,
                                                    this->background.spriteData->width) != 0)
@@ -1000,11 +1000,11 @@ int ContinueMenu::UpdateContinueMenu()
     }
     for (i = 0; i < 5; i++)
     {
-        g_SpriteRenderer->Step(&this->sprites[i]);
+        g_SpriteEngine->Step(&this->sprites[i]);
     }
     if ((g_App.stateFlags >> 1) & 1)
     {
-        g_SpriteRenderer->Step(&this->background);
+        g_SpriteEngine->Step(&this->background);
     }
     this->stateFrames++;
     return 0;
@@ -1016,7 +1016,7 @@ void ContinueMenu::DrawContinueMenu()
 
     if (g_GameManager.isInContinueMenu)
     {
-        g_SpriteRenderer->FlushQuadBatch();
+        g_SpriteEngine->FlushQuadBatch();
         g_App.viewport.X = g_GameManager.arena[0];
         g_App.viewport.Y = g_GameManager.arena[1];
         g_App.viewport.Width = g_GameManager.arena[2];
@@ -1024,17 +1024,17 @@ void ContinueMenu::DrawContinueMenu()
         g_App.d3dDevice->SetViewport(&g_App.viewport);
         if ((g_App.stateFlags >> 1) & 1 && (this->state != 0 || this->stateFrames > 2))
         {
-            g_SpriteRenderer->DrawUnrotated(&this->background);
+            g_SpriteEngine->DrawUnrotated(&this->background);
         }
         if (this->state == 1 || this->state == 2)
         {
-            g_SpriteRenderer->DrawUnrotated(&this->sprites[4]);
+            g_SpriteEngine->DrawUnrotated(&this->sprites[4]);
         }
         for (i = 0; i < 5; i++)
         {
             if (this->sprites[i].flags & 1)
             {
-                g_SpriteRenderer->DrawUnrotated(&this->sprites[i]);
+                g_SpriteEngine->DrawUnrotated(&this->sprites[i]);
             }
         }
     }
@@ -1089,20 +1089,20 @@ void AsciiText::DrawPopups()
         {
             if (p->timer < 0x34 || *digitPtr == 10)
             {
-                this->digit.spriteData = &g_SpriteRenderer->sprites[*digitPtr];
+                this->digit.spriteData = &g_SpriteEngine->sprites[*digitPtr];
                 this->digit.alpha = alpha;
             }
             else if (p->timer < 0x38)
             {
-                this->digit.spriteData = &g_SpriteRenderer->sprites[*digitPtr + 0xb];
+                this->digit.spriteData = &g_SpriteEngine->sprites[*digitPtr + 0xb];
                 this->digit.alpha = alpha;
             }
             else
             {
-                this->digit.spriteData = &g_SpriteRenderer->sprites[*digitPtr + 0x15];
+                this->digit.spriteData = &g_SpriteEngine->sprites[*digitPtr + 0x15];
                 this->digit.alpha = alpha;
             }
-            g_SpriteRenderer->DrawUnrotated(&this->digit);
+            g_SpriteEngine->DrawUnrotated(&this->digit);
             this->digit.pos.x += 8.0f;
             digitPtr--;
         }
@@ -1112,7 +1112,7 @@ void AsciiText::DrawPopups()
         div = 100000;
         nonzero = 0;
         amount = g_GameManager.bonusPoints - g_GameManager.stats->grazeCount;
-        g_SpriteRenderer->DrawUnrotated(&this->summaryPopup);
+        g_SpriteEngine->DrawUnrotated(&this->summaryPopup);
         this->summaryDigit.pos.x = this->summaryPopup.pos.x + 40.0f + 6.0f;
         this->summaryDigit.pos.y = this->summaryPopup.pos.y + 11.0f;
         this->summaryDigit.pos.z = this->summaryPopup.pos.z;
@@ -1145,8 +1145,8 @@ void AsciiText::DrawPopups()
             }
             if (nonzero != 0 || div == 1)
             {
-                g_SpriteRenderer->SetSprite(&this->summaryDigit, count + 0x84);
-                g_SpriteRenderer->DrawUnrotated(&this->summaryDigit);
+                g_SpriteEngine->SetSprite(&this->summaryDigit, count + 0x84);
+                g_SpriteEngine->DrawUnrotated(&this->summaryDigit);
             }
             this->summaryDigit.pos.x += 7.0f;
         }
@@ -1176,8 +1176,8 @@ void AsciiText::DrawPopups()
             }
             if (nonzero != 0 || div == 1)
             {
-                g_SpriteRenderer->SetSprite(&this->summaryDigit, count + 0x84);
-                g_SpriteRenderer->DrawUnrotated(&this->summaryDigit);
+                g_SpriteEngine->SetSprite(&this->summaryDigit, count + 0x84);
+                g_SpriteEngine->DrawUnrotated(&this->summaryDigit);
             }
             this->summaryDigit.pos.x += 7.0f;
         }
@@ -1221,8 +1221,8 @@ void AsciiText::DrawPopups()
             }
             if (nonzero != 0 || div == 1)
             {
-                g_SpriteRenderer->SetSprite(&this->summaryDigit, count + 0x84);
-                g_SpriteRenderer->DrawUnrotated(&this->summaryDigit);
+                g_SpriteEngine->SetSprite(&this->summaryDigit, count + 0x84);
+                g_SpriteEngine->DrawUnrotated(&this->summaryDigit);
             }
             this->summaryDigit.pos.x += step;
         }
@@ -1234,7 +1234,7 @@ void AsciiText::DrawPopups()
             this->summaryBombIcon.pos.x += 24.0f;
             this->summaryBombIcon.pos.y += 8.0f;
             this->summaryBombIcon.color = this->summaryPopup.color;
-            g_SpriteRenderer->DrawUnrotated(&this->summaryBombIcon);
+            g_SpriteEngine->DrawUnrotated(&this->summaryBombIcon);
         }
     }
 }

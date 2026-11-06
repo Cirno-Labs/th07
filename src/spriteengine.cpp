@@ -22,7 +22,7 @@ const int g_TextureFormatSizes[7] = {
 // (__real@3f000000), which inline asm can't name. As a selectany
 // constant, /OPT:ICF folds g_Half into it.
 __declspec(selectany) extern const float g_Half = 0.5f;
-VertexTex1Xyzrwh g_QuadVertices[4];
+VertexTex1Xyzrwh g_TexQuad[4];
 VertexTex1DiffuseXyzrwh g_DiffuseQuad[4];
 VertexTex1DiffuseXyz g_DiffuseQuadXyz[4];
 #endif // TH07_EXE
@@ -36,15 +36,15 @@ SpriteEngine::SpriteEngine()
     {
         this->sprites[i].sourceFileIndex = -1;
     }
-    g_QuadVertices[0].w = g_QuadVertices[1].w = g_QuadVertices[2].w = g_QuadVertices[3].w = 1.0f;
-    g_QuadVertices[0].uv.x = 0.0f;
-    g_QuadVertices[0].uv.y = 0.0f;
-    g_QuadVertices[1].uv.x = 1.0f;
-    g_QuadVertices[1].uv.y = 0.0f;
-    g_QuadVertices[2].uv.x = 0.0f;
-    g_QuadVertices[2].uv.y = 1.0f;
-    g_QuadVertices[3].uv.x = 1.0f;
-    g_QuadVertices[3].uv.y = 1.0f;
+    g_TexQuad[0].w = g_TexQuad[1].w = g_TexQuad[2].w = g_TexQuad[3].w = 1.0f;
+    g_TexQuad[0].uv.x = 0.0f;
+    g_TexQuad[0].uv.y = 0.0f;
+    g_TexQuad[1].uv.x = 1.0f;
+    g_TexQuad[1].uv.y = 0.0f;
+    g_TexQuad[2].uv.x = 0.0f;
+    g_TexQuad[2].uv.y = 1.0f;
+    g_TexQuad[3].uv.x = 1.0f;
+    g_TexQuad[3].uv.y = 1.0f;
     g_DiffuseQuad[0].w = g_DiffuseQuad[1].w = g_DiffuseQuad[2].w = g_DiffuseQuad[3].w = 1.0f;
     g_DiffuseQuad[0].uv.x = 0.0f;
     g_DiffuseQuad[0].uv.y = 0.0f;
@@ -111,7 +111,7 @@ void SpriteEngine::CreateQuad()
         this->vertexBuffer->Lock(0, 0, (BYTE **)&data, 0);
         memcpy(data, this->quad, sizeof(this->quad));
         this->vertexBuffer->Unlock();
-        g_App.d3dDevice->SetStreamSource(0, g_SpriteRenderer->vertexBuffer, sizeof(VertexTex1Xyz));
+        g_App.d3dDevice->SetStreamSource(0, g_SpriteEngine->vertexBuffer, sizeof(VertexTex1Xyz));
     }
 }
 
@@ -688,7 +688,7 @@ void SpriteEngine::SetRenderStateForSprite(Sprite *vm)
     }
     if (this->lastCameraSetupFlag != (vm->flags >> 14 & 1))
     {
-        g_SpriteRenderer->FlushQuadBatch();
+        g_SpriteEngine->FlushQuadBatch();
         this->lastCameraSetupFlag = vm->flags >> 14 & 1;
         if (this->lastCameraSetupFlag == 0)
         {
@@ -2332,7 +2332,7 @@ void SpriteEngine::StepSprites(Sprite *vms, int count)
     {
         if (vms->scriptIndex >= 0)
         {
-            g_SpriteRenderer->Step(vms);
+            g_SpriteEngine->Step(vms);
         }
         vms++;
         count--;
@@ -2343,7 +2343,7 @@ void SpriteEngine::StartSpriteSeries(Sprite *vms, int script, int count)
 {
     while (count != 0)
     {
-        g_SpriteRenderer->StartScriptAtOrigin(vms, script);
+        g_SpriteEngine->StartScriptAtOrigin(vms, script);
         vms->baseSpriteIndex = vms->spriteIndex;
         script++;
         vms++;

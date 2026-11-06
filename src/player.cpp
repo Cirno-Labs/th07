@@ -115,7 +115,7 @@ void FireShot(Player *player, PlayerBullet *bullet, ShotData *sd)
     {
         g_SoundPlayer.QueueSound(sd->sound, 0);
     }
-    g_SpriteRenderer->StartScript(&bullet->sprite, sd->script);
+    g_SpriteEngine->StartScript(&bullet->sprite, sd->script);
 }
 
 int TryFireShot(Player *player, PlayerBullet *bullet, int frame, ShotData *sd)
@@ -426,7 +426,7 @@ int DrawTrailLaserBullet(Player *player, PlayerBullet *bullet)
         bullet->sprite.alpha = alpha - alpha * i / bullet->trailLength;
         bullet->sprite.pos[0] += g_GameManager.arena[0];
         bullet->sprite.pos[1] += g_GameManager.arena[1];
-        g_SpriteRenderer->Draw(&bullet->sprite);
+        g_SpriteEngine->Draw(&bullet->sprite);
     }
     bullet->sprite.alpha = alpha;
     return 0;
@@ -642,7 +642,7 @@ void UpdateBullets(Player *player)
         {
             bullet->state = 0;
         }
-        if (g_SpriteRenderer->Step(&bullet->sprite))
+        if (g_SpriteEngine->Step(&bullet->sprite))
         {
             bullet->state = 0;
         }
@@ -668,7 +668,7 @@ void DrawBullets(Player *player)
         bullet->sprite.pos.x = g_GameManager.arena[0] + bullet->pos.x;
         bullet->sprite.pos.y = g_GameManager.arena[1] + bullet->pos.y;
         bullet->sprite.pos.z = 0.4f;
-        g_SpriteRenderer->Draw(&bullet->sprite);
+        g_SpriteEngine->Draw(&bullet->sprite);
         if (bullet->draw != NULL)
         {
             bullet->draw(player, bullet);
@@ -694,7 +694,7 @@ void DrawHitBullets(Player *player)
         bullet->sprite.pos.x = g_GameManager.arena[0] + bullet->pos.x;
         bullet->sprite.pos.y = g_GameManager.arena[1] + bullet->pos.y;
         bullet->sprite.pos.z = 0.4f;
-        g_SpriteRenderer->Draw(&bullet->sprite);
+        g_SpriteEngine->Draw(&bullet->sprite);
     }
 }
 
@@ -787,7 +787,7 @@ int Player::CalcDamage(D3DXVECTOR3 *pos, D3DXVECTOR3 *size, int *hitByBomb)
         {
             if (cur->state == 1)
             {
-                g_SpriteRenderer->StartScript(&cur->sprite, cur->sprite.scriptIndex + 0x20);
+                g_SpriteEngine->StartScript(&cur->sprite, cur->sprite.scriptIndex + 0x20);
                 g_EffectManager.SpawnEffect(5, &cur->pos, 1, 0xffffffff);
                 cur->pos.z = 0.1f;
             }
@@ -900,7 +900,7 @@ int Player::CheckHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size)
     {
         return 0;
     }
-    g_ReplaySystem->frameEvents |= 2;
+    g_ReplayManager->frameEvents |= 2;
     if (this->playerState == 4)
     {
         g_Player.StopBombState(0);
@@ -1001,7 +1001,7 @@ int Player::CheckLaserHit(D3DXVECTOR3 *pos, D3DXVECTOR3 *size, D3DXVECTOR3 *orig
     return 2;
 
 hit:
-    g_ReplaySystem->frameEvents |= 2;
+    g_ReplayManager->frameEvents |= 2;
     if (this->playerState == 4)
     {
         g_Player.StopBombState(0);
@@ -1200,19 +1200,19 @@ int HandleInput(Player *player)
     }
     if (deltaX < 0.0f && player->velocityX >= 0.0f)
     {
-        g_SpriteRenderer->StartScript(&player->sprite, 0x401);
+        g_SpriteEngine->StartScript(&player->sprite, 0x401);
     }
     else if (deltaX == 0.0f && player->velocityX < 0.0f)
     {
-        g_SpriteRenderer->StartScript(&player->sprite, 0x402);
+        g_SpriteEngine->StartScript(&player->sprite, 0x402);
     }
     if (deltaX > 0.0f && player->velocityX <= 0.0f)
     {
-        g_SpriteRenderer->StartScript(&player->sprite, 0x403);
+        g_SpriteEngine->StartScript(&player->sprite, 0x403);
     }
     else if (deltaX == 0.0f && player->velocityX > 0.0f)
     {
-        g_SpriteRenderer->StartScript(&player->sprite, 0x404);
+        g_SpriteEngine->StartScript(&player->sprite, 0x404);
     }
     player->velocityX = deltaX;
     player->velocityY = deltaY;
@@ -1537,7 +1537,7 @@ void UpdateBombState(Player *player)
     if (!g_GameManager.ChecksumMismatch() && !g_Gui.IsMsgRunning() && player->deathbombFrames != 0 &&
         (int)g_GameManager.stats->bombs > 0 && player->bombCooldown == 0 && (g_GameInputs & 2))
     {
-        g_ReplaySystem->frameEvents |= 1;
+        g_ReplayManager->frameEvents |= 1;
         g_GameManager.AddBombsUsed(1);
         g_GameManager.AddBombs(-1);
         g_Gui.bombsChanged = 2;
@@ -1585,7 +1585,7 @@ int UpdateDyingState(Player *player)
         player->deathbombFrames--;
         if (player->deathbombFrames == 0)
         {
-            g_ReplaySystem->frameEvents |= 4;
+            g_ReplayManager->frameEvents |= 4;
             g_GameManager.powerItemCombo = 0;
             g_EnemyManager.spellCardBonus = 0;
             g_EnemyManager.spellCardCapture = 0;
@@ -1657,7 +1657,7 @@ int UpdateDyingState(Player *player)
             player->stateTimer.Set(0);
             player->sprite.scaleX = 3.0f;
             player->sprite.scaleY = 3.0f;
-            g_SpriteRenderer->StartScript(&player->sprite, 0x400);
+            g_SpriteEngine->StartScript(&player->sprite, 0x400);
             if ((int)g_GameManager.stats->lives <= 0)
             {
                 g_GameManager.isInContinueMenu = 1;
@@ -1917,7 +1917,7 @@ void StartBombState(Player *player)
     g_Gui.ShowFullPowerPopup(0, 2);
     g_SoundPlayer.QueueSound(0x20, 0);
     g_SoundPlayer.QueueSound(0x24, 0);
-    g_ReplaySystem->frameEvents |= 8;
+    g_ReplayManager->frameEvents |= 8;
 }
 
 void Player::StopBombState(int unused)
@@ -1965,7 +1965,7 @@ void Player::StopBombState(int unused)
     }
     g_SoundPlayer.QueueSound(7, 0);
     g_SoundPlayer.QueueSound(0x21, 0);
-    g_ReplaySystem->frameEvents |= 0x10;
+    g_ReplayManager->frameEvents |= 0x10;
 }
 
 void ResetHomingAndText(Player *player)
@@ -2015,11 +2015,11 @@ int Player::OnUpdate(Player *player)
     {
         HandleInput(player);
     }
-    g_SpriteRenderer->Step(&player->sprite);
+    g_SpriteEngine->Step(&player->sprite);
     if (player->optionState)
     {
-        g_SpriteRenderer->Step(&player->optionSprites[0]);
-        g_SpriteRenderer->Step(&player->optionSprites[1]);
+        g_SpriteEngine->Step(&player->optionSprites[0]);
+        g_SpriteEngine->Step(&player->optionSprites[1]);
     }
     UpdateBullets(player);
     UpdateFiring(player);
@@ -2048,7 +2048,7 @@ int Player::OnDraw(Player *player)
         player->sprite.pos.x = g_GameManager.arena[0] + player->position.x;
         player->sprite.pos.y = g_GameManager.arena[1] + player->position.y;
         player->sprite.pos.z = 0.0f;
-        g_SpriteRenderer->DrawUnrotated(&player->sprite);
+        g_SpriteEngine->DrawUnrotated(&player->sprite);
         if (player->optionState && (player->playerState == 0 || player->playerState == 4 || player->playerState == 3))
         {
             player->optionSprites[0].pos.x = g_GameManager.arena[0] + player->optionPos[0].x;
@@ -2057,8 +2057,8 @@ int Player::OnDraw(Player *player)
             player->optionSprites[1].pos.x = g_GameManager.arena[0] + player->optionPos[1].x;
             player->optionSprites[1].pos.y = g_GameManager.arena[1] + player->optionPos[1].y;
             player->optionSprites[1].pos.z = 0.0f;
-            g_SpriteRenderer->Draw(&player->optionSprites[0]);
-            g_SpriteRenderer->Draw(&player->optionSprites[1]);
+            g_SpriteEngine->Draw(&player->optionSprites[0]);
+            g_SpriteEngine->Draw(&player->optionSprites[1]);
         }
     }
     if (player->playerState == 4 && player->stateTimer.AsFrames() > 0)
@@ -2165,26 +2165,26 @@ int Player::AddedCallback(Player *player)
         switch (g_GameManager.character)
         {
         case 0:
-            if (g_SpriteRenderer->LoadAnm(10, "data/player00.anm", 0x400) != 0)
+            if (g_SpriteEngine->LoadAnm(10, "data/player00.anm", 0x400) != 0)
             {
                 return -1;
             }
             break;
         case 1:
-            if (g_SpriteRenderer->LoadAnm(10, "data/player01.anm", 0x400) != 0)
+            if (g_SpriteEngine->LoadAnm(10, "data/player01.anm", 0x400) != 0)
             {
                 return -1;
             }
             break;
         case 2:
-            if (g_SpriteRenderer->LoadAnm(10, "data/player02.anm", 0x400) != 0)
+            if (g_SpriteEngine->LoadAnm(10, "data/player02.anm", 0x400) != 0)
             {
                 return -1;
             }
             break;
         }
     }
-    g_SpriteRenderer->StartScript(&player->sprite, 0x400);
+    g_SpriteEngine->StartScript(&player->sprite, 0x400);
     player->position.x = g_GameManager.arena[2] / 2.0f;
     player->position.y = g_GameManager.arena[3] - 64.0f;
     player->position.z = 0.49f;
@@ -2208,8 +2208,8 @@ int Player::AddedCallback(Player *player)
     player->playerState = 1;
     player->stateTimer.Set(120);
     player->optionState = 1;
-    g_SpriteRenderer->StartScript(&player->optionSprites[0], 0x480);
-    g_SpriteRenderer->StartScript(&player->optionSprites[1], 0x481);
+    g_SpriteEngine->StartScript(&player->optionSprites[0], 0x480);
+    g_SpriteEngine->StartScript(&player->optionSprites[1], 0x481);
     bullet = player->bullets;
     for (i = 0; i < 0x60; i++, bullet++)
     {
@@ -2245,7 +2245,7 @@ int Player::DeletedCallback(Player *player)
 {
     if ((g_App.scene != 3 && g_App.scene != 0xb && g_App.scene != 0xc) != 0)
     {
-        g_SpriteRenderer->ReleaseAnm(10);
+        g_SpriteEngine->ReleaseAnm(10);
         g_AsciiText.summaryPopup.pendingInterrupt = 99;
         g_AsciiText.summaryPendingInterrupt = 99;
         g_AsciiText.InterruptBossMarker(0);
@@ -2358,13 +2358,13 @@ int UnusedAppAddedCallback(App *arg)
     }
     // Shows the logo while the refresh rate is measured, or for four
     // frames.
-    g_SpriteRenderer->LoadSurface(0, "data/title/th07logo.jpg");
+    g_SpriteEngine->LoadSurface(0, "data/title/th07logo.jpg");
     g_App.hideFps = 1;
     if (g_App.presentImmediate == 0)
     {
         if (MeasureRefreshRate() != 0)
         {
-            g_SpriteRenderer->ReleaseSurface(0);
+            g_SpriteEngine->ReleaseSurface(0);
             return -2;
         }
     }
@@ -2374,7 +2374,7 @@ int UnusedAppAddedCallback(App *arg)
         while (i < 4)
         {
             g_App.d3dDevice->BeginScene();
-            g_SpriteRenderer->CopySurfaceToBackBuffer(0, 0, 0, 0, 0);
+            g_SpriteEngine->CopySurfaceToBackBuffer(0, 0, 0, 0, 0);
             g_App.d3dDevice->EndScene();
             if (FAILED(g_App.d3dDevice->Present(NULL, NULL, NULL, NULL)))
             {
@@ -2383,7 +2383,7 @@ int UnusedAppAddedCallback(App *arg)
             i++;
         }
     }
-    g_SpriteRenderer->ReleaseSurface(0);
+    g_SpriteEngine->ReleaseSurface(0);
     arg->hideFps = 0;
     arg->redrawFrames = 0;
     arg->lastPlayTimeTick = timeGetTime();
@@ -2398,7 +2398,7 @@ int UnusedAppAddedCallback(App *arg)
         arg->midi->LoadFile(0x1e, "bgm/init.mid");
     }
     g_SoundPlayer.LoadSounds();
-    if (g_SpriteRenderer->LoadAnm(0, "data/text.anm", 0x700) != 0)
+    if (g_SpriteEngine->LoadAnm(0, "data/text.anm", 0x700) != 0)
     {
         return -1;
     }
@@ -2407,7 +2407,7 @@ int UnusedAppAddedCallback(App *arg)
         LogPrintf(&g_Logger, "error : 文字の初期化に失敗しました\r\n");
         return -1;
     }
-    g_SpriteRenderer->CreateQuad();
+    g_SpriteEngine->CreateQuad();
     CreateTextSurface();
     if (g_SoundPlayer.LoadBgmFormat("bgm/thbgm.fmt") != 0)
     {

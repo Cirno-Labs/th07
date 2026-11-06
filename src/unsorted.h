@@ -378,20 +378,20 @@ int SetButtonFromJoystick(WORD *buttons, short button, WORD bit, DWORD joyButton
 int SetButtonFromDirectInput(WORD *buttons, short button, WORD bit, BYTE *rgbButtons);
 
 // How many frames shoot has been held, for App::shootFocuses; at most
-// 20. Named, and declared before g_JoyCaps, to come between g_JoyCaps
+// 20. Named, and declared before g_JoyDeviceCaps, to come between g_JoyDeviceCaps
 // and g_Rng in .bss as in the original: the exe sorts an object's
 // globals by name_hash(name) % 1024 (tools/locals.py), and of two equal
 // ones puts the name first seen later first.
 extern WORD g_ShotButtonHeldLen;
 // The joystick's capabilities, from joyGetDevCaps.
-extern JOYCAPSA g_JoyCaps;
+extern JOYCAPSA g_JoyDeviceCaps;
 
 // Adds the joystick's buttons and directions to `buttons` and returns
 // them: through DirectInput if there is a device, else joyGetPosEx.
 WORD ReadJoystick(WORD buttons);
 
 // Checks that joystick 1 is there and reads its capabilities into
-// g_JoyCaps. Returns 1 when there is none.
+// g_JoyDeviceCaps. Returns 1 when there is none.
 WORD InitJoystick();
 
 // The pad's buttons as GetPadButtons last read them: 0x80 when down.
@@ -412,7 +412,7 @@ extern WORD g_LastButtons;
 // The buttons the game plays by this frame: g_Buttons, or a replay's.
 extern WORD g_GameInputs;
 // g_GameInputs the frame before.
-extern WORD g_PreviousGameInputs;
+extern WORD g_PreviousPlayButtons;
 // 1 on every 8th frame once the buttons have been held unchanged for 30
 // frames, for key repeat.
 extern WORD g_RepeatButtons;
@@ -1255,8 +1255,8 @@ public:
 };
 ASSERT_SIZE(Gui, 0x94);
 extern Gui g_Gui;
-extern ChainElem g_GuiUpdateChain;
-extern ChainElem g_GuiDraw;
+extern ChainElem g_GuiCalcElem;
+extern ChainElem g_GuiDrawElem;
 // The colors of the boss timer: 20 seconds and more, 10, 5 and under 5.
 extern D3DCOLOR g_BossTimerColors[4];
 // Copies the rectangle of sprite `sprite` in texture 0x16 into sprite
@@ -1745,5 +1745,5 @@ extern Stage g_StageManager;
 extern char *g_StageDataFiles[];
 // Stage's statically allocated chain elements.
 extern ChainElem g_StageCalcChain;
-extern ChainElem g_StageDrawChain;
-extern ChainElem g_StageDrawChain2;
+extern ChainElem g_StageDrawElem;
+extern ChainElem g_StageDrawElem2;

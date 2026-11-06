@@ -18,8 +18,8 @@ BYTE g_EnemyItemDrops[0x20] = {
     1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 7, 1, 1, 1, 0, 2,
 };
 ChainElem g_EnemyManagerUpdate;
-ChainElem g_EnemyManagerRenderChain;
-ChainElem g_EnemyManagerRenderChain2;
+ChainElem g_EnemyDrawElem;
+ChainElem g_EnemyDrawElem2;
 EnemyManager g_EnemyManager;
 #endif // TH07_EXE
 
@@ -547,7 +547,7 @@ void Enemy::Despawn()
     {
         g_EnemyManager.bosses[this->bossIndex] = NULL;
     }
-    g_ReplaySystem->frameEvents |= 0x20;
+    g_ReplayManager->frameEvents |= 0x20;
 }
 
 void Enemy::ClampPos()
@@ -711,11 +711,11 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
             goto again;
         }
         enemy->sprite.color = enemy->color;
-        g_SpriteRenderer->Step(&enemy->sprite);
+        g_SpriteEngine->Step(&enemy->sprite);
         enemy->color = enemy->sprite.color;
         for (seg = 0; seg < 2; seg++)
         {
-            if (enemy->sprites[seg].scriptIndex >= 0 && g_SpriteRenderer->Step(&enemy->sprites[seg]))
+            if (enemy->sprites[seg].scriptIndex >= 0 && g_SpriteEngine->Step(&enemy->sprites[seg]))
             {
                 enemy->sprites[seg].scriptIndex = -1;
             }
@@ -904,7 +904,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                 enemy->flags.takesDamage = 0;
                 enemy->flags.deathMode = 0;
                 g_Gui.bossPresent = 0;
-                g_ReplaySystem->frameEvents |= 0x20;
+                g_ReplayManager->frameEvents |= 0x20;
                 if (enemy->deathEffect >= 0)
                 {
                     g_EffectManager.SpawnEffect(enemy->deathEffect, &enemy->pos, 1, 0xffffffff);
@@ -958,7 +958,7 @@ int EnemyManager::OnUpdate(EnemyManager *mgr)
                     }
                 }
                 enemy->life = 0;
-                g_ReplaySystem->frameEvents |= 0x20;
+                g_ReplayManager->frameEvents |= 0x20;
                 break;
             }
             g_SoundPlayer.QueueSound(i % 2 + 2, 0);
@@ -1120,7 +1120,7 @@ int EnemyManager::DrawEnemies(EnemyManager *mgr, int from, int to)
                     sprite->pos.z = 0.3f;
                     sprite->pos.x = g_GameManager.arena[0] + sprite->pos.x;
                     sprite->pos.y = g_GameManager.arena[1] + sprite->pos.y;
-                    g_SpriteRenderer->Draw(sprite);
+                    g_SpriteEngine->Draw(sprite);
                 }
             }
             if (enemy->flags.rotateSprite)
@@ -1133,7 +1133,7 @@ int EnemyManager::DrawEnemies(EnemyManager *mgr, int from, int to)
             {
                 enemy->sprite.pos.x = g_GameManager.arena[0] + enemy->sprite.pos.x;
                 enemy->sprite.pos.y = g_GameManager.arena[1] + enemy->sprite.pos.y;
-                g_SpriteRenderer->Draw(&enemy->sprite);
+                g_SpriteEngine->Draw(&enemy->sprite);
             }
             for (b = 1; b < 2; b++, sprite++)
             {
@@ -1147,7 +1147,7 @@ int EnemyManager::DrawEnemies(EnemyManager *mgr, int from, int to)
                     sprite->pos.z = 0.3f;
                     sprite->pos.x = g_GameManager.arena[0] + sprite->pos.x;
                     sprite->pos.y = g_GameManager.arena[1] + sprite->pos.y;
-                    g_SpriteRenderer->Draw(sprite);
+                    g_SpriteEngine->Draw(sprite);
                 }
             }
             if (enemy->trailFlags)
@@ -1179,7 +1179,7 @@ int EnemyManager::DrawEnemies(EnemyManager *mgr, int from, int to)
                         enemy->sprite.pos.z = 0.3f;
                         enemy->sprite.pos.x = g_GameManager.arena[0] + enemy->sprite.pos.x;
                         enemy->sprite.pos.y = g_GameManager.arena[1] + enemy->sprite.pos.y;
-                        g_SpriteRenderer->Draw(&enemy->sprite);
+                        g_SpriteEngine->Draw(&enemy->sprite);
                     }
                 }
                 else
@@ -1257,7 +1257,7 @@ int EnemyManager::DrawEnemies(EnemyManager *mgr, int from, int to)
                         }
                         if (vertices > 2)
                         {
-                            g_SpriteRenderer->DrawVertexStrip(&enemy->sprite,
+                            g_SpriteEngine->DrawVertexStrip(&enemy->sprite,
                                                             (VertexTex1DiffuseXyzrwh *)enemy->spriteStripVertices, vertices);
                         }
                     }
@@ -1285,11 +1285,11 @@ int EnemyManager::AddedCallback(EnemyManager *mgr)
 {
     Enemy *unused = mgr->enemies;
 
-    if (mgr->anmPath != NULL && g_SpriteRenderer->LoadAnm(0xf, mgr->anmPath, 0x900) != 0)
+    if (mgr->anmPath != NULL && g_SpriteEngine->LoadAnm(0xf, mgr->anmPath, 0x900) != 0)
     {
         return -1;
     }
-    if (mgr->anmPath2 != NULL && g_SpriteRenderer->LoadAnm(0x10, mgr->anmPath2, 0x900) != 0)
+    if (mgr->anmPath2 != NULL && g_SpriteEngine->LoadAnm(0x10, mgr->anmPath2, 0x900) != 0)
     {
         return -1;
     }
@@ -1306,8 +1306,8 @@ int EnemyManager::AddedCallback(EnemyManager *mgr)
 
 int EnemyManager::DeletedCallback(EnemyManager *mgr)
 {
-    g_SpriteRenderer->ReleaseAnm(0x10);
-    g_SpriteRenderer->ReleaseAnm(0xf);
+    g_SpriteEngine->ReleaseAnm(0x10);
+    g_SpriteEngine->ReleaseAnm(0xf);
     D3DXVECTOR3 nowhere(-999.0f, -999.0f, -999.0f);
     g_AsciiText.SetBossMarkerPos(0, &nowhere);
     g_AsciiText.SetBossMarkerPos(1, &nowhere);
@@ -1331,15 +1331,15 @@ int EnemyManager::RegisterChain(char *anmPath, char *anmPath2)
     {
         return -1;
     }
-    g_EnemyManagerRenderChain.SetCallback((ChainCallback)EnemyManager::OnDraw);
-    g_EnemyManagerRenderChain.arg = mgr;
-    if (g_Chain.AddToDrawChain(&g_EnemyManagerRenderChain, 5) != 0)
+    g_EnemyDrawElem.SetCallback((ChainCallback)EnemyManager::OnDraw);
+    g_EnemyDrawElem.arg = mgr;
+    if (g_Chain.AddToDrawChain(&g_EnemyDrawElem, 5) != 0)
     {
         return -1;
     }
-    g_EnemyManagerRenderChain2.SetCallback((ChainCallback)EnemyManager::OnDraw2);
-    g_EnemyManagerRenderChain2.arg = mgr;
-    if (g_Chain.AddToDrawChain(&g_EnemyManagerRenderChain2, 7) != 0)
+    g_EnemyDrawElem2.SetCallback((ChainCallback)EnemyManager::OnDraw2);
+    g_EnemyDrawElem2.arg = mgr;
+    if (g_Chain.AddToDrawChain(&g_EnemyDrawElem2, 7) != 0)
     {
         return -1;
     }
@@ -1349,8 +1349,8 @@ int EnemyManager::RegisterChain(char *anmPath, char *anmPath2)
 void EnemyManager::RemoveChain()
 {
     g_Chain.Remove(&g_EnemyManagerUpdate);
-    g_Chain.Remove(&g_EnemyManagerRenderChain);
-    g_Chain.Remove(&g_EnemyManagerRenderChain2);
+    g_Chain.Remove(&g_EnemyDrawElem);
+    g_Chain.Remove(&g_EnemyDrawElem2);
 }
 
 int EnemyManager::ClearEnemiesForBonus(int maxBonus, int start)
