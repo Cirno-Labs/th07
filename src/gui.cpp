@@ -577,7 +577,7 @@ int Gui::LoadResources()
     this->livesChanged = 2;
     this->bombsChanged = 2;
     this->grazeChanged = 2;
-    this->frameItemsHideTimer = 2;
+    this->pointsChanged = 2;
     this->powerChanged = 2;
     g_App.redrawFrames = 0x10;
     return 0;
@@ -1246,7 +1246,7 @@ void Gui::DrawHud()
         this->livesChanged = 2;
         this->bombsChanged = 2;
         this->grazeChanged = 2;
-        this->frameItemsHideTimer = 2;
+        this->pointsChanged = 2;
         this->powerChanged = 2;
     }
     if (!g_App.flags.noFrameItems)
@@ -1277,7 +1277,7 @@ void Gui::DrawHud()
             vm->pos = D3DXVECTOR3(xx, 160.0f, 0.48f);
             g_SpriteRenderer->DrawUnrotated(vm);
         }
-        if (this->frameItemsHideTimer)
+        if (this->pointsChanged)
         {
             vm->pos = D3DXVECTOR3(xx, 176.0f, 0.48f);
             g_SpriteRenderer->DrawUnrotated(vm);
@@ -1354,7 +1354,7 @@ void Gui::DrawHud()
             scorePos = D3DXVECTOR3(496.0f, 160.0f, 0.0f);
             g_AsciiText.AddFormat(&scorePos, "%d", g_GameManager.stats->grazeTotal);
         }
-        if (this->frameItemsHideTimer || g_App.flags.noFrameItems)
+        if (this->pointsChanged || g_App.flags.noFrameItems)
         {
             scorePos = D3DXVECTOR3(496.0f, 176.0f, 0.0f);
             g_AsciiText.AddFormat(&scorePos, "%d/%d", g_GameManager.stats->pointItemsTotal,

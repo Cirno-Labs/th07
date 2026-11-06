@@ -1221,7 +1221,7 @@ public:
     unsigned int bombsChanged : 2;
     unsigned int powerChanged : 2;
     unsigned int grazeChanged : 2;
-    unsigned int frameItemsHideTimer : 2;
+    unsigned int pointsChanged : 2;
     GuiImpl *impl;
     // The width of the text ShowBombName shows, from its length.
     float bombNameWidth;

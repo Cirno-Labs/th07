@@ -1522,7 +1522,7 @@ void UpdateBombState(Player *player)
         if (player->bomb.timer.HasTicked())
         {
             g_GameManager.SubBonusPoints(player->bomb.drainPerFrame);
-            g_Gui.frameItemsHideTimer = 2;
+            g_Gui.pointsChanged = 2;
         }
         if (!player->bomb.focused)
         {
@@ -1622,7 +1622,7 @@ int UpdateDyingState(Player *player)
                 }
                 bonus -= bonus % 10;
                 g_GameManager.bonusPoints -= bonus;
-                g_Gui.frameItemsHideTimer = 2;
+                g_Gui.pointsChanged = 2;
                 g_ItemManager.RecycleCollectedItems();
             }
             else
